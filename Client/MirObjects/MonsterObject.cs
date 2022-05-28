@@ -895,6 +895,9 @@ namespace Client.MirObjects
                             case Monster.DarkOmaKing:
                                 Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.DarkOmaKing], 1702, 13, 13 * Frame.Interval, this));
                                 break;
+                            case Monster.CrystalBeast:
+                                MapControl.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.CrystalBeast], 1269, 7, 7 * 200, CurrentLocation));
+                                break;
                         }
                         break;
                     case MirAction.Attack5:
@@ -1000,6 +1003,11 @@ namespace Client.MirObjects
                                 break;
                             case Monster.WizardScroll:
                                 Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.WizardScroll], 296, 4, 4 * Frame.Interval, this));
+                                break;
+                            case Monster.CrystalBeast:
+                                Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.CrystalBeast], 1276, 5, 5 * Frame.Interval, this, CMain.Time + 500));
+                                Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.CrystalBeast], 368 + (int)Direction * 2, 2, 2 * Frame.Interval, this, CMain.Time + 2100){ Blend = false });
+                                Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.CrystalBeast], 904 + (int)Direction * 2, 2, 2 * Frame.Interval, this, CMain.Time + 2100){ Blend = true });
                                 break;
                         }
                         break;
@@ -1720,6 +1728,9 @@ namespace Client.MirObjects
                                                 Effect purpleFaeFlowerEffect = new Effect(Libraries.Monsters[(ushort)Monster.PurpleFaeFlower], 483, 7, 700, front, CMain.Time + 300);
                                                 MapControl.Effects.Add(purpleFaeFlowerEffect);
                                                 break;
+                                            case Monster.CrystalBeast:
+                                                MapControl.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.CrystalBeast], 1112, 6, 300, front));
+                                                break;
                                         }
                                     }
                                     break;
@@ -2250,6 +2261,9 @@ namespace Client.MirObjects
                                             Effect effect = new Effect(Libraries.Monsters[(ushort)Monster.DragonWarrior], 664, 6, 600, source, CMain.Time + 300);
                                             MapControl.Effects.Add(effect); 
                                             break;
+                                        case Monster.CrystalBeast:
+                                            Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.CrystalBeast], 1229 + (int)Direction * 5, 5, 300, this));
+                                            break;
                                     }
                                     break;
                                 case 5:
@@ -2271,6 +2285,9 @@ namespace Client.MirObjects
                                             SoundManager.PlaySound(8452, false);
                                             Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.HornedCommander], 864, 8, 8 * Frame.Interval, this));
                                             break;
+                                        case Monster.CrystalBeast:
+                                             MapControl.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.CrystalBeast], 1222, 7, 300, front));
+                                             break;
                                     }
                                     break;
                                 case 6:
@@ -2513,6 +2530,10 @@ namespace Client.MirObjects
                                                         missile.Target.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.PurpleFaeFlower], 427, 9, 900, missile.Target) { Blend = true });
                                                     };
                                                 }
+                                                break;
+                                            case Monster.CrystalBeast:
+                                                Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.CrystalBeast], 1281, 10, 10 * 60, this, CMain.Time + 2200) { Blend = true, DrawBehind = true });
+                                                Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.CrystalBeast], 1291, 7, 7 * Frame.Interval, this, CMain.Time + 200) { Blend = true });
                                                 break;
                                         }
                                         break;
@@ -3613,6 +3634,13 @@ namespace Client.MirObjects
                                             case Monster.HornedCommander:
                                                 Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.HornedCommander], 938 + (int)Direction * 9, 9, 9 * Frame.Interval, this));
                                                 Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.HornedCommander], 1010 + (int)Direction * 2, 2, 2 * Frame.Interval, this));
+                                                break;
+                                            case Monster.CrystalBeast:
+                                                ob = MapControl.GetObject(TargetID);
+                                                if (ob != null)
+                                                {
+                                                    ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.CrystalBeast], 1298, 13, 1300, ob) { Blend = true });
+                                                }
                                                 break;
                                         }
                                         break;
@@ -5565,6 +5593,44 @@ namespace Client.MirObjects
                             break;
                         case MirAction.Die:
                             Libraries.Monsters[(ushort)Monster.DarkOmaKing].DrawBlend((1488 + FrameIndex + (int)Direction * 10), DrawLocation, Color.White, true);
+                            break;
+                    }
+                    break;
+                case Monster.CrystalBeast:
+                    switch (CurrentAction)
+                    {
+                        case MirAction.Standing:
+                            Libraries.Monsters[(ushort)Monster.CrystalBeast].DrawBlend(536 + FrameIndex + (int)Direction * 6, DrawLocation, Color.White, true);
+                            break;
+                        case MirAction.Walking:
+                            Libraries.Monsters[(ushort)Monster.CrystalBeast].DrawBlend(584 + FrameIndex + (int)Direction * 6, DrawLocation, Color.White, true);
+                            break;
+                        case MirAction.Attack1:
+                            Libraries.Monsters[(ushort)Monster.CrystalBeast].DrawBlend(632 + FrameIndex + (int)Direction * 5, DrawLocation, Color.White, true);
+                            Libraries.Monsters[(ushort)Monster.CrystalBeast].DrawBlend(1072 + FrameIndex + (int)Direction * 5, DrawLocation, Color.White, true);
+                            break;
+                        case MirAction.Attack2:
+                            Libraries.Monsters[(ushort)Monster.CrystalBeast].DrawBlend(672 + FrameIndex + (int)Direction * 5, DrawLocation, Color.White, true);
+                            Libraries.Monsters[(ushort)Monster.CrystalBeast].DrawBlend(1118 + FrameIndex + (int)Direction * 5, DrawLocation, Color.White, true);
+                            break;
+                        case MirAction.Attack3:
+                            Libraries.Monsters[(ushort)Monster.CrystalBeast].DrawBlend(712 + FrameIndex + (int)Direction * 8, DrawLocation, Color.White, true);
+                            Libraries.Monsters[(ushort)Monster.CrystalBeast].DrawBlend(1158 + FrameIndex + (int)Direction * 8, DrawLocation, Color.White, true);
+                            break;
+                        case MirAction.Attack4:
+                            Libraries.Monsters[(ushort)Monster.CrystalBeast].DrawBlend(776 + FrameIndex + (int)Direction * 6, DrawLocation, Color.White, true);
+                            break;
+                        case MirAction.AttackRange1:
+                            Libraries.Monsters[(ushort)Monster.CrystalBeast].DrawBlend(824 + FrameIndex + (int)Direction * 5, DrawLocation, Color.White, true);
+                            break;
+                        case MirAction.AttackRange2:
+                            Libraries.Monsters[(ushort)Monster.CrystalBeast].DrawBlend(920 + FrameIndex + (int)Direction * 8, DrawLocation, Color.White, true);
+                            break;
+                        case MirAction.Struck:
+                            Libraries.Monsters[(ushort)Monster.CrystalBeast].DrawBlend(984 + FrameIndex + (int)Direction * 3, DrawLocation, Color.White, true);
+                            break;
+                        case MirAction.Die:
+                            Libraries.Monsters[(ushort)Monster.CrystalBeast].DrawBlend(1008 + FrameIndex + (int)Direction * 8, DrawLocation, Color.White, true);
                             break;
                     }
                     break;
