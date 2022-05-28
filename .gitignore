@@ -1,0 +1,68 @@
+# Windows File Cache
+Thumbs.db
+ehthumbs.db
+
+# Windows Icon Database
+Desktop.ini
+
+# Windows Installer Files
+*.cab
+*.msi
+*.msm
+*.msp
+
+# Windows Shortcuts
+*.lnk
+
+# Recycle Bin
+$RECYCLE.BIN/
+
+# Macintosh System Files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Thumbnails
+._*
+
+# External Disk
+.Spotlight-V100
+.Trashes
+
+# Remote AFP Share
+.apdisk
+.AppleDB
+.AppleDesktop
+Temporary Items
+Network Trash Folder
+
+# Visual Studio User Configuration
+Legend of Mir.sln.DotSettings.user
+Legend of Mir.v11.suo
+Legend of Mir.v12.suo
+.vs/Legend of Mir/v15/.suo
+.vs/Legend of Mir/v16/.suo
+
+# Visual Studio Build Files
+/Client/obj
+/Server/obj
+/Server.MirForms/obj
+/AutoPatcherAdmin/obj
+/LibraryViewer/obj
+/LibraryEditor/obj
+/LibraryViewer/bin
+/Build
+/.vs
+Packages
+Release
+Debug
+obj
+
+# Custom Files and Folders
+/Notes
+/PatcherWebSite
+*.user
+/Components/CustomFormControl.dll
+/Components/CustoMFormControl.pdb
+Components/CustomFormControl.dll
+Components/CustomFormControl.pdb
