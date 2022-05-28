@@ -12927,6 +12927,9 @@ namespace Server.MirObjects
             if (ItemRentalFeeLocked)
                 return;
 
+            if ((ulong)amount + ItemRentalFeeAmount >= uint.MaxValue)
+                return;
+
             if (Account.Gold < amount)
                 return;
 
@@ -12942,6 +12945,9 @@ namespace Server.MirObjects
 
         public void SetItemRentalPeriodLength(uint days)
         {
+            if (days < 1 || days > 30)
+                return;
+
             if (ItemRentalItemLocked)
                 return;
 
