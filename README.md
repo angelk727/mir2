@@ -15,6 +15,7 @@
 
 ## Guidance
 有关服务器和游戏文件的更多信息，请访问《热血传奇》维基百科（https://www.lomcn.org/wiki/index.php/Main_Page）。
+
 客户端下载地址：（https://github.com/angelk727/ClientDataMonster）
 
 ## Community
