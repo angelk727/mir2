@@ -1,17 +1,18 @@
-﻿using Server.MirDatabase;
+﻿using System;
 using System.Collections.Generic;
+using Server.MirDatabase;
 using S = ServerPackets;
 
 namespace Server.MirObjects.Monsters
 {
     /// <summary>
-    /// Contains AI's for all of the HoodedSummoner's scrolls (WarriorScroll / TaoistScroll / WizardScroll / AssassinScroll).
+    /// Contains AI's for all of the HoodedSummoner's scrolls (CallScroll / PoisonScroll / FireballScroll / LightningScroll).
     /// Set AI for all Scrolls to this AI and set the Effect to case number based on which scroll you want.
     /// 
-    /// WarriorScroll = 0
-    /// TaoistScroll = 1
-    /// WizardScroll = 2
-    /// AssassinScroll = 3
+    /// CallScroll = 0
+    /// PoisonScroll = 1
+    /// FireballScroll = 2
+    /// LightningScroll = 3
     /// 
     /// </summary>
 
@@ -54,28 +55,41 @@ namespace Server.MirObjects.Monsters
 
             switch (Info.Effect)
             {
-                case 0: // WarriorScroll - FireWall attack?
-                    Broadcast(new S.ObjectRangeAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation, TargetID = Target.ObjectID });
-                    DelayedAction warriorScrollAction = new DelayedAction(DelayedType.Damage, Envir.Time + 500, Target, damage, DefenceType.MACAgility);
-                    ActionList.Add(warriorScrollAction);
+                case 0: // CallScroll - FireWall attack?
+                    switch (Envir.Random.Next(2))
+                    {
+                        case 0:
+                            {
+                                Broadcast(new S.ObjectRangeAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation, TargetID = Target.ObjectID });
+                                DelayedAction callScrollAction = new DelayedAction(DelayedType.Damage, Envir.Time + 500, Target, damage, DefenceType.MACAgility);
+                                ActionList.Add(callScrollAction);
+                            }
+                            break;
+                        case 1:
+                            {
+                                Broadcast(new S.ObjectRangeAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation, TargetID = Target.ObjectID });
+                                SpawnSlaves();
+                            }
+                            break;
+                    }
                     break;
-                case 1: // TaoistScroll - PoisonCloud + PoisonExplosion on death.
+                case 1: // PoisonScroll - PoisonCloud + PoisonExplosion on death.
                     Broadcast(new S.ObjectRangeAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation, TargetID = Target.ObjectID });
-                    DelayedAction taoistScrollAction = new DelayedAction(DelayedType.RangeDamage, Envir.Time + 500, Target, damage, DefenceType.MACAgility, true);
-                    ActionList.Add(taoistScrollAction);
+                    DelayedAction poisonScrollAction = new DelayedAction(DelayedType.RangeDamage, Envir.Time + 500, Target, damage, DefenceType.MACAgility, true);
+                    ActionList.Add(poisonScrollAction);
                     break;
-                case 2: // WizardScroll - Projectile Attack (D16).
+                case 2: // FireballScroll - Projectile Attack (D16).
                     Broadcast(new S.ObjectRangeAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation, TargetID = Target.ObjectID });
 
                     int delay = Functions.MaxDistance(CurrentLocation, Target.CurrentLocation) * 50 + 500; //50 MS per Step
 
-                    DelayedAction wizardScrollAction = new DelayedAction(DelayedType.Damage, Envir.Time + delay, Target, damage, DefenceType.MACAgility);
-                    ActionList.Add(wizardScrollAction);
+                    DelayedAction fireballScrollAction = new DelayedAction(DelayedType.Damage, Envir.Time + delay, Target, damage, DefenceType.MACAgility);
+                    ActionList.Add(fireballScrollAction);
                     break;
-                case 3: // AssassinScroll - ThunderBolt Attack.
+                case 3: // LightningScroll - ThunderBolt Attack.
                     Broadcast(new S.ObjectRangeAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation, TargetID = Target.ObjectID });
-                    DelayedAction assassinScrollAction = new DelayedAction(DelayedType.Damage, Envir.Time + 500, Target, damage, DefenceType.MACAgility);
-                    ActionList.Add(assassinScrollAction);
+                    DelayedAction lightningScrollAction = new DelayedAction(DelayedType.Damage, Envir.Time + 500, Target, damage, DefenceType.MACAgility);
+                    ActionList.Add(lightningScrollAction);
                     break;
                 default:
                     base.Attack();
@@ -165,10 +179,11 @@ namespace Server.MirObjects.Monsters
                 case 0:
                 case 2:
                 case 3:
-                default:
-                    base.Die();
+                    //default:
+                    //base.Die();
                     break;
             }
+            base.Die();
         }
 
         protected override void CompleteDeath(IList<object> data)
@@ -178,12 +193,34 @@ namespace Server.MirObjects.Monsters
 
             for (int i = 0; i < targets.Count; i++)
             {
-                int damage = GetAttackPower(Stats[Stat.MinDC], Stats[Stat.MaxDC]);
+                int damage = GetAttackPower(Stats[Stat.MinSC], Stats[Stat.MaxSC]);
                 if (damage == 0) return;
 
                 if (targets[i].Attacked(this, damage, DefenceType.ACAgility) <= 0) continue;
 
-                PoisonTarget(targets[i], 7, 5, PoisonType.Green);
+                PoisonTarget(targets[i], 7, 5, PoisonType.Green, 2000);
+            }
+        }
+
+        private void SpawnSlaves()
+        {
+            int count = Math.Min(1, 1 - SlaveList.Count);
+
+            for (int i = 0; i < count; i++)
+            {
+                MonsterObject mob;
+
+                {
+                  mob = GetMonster(Envir.GetMonsterInfo(Settings.CallScrollMob));
+                }
+
+                if (mob == null) continue;
+
+                if (!mob.Spawn(CurrentMap, Front))
+                    mob.Spawn(CurrentMap, Target.CurrentLocation);
+
+                mob.ActionTime = Envir.Time + 2000;
+                SlaveList.Add(mob);
             }
         }
     }

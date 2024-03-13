@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using C = ClientPackets;
 using Server.MirDatabase;
 using Server.MirEnvir;
 using Server.MirNetwork;
-using S = ServerPackets;
-using System.Text.RegularExpressions;
 using Server.MirObjects.Monsters;
+using S = ServerPackets;
 
 namespace Server.MirObjects
 {
@@ -70,8 +67,8 @@ namespace Server.MirObjects
             }
         }
 
-        public const int SearchDelay = 3000, ViewRange = 8, RoamDelay = 1000, RevivalDelay = 2000, AutoPotDelay = 1000;
-        public long RoamTime, AutoPotTime;
+        public const int SearchDelay = 3000, ViewRange = 8, RoamDelay = 1000, RevivalDelay = 2000, AutoPotDelay = 1000, HeroRecallDelay = 180000; //自添加
+        public long RoamTime, AutoPotTime, HeroRecallTime;
 
         public override long BrownTime
         {
@@ -135,7 +132,10 @@ namespace Server.MirObjects
         {
             CheckCellTime = false;
 
-            Owner = owner;            
+            Owner = owner;
+
+            base.Report = owner.Report;
+
             Load(info, null);           
         }
 
@@ -297,7 +297,7 @@ namespace Server.MirObjects
         {
             return true;
         }
-        public override void BeginMagic(Spell spell, MirDirection dir, uint targetID, Point location)
+        public override void BeginMagic(Spell spell, MirDirection dir, uint targetID, Point location, bool spellTargetLock = false)
         {
             NextMagicSpell = spell;
             NextMagicDirection = dir;
@@ -311,6 +311,8 @@ namespace Server.MirObjects
 
             UserItem item = null;
             int index = -1;
+
+            if (Owner.Hero != null && Owner.Hero.Dead) return;
 
             for (int i = 0; i < Info.Inventory.Length; i++)
             {
@@ -326,7 +328,7 @@ namespace Server.MirObjects
                 return;
             }
 
-            if (Dead && !(item.Info.Type == ItemType.Scroll && item.Info.Shape == 6))
+            if (Dead && !(item.Info.Type == ItemType.卷轴 && item.Info.Shape == 6))
             {
                 Owner.Enqueue(p);
                 return;
@@ -334,7 +336,7 @@ namespace Server.MirObjects
 
             switch (item.Info.Type)
             {
-                case ItemType.Potion:
+                case ItemType.药水:
                     switch (item.Info.Shape)
                     {
                         case 0: //NormalPotion
@@ -348,11 +350,11 @@ namespace Server.MirObjects
                         case 2: //MysteryWater
                             if (UnlockCurse)
                             {
-                                ReceiveChat("You can already unequip a cursed item.", ChatType.Hint);
+                                ReceiveChat("诅咒已被解除", ChatType.Hint);
                                 Owner.Enqueue(p);
                                 return;
                             }
-                            ReceiveChat("You can now unequip a cursed item.", ChatType.Hint);
+                            ReceiveChat("诅咒将被解除", ChatType.Hint);
                             UnlockCurse = true;
                             break;
                         case 3: //Buff
@@ -360,48 +362,68 @@ namespace Server.MirObjects
                                 int time = item.Info.Durability;
 
                                 if (item.GetTotal(Stat.MaxDC) > 0)
-                                    AddBuff(BuffType.Impact, this, time * Settings.Minute, new Stats { [Stat.MaxDC] = item.GetTotal(Stat.MaxDC) });
+                                    AddBuff(BuffType.火龍祝福, this, time * Settings.Minute, new Stats { [Stat.MaxDC] = item.GetTotal(Stat.MaxDC) });
 
                                 if (item.GetTotal(Stat.MaxMC) > 0)
-                                    AddBuff(BuffType.Magic, this, time * Settings.Minute, new Stats { [Stat.MaxMC] = item.GetTotal(Stat.MaxMC) });
+                                    AddBuff(BuffType.蓝魔之眼, this, time * Settings.Minute, new Stats { [Stat.MaxMC] = item.GetTotal(Stat.MaxMC) });
 
                                 if (item.GetTotal(Stat.MaxSC) > 0)
-                                    AddBuff(BuffType.Taoist, this, time * Settings.Minute, new Stats { [Stat.MaxSC] = item.GetTotal(Stat.MaxSC) });
+                                    AddBuff(BuffType.冰龍祝福, this, time * Settings.Minute, new Stats { [Stat.MaxSC] = item.GetTotal(Stat.MaxSC) });
 
-                                if (item.GetTotal(Stat.AttackSpeed) > 0)
-                                    AddBuff(BuffType.Storm, this, time * Settings.Minute, new Stats { [Stat.AttackSpeed] = item.GetTotal(Stat.AttackSpeed) });
+                                if (item.GetTotal(Stat.攻击速度) > 0)
+                                    AddBuff(BuffType.眼疾手快, this, time * Settings.Minute, new Stats { [Stat.攻击速度] = item.GetTotal(Stat.攻击速度) });
 
                                 if (item.GetTotal(Stat.HP) > 0)
-                                    AddBuff(BuffType.HealthAid, this, time * Settings.Minute, new Stats { [Stat.HP] = item.GetTotal(Stat.HP) });
+                                    AddBuff(BuffType.生命永驻, this, time * Settings.Minute, new Stats { [Stat.HP] = item.GetTotal(Stat.HP) });
 
                                 if (item.GetTotal(Stat.MP) > 0)
-                                    AddBuff(BuffType.ManaAid, this, time * Settings.Minute, new Stats { [Stat.MP] = item.GetTotal(Stat.MP) });
+                                    AddBuff(BuffType.法力常在, this, time * Settings.Minute, new Stats { [Stat.MP] = item.GetTotal(Stat.MP) });
 
                                 if (item.GetTotal(Stat.MaxAC) > 0)
-                                    AddBuff(BuffType.Defence, this, time * Settings.Minute, new Stats { [Stat.MaxAC] = item.GetTotal(Stat.MaxAC) });
+                                    AddBuff(BuffType.防御之力, this, time * Settings.Minute, new Stats { [Stat.MaxAC] = item.GetTotal(Stat.MaxAC) });
 
                                 if (item.GetTotal(Stat.MaxMAC) > 0)
-                                    AddBuff(BuffType.MagicDefence, this, time * Settings.Minute, new Stats { [Stat.MaxMAC] = item.GetTotal(Stat.MaxMAC) });
+                                    AddBuff(BuffType.抗魔屏障, this, time * Settings.Minute, new Stats { [Stat.MaxMAC] = item.GetTotal(Stat.MaxMAC) });
 
-                                if (item.GetTotal(Stat.BagWeight) > 0)
-                                    AddBuff(BuffType.BagWeight, this, time * Settings.Minute, new Stats { [Stat.BagWeight] = item.GetTotal(Stat.BagWeight) });
+                                if (item.GetTotal(Stat.背包负重) > 0)
+                                    AddBuff(BuffType.包罗万象, this, time * Settings.Minute, new Stats { [Stat.背包负重] = item.GetTotal(Stat.背包负重) });
+
+                                if (item.GetTotal(Stat.准确) > 0)
+                                    AddBuff(BuffType.精确命中, this, time * Settings.Minute, new Stats { [Stat.准确] = item.GetTotal(Stat.准确) });
+
+                                if (item.GetTotal(Stat.敏捷) > 0)
+                                    AddBuff(BuffType.敏捷加身, this, time * Settings.Minute, new Stats { [Stat.敏捷] = item.GetTotal(Stat.敏捷) });
                             }
                             break;
                         case 4: //Exp
                             {
                                 int time = item.Info.Durability;
-                                AddBuff(BuffType.Exp, this, Settings.Minute * time, new Stats { [Stat.ExpRatePercent] = item.GetTotal(Stat.Luck) });
+                                AddBuff(BuffType.经验丰富, this, Settings.Minute * time, new Stats { [Stat.经验增长数率] = item.GetTotal(Stat.幸运) });
                             }
                             break;
                         case 5: //Drop
                             {
                                 int time = item.Info.Durability;
-                                AddBuff(BuffType.Drop, this, Settings.Minute * time, new Stats { [Stat.ItemDropRatePercent] = item.GetTotal(Stat.Luck) });
+                                AddBuff(BuffType.落物纷飞, this, Settings.Minute * time, new Stats { [Stat.物品掉落数率] = item.GetTotal(Stat.幸运) });
+                            }
+                            break;
+                        case 6: //自添加慢速恢复%
+                            PotHealthAmount = (ushort)Math.Min(ushort.MaxValue, PotHealthAmount + (Stats[Stat.HP] / 100) * (item.Info.Stats[Stat.生命值数率]));
+                            PotManaAmount = (ushort)Math.Min(ushort.MaxValue, PotManaAmount + (Stats[Stat.MP] / 100) * (item.Info.Stats[Stat.法力值数率]));
+                            break;
+                        case 7: //自添加快速恢复%
+                            ChangeHP((Stats[Stat.HP] / 100) * (item.Info.Stats[Stat.生命值数率]));
+                            ChangeMP((Stats[Stat.MP] / 100) * (item.Info.Stats[Stat.法力值数率]));
+                            break;
+                        case 8: //自添加技能修炼速度
+                            {
+                                int time = item.Info.Durability;
+                                AddBuff(BuffType.潜心修炼, this, Settings.Minute * time, new Stats { [Stat.技能熟练度倍率] = 2 });
                             }
                             break;
                     }
                     break;
-                case ItemType.Scroll:
+                case ItemType.卷轴:
                     UserItem temp;
                     switch (item.Info.Shape)
                     {
@@ -413,7 +435,7 @@ namespace Server.MirObjects
                             }
                             break;
                         case 4: //RepairOil
-                            temp = Info.Equipment[(int)EquipmentSlot.Weapon];
+                            temp = Info.Equipment[(int)EquipmentSlot.武器];
                             if (temp == null || temp.MaxDura == temp.CurrentDura)
                             {
                                 Owner.Enqueue(p);
@@ -429,11 +451,11 @@ namespace Server.MirObjects
                             temp.CurrentDura = (ushort)Math.Min(temp.MaxDura, temp.CurrentDura + 5000);
                             temp.DuraChanged = false;
 
-                            ReceiveChat("Your weapon has been partially repaired", ChatType.Hint);
+                            ReceiveChat("武器得到部分修复", ChatType.Hint);
                             Owner.Enqueue(new S.ItemRepaired { UniqueID = temp.UniqueID, MaxDura = temp.MaxDura, CurrentDura = temp.CurrentDura });
                             break;
                         case 5: //WarGodOil
-                            temp = Info.Equipment[(int)EquipmentSlot.Weapon];
+                            temp = Info.Equipment[(int)EquipmentSlot.武器];
                             if (temp == null || temp.MaxDura == temp.CurrentDura)
                             {
                                 Owner.Enqueue(p);
@@ -447,13 +469,13 @@ namespace Server.MirObjects
                             temp.CurrentDura = temp.MaxDura;
                             temp.DuraChanged = false;
 
-                            ReceiveChat("Your weapon has been completely repaired", ChatType.Hint);
+                            ReceiveChat("武器得到完全修复", ChatType.Hint);
                             Owner.Enqueue(new S.ItemRepaired { UniqueID = temp.UniqueID, MaxDura = temp.MaxDura, CurrentDura = temp.CurrentDura });
                             break;
                         case 6: //ResurrectionScroll
                             if (CurrentMap.Info.NoReincarnation)
                             {
-                                ReceiveChat(string.Format("Cannot use on this map"), ChatType.System);
+                                ReceiveChat(string.Format("当前地图禁用"), ChatType.System);
                                 Owner.Enqueue(p);
                                 return;
                             }
@@ -465,7 +487,7 @@ namespace Server.MirObjects
                             break;
                     }
                     break;
-                case ItemType.Book:
+                case ItemType.技能书:
                     UserMagic magic = new UserMagic((Spell)item.Info.Shape);
 
                     if (magic.Info == null)
@@ -478,8 +500,8 @@ namespace Server.MirObjects
                     SendMagicInfo(magic);
                     RefreshStats();
                     break;
-                case ItemType.Food:
-                    temp = Info.Equipment[(int)EquipmentSlot.Mount];
+                case ItemType.坐骑食物:
+                    temp = Info.Equipment[(int)EquipmentSlot.坐骑];
                     if (temp == null || temp.MaxDura == temp.CurrentDura)
                     {
                         Owner.Enqueue(p);
@@ -498,17 +520,17 @@ namespace Server.MirObjects
                     temp.CurrentDura = (ushort)Math.Min(temp.MaxDura, temp.CurrentDura + item.CurrentDura);
                     temp.DuraChanged = false;
 
-                    ReceiveChat("Your mount has been fed.", ChatType.Hint);
+                    ReceiveChat("坐骑已经吃饱", ChatType.Hint);
                     Owner.Enqueue(new S.ItemRepaired { UniqueID = temp.UniqueID, MaxDura = temp.MaxDura, CurrentDura = temp.CurrentDura });
 
                     RefreshStats();
                     break;                
-                case ItemType.Transform: //Transforms
+                case ItemType.外形物品: //Transforms
                     {
-                        AddBuff(BuffType.Transform, this, (Settings.Second * item.Info.Durability), new Stats(), values: item.Info.Shape);
+                        AddBuff(BuffType.变形效果, this, (Settings.Second * item.Info.Durability), new Stats(), values: item.Info.Shape);
                     }
                     break;
-                case ItemType.Deco:
+                case ItemType.装饰:
 
                     DecoObject decoOb = new DecoObject
                     {
@@ -523,7 +545,7 @@ namespace Server.MirObjects
                     Owner.Enqueue(decoOb.GetInfo());
 
                     break;
-                case ItemType.MonsterSpawn:
+                case ItemType.怪物蛋:
 
                     var monsterID = item.Info.Stats[Stat.HP];
                     var spawnAsPet = item.Info.Shape == 1;
@@ -539,7 +561,7 @@ namespace Server.MirObjects
                     {
                         if (Pets.Count(t => !t.Dead && t.Race != ObjectType.Creature) >= Globals.MaxPets)
                         {
-                            ReceiveChat("Maximum number of pets already reached.", ChatType.Hint);
+                            ReceiveChat("宠物数量已达到上限", ChatType.Hint);
                             Owner.Enqueue(p);
                             return;
                         }
@@ -556,7 +578,7 @@ namespace Server.MirObjects
                         var con = CurrentMap.GetConquest(CurrentLocation);
                         if (con == null)
                         {
-                            ReceiveChat(string.Format("{0} can only be spawned during a conquest.", monsterInfo.GameName), ChatType.Hint);
+                            ReceiveChat(string.Format("{0} 只能在攻城战期间召唤", monsterInfo.GameName), ChatType.Hint);
                             Owner.Enqueue(p);
                             return;
                         }
@@ -568,7 +590,7 @@ namespace Server.MirObjects
                     if (!monster.Spawn(CurrentMap, Front))
                         monster.Spawn(CurrentMap, CurrentLocation);
                     break;
-                case ItemType.SiegeAmmo:
+                case ItemType.攻城弹药:
                     //TODO;
                     break;
                 default:
@@ -590,7 +612,7 @@ namespace Server.MirObjects
             {
                 LastRevivalTime = Envir.Time + 300000;
 
-                for (var i = (int)EquipmentSlot.RingL; i <= (int)EquipmentSlot.RingR; i++)
+                for (var i = (int)EquipmentSlot.左戒指; i <= (int)EquipmentSlot.右戒指; i++)
                 {
                     var item = Info.Equipment[i];
 
@@ -600,7 +622,7 @@ namespace Server.MirObjects
                     item.CurrentDura = (ushort)(item.CurrentDura - 1000);
                     Enqueue(new S.DuraChanged { UniqueID = item.UniqueID, CurrentDura = item.CurrentDura });
                     RefreshStats();
-                    ReceiveChat("You have been given a second chance at life", ChatType.System);
+                    ReceiveChat("复活之力使你从死亡中获得的重生", ChatType.System);
                     return;
                 }
             }
@@ -611,8 +633,8 @@ namespace Server.MirObjects
                 Pets[i].Die();
             }
 
-            RemoveBuff(BuffType.MagicShield);
-            RemoveBuff(BuffType.ElementalBarrier);
+            RemoveBuff(BuffType.魔法盾);
+            RemoveBuff(BuffType.金刚术);
 
             if (!InSafeZone)
                 DeathDrop(LastHitter);
@@ -739,6 +761,8 @@ namespace Server.MirObjects
         {
             base.Process();
 
+            if (Node == null || Info == null) return;
+
             if (Target != null && (Target.CurrentMap != CurrentMap || !Target.IsAttackTarget(this) || !Functions.InRange(CurrentLocation, Target.CurrentLocation, Globals.DataRange)))
                 Target = null;
 
@@ -749,6 +773,39 @@ namespace Server.MirObjects
 
             if (Owner.PMode == PetMode.MoveOnly || Owner.PMode == PetMode.None)
                 Target = null;
+
+            if (Owner.Info.HeroBehaviour == HeroBehaviour.原地) //自添加英雄窗口
+            {
+                MoveTo(Owner.CurrentLocation);
+            };
+
+            if (Owner.Info.HeroBehaviour == HeroBehaviour.跑回)
+            {
+                if (Target != null) return;
+
+                if (Owner != null)
+                {
+                    MoveTo(Owner.Back);
+                    Owner.Info.HeroBehaviour = HeroBehaviour.反击;
+                }
+            };
+
+            if (Owner.Info.HeroBehaviour == HeroBehaviour.瞬回)
+            {
+                if (Envir.Time < HeroRecallTime)
+                {
+                    Owner.Info.HeroBehaviour = HeroBehaviour.攻击;
+                    //ReceiveChat(string.Format("英雄传送再次使用 {0} 秒", (HeroRecallTime - Envir.Time) / 1000), ChatType.System);
+                    return;
+                }               
+                else if (Owner != null)
+                {
+                    OwnerRecall();
+                    Owner.Info.HeroBehaviour = HeroBehaviour.跟随;
+                }
+
+                HeroRecallTime = Envir.Time + HeroRecallDelay;
+            };
 
             ProcessAutoPot();
             ProcessStacking();
@@ -833,7 +890,7 @@ namespace Server.MirObjects
         protected virtual void ProcessSearch()
         {
             if (Envir.Time < SearchTime) return;
-            if (Owner.Info.HeroBehaviour == HeroBehaviour.Follow || !Mount.CanAttack) return;
+            if (Owner.Info.HeroBehaviour == HeroBehaviour.跟随 || !Mount.CanAttack) return;
 
             SearchTime = Envir.Time + SearchDelay;
 
@@ -1038,7 +1095,7 @@ namespace Server.MirObjects
                                     if (!ob.IsAttackTarget(Owner)) continue;
                                     if (ob.Hidden && (!CoolEye || Level < ob.Level)) continue;
                                     if (ob.Master != null && Target != ob) continue;
-                                    if (Owner.Info.HeroBehaviour == HeroBehaviour.CounterAttack && ob.Target != this && ob.Target != Owner) continue;
+                                    if (Owner.Info.HeroBehaviour == HeroBehaviour.反击 && ob.Target != this && ob.Target != Owner) continue;
 
                                     Target = ob;
                                     return;
@@ -1102,18 +1159,7 @@ namespace Server.MirObjects
 
         public override void GainExp(uint amount)
         {
-            if (!CanGainExp) return;
-
             if (amount == 0) return;
-
-            if (Stats[Stat.ExpRatePercent] > 0)
-            {
-                amount += (uint)Math.Max(0, (amount * Stats[Stat.ExpRatePercent]) / 100);
-            }
-
-            Experience += amount;
-
-            Owner.Enqueue(new S.GainHeroExperience { Amount = amount });
 
             for (int i = 0; i < Pets.Count; i++)
             {
@@ -1121,6 +1167,17 @@ namespace Server.MirObjects
                 if (monster.CurrentMap == CurrentMap && Functions.InRange(monster.CurrentLocation, CurrentLocation, Globals.DataRange) && !monster.Dead)
                     monster.PetExp(amount);
             }
+
+            if (!CanGainExp) return;
+
+            if (Stats[Stat.经验增长数率] > 0)
+            {
+                amount += (uint)Math.Max(0, (amount * Stats[Stat.经验增长数率]) / 100);
+            }
+
+            Experience += amount;
+
+            Owner.Enqueue(new S.GainHeroExperience { Amount = amount });
 
             if (Experience < MaxExperience) return;
             if (Level >= ushort.MaxValue) return;
@@ -1207,7 +1264,7 @@ namespace Server.MirObjects
                 Poison = CurrentPoison,
                 Dead = Dead,
                 Hidden = Hidden,
-                Effect = HasBuff(BuffType.MagicShield, out _) ? SpellEffect.MagicShieldUp : HasBuff(BuffType.ElementalBarrier, out _) ? SpellEffect.ElementalBarrierUp : SpellEffect.None,
+                Effect = HasBuff(BuffType.魔法盾, out _) ? SpellEffect.MagicShieldUp : HasBuff(BuffType.金刚术, out _) ? SpellEffect.ElementalBarrierUp : SpellEffect.None,
                 WingEffect = Looks_Wings,
                 MountType = Mount.MountType,
                 RidingMount = RidingMount,

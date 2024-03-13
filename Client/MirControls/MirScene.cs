@@ -6,7 +6,6 @@ using Client.MirNetwork;
 using Client.MirScenes;
 using SlimDX.Direct3D9;
 using S = ServerPackets;
-using C = ClientPackets;
 
 namespace Client.MirControls
 {
@@ -252,19 +251,19 @@ namespace Client.MirControls
                     MirMessageBox.Show(GameLanguage.ShuttingDown, true);
                     break;
                 case 1:
-                    MirMessageBox.Show("Disconnected: Another user logged onto your account.", true);
+                    MirMessageBox.Show("断开连接: 账户重复登录", true);
                     break;
                 case 2:
-                    MirMessageBox.Show("Disconnected: Packet Error.", true);
+                    MirMessageBox.Show("断开连接: 数据错误", true);
                     break;
                 case 3:
-                    MirMessageBox.Show("Disconnected: Server Crashed.", true);
+                    MirMessageBox.Show("断开连接: 服务器崩溃", true);
                     break;
                 case 4:
-                    MirMessageBox.Show("Disconnected: Kicked by Admin.", true);
+                    MirMessageBox.Show("断开连接: 联系管理员", true);
                     break;
                 case 5:
-                    MirMessageBox.Show("Disconnected: Maximum connections reached.", true);
+                    MirMessageBox.Show("断开连接: 服务器超员", true);
                     break;
             }
 

@@ -51,7 +51,7 @@ namespace Server.MirObjects.Monsters
             else
             {
                 Broadcast(new S.ObjectRangeAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation, TargetID = Target.ObjectID });
-                AttackTime = Envir.Time + AttackSpeed + 500;
+                AttackTime = Envir.Time + AttackSpeed + 2000;
                 if (damage == 0) return;
 
                 DelayedAction action = new DelayedAction(DelayedType.RangeDamage, Envir.Time + 500, Target, damage, DefenceType.MAC);

@@ -73,7 +73,7 @@ namespace Server
             {
                 SelectedBuff = null;
                 BuffPanel.Enabled = false;
-                BufflblIndex.Text = "No Buff Selected";
+                BufflblIndex.Text = "选择特效编号后进行编辑";
                 BufftxtName.Text = string.Empty;
                 BuffTxtLevelReq.Text = string.Empty;
                 BufftxtPointsReq.Text = string.Empty;
@@ -103,7 +103,7 @@ namespace Server
             {
                 SelectedBuff  = (GuildBuffInfo)BuffList.SelectedItem;
                 BuffPanel.Enabled = true;
-                BufflblIndex.Text = $"Index:  {SelectedBuff.Id}";
+                BufflblIndex.Text = $"编号:  {SelectedBuff.Id}";
                 BufftxtName.Text = SelectedBuff.Name;
                 BuffTxtLevelReq.Text = SelectedBuff.LevelRequirement.ToString();
                 BufftxtPointsReq.Text = SelectedBuff.PointsRequirement.ToString();
@@ -115,19 +115,19 @@ namespace Server
                 BufftxtDc.Text = SelectedBuff.Stats[Stat.MaxDC].ToString();
                 BufftxtMc.Text = SelectedBuff.Stats[Stat.MaxMC].ToString();
                 BufftxtSc.Text = SelectedBuff.Stats[Stat.MaxSC].ToString();
-                BufftxtAttack.Text = SelectedBuff.Stats[Stat.AttackBonus].ToString();
-                BufftxtHpRegen.Text = SelectedBuff.Stats[Stat.HealthRecovery].ToString();
-                BufftxtMpRegen.Text = SelectedBuff.Stats[Stat.SpellRecovery].ToString();
+                BufftxtAttack.Text = SelectedBuff.Stats[Stat.攻击增伤].ToString();
+                BufftxtHpRegen.Text = SelectedBuff.Stats[Stat.生命恢复].ToString();
+                BufftxtMpRegen.Text = SelectedBuff.Stats[Stat.法力恢复].ToString();
                 BufftxtMaxHp.Text = SelectedBuff.Stats[Stat.HP].ToString();
                 BufftxtMaxMp.Text = SelectedBuff.Stats[Stat.MP].ToString();
-                BufftxtMineRate.Text = SelectedBuff.Stats[Stat.MineRatePercent].ToString();
-                BufftxtGemRate.Text = SelectedBuff.Stats[Stat.GemRatePercent].ToString();
-                BufftxtFishRate.Text = SelectedBuff.Stats[Stat.FishRatePercent].ToString();
-                BufftxtExpRate.Text = SelectedBuff.Stats[Stat.ExpRatePercent].ToString();
-                BufftxtCraftRate.Text = SelectedBuff.Stats[Stat.CraftRatePercent].ToString();
-                BufftxtSkillRate.Text = SelectedBuff.Stats[Stat.SkillGainMultiplier].ToString();
-                BufftxtDropRate.Text = SelectedBuff.Stats[Stat.ItemDropRatePercent].ToString();
-                BufftxtGoldRate.Text = SelectedBuff.Stats[Stat.GoldDropRatePercent].ToString();
+                BufftxtMineRate.Text = SelectedBuff.Stats[Stat.采矿出矿数率].ToString();
+                BufftxtGemRate.Text = SelectedBuff.Stats[Stat.宝石成功数率].ToString();
+                BufftxtFishRate.Text = SelectedBuff.Stats[Stat.钓鱼成功数率].ToString();
+                BufftxtExpRate.Text = SelectedBuff.Stats[Stat.经验增长数率].ToString();
+                BufftxtCraftRate.Text = SelectedBuff.Stats[Stat.大师概率数率].ToString();
+                BufftxtSkillRate.Text = SelectedBuff.Stats[Stat.技能熟练度倍率].ToString();
+                BufftxtDropRate.Text = SelectedBuff.Stats[Stat.物品掉落数率].ToString();
+                BufftxtGoldRate.Text = SelectedBuff.Stats[Stat.金币收益数率].ToString();
             }
         }
 
@@ -192,7 +192,7 @@ namespace Server
         private void GuildDeleteCreateItembutton_Click(object sender, EventArgs e)
         {
             if (ActiveControl != sender) return;
-            if (MessageBox.Show("Are you sure you want to delete the last index?", "Delete?", MessageBoxButtons.YesNo) != DialogResult.Yes) return;
+            if (MessageBox.Show("确实要删除最后一组索引编号吗？", "删除", MessageBoxButtons.YesNo) != DialogResult.Yes) return;
 
             GuildCreateListcomboBox.Items.RemoveAt(Settings.Guild_CreationCostList.Count - 1);
             Settings.Guild_CreationCostList.RemoveAt(Settings.Guild_CreationCostList.Count - 1);
@@ -256,7 +256,7 @@ namespace Server
         private void GuildDeleteLevelbutton_Click(object sender, EventArgs e)
         {
             if (ActiveControl != sender) return;
-            if (MessageBox.Show("Are you sure you want to delete the last index?", "Delete?", MessageBoxButtons.YesNo) != DialogResult.Yes) return;
+            if (MessageBox.Show("确实要删除最后一组编号索引吗？", "删除", MessageBoxButtons.YesNo) != DialogResult.Yes) return;
 
             GuildLevelListcomboBox.Items.RemoveAt(Settings.Guild_ExperienceList.Count - 1);
             Settings.Guild_ExperienceList.RemoveAt(Settings.Guild_ExperienceList.Count - 1);
@@ -386,7 +386,7 @@ namespace Server
         {
             if (BuffList.SelectedItem == null) return;
 
-            if (MessageBox.Show("Are you sure you want to remove the selected guildbuff?", "Remove guildbuff?", MessageBoxButtons.YesNo) != DialogResult.Yes) return;
+            if (MessageBox.Show("是否确实要删除选定的公会特效？", "删除公会特效", MessageBoxButtons.YesNo) != DialogResult.Yes) return;
             Settings.Guild_BuffList.Remove((GuildBuffInfo)BuffList.SelectedItem);
             BuffList.Items.RemoveAt(BuffList.SelectedIndex);
             GuildsChanged = true;
@@ -500,7 +500,7 @@ namespace Server
             byte temp = 0;
             if (!IsValid(ref temp, sender)) return;
             ActiveControl.BackColor = SystemColors.Window;
-            SelectedBuff.Stats[Stat.AttackBonus] = temp;
+            SelectedBuff.Stats[Stat.攻击增伤] = temp;
             GuildsChanged = true;
         }
 
@@ -527,7 +527,7 @@ namespace Server
             byte temp = 0;
             if (!IsValid(ref temp, sender)) return;
             ActiveControl.BackColor = SystemColors.Window;
-            SelectedBuff.Stats[Stat.HealthRecovery] = temp;
+            SelectedBuff.Stats[Stat.生命恢复] = temp;
             GuildsChanged = true;
         }
 
@@ -536,7 +536,7 @@ namespace Server
             byte temp = 0;
             if (!IsValid(ref temp, sender)) return;
             ActiveControl.BackColor = SystemColors.Window;
-            SelectedBuff.Stats[Stat.SpellRecovery] = temp;
+            SelectedBuff.Stats[Stat.法力恢复] = temp;
             GuildsChanged = true;
         }
 
@@ -545,7 +545,7 @@ namespace Server
             byte temp = 0;
             if (!IsValid(ref temp, sender)) return;
             ActiveControl.BackColor = SystemColors.Window;
-            SelectedBuff.Stats[Stat.MineRatePercent] = temp;
+            SelectedBuff.Stats[Stat.采矿出矿数率] = temp;
             GuildsChanged = true;
         }
 
@@ -554,7 +554,7 @@ namespace Server
             byte temp = 0;
             if (!IsValid(ref temp, sender)) return;
             ActiveControl.BackColor = SystemColors.Window;
-            SelectedBuff.Stats[Stat.GemRatePercent] = temp;
+            SelectedBuff.Stats[Stat.宝石成功数率] = temp;
             GuildsChanged = true;
         }
 
@@ -563,7 +563,7 @@ namespace Server
             byte temp = 0;
             if (!IsValid(ref temp, sender)) return;
             ActiveControl.BackColor = SystemColors.Window;
-            SelectedBuff.Stats[Stat.FishRatePercent] = temp;
+            SelectedBuff.Stats[Stat.钓鱼成功数率] = temp;
             GuildsChanged = true;
         }
 
@@ -572,7 +572,7 @@ namespace Server
             byte temp = 0;
             if (!IsValid(ref temp, sender)) return;
             ActiveControl.BackColor = SystemColors.Window;
-            SelectedBuff.Stats[Stat.ExpRatePercent] = temp;
+            SelectedBuff.Stats[Stat.经验增长数率] = temp;
             GuildsChanged = true;
         }
 
@@ -581,7 +581,7 @@ namespace Server
             byte temp = 0;
             if (!IsValid(ref temp, sender)) return;
             ActiveControl.BackColor = SystemColors.Window;
-            SelectedBuff.Stats[Stat.CraftRatePercent] = temp;
+            SelectedBuff.Stats[Stat.大师概率数率] = temp;
             GuildsChanged = true;
         }
 
@@ -590,7 +590,7 @@ namespace Server
             byte temp = 0;
             if (!IsValid(ref temp, sender)) return;
             ActiveControl.BackColor = SystemColors.Window;
-            SelectedBuff.Stats[Stat.SkillGainMultiplier] = temp;
+            SelectedBuff.Stats[Stat.技能熟练度倍率] = temp;
             GuildsChanged = true;
         }
 
@@ -599,7 +599,7 @@ namespace Server
             byte temp = 0;
             if (!IsValid(ref temp, sender)) return;
             ActiveControl.BackColor = SystemColors.Window;
-            SelectedBuff.Stats[Stat.ItemDropRatePercent] = temp;
+            SelectedBuff.Stats[Stat.物品掉落数率] = temp;
             GuildsChanged = true;
         }
 
@@ -608,7 +608,7 @@ namespace Server
             byte temp = 0;
             if (!IsValid(ref temp, sender)) return;
             ActiveControl.BackColor = SystemColors.Window;
-            SelectedBuff.Stats[Stat.GoldDropRatePercent] = temp;
+            SelectedBuff.Stats[Stat.金币收益数率] = temp;
             GuildsChanged = true;
         }
 

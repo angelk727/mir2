@@ -1,9 +1,7 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Collections.Generic;
 using Server.MirDatabase;
 using Server.MirEnvir;
 using S = ServerPackets;
-using System.Collections.Generic;
 
 namespace Server.MirObjects.Monsters
 {
@@ -61,7 +59,7 @@ namespace Server.MirObjects.Monsters
 
         protected override void CompleteRangeAttack(IList<object> data)
         {
-            //Retreat attack does no damage
+            //后退攻击不会造成伤害
         }
     }
 }

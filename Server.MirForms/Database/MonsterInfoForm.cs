@@ -34,7 +34,7 @@ namespace Server
         {
             if (_selectedMonsterInfos.Count == 0) return;
 
-            if (MessageBox.Show("Are you sure you want to remove the selected Monsters?", "Remove Monsters?", MessageBoxButtons.YesNo) != DialogResult.Yes) return;
+            if (MessageBox.Show("是否删除选定怪物信息", "删除怪物", MessageBoxButtons.YesNo) != DialogResult.Yes) return;
 
             for (int i = 0; i < _selectedMonsterInfos.Count; i++) Envir.Remove(_selectedMonsterInfos[i]);
 
@@ -127,8 +127,8 @@ namespace Server
             MaxMCTextBox.Text = info.Stats[Stat.MaxMC].ToString();
             MinSCTextBox.Text = info.Stats[Stat.MinSC].ToString();
             MaxSCTextBox.Text = info.Stats[Stat.MaxSC].ToString();
-            AccuracyTextBox.Text = info.Stats[Stat.Accuracy].ToString();
-            AgilityTextBox.Text = info.Stats[Stat.Agility].ToString();
+            AccuracyTextBox.Text = info.Stats[Stat.准确].ToString();
+            AgilityTextBox.Text = info.Stats[Stat.敏捷].ToString();
             LightTextBox.Text = info.Light.ToString();
 
             ASpeedTextBox.Text = info.AttackSpeed.ToString();
@@ -168,8 +168,8 @@ namespace Server
                 if (MaxMCTextBox.Text != info.Stats[Stat.MaxMC].ToString()) MaxMCTextBox.Text = string.Empty;
                 if (MinSCTextBox.Text != info.Stats[Stat.MinSC].ToString()) MinSCTextBox.Text = string.Empty;
                 if (MaxSCTextBox.Text != info.Stats[Stat.MaxSC].ToString()) MaxSCTextBox.Text = string.Empty;
-                if (AccuracyTextBox.Text != info.Stats[Stat.Accuracy].ToString()) AccuracyTextBox.Text = string.Empty;
-                if (AgilityTextBox.Text != info.Stats[Stat.Agility].ToString()) AgilityTextBox.Text = string.Empty;
+                if (AccuracyTextBox.Text != info.Stats[Stat.准确].ToString()) AccuracyTextBox.Text = string.Empty;
+                if (AgilityTextBox.Text != info.Stats[Stat.敏捷].ToString()) AgilityTextBox.Text = string.Empty;
                 if (LightTextBox.Text != info.Light.ToString()) LightTextBox.Text = string.Empty;
                 if (ASpeedTextBox.Text != info.AttackSpeed.ToString()) ASpeedTextBox.Text = string.Empty;
                 if (MSpeedTextBox.Text != info.MoveSpeed.ToString()) MSpeedTextBox.Text = string.Empty;
@@ -212,9 +212,9 @@ namespace Server
         {
             if (ActiveControl != sender) return;
 
-            byte temp;
+            ushort temp; //自添加AI扩容
 
-            if (!byte.TryParse(ActiveControl.Text, out temp))
+            if (!ushort.TryParse(ActiveControl.Text, out temp))//自添加AI扩容
             {
                 ActiveControl.BackColor = Color.Red;
                 return;
@@ -514,7 +514,7 @@ namespace Server
 
 
             for (int i = 0; i < _selectedMonsterInfos.Count; i++)
-                _selectedMonsterInfos[i].Stats[Stat.Accuracy] = temp;
+                _selectedMonsterInfos[i].Stats[Stat.准确] = temp;
         }
         private void AgilityTextBox_TextChanged(object sender, EventArgs e)
         {
@@ -532,7 +532,7 @@ namespace Server
 
 
             for (int i = 0; i < _selectedMonsterInfos.Count; i++)
-                _selectedMonsterInfos[i].Stats[Stat.Agility] = temp;
+                _selectedMonsterInfos[i].Stats[Stat.敏捷] = temp;
         }
         private void ASpeedTextBox_TextChanged(object sender, EventArgs e)
         {
@@ -609,7 +609,7 @@ namespace Server
 
             if (!data.StartsWith("Monster", StringComparison.OrdinalIgnoreCase))
             {
-                MessageBox.Show("Cannot Paste, Copied data is not Monster Information.");
+                MessageBox.Show("无法粘贴，复制的数据不是怪物信息");
                 return;
             }
 
@@ -672,7 +672,7 @@ namespace Server
 
             File.WriteAllLines(MonsterListPath, list);
 
-            MessageBox.Show(monsterInfos.Count() + " Items have been exported");
+            MessageBox.Show(monsterInfos.Count() + " 信息已导出");
         }
 
         private void ImportButton_Click(object sender, EventArgs e)

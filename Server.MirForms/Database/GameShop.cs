@@ -105,6 +105,8 @@ namespace Server
                 TotalSold_label.Text = "0";
                 LeftinStock_label.Text = "";
                 Count_textbox.Text = String.Empty;
+                CreditOnlyBox.Checked = false;
+                GoldOnlyBox.Checked = false;
                 return;
             }
 
@@ -119,7 +121,8 @@ namespace Server
             TopItem_checkbox.Checked = SelectedItems[0].TopItem;
             DealofDay_checkbox.Checked = SelectedItems[0].Deal;
             Count_textbox.Text = SelectedItems[0].Count.ToString();
-
+            CreditOnlyBox.Checked = SelectedItems[0].CanBuyCredit;
+            GoldOnlyBox.Checked = SelectedItems[0].CanBuyGold;
             GetStats();
 
         }
@@ -140,11 +143,11 @@ namespace Server
             }
             else if (SelectedItems[0].Stock == 0)
             {
-                LeftinStock_label.Text = "Infinite";
+                LeftinStock_label.Text = "无限的";
             }
             else if (Individual_checkbox.Checked)
             {
-                LeftinStock_label.Text = "Can't calc individual levels";
+                LeftinStock_label.Text = "不能单独结算";
             }
         }
 
@@ -206,7 +209,7 @@ namespace Server
         {
             if (SelectedItems.Count == 0) return;
 
-            if (MessageBox.Show("Are you sure you want to remove the selected Items?", "Remove Items?", MessageBoxButtons.YesNo) != DialogResult.Yes) return;
+            if (MessageBox.Show("确定要删除选定物品？", "删除商城物品", MessageBoxButtons.YesNo) != DialogResult.Yes) return;
 
             for (int i = 0; i < SelectedItems.Count; i++) Envir.Remove(SelectedItems[i]);
 
@@ -331,14 +334,33 @@ namespace Server
         {
             if (SMain.Envir.Running)
             {
-                if (MessageBox.Show("Reseting purchase logs cannot be reverted and will set stock levels back to defaults, This will take effect instantly.", "Remove Logs?", MessageBoxButtons.YesNo) != DialogResult.Yes) return;
+                if (MessageBox.Show("重置购买日志无法恢复，库存将设置为默认值，操作立即生效。", "删除日志", MessageBoxButtons.YesNo) != DialogResult.Yes) return;
                 SMain.Envir.ClearGameshopLog();
             }
             else
             {
-                if (MessageBox.Show("Reseting purchase logs cannot be reverted and will set stock levels back to defaults, This will take effect when you start the server", "Remove Logs?", MessageBoxButtons.YesNo) != DialogResult.Yes) return;
+                if (MessageBox.Show("重置购买日志无法恢复，库存将设置为默认值，启动服务器时生效", "删除日志", MessageBoxButtons.YesNo) != DialogResult.Yes) return;
                 SMain.Envir.ResetGS = true;
             }
         }
+        private void GoldOnlyBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (ActiveControl != sender)
+                return;
+
+            for (int i = 0; i < SelectedItems.Count; i++)
+                SelectedItems[i].CanBuyGold = GoldOnlyBox.Checked;
+        }
+
+        private void CreditOnly_CheckedChanged(object sender, EventArgs e)
+        {
+            if (ActiveControl != sender)
+                return;
+
+            for (int i = 0; i < SelectedItems.Count; i++)
+                SelectedItems[i].CanBuyCredit = CreditOnlyBox.Checked;
+        }
+
+
     }
 }

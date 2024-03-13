@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
-using System.IO.Compression;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using Launcher;
-using System.Runtime.InteropServices;
-using System.Runtime.CompilerServices;
-using System.ComponentModel;
-using System.Reflection;
 
 namespace Client
 {
@@ -49,7 +46,6 @@ namespace Client
                 else Application.Run(Form = new CMain());
 
                 Settings.Save();
-                CMain.InputKeys.Save();
 
                 if (Restart)
                 {
@@ -93,7 +89,7 @@ namespace Client
                             }
 
                         if (stopwatch.ElapsedMilliseconds <= 3000) continue;
-                        MessageBox.Show("Failed to close AutoPatcher during update.");
+                        MessageBox.Show("更新期间无法关闭自动修补程序");
                         return true;
                     }
                 }
@@ -129,8 +125,8 @@ namespace Client
                 }
                 catch (COMException)
                 {
-                    // This occurs with an HRESULT meaning 
-                    // "A different runtime was already bound to the legacy CLR version 2 activation policy."
+                    // 这具有HRESULT含义 
+                    // "其他运行时已绑定到旧版CLR版本2激活策略。"
                     LegacyV2RuntimeEnabledSuccessfully = false;
                 }
             }

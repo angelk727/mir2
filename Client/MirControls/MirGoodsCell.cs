@@ -1,11 +1,8 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
+using System.Linq;
 using Client.MirGraphics;
 using Client.MirScenes;
 using SlimDX;
-using System.Text.RegularExpressions;
-using System.Linq;
-using System.Collections.Generic;
 
 namespace Client.MirControls
 {
@@ -83,11 +80,11 @@ namespace Client.MirControls
             {
                 ClientRecipeInfo recipe = GameScene.RecipeInfoList.SingleOrDefault(x => x.Item.ItemIndex == Item.ItemIndex);
 
-                PriceLabel.Text = string.Format("Price: {0} gold", (uint)(recipe.Gold * GameScene.NPCRate));
+                PriceLabel.Text = string.Format("价格: {0} 金币", (uint)(recipe.Gold * GameScene.NPCRate));
             }
             else
             {
-                PriceLabel.Text = string.Format("Price: {0} gold", (uint)(Item.Price() * GameScene.NPCRate));
+                PriceLabel.Text = string.Format("价格: {0} 金币", (uint)(Item.Price() * GameScene.NPCRate));
             }
         }
 

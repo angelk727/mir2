@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
+﻿using System.Drawing;
 using Server.MirDatabase;
 using Server.MirEnvir;
 using S = ServerPackets;
@@ -153,7 +149,7 @@ namespace Server.MirObjects.Monsters
 
             if (Hidden)
             {
-                RemoveBuff(BuffType.Hiding);
+                RemoveBuff(BuffType.隐身术);
             }
 
             CellTime = Envir.Time + 500;

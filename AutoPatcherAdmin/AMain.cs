@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
-using System.Net;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using WinSCP;
-using System.Linq;
 
 namespace AutoPatcherAdmin
 {
@@ -535,7 +531,7 @@ namespace AutoPatcherAdmin
 
                     if (info.Compressed == 0)
                     {
-                        //We've uploaded a new file which is unknown to the existing PList (or no PList available). Assume this file was uploaded uncompressed and set to file length.
+                        //我们已经上传了一个新文件，该文件对现有的PList是未知的（或者没有可用的PList）。假设此文件是未压缩上传的，并设置为文件长度。
                         info.Compressed = info.Length;
                     }
                 }

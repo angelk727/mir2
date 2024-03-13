@@ -7,7 +7,6 @@ using System.Drawing.Imaging;
 using System.Drawing.Text;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Security;
 using System.Threading;
@@ -49,7 +48,7 @@ namespace Client
         public static long PingTime;
         public static long NextPing = 10000;
 
-        public static bool Shift, Alt, Ctrl, Tilde;
+        public static bool Shift, Alt, Ctrl, Tilde, SpellTargetLock;
         public static double BytesSent, BytesReceived;
 
         public static KeyBindSettings InputKeys = new KeyBindSettings();
@@ -73,7 +72,8 @@ namespace Client
 
 
             SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.Selectable, true);
-            FormBorderStyle = Settings.FullScreen || Settings.Borderless ? FormBorderStyle.None : FormBorderStyle.FixedDialog;
+            //FormBorderStyle = Settings.FullScreen || Settings.Borderless ? FormBorderStyle.None : FormBorderStyle.FixedDialog;
+            FormBorderStyle = Settings.FullScreen ? FormBorderStyle.None : FormBorderStyle.FixedDialog;//有边框
 
             Graphics = CreateGraphics();
             Graphics.SmoothingMode = SmoothingMode.AntiAlias;
@@ -132,6 +132,7 @@ namespace Client
             Alt = false;
             Ctrl = false;
             Tilde = false;
+            SpellTargetLock = false;
         }
 
         public static void CMain_KeyDown(object sender, KeyEventArgs e)
@@ -139,6 +140,16 @@ namespace Client
             Shift = e.Shift;
             Alt = e.Alt;
             Ctrl = e.Control;
+
+            if (!String.IsNullOrEmpty(InputKeys.GetKey(KeybindOptions.TargetSpellLockOn)))
+            {
+                SpellTargetLock = e.KeyCode == (Keys)Enum.Parse(typeof(Keys), InputKeys.GetKey(KeybindOptions.TargetSpellLockOn), true);
+            }
+            else
+            {
+                SpellTargetLock = false;
+            }
+
 
             if (e.KeyCode == Keys.Oem8)
                 CMain.Tilde = true;
@@ -182,6 +193,15 @@ namespace Client
             Shift = e.Shift;
             Alt = e.Alt;
             Ctrl = e.Control;
+
+            if (!String.IsNullOrEmpty(InputKeys.GetKey(KeybindOptions.TargetSpellLockOn)))
+            {
+                SpellTargetLock = e.KeyCode == (Keys)Enum.Parse(typeof(Keys), InputKeys.GetKey(KeybindOptions.TargetSpellLockOn), true);
+            }
+            else
+            {
+                SpellTargetLock = false;
+            }
 
             if (e.KeyCode == Keys.Oem8)
                 CMain.Tilde = false;
@@ -499,10 +519,10 @@ namespace Client
             {
                 HintBaseLabel = new MirControl
                 {
-                    BackColour = Color.FromArgb(128, 128, 50),
+                    BackColour = Color.FromArgb(255, 0, 0, 0),
                     Border = true,
                     DrawControlTexture = true,
-                    BorderColour = Color.Yellow,
+                    BorderColour = Color.FromArgb(255, 144, 144, 0),
                     ForeColour = Color.Yellow,
                     Parent = MirScene.ActiveScene,
                     NotControl = true,
@@ -517,7 +537,7 @@ namespace Client
                 {
                     AutoSize = true,
                     BackColour = Color.Transparent,
-                    ForeColour = Color.White,
+                    ForeColour = Color.Yellow,
                     Parent = HintBaseLabel,
                 };
 
@@ -553,7 +573,9 @@ namespace Client
         {
             Settings.FullScreen = !Settings.FullScreen;
 
-            Program.Form.FormBorderStyle = Settings.FullScreen || Settings.Borderless ? FormBorderStyle.None : FormBorderStyle.FixedDialog;
+            //Program.Form.FormBorderStyle = Settings.FullScreen || Settings.Borderless ? FormBorderStyle.None : FormBorderStyle.FixedDialog;
+
+            Program.Form.FormBorderStyle = Settings.FullScreen ? FormBorderStyle.None : FormBorderStyle.FixedDialog; //有边框
 
             DXManager.Parameters.Windowed = !Settings.FullScreen;
 
@@ -678,7 +700,7 @@ namespace Client
 
         private void CMain_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (CMain.Time < GameScene.LogTime && !Settings.UseTestConfig)
+            if (CMain.Time < GameScene.LogTime && !Settings.UseTestConfig && !GameScene.Observing)
             {
                 GameScene.Scene.ChatDialog.ReceiveChat(string.Format(GameLanguage.CannotLeaveGame, (GameScene.LogTime - CMain.Time) / 1000), ChatType.System);
                 e.Cancel = true;
@@ -758,9 +780,9 @@ namespace Client
             IntPtr hCurs = LoadCursorFromFile(path);
             if (hCurs == IntPtr.Zero) throw new Win32Exception();
             var curs = new Cursor(hCurs);
-            // Note: force the cursor to own the handle so it gets released properly
-            var fi = typeof(Cursor).GetField("ownHandle", BindingFlags.NonPublic | BindingFlags.Instance);
-            fi.SetValue(curs, true);
+            // 注意：将光标强制指向该句柄，以确保它被正确释放。
+            //var fi = typeof(Cursor).GetField("ownHandle", BindingFlags.NonPublic | BindingFlags.Instance);
+            //fi.SetValue(curs, true);
             return curs;
         }
 

@@ -1,15 +1,8 @@
-﻿using Client.MirControls;
-using Client.MirGraphics;
-using Client.MirNetwork;
-using Client.MirSounds;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using C = ClientPackets;
+using Client.MirControls;
+using Client.MirGraphics;
+using Client.MirSounds;
 
 namespace Client.MirScenes.Dialogs
 {
@@ -48,9 +41,9 @@ namespace Client.MirScenes.Dialogs
                 Visible = true,
                 Enabled = true,
             };
-            ReportType.Items.Add("Select Report Type.");
-            ReportType.Items.Add("Submit Bug");
-            ReportType.Items.Add("Report Player");
+            ReportType.Items.Add("选择投诉类型");
+            ReportType.Items.Add("上报 Bug");
+            ReportType.Items.Add("投诉玩家");
 
             MessageArea = new MirTextBox
             {

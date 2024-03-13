@@ -30,10 +30,12 @@ namespace Server.Database
         private void InitializeComponent()
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.itemInfoGridView = new System.Windows.Forms.DataGridView();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.Gameshop_button = new System.Windows.Forms.Button();
             this.btnExport = new System.Windows.Forms.Button();
             this.btnImport = new System.Windows.Forms.Button();
             this.lblFilterType = new System.Windows.Forms.Label();
@@ -69,6 +71,7 @@ namespace Server.Database
             this.ItemDurability = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ItemPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ItemToolTip = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.StartItem = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.NeedIdentify = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.ShowGroupPickup = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.GlobalDropNotify = new System.Windows.Forms.DataGridViewCheckBoxColumn();
@@ -112,6 +115,7 @@ namespace Server.Database
             this.ItemDurability,
             this.ItemPrice,
             this.ItemToolTip,
+            this.StartItem,
             this.NeedIdentify,
             this.ShowGroupPickup,
             this.GlobalDropNotify,
@@ -120,19 +124,19 @@ namespace Server.Database
             this.CanMine,
             this.CanFastRun,
             this.CanAwakening});
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.itemInfoGridView.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.itemInfoGridView.DefaultCellStyle = dataGridViewCellStyle3;
             this.itemInfoGridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.itemInfoGridView.Location = new System.Drawing.Point(0, 0);
             this.itemInfoGridView.Name = "itemInfoGridView";
             this.itemInfoGridView.RowTemplate.DefaultCellStyle.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.itemInfoGridView.Size = new System.Drawing.Size(956, 433);
+            this.itemInfoGridView.Size = new System.Drawing.Size(956, 400);
             this.itemInfoGridView.TabIndex = 0;
             this.itemInfoGridView.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.itemInfoGridView_CellValidating);
             this.itemInfoGridView.DataError += new System.Windows.Forms.DataGridViewDataErrorEventHandler(this.itemInfoGridView_DataError);
@@ -145,11 +149,12 @@ namespace Server.Database
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(956, 47);
+            this.panel1.Size = new System.Drawing.Size(956, 43);
             this.panel1.TabIndex = 1;
             // 
             // panel3
             // 
+            this.panel3.Controls.Add(this.Gameshop_button);
             this.panel3.Controls.Add(this.btnExport);
             this.panel3.Controls.Add(this.btnImport);
             this.panel3.Controls.Add(this.lblFilterType);
@@ -160,37 +165,47 @@ namespace Server.Database
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(0, 0);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(956, 47);
+            this.panel3.Size = new System.Drawing.Size(956, 43);
             this.panel3.TabIndex = 5;
+            // 
+            // Gameshop_button
+            // 
+            this.Gameshop_button.Location = new System.Drawing.Point(874, 15);
+            this.Gameshop_button.Name = "Gameshop_button";
+            this.Gameshop_button.Size = new System.Drawing.Size(83, 23);
+            this.Gameshop_button.TabIndex = 30;
+            this.Gameshop_button.Text = "+ 游戏商城";
+            this.Gameshop_button.UseVisualStyleBackColor = true;
+            this.Gameshop_button.Click += new System.EventHandler(this.Gameshop_button_Click);
             // 
             // btnExport
             // 
-            this.btnExport.Location = new System.Drawing.Point(693, 22);
+            this.btnExport.Location = new System.Drawing.Point(783, 16);
             this.btnExport.Name = "btnExport";
-            this.btnExport.Size = new System.Drawing.Size(75, 23);
+            this.btnExport.Size = new System.Drawing.Size(75, 21);
             this.btnExport.TabIndex = 6;
-            this.btnExport.Text = "Export";
+            this.btnExport.Text = "导出";
             this.btnExport.UseVisualStyleBackColor = true;
             this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
             // 
             // btnImport
             // 
-            this.btnImport.Location = new System.Drawing.Point(611, 22);
+            this.btnImport.Location = new System.Drawing.Point(702, 16);
             this.btnImport.Name = "btnImport";
-            this.btnImport.Size = new System.Drawing.Size(75, 23);
+            this.btnImport.Size = new System.Drawing.Size(75, 21);
             this.btnImport.TabIndex = 5;
-            this.btnImport.Text = "Import";
+            this.btnImport.Text = "导入";
             this.btnImport.UseVisualStyleBackColor = true;
             this.btnImport.Click += new System.EventHandler(this.btnImport_Click);
             // 
             // lblFilterType
             // 
             this.lblFilterType.AutoSize = true;
-            this.lblFilterType.Location = new System.Drawing.Point(334, 9);
+            this.lblFilterType.Location = new System.Drawing.Point(414, 3);
             this.lblFilterType.Name = "lblFilterType";
-            this.lblFilterType.Size = new System.Drawing.Size(37, 13);
+            this.lblFilterType.Size = new System.Drawing.Size(41, 12);
             this.lblFilterType.TabIndex = 3;
-            this.lblFilterType.Text = "Type :";
+            this.lblFilterType.Text = "类型 :";
             // 
             // groupView
             // 
@@ -201,20 +216,20 @@ namespace Server.Database
             this.groupView.Controls.Add(this.rbtnViewStats);
             this.groupView.Location = new System.Drawing.Point(3, 3);
             this.groupView.Name = "groupView";
-            this.groupView.Size = new System.Drawing.Size(325, 41);
+            this.groupView.Size = new System.Drawing.Size(405, 38);
             this.groupView.TabIndex = 4;
             this.groupView.TabStop = false;
-            this.groupView.Text = "View Mode";
+            this.groupView.Text = "查看模式";
             // 
             // rBtnViewSpecial
             // 
             this.rBtnViewSpecial.AutoSize = true;
-            this.rBtnViewSpecial.Location = new System.Drawing.Point(248, 20);
+            this.rBtnViewSpecial.Location = new System.Drawing.Point(317, 17);
             this.rBtnViewSpecial.Name = "rBtnViewSpecial";
-            this.rBtnViewSpecial.Size = new System.Drawing.Size(60, 17);
+            this.rBtnViewSpecial.Size = new System.Drawing.Size(71, 16);
             this.rBtnViewSpecial.TabIndex = 4;
             this.rBtnViewSpecial.TabStop = true;
-            this.rBtnViewSpecial.Text = "Special";
+            this.rBtnViewSpecial.Text = "特殊属性";
             this.rBtnViewSpecial.UseVisualStyleBackColor = true;
             this.rBtnViewSpecial.CheckedChanged += new System.EventHandler(this.rBtnViewSpecial_CheckedChanged);
             // 
@@ -222,48 +237,48 @@ namespace Server.Database
             // 
             this.rbtnViewAll.AutoSize = true;
             this.rbtnViewAll.Checked = true;
-            this.rbtnViewAll.Location = new System.Drawing.Point(27, 19);
+            this.rbtnViewAll.Location = new System.Drawing.Point(9, 16);
             this.rbtnViewAll.Name = "rbtnViewAll";
-            this.rbtnViewAll.Size = new System.Drawing.Size(36, 17);
+            this.rbtnViewAll.Size = new System.Drawing.Size(71, 16);
             this.rbtnViewAll.TabIndex = 0;
             this.rbtnViewAll.TabStop = true;
-            this.rbtnViewAll.Text = "All";
+            this.rbtnViewAll.Text = "所有属性";
             this.rbtnViewAll.UseVisualStyleBackColor = true;
             this.rbtnViewAll.CheckedChanged += new System.EventHandler(this.rbtnViewAll_CheckedChanged);
             // 
             // rbtnViewBinding
             // 
             this.rbtnViewBinding.AutoSize = true;
-            this.rbtnViewBinding.Location = new System.Drawing.Point(181, 19);
+            this.rbtnViewBinding.Location = new System.Drawing.Point(240, 16);
             this.rbtnViewBinding.Name = "rbtnViewBinding";
-            this.rbtnViewBinding.Size = new System.Drawing.Size(60, 17);
+            this.rbtnViewBinding.Size = new System.Drawing.Size(71, 16);
             this.rbtnViewBinding.TabIndex = 3;
             this.rbtnViewBinding.TabStop = true;
-            this.rbtnViewBinding.Text = "Binding";
+            this.rbtnViewBinding.Text = "绑定属性";
             this.rbtnViewBinding.UseVisualStyleBackColor = true;
             this.rbtnViewBinding.CheckedChanged += new System.EventHandler(this.rbtnViewBinding_CheckedChanged);
             // 
             // rbtnViewBasic
             // 
             this.rbtnViewBasic.AutoSize = true;
-            this.rbtnViewBasic.Location = new System.Drawing.Point(69, 19);
+            this.rbtnViewBasic.Location = new System.Drawing.Point(86, 16);
             this.rbtnViewBasic.Name = "rbtnViewBasic";
-            this.rbtnViewBasic.Size = new System.Drawing.Size(51, 17);
+            this.rbtnViewBasic.Size = new System.Drawing.Size(71, 16);
             this.rbtnViewBasic.TabIndex = 1;
             this.rbtnViewBasic.TabStop = true;
-            this.rbtnViewBasic.Text = "Basic";
+            this.rbtnViewBasic.Text = "常规属性";
             this.rbtnViewBasic.UseVisualStyleBackColor = true;
             this.rbtnViewBasic.CheckedChanged += new System.EventHandler(this.rbtnViewBasic_CheckedChanged);
             // 
             // rbtnViewStats
             // 
             this.rbtnViewStats.AutoSize = true;
-            this.rbtnViewStats.Location = new System.Drawing.Point(126, 19);
+            this.rbtnViewStats.Location = new System.Drawing.Point(163, 16);
             this.rbtnViewStats.Name = "rbtnViewStats";
-            this.rbtnViewStats.Size = new System.Drawing.Size(49, 17);
+            this.rbtnViewStats.Size = new System.Drawing.Size(71, 16);
             this.rbtnViewStats.TabIndex = 2;
             this.rbtnViewStats.TabStop = true;
-            this.rbtnViewStats.Text = "Stats";
+            this.rbtnViewStats.Text = "基本属性";
             this.rbtnViewStats.UseVisualStyleBackColor = true;
             this.rbtnViewStats.CheckedChanged += new System.EventHandler(this.rbtnViewStats_CheckedChanged);
             // 
@@ -271,26 +286,26 @@ namespace Server.Database
             // 
             this.drpFilterType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.drpFilterType.FormattingEnabled = true;
-            this.drpFilterType.Location = new System.Drawing.Point(337, 24);
+            this.drpFilterType.Location = new System.Drawing.Point(414, 19);
             this.drpFilterType.Name = "drpFilterType";
-            this.drpFilterType.Size = new System.Drawing.Size(121, 21);
+            this.drpFilterType.Size = new System.Drawing.Size(121, 20);
             this.drpFilterType.TabIndex = 2;
             this.drpFilterType.SelectedIndexChanged += new System.EventHandler(this.drpFilterType_SelectedIndexChanged);
             // 
             // lblSearch
             // 
             this.lblSearch.AutoSize = true;
-            this.lblSearch.Location = new System.Drawing.Point(461, 9);
+            this.lblSearch.Location = new System.Drawing.Point(539, 4);
             this.lblSearch.Name = "lblSearch";
-            this.lblSearch.Size = new System.Drawing.Size(44, 13);
+            this.lblSearch.Size = new System.Drawing.Size(35, 12);
             this.lblSearch.TabIndex = 1;
-            this.lblSearch.Text = "Search:";
+            this.lblSearch.Text = "查找:";
             // 
             // txtSearch
             // 
-            this.txtSearch.Location = new System.Drawing.Point(464, 25);
+            this.txtSearch.Location = new System.Drawing.Point(541, 19);
             this.txtSearch.Name = "txtSearch";
-            this.txtSearch.Size = new System.Drawing.Size(141, 20);
+            this.txtSearch.Size = new System.Drawing.Size(141, 21);
             this.txtSearch.TabIndex = 0;
             this.txtSearch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtSearch_KeyDown);
             // 
@@ -298,9 +313,9 @@ namespace Server.Database
             // 
             this.panel2.Controls.Add(this.itemInfoGridView);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(0, 47);
+            this.panel2.Location = new System.Drawing.Point(0, 43);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(956, 433);
+            this.panel2.Size = new System.Drawing.Size(956, 400);
             this.panel2.TabIndex = 2;
             // 
             // Modified
@@ -308,203 +323,212 @@ namespace Server.Database
             this.Modified.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
             this.Modified.DataPropertyName = "Modified";
             this.Modified.Frozen = true;
-            this.Modified.HeaderText = "Modified";
+            this.Modified.HeaderText = "修改";
             this.Modified.Name = "Modified";
             this.Modified.ReadOnly = true;
-            this.Modified.Width = 53;
+            this.Modified.Width = 35;
             // 
             // ItemIndex
             // 
             this.ItemIndex.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.ItemIndex.DataPropertyName = "ItemIndex";
             this.ItemIndex.Frozen = true;
-            this.ItemIndex.HeaderText = "Index";
+            this.ItemIndex.HeaderText = "物品编号";
             this.ItemIndex.Name = "ItemIndex";
             this.ItemIndex.ReadOnly = true;
-            this.ItemIndex.Width = 58;
+            this.ItemIndex.Width = 78;
             // 
             // ItemName
             // 
             this.ItemName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
             this.ItemName.DataPropertyName = "ItemName";
             this.ItemName.Frozen = true;
-            this.ItemName.HeaderText = "Name";
+            this.ItemName.HeaderText = "物品名称";
             this.ItemName.Name = "ItemName";
-            this.ItemName.Width = 60;
+            this.ItemName.Width = 78;
             // 
             // ItemType
             // 
             this.ItemType.DataPropertyName = "ItemType";
-            this.ItemType.HeaderText = "Type";
+            this.ItemType.HeaderText = "物品类型";
             this.ItemType.Name = "ItemType";
             this.ItemType.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // ItemGrade
             // 
             this.ItemGrade.DataPropertyName = "ItemGrade";
-            this.ItemGrade.HeaderText = "Grade";
+            this.ItemGrade.HeaderText = "物品品质";
             this.ItemGrade.Name = "ItemGrade";
             // 
             // ItemRequiredType
             // 
             this.ItemRequiredType.DataPropertyName = "ItemRequiredType";
-            this.ItemRequiredType.HeaderText = "Required Type";
+            this.ItemRequiredType.HeaderText = "需要类型";
             this.ItemRequiredType.Name = "ItemRequiredType";
             // 
             // ItemRequiredGender
             // 
             this.ItemRequiredGender.DataPropertyName = "ItemRequiredGender";
-            this.ItemRequiredGender.HeaderText = "Required Gender";
+            this.ItemRequiredGender.HeaderText = "性别类型";
             this.ItemRequiredGender.Name = "ItemRequiredGender";
             // 
             // ItemRequiredClass
             // 
             this.ItemRequiredClass.DataPropertyName = "ItemRequiredClass";
-            this.ItemRequiredClass.HeaderText = "Required Class";
+            this.ItemRequiredClass.HeaderText = "职业类型";
             this.ItemRequiredClass.Name = "ItemRequiredClass";
             // 
             // ItemSet
             // 
             this.ItemSet.DataPropertyName = "ItemSet";
-            this.ItemSet.HeaderText = "Set";
+            this.ItemSet.HeaderText = "套装设置";
             this.ItemSet.Name = "ItemSet";
             // 
             // ItemRandomStatsId
             // 
             this.ItemRandomStatsId.DataPropertyName = "ItemRandomStatsId";
-            this.ItemRandomStatsId.HeaderText = "Random Stats";
+            this.ItemRandomStatsId.HeaderText = "随机附加";
             this.ItemRandomStatsId.Name = "ItemRandomStatsId";
             // 
             // ItemRequiredAmount
             // 
             this.ItemRequiredAmount.DataPropertyName = "ItemRequiredAmount";
-            this.ItemRequiredAmount.HeaderText = "Required Amount";
+            this.ItemRequiredAmount.HeaderText = "需求等级";
             this.ItemRequiredAmount.Name = "ItemRequiredAmount";
             // 
             // ItemImage
             // 
             this.ItemImage.DataPropertyName = "ItemImage";
-            this.ItemImage.HeaderText = "Image";
+            this.ItemImage.HeaderText = "内观";
             this.ItemImage.Name = "ItemImage";
             // 
             // ItemShape
             // 
             this.ItemShape.DataPropertyName = "ItemShape";
-            this.ItemShape.HeaderText = "Shape";
+            this.ItemShape.HeaderText = "外观";
             this.ItemShape.Name = "ItemShape";
             // 
             // ItemEffect
             // 
             this.ItemEffect.DataPropertyName = "ItemEffect";
-            this.ItemEffect.HeaderText = "Effect";
+            this.ItemEffect.HeaderText = "特效";
             this.ItemEffect.Name = "ItemEffect";
             // 
             // ItemStackSize
             // 
             this.ItemStackSize.DataPropertyName = "ItemStackSize";
-            this.ItemStackSize.HeaderText = "Stack Size";
+            this.ItemStackSize.HeaderText = "叠加数量";
             this.ItemStackSize.Name = "ItemStackSize";
             // 
             // ItemSlots
             // 
             this.ItemSlots.DataPropertyName = "ItemSlots";
-            this.ItemSlots.HeaderText = "Slots";
+            this.ItemSlots.HeaderText = "镶嵌孔位";
             this.ItemSlots.Name = "ItemSlots";
             // 
             // ItemWeight
             // 
             this.ItemWeight.DataPropertyName = "ItemWeight";
-            this.ItemWeight.HeaderText = "Weight";
+            this.ItemWeight.HeaderText = "重量";
             this.ItemWeight.Name = "ItemWeight";
             // 
             // ItemLightRange
             // 
             this.ItemLightRange.DataPropertyName = "ItemLightRange";
-            this.ItemLightRange.HeaderText = "Light Range";
+            this.ItemLightRange.HeaderText = "发光范围";
             this.ItemLightRange.Name = "ItemLightRange";
             // 
             // ItemLightIntensity
             // 
             this.ItemLightIntensity.DataPropertyName = "ItemLightIntensity";
-            this.ItemLightIntensity.HeaderText = "Intensity";
+            this.ItemLightIntensity.HeaderText = "发光强度";
             this.ItemLightIntensity.Name = "ItemLightIntensity";
             // 
             // ItemDurability
             // 
             this.ItemDurability.DataPropertyName = "ItemDurability";
-            this.ItemDurability.HeaderText = "Durability";
+            this.ItemDurability.HeaderText = "持久度";
             this.ItemDurability.Name = "ItemDurability";
             // 
             // ItemPrice
             // 
             this.ItemPrice.DataPropertyName = "ItemPrice";
-            this.ItemPrice.HeaderText = "Price";
+            this.ItemPrice.HeaderText = "商店价格";
             this.ItemPrice.Name = "ItemPrice";
             // 
             // ItemToolTip
             // 
             this.ItemToolTip.DataPropertyName = "ItemToolTip";
-            this.ItemToolTip.HeaderText = "ToolTip";
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.ItemToolTip.DefaultCellStyle = dataGridViewCellStyle2;
+            this.ItemToolTip.HeaderText = "物品说明";
             this.ItemToolTip.Name = "ItemToolTip";
             this.ItemToolTip.Width = 68;
+            // 
+            // StartItem
+            // 
+            this.StartItem.DataPropertyName = "StartItem";
+            this.StartItem.HeaderText = "新手物品";
+            this.StartItem.Name = "StartItem";
+            this.StartItem.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             // 
             // NeedIdentify
             // 
             this.NeedIdentify.DataPropertyName = "NeedIdentify";
-            this.NeedIdentify.HeaderText = "Need Identify";
+            this.NeedIdentify.HeaderText = "需要鉴定";
             this.NeedIdentify.Name = "NeedIdentify";
             // 
             // ShowGroupPickup
             // 
             this.ShowGroupPickup.DataPropertyName = "ShowGroupPickup";
-            this.ShowGroupPickup.HeaderText = "Show Group Pickup";
+            this.ShowGroupPickup.HeaderText = "组队收集";
             this.ShowGroupPickup.Name = "ShowGroupPickup";
             // 
             // GlobalDropNotify
             // 
             this.GlobalDropNotify.DataPropertyName = "GlobalDropNotify";
-            this.GlobalDropNotify.HeaderText = "Global Drop Notify";
+            this.GlobalDropNotify.HeaderText = "掉落通告";
             this.GlobalDropNotify.Name = "GlobalDropNotify";
             // 
             // ClassBased
             // 
             this.ClassBased.DataPropertyName = "ClassBased";
-            this.ClassBased.HeaderText = "Class Based";
+            this.ClassBased.HeaderText = "基于职业";
             this.ClassBased.Name = "ClassBased";
             // 
             // LevelBased
             // 
             this.LevelBased.DataPropertyName = "LevelBased";
-            this.LevelBased.HeaderText = "Level Based";
+            this.LevelBased.HeaderText = "基于等级";
             this.LevelBased.Name = "LevelBased";
             // 
             // CanMine
             // 
             this.CanMine.DataPropertyName = "CanMine";
-            this.CanMine.HeaderText = "Can Mine";
+            this.CanMine.HeaderText = "允许挖矿";
             this.CanMine.Name = "CanMine";
             // 
             // CanFastRun
             // 
             this.CanFastRun.DataPropertyName = "CanFastRun";
-            this.CanFastRun.HeaderText = "Can FastRun";
+            this.CanFastRun.HeaderText = "允许助跑";
             this.CanFastRun.Name = "CanFastRun";
             // 
             // CanAwakening
             // 
             this.CanAwakening.DataPropertyName = "CanAwakening";
-            this.CanAwakening.HeaderText = "Can Awakening";
+            this.CanAwakening.HeaderText = "允许觉醒";
             this.CanAwakening.Name = "CanAwakening";
             // 
             // ItemInfoFormNew
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(956, 480);
+            this.ClientSize = new System.Drawing.Size(956, 443);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Name = "ItemInfoFormNew";
-            this.Text = "ItemInfoFormNew";
+            this.Text = "物品信息";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ItemInfoFormNew_FormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.itemInfoGridView)).EndInit();
             this.panel1.ResumeLayout(false);
@@ -535,6 +559,7 @@ namespace Server.Database
         private System.Windows.Forms.ComboBox drpFilterType;
         private System.Windows.Forms.Button btnExport;
         private System.Windows.Forms.Button btnImport;
+        private System.Windows.Forms.Button Gameshop_button;
         private System.Windows.Forms.DataGridViewCheckBoxColumn Modified;
         private System.Windows.Forms.DataGridViewTextBoxColumn ItemIndex;
         private System.Windows.Forms.DataGridViewTextBoxColumn ItemName;
@@ -557,6 +582,7 @@ namespace Server.Database
         private System.Windows.Forms.DataGridViewTextBoxColumn ItemDurability;
         private System.Windows.Forms.DataGridViewTextBoxColumn ItemPrice;
         private System.Windows.Forms.DataGridViewTextBoxColumn ItemToolTip;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn StartItem;
         private System.Windows.Forms.DataGridViewCheckBoxColumn NeedIdentify;
         private System.Windows.Forms.DataGridViewCheckBoxColumn ShowGroupPickup;
         private System.Windows.Forms.DataGridViewCheckBoxColumn GlobalDropNotify;

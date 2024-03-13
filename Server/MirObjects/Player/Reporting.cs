@@ -1,6 +1,6 @@
 ﻿using System;
-using log4net;
 using System.Runtime.CompilerServices;
+using log4net;
 using Server.MirDatabase;
 
 namespace Server.MirObjects
@@ -25,7 +25,7 @@ namespace Server.MirObjects
 
         public void MapChange(MapInfo oldMap, MapInfo newMap, [CallerMemberName] string source = "")
         {
-            string message = $"Moved Map {oldMap.FileName} => {newMap.FileName}";
+            string message = $"从地图 {oldMap.FileName} 移动到地图 {newMap.FileName}";
 
             LogMessage(message, source);
         }
@@ -80,6 +80,25 @@ namespace Server.MirObjects
             LogMessage(message, source);
         }
 
+        public void ItemChangedHero(UserItem item, uint amount, int state, [CallerMemberName] string source = "")
+        {
+            string type = string.Empty;
+
+            switch (state)
+            {
+                case 1:
+                    type = "Lost";
+                    break;
+                case 2:
+                    type = "Gained";
+                    break;
+            }
+
+            string message = $"Item {type} - {item.Info.Name} x{amount} ({item.UniqueID})";
+
+            LogHeroMessage(message, source);
+        }
+
         public void ItemGSBought(GameShopItem item, uint amount, uint CreditCost, uint GoldCost, [CallerMemberName] string source = "")
         {
             string message = $"Purchased {item.Info.FriendlyName} x{amount} for {CreditCost} Credits and {GoldCost} Gold.";
@@ -93,16 +112,16 @@ namespace Server.MirObjects
             switch (reason)
             {
                 case 1:
-                    msg = "Could not return item to bag after trade.";
+                    msg = "无法在交易后将物品再退回到背包";
                     break;
                 case 2:
-                    msg = "Item rental expired.";
+                    msg = "租赁物品到期";
                     break;
                 case 3:
-                    msg = "Could not return item to bag after rental.";
+                    msg = "租借后无法将物品再退回到背包";
                     break;
                 default:
-                    msg = "No reason provided.";
+                    msg = "未提供原因";
                     break;
             }
 
@@ -138,14 +157,14 @@ namespace Server.MirObjects
 
         public void KilledPlayer(PlayerObject obj, string info = "", [CallerMemberName] string source = "")
         {
-            string message = $"Killed Player {obj.Name} {info}";
+            string message = $"杀死玩家 {obj.Name} {info}";
 
             LogMessage(message, source);
         }
 
         public void KilledMonster(MonsterObject obj, string info = "", [CallerMemberName] string source = "")
         {
-            string message = $"Killed Monster {obj.Name} {info}";
+            string message = $"击杀怪物 {obj.Name} {info}";
 
             LogMessage(message, source);
         }
@@ -156,28 +175,28 @@ namespace Server.MirObjects
 
         public void Levelled(int level)
         {
-            string message = $"Levelled to {level}";
+            string message = $"等级提升 {level}";
 
             LogMessage(message, "");
         }
 
         public void Died(string map)
         {
-            string message = $"Died - Map {map}";
+            string message = $"死亡 - 地图 {map}";
 
             LogMessage(message, "");
         }
 
         public void Connected(string ipAddress)
         {
-            string message = $"Connected - {ipAddress}";
+            string message = $"连接 - {ipAddress}";
 
             LogMessage(message, "");
         }
 
         public void Disconnected(string reason)
         {
-            string message = $"Disconnected - {reason}";
+            string message = $"断开连接 - {reason}";
 
             LogMessage(message, "");
         }
@@ -191,6 +210,20 @@ namespace Server.MirObjects
             try
             {
                 var logMessage = $"{_player.Name} - {source} : {message}";
+
+                log.Info(logMessage);
+            }
+            catch (Exception ex)
+            {
+                MessageQueue.Enqueue(ex);
+            }
+        }
+
+        private void LogHeroMessage(string message, string source)
+        {
+            try
+            {
+                var logMessage = $"{_player.Name}[Hero] - {source} : {message}";
 
                 log.Info(logMessage);
             }

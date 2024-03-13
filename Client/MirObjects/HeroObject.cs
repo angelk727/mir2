@@ -1,16 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using Client.MirGraphics;
-using Client.MirNetwork;
-using Client.MirScenes;
-using Client.MirSounds;
+﻿using System.Drawing;
 using Client.MirControls;
 using S = ServerPackets;
-using C = ClientPackets;
-using Client.MirScenes.Dialogs;
 
 namespace Client.MirObjects
 {
@@ -47,7 +37,7 @@ namespace Client.MirObjects
             base.CreateLabel();
 
             OwnerLabel = null;
-            string ownerText = $"{OwnerName}'s Hero";
+            string ownerText = $"{OwnerName}'的英雄";
 
             for (int i = 0; i < LabelList.Count; i++)
             {

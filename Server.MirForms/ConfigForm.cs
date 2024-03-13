@@ -43,7 +43,7 @@ namespace Server
             SaveDelayTextBox.Text = Settings.SaveDelay.ToString();
 
             ServerVersionLabel.Text = Application.ProductVersion;
-            DBVersionLabel.Text = MirEnvir.Envir.LoadVersion.ToString() + ((MirEnvir.Envir.LoadVersion < MirEnvir.Envir.Version) ? " (Update needed)" : "");
+            DBVersionLabel.Text = MirEnvir.Envir.LoadVersion.ToString() + ((MirEnvir.Envir.LoadVersion < MirEnvir.Envir.Version) ? " (需要更新)" : "");
         }
 
         private void ConfigForm_FormClosed(object sender, FormClosedEventArgs e)

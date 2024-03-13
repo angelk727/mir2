@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Drawing;
 using Server.MirDatabase;
 using Server.MirEnvir;
 using S = ServerPackets;
@@ -62,7 +60,7 @@ namespace Server.MirObjects.Monsters
 
             if (poison)
             {
-                PoisonTarget(Target, 5, Envir.Random.Next(1, 4), PoisonType.Dazed, 1000);
+                PoisonTarget(target, 5, Envir.Random.Next(1, 4), PoisonType.Dazed, 1000);
             }
         }
     }

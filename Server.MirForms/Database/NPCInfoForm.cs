@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using Server.MirDatabase;
 using Server.MirEnvir;
-using System.Diagnostics;
 
 namespace Server
 {
@@ -28,12 +28,12 @@ namespace Server
             {
                 ConquestHidden_combo.Items.Clear();
 
+                ConquestHidden_combo.Items.Add("");
                 for (int i = 0; i < Envir.ConquestInfoList.Count; i++)
                 {
                     ConquestHidden_combo.Items.Add(Envir.ConquestInfoList[i]);
                 }
             }
-
 
             UpdateInterface();
         }
@@ -47,7 +47,7 @@ namespace Server
         {
             if (_selectedNPCInfos.Count == 0) return;
 
-            if (MessageBox.Show("Are you sure you want to remove the selected NPCs?", "Remove NPCs?", MessageBoxButtons.YesNo) != DialogResult.Yes) return;
+            if (MessageBox.Show("是否要删除选定的NPC", "删除NPC", MessageBoxButtons.YesNo) != DialogResult.Yes) return;
 
             for (int i = 0; i < _selectedNPCInfos.Count; i++) Envir.Remove(_selectedNPCInfos[i]);
 
@@ -93,6 +93,7 @@ namespace Server
                 Flag_textbox.Text = string.Empty;
                 ShowBigMapCheckBox.Checked = false;
                 BigMapIconTextBox.Text = string.Empty;
+                ConquestVisible_checkbox.Checked = true;
                 return;
             }
 
@@ -123,6 +124,8 @@ namespace Server
             ShowBigMapCheckBox.Checked = info.ShowOnBigMap;
             BigMapIconTextBox.Text = info.BigMapIcon.ToString();
             TeleportToCheckBox.Checked = info.CanTeleportTo;
+            ConquestVisible_checkbox.Checked = info.ConquestVisible;
+            LoadImage(info.Image);
 
 
             for (int i = 1; i < _selectedNPCInfos.Count; i++)
@@ -157,7 +160,35 @@ namespace Server
 
         private void NPCInfoListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (_selectedNPCInfos.Count > 0)
+            {
+                NPCInfo info = _selectedNPCInfos[0];
+                LoadImage(info.Image);
+            }
+            else
+            {
+                LoadImage(0);
+            }
+
             UpdateInterface();
+
+        }
+        private void LoadImage(ushort imageValue)
+        {
+            string filename = $"{imageValue}.bmp";
+            string imagePath = Path.Combine(Environment.CurrentDirectory, "Envir", "Previews", "NPC", filename);
+
+            if (File.Exists(imagePath))
+            {
+                using (FileStream fs = new FileStream(imagePath, FileMode.Open, FileAccess.Read))
+                {
+                    NPCPreview.Image = Image.FromStream(fs);
+                }
+            }
+            else
+            {
+                NPCPreview.Image = null;
+            }
         }
 
         private void NFileNameTextBox_TextChanged(object sender, EventArgs e)
@@ -231,6 +262,7 @@ namespace Server
             for (int i = 0; i < _selectedNPCInfos.Count; i++)
                 _selectedNPCInfos[i].Image = temp;
 
+            LoadImage(temp);
         }
         private void NRateTextBox_TextChanged(object sender, EventArgs e)
         {
@@ -276,12 +308,12 @@ namespace Server
 
             if (!data.StartsWith("NPC", StringComparison.OrdinalIgnoreCase))
             {
-                MessageBox.Show("Cannot Paste, Copied data is not NPC Information.");
+                MessageBox.Show("无法粘贴，复制的数据不是NPC信息");
                 return;
             }
 
 
-            string[] npcs = data.Split(new[] {'\t'}, StringSplitOptions.RemoveEmptyEntries);
+            string[] npcs = data.Split(new[] { '\t' }, StringSplitOptions.RemoveEmptyEntries);
 
 
             //for (int i = 1; i < npcs.Length; i++)
@@ -308,6 +340,7 @@ namespace Server
 
             SaveFileDialog sfd = new SaveFileDialog();
             sfd.InitialDirectory = Path.Combine(Application.StartupPath, "Exports");
+            sfd.FileName = "4_NPC数据";
             sfd.Filter = "Text File|*.txt";
             sfd.ShowDialog();
 
@@ -320,7 +353,7 @@ namespace Server
                     sw.WriteLine(NPCs[j].ToText());
                 }
             }
-            MessageBox.Show("NPC Export complete");
+            MessageBox.Show("NPC数据导出完成");
         }
 
         private void ImportButton_Click(object sender, EventArgs e)
@@ -353,7 +386,7 @@ namespace Server
             }
 
             UpdateInterface();
-            MessageBox.Show("NPC Import complete");
+            MessageBox.Show("NPC数据导入完成");
         }
 
         private void OpenNButton_Click(object sender, EventArgs e)
@@ -559,10 +592,16 @@ namespace Server
         private void ConquestHidden_combo_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (ActiveControl != sender) return;
-            ConquestInfo temp = (ConquestInfo)ConquestHidden_combo.SelectedItem;
+
+            int conquestIndex = 0;
+
+            if (ConquestHidden_combo.SelectedItem is ConquestInfo conquestInfo)
+            {
+                conquestIndex = conquestInfo.Index;
+            }
 
             for (int i = 0; i < _selectedNPCInfos.Count; i++)
-                _selectedNPCInfos[i].Conquest = temp.Index;
+                _selectedNPCInfos[i].Conquest = conquestIndex;
         }
 
         private void ShowBigMapCheckBox_CheckedChanged(object sender, EventArgs e)
@@ -597,6 +636,14 @@ namespace Server
 
             for (int i = 0; i < _selectedNPCInfos.Count; i++)
                 _selectedNPCInfos[i].CanTeleportTo = TeleportToCheckBox.Checked;
+        }
+
+        private void ConquestVisible_checkbox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (ActiveControl != sender) return;
+
+            for (int i = 0; i < _selectedNPCInfos.Count; i++)
+                _selectedNPCInfos[i].ConquestVisible = ConquestVisible_checkbox.Checked;
         }
     }
 }

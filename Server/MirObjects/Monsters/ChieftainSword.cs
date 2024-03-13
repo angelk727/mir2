@@ -9,22 +9,59 @@ namespace Server.MirObjects.Monsters
     public class ChieftainSword : MonsterObject
     {
         private long _BuffTime;
-        protected virtual byte AttackRange
-        {
-            get
-            {
-                return 6;
-            }
-        }
+        public bool YangDragonFlameMode = false;
+        protected virtual byte AttackRange => Info.ViewRange;
 
         protected internal ChieftainSword(MonsterInfo info)
             : base(info)
         {
         }
 
+        private bool IsValidTarget(MapObject target)
+        {
+            return target != null && target.IsAttackTarget(this) && target.CurrentMap == CurrentMap && target.Node != null;
+        }
+
         protected override bool InAttackRange()
         {
-            return CurrentMap == Target.CurrentMap && Functions.InRange(CurrentLocation, Target.CurrentLocation, AttackRange);
+            return IsValidTarget(Target) && Functions.InRange(CurrentLocation, Target.CurrentLocation, AttackRange);
+        }
+
+        protected override void ProcessTarget()
+        {
+            if (CurrentMap.Players.Count == 0 || Target == null)
+            {
+                return;
+            }
+
+            Point targetLocation = Target.CurrentLocation;
+
+            if (Envir.Time >= ShockTime)
+            {
+                MoveToTarget(targetLocation);
+            }
+            else
+            {
+                Target = null;
+            }
+        }
+
+        private void MoveToTarget(Point target)
+        {
+            if (Functions.InRange(CurrentLocation, target, AttackRange))
+            {
+                if (CanAttack)
+                {
+                    Attack();
+                }
+                return;
+            }
+            MoveTo(target);
+        }
+
+        public override void Die()
+        {
+            base.Die();
         }
 
         protected override void Attack()
@@ -35,8 +72,13 @@ namespace Server.MirObjects.Monsters
                 return;
             }
 
+            ShockTime = 0;
             Direction = Functions.DirectionFromPoint(CurrentLocation, Target.CurrentLocation);
-            bool ranged = CurrentLocation == Target.CurrentLocation || !Functions.InRange(CurrentLocation, Target.CurrentLocation, 1);
+            bool ranged = !Functions.InRange(CurrentLocation, Target.CurrentLocation, 2)
+                || (Functions.InRange(CurrentLocation, Target.CurrentLocation, 2) && Envir.Random.Next(10) < 3);
+
+            ActionTime = Envir.Time + 300;
+            AttackTime = Envir.Time + AttackSpeed;
 
             if (!ranged)
             {
@@ -70,15 +112,7 @@ namespace Server.MirObjects.Monsters
                         break;
                     case 2:
                         {
-                            Broadcast(new S.ObjectAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation, Type = 2 });
-
-                            int damage = GetAttackPower(Stats[Stat.MinDC], Stats[Stat.MaxDC]);
-                            if (damage == 0) return;
-
-                            FullmoonAttack(damage);
-
-                            DelayedAction action = new DelayedAction(DelayedType.Damage, Envir.Time + 300, Target, damage, DefenceType.ACAgility);
-                            ActionList.Add(action);
+                            BloodthirstySpike();
                         }
                         break;
                     case 3:
@@ -127,112 +161,54 @@ namespace Server.MirObjects.Monsters
 
                 }
             }
-
             else
             {
-                if (Envir.Random.Next(3) == 0)
+                switch (Envir.Random.Next(3))
                 {
-                    MoveTo(Target.CurrentLocation);
+                    case 0:
+                        {
+                            YangDragonFlameMode = false;
+                            {
+                                YangDragonFlame();
+                            }
+                        }
+                        break;
+                    case 1:
+                        {
+                            YangDragonFlameMode = true;
+                            {
+                                YangDragonFlame();
+                            }
+                        }
+                        break;
+                    case 2:
+                        {
+
+                            if (HasBuff(BuffType.ChieftainSwordBuff, out _))
+                            {
+                                return;
+                            }
+
+                            var hpPercent = (HP * 100) / MaxHealth;
+
+                            if (Envir.Time > _BuffTime && hpPercent < 50)
+                            {
+                                _BuffTime = Envir.Time + 15000 + Envir.Random.Next(0, 5000);
+
+                                var stats = new Stats
+                                {
+                                    [Stat.MaxDC] = 100,
+                                    [Stat.MinMC] = 100
+                                };
+
+                                Broadcast(new S.ObjectRangeAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation, TargetID = Target.ObjectID, Type = 2 });
+
+                                AddBuff(BuffType.ChieftainSwordBuff, this, Settings.Second * 10, stats);
+                            }
+                        }
+                        break;
                 }
-                else
-                {
-                    switch (Envir.Random.Next(3))
-                    {
-                        case 0:
-                            {
-                                switch (Envir.Random.Next(2))
-                                {
-                                    case 0:
-                                        {
-                                            Broadcast(new S.ObjectRangeAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation, TargetID = Target.ObjectID, Type = 0 });
-                                            int damage = GetAttackPower(Stats[Stat.MinMC], Stats[Stat.MaxMC]);
-                                            if (damage == 0) return;
-
-                                            PoisonTarget(Target, 4, 10, PoisonType.Slow, 1200);
-
-                                            DelayedAction action = new DelayedAction(DelayedType.RangeDamage, Envir.Time + 300, Target, damage, DefenceType.MACAgility, true);
-                                            ActionList.Add(action);
-                                        }
-                                        break;
-                                    case 1:
-                                        {
-                                            Broadcast(new S.ObjectRangeAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation, TargetID = Target.ObjectID, Type = 0 });
-                                            int damage = GetAttackPower(Stats[Stat.MinMC], Stats[Stat.MaxMC] * 2);
-                                            if (damage == 0) return;
-
-                                            PoisonTarget(Target, 4, 10, PoisonType.Slow, 1200);
-
-                                            DelayedAction action = new DelayedAction(DelayedType.RangeDamage, Envir.Time + 300, Target, damage, DefenceType.MACAgility, false);
-                                            ActionList.Add(action);
-                                        }
-                                        break;
-                                }
-                            }
-                            break;
-                        case 1:
-                            {
-                                Broadcast(new S.ObjectRangeAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation, TargetID = Target.ObjectID, Type = 1 });
-                                int damage = GetAttackPower(Stats[Stat.MinMC], Stats[Stat.MaxMC]);
-                                if (damage == 0) return;
-
-                                PoisonTarget(Target, 6, 5, PoisonType.Frozen, 1000);
-
-                                DelayedAction action = new DelayedAction(DelayedType.RangeDamage, Envir.Time + 300, Target, damage, DefenceType.MACAgility, false);
-                                ActionList.Add(action);
-                            }
-                            break;
-                        case 2:
-                            {
-
-                                if (HasBuff(BuffType.ChieftainSwordBuff, out _))
-                                {
-                                    return;
-                                }
-
-                                var hpPercent = (HP * 100) / MaxHealth;
-
-                                if (Envir.Time > _BuffTime && hpPercent < 50)
-                                {
-                                    _BuffTime = Envir.Time + 15000 + Envir.Random.Next(0, 5000);
-
-                                    var stats = new Stats
-                                    {
-                                        [Stat.MaxDC] = 100,
-                                        [Stat.MinMC] = 100
-                                    };
-
-                                    Broadcast(new S.ObjectRangeAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation, TargetID = Target.ObjectID, Type = 2 });
-
-                                    AddBuff(BuffType.ChieftainSwordBuff, this, Settings.Second * 10, stats);
-                                }
-                            }
-                            break;
-                    }
-                }
-
             }
-            ShockTime = 0;
-            ActionTime = Envir.Time + 500;
-            AttackTime = Envir.Time + AttackSpeed;
-        }
-
-        protected override void ProcessTarget()
-        {
-            if (Target == null) return;
-
-            if (InAttackRange() && CanAttack)
-            {
-                Attack();
-                return;
-            }
-
-            if (Envir.Time < ShockTime)
-            {
-                Target = null;
-                return;
-            }
-
-            MoveTo(Target.Front);
         }
 
         private void Thrust(MapObject target)
@@ -270,43 +246,98 @@ namespace Server.MirObjects.Monsters
             Broadcast(new S.ObjectDashAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation, Distance = 1 });
         }
 
-        protected override void CompleteAttack(IList<object> data)
+        private void BloodthirstySpike()
         {
-            MapObject target = (MapObject)data[0];
-            int damage = (int)data[1];
-            DefenceType defence = (DefenceType)data[2];
-            bool aoe = data.Count >= 4 && (bool)data[3];
+            List<MapObject> targets = FindAllTargets(Info.ViewRange, CurrentLocation);
+            if (targets.Count == 0) return;
 
-            if (target == null || !target.IsAttackTarget(this) || target.CurrentMap != CurrentMap || target.Node == null) return;
-
-            if (aoe)
-            {
-                var targets = FindAllTargets(2, CurrentLocation, false);
-
-                for (int i = 0; i < targets.Count; i++)
-                {
-                    targets[i].Attacked(this, damage, defence);
-                }
-            }
-            else
-            {
-                target.Attacked(this, damage, defence);
-            }
-        }
-
-        protected override void CompleteRangeAttack(IList<object> data)
-        {
-            MapObject target = (MapObject)data[0];
-            int damage = (int)data[1];
-            DefenceType defence = (DefenceType)data[2];
-
-            if (target == null || !target.IsAttackTarget(this) || target.CurrentMap != CurrentMap || target.Node == null) return;
-
-            List<MapObject> targets = FindAllTargets(2, target.CurrentLocation);
+            Broadcast(new S.ObjectAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation, Type = 2 });
 
             for (int i = 0; i < targets.Count; i++)
             {
-                targets[i].Attacked(this, damage, defence);
+                Target = targets[i];
+
+                int damage = GetAttackPower(Stats[Stat.MinDC], Stats[Stat.MaxDC]);
+                if (damage == 0) continue;
+
+                DelayedAction action = new DelayedAction(DelayedType.Damage, Envir.Time + 1200, Target, damage, DefenceType.ACAgility);
+                ActionList.Add(action);
+
+                Broadcast(new S.ObjectEffect { ObjectID = Target.ObjectID, Effect = SpellEffect.BloodthirstySpike });
+            }
+        }
+
+        private void YangDragonFlame()
+        {
+            const int defaultXY = 2;
+            const int RangeType = 0;
+
+            int explodeRange = YangDragonFlameMode ? 3 : defaultXY;
+            byte RangeTypeDate = (byte)(YangDragonFlameMode ? 1 : RangeType);
+
+            int bombX = YangDragonFlameMode ? 3 : defaultXY;
+            int bombY = YangDragonFlameMode ? 3 : defaultXY;
+
+            if (Target == null) return;
+
+            Broadcast(new S.ObjectRangeAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation, TargetID = Target.ObjectID, Type = RangeTypeDate });
+
+            var targets = FindAllTargets(explodeRange, Target.CurrentLocation);
+            if (Dead || targets.Count == 0) return;
+
+            Target = targets[Envir.Random.Next(targets.Count)];
+            var location = Target.CurrentLocation;
+
+            for (int y = location.Y - explodeRange; y <= location.Y + explodeRange; y++)
+            {
+                if (y < 0) continue;
+                if (y >= CurrentMap.Height) break;
+
+                for (int x = location.X - explodeRange; x <= location.X + explodeRange; x++)
+                {
+                    if (x < 0) continue;
+                    if (x >= CurrentMap.Width) break;
+
+                    if ((x == bombX && y == bombY) || (x == CurrentLocation.X && y == CurrentLocation.Y)) continue;
+
+                    var cell = CurrentMap.GetCell(x, y);
+                    if (!cell.Valid) continue;
+
+                    int damage = 0;
+                    var start = 0;
+                    var time = 0;
+
+                    if (YangDragonFlameMode)
+                    {
+                        damage = GetAttackPower(Stats[Stat.MinMC], Stats[Stat.MaxMC]);
+                        start = 1000;
+                        time = 1600;
+                    }
+                    else
+                    {
+                        damage = (int)(GetAttackPower(Stats[Stat.MinMC], Stats[Stat.MaxMC]) * (YangDragonFlameMode ? 2 : 1.5));
+                        start = 1000;
+                        time = 2200;
+                    }
+
+                    SpellObject ob = new SpellObject
+                    {
+                        Spell = YangDragonFlameMode ? Spell.YangDragonIcyBurst : Spell.YangDragonFlame,
+                        Value = damage,
+                        ExpireTime = Envir.Time + time + start,
+                        TickSpeed = 1300,
+                        Direction = Direction,
+                        CurrentLocation = new Point(x, y),
+                        CastLocation = location,
+                        Show = (location.X == x && location.Y == y),
+                        CurrentMap = CurrentMap,
+                        Owner = this,
+                        Caster = this
+                    };
+
+                    DelayedAction action = new DelayedAction(DelayedType.Spawn, Envir.Time + start, ob);
+                    CurrentMap.ActionList.Add(action);
+                }
             }
         }
     }

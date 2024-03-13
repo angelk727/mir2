@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Drawing;
 using Server.MirDatabase;
@@ -106,7 +105,7 @@ namespace Server.MirObjects.Monsters
                                     if (target.Attacked(this, j <= 1 ? nearDamage : farDamage, DefenceType.MAC) > 0)
                                     {
                                         PoisonTarget(target, 5, target.Race == ObjectType.Player ? 4 : 5 + Envir.Random.Next(5), PoisonType.Slow, 1000);
-                                        PoisonTarget(target, 5, target.Race == ObjectType.Player ? 2 : 5 + Envir.Random.Next(this.Stats[Stat.Freezing]), PoisonType.Frozen, 1000);
+                                        PoisonTarget(target, 5, target.Race == ObjectType.Player ? 2 : 5 + Envir.Random.Next(this.Stats[Stat.±ù¶³ÉËº¦]), PoisonType.Frozen, 1000);
                                     }
                                 }
                                 break;

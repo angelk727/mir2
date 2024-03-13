@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Server.MirDatabase;
 using S = ServerPackets;
 
 namespace Server.MirObjects.Monsters
-{    
+{
     public class HarvestMonster : MonsterObject
     {
         protected short Quality;
@@ -61,7 +60,7 @@ namespace Server.MirObjects.Monsters
             {
                 DropInfo drop = Info.Drops[i];
 
-                var reward = drop.AttemptDrop(EXPOwner?.Stats[Stat.ItemDropRatePercent] ?? 0, EXPOwner?.Stats[Stat.GoldDropRatePercent] ?? 0);
+                var reward = drop.AttemptDrop(EXPOwner?.Stats[Stat.物品掉落数率] ?? 0, EXPOwner?.Stats[Stat.金币收益数率] ?? 0);
 
                 if (reward != null)
                 {
@@ -75,7 +74,7 @@ namespace Server.MirObjects.Monsters
                             if (!player.CheckGroupQuestItem(item, false)) continue;
                         }
 
-                        if (item.Info.Type == ItemType.Meat)
+                        if (item.Info.Type == ItemType.肉)
                         {
                             item.CurrentDura = (ushort)Math.Max(0, item.CurrentDura + Quality);
                         }
@@ -87,7 +86,7 @@ namespace Server.MirObjects.Monsters
 
             if (_drops.Count == 0)
             {
-                player.ReceiveChat("Nothing was found.", ChatType.System);
+                player.ReceiveChat("没有发现任何物品", ChatType.System);
                 Harvested = true;
                 _drops = null;
                 Broadcast(new S.ObjectHarvested { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation });

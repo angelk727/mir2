@@ -1,12 +1,11 @@
-﻿using Client.MirControls;
-using Client.MirGraphics;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Drawing;
-using Client.MirSounds;
+using System.Linq;
 using System.Windows.Forms;
+using Client.MirControls;
+using Client.MirGraphics;
+using Client.MirSounds;
 
 namespace Client.MirScenes.Dialogs
 {
@@ -52,7 +51,7 @@ namespace Client.MirScenes.Dialogs
             {
                 HoverIndex = 361,
                 Index = 360,
-                Location = new Point(300, 3),
+                Location = new Point(363, 2),
                 Library = Libraries.Prguse2,
                 Parent = this,
                 PressedIndex = 362,
@@ -66,7 +65,7 @@ namespace Client.MirScenes.Dialogs
                 PressedIndex = 752,
                 HoverIndex = 753,
                 Library = Libraries.Title,
-                Hint = "Overall TOP 20",
+                Hint = "总排行榜 TOP 20",
                 Location = new Point(10, 38),
                 Parent = this,
                 Sound = SoundList.ButtonA,
@@ -79,7 +78,7 @@ namespace Client.MirScenes.Dialogs
                 PressedIndex = 761,
                 HoverIndex = 762,
                 Library = Libraries.Title,
-                Hint = "TOP 20 Taoists",
+                Hint = "道士排行榜 TOP 20",
                 Location = new Point(40, 38),
                 Parent = this,
                 Sound = SoundList.ButtonA,
@@ -91,7 +90,7 @@ namespace Client.MirScenes.Dialogs
                 PressedIndex = 755,
                 HoverIndex = 756,
                 Library = Libraries.Title,
-                Hint = "TOP 20 Warriors",
+                Hint = "武士排行榜 TOP 20",
                 Location = new Point(60, 38),
                 Parent = this,
                 Sound = SoundList.ButtonA,
@@ -103,7 +102,7 @@ namespace Client.MirScenes.Dialogs
                 PressedIndex = 764,
                 HoverIndex = 765,
                 Library = Libraries.Title,
-                Hint = "TOP 20 Wizards",
+                Hint = "法师排行榜 TOP 20",
                 Location = new Point(80, 38),
                 Parent = this,
                 Sound = SoundList.ButtonA,
@@ -115,7 +114,7 @@ namespace Client.MirScenes.Dialogs
                 PressedIndex = 758,
                 HoverIndex = 759,
                 Library = Libraries.Title,
-                Hint = "TOP 20 Assasins",
+                Hint = "刺客排行榜 TOP 20",
                 Location = new Point(100, 38),
                 Parent = this,
                 Sound = SoundList.ButtonA,
@@ -127,7 +126,7 @@ namespace Client.MirScenes.Dialogs
                 PressedIndex = 767,
                 HoverIndex = 768,
                 Library = Libraries.Title,
-                Hint = "TOP 20 Archers",
+                Hint = "弓箭排行榜 TOP 20",
                 Location = new Point(120, 38),
                 Parent = this,
                 Sound = SoundList.ButtonA,
@@ -140,7 +139,7 @@ namespace Client.MirScenes.Dialogs
                 HoverIndex = 208,
                 PressedIndex = 209,
                 Library = Libraries.Prguse2,
-                Location = new Point(299, 386),
+                Location = new Point(360, 385),
                 Parent = this,
                 Sound = SoundList.ButtonA,
             };
@@ -152,7 +151,7 @@ namespace Client.MirScenes.Dialogs
                 HoverIndex = 198,
                 PressedIndex = 199,
                 Library = Libraries.Prguse2,
-                Location = new Point(299, 100),
+                Location = new Point(360, 99),
                 Parent = this,
                 Sound = SoundList.ButtonA,
             };
@@ -165,7 +164,7 @@ namespace Client.MirScenes.Dialogs
                 Index = 205,
                 HoverIndex = 206,
                 PressedIndex = 206,
-                Location = new Point(299, PrevButton.Location.Y + 13),
+                Location = new Point(360, PrevButton.Location.Y + 13),
                 Library = Libraries.Prguse2,
                 Parent = this,
                 Movable = true,
@@ -183,11 +182,11 @@ namespace Client.MirScenes.Dialogs
 
                 var row = Math.Max(0, Math.Min(RankCount - 20, (y - PrevButton.Location.Y - 13) / GapPerRow));
                 RowOffset = (int)row;
-                NextRequestTime = CMain.Now + TimeSpan.FromSeconds(0.1);
+                NextRequestTime = CMain.Now + TimeSpan.FromSeconds(0.5);//默认 0.1
             };
 
             OnlineOnlyButton = new MirCheckBox { Index = 2086, UnTickedIndex = 2086, TickedIndex = 2087, Parent = this, Location = new Point(190, Size.Height - 20), Library = Libraries.Prguse };
-            OnlineOnlyButton.LabelText = "Online Only";
+            OnlineOnlyButton.LabelText = "在线玩家";
             OnlineOnlyButton.Click += (o, e) =>
             {
                 OnlineOnly = OnlineOnlyButton.Checked;
@@ -215,7 +214,7 @@ namespace Client.MirScenes.Dialogs
                 { 
                     Parent = this, 
                     Location = new Point(32, 98 + i * 15),
-                    Size = new Size(270,15),
+                    Size = new Size(285,15),
                 };
                 Rows[i].MouseWheel += (o, e) => Ranking_MouseWheel(o, e);
             }
@@ -276,7 +275,7 @@ namespace Client.MirScenes.Dialogs
             {//go up
                 RowOffset = RowOffset > 0 ? --RowOffset : RowOffset;
             }
-            NextRequestTime = CMain.Now;
+            NextRequestTime = CMain.Now + TimeSpan.FromSeconds(0.5);
         }
 
         public void RequestRanks(byte RankType)
@@ -317,9 +316,9 @@ namespace Client.MirScenes.Dialogs
                     Rows[i].Update(RankList[RankType][i], RowOffset + i + 1);
             }
             if (Rank[RankType] == 0)
-                MyRank.Text = "Not Listed";
+                MyRank.Text = "未入排名";
             else
-                MyRank.Text = string.Format("Ranked: {0}", Rank[RankType]);
+                MyRank.Text = string.Format("排名: {0}", Rank[RankType]); ;
         }
 
         public sealed class RankingRow : MirControl

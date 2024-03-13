@@ -1,11 +1,7 @@
 ﻿using System.Collections.Generic;
-using System;
-using System.Drawing;
 using Server.MirDatabase;
 using Server.MirEnvir;
 using S = ServerPackets;
-using System.Linq;
-using System.Text;
 
 namespace Server.MirObjects.Monsters
 {
@@ -67,7 +63,7 @@ namespace Server.MirObjects.Monsters
             else
             {
                 Broadcast(new S.ObjectRangeAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation, TargetID = Target.ObjectID, Type = 0 });
-                int damage = GetAttackPower(Stats[Stat.MinMC], Stats[Stat.MaxMC]);
+                int damage = GetAttackPower(Stats[Stat.MinSC], Stats[Stat.MaxSC]);
                 if (damage == 0) return;
 
                 int delay = Functions.MaxDistance(CurrentLocation, Target.CurrentLocation) * 50 + 500; //50 MS per Step

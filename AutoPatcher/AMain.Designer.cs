@@ -75,7 +75,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(40, 13);
             this.label1.TabIndex = 3;
-            this.label1.Text = "Action:";
+            this.label1.Text = "功能:";
             // 
             // ActionLabel
             // 
@@ -84,7 +84,7 @@
             this.ActionLabel.Name = "ActionLabel";
             this.ActionLabel.Size = new System.Drawing.Size(85, 13);
             this.ActionLabel.TabIndex = 4;
-            this.ActionLabel.Text = "Checking Files...";
+            this.ActionLabel.Text = "检查文件...";
             // 
             // progressBar1
             // 
@@ -99,7 +99,7 @@
             this.CancelButton.Name = "CancelButton";
             this.CancelButton.Size = new System.Drawing.Size(75, 23);
             this.CancelButton.TabIndex = 6;
-            this.CancelButton.Text = "Cancel";
+            this.CancelButton.Text = "取消";
             this.CancelButton.UseVisualStyleBackColor = true;
             this.CancelButton.Click += new System.EventHandler(this.CancelButton_Click);
             // 
@@ -129,7 +129,7 @@
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(57, 13);
             this.label3.TabIndex = 8;
-            this.label3.Text = "Total Size:";
+            this.label3.Text = "总计容量:";
             // 
             // FileLabel
             // 
@@ -147,7 +147,7 @@
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(63, 13);
             this.label5.TabIndex = 10;
-            this.label5.Text = "Current File:";
+            this.label5.Text = "目前文件:";
             // 
             // SpeedLabel
             // 
@@ -165,7 +165,7 @@
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(41, 13);
             this.label7.TabIndex = 12;
-            this.label7.Text = "Speed:";
+            this.label7.Text = "速度:";
             // 
             // progressBar2
             // 
@@ -212,7 +212,7 @@
             this.Controls.Add(this.ImageLinkLabel);
             this.Controls.Add(this.pictureBox1);
             this.Name = "AMain";
-            this.Text = "Auto Patcher";
+            this.Text = "自动匹配";
             this.Load += new System.EventHandler(this.AMain_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);

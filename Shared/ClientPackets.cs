@@ -1,7 +1,7 @@
 ﻿using System;
-using System.IO;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 
 namespace ClientPackets
 {
@@ -580,16 +580,19 @@ namespace ClientPackets
 
         public ulong UniqueID;
         public ushort Count;
+        public bool HeroInventory = false;
 
         protected override void ReadPacket(BinaryReader reader)
         {
             UniqueID = reader.ReadUInt64();
             Count = reader.ReadUInt16();
+            HeroInventory = reader.ReadBoolean();
         }
         protected override void WritePacket(BinaryWriter writer)
         {
             writer.Write(UniqueID);
             writer.Write(Count);
+            writer.Write(HeroInventory);
         }
     }
 
@@ -661,17 +664,20 @@ namespace ClientPackets
 
         public uint ObjectID;
         public bool Ranking = false;
+        public bool Hero = false;
 
         protected override void ReadPacket(BinaryReader reader)
         {
             ObjectID = reader.ReadUInt32();
             Ranking = reader.ReadBoolean();
+            Hero = reader.ReadBoolean();
         }
 
         protected override void WritePacket(BinaryWriter writer)
         {
             writer.Write(ObjectID);
             writer.Write(Ranking);
+            writer.Write(Hero);
         }
     }
     public sealed class Observe : Packet
@@ -1009,6 +1015,7 @@ namespace ClientPackets
         public uint TargetID;
         public Point Location;
         public uint ObjectID;
+        public bool SpellTargetLock;
 
         protected override void ReadPacket(BinaryReader reader)
         {
@@ -1017,6 +1024,7 @@ namespace ClientPackets
             Direction = (MirDirection)reader.ReadByte();
             TargetID = reader.ReadUInt32();
             Location = new Point(reader.ReadInt32(), reader.ReadInt32());
+            SpellTargetLock = reader.ReadBoolean();
         }
         protected override void WritePacket(BinaryWriter writer)
         {
@@ -1026,6 +1034,7 @@ namespace ClientPackets
             writer.Write(TargetID);
             writer.Write(Location.X);
             writer.Write(Location.Y);
+            writer.Write(SpellTargetLock);
         }
     }
 
@@ -2272,7 +2281,7 @@ namespace ClientPackets
     {
         public override short Index { get { return (short)ClientPacketIds.GuildBuffUpdate; } }
 
-        public byte Action = 0; //0 = request list, 1 = request a buff to be enabled, 2 = request a buff to be activated
+        public byte Action = 0; //0 = 请求列表, 1 = 请求启用buff, 2 = 请求激活buff
         public int Id;
 
         protected override void ReadPacket(BinaryReader reader)
@@ -2293,16 +2302,19 @@ namespace ClientPackets
 
         public int GIndex;
         public byte Quantity;
+        public int PType;
 
         protected override void ReadPacket(BinaryReader reader)
         {
             GIndex = reader.ReadInt32();
             Quantity = reader.ReadByte();
+            PType = reader.ReadInt32();
         }
         protected override void WritePacket(BinaryWriter writer)
         {
             writer.Write(GIndex);
             writer.Write(Quantity);
+            writer.Write(PType);
         }
     }
 

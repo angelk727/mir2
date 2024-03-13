@@ -1,16 +1,12 @@
-﻿using System;
-using System.Drawing;
-using Server.MirDatabase;
+﻿using Server.MirDatabase;
 using Server.MirEnvir;
 using S = ServerPackets;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Server.MirObjects.Monsters
 {
     public class FrozenMagician : MonsterObject
     {
-        private const byte AttackRange = 9;
+        private const byte AttackRange = 7;
 
         protected internal FrozenMagician(MonsterInfo info)
             : base(info)

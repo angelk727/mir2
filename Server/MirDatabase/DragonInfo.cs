@@ -32,7 +32,7 @@ namespace Server.MirDatabase
             //Default values
             Enabled = false;
             MapFileName = "D2083";
-            MonsterName = "Evil Mir";
+            MonsterName = "破天魔龙";
             BodyName = "00";
             Location = new Point(82, 44);
             DropAreaTop = new Point(75, 45);
@@ -91,7 +91,7 @@ namespace Server.MirDatabase
         public void LoadDrops()
         {
             for (int i = 0; i < Globals.MaxDragonLevel; i++) Drops[i].Clear();
-            string path = Path.Combine(Settings.DropPath, "DragonItem.txt");
+            string path = Path.Combine(Settings.DropPath, "破天魔龙.txt");
             if (!File.Exists(path))
             {
                 string[] contents = new[]
@@ -123,7 +123,7 @@ namespace Server.MirDatabase
                 DropInfo drop = DropInfo.FromLine(lines[i]);
                 if (drop == null)
                 {
-                    MessageQueue.Enqueue(string.Format("Could not load Drop: DragonItem, Line {0}", lines[i]));
+                    MessageQueue.Enqueue(string.Format("加载掉落物品失败: 破天魔龙, Line {0}", lines[i]));
                     continue;
                 }
 

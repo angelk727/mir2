@@ -3,10 +3,8 @@ using System.Drawing;
 using System.Windows.Forms;
 using Client.MirGraphics;
 using Client.MirNetwork;
-using Client.MirObjects;
 using Client.MirScenes;
 using Client.MirSounds;
-using Client.MirScenes.Dialogs;
 using C = ClientPackets;
 
 namespace Client.MirControls
@@ -74,7 +72,7 @@ namespace Client.MirControls
                 NotControl = true,
                 ForeColour = Color.Gray,
                 Font = new Font(Settings.FontName, 7F),
-                Text = "STOCK:"
+                Text = "库存:"
             };
 
             stockLabel = new MirLabel
@@ -196,38 +194,50 @@ namespace Client.MirControls
             uint CreditCost;
             uint GoldCost;
             MirMessageBox messageBox;
-
-            if (Item.CreditPrice * Quantity <= GameScene.Credit)
+            int pType = -1;
+            if (GameScene.Scene.GameShopDialog.PaymentTypeCredit.Checked && Item.CanBuyCredit)
             {
-                CreditCost = Item.CreditPrice * Quantity;
-                messageBox = new MirMessageBox(string.Format("Are you sure would you like to buy {1} x {0}({3}) for {2} Credits?", Item.Info.FriendlyName, Quantity, CreditCost, Item.Count), MirMessageBoxButtons.YesNo);
+                pType = 0;
             }
-            else
-            { //Needs to attempt to pay with gold and credits
-                if (GameScene.Gold >= (((Item.GoldPrice * Quantity) / (Item.CreditPrice * Quantity)) * ((Item.CreditPrice * Quantity) - GameScene.Credit)))
-                {
-                    GoldCost = ((Item.GoldPrice * Quantity) / (Item.CreditPrice * Quantity)) * ((Item.CreditPrice * Quantity) - GameScene.Credit);
-                    CreditCost = GameScene.Credit;
-                    if (CreditCost == 0)
+            else if (GameScene.Scene.GameShopDialog.PaymentTypeGold.Checked && Item.CanBuyGold)
+            {
+                pType = 1;
+            }
+            if (pType == -1)
+            {
+                GameScene.Scene.ChatDialog.ReceiveChat("选择适合的付款方式", ChatType.System);
+                return;
+            }
+            switch (pType)
+            {
+                case 0: //  Credit
+                    if (Item.CreditPrice * Quantity <= GameScene.Credit)
                     {
-                        messageBox = new MirMessageBox(string.Format("Are you sure would you like to buy {1} x {0}({3}) for {2} Gold?", Item.Info.FriendlyName, Quantity, GoldCost, Item.Count), MirMessageBoxButtons.YesNo);
+                        CreditCost = Item.CreditPrice * Quantity;
+                        messageBox = new MirMessageBox(string.Format("确定要用 {2} 信用点购买物品：{1} x {0} ({3}) ？", Item.Info.FriendlyName, Quantity, CreditCost, Item.Count), MirMessageBoxButtons.YesNo);
+                        messageBox.YesButton.Click += (o, e) => Network.Enqueue(new C.GameshopBuy { GIndex = Item.GIndex, Quantity = Quantity, PType = pType });
+                        messageBox.NoButton.Click += (o, e) => { };
+                        messageBox.Show();
                     }
                     else
+                        GameScene.Scene.ChatDialog.ReceiveChat("没有足够的信用点购买该物品", ChatType.System);
+                    break;
+                case 1: //  Gold
+                    if (Item.GoldPrice * Quantity <= GameScene.Gold)
                     {
-                        messageBox = new MirMessageBox(string.Format("Are you sure would you like to buy {1} x {0}({4}) for {2} Credit and {3} Gold?", Item.Info.FriendlyName, Quantity, CreditCost, GoldCost, Item.Count), MirMessageBoxButtons.YesNo);
+                        GoldCost = Item.GoldPrice * Quantity;
+                        messageBox = new MirMessageBox(string.Format("确定要用 {2} 金币购买物品：{1} x {0} ({3}) ？", Item.Info.FriendlyName, Quantity, GoldCost, Item.Count), MirMessageBoxButtons.YesNo);
+                        messageBox.YesButton.Click += (o, e) => Network.Enqueue(new C.GameshopBuy { GIndex = Item.GIndex, Quantity = Quantity, PType = pType });
+                        messageBox.NoButton.Click += (o, e) => { };
+                        messageBox.Show();
                     }
-                }
-                else
-                {
-                    GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.LowGold, ChatType.System);
+                    else
+                        GameScene.Scene.ChatDialog.ReceiveChat("没有足够的金币购买该物品", ChatType.System);
+                    break;
+                default:
+
                     return;
-                }
-
             }
-
-            messageBox.YesButton.Click += (o, e) => Network.Enqueue(new C.GameshopBuy { GIndex = Item.GIndex, Quantity = Quantity });
-            messageBox.NoButton.Click += (o, e) => { };
-            messageBox.Show();
         }
 
         public override void OnMouseMove(MouseEventArgs e)
@@ -241,12 +251,12 @@ namespace Client.MirControls
                 ShowItem = null;
             }
 
-            if (ShowItem == null && ItemDisplayArea != null && ItemDisplayArea.Contains(CMain.MPoint))
+            if (ShowItem == null && ItemDisplayArea.Contains(CMain.MPoint))
             {
                 ShowItem = new UserItem(Item.Info) { MaxDura = Item.Info.Durability, CurrentDura = Item.Info.Durability, Count = Item.Count };
                 GameScene.Scene.CreateItemLabel(ShowItem);
             }
-            else if (ShowItem != null && ItemDisplayArea != null && !ItemDisplayArea.Contains(CMain.MPoint))
+            else if (ShowItem != null && !ItemDisplayArea.Contains(CMain.MPoint))
             {
                 GameScene.Scene.DisposeItemLabel();
                 GameScene.HoverItem = null;
@@ -259,15 +269,17 @@ namespace Client.MirControls
             nameLabel.Text = Item.Info.FriendlyName;
             nameLabel.Text = nameLabel.Text.Length > 17 ? nameLabel.Text.Substring(0, 17) : nameLabel.Text;
             nameLabel.ForeColour = GameScene.Scene.GradeNameColor(Item.Info.Grade);
-            quantity.Text = Quantity.ToString();
-            goldLabel.Text = (Item.GoldPrice * Quantity).ToString("###,###,##0");
-            gpLabel.Text = (Item.CreditPrice * Quantity).ToString("###,###,##0");
+            quantity.Text = Quantity.ToString(); //商城显示物品个数
+            if (Item.CanBuyGold)
+                goldLabel.Text = (Item.GoldPrice * Quantity).ToString("###,###,##0");
+            if (Item.CanBuyCredit)
+                gpLabel.Text = (Item.CreditPrice * Quantity).ToString("###,###,##0");
             if (Item.Stock >= 99) stockLabel.Text = "99+";
             if (Item.Stock == 0) stockLabel.Text = "∞";
             else stockLabel.Text = Item.Stock.ToString();
             countLabel.Text = Item.Count.ToString();
 
-            if (Item.Info.Type == ItemType.Mount || Item.Info.Type == ItemType.Weapon || Item.Info.Type == ItemType.Armour || Item.Info.Type == ItemType.Transform)
+            if (Item.Info.Type == ItemType.坐骑 || Item.Info.Type == ItemType.武器 || Item.Info.Type == ItemType.盔甲 || Item.Info.Type == ItemType.外形物品)
             {
                 PreviewItem.Visible = true;
                 BuyItem.Location = new Point(75, 122);
@@ -434,10 +446,10 @@ namespace Client.MirControls
         public void UpdateViewer()
         {
             this.Visible = true;
-            if (ViewerItem.Info.Type == ItemType.Weapon) DrawWeapon();
-            if (ViewerItem.Info.Type == ItemType.Armour) DrawArmour();
-            if (ViewerItem.Info.Type == ItemType.Mount) DrawMount();
-            if (ViewerItem.Info.Type == ItemType.Transform) DrawTransform();
+            if (ViewerItem.Info.Type == ItemType.武器) DrawWeapon();
+            if (ViewerItem.Info.Type == ItemType.盔甲) DrawArmour();
+            if (ViewerItem.Info.Type == ItemType.坐骑) DrawMount();
+            if (ViewerItem.Info.Type == ItemType.外形物品) DrawTransform();
         }
 
         private void GameShopViewer_BeforeDraw(object sender, EventArgs e)
@@ -449,12 +461,12 @@ namespace Client.MirControls
         {
             WeaponImage.Visible = false;
             WeaponImage2.Visible = false;
-            if (GameScene.User.Equipment[(int)EquipmentSlot.Armour] != null)
-                PreviewImage.Library = Libraries.CArmours[GameScene.User.Equipment[(int)EquipmentSlot.Armour].Info.Shape];
+            if (GameScene.User.Equipment[(int)EquipmentSlot.盔甲] != null)
+                PreviewImage.Library = Libraries.CArmours[GameScene.User.Equipment[(int)EquipmentSlot.盔甲].Info.Shape];
             else
                 PreviewImage.Library = Libraries.CArmours[0];
 
-            if (GameScene.User.Gender == MirGender.Male)
+            if (GameScene.User.Gender == MirGender.男性)
                 PreviewImage.Index = 448 + (8 * (Direction - 1));
             else
                 PreviewImage.Index = 1256 + (8 * (Direction - 1));
@@ -475,12 +487,12 @@ namespace Client.MirControls
         {
             MountImage.Visible = false;
 
-            if (GameScene.User.Equipment[(int)EquipmentSlot.Armour] != null)
-                PreviewImage.Library = Libraries.CArmours[GameScene.User.Equipment[(int)EquipmentSlot.Armour].Info.Shape];
+            if (GameScene.User.Equipment[(int)EquipmentSlot.盔甲] != null)
+                PreviewImage.Library = Libraries.CArmours[GameScene.User.Equipment[(int)EquipmentSlot.盔甲].Info.Shape];
             else
                 PreviewImage.Library = Libraries.CArmours[0];
 
-            if (GameScene.User.Gender == MirGender.Male)
+            if (GameScene.User.Gender == MirGender.男性)
                 PreviewImage.Index = 32 + (6 * (Direction - 1));
             else
                 PreviewImage.Index = 840 + (6 * (Direction - 1));
@@ -555,7 +567,7 @@ namespace Client.MirControls
             WeaponImage2.Visible = false;
             MountImage.Visible = false;
 
-            if (ViewerItem.Info.RequiredGender == RequiredGender.Male)
+            if (ViewerItem.Info.RequiredGender == RequiredGender.男性)
                 PreviewImage.Index = 32 + (6 * (Direction - 1));
             else
                 PreviewImage.Index = 840 + (6 * (Direction - 1));

@@ -309,7 +309,7 @@ namespace Client.MirScenes.Dialogs
         {
             if (WeightBar.Library == null) return;
 
-            double percent = MapObject.User.CurrentBagWeight / (double)MapObject.User.Stats[Stat.BagWeight];
+            double percent = MapObject.User.CurrentBagWeight / (double)MapObject.User.Stats[Stat.背包负重];
             if (percent > 1) percent = 1;
             if (percent <= 0) return;
 

@@ -11,8 +11,8 @@ public class ItemInfo
     public ItemType Type;
     public ItemGrade Grade;
     public RequiredType RequiredType = RequiredType.Level;
-    public RequiredClass RequiredClass = RequiredClass.None;
-    public RequiredGender RequiredGender = RequiredGender.None;
+    public RequiredClass RequiredClass = RequiredClass.全职业;
+    public RequiredGender RequiredGender = RequiredGender.性别不限;
     public ItemSet Set;
 
     public short Shape;
@@ -46,7 +46,7 @@ public class ItemInfo
 
     public bool IsConsumable
     {
-        get { return Type == ItemType.Potion || Type == ItemType.Scroll || Type == ItemType.Food || Type == ItemType.Transform || Type == ItemType.Script || Type == ItemType.SealedHero; }
+        get { return Type == ItemType.药水 || Type == ItemType.卷轴 || Type == ItemType.坐骑食物 || Type == ItemType.外形物品 || Type == ItemType.特殊消耗品; }
     }
     public bool IsFishingRod
     {
@@ -58,8 +58,8 @@ public class ItemInfo
         get
         {
             string temp = Name;
-            temp = Regex.Replace(temp, @"\d+$", string.Empty); //hides end numbers
-            temp = Regex.Replace(temp, @"\[[^]]*\]", string.Empty); //hides square brackets
+            temp = Regex.Replace(temp, @"\d+$", string.Empty); //隐藏结尾的数字
+            temp = Regex.Replace(temp, @"\[[^]]*\]", string.Empty); //隐藏方括号
 
             return temp;
         }
@@ -115,36 +115,36 @@ public class ItemInfo
             Stats[Stat.MaxSC] = reader.ReadByte();
             Stats[Stat.HP] = reader.ReadUInt16();
             Stats[Stat.MP] = reader.ReadUInt16();
-            Stats[Stat.Accuracy] = reader.ReadByte();
-            Stats[Stat.Agility] = reader.ReadByte();
+            Stats[Stat.准确] = reader.ReadByte();
+            Stats[Stat.敏捷] = reader.ReadByte();
 
-            Stats[Stat.Luck] = reader.ReadSByte();
-            Stats[Stat.AttackSpeed] = reader.ReadSByte();
+            Stats[Stat.幸运] = reader.ReadSByte();
+            Stats[Stat.攻击速度] = reader.ReadSByte();
         }
 
         StartItem = reader.ReadBoolean();
 
         if (version <= 84)
         {
-            Stats[Stat.BagWeight] = reader.ReadByte();
-            Stats[Stat.HandWeight] = reader.ReadByte();
-            Stats[Stat.WearWeight] = reader.ReadByte();
+            Stats[Stat.背包负重] = reader.ReadByte();
+            Stats[Stat.腕力负重] = reader.ReadByte();
+            Stats[Stat.装备负重] = reader.ReadByte();
         }
 
         Effect = reader.ReadByte();
 
         if (version <= 84)
         {
-            Stats[Stat.Strong] = reader.ReadByte();
-            Stats[Stat.MagicResist] = reader.ReadByte();
-            Stats[Stat.PoisonResist] = reader.ReadByte();
-            Stats[Stat.HealthRecovery] = reader.ReadByte();
-            Stats[Stat.SpellRecovery] = reader.ReadByte();
-            Stats[Stat.PoisonRecovery] = reader.ReadByte();
-            Stats[Stat.HPRatePercent] = reader.ReadByte();
-            Stats[Stat.MPRatePercent] = reader.ReadByte();
-            Stats[Stat.CriticalRate] = reader.ReadByte();
-            Stats[Stat.CriticalDamage] = reader.ReadByte();
+            Stats[Stat.强度] = reader.ReadByte();
+            Stats[Stat.魔法躲避] = reader.ReadByte();
+            Stats[Stat.毒物躲避] = reader.ReadByte();
+            Stats[Stat.生命恢复] = reader.ReadByte();
+            Stats[Stat.法力恢复] = reader.ReadByte();
+            Stats[Stat.中毒恢复] = reader.ReadByte();
+            Stats[Stat.生命值数率] = reader.ReadByte();
+            Stats[Stat.法力值数率] = reader.ReadByte();
+            Stats[Stat.暴击倍率] = reader.ReadByte();
+            Stats[Stat.暴击伤害] = reader.ReadByte();
         }
 
 
@@ -162,19 +162,19 @@ public class ItemInfo
 
         if (version <= 84)
         {
-            Stats[Stat.MaxACRatePercent] = reader.ReadByte();
-            Stats[Stat.MaxMACRatePercent] = reader.ReadByte();
-            Stats[Stat.Holy] = reader.ReadByte();
-            Stats[Stat.Freezing] = reader.ReadByte();
-            Stats[Stat.PoisonAttack] = reader.ReadByte();
+            Stats[Stat.最大防御数率] = reader.ReadByte();
+            Stats[Stat.最大魔御数率] = reader.ReadByte();
+            Stats[Stat.神圣] = reader.ReadByte();
+            Stats[Stat.冰冻伤害] = reader.ReadByte();
+            Stats[Stat.毒素伤害] = reader.ReadByte();
         }
 
         Bind = (BindMode)reader.ReadInt16();
 
         if (version <= 84)
         {
-            Stats[Stat.Reflect] = reader.ReadByte();
-            Stats[Stat.HPDrainRatePercent] = reader.ReadByte();
+            Stats[Stat.反弹伤害] = reader.ReadByte();
+            Stats[Stat.吸血数率] = reader.ReadByte();
         }
 
         Unique = (SpecialItemMode)reader.ReadInt16();
@@ -200,9 +200,9 @@ public class ItemInfo
             ToolTip = reader.ReadString();
         }
 
-        if (version < 70) //before db version 70 all specialitems had wedding rings disabled, after that it became a server option
+        if (version < 70) //在db版本70之前，所有专业人员都禁用结婚戒指，之后它成为服务器选项
         {
-            if ((Type == ItemType.Ring) && (Unique != SpecialItemMode.None))
+            if ((Type == ItemType.戒指) && (Unique != SpecialItemMode.None))
                 Bind |= BindMode.NoWeddingRing;
         }
     }
@@ -320,13 +320,15 @@ public class UserItem
 
     public int Weight
     {
-        get { return Info.Type == ItemType.Amulet ? Info.Weight : Info.Weight * Count; }
+        get { return Info.Type == ItemType.护身符 ? Info.Weight : Info.Weight * Count; }
     }
 
     public string FriendlyName
     {
         get { return Count > 1 ? string.Format("{0} ({1})", Info.FriendlyName, Count) : Info.FriendlyName; }
     }
+
+    public bool GMMade { get; set; }
 
     public UserItem(ItemInfo info)
     {
@@ -364,13 +366,13 @@ public class UserItem
             AddedStats[Stat.MaxMC] = reader.ReadByte();
             AddedStats[Stat.MaxSC] = reader.ReadByte();
 
-            AddedStats[Stat.Accuracy] = reader.ReadByte();
-            AddedStats[Stat.Agility] = reader.ReadByte();
+            AddedStats[Stat.准确] = reader.ReadByte();
+            AddedStats[Stat.敏捷] = reader.ReadByte();
             AddedStats[Stat.HP] = reader.ReadByte();
             AddedStats[Stat.MP] = reader.ReadByte();
 
-            AddedStats[Stat.AttackSpeed] = reader.ReadSByte();
-            AddedStats[Stat.Luck] = reader.ReadSByte();
+            AddedStats[Stat.攻击速度] = reader.ReadSByte();
+            AddedStats[Stat.幸运] = reader.ReadSByte();
         }
 
         SoulBoundId = reader.ReadInt32();
@@ -380,16 +382,16 @@ public class UserItem
 
         if (version <= 84)
         {
-            AddedStats[Stat.Strong] = reader.ReadByte();
-            AddedStats[Stat.MagicResist] = reader.ReadByte();
-            AddedStats[Stat.PoisonResist] = reader.ReadByte();
-            AddedStats[Stat.HealthRecovery] = reader.ReadByte();
-            AddedStats[Stat.SpellRecovery] = reader.ReadByte();
-            AddedStats[Stat.PoisonRecovery] = reader.ReadByte();
-            AddedStats[Stat.CriticalRate] = reader.ReadByte();
-            AddedStats[Stat.CriticalDamage] = reader.ReadByte();
-            AddedStats[Stat.Freezing] = reader.ReadByte();
-            AddedStats[Stat.PoisonAttack] = reader.ReadByte();
+            AddedStats[Stat.强度] = reader.ReadByte();
+            AddedStats[Stat.魔法躲避] = reader.ReadByte();
+            AddedStats[Stat.毒物躲避] = reader.ReadByte();
+            AddedStats[Stat.生命恢复] = reader.ReadByte();
+            AddedStats[Stat.法力恢复] = reader.ReadByte();
+            AddedStats[Stat.中毒恢复] = reader.ReadByte();
+            AddedStats[Stat.暴击倍率] = reader.ReadByte();
+            AddedStats[Stat.暴击伤害] = reader.ReadByte();
+            AddedStats[Stat.冰冻伤害] = reader.ReadByte();
+            AddedStats[Stat.毒素伤害] = reader.ReadByte();
         }
 
         int count = reader.ReadInt32();
@@ -452,6 +454,11 @@ public class UserItem
         {
             SealedInfo = new SealedInfo(reader, version, customVersion);
         }
+
+        if (version > 107)
+        {
+            GMMade = reader.ReadBoolean();
+        }
     }
 
     public void Save(BinaryWriter writer)
@@ -501,6 +508,8 @@ public class UserItem
 
         writer.Write(SealedInfo != null);
         SealedInfo?.Save(writer);
+
+        writer.Write(GMMade);
     }
 
     public int GetTotal(Stat type)
@@ -613,13 +622,13 @@ public class UserItem
         {
             switch (Info.Type)
             {
-                case ItemType.Mount:
+                case ItemType.坐骑:
                     if (Info.Shape < 7)
                         size = 4;
-                    else if (Info.Shape < 12)
+                    else if (Info.Shape < 13)//添加坐骑 坐骑数 默认：12
                         size = 5;
                     break;
-                case ItemType.Weapon:
+                case ItemType.武器:
                     if (Info.Shape == 49 || Info.Shape == 50)
                         size = 5;
                     break;
@@ -640,22 +649,22 @@ public class UserItem
             switch (Info.Type)
             {
                 #region Amulet and Poison Stack Image changes
-                case ItemType.Amulet:
+                case ItemType.护身符:
                     if (Info.StackSize > 0)
                     {
                         switch (Info.Shape)
                         {
-                            case 0: //Amulet
+                            case 0: //护身符
                                 if (Count >= 300) return 3662;
                                 if (Count >= 200) return 3661;
                                 if (Count >= 100) return 3660;
                                 return 3660;
-                            case 1: //Grey Poison
+                            case 1: //绿毒
                                 if (Count >= 150) return 3675;
                                 if (Count >= 100) return 2960;
                                 if (Count >= 50) return 3674;
                                 return 3673;
-                            case 2: //Yellow Poison
+                            case 2: //黄毒
                                 if (Count >= 150) return 3672;
                                 if (Count >= 100) return 2961;
                                 if (Count >= 50) return 3671;
@@ -694,7 +703,8 @@ public class UserItem
             RentalInformation = RentalInformation,
             SealedInfo = SealedInfo,
 
-            IsShopItem = IsShopItem
+            IsShopItem = IsShopItem,
+            GMMade = GMMade
         };
 
         return item;
@@ -784,6 +794,8 @@ public class GameShopItem
     public bool Deal = false;
     public bool TopItem = false;
     public DateTime Date;
+    public bool CanBuyGold = false;
+    public bool CanBuyCredit = false;
 
     public GameShopItem()
     {
@@ -810,6 +822,12 @@ public class GameShopItem
         Deal = reader.ReadBoolean();
         TopItem = reader.ReadBoolean();
         Date = DateTime.FromBinary(reader.ReadInt64());
+        if (version > 105)
+        {
+            CanBuyGold = reader.ReadBoolean();
+            CanBuyCredit = reader.ReadBoolean();
+        }
+
     }
 
     public GameShopItem(BinaryReader reader, bool packet = false)
@@ -827,6 +845,8 @@ public class GameShopItem
         Deal = reader.ReadBoolean();
         TopItem = reader.ReadBoolean();
         Date = DateTime.FromBinary(reader.ReadInt64());
+        CanBuyCredit = reader.ReadBoolean();
+        CanBuyGold = reader.ReadBoolean();
     }
 
     public void Save(BinaryWriter writer, bool packet = false)
@@ -844,6 +864,8 @@ public class GameShopItem
         writer.Write(Deal);
         writer.Write(TopItem);
         writer.Write(Date.ToBinary());
+        writer.Write(CanBuyCredit);
+        writer.Write(CanBuyGold);
     }
 
     public override string ToString()
@@ -855,7 +877,7 @@ public class GameShopItem
 
 public class Awake
 {
-    //Awake Option
+    //觉醒设置
     public static byte AwakeSuccessRate = 70;
     public static byte AwakeHitRate = 70;
     public static int MaxAwakeLevel = 5;
@@ -922,11 +944,11 @@ public class Awake
 
         if (this.Type == AwakeType.None)
         {
-            if (item.Info.Type == ItemType.Weapon)
+            if (item.Info.Type == ItemType.武器)
             {
-                if (type == AwakeType.DC ||
-                    type == AwakeType.MC ||
-                    type == AwakeType.SC)
+                if (type == AwakeType.物理攻击 ||
+                    type == AwakeType.魔法攻击 ||
+                    type == AwakeType.道术攻击)
                 {
                     this.Type = type;
                     return true;
@@ -934,10 +956,10 @@ public class Awake
                 else
                     return false;
             }
-            else if (item.Info.Type == ItemType.Helmet)
+            else if (item.Info.Type == ItemType.头盔)
             {
-                if (type == AwakeType.AC ||
-                    type == AwakeType.MAC)
+                if (type == AwakeType.物理防御 ||
+                    type == AwakeType.魔法防御)
                 {
                     this.Type = type;
                     return true;
@@ -945,9 +967,9 @@ public class Awake
                 else
                     return false;
             }
-            else if (item.Info.Type == ItemType.Armour)
+            else if (item.Info.Type == ItemType.盔甲)
             {
-                if (type == AwakeType.HPMP)
+                if (type == AwakeType.生命法力值)
                 {
                     this.Type = type;
                     return true;
@@ -969,7 +991,7 @@ public class Awake
 
     public int UpgradeAwake(UserItem item, AwakeType type, out bool[] isHit)
     {
-        //return -1 condition error, -1 = dont upgrade, 0 = failed, 1 = Succeed,  
+        //return -1 条件误差, -1 = 不能升级, 0 = 失败, 1 = 成功,  
         isHit = null;
         if (CheckAwakening(item, type) != true)
             return -1;
@@ -1008,12 +1030,12 @@ public class Awake
 
     public int GetAwakeLevelValue(int i) { return listAwake[i]; }
 
-    public byte GetDC() { return (Type == AwakeType.DC ? GetAwakeValue() : (byte)0); }
-    public byte GetMC() { return (Type == AwakeType.MC ? GetAwakeValue() : (byte)0); }
-    public byte GetSC() { return (Type == AwakeType.SC ? GetAwakeValue() : (byte)0); }
-    public byte GetAC() { return (Type == AwakeType.AC ? GetAwakeValue() : (byte)0); }
-    public byte GetMAC() { return (Type == AwakeType.MAC ? GetAwakeValue() : (byte)0); }
-    public byte GetHPMP() { return (Type == AwakeType.HPMP ? GetAwakeValue() : (byte)0); }
+    public byte GetDC() { return (Type == AwakeType.物理攻击 ? GetAwakeValue() : (byte)0); }
+    public byte GetMC() { return (Type == AwakeType.魔法攻击 ? GetAwakeValue() : (byte)0); }
+    public byte GetSC() { return (Type == AwakeType.道术攻击 ? GetAwakeValue() : (byte)0); }
+    public byte GetAC() { return (Type == AwakeType.物理防御 ? GetAwakeValue() : (byte)0); }
+    public byte GetMAC() { return (Type == AwakeType.魔法防御 ? GetAwakeValue() : (byte)0); }
+    public byte GetHPMP() { return (Type == AwakeType.生命法力值 ? GetAwakeValue() : (byte)0); }
 
     private bool[] MakeHit(int maxValue, out int makeValue)
     {
@@ -1048,13 +1070,13 @@ public class Awake
 
         switch (item.Info.Type)
         {
-            case ItemType.Weapon:
+            case ItemType.武器:
                 result *= (int)Awake_WeaponRate;
                 break;
-            case ItemType.Armour:
+            case ItemType.盔甲:
                 result *= (int)Awake_ArmorRate;
                 break;
-            case ItemType.Helmet:
+            case ItemType.头盔:
                 result *= (int)Awake_HelmetRate;
                 break;
             default:
@@ -1096,7 +1118,7 @@ public class ItemRentalInformation
 }
 
 
-public class ItemSets
+public class ItemSets //套装件数设置
 {
     public ItemSet Set;
     public List<ItemType> Type;
@@ -1106,42 +1128,46 @@ public class ItemSets
         {
             switch (Set)
             {
-                case ItemSet.Mundane:
-                case ItemSet.NokChi:
-                case ItemSet.TaoProtect:
-                case ItemSet.Whisker1:
-                case ItemSet.Whisker2:
-                case ItemSet.Whisker3:
-                case ItemSet.Whisker4:
-                case ItemSet.Whisker5:
+                case ItemSet.世轮套装:
+                case ItemSet.绿翠套装:
+                case ItemSet.道护套装:
+                case ItemSet.贵人战套:
+                case ItemSet.贵人法套:
+                case ItemSet.贵人道套:
+                case ItemSet.贵人刺套:
+                case ItemSet.贵人弓套:
                     return 2;
-                case ItemSet.RedOrchid:
-                case ItemSet.RedFlower:
-                case ItemSet.Smash:
-                case ItemSet.HwanDevil:
-                case ItemSet.Purity:
-                case ItemSet.FiveString:
-                case ItemSet.Bone:
-                case ItemSet.Bug:
-                case ItemSet.DarkGhost:
+                case ItemSet.赤兰套装:
+                case ItemSet.密火套装:
+                case ItemSet.破碎套装:
+                case ItemSet.幻魔石套:
+                case ItemSet.灵玉套装:
+                case ItemSet.五玄套装:
+                case ItemSet.白骨套装:
+                case ItemSet.虫血套装:
+                case ItemSet.鏃未套装:
                     return 3;
-                case ItemSet.Recall:
+                case ItemSet.记忆套装:
+                case ItemSet.神龙套装:
                     return 4;
-                case ItemSet.Spirit:
-                case ItemSet.WhiteGold:
-                case ItemSet.WhiteGoldH:
-                case ItemSet.RedJade:
-                case ItemSet.RedJadeH:
-                case ItemSet.Nephrite:
-                case ItemSet.NephriteH:
-                case ItemSet.Hyeolryong:
-                case ItemSet.Monitor:
-                case ItemSet.Oppressive:
-                case ItemSet.Paeok:
-                case ItemSet.Sulgwan:
-                case ItemSet.BlueFrostH:
-                case ItemSet.BlueFrost:
+                case ItemSet.祈祷套装:
+                case ItemSet.白金套装:
+                case ItemSet.强白金套:
+                case ItemSet.红玉套装:
+                case ItemSet.强红玉套:
+                case ItemSet.软玉套装:
+                case ItemSet.强软玉套:
+                case ItemSet.龙血套装:
+                case ItemSet.监视套装:
+                case ItemSet.暴压套装:
+                case ItemSet.贝玉套装:
+                case ItemSet.黑术套装:
+                case ItemSet.强青玉套:
+                case ItemSet.青玉套装:
+                case ItemSet.圣龙套装:
                     return 5;
+                case ItemSet.天龙套装:
+                    return 8;
                 default:
                     return 0;
             }
@@ -1171,33 +1197,33 @@ public class RandomItemStat
     public byte CurseChance;
     public byte SlotChance, SlotStatChance, SlotMaxStat;
 
-    public RandomItemStat(ItemType Type = ItemType.Book)
+    public RandomItemStat(ItemType Type = ItemType.技能书)
     {
         switch (Type)
         {
-            case ItemType.Weapon:
+            case ItemType.武器:
                 SetWeapon();
                 break;
-            case ItemType.Armour:
+            case ItemType.盔甲:
                 SetArmour();
                 break;
-            case ItemType.Helmet:
+            case ItemType.头盔:
                 SetHelmet();
                 break;
-            case ItemType.Belt:
-            case ItemType.Boots:
+            case ItemType.腰带:
+            case ItemType.靴子:
                 SetBeltBoots();
                 break;
-            case ItemType.Necklace:
+            case ItemType.项链:
                 SetNecklace();
                 break;
-            case ItemType.Bracelet:
+            case ItemType.手镯:
                 SetBracelet();
                 break;
-            case ItemType.Ring:
+            case ItemType.戒指:
                 SetRing();
                 break;
-            case ItemType.Mount:
+            case ItemType.坐骑:
                 SetMount();
                 break;
         }
@@ -1232,6 +1258,10 @@ public class RandomItemStat
         AccuracyChance = 30;
         AccuracyStatChance = 20;
         AccuracyMaxStat = 2;
+
+        SlotChance = 0; //新添加
+        SlotStatChance = 0;
+        SlotMaxStat = 4;
     }
     public void SetArmour()
     {

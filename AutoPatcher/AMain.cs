@@ -46,7 +46,7 @@ namespace AutoPatcher
             }
             else
             {
-                MessageBox.Show("Could not get Patch Information.");
+                MessageBox.Show("无法获取补丁程序信息");
                 Completed = true;
                 return;
             }
@@ -317,12 +317,12 @@ namespace AutoPatcher
                     PlayButton.Enabled = true;
                     InterfaceTimer.Enabled = false;
 
-                    if (ErrorFound) MessageBox.Show("One or more files failed to download, check Error.txt for details.", "Failed to Download.");
+                    if (ErrorFound) MessageBox.Show("一个或多个文件下载失败，请检查Error.txt以了解详细信息", "下载失败");
                     ErrorFound = false;
                     return;
                 }
 
-                ActionLabel.Text = !Checked ? string.Format("Checking Files... {0}/{1}", _currentCount, _fileCount) : string.Format("Downloading... {0}/{1}", _currentCount, _fileCount);
+                ActionLabel.Text = !Checked ? string.Format("文件校验... {0}/{1}", _currentCount, _fileCount) : string.Format("下载中... {0}/{1}", _currentCount, _fileCount);
                 SizeLabel.Text = string.Format("{0:#,##0} MB / {1:#,##0} MB", (_completedBytes + _currentBytes) / 1024 / 1024, _totalBytes / 1024 / 1024);
 
                 if (_currentFile != null)

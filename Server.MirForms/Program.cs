@@ -1,9 +1,5 @@
 ﻿using System;
-using System.IO;
-using System.Reflection;
 using System.Windows.Forms;
-using System.Xml;
-using log4net;
 
 namespace Server.MirForms
 {

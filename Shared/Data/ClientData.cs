@@ -468,8 +468,8 @@ public class ClientQuestInfo
 
         switch (Type)
         {
-            case QuestType.General:
-            case QuestType.Repeatable:
+            case QuestType.一般:
+            case QuestType.重复:
                 if (completed)
                     icon = QuestIcon.QuestionYellow;
                 else if (taken)
@@ -477,7 +477,7 @@ public class ClientQuestInfo
                 else
                     icon = QuestIcon.ExclamationYellow;
                 break;
-            case QuestType.Daily:
+            case QuestType.每日:
                 if (completed)
                     icon = QuestIcon.QuestionBlue;
                 else if (taken)
@@ -485,7 +485,7 @@ public class ClientQuestInfo
                 else
                     icon = QuestIcon.ExclamationBlue;
                 break;
-            case QuestType.Story:
+            case QuestType.主线:
                 if (completed)
                     icon = QuestIcon.QuestionGreen;
                 else if (taken)

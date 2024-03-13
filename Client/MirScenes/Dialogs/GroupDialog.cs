@@ -1,15 +1,11 @@
-﻿using Client.MirControls;
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using Client.MirControls;
 using Client.MirGraphics;
 using Client.MirNetwork;
 using Client.MirObjects;
 using Client.MirSounds;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using C = ClientPackets;
 
 namespace Client.MirScenes.Dialogs
@@ -18,6 +14,7 @@ namespace Client.MirScenes.Dialogs
     {
         public static bool AllowGroup;
         public static List<string> GroupList = new List<string>();
+        public static Dictionary<string, string> GroupMembersMap = new Dictionary<string, string>();
 
         public MirImageControl TitleLabel;
         public MirButton SwitchButton, CloseButton, AddButton, DelButton;
@@ -38,7 +35,7 @@ namespace Client.MirScenes.Dialogs
                 AutoSize = true,
                 Location = new Point(16, 33),
                 Parent = this,
-                NotControl = true,
+                NotControl = false,
             };
 
             for (int i = 1; i < GroupMembers.Length; i++)
@@ -48,7 +45,7 @@ namespace Client.MirScenes.Dialogs
                     AutoSize = true,
                     Location = new Point(((i + 1) % 2) * 100 + 16, 55 + ((i - 1) / 2) * 20),
                     Parent = this,
-                    NotControl = true,
+                    NotControl = false,
                 };
             }
 
@@ -156,18 +153,31 @@ namespace Client.MirScenes.Dialogs
 
             for (int i = 0; i < GroupMembers.Length; i++)
                 GroupMembers[i].Text = i >= GroupList.Count ? string.Empty : GroupList[i];
+
+            foreach (var player in GroupMembersMap)
+            {
+                for (int i = 0; i < GroupMembers.Length; i++)
+                {
+                    string playersName = GroupMembers[i].Text;
+
+                    if (player.Key == playersName)
+                        GroupMembers[i].Hint = player.Value;
+                }
+            }
+
+
         }
 
         public void AddMember(string name)
         {
             if (GroupList.Count >= Globals.MaxGroup)
             {
-                GameScene.Scene.ChatDialog.ReceiveChat("Your group already has the maximum number of members.", ChatType.System);
+                GameScene.Scene.ChatDialog.ReceiveChat("行会人数已达上限", ChatType.System);
                 return;
             }
             if (GroupList.Count > 0 && GroupList[0] != MapObject.User.Name)
             {
-                GameScene.Scene.ChatDialog.ReceiveChat("You are not the leader of your group.", ChatType.System);
+                GameScene.Scene.ChatDialog.ReceiveChat("没有行会权限", ChatType.System);
                 return;
             }
 
@@ -178,13 +188,13 @@ namespace Client.MirScenes.Dialogs
         {
             if (GroupList.Count >= Globals.MaxGroup)
             {
-                GameScene.Scene.ChatDialog.ReceiveChat("Your group already has the maximum number of members.", ChatType.System);
+                GameScene.Scene.ChatDialog.ReceiveChat("行会人数已达上限", ChatType.System);
                 return;
             }
             if (GroupList.Count > 0 && GroupList[0] != MapObject.User.Name)
             {
 
-                GameScene.Scene.ChatDialog.ReceiveChat("You are not the leader of your group.", ChatType.System);
+                GameScene.Scene.ChatDialog.ReceiveChat("没有行会权限", ChatType.System);
                 return;
             }
 
@@ -202,7 +212,7 @@ namespace Client.MirScenes.Dialogs
             if (GroupList.Count > 0 && GroupList[0] != MapObject.User.Name)
             {
 
-                GameScene.Scene.ChatDialog.ReceiveChat("You are not the leader of your group.", ChatType.System);
+                GameScene.Scene.ChatDialog.ReceiveChat("你不是行会的会长", ChatType.System);
                 return;
             }
 

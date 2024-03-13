@@ -36,41 +36,41 @@ namespace Server
             // 
             // PasswordTextBox
             // 
-            this.PasswordTextBox.Location = new System.Drawing.Point(12, 12);
+            this.PasswordTextBox.Location = new System.Drawing.Point(12, 11);
             this.PasswordTextBox.Name = "PasswordTextBox";
-            this.PasswordTextBox.Size = new System.Drawing.Size(183, 20);
+            this.PasswordTextBox.Size = new System.Drawing.Size(183, 21);
             this.PasswordTextBox.TabIndex = 0;
             // 
             // okButton
             // 
             this.okButton.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.okButton.Location = new System.Drawing.Point(12, 38);
+            this.okButton.Location = new System.Drawing.Point(12, 35);
             this.okButton.Name = "okButton";
-            this.okButton.Size = new System.Drawing.Size(75, 23);
+            this.okButton.Size = new System.Drawing.Size(75, 21);
             this.okButton.TabIndex = 1;
-            this.okButton.Text = "OK";
+            this.okButton.Text = "更改";
             this.okButton.UseVisualStyleBackColor = true;
             // 
             // cancelButton
             // 
             this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.cancelButton.Location = new System.Drawing.Point(120, 38);
+            this.cancelButton.Location = new System.Drawing.Point(120, 35);
             this.cancelButton.Name = "cancelButton";
-            this.cancelButton.Size = new System.Drawing.Size(75, 23);
+            this.cancelButton.Size = new System.Drawing.Size(75, 21);
             this.cancelButton.TabIndex = 2;
-            this.cancelButton.Text = "Cancel";
+            this.cancelButton.Text = "取消";
             this.cancelButton.UseVisualStyleBackColor = true;
             // 
             // ChangePasswordDialog
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(207, 70);
+            this.ClientSize = new System.Drawing.Size(230, 65);
             this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.okButton);
             this.Controls.Add(this.PasswordTextBox);
             this.Name = "ChangePasswordDialog";
-            this.Text = "Set Password";
+            this.Text = "设置密码";
             this.ResumeLayout(false);
             this.PerformLayout();
 

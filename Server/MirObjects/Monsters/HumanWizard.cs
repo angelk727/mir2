@@ -1,6 +1,5 @@
 ﻿using Server.MirDatabase;
 using S = ServerPackets;
-using System.Collections.Generic;
 
 namespace Server.MirObjects.Monsters
 {
@@ -147,8 +146,11 @@ namespace Server.MirObjects.Monsters
             if (Master == null)
                 Drop();
 
+            Master = null;
+
             PoisonList.Clear();
             Envir.MonsterCount--;
+            if (CurrentMap != null)
             CurrentMap.MonsterCount--;
         }
 
@@ -158,20 +160,26 @@ namespace Server.MirObjects.Monsters
             short weapon = -1;
             short armour = 0;
             byte wing = 0;
-            if (Master != null && Master is PlayerObject) master = (PlayerObject)Master;
+            short weaponeffects = 0;
+            
+            if (Master != null && Master is PlayerObject) 
+                master = (PlayerObject)Master;
+
             if (master != null)
             {
                 weapon = master.Looks_Weapon;
                 armour = master.Looks_Armour;
                 wing = master.Looks_Wings;
+                weaponeffects = master.Looks_WeaponEffect;
             }
+
             return new S.ObjectPlayer
             {
                 ObjectID = ObjectID,
                 Name = master != null ? master.Name : Name,
                 NameColour = NameColour,
-                Class = master != null ? master.Class : MirClass.Wizard,
-                Gender =  master != null ? master.Gender : MirGender.Male,
+                Class = master != null ? master.Class : MirClass.法师,
+                Gender =  master != null ? master.Gender : MirGender.男性,
                 Location = CurrentLocation,
                 Direction = Direction,
                 Hair = master != null ? master.Hair : (byte)0,
@@ -183,6 +191,7 @@ namespace Server.MirObjects.Monsters
                 Hidden = Hidden,
                 Effect = SpellEffect.None,
                 WingEffect = wing,
+                WeaponEffect = weaponeffects,
                 Extra = Summoned,
                 TransformType = -1
             };

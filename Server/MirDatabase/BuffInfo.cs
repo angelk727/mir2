@@ -1,9 +1,7 @@
-﻿using Server.MirEnvir;
-using Server.MirObjects;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Text;
+using Server.MirEnvir;
+using Server.MirObjects;
 
 namespace Server.MirDatabase
 {
@@ -20,71 +18,86 @@ namespace Server.MirDatabase
             List<BuffInfo> info = new List<BuffInfo>
             {
                 //Magics
-                new BuffInfo { Type = BuffType.TemporalFlux, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration },
-                new BuffInfo { Type = BuffType.Hiding, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration },
-                new BuffInfo { Type = BuffType.Haste, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration },
-                new BuffInfo { Type = BuffType.SwiftFeet, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration, Visible = true },
-                new BuffInfo { Type = BuffType.Fury, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration, Visible = true },
-                new BuffInfo { Type = BuffType.SoulShield, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration },
-                new BuffInfo { Type = BuffType.BlessedArmour, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration },
-                new BuffInfo { Type = BuffType.LightBody, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration },
-                new BuffInfo { Type = BuffType.UltimateEnhancer, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration },
-                new BuffInfo { Type = BuffType.ProtectionField, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration },
-                new BuffInfo { Type = BuffType.Rage, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration },
-                new BuffInfo { Type = BuffType.Curse, Properties = BuffProperty.RemoveOnDeath | BuffProperty.Debuff, StackType = BuffStackType.ResetDuration },
-                new BuffInfo { Type = BuffType.MoonLight, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration, Visible = true },
-                new BuffInfo { Type = BuffType.DarkBody, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration, Visible = true },
-                new BuffInfo { Type = BuffType.Concentration, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration },
-                new BuffInfo { Type = BuffType.VampireShot, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration, Visible = true },
-                new BuffInfo { Type = BuffType.PoisonShot, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration, Visible = true },
-                new BuffInfo { Type = BuffType.CounterAttack, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration, Visible = true },
-                new BuffInfo { Type = BuffType.MentalState, Properties = BuffProperty.None, StackType = BuffStackType.Infinite },
-                new BuffInfo { Type = BuffType.EnergyShield, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration, Visible = true },
-                new BuffInfo { Type = BuffType.MagicBooster, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration, Visible = true },
-                new BuffInfo { Type = BuffType.PetEnhancer, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration, Visible = true },
-                new BuffInfo { Type = BuffType.ImmortalSkin, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration, Visible = true },
-                new BuffInfo { Type = BuffType.MagicShield, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration },
-                new BuffInfo { Type = BuffType.ElementalBarrier, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration },
+                new BuffInfo { Type = BuffType.时间之殇, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration },
+                new BuffInfo { Type = BuffType.隐身术, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration },
+                new BuffInfo { Type = BuffType.体迅风, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration },
+                new BuffInfo { Type = BuffType.轻身步, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration, Visible = true },
+                new BuffInfo { Type = BuffType.血龙剑法, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration, Visible = true },
+                new BuffInfo { Type = BuffType.幽灵盾, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration },
+                new BuffInfo { Type = BuffType.神圣战甲术, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration },
+                new BuffInfo { Type = BuffType.风身术, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration },
+                new BuffInfo { Type = BuffType.无极真气, Properties = BuffProperty.None, StackType = BuffStackType.ResetStatAndDuration },
+                new BuffInfo { Type = BuffType.护身气幕, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration },
+                new BuffInfo { Type = BuffType.剑气爆, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration },
+                new BuffInfo { Type = BuffType.诅咒术, Properties = BuffProperty.RemoveOnDeath | BuffProperty.Debuff, StackType = BuffStackType.ResetDuration },
+                new BuffInfo { Type = BuffType.月影术, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration, Visible = true },
+                new BuffInfo { Type = BuffType.烈火身, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration, Visible = true },
+                new BuffInfo { Type = BuffType.气流术, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration },
+                new BuffInfo { Type = BuffType.吸血地闪, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration, Visible = true },
+                new BuffInfo { Type = BuffType.毒魔闪, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration, Visible = true },
+                new BuffInfo { Type = BuffType.天务, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration, Visible = true },
+                new BuffInfo { Type = BuffType.精神状态, Properties = BuffProperty.None, StackType = BuffStackType.Infinite },
+                new BuffInfo { Type = BuffType.先天气功, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration, Visible = true },
+                new BuffInfo { Type = BuffType.深延术, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration, Visible = true },
+                new BuffInfo { Type = BuffType.血龙水, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration, Visible = true },
+                new BuffInfo { Type = BuffType.金刚不坏, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration, Visible = true },
+                new BuffInfo { Type = BuffType.金刚不坏秘籍, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration, Visible = true },
+                new BuffInfo { Type = BuffType.天上秘术, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration, Visible = true },
+                new BuffInfo { Type = BuffType.魔法盾, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration },
+                new BuffInfo { Type = BuffType.金刚术, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration },
 
                 //Monsters
                 new BuffInfo { Type = BuffType.HornedArcherBuff, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration, Visible = true },
                 new BuffInfo { Type = BuffType.ColdArcherBuff, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration, Visible = true },
-                new BuffInfo { Type = BuffType.GeneralMeowMeowShield, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration, Visible = true },
-                new BuffInfo { Type = BuffType.RhinoPriestDebuff, Properties = BuffProperty.Debuff, StackType = BuffStackType.ResetDuration },
-                new BuffInfo { Type = BuffType.PowerBeadBuff, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration, Visible = true },
-                new BuffInfo { Type = BuffType.ChieftainSwordBuff, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration, Visible = true },
-                new BuffInfo { Type = BuffType.HornedWarriorShield, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration, Visible = true },
-                new BuffInfo { Type = BuffType.HornedCommanderShield, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration, Visible = true },
+                new BuffInfo { Type = BuffType.HornedColdArcherBuff, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration, Visible = true },
+                new BuffInfo { Type = BuffType.GeneralMeowMeowShield, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration, Visible = true }, //341
+                new BuffInfo { Type = BuffType.惩戒真言, Properties = BuffProperty.Debuff, StackType = BuffStackType.ResetDuration },
+                new BuffInfo { Type = BuffType.御体之力, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration, Visible = true },
+                new BuffInfo { Type = BuffType.HornedWarriorShield, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration, Visible = true }, //403
+                new BuffInfo { Type = BuffType.ChieftainSwordBuff, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration, Visible = true }, //418
+				new BuffInfo { Type = BuffType.HornedCommanderShield, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration, Visible = true }, //409 特效未使用
                 new BuffInfo { Type = BuffType.Blindness, Properties = BuffProperty.RemoveOnDeath | BuffProperty.Debuff, StackType = BuffStackType.ResetDuration },
+                new BuffInfo { Type = BuffType.寒冰护甲, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration, Visible = true }, //476
+                new BuffInfo { Type = BuffType.ReaperPriestBuff, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration, Visible = true }, //479
+                new BuffInfo { Type = BuffType.至尊威严, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration, Visible = true }, //502
+                new BuffInfo { Type = BuffType.伤口加深, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration, Visible = true }, //505
+                new BuffInfo { Type = BuffType.死亡印记, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration, Visible = true }, //516
+                new BuffInfo { Type = BuffType.RiklebitesShield, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration, Visible = true }, //518
+                new BuffInfo { Type = BuffType.麻痹状态, Properties = BuffProperty.Debuff, StackType = BuffStackType.ResetDuration, Visible = true }, //中毒
 
                 //Special
-                new BuffInfo { Type = BuffType.GameMaster, Properties = BuffProperty.None, StackType = BuffStackType.Infinite, Visible = Settings.GameMasterEffect },
-                new BuffInfo { Type = BuffType.Mentee, Properties = BuffProperty.None, StackType = BuffStackType.Infinite },
-                new BuffInfo { Type = BuffType.Mentor, Properties = BuffProperty.None, StackType = BuffStackType.Infinite },
-                new BuffInfo { Type = BuffType.Guild, Properties = BuffProperty.None, StackType = BuffStackType.Infinite },
-                new BuffInfo { Type = BuffType.Skill, Properties = BuffProperty.None, StackType = BuffStackType.Infinite },
-                new BuffInfo { Type = BuffType.ClearRing, Properties = BuffProperty.None, StackType = BuffStackType.Infinite },
-                new BuffInfo { Type = BuffType.Transform, Properties = BuffProperty.None, StackType = BuffStackType.None },
-                new BuffInfo { Type = BuffType.Lover, Properties = BuffProperty.None, StackType = BuffStackType.Infinite },
-                new BuffInfo { Type = BuffType.Rested, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration },
+                new BuffInfo { Type = BuffType.游戏管理, Properties = BuffProperty.None, StackType = BuffStackType.Infinite, Visible = Settings.GameMasterEffect },
+                new BuffInfo { Type = BuffType.衣钵相传, Properties = BuffProperty.None, StackType = BuffStackType.Infinite },
+                new BuffInfo { Type = BuffType.火传穷薪, Properties = BuffProperty.None, StackType = BuffStackType.Infinite },
+                new BuffInfo { Type = BuffType.公会特效, Properties = BuffProperty.None, StackType = BuffStackType.Infinite },
+                new BuffInfo { Type = BuffType.技巧项链, Properties = BuffProperty.None, StackType = BuffStackType.Infinite },
+                new BuffInfo { Type = BuffType.隐身戒指, Properties = BuffProperty.None, StackType = BuffStackType.Infinite },
+                new BuffInfo { Type = BuffType.变形效果, Properties = BuffProperty.None, StackType = BuffStackType.None },
+                new BuffInfo { Type = BuffType.心心相映, Properties = BuffProperty.RemoveOnExit, StackType = BuffStackType.Infinite },
+                new BuffInfo { Type = BuffType.精力充沛, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration },
                 new BuffInfo { Type = BuffType.Prison, Properties = BuffProperty.None, StackType = BuffStackType.None }, //???
                 new BuffInfo { Type = BuffType.General, Properties = BuffProperty.None, StackType = BuffStackType.None }, //???
+                new BuffInfo { Type = BuffType.英雄灵气, Properties = BuffProperty.None, StackType = BuffStackType.Infinite }, ////自添加
 
                 //Stats
-                new BuffInfo { Type = BuffType.Exp, Properties = BuffProperty.PauseInSafeZone, StackType = BuffStackType.StackDuration },
-                new BuffInfo { Type = BuffType.Drop, Properties = BuffProperty.PauseInSafeZone, StackType = BuffStackType.StackDuration },
-                new BuffInfo { Type = BuffType.Gold, Properties = BuffProperty.PauseInSafeZone, StackType = BuffStackType.StackDuration },
-                new BuffInfo { Type = BuffType.BagWeight, Properties = BuffProperty.PauseInSafeZone, StackType = BuffStackType.StackDuration },
-                new BuffInfo { Type = BuffType.Impact, Properties = BuffProperty.PauseInSafeZone, StackType = BuffStackType.StackDuration },
-                new BuffInfo { Type = BuffType.Magic, Properties = BuffProperty.PauseInSafeZone, StackType = BuffStackType.StackDuration },
-                new BuffInfo { Type = BuffType.Taoist, Properties = BuffProperty.PauseInSafeZone, StackType = BuffStackType.StackDuration },
-                new BuffInfo { Type = BuffType.Storm, Properties = BuffProperty.PauseInSafeZone, StackType = BuffStackType.StackDuration },
-                new BuffInfo { Type = BuffType.HealthAid, Properties = BuffProperty.PauseInSafeZone, StackType = BuffStackType.StackDuration },
-                new BuffInfo { Type = BuffType.ManaAid, Properties = BuffProperty.PauseInSafeZone, StackType = BuffStackType.StackDuration },
-                new BuffInfo { Type = BuffType.Defence, Properties = BuffProperty.PauseInSafeZone, StackType = BuffStackType.StackDuration },
-                new BuffInfo { Type = BuffType.MagicDefence, Properties = BuffProperty.PauseInSafeZone, StackType = BuffStackType.StackDuration },
-                new BuffInfo { Type = BuffType.WonderDrug, Properties = BuffProperty.PauseInSafeZone, StackType = BuffStackType.StackDuration },
-                new BuffInfo { Type = BuffType.Knapsack, Properties = BuffProperty.PauseInSafeZone, StackType = BuffStackType.StackDuration }
+                new BuffInfo { Type = BuffType.经验丰富, Properties = BuffProperty.PauseInSafeZone, StackType = BuffStackType.StackDuration },
+                new BuffInfo { Type = BuffType.落物纷飞, Properties = BuffProperty.PauseInSafeZone, StackType = BuffStackType.StackDuration },
+                new BuffInfo { Type = BuffType.金币辉煌, Properties = BuffProperty.PauseInSafeZone, StackType = BuffStackType.StackDuration },
+                new BuffInfo { Type = BuffType.包罗万象, Properties = BuffProperty.None, StackType = BuffStackType.StackDuration },
+                new BuffInfo { Type = BuffType.火龍祝福, Properties = BuffProperty.PauseInSafeZone, StackType = BuffStackType.StackDuration },
+                new BuffInfo { Type = BuffType.蓝魔之眼, Properties = BuffProperty.PauseInSafeZone, StackType = BuffStackType.StackDuration },
+                new BuffInfo { Type = BuffType.冰龍祝福, Properties = BuffProperty.PauseInSafeZone, StackType = BuffStackType.StackDuration },
+                new BuffInfo { Type = BuffType.眼疾手快, Properties = BuffProperty.PauseInSafeZone, StackType = BuffStackType.StackDuration },
+                new BuffInfo { Type = BuffType.生命永驻, Properties = BuffProperty.PauseInSafeZone, StackType = BuffStackType.StackDuration },
+                new BuffInfo { Type = BuffType.法力常在, Properties = BuffProperty.PauseInSafeZone, StackType = BuffStackType.StackDuration },
+                new BuffInfo { Type = BuffType.防御之力, Properties = BuffProperty.PauseInSafeZone, StackType = BuffStackType.StackDuration },
+                new BuffInfo { Type = BuffType.抗魔屏障, Properties = BuffProperty.PauseInSafeZone, StackType = BuffStackType.StackDuration },
+                new BuffInfo { Type = BuffType.灵丹妙药, Properties = BuffProperty.PauseInSafeZone, StackType = BuffStackType.StackDuration },
+                new BuffInfo { Type = BuffType.包容万金, Properties = BuffProperty.PauseInSafeZone, StackType = BuffStackType.StackDuration },
+                new BuffInfo { Type = BuffType.精确命中, Properties = BuffProperty.PauseInSafeZone, StackType = BuffStackType.StackDuration }, //自添加
+                new BuffInfo { Type = BuffType.敏捷加身, Properties = BuffProperty.PauseInSafeZone, StackType = BuffStackType.StackDuration }, //自添加
+                new BuffInfo { Type = BuffType.潜心修炼, Properties = BuffProperty.PauseInSafeZone, StackType = BuffStackType.StackDuration }, //自添加
+                new BuffInfo { Type = BuffType.龍之祝福, Properties = BuffProperty.PauseInSafeZone, StackType = BuffStackType.StackDuration } //自添加
             };
 
             return info;

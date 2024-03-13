@@ -1,4 +1,4 @@
-﻿﻿using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -580,7 +580,7 @@ namespace ServerPackets
             Experience = reader.ReadInt64();
             MaxExperience = reader.ReadInt64();
 
-            LevelEffects = (LevelEffects)reader.ReadByte();
+            LevelEffects = (LevelEffects)reader.ReadUInt16();
             HasHero = reader.ReadBoolean();
             HeroBehaviour = (HeroBehaviour)reader.ReadByte();
 
@@ -659,7 +659,7 @@ namespace ServerPackets
             writer.Write(Experience);
             writer.Write(MaxExperience);
 
-            writer.Write((byte)LevelEffects);
+            writer.Write((ushort)LevelEffects);
             writer.Write(HasHero);
             writer.Write((byte)HeroBehaviour);
 
@@ -900,7 +900,7 @@ namespace ServerPackets
                 Buffs.Add((BuffType)reader.ReadByte());
             }
 
-            LevelEffects = (LevelEffects)reader.ReadByte();
+            LevelEffects = (LevelEffects)reader.ReadUInt16();
         }
 
         protected override void WritePacket(BinaryWriter writer)
@@ -943,7 +943,7 @@ namespace ServerPackets
                 writer.Write((byte)Buffs[i]);
             }
 
-            writer.Write((byte)LevelEffects);
+            writer.Write((ushort)LevelEffects);
         }
     }
 
@@ -1596,12 +1596,14 @@ namespace ServerPackets
 
         public ulong UniqueID;
         public ushort Count;
+        public bool HeroItem = false;
         public bool Success;
 
         protected override void ReadPacket(BinaryReader reader)
         {
             UniqueID = reader.ReadUInt64();
             Count = reader.ReadUInt16();
+            HeroItem = reader.ReadBoolean();
             Success = reader.ReadBoolean();
         }
 
@@ -1609,6 +1611,7 @@ namespace ServerPackets
         {
             writer.Write(UniqueID);
             writer.Write(Count);
+            writer.Write(HeroItem);
             writer.Write(Success);
         }
     }
@@ -1718,6 +1721,7 @@ namespace ServerPackets
         public ushort Level;
         public string LoverName;
         public bool AllowObserve;
+        public bool IsHero = false;
 
         protected override void ReadPacket(BinaryReader reader)
         {
@@ -1737,6 +1741,7 @@ namespace ServerPackets
             Level = reader.ReadUInt16();
             LoverName = reader.ReadString();
             AllowObserve = reader.ReadBoolean();
+            IsHero = reader.ReadBoolean();
         }
 
         protected override void WritePacket(BinaryWriter writer)
@@ -1758,6 +1763,7 @@ namespace ServerPackets
             writer.Write(Level);
             writer.Write(LoverName);
             writer.Write(AllowObserve);
+            writer.Write(IsHero);
         }
     }
 
@@ -2213,8 +2219,9 @@ namespace ServerPackets
         public Color NameColour;
         public Point Location;
         public Monster Image;
+        public ushort AI; //自添加AI扩容
         public MirDirection Direction;
-        public byte Effect, AI, Light;
+        public byte Effect, Light; //自添加AI扩容
         public bool Dead, Skeleton;
         public PoisonType Poison;
         public bool Hidden, Extra;
@@ -2233,7 +2240,7 @@ namespace ServerPackets
             Image = (Monster)reader.ReadUInt16();
             Direction = (MirDirection)reader.ReadByte();
             Effect = reader.ReadByte();
-            AI = reader.ReadByte();
+            AI = reader.ReadUInt16(); //自添加AI扩容
             Light = reader.ReadByte();
             Dead = reader.ReadBoolean();
             Skeleton = reader.ReadBoolean();
@@ -2261,7 +2268,7 @@ namespace ServerPackets
             writer.Write((ushort)Image);
             writer.Write((byte)Direction);
             writer.Write(Effect);
-            writer.Write(AI);
+            writer.Write((ushort)AI);//自添加AI扩容
             writer.Write(Light);
             writer.Write(Dead);
             writer.Write(Skeleton);
@@ -3678,6 +3685,43 @@ namespace ServerPackets
             writer.Write(Name);
         }
     }
+    public sealed class GroupMembersMap : Packet
+    {
+        public override short Index { get { return (short)ServerPacketIds.GroupMembersMap; } }
+
+        public string PlayerName = string.Empty;
+        public string PlayerMap = string.Empty;
+
+        protected override void ReadPacket(BinaryReader reader)
+        {
+            PlayerName = reader.ReadString();
+            PlayerMap = reader.ReadString();
+        }
+        protected override void WritePacket(BinaryWriter writer)
+        {
+            writer.Write(PlayerName);
+            writer.Write(PlayerMap);
+        }
+    }
+    public sealed class SendMemberLocation : Packet
+    {
+        public override short Index { get { return (short)ServerPacketIds.SendMemberLocation; } }
+
+        public string MemberName;
+        public Point MemberLocation;
+
+        protected override void ReadPacket(BinaryReader reader)
+        {
+            MemberName = reader.ReadString();
+            MemberLocation = new Point(reader.ReadInt32(), reader.ReadInt32());
+        }
+        protected override void WritePacket(BinaryWriter writer)
+        {
+            writer.Write(MemberName);
+            writer.Write(MemberLocation.X);
+            writer.Write(MemberLocation.Y);
+        }
+    }
     public sealed class Revived : Packet
     {
         public override short Index { get { return (short)ServerPacketIds.Revived; } }
@@ -4167,15 +4211,15 @@ namespace ServerPackets
         public byte Reason;
 
         /*
-         * 0: Dead.
-         * 1: Not talking to TrustMerchant.
-         * 2: Already Sold.
-         * 3: Expired.
-         * 4: Not enough Gold.
-         * 5: Too heavy or not enough bag space.
-         * 6: You cannot buy your own items.
-         * 7: Trust Merchant is too far.
-         * 8: Too much Gold.
+         * 0: 角色死亡
+         * 1: 未与信托商交谈
+         * 2: 物品已出售
+         * 3: 过期
+         * 4: 金币不足
+         * 5: 超重或背包空间不足
+         * 6: 不能购买自己的物品
+         * 7: 与信托商距离太远
+         * 8: 金币到达上限
          */
 
         protected override void ReadPacket(BinaryReader reader)
@@ -5376,7 +5420,7 @@ namespace ServerPackets
         }
     }
 
-    public sealed class UserAttackMove : Packet//warrior skill - SlashingBurst move packet 
+    public sealed class UserAttackMove : Packet//战士技能 - 日闪移动数据包 
     {
         public override short Index
         {
@@ -5560,12 +5604,12 @@ namespace ServerPackets
         protected override void ReadPacket(BinaryReader reader)
         {
             ObjectID = reader.ReadUInt32();
-            LevelEffects = (LevelEffects)reader.ReadByte();
+            LevelEffects = (LevelEffects)reader.ReadUInt16();
         }
         protected override void WritePacket(BinaryWriter writer)
         {
             writer.Write(ObjectID);
-            writer.Write((byte)LevelEffects);
+            writer.Write((ushort)LevelEffects);
         }
     }
 

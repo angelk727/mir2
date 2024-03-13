@@ -44,13 +44,11 @@ namespace Server.MirObjects.Monsters
             else
             {
                 Broadcast(new S.ObjectAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation, Type = 2 });
-                //Shield Bash Attack
 
                 int damage = GetAttackPower(Stats[Stat.MinDC], Stats[Stat.MaxDC]);
 
                 SinglePushAttack(damage);
 
-                //TODO - Delay
                 PoisonTarget(Target, 3, 5, PoisonType.Dazed);
             }
         }

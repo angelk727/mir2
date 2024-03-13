@@ -1,5 +1,5 @@
-﻿using System.IO;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.IO;
 
 namespace LibraryEditor
 {
@@ -10,19 +10,19 @@ namespace LibraryEditor
 
         public static FrameSet DefaultMonsterFrameSet = new FrameSet
         {
-            { MirAction.Standing, new Frame(0, 4, 0, 500) },
-            { MirAction.Walking, new Frame(32, 6, 0, 100) },
-            { MirAction.Attack1, new Frame(80, 6, 0, 100) },
-            { MirAction.Struck, new Frame(128, 2, 0, 200) },
-            { MirAction.Die, new Frame(144, 10, 0, 100) },
-            { MirAction.Dead, new Frame(153, 1, 9, 1000) },
-            { MirAction.Revive, new Frame(144, 10, 0, 100) { Reverse = true } }
+            { MirAction.站立动作, new Frame(0, 4, 0, 500) },
+            { MirAction.行走动作, new Frame(32, 6, 0, 100) },
+            { MirAction.近距攻击1, new Frame(80, 6, 0, 100) },
+            { MirAction.被击动作, new Frame(128, 2, 0, 200) },
+            { MirAction.死亡动作, new Frame(144, 10, 0, 100) },
+            { MirAction.死后尸体, new Frame(153, 1, 9, 1000) },
+            { MirAction.复活动作, new Frame(144, 10, 0, 100) { Reverse = true } }
         };
 
         public static FrameSet DefaultNPCFrameSet = new FrameSet
         {
-            { MirAction.Standing, new Frame(0, 4, 0, 450) },
-            { MirAction.Harvest, new Frame(12, 10, 0, 200) }
+            { MirAction.站立动作, new Frame(0, 4, 0, 450) },
+            { MirAction.人挖N展, new Frame(12, 10, 0, 200) }
         };
     }
 

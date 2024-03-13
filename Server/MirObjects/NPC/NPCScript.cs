@@ -1,14 +1,11 @@
-﻿using Server.MirDatabase;
-using Server.MirEnvir;
-using Server.MirObjects;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
+using Server.MirDatabase;
+using Server.MirEnvir;
 using S = ServerPackets;
 
 namespace Server.MirObjects
@@ -45,7 +42,7 @@ namespace Server.MirObjects
         public readonly int ScriptID;
         public readonly uint LoadedObjectID;
         public readonly NPCScriptType Type;
-        protected readonly string FileName;
+        public readonly string FileName;
 
         public const string
             MainKey = "[@MAIN]",
@@ -168,7 +165,7 @@ namespace Server.MirObjects
                 }
             }
             else
-                MessageQueue.Enqueue(string.Format("Script Not Found: {0}", FileName));
+                MessageQueue.Enqueue(string.Format("找不到脚本: {0}", FileName));
         }
         public void ClearInfo()
         {
@@ -321,7 +318,7 @@ namespace Server.MirObjects
                 string path = Path.Combine(Settings.EnvirPath, split[1].Substring(1, split[1].Length - 2));
 
                 if (!File.Exists(path))
-                    MessageQueue.Enqueue(string.Format("INSERT Script Not Found: {0}", path));
+                    MessageQueue.Enqueue(string.Format("INSERT:未找到要调用的文件或脚本 {0}", path));
                 else
                     newLines = File.ReadAllLines(path).ToList();
 
@@ -350,7 +347,7 @@ namespace Server.MirObjects
 
                 if (!File.Exists(path))
                 {
-                    MessageQueue.Enqueue(string.Format("INCLUDE Script Not Found: {0}", path));
+                    MessageQueue.Enqueue(string.Format("INCLUDE:未找到要调用的脚本或文件 {0}", path));
                     return parsedLines;
                 }
 
@@ -426,10 +423,10 @@ namespace Server.MirObjects
 
             NPCPage Page = new NPCPage(sectionName);
 
-            //Cleans arguments out of search page name
+            //Cleans arguments out of search page name清除搜索页面名称中的参数
             string tempSectionName = Page.ArgumentParse(sectionName);
 
-            //parse all individual pages in a script, defined by sectionName
+            //parse all individual pages in a script, defined by sectionName解析脚本中由节名称定义的所有单独页面
             for (int i = 0; i < lines.Count; i++)
             {
                 string line = lines[i];
@@ -442,7 +439,7 @@ namespace Server.MirObjects
 
                 nextPage = false;
 
-                //Found a page, now process that page and split it into segments
+                //Found a page, now process that page and split it into segments找到一个页面，现在处理该页面并将其拆分为多个部分
                 for (int j = i + 1; j < lines.Count; j++)
                 {
                     string nextLine = lines[j];
@@ -466,7 +463,7 @@ namespace Server.MirObjects
                     {
                         segmentLines.Add(lines[j]);
 
-                        //end of segment, so need to parse it and put into the segment list within the page
+                        //end of segment, so need to parse it and put into the segment list within the page段的末尾，所以需要对其进行解析，并将其放入页面内的段列表中
                         if (segmentLines.Count > 0)
                         {
                             NPCSegment segment = ParseSegment(Page, segmentLines);
@@ -580,7 +577,7 @@ namespace Server.MirObjects
                         match = match.NextMatch();
                     }
 
-                    //Check if line has a goto command
+                    //检查该行是否有goto命令
                     var parts = lines[i].Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
                     if (parts.Count() > 1)
@@ -674,7 +671,7 @@ namespace Server.MirObjects
 
                     if (goods == null || Goods.Contains(goods))
                     {
-                        MessageQueue.Enqueue(string.Format("Could not find Item: {0}, File: {1}", lines[i], FileName));
+                        MessageQueue.Enqueue(string.Format("{1} 中未找到 {0} ", lines[i], FileName));
                         continue;
                     }
 
@@ -773,13 +770,13 @@ namespace Server.MirObjects
 
                     if (recipe == null)
                     {
-                        MessageQueue.Enqueue(string.Format("Could not find recipe: {0}, File: {1}", lines[i], FileName));
+                        MessageQueue.Enqueue(string.Format("缺少配方: {0}, 文件名: {1}", lines[i], FileName));
                         continue;
                     }
 
                     if (recipe.Ingredients.Count == 0)
                     {
-                        MessageQueue.Enqueue(string.Format("Could not find ingredients: {0}, File: {1}", lines[i], FileName));
+                        MessageQueue.Enqueue(string.Format("缺少材料: {0}, 文件名: {1}", lines[i], FileName));
                         continue;
                     }
 
@@ -854,7 +851,7 @@ namespace Server.MirObjects
 
                     if (!found)
                     {
-                        MessageQueue.Enqueue(string.Format("Player: {0} was prevented access to NPC key: '{1}' ", player.Name, key));
+                        MessageQueue.Enqueue(string.Format("玩家: {0} 执行NPC脚本命令: '{1}' 被阻 ", player.Name, key));
                         return;
                     }
                 }
@@ -866,7 +863,7 @@ namespace Server.MirObjects
 
             if (key.StartsWith("[@@") && !player.NPCData.TryGetValue("NPCInputStr", out object _npcInputStr))
             {
-                //send off packet to request input
+                //发送数据包请求输入
                 player.Enqueue(new S.NPCRequestInput { NPCID = player.NPCObjectID, PageName = key });
                 return;
             }
@@ -987,7 +984,7 @@ namespace Server.MirObjects
                 case RefineKey:
                     if (player.Info.CurrentRefine != null)
                     {
-                        player.ReceiveChat("You're already refining an item.", ChatType.System);
+                        player.ReceiveChat("精炼正在进行中...", ChatType.System);
                         player.Enqueue(new S.NPCRefine { Rate = (Settings.RefineCost), Refining = true });
                         break;
                     }
@@ -1048,12 +1045,12 @@ namespace Server.MirObjects
                     break;
                 case MarketKey:
                     player.UserMatch = false;
-                    player.GetMarket(string.Empty, ItemType.Nothing);
+                    player.GetMarket(string.Empty, ItemType.杂物);
                     break;
                 case GuildCreateKey:
                     if (player.Info.Level < Settings.Guild_RequiredLevel)
                     {
-                        player.ReceiveChat(String.Format("You have to be at least level {0} to create a guild.", Settings.Guild_RequiredLevel), ChatType.System);
+                        player.ReceiveChat(String.Format("创建行会需要 {0} 级", Settings.Guild_RequiredLevel), ChatType.System);
                     }
                     else if (player.MyGuild == null)
                     {
@@ -1061,14 +1058,14 @@ namespace Server.MirObjects
                         player.Enqueue(new S.GuildNameRequest());
                     }
                     else
-                        player.ReceiveChat("You are already part of a guild.", ChatType.System);
+                        player.ReceiveChat("你已经是公会成员", ChatType.System);
                     break;
                 case RequestWarKey:
                     if (player.MyGuild != null)
                     {
                         if (player.MyGuildRank != player.MyGuild.Ranks[0])
                         {
-                            player.ReceiveChat("You must be the leader to request a war.", ChatType.System);
+                            player.ReceiveChat("必须由会长发起行会战", ChatType.System);
                             return;
                         }
                         player.Enqueue(new S.GuildRequestWar());
@@ -1120,7 +1117,7 @@ namespace Server.MirObjects
                 case HeroCreateKey:
                     if (player.Info.Level < Settings.Hero_RequiredLevel)
                     {
-                        player.ReceiveChat(String.Format("You have to be at least level {0} to create a hero.", Settings.Hero_RequiredLevel), ChatType.System);
+                        player.ReceiveChat(String.Format("召唤英雄需要角色达到 {0} 级", Settings.Hero_RequiredLevel), ChatType.System);
                         break;
                     }
                     player.CanCreateHero = true;
@@ -1218,7 +1215,7 @@ namespace Server.MirObjects
 
             if (isUsed)
             {
-                callingNPC.UsedGoods.Remove(goods); //If used or buyback will destroy whole stack instead of reducing to remaining quantity
+                callingNPC.UsedGoods.Remove(goods); //如果使用或回购将破坏整个堆栈，而不是减少到剩余数量
 
                 List<UserItem> newGoodsList = new List<UserItem>();
                 newGoodsList.AddRange(Goods);
@@ -1226,12 +1223,12 @@ namespace Server.MirObjects
 
                 callingNPC.NeedSave = true;
 
-                player.Enqueue(new S.NPCGoods 
-                { 
-                    List = newGoodsList, 
-                    Rate = PriceRate(player), 
-                    HideAddedStats = Settings.GoodsHideAddedStats, 
-                    Type = player.NPCPage.Key.ToUpper() == BuyUsedKey ? PanelType.BuySub : PanelType.Buy 
+                player.Enqueue(new S.NPCGoods
+                {
+                    List = newGoodsList,
+                    Rate = PriceRate(player),
+                    HideAddedStats = Settings.GoodsHideAddedStats,
+                    Type = player.NPCPage.Key.ToUpper() == BuyUsedKey ? PanelType.BuySub : PanelType.Buy
                 });
             }
 
@@ -1243,7 +1240,7 @@ namespace Server.MirObjects
         }
         public void Sell(PlayerObject player, UserItem item)
         {
-            /* Handle Item Sale */
+            /* 商品销售处理 */
         }
         public void Craft(PlayerObject player, ulong index, ushort count, int[] slots)
         {
@@ -1266,7 +1263,7 @@ namespace Server.MirObjects
                 return;
             }
 
-            if (player.Account.Gold < recipe.Gold)
+            if (player.Account.Gold < (recipe.Gold * count))
             {
                 player.Enqueue(p);
                 return;
@@ -1437,12 +1434,12 @@ namespace Server.MirObjects
             }
 
             //Take Gold
-            player.Account.Gold -= recipe.Gold;
-            player.Enqueue(new S.LoseGold { Gold = recipe.Gold });
+            player.Account.Gold -= (recipe.Gold * count);
+            player.Enqueue(new S.LoseGold { Gold = (recipe.Gold * count) });
 
-            if (Envir.Random.Next(100) >= recipe.Chance + player.Stats[Stat.CraftRatePercent])
+            if (Envir.Random.Next(100) >= recipe.Chance + player.Stats[Stat.大师概率数率])
             {
-                player.ReceiveChat("Crafting attempt failed.", ChatType.System);
+                player.ReceiveChat("制作失败", ChatType.System);
             }
             else
             {

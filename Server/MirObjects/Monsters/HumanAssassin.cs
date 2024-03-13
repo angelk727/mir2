@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
+﻿using System.Drawing;
 using Server.MirDatabase;
 using Server.MirEnvir;
-using Server.MirObjects.Monsters;
 using S = ServerPackets;
 
 namespace Server.MirObjects.Monsters
@@ -25,13 +21,16 @@ namespace Server.MirObjects.Monsters
 
         protected override void RefreshBase()
         {
-            Stats.Clear();
-            Stats.Add(Master.Stats);
+            if (Master != null)
+            {
+                Stats.Clear();
+                Stats.Add(Master.Stats);
 
-            Stats[Stat.HP] = 1500;
+                Stats[Stat.HP] = 1500;
 
-            MoveSpeed = 100;
-            AttackSpeed = Master.AttackSpeed;
+                MoveSpeed = 100;
+                AttackSpeed = Master.AttackSpeed;
+            }
         }
 
         public override void RefreshAll()
@@ -100,7 +99,7 @@ namespace Server.MirObjects.Monsters
 
             if (Hidden)
             {
-                RemoveBuff(BuffType.Hiding);
+                RemoveBuff(BuffType.隐身术);
             }
 
             CellTime = Envir.Time + 500;
@@ -285,14 +284,17 @@ namespace Server.MirObjects.Monsters
             if (Respawn != null)
                 Respawn.Count--;
 
+            Master = null;
+
             PoisonList.Clear();
             Envir.MonsterCount--;
+            if (CurrentMap != null)
             CurrentMap.MonsterCount--;
         }
 
         private void ExplosionDie()
         {
-            int criticalDamage = Envir.Random.Next(0, 100) <= Stats[Stat.Accuracy] ? Stats[Stat.MaxDC] * 2 : Stats[Stat.MinDC] * 2;
+            int criticalDamage = Envir.Random.Next(0, 100) <= Stats[Stat.准确] ? Stats[Stat.MaxDC] * 2 : Stats[Stat.MinDC] * 2;
             int damage = (Stats[Stat.MinDC] / 5 + 4 * (Level / 20)) * criticalDamage / 20 + Stats[Stat.MaxDC];
 
             for (int i = 0; i < 16; i++)
@@ -331,20 +333,26 @@ namespace Server.MirObjects.Monsters
             short weapon = -1;
             short armour = 0;
             byte wing = 0;
-            if (Master != null && Master is PlayerObject) master = (PlayerObject)Master;
+            short weaponeffects = 0;
+
+            if (Master != null && Master is PlayerObject) 
+                master = (PlayerObject)Master;
+
             if (master != null)
             {
                 weapon = master.Looks_Weapon;
                 armour = master.Looks_Armour;
                 wing = master.Looks_Wings;
+                weaponeffects = master.Looks_WeaponEffect;
             }
+
             return new S.ObjectPlayer
             {
                 ObjectID = ObjectID,
                 Name = master != null ? master.Name : Name,
                 NameColour = NameColour,
-                Class = master != null ? master.Class : MirClass.Assassin,
-                Gender = master != null ? master.Gender : MirGender.Male,
+                Class = master != null ? master.Class : MirClass.刺客,
+                Gender = master != null ? master.Gender : MirGender.男性,
                 Location = CurrentLocation,
                 Direction = Direction,
                 Hair = master != null ? master.Hair : (byte)0,
@@ -356,6 +364,7 @@ namespace Server.MirObjects.Monsters
                 Hidden = Hidden,
                 Effect = SpellEffect.None,
                 WingEffect = wing,
+                WeaponEffect = weaponeffects,
                 Extra = false,
                 TransformType = -1
             };

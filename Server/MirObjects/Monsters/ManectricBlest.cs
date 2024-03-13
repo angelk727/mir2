@@ -1,9 +1,8 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using Server.MirDatabase;
 using Server.MirEnvir;
 using S = ServerPackets;
-using System.Collections.Generic;
 
 namespace Server.MirObjects.Monsters
 {
@@ -39,7 +38,7 @@ namespace Server.MirObjects.Monsters
                     targets[i].Attacked(this, damage, DefenceType.MAC);
 
                     //TODO - Delay this
-                    if (Envir.Random.Next(Settings.PoisonResistWeight) >= targets[i].Stats[Stat.PoisonResist])
+                    if (Envir.Random.Next(Settings.PoisonResistWeight) >= targets[i].Stats[Stat.毒物躲避])
                     {
                         if (Envir.Random.Next(5) == 0)
                         {

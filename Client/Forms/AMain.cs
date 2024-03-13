@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Windows.Forms;
-using System.Drawing;
-using System.Drawing.Drawing2D;
 using Client;
-using System.Linq;
 using Microsoft.Web.WebView2.Core;
 
 namespace Launcher
@@ -20,7 +19,7 @@ namespace Launcher
         private int _fileCount, _currentCount;
 
         public bool Completed, Checked, CleanFiles, LabelSwitch, ErrorFound;
-        
+
         public List<FileInformation> OldList;
         public Queue<FileInformation> DownloadList = new Queue<FileInformation>();
         public List<Download> ActiveDownloads = new List<Download>();
@@ -81,7 +80,6 @@ namespace Launcher
                 _fileCount = 0;
                 _currentCount = 0;
 
-
                 _fileCount = DownloadList.Count;
 
                 ServicePointManager.DefaultConnectionLimit = Settings.P_Concurrency;
@@ -89,6 +87,8 @@ namespace Launcher
                 _stopwatch = Stopwatch.StartNew();
                 for (var i = 0; i < Settings.P_Concurrency; i++)
                     BeginDownload();
+
+
             }
             catch (EndOfStreamException ex)
             {
@@ -104,10 +104,8 @@ namespace Launcher
             }
         }
 
-        
-
         private void BeginDownload()
-        {           
+        {
             if (DownloadList.Count == 0)
             {
                 Completed = true;
@@ -121,6 +119,7 @@ namespace Launcher
 
             Download(download);
         }
+
         private void CleanUp()
         {
             if (!CleanFiles) return;
@@ -140,7 +139,7 @@ namespace Launcher
                     if (!NeedFile(fileNames[i]))
                         File.Delete(fileNames[i]);
                 }
-                catch{}
+                catch { }
             }
         }
         public bool NeedFile(string fileName)
@@ -160,7 +159,6 @@ namespace Launcher
 
             //byte[] data = DownloadFile(PatchFileName);
             byte[] data = Download(Settings.P_PatchFileName);
-
             if (data != null)
             {
                 using MemoryStream stream = new MemoryStream(data);
@@ -205,7 +203,7 @@ namespace Launcher
                     }
                     finally
                     {
-                        //Might cause an infinite loop if it can never gain access
+                        //如果永远无法访问，可能会导致无限循环
                         Restart = true;
                     }
                 }
@@ -238,7 +236,7 @@ namespace Launcher
                             if (e.Error != null)
                             {
                                 File.AppendAllText(@".\Error.txt",
-                                       string.Format("[{0}] {1}{2}", DateTime.Now, info.FileName + " could not be downloaded. (" + e.Error.Message + ")", Environment.NewLine));
+                                       string.Format("[{0}] {1}{2}", DateTime.Now, info.FileName + " 无法下载 (" + e.Error.Message + ")", Environment.NewLine));
                                 ErrorFound = true;
 
                                 BeginDownload();
@@ -250,7 +248,7 @@ namespace Launcher
                                 dl.CurrentBytes = 0;
                                 dl.Completed = true;
 
-                                BeginDownload(); // Start next download, file IO can wait.
+                                BeginDownload(); // 开始下一次下载，文件IO可以等待
 
                                 byte[] raw = e.Result;
 
@@ -278,7 +276,7 @@ namespace Launcher
             }
             catch
             {
-                MessageBox.Show(string.Format("Failed to download file: {0}", fileName));
+                MessageBox.Show(string.Format("下载文件失败: {0}", fileName));
             }
         }
 
@@ -304,7 +302,7 @@ namespace Launcher
             return data;
         }
 
-        //Seems to want to cache the PList when using WebClient, so causes issues. No longer used.
+        //在使用WebClient时似乎希望缓存PList，因此会导致问题。不再使用
         public byte[] DownloadOld(string fileName)
         {
             fileName = fileName.Replace(@"\", "/");
@@ -398,7 +396,7 @@ namespace Launcher
             Launch_pb.Enabled = false;
             ProgressCurrent_pb.Width = 5;
             TotalProg_pb.Width = 5;
-            Version_label.Text = string.Format("Build: {0}.{1}.{2}", Globals.ProductCodename, Settings.UseTestConfig ? "Debug" : "Release", Application.ProductVersion);
+            Version_label.Text = string.Format("版本: {0}.{1}.{2}", Globals.ProductCodename, Settings.UseTestConfig ? "Debug" : "Release", Application.ProductVersion);
 
             if (Settings.P_ServerName != String.Empty)
             {
@@ -542,11 +540,10 @@ namespace Launcher
         {
             try
             {
-                if (Completed)
+                if (Completed && ActiveDownloads.Count == 0)
                 {
-                    
                     ActionLabel.Text = "";
-                    CurrentFile_label.Text = "Up to date.";
+                    CurrentFile_label.Text = "数据更新";
                     SpeedLabel.Text = "";
                     ProgressCurrent_pb.Width = 550;
                     TotalProg_pb.Width = 550;
@@ -557,13 +554,13 @@ namespace Launcher
                     TotalPercent_label.Text = "100%";
                     InterfaceTimer.Enabled = false;
                     Launch_pb.Enabled = true;
-                    if (ErrorFound) MessageBox.Show("One or more files failed to download, check Error.txt for details.", "Failed to Download.");
+                    if (ErrorFound) MessageBox.Show("一个或多个文件下载失败，请检查错误", "下载失败");
                     ErrorFound = false;
 
                     if (CleanFiles)
                     {
                         CleanFiles = false;
-                        MessageBox.Show("Your files have been cleaned up.", "Clean Files");
+                        MessageBox.Show("文件已清理", "清理文件");
                     }
 
                     if (Restart)
@@ -582,10 +579,10 @@ namespace Launcher
                     return;
                 }
 
-                var currentBytes = 0l;
+                var currentBytes = 0L;
                 FileInformation currentFile = null;
 
-                // Remove completed downloads..
+                // 删除已完成的下载。。
                 for (var i = ActiveDownloads.Count - 1; i >= 0; i--)
                 {
                     var dl = ActiveDownloads[i];
@@ -606,7 +603,7 @@ namespace Launcher
 
                 if (Settings.P_Concurrency == 1)
                 {
-                    // Note: Just mimic old behaviour for now until a better UI is done.
+                    // 注意：现在只需模仿旧的行为，直到完成更好的UI
                     if  (ActiveDownloads.Count > 0)
                         currentFile = ActiveDownloads[0].Info;
                 }
@@ -617,8 +614,8 @@ namespace Launcher
                 CurrentPercent_label.Visible = true;
                 TotalPercent_label.Visible = true;
 
-                if (LabelSwitch) ActionLabel.Text = string.Format("{0} Files Remaining", _fileCount - _currentCount);
-                else ActionLabel.Text = string.Format("{0:#,##0}MB Remaining",  ((_totalBytes) - (_completedBytes + currentBytes)) / 1024 / 1024);
+                if (LabelSwitch) ActionLabel.Text = string.Format("{0} 剩余文件数", _fileCount - _currentCount);
+                else ActionLabel.Text = string.Format("{剩余 0:#,##0}MB ",  ((_totalBytes) - (_completedBytes + currentBytes)) / 1024 / 1024);
 
                 //ActionLabel.Text = string.Format("{0:#,##0}MB / {1:#,##0}MB", (_completedBytes + _currentBytes) / 1024 / 1024, _totalBytes / 1024 / 1024);
 
@@ -660,8 +657,8 @@ namespace Launcher
 
         private void Credit_label_Click(object sender, EventArgs e)
         {
-            if (Credit_label.Text == "Powered by Crystal M2") Credit_label.Text = "Designed by Breezer";
-            else Credit_label.Text = "Powered by Crystal M2";
+            if (Credit_label.Text == "技术支持水晶传奇：CrystalM2") Credit_label.Text = "致敬设计者：Breezer";
+            else Credit_label.Text = "技术支持水晶传奇：CrystalM2";
         }
 
         private void AMain_FormClosed(object sender, FormClosedEventArgs e)

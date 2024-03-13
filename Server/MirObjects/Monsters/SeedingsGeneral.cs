@@ -1,11 +1,7 @@
 ﻿using System.Collections.Generic;
-using System;
-using System.Drawing;
 using Server.MirDatabase;
 using Server.MirEnvir;
 using S = ServerPackets;
-using System.Linq;
-using System.Text;
 
 namespace Server.MirObjects.Monsters
 {
@@ -51,7 +47,7 @@ namespace Server.MirObjects.Monsters
                 {
                     Broadcast(new S.ObjectAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation });
 
-                    //Blood Attack
+                    //血腥撕咬攻击
                     int damage = GetAttackPower(Stats[Stat.MinDC], Stats[Stat.MaxDC]);
                     if (damage == 0) return;
 
@@ -62,7 +58,7 @@ namespace Server.MirObjects.Monsters
                 {
                     Broadcast(new S.ObjectAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation, Type = 1 });
 
-                    //Green Splash Attack
+                    //狂抓绿色攻击
                     int damage = GetAttackPower(Stats[Stat.MinMC], Stats[Stat.MaxMC]);
                     if (damage == 0) return;
 
@@ -82,7 +78,7 @@ namespace Server.MirObjects.Monsters
                     Broadcast(new S.ObjectRangeAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation, TargetID = Target.ObjectID, Type = 0 });
                     if (damage == 0) return;
 
-                    //Echo Shout
+                    //咆哮
                     DelayedAction action = new DelayedAction(DelayedType.RangeDamage, Envir.Time + 300, Target, damage, DefenceType.MACAgility, false);
                     ActionList.Add(action);
                 }
@@ -91,7 +87,7 @@ namespace Server.MirObjects.Monsters
                     Broadcast(new S.ObjectRangeAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation, TargetID = Target.ObjectID, Type = 1 });
                     if (damage == 0) return;
 
-                    //Stomp
+                    //怒吼
                     DelayedAction action = new DelayedAction(DelayedType.RangeDamage, Envir.Time + 300, Target, damage, DefenceType.MACAgility, true);
                     ActionList.Add(action);
                 }

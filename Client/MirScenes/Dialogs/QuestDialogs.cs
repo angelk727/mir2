@@ -2,16 +2,13 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Client.MirControls;
 using Client.MirGraphics;
 using Client.MirNetwork;
 using Client.MirObjects;
 using Client.MirSounds;
-using S = ServerPackets;
 using C = ClientPackets;
 
 namespace Client.MirScenes.Dialogs
@@ -141,7 +138,7 @@ namespace Client.MirScenes.Dialogs
 
                 if (Reward.SelectedItemIndex < 0 && SelectedQuest.QuestInfo.RewardsSelectItem.Count > 0)
                 {
-                    MirMessageBox messageBox = new MirMessageBox("You must select a reward item.");
+                    MirMessageBox messageBox = new MirMessageBox("选择相应的奖励物品");
                     messageBox.Show();
                     return;
                 }
@@ -332,7 +329,7 @@ namespace Client.MirScenes.Dialogs
 
         public void RefreshInterface()
         {
-            _availableQuestLabel.Text = string.Format("List: {0}", Quests.Count);
+            _availableQuestLabel.Text = string.Format("待接: {0}", Quests.Count);
 
             int maxIndex = Quests.Count - Rows.Length;
 
@@ -583,9 +580,9 @@ namespace Client.MirScenes.Dialogs
 
             _cancelButton = new MirButton
             {
-                Index = 203,
-                HoverIndex = 204,
-                PressedIndex = 205,
+                Index = 613,
+                HoverIndex = 614,
+                PressedIndex = 615,
                 Library = Libraries.Title,
                 Parent = this,
                 Location = new Point(200, 436),
@@ -593,7 +590,7 @@ namespace Client.MirScenes.Dialogs
             };
             _cancelButton.Click += (o, e) =>
             {
-                MirMessageBox messageBox = new MirMessageBox("Are you sure you want to cancel this quest?", MirMessageBoxButtons.YesNo);
+                MirMessageBox messageBox = new MirMessageBox("确定要放弃这个任务", MirMessageBoxButtons.YesNo);
 
                 messageBox.YesButton.Click += (o1, a) =>
                 {
@@ -709,7 +706,7 @@ namespace Client.MirScenes.Dialogs
 
             Quests = GameScene.User.CurrentQuests;
 
-            _takenQuestsLabel.Text = string.Format("List: {0}/{1}", Quests.Count, Globals.MaxConcurrentQuests);
+            _takenQuestsLabel.Text = string.Format("任务数: {0}/{1}", Quests.Count, Globals.MaxConcurrentQuests);
 
             var groupedQuests = Quests.GroupBy(d => d.QuestInfo.Group).ToList();
 
@@ -1025,7 +1022,7 @@ namespace Client.MirScenes.Dialogs
         public Font Font = new Font(Settings.FontName, 8F);
         public List<string> CurrentLines = new List<string>();
 
-        private const string TaskTitle = "Tasks", ProgressTitle = "Progress", ReturnTitle = "Quest Return", TimeLimitTitle = "Time Limit";
+        private const string TaskTitle = "任务", ProgressTitle = "完成条件", ReturnTitle = "重复任务", TimeLimitTitle = "时间限制";
 
         public QuestMessage(MirButton scrollUpButton, MirButton scrollDownButton, MirButton positionBar, int lineCount, bool displayProgress = false)
         {
@@ -1149,7 +1146,7 @@ namespace Client.MirScenes.Dialogs
 
             CurrentLines.Clear();
 
-            //add quest title at the beginning
+            //在开始处添加任务标题
             CurrentLines.Insert(0, Quest.QuestInfo.Name);
 
             if (Quest.Taken && !Quest.QuestInfo.SameFinishNPC && Quest.QuestInfo.CompletionDescription.Count > 0 && GameScene.Scene.QuestListDialog.CurrentNPCID == Quest.QuestInfo.FinishNPCIndex)
@@ -1530,18 +1527,18 @@ namespace Client.MirScenes.Dialogs
         {
             List<QuestItemReward> filteredRewards = new List<QuestItemReward>();
 
-            //Only display same sex items
+            //只展示同性物品
             foreach (var reward in rewardItems)
             {
                 ItemInfo item = reward.Item;
 
                 switch (MapObject.User.Gender)
                 {
-                    case MirGender.Male:
-                        if (!item.RequiredGender.HasFlag(RequiredGender.Male)) continue;
+                    case MirGender.男性:
+                        if (!item.RequiredGender.HasFlag(RequiredGender.男性)) continue;
                         break;
-                    case MirGender.Female:
-                        if (!item.RequiredGender.HasFlag(RequiredGender.Female)) continue;
+                    case MirGender.女性:
+                        if (!item.RequiredGender.HasFlag(RequiredGender.女性)) continue;
                         break;
                 }
 
@@ -1836,7 +1833,7 @@ namespace Client.MirScenes.Dialogs
 
             string name = Quest.QuestInfo.Name;
             string level = string.Format("Lv{0}", Quest.QuestInfo.MinLevelNeeded);
-            string state = quest.Completed ? "(Complete)" : "(In Progress)";
+            string state = quest.Completed ? "(任务完成)" : "(进行中)";
 
             bool lowLevelQuest = (MapObject.User.Level - quest.QuestInfo.MinLevelNeeded) > 10;
 

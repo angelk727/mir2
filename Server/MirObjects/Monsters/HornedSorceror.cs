@@ -1,9 +1,8 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using Server.MirDatabase;
 using Server.MirEnvir;
 using S = ServerPackets;
-using System.Collections.Generic;
 
 namespace Server.MirObjects.Monsters
 {
@@ -205,13 +204,13 @@ namespace Server.MirObjects.Monsters
 
             Point location;
 
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 1; i++)
             {
                 location = Functions.PointMove(CurrentLocation, jumpDir, 1);
                 if (!CurrentMap.ValidPoint(location)) return;
             }
 
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 1; i++)
             {
                 location = Functions.PointMove(CurrentLocation, jumpDir, 1);
 
@@ -230,7 +229,7 @@ namespace Server.MirObjects.Monsters
                 }
             }
 
-            Broadcast(new S.ObjectDashAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation, Distance = 3 });
+            Broadcast(new S.ObjectDashAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation, Distance = 1 });
         }
 
         protected override void CompleteRangeAttack(IList<object> data)

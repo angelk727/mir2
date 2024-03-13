@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
 using Server.MirEnvir;
 
 namespace Server.MirDatabase
@@ -40,6 +39,7 @@ namespace Server.MirDatabase
         public bool ShowOnBigMap;
         public int BigMapIcon;
         public bool CanTeleportTo;
+        public bool ConquestVisible = true;
 
         public List<int> CollectQuestIndexes = new List<int>();
         public List<int> FinishQuestIndexes = new List<int>();
@@ -99,6 +99,11 @@ namespace Server.MirDatabase
             }
             if (Envir.LoadVersion > 96)
                 CanTeleportTo = reader.ReadBoolean();
+
+            if (Envir.LoadVersion >= 107)
+            {
+                ConquestVisible = reader.ReadBoolean();
+            }
         }
         public void Save(BinaryWriter writer)
         {
@@ -136,6 +141,7 @@ namespace Server.MirDatabase
             writer.Write(ShowOnBigMap);
             writer.Write(BigMapIcon);
             writer.Write(CanTeleportTo);
+            writer.Write(ConquestVisible);
         }
 
         public static void FromText(string text)
@@ -164,14 +170,23 @@ namespace Server.MirDatabase
             if (!bool.TryParse(data[7], out info.ShowOnBigMap)) return;
             if (!int.TryParse(data[8], out info.BigMapIcon)) return;
             if (!bool.TryParse(data[9], out info.CanTeleportTo)) return;
+            if (!bool.TryParse(data[10], out info.ConquestVisible)) return;
+            if (!short.TryParse(data[11], out info.MinLev)) return;
+            if (!short.TryParse(data[12], out info.MaxLev)) return;
+            if (!bool.TryParse(data[13], out info.TimeVisible)) return;
+            if (!byte.TryParse(data[14], out info.HourStart)) return;
+            if (!byte.TryParse(data[15], out info.MinuteStart)) return;
+            if (!byte.TryParse(data[16], out info.HourEnd)) return;
+            if (!byte.TryParse(data[17], out info.MinuteEnd)) return;
 
             info.Index = ++EditEnvir.NPCIndex;
             EditEnvir.NPCInfoList.Add(info);
         }
         public string ToText()
         {
-            return string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9}",
-                FileName, EditEnvir.MapInfoList.Where(d => d.Index == MapIndex).FirstOrDefault().FileName, Location.X, Location.Y, Name, Image, Rate, ShowOnBigMap, BigMapIcon, CanTeleportTo);
+            return string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15},{16},{17}",
+                FileName, EditEnvir.MapInfoList.Where(d => d.Index == MapIndex).FirstOrDefault().FileName, Location.X, Location.Y, Name, Image, Rate, ShowOnBigMap, BigMapIcon, CanTeleportTo, ConquestVisible,
+                MinLev, MaxLev, TimeVisible, HourStart, MinuteStart, HourEnd, MinuteEnd);
         }
 
         public override string ToString()

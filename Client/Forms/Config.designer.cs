@@ -74,7 +74,7 @@
             this.AccountLogin_txt.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.AccountLogin_txt.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.AccountLogin_txt.ForeColor = System.Drawing.Color.White;
-            this.AccountLogin_txt.Location = new System.Drawing.Point(22, 190);
+            this.AccountLogin_txt.Location = new System.Drawing.Point(22, 175);
             this.AccountLogin_txt.Name = "AccountLogin_txt";
             this.AccountLogin_txt.Size = new System.Drawing.Size(123, 15);
             this.AccountLogin_txt.TabIndex = 0;
@@ -89,7 +89,7 @@
             this.AccountPass_txt.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.AccountPass_txt.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.AccountPass_txt.ForeColor = System.Drawing.Color.White;
-            this.AccountPass_txt.Location = new System.Drawing.Point(22, 218);
+            this.AccountPass_txt.Location = new System.Drawing.Point(22, 201);
             this.AccountPass_txt.Name = "AccountPass_txt";
             this.AccountPass_txt.PasswordChar = '*';
             this.AccountPass_txt.Size = new System.Drawing.Size(123, 15);
@@ -104,7 +104,7 @@
             this.label2.BackColor = System.Drawing.Color.Transparent;
             this.label2.Font = new System.Drawing.Font("Calibri", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.Gray;
-            this.label2.Location = new System.Drawing.Point(160, 51);
+            this.label2.Location = new System.Drawing.Point(160, 47);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(54, 13);
             this.label2.TabIndex = 5;
@@ -117,7 +117,7 @@
             this.label3.BackColor = System.Drawing.Color.Transparent;
             this.label3.Font = new System.Drawing.Font("Calibri", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.Gray;
-            this.label3.Location = new System.Drawing.Point(160, 87);
+            this.label3.Location = new System.Drawing.Point(160, 80);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(54, 13);
             this.label3.TabIndex = 7;
@@ -127,9 +127,9 @@
             // Res3_pb
             // 
             this.Res3_pb.Image = global::Client.Properties.Resources.Radio_Unactive;
-            this.Res3_pb.Location = new System.Drawing.Point(142, 87);
+            this.Res3_pb.Location = new System.Drawing.Point(142, 80);
             this.Res3_pb.Name = "Res3_pb";
-            this.Res3_pb.Size = new System.Drawing.Size(12, 12);
+            this.Res3_pb.Size = new System.Drawing.Size(12, 11);
             this.Res3_pb.TabIndex = 6;
             this.Res3_pb.TabStop = false;
             this.Res3_pb.Click += new System.EventHandler(this.Res3_pb_Click);
@@ -137,9 +137,9 @@
             // Res2_pb
             // 
             this.Res2_pb.Image = global::Client.Properties.Resources.Radio_Unactive;
-            this.Res2_pb.Location = new System.Drawing.Point(142, 51);
+            this.Res2_pb.Location = new System.Drawing.Point(142, 47);
             this.Res2_pb.Name = "Res2_pb";
-            this.Res2_pb.Size = new System.Drawing.Size(12, 12);
+            this.Res2_pb.Size = new System.Drawing.Size(12, 11);
             this.Res2_pb.TabIndex = 4;
             this.Res2_pb.TabStop = false;
             this.Res2_pb.Click += new System.EventHandler(this.Res2_pb_Click);
@@ -151,11 +151,11 @@
             this.ID_l.Enabled = false;
             this.ID_l.Font = new System.Drawing.Font("Calibri", 9.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ID_l.ForeColor = System.Drawing.Color.DarkGray;
-            this.ID_l.Location = new System.Drawing.Point(22, 190);
+            this.ID_l.Location = new System.Drawing.Point(22, 175);
             this.ID_l.Name = "ID_l";
-            this.ID_l.Size = new System.Drawing.Size(123, 15);
+            this.ID_l.Size = new System.Drawing.Size(123, 14);
             this.ID_l.TabIndex = 8;
-            this.ID_l.Text = "Username";
+            this.ID_l.Text = "账号名";
             this.ID_l.Click += new System.EventHandler(this.AccountLogin_txt_Click);
             // 
             // Password_l
@@ -165,29 +165,29 @@
             this.Password_l.Enabled = false;
             this.Password_l.Font = new System.Drawing.Font("Calibri Light", 9.75F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Password_l.ForeColor = System.Drawing.Color.DarkGray;
-            this.Password_l.Location = new System.Drawing.Point(22, 218);
+            this.Password_l.Location = new System.Drawing.Point(22, 201);
             this.Password_l.Name = "Password_l";
-            this.Password_l.Size = new System.Drawing.Size(123, 15);
+            this.Password_l.Size = new System.Drawing.Size(123, 14);
             this.Password_l.TabIndex = 9;
-            this.Password_l.Text = "Password";
+            this.Password_l.Text = "密码";
             this.Password_l.Click += new System.EventHandler(this.AccountPass_txt_Click);
             // 
             // label4
             // 
             this.label4.AutoSize = true;
             this.label4.BackColor = System.Drawing.Color.Transparent;
-            this.label4.Location = new System.Drawing.Point(224, 27);
+            this.label4.Location = new System.Drawing.Point(224, 25);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(0, 13);
+            this.label4.Size = new System.Drawing.Size(0, 12);
             this.label4.TabIndex = 10;
             // 
             // AutoStart_pb
             // 
             this.AutoStart_pb.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.AutoStart_pb.Image = global::Client.Properties.Resources.Config_Check_Off1;
-            this.AutoStart_pb.Location = new System.Drawing.Point(15, 148);
+            this.AutoStart_pb.Location = new System.Drawing.Point(15, 137);
             this.AutoStart_pb.Name = "AutoStart_pb";
-            this.AutoStart_pb.Size = new System.Drawing.Size(12, 12);
+            this.AutoStart_pb.Size = new System.Drawing.Size(12, 11);
             this.AutoStart_pb.TabIndex = 11;
             this.AutoStart_pb.TabStop = false;
             this.AutoStart_pb.Click += new System.EventHandler(this.AutoStart_pb_Click);
@@ -198,11 +198,11 @@
             this.AutoStart_label.BackColor = System.Drawing.Color.Transparent;
             this.AutoStart_label.Font = new System.Drawing.Font("Calibri", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.AutoStart_label.ForeColor = System.Drawing.Color.Gray;
-            this.AutoStart_label.Location = new System.Drawing.Point(30, 147);
+            this.AutoStart_label.Location = new System.Drawing.Point(30, 136);
             this.AutoStart_label.Name = "AutoStart_label";
-            this.AutoStart_label.Size = new System.Drawing.Size(54, 13);
+            this.AutoStart_label.Size = new System.Drawing.Size(55, 13);
             this.AutoStart_label.TabIndex = 12;
-            this.AutoStart_label.Text = "Auto start";
+            this.AutoStart_label.Text = "自动登录";
             this.AutoStart_label.Click += new System.EventHandler(this.AutoStart_pb_Click);
             // 
             // Fullscreen_label
@@ -211,20 +211,20 @@
             this.Fullscreen_label.BackColor = System.Drawing.Color.Transparent;
             this.Fullscreen_label.Font = new System.Drawing.Font("Calibri", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Fullscreen_label.ForeColor = System.Drawing.Color.Gray;
-            this.Fullscreen_label.Location = new System.Drawing.Point(30, 51);
+            this.Fullscreen_label.Location = new System.Drawing.Point(30, 47);
             this.Fullscreen_label.Name = "Fullscreen_label";
             this.Fullscreen_label.Size = new System.Drawing.Size(56, 13);
             this.Fullscreen_label.TabIndex = 14;
-            this.Fullscreen_label.Text = "Fullscreen";
+            this.Fullscreen_label.Text = "全屏显示";
             this.Fullscreen_label.Click += new System.EventHandler(this.Fullscreen_pb_Click);
             // 
             // Fullscreen_pb
             // 
             this.Fullscreen_pb.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.Fullscreen_pb.Image = global::Client.Properties.Resources.Config_Check_Off1;
-            this.Fullscreen_pb.Location = new System.Drawing.Point(15, 51);
+            this.Fullscreen_pb.Location = new System.Drawing.Point(15, 47);
             this.Fullscreen_pb.Name = "Fullscreen_pb";
-            this.Fullscreen_pb.Size = new System.Drawing.Size(12, 12);
+            this.Fullscreen_pb.Size = new System.Drawing.Size(12, 11);
             this.Fullscreen_pb.TabIndex = 13;
             this.Fullscreen_pb.TabStop = false;
             this.Fullscreen_pb.Click += new System.EventHandler(this.Fullscreen_pb_Click);
@@ -235,20 +235,20 @@
             this.OnTop_label.BackColor = System.Drawing.Color.Transparent;
             this.OnTop_label.Font = new System.Drawing.Font("Calibri", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.OnTop_label.ForeColor = System.Drawing.Color.Gray;
-            this.OnTop_label.Location = new System.Drawing.Point(30, 98);
+            this.OnTop_label.Location = new System.Drawing.Point(30, 90);
             this.OnTop_label.Name = "OnTop_label";
             this.OnTop_label.Size = new System.Drawing.Size(72, 13);
             this.OnTop_label.TabIndex = 16;
-            this.OnTop_label.Text = "Always on top";
+            this.OnTop_label.Text = "游戏置顶";
             this.OnTop_label.Click += new System.EventHandler(this.OnTop_pb_Click);
             // 
             // OnTop_pb
             // 
             this.OnTop_pb.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.OnTop_pb.Image = global::Client.Properties.Resources.Config_Check_Off1;
-            this.OnTop_pb.Location = new System.Drawing.Point(15, 98);
+            this.OnTop_pb.Location = new System.Drawing.Point(15, 90);
             this.OnTop_pb.Name = "OnTop_pb";
-            this.OnTop_pb.Size = new System.Drawing.Size(12, 12);
+            this.OnTop_pb.Size = new System.Drawing.Size(12, 11);
             this.OnTop_pb.TabIndex = 15;
             this.OnTop_pb.TabStop = false;
             this.OnTop_pb.Click += new System.EventHandler(this.OnTop_pb_Click);
@@ -259,20 +259,20 @@
             this.FPScap_label.BackColor = System.Drawing.Color.Transparent;
             this.FPScap_label.Font = new System.Drawing.Font("Calibri", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FPScap_label.ForeColor = System.Drawing.Color.Gray;
-            this.FPScap_label.Location = new System.Drawing.Point(30, 73);
+            this.FPScap_label.Location = new System.Drawing.Point(30, 67);
             this.FPScap_label.Name = "FPScap_label";
             this.FPScap_label.Size = new System.Drawing.Size(42, 13);
             this.FPScap_label.TabIndex = 18;
-            this.FPScap_label.Text = "FPS cap";
+            this.FPScap_label.Text = "游戏帧数";
             this.FPScap_label.Click += new System.EventHandler(this.FPScap_pb_Click);
             // 
             // FPScap_pb
             // 
             this.FPScap_pb.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.FPScap_pb.Image = global::Client.Properties.Resources.Config_Check_Off1;
-            this.FPScap_pb.Location = new System.Drawing.Point(15, 74);
+            this.FPScap_pb.Location = new System.Drawing.Point(15, 68);
             this.FPScap_pb.Name = "FPScap_pb";
-            this.FPScap_pb.Size = new System.Drawing.Size(12, 12);
+            this.FPScap_pb.Size = new System.Drawing.Size(12, 11);
             this.FPScap_pb.TabIndex = 17;
             this.FPScap_pb.TabStop = false;
             this.FPScap_pb.Click += new System.EventHandler(this.FPScap_pb_Click);
@@ -281,9 +281,9 @@
             // 
             this.CleanFiles_pb.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.CleanFiles_pb.Image = global::Client.Properties.Resources.CheckF_Base2;
-            this.CleanFiles_pb.Location = new System.Drawing.Point(9, 278);
+            this.CleanFiles_pb.Location = new System.Drawing.Point(9, 257);
             this.CleanFiles_pb.Name = "CleanFiles_pb";
-            this.CleanFiles_pb.Size = new System.Drawing.Size(67, 23);
+            this.CleanFiles_pb.Size = new System.Drawing.Size(67, 21);
             this.CleanFiles_pb.TabIndex = 19;
             this.CleanFiles_pb.TabStop = false;
             this.CleanFiles_pb.Click += new System.EventHandler(this.CleanFiles_pb_Click);
@@ -296,9 +296,9 @@
             // 
             this.pictureBox6.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox6.Image = global::Client.Properties.Resources.textboxes;
-            this.pictureBox6.Location = new System.Drawing.Point(15, 183);
+            this.pictureBox6.Location = new System.Drawing.Point(15, 169);
             this.pictureBox6.Name = "pictureBox6";
-            this.pictureBox6.Size = new System.Drawing.Size(139, 57);
+            this.pictureBox6.Size = new System.Drawing.Size(139, 53);
             this.pictureBox6.TabIndex = 20;
             this.pictureBox6.TabStop = false;
             // 
@@ -308,11 +308,11 @@
             this.label9.BackColor = System.Drawing.Color.Transparent;
             this.label9.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label9.ForeColor = System.Drawing.Color.White;
-            this.label9.Location = new System.Drawing.Point(6, 28);
+            this.label9.Location = new System.Drawing.Point(6, 26);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(55, 14);
+            this.label9.Size = new System.Drawing.Size(31, 14);
             this.label9.TabIndex = 21;
-            this.label9.Text = "Graphics";
+            this.label9.Text = "图像设置";
             // 
             // label10
             // 
@@ -320,11 +320,11 @@
             this.label10.BackColor = System.Drawing.Color.Transparent;
             this.label10.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label10.ForeColor = System.Drawing.Color.White;
-            this.label10.Location = new System.Drawing.Point(133, 28);
+            this.label10.Location = new System.Drawing.Point(133, 26);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(66, 14);
+            this.label10.Size = new System.Drawing.Size(43, 14);
             this.label10.TabIndex = 22;
-            this.label10.Text = "Resolution";
+            this.label10.Text = "显示设置";
             // 
             // label11
             // 
@@ -332,11 +332,11 @@
             this.label11.BackColor = System.Drawing.Color.Transparent;
             this.label11.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label11.ForeColor = System.Drawing.Color.White;
-            this.label11.Location = new System.Drawing.Point(6, 126);
+            this.label11.Location = new System.Drawing.Point(6, 116);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(39, 14);
+            this.label11.Size = new System.Drawing.Size(31, 14);
             this.label11.TabIndex = 23;
-            this.label11.Text = "Game";
+            this.label11.Text = "游戏账号";
             // 
             // label12
             // 
@@ -344,11 +344,11 @@
             this.label12.BackColor = System.Drawing.Color.Transparent;
             this.label12.Font = new System.Drawing.Font("Calibri", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label12.ForeColor = System.Drawing.Color.Gray;
-            this.label12.Location = new System.Drawing.Point(16, 169);
+            this.label12.Location = new System.Drawing.Point(16, 156);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(80, 13);
             this.label12.TabIndex = 24;
-            this.label12.Text = "Account details";
+            this.label12.Text = "登录账号密码";
             // 
             // label5
             // 
@@ -356,7 +356,7 @@
             this.label5.BackColor = System.Drawing.Color.Transparent;
             this.label5.Font = new System.Drawing.Font("Calibri", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.Color.Gray;
-            this.label5.Location = new System.Drawing.Point(160, 69);
+            this.label5.Location = new System.Drawing.Point(160, 64);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(54, 13);
             this.label5.TabIndex = 26;
@@ -365,9 +365,9 @@
             // Res4_pb
             // 
             this.Res4_pb.Image = global::Client.Properties.Resources.Radio_Unactive;
-            this.Res4_pb.Location = new System.Drawing.Point(142, 69);
+            this.Res4_pb.Location = new System.Drawing.Point(142, 64);
             this.Res4_pb.Name = "Res4_pb";
-            this.Res4_pb.Size = new System.Drawing.Size(12, 12);
+            this.Res4_pb.Size = new System.Drawing.Size(12, 11);
             this.Res4_pb.TabIndex = 25;
             this.Res4_pb.TabStop = false;
             this.Res4_pb.Click += new System.EventHandler(this.Res4_pb_Click);
@@ -378,7 +378,7 @@
             this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("Calibri", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.Gray;
-            this.label1.Location = new System.Drawing.Point(160, 105);
+            this.label1.Location = new System.Drawing.Point(160, 97);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(60, 13);
             this.label1.TabIndex = 27;
@@ -387,16 +387,16 @@
             // Res5_pb
             // 
             this.Res5_pb.Image = global::Client.Properties.Resources.Radio_Unactive;
-            this.Res5_pb.Location = new System.Drawing.Point(142, 105);
+            this.Res5_pb.Location = new System.Drawing.Point(142, 97);
             this.Res5_pb.Name = "Res5_pb";
-            this.Res5_pb.Size = new System.Drawing.Size(12, 12);
+            this.Res5_pb.Size = new System.Drawing.Size(12, 11);
             this.Res5_pb.TabIndex = 28;
             this.Res5_pb.TabStop = false;
             this.Res5_pb.Click += new System.EventHandler(this.Res5_pb_Click);
             // 
             // Config
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.BackgroundImage = global::Client.Properties.Resources.Config_Base1;
@@ -437,7 +437,7 @@
             this.ShowInTaskbar = false;
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Config";
+            this.Text = "配置";
             this.TransparencyKey = System.Drawing.Color.Black;
             this.Load += new System.EventHandler(this.Config_Load);
             this.VisibleChanged += new System.EventHandler(this.Config_VisibleChanged);

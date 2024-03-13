@@ -1,14 +1,9 @@
-﻿using Client.MirControls;
+﻿using System.Drawing;
+using System.Windows.Forms;
+using Client.MirControls;
 using Client.MirGraphics;
 using Client.MirNetwork;
 using Client.MirSounds;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using C = ClientPackets;
 
 namespace Client.MirScenes.Dialogs
@@ -100,7 +95,7 @@ namespace Client.MirScenes.Dialogs
             {
                 if (MentorLevel != 0)
                 {
-                    GameScene.Scene.ChatDialog.ReceiveChat("You already have a Mentor.", ChatType.System);
+                    GameScene.Scene.ChatDialog.ReceiveChat("你已经有师傅了", ChatType.System);
                     return;
                 }
 
@@ -137,7 +132,7 @@ namespace Client.MirScenes.Dialogs
                     return;
                 }
 
-                MirMessageBox messageBox = new MirMessageBox(string.Format("Cancelling a Mentorship early will cause a cooldown. Are you sure?"), MirMessageBoxButtons.YesNo);
+                MirMessageBox messageBox = new MirMessageBox(string.Format("确定要解除师徒关系？强制解除将一定时间内不可使用此功能"), MirMessageBoxButtons.YesNo);
 
                 messageBox.YesButton.Click += (oo, ee) => Network.Enqueue(new C.CancelMentor { });
                 messageBox.NoButton.Click += (oo, ee) => { messageBox.Dispose(); };
@@ -181,7 +176,7 @@ namespace Client.MirScenes.Dialogs
                 NotControl = true,
                 Font = new Font(Settings.FontName, 7F),
                 Visible = false,
-                Text = "ONLINE",
+                Text = "在线",
             };
 
             StudentNameLabel = new MirLabel
@@ -219,7 +214,7 @@ namespace Client.MirScenes.Dialogs
                 NotControl = true,
                 Font = new Font(Settings.FontName, 7F),
                 Visible = false,
-                Text = "ONLINE",
+                Text = "在线",
             };
 
             MentorLabel = new MirLabel
@@ -232,7 +227,7 @@ namespace Client.MirScenes.Dialogs
                 Parent = this,
                 NotControl = true,
                 Font = new Font(Settings.FontName, 7F),
-                Text = "MENTOR",
+                Text = "师傅",
             };
 
             StudentLabel = new MirLabel
@@ -245,7 +240,7 @@ namespace Client.MirScenes.Dialogs
                 Parent = this,
                 NotControl = true,
                 Font = new Font(Settings.FontName, 7F),
-                Text = "MENTEE",
+                Text = "徒弟",
             };
 
             MenteeEXPLabel = new MirLabel
@@ -289,30 +284,30 @@ namespace Client.MirScenes.Dialogs
             if (GameScene.User.Level > MentorLevel)
             {
                 MentorNameLabel.Text = GameScene.User.Name;
-                MentorLevelLabel.Text = "Lv " + GameScene.User.Level.ToString();
+                MentorLevelLabel.Text = "等级 " + GameScene.User.Level.ToString();
                 MentorOnlineLabel.Visible = false;
 
                 StudentNameLabel.Text = MentorName;
-                StudentLevelLabel.Text = "Lv " + MentorLevel.ToString();
+                StudentLevelLabel.Text = "等级 " + MentorLevel.ToString();
                 if (MentorOnline)
                     StudentOnlineLabel.Visible = true;
                 else
                     StudentOnlineLabel.Visible = false;
 
                 MenteeEXPLabel.Visible = true;
-                MenteeEXPLabel.Text = "MENTEE EXP: " + MenteeEXP;
+                MenteeEXPLabel.Text = "徒弟经验: " + MenteeEXP;
             }
             else
             {
                 MentorNameLabel.Text = MentorName;
-                MentorLevelLabel.Text = "Lv " + MentorLevel.ToString();
+                MentorLevelLabel.Text = "等级 " + MentorLevel.ToString();
                 if (MentorOnline)
                     MentorOnlineLabel.Visible = true;
                 else
                     MentorOnlineLabel.Visible = false;
 
                 StudentNameLabel.Text = GameScene.User.Name;
-                StudentLevelLabel.Text = "Lv " + GameScene.User.Level.ToString();
+                StudentLevelLabel.Text = "等级 " + GameScene.User.Level.ToString();
                 StudentOnlineLabel.Visible = false;
             }
         }

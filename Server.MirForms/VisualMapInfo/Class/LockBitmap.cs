@@ -36,7 +36,7 @@ namespace Server.MirForms.VisualMapInfo.Class
 
                 if (Depth != 8 && Depth != 24 && Depth != 32)
                 {
-                    throw new ArgumentException("Only 8, 24 and 32 bpp images are supported.");
+                    throw new ArgumentException("仅支持8位24位和32位图像");
                 }
 
                 bitmapData = source.LockBits(rect, ImageLockMode.ReadWrite,

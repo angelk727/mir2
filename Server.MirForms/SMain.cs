@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Windows.Forms;
-using Server.MirEnvir;
-using Server.MirDatabase;
-using Server.MirForms.Systems;
 using Server.Database;
+using Server.MirDatabase;
+using Server.MirEnvir;
+using Server.MirForms.Systems;
 
 namespace Server
 {
@@ -63,14 +63,14 @@ namespace Server
         {
             try
             {
-                Text = $"Total: {Envir.LastCount}, Real: {Envir.LastRealCount}";
-                PlayersLabel.Text = $"Players: {Envir.Players.Count}";
-                MonsterLabel.Text = $"Monsters: {Envir.MonsterCount}";
-                ConnectionsLabel.Text = $"Connections: {Envir.Connections.Count}";
+                Text = $"总计: {Envir.LastCount}, 实计: {Envir.LastRealCount}";
+                PlayersLabel.Text = $"在线角色: {Envir.Players.Count}";
+                MonsterLabel.Text = $"刷新怪物: {Envir.MonsterCount}";
+                ConnectionsLabel.Text = $"连线登录: {Envir.Connections.Count}";
 
                 if (Settings.Multithreaded && (Envir.MobThreads != null))
                 {
-                    CycleDelayLabel.Text = $"CycleDelays: {Envir.LastRunTime:0000}";
+                    CycleDelayLabel.Text = $"延迟周期: {Envir.LastRunTime:0000}";
                     for (int i = 0; i < Envir.MobThreads.Length; i++)
                     {
                         if (Envir.MobThreads[i] == null) break;
@@ -79,7 +79,7 @@ namespace Server
                     }
                 }
                 else
-                    CycleDelayLabel.Text = $"CycleDelay: {Envir.LastRunTime}";
+                    CycleDelayLabel.Text = $"延迟周期: {Envir.LastRunTime}";
 
                 while (!MessageQueue.MessageLog.IsEmpty)
                 {

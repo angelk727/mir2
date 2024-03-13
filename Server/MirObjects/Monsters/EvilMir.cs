@@ -182,7 +182,7 @@ namespace Server.MirObjects.Monsters
                 {
                     Envir.MonsterNPC.Call(this,string.Format("[@_DIE({0})]", Info.Index));
                 }
-                Envir.DragonSystem.GainExp(250);//why would hitting em give you so little 'points', while hitting them gives so much
+                Envir.DragonSystem.GainExp(250);//为什么打他们会给你那么少的“分数”，而打他们会给你那么多
                 Sleeping = true;
                 WakeUpTime = Envir.Time + 5 * (60 * 1000);
             }

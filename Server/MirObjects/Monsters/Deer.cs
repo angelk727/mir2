@@ -17,7 +17,7 @@ namespace Server.MirObjects.Monsters
         protected internal Deer(MonsterInfo info)
             : base(info)
         {
-            if (Info.AI != 2) return;
+            if (Info.AI != 161) return;
 
             RemainingSkinCount = 5;
 

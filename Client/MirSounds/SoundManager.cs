@@ -85,7 +85,6 @@ namespace Client.MirSounds
 
         }
 
-
         public static void StopSound(int index)
         {
             for (int i = 0; i < Sounds.Count; i++)
@@ -199,6 +198,8 @@ namespace Client.MirSounds
 
             IntroMusic = 10146,
             SelectMusic = 10147,
+            IntroMusic1 = 10148,
+            SelectMusic1 = 10149,
             LoginEffect = 10100,
 
             ButtonA = 10103,
@@ -269,7 +270,7 @@ namespace Client.MirSounds
             SwingAxe = 10054,
             SwingClub = 10055,
             SwingLong = 10056,
-            SwingFist = 10056,
+            SwingFist = 10057,
 
             //Struck
             StruckShort = 10060,
@@ -288,6 +289,8 @@ namespace Client.MirSounds
             StruckArmourAxe = 10081,
             StruckArmourLongStick = 10082,
             StruckArmourFist = 10083,
+
+            StruckEvilMir = 10090,
 
             MaleFlinch = 10138,
             FemaleFlinch = 10139,
@@ -318,6 +321,7 @@ namespace Client.MirSounds
             WolfAttack3 = 10192,
             WolfStruck1 = 10193,
             WolfStruck2 = 10194,
+            TigerTargetStruck = 10217,
             TigerRide1 = 10218,
             TigerRide2 = 10219,
 
@@ -330,11 +334,13 @@ namespace Client.MirSounds
             PetBlackKitten = 10506,
             PetDragon = 10507,
             PetOlympic = 10508,
+            PetSnowMan = 10509,
             PetFrog = 10510,
             PetMonkey = 10511,
             PetAngryBird = 10512,
             PetFoxey = 10513,
             PetMedicalRat = 10514,
+            PetCatSuperman = 10515,
             PetPickup = 10520;
     }
 }

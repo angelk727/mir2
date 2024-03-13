@@ -1,14 +1,12 @@
-﻿using Client.MirControls;
-using Client.MirGraphics;
-using Client.MirNetwork;
-using Client.MirSounds;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using Client.MirControls;
+using Client.MirGraphics;
+using Client.MirNetwork;
+using Client.MirSounds;
 using C = ClientPackets;
 
 namespace Client.MirScenes.Dialogs
@@ -181,7 +179,7 @@ namespace Client.MirScenes.Dialogs
             {
                 if (SelectedFriend == null) return;
 
-                MirMessageBox messageBox = new MirMessageBox(string.Format("Are you sure you wish to remove '{0}'?", SelectedFriend.Name), MirMessageBoxButtons.YesNo);
+                MirMessageBox messageBox = new MirMessageBox(string.Format("是否要删除 '{0}'?", SelectedFriend.Name), MirMessageBoxButtons.YesNo);
 
                 messageBox.YesButton.Click += (o1, e1) =>
                 {

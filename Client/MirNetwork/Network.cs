@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.IO;
 using System.Net.Sockets;
 using Client.MirControls;
 using C = ClientPackets;
@@ -52,7 +51,6 @@ namespace Client.MirNetwork
 
                 TimeOutTime = CMain.Time + Settings.TimeOut;
                 TimeConnected = CMain.Time;
-
 
                 BeginReceive();
             }
@@ -145,7 +143,6 @@ namespace Client.MirNetwork
             { }
         }
 
-
         public static void Disconnect()
         {
             if (_client == null) return;
@@ -176,7 +173,7 @@ namespace Client.MirNetwork
                         return;
                     }
 
-                    MirMessageBox.Show("Lost connection with the server.", true);
+                    MirMessageBox.Show("与服务器的连接中断", true);
                     Disconnect();
                     return;
                 }

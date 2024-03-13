@@ -1,14 +1,11 @@
-﻿using Client.MirControls;
-using Client.MirGraphics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System;
 using System.Drawing;
-using Client.MirSounds;
-using Client.MirNetwork;
-using C = ClientPackets;
 using System.Windows.Forms;
+using Client.MirControls;
+using Client.MirGraphics;
+using Client.MirNetwork;
+using Client.MirSounds;
+using C = ClientPackets;
 
 namespace Client.MirScenes.Dialogs
 {
@@ -17,7 +14,7 @@ namespace Client.MirScenes.Dialogs
         MirImageControl TitleLabel;
         MirButton HelpButton, CloseButton;
         MirLabel TitleTypeLabel, TitleSenderLabel, TitleMessageLabel;
-        //Send / Reply (Can only reply if index exists, button will disapear if not) / Read / Delete / Block List / Bug Report (new system??)
+        //发送/回复（只有在索引存在时才能回复，如果没有，按钮将消失）/读取/删除/阻止列表/错误报告（新系统？？）
 
         MirLabel PageLabel;
         MirButton PreviousButton, NextButton;
@@ -40,43 +37,43 @@ namespace Client.MirScenes.Dialogs
             Sort = true;
             Location = new Point((Settings.ScreenWidth - Size.Width) - 150, 5);
 
-            TitleLabel = new MirImageControl
-            {
-                Index = 7,
-                Library = Libraries.Title,
-                Location = new Point(18, 9),
-                Parent = this
-            };
+            //TitleLabel = new MirImageControl //此处代码可省略，因为客户端LIB有显示
+            //{
+            //    Index = 7,
+            //    Library = Libraries.Title,
+            //    Location = new Point(18, 9),
+            //    Parent = this
+            //};
 
-            TitleTypeLabel = new MirLabel
-            {
-                Text = "TYPE",
-                Parent = this,
-                Font = new Font(Settings.FontName, Settings.FontSize - 1, FontStyle.Italic),
-                DrawFormat = TextFormatFlags.VerticalCenter | TextFormatFlags.HorizontalCenter,
-                Size = new Size(37, 19),
-                Location = new Point(8, 34)
-            };
+            //TitleTypeLabel = new MirLabel
+            //{
+            //    Text = "类型",
+            //    Parent = this,
+            //    Font = new Font(Settings.FontName, Settings.FontSize - 1, FontStyle.Italic),
+            //    DrawFormat = TextFormatFlags.VerticalCenter | TextFormatFlags.HorizontalCenter,
+            //    Size = new Size(37, 19),
+            //    Location = new Point(8, 34)
+            //};
 
-            TitleSenderLabel = new MirLabel
-            {
-                Text = "SENDER",
-                Parent = this,
-                Font = new Font(Settings.FontName, Settings.FontSize - 1, FontStyle.Italic),
-                DrawFormat = TextFormatFlags.VerticalCenter | TextFormatFlags.HorizontalCenter,
-                Size = new Size(132, 19),
-                Location = new Point(47, 34)
-            };
+            //TitleSenderLabel = new MirLabel
+            //{
+            //    Text = "发件人",
+            //    Parent = this,
+            //    Font = new Font(Settings.FontName, Settings.FontSize - 1, FontStyle.Italic),
+            //    DrawFormat = TextFormatFlags.VerticalCenter | TextFormatFlags.HorizontalCenter,
+            //    Size = new Size(132, 19),
+            //    Location = new Point(47, 34)
+            //};
 
-            TitleMessageLabel = new MirLabel
-            {
-                Text = "MESSAGE",
-                Parent = this,
-                Font = new Font(Settings.FontName, Settings.FontSize - 1, FontStyle.Italic),
-                DrawFormat = TextFormatFlags.VerticalCenter | TextFormatFlags.HorizontalCenter,
-                Size = new Size(122, 19),
-                Location = new Point(181, 34)
-            };
+            //TitleMessageLabel = new MirLabel
+            //{
+            //    Text = "信息",
+            //    Parent = this,
+            //    Font = new Font(Settings.FontName, Settings.FontSize - 1, FontStyle.Italic),
+            //    DrawFormat = TextFormatFlags.VerticalCenter | TextFormatFlags.HorizontalCenter,
+            //    Size = new Size(122, 19),
+            //    Location = new Point(181, 34)
+            //};
 
             CloseButton = new MirButton
             {
@@ -174,7 +171,7 @@ namespace Client.MirScenes.Dialogs
 
                     inputBox.OKButton.Click += (o1, e1) =>
                     {
-                        //open letter dialog, pass in name
+                        //公开信对话框，输入名称
                         GameScene.Scene.MailComposeLetterDialog.ComposeMail(inputBox.InputTextBox.Text);
                         
                         inputBox.Dispose();
@@ -243,7 +240,7 @@ namespace Client.MirScenes.Dialogs
 
                 if (SelectedMail.Items.Count > 0 || SelectedMail.Gold > 0)
                 {
-                    MirMessageBox messageBox = new MirMessageBox("This parcel contains items or gold. Are you sure you want to delete it?", MirMessageBoxButtons.YesNo);
+                    MirMessageBox messageBox = new MirMessageBox("确定要删除邮件中的物品或金币？", MirMessageBoxButtons.YesNo);
 
                     messageBox.YesButton.Click += (o1, e1) =>
                     {
@@ -283,7 +280,7 @@ namespace Client.MirScenes.Dialogs
                 Parent = this,
                 Location = new Point(210, 414),
                 Sound = SoundList.ButtonA,
-                Hint = "Report Bug",
+                Hint = "提交BUG",
                 GrayScale = true,
                 Enabled = false
             };
@@ -555,7 +552,7 @@ namespace Client.MirScenes.Dialogs
 
                 if (!Mail.Opened)
                 {
-                    //move unread to second position if not collected parcel
+                    //如果未收集包裹，则将未读邮件移至第二个位置
                     UnreadImage.Location = new Point(20, 17);
                 }
             }
@@ -563,7 +560,7 @@ namespace Client.MirScenes.Dialogs
             {
                 if (Mail.Locked)
                 {
-                    //move unread to second position if locked
+                    //如果锁定，将未读内容移动到第二个位置
                     UnreadImage.Location = new Point(20, 17);
                 }
             }
@@ -633,7 +630,7 @@ namespace Client.MirScenes.Dialogs
                 Parent = this,
                 Font = new Font(Settings.FontName, 8F),
                 ForeColour = Color.White,
-                Location = new Point(70, 35),
+                Location = new Point(70, 32), //默认：(70, 35)
                 Size = new Size(150, 15),
                 NotControl = true,
             };
@@ -907,7 +904,7 @@ namespace Client.MirScenes.Dialogs
                 for (int i = 0; i < GameScene.User.Inventory.Length; i++)
                 {
                     UserItem item = GameScene.User.Inventory[i];
-                    if (item == null || item.Info.Type != ItemType.Nothing || item.Info.Shape != 1) continue;
+                    if (item == null || item.Info.Type != ItemType.杂物 || item.Info.Shape != 1) continue;
 
                     Stamped = true;
                     break;

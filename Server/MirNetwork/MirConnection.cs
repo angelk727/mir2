@@ -2,13 +2,12 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Net.Sockets;
+using System.Text.RegularExpressions;
 using Server.MirDatabase;
 using Server.MirEnvir;
 using Server.MirObjects;
 using C = ClientPackets;
 using S = ServerPackets;
-using System.Linq;
-using System.Text.RegularExpressions;
 
 namespace Server.MirNetwork
 {
@@ -87,13 +86,13 @@ namespace Server.MirNetwork
 
                     if (connCount >= Settings.MaxIP)
                     {
-                        MessageQueue.EnqueueDebugging(IPAddress + ", Maximum connections reached.");
+                        MessageQueue.EnqueueDebugging(IPAddress + "已达到设定可登录人数上限");
                         conn.SendDisconnect(5);
                     }
                 }
             }
 
-            MessageQueue.Enqueue(IPAddress + ", Connected.");
+            MessageQueue.Enqueue(IPAddress + "已连接服务器");
 
             _client = client;
             _client.NoDelay = true;
@@ -135,6 +134,7 @@ namespace Server.MirNetwork
                 Disconnecting = true;
             }
         }
+
         private void ReceiveData(IAsyncResult result)
         {
             if (!Connected) return;
@@ -159,10 +159,10 @@ namespace Server.MirNetwork
 
             byte[] rawBytes = result.AsyncState as byte[];
 
-            byte[] temp = _rawData;
-            _rawData = new byte[dataRead + temp.Length];
-            Buffer.BlockCopy(temp, 0, _rawData, 0, temp.Length);
-            Buffer.BlockCopy(rawBytes, 0, _rawData, temp.Length, dataRead);
+                byte[] temp = _rawData;
+                _rawData = new byte[dataRead + temp.Length];
+                Buffer.BlockCopy(temp, 0, _rawData, 0, temp.Length);
+                Buffer.BlockCopy(rawBytes, 0, _rawData, temp.Length, dataRead);
 
             Packet p;
             while ((p = Packet.ReceivePacket(_rawData, out _rawData)) != null)
@@ -205,7 +205,7 @@ namespace Server.MirNetwork
             foreach (MirConnection c in Observers)
                 c.Enqueue(p);
         }
-        
+
         public void Process()
         {
             if (_client == null || !_client.Connected)
@@ -689,7 +689,7 @@ namespace Server.MirNetwork
                     ConfirmItemRental();
                     break;
                 default:
-                    MessageQueue.Enqueue(string.Format("Invalid packet received. Index : {0}", p.Index));
+                    MessageQueue.Enqueue(string.Format("接受的数据包无效 路径 : {0}", p.Index));
                     break;
             }
         }
@@ -797,12 +797,12 @@ namespace Server.MirNetwork
 
                     BeginSend(data);
                     SoftDisconnect(10);
-                    MessageQueue.Enqueue(SessionID + ", Disconnnected - Wrong Client Version.");
+                    MessageQueue.Enqueue(SessionID + "断开连接 客户端版本错误");
                     return;
                 }
             }
 
-            MessageQueue.Enqueue(SessionID + ", " + IPAddress + ", Client version matched.");
+            MessageQueue.Enqueue(SessionID + ", " + IPAddress + "客户端版本匹配");
             Enqueue(new S.ClientVersion { Result = 1 });
 
             Stage = GameStage.Login;
@@ -818,21 +818,21 @@ namespace Server.MirNetwork
         {
             if (Stage != GameStage.Login) return;
 
-            MessageQueue.Enqueue(SessionID + ", " + IPAddress + ", New account being created.");
+            MessageQueue.Enqueue(SessionID + ", " + IPAddress + "正在创建新账户");
             Envir.NewAccount(p, this);
         }
         private void ChangePassword(C.ChangePassword p)
         {
             if (Stage != GameStage.Login) return;
 
-            MessageQueue.Enqueue(SessionID + ", " + IPAddress + ", Password being changed.");
+            MessageQueue.Enqueue(SessionID + ", " + IPAddress + "正在更改密码");
             Envir.ChangePassword(p, this);
         }
         private void Login(C.Login p)
         {
             if (Stage != GameStage.Login) return;
 
-            MessageQueue.Enqueue(SessionID + ", " + IPAddress + ", User logging in.");
+            MessageQueue.Enqueue(SessionID + ", " + IPAddress + "正在登录");
             Envir.Login(p, this);
         }
         private void NewCharacter(C.NewCharacter p)
@@ -1111,7 +1111,7 @@ namespace Server.MirNetwork
         {
             if (Stage != GameStage.Game) return;
 
-            Player.DropItem(p.UniqueID, p.Count);
+            Player.DropItem(p.UniqueID, p.Count, p.HeroInventory);
         }
 
         private void TakeBackHeroItem(C.TakeBackHeroItem p)
@@ -1165,9 +1165,17 @@ namespace Server.MirNetwork
             if (Stage != GameStage.Game && Stage != GameStage.Observer) return;
 
             if (p.Ranking)
+            {
                 Envir.Inspect(this, (int)p.ObjectID);
+            }
+            else if (p.Hero)
+            {
+                Envir.InspectHero(this, (int)p.ObjectID);
+            }
             else
+            {
                 Envir.Inspect(this, p.ObjectID);
+            } 
         }
         private void Observe(C.Observe p)
         {
@@ -1323,7 +1331,7 @@ namespace Server.MirNetwork
             if (!actor.Dead && (actor.ActionTime > Envir.Time || actor.SpellTime > Envir.Time))
                 _retryList.Enqueue(p);
             else
-                actor.BeginMagic(p.Spell, p.Direction, p.TargetID, p.Location);
+                actor.BeginMagic(p.Spell, p.Direction, p.TargetID, p.Location, p.SpellTargetLock);
         }
 
         private void SwitchGroup(C.SwitchGroup p)
@@ -1531,17 +1539,17 @@ namespace Server.MirNetwork
             {
                 Player.AllowMarriage = !Player.AllowMarriage;
                 if (Player.AllowMarriage)
-                    Player.ReceiveChat("You're now allowing marriage requests.", ChatType.Hint);
+                    Player.ReceiveChat("允许求婚已开启", ChatType.Hint);
                 else
-                    Player.ReceiveChat("You're now blocking marriage requests.", ChatType.Hint);
+                    Player.ReceiveChat("允许求婚已关闭", ChatType.Hint);
             }
             else
             {
                 Player.AllowLoverRecall = !Player.AllowLoverRecall;
                 if (Player.AllowLoverRecall)
-                    Player.ReceiveChat("You're now allowing recall from lover.", ChatType.Hint);
+                    Player.ReceiveChat("夫妻传送已开启", ChatType.Hint);
                 else
-                    Player.ReceiveChat("You're now blocking recall from lover.", ChatType.Hint);
+                    Player.ReceiveChat("夫妻传送已关闭", ChatType.Hint);
             }
         }
 
@@ -1681,7 +1689,7 @@ namespace Server.MirNetwork
                 return;
             }
 
-            Player.ReceiveChat("Reincarnation failed", ChatType.System);
+            Player.ReceiveChat("放弃复活", ChatType.System);
         }
 
         private void CancelReincarnation()
@@ -1815,12 +1823,12 @@ namespace Server.MirNetwork
             }
             else
             {
-                //Update the creature info
+                //更新灵物信息
                 for (int i = 0; i < Player.Info.IntelligentCreatures.Count; i++)
                 {
                     if (Player.Info.IntelligentCreatures[i].PetType == petUpdate.PetType)
                     {
-                        var reg = new Regex(@"^[A-Za-z0-9]{" + Globals.MinCharacterNameLength + "," + Globals.MaxCharacterNameLength + "}$");
+                        var reg = new Regex(@"^[A-Za-z0-9\u4E00-\u9FA5]{" + Globals.MinCharacterNameLength + "," + Globals.MaxCharacterNameLength + "}$");
 
                         if (reg.IsMatch(petUpdate.CustomName))
                         {
@@ -1885,6 +1893,12 @@ namespace Server.MirNetwork
             if (Stage != GameStage.Game) return;
 
             Player.NPCData["NPCInputStr"] = p.Value;
+
+            if (p.NPCID == Envir.DefaultNPC.LoadedObjectID && Player.NPCObjectID == Envir.DefaultNPC.LoadedObjectID)
+            {
+                Player.CallDefaultNPC(p.PageName);
+                return;
+            }
 
             Player.CallNPC(Player.NPCObjectID, p.PageName);
         }

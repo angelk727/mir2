@@ -1,24 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Globalization;
-using System.IO;
-using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using Client.MirControls;
 using Client.MirGraphics;
-using Client.MirNetwork;
-using Client.MirObjects;
 using Client.MirSounds;
-using Font = System.Drawing.Font;
-using C = ClientPackets;
-using Effect = Client.MirObjects.Effect;
 namespace Client.MirScenes.Dialogs
 {
     public sealed class NewCharacterDialog : MirImageControl
     {
-        private static readonly Regex Reg = new Regex(@"^[A-Za-z0-9]{" + Globals.MinCharacterNameLength + "," + Globals.MaxCharacterNameLength + "}$");
+        private static readonly Regex Reg = new Regex(@"^[A-Za-z0-9\u4E00-\u9FA5]{" + Globals.MinCharacterNameLength + "," + Globals.MaxCharacterNameLength + "}$");
 
         public MirImageControl TitleLabel;
         public MirAnimatedControl CharacterDisplay;
@@ -41,32 +32,32 @@ namespace Client.MirScenes.Dialogs
         public MirGender Gender;
 
         #region Descriptions
-        public const string WarriorDescription =
-            "Warriors are a class of great strength and vitality. They are not easily killed in battle and have the advantage of being able to use" +
-            " a variety of heavy weapons and Armour. Therefore, Warriors favor attacks that are based on melee physical damage. They are weak in ranged" +
-            " attacks, however the variety of equipment that are developed specifically for Warriors complement their weakness in ranged combat.";
+            public const string WarriorDescription =
+                "以强有力的体格为基础，特殊之处在于用剑法及刀法等技术。即便穿戴沉重的武器" +
+                "及对打猎、战斗比较适用。 体力强的战士能带许多东西，铠甲也可以" +
+                "自由活动。 但战士所戴的铠甲对魔法的防御能力相对较弱。";
 
-        public const string WizardDescription =
-            "Wizards are a class of low strength and stamina, but have the ability to use powerful spells. Their offensive spells are very effective, but" +
-            " because it takes time to cast these spells, they're likely to leave themselves open for enemy's attacks. Therefore, the physically weak wizards" +
-            " must aim to attack their enemies from a safe distance.";
+            public const string WizardDescription =
+                "以长时间锻炼的内功为基础，能发挥强大的攻击型魔法。魔法攻击力卓越，但体力较弱。对体力" +
+                "上直接受到攻击的防御能力较低，另外，发挥高水平的魔法时需要较长时间，此时" +
+                "可能受到对方的快速攻击。 魔法师的魔法比任何攻击能力都强大，能有效的威胁对方。";
 
-        public const string TaoistDescription =
-            "Taoists are well disciplined in the study of Astronomy, Medicine, and others aside from Mu-Gong. Rather then directly engaging the enemies, their" +
-            " specialty lies in assisting their allies with support. Taoists can summon powerful creatures and have a high resistance to magic, and is a class" +
-            " with well balanced offensive and defensive abilities.";
+            public const string TaoistDescription =
+                "以强大的精神力作为基础，可以使用治疗术帮助别人。 对" +
+                "自然很熟悉，在用毒方面的能力最强。 博学多知，能使用剑术和魔法" +
+                "，所以每时每刻都能发挥多样的法术，随机应变性强。";
 
-        public const string AssassinDescription =
-            "Assassins are members of a secret organization and their history is relatively unknown. They're capable of hiding themselves and performing attacks" +
-            " while being unseen by others, which naturally makes them excellent at making fast kills. It is necessary for them to avoid being in battles with" +
-            " multiple enemies due to their weak vitality and strength.";
+            public const string AssassinDescription =
+                "以敏捷快速的攻击为基础，矫健的刺客还拥有超强的爆" +
+                "发性他们熟悉各种技能 尤其擅长瞬移、潜行技能！ 他们是暗夜" +
+                "的主人，是绝对的伤害高、攻击高、爆发型的职业。";
 
-        public const string ArcherDescription =
-            "Archers are a class of great accuracy and strength, using their powerful skills with bows to deal extraordinary damage from range. Much like" +
-            " wizards, they rely on their keen instincts to dodge oncoming attacks as they tend to leave themselves open to frontal attacks. However, their" +
-            " physical prowess and deadly aim allows them to instil fear into anyone they hit.";
+            public const string ArcherDescription =
+                "强大的远程输出：作为一个名副其实的远程物理输出职业，弓箭最擅长在敌人攻击范围之外" +
+                "对敌人造成致命打击。 多变：弓箭手永远是战场上的未知数，就必须练就准确的判断力，熟练掌握其操作技巧" +
+                " 华丽：鲜艳的服装、优雅的射击动作和绚美的特效，非弓箭手莫属!";
 
-        #endregion
+            #endregion
 
         public NewCharacterDialog()
         {
@@ -92,7 +83,7 @@ namespace Client.MirScenes.Dialogs
                 Parent = this,
                 PressedIndex = 282
             };
-            CancelButton.Click += (o, e) => Dispose();
+            CancelButton.Click += (o, e) => Hide();
 
             OKButton = new MirButton
             {
@@ -130,7 +121,7 @@ namespace Client.MirScenes.Dialogs
             };
             CharacterDisplay.AfterDraw += (o, e) =>
             {
-                if (Class == MirClass.Wizard)
+                if (Class == MirClass.法师)
                     Libraries.ChrSel.DrawBlend(CharacterDisplay.Index + 560, CharacterDisplay.DisplayLocationWithoutOffSet, Color.White, true);
             };
 
@@ -147,7 +138,7 @@ namespace Client.MirScenes.Dialogs
             };
             WarriorButton.Click += (o, e) =>
             {
-                Class = MirClass.Warrior;
+                Class = MirClass.战士;
                 UpdateInterface();
             };
 
@@ -164,7 +155,7 @@ namespace Client.MirScenes.Dialogs
             };
             WizardButton.Click += (o, e) =>
             {
-                Class = MirClass.Wizard;
+                Class = MirClass.法师;
                 UpdateInterface();
             };
 
@@ -181,7 +172,7 @@ namespace Client.MirScenes.Dialogs
             };
             TaoistButton.Click += (o, e) =>
             {
-                Class = MirClass.Taoist;
+                Class = MirClass.道士;
                 UpdateInterface();
             };
 
@@ -197,7 +188,7 @@ namespace Client.MirScenes.Dialogs
             };
             AssassinButton.Click += (o, e) =>
             {
-                Class = MirClass.Assassin;
+                Class = MirClass.刺客;
                 UpdateInterface();
             };
 
@@ -213,7 +204,7 @@ namespace Client.MirScenes.Dialogs
             };
             ArcherButton.Click += (o, e) =>
             {
-                Class = MirClass.Archer;
+                Class = MirClass.弓箭;
                 UpdateInterface();
             };
 
@@ -230,7 +221,7 @@ namespace Client.MirScenes.Dialogs
             };
             MaleButton.Click += (o, e) =>
             {
-                Gender = MirGender.Male;
+                Gender = MirGender.男性;
                 UpdateInterface();
             };
 
@@ -246,7 +237,7 @@ namespace Client.MirScenes.Dialogs
             };
             FemaleButton.Click += (o, e) =>
             {
-                Gender = MirGender.Female;
+                Gender = MirGender.女性;
                 UpdateInterface();
             };
 
@@ -264,8 +255,8 @@ namespace Client.MirScenes.Dialogs
         {
             base.Show();
 
-            Class = MirClass.Warrior;
-            Gender = MirGender.Male;
+            Class = MirClass.战士;
+            Gender = MirGender.男性;
             NameTextBox.Text = string.Empty;
 
             UpdateInterface();
@@ -323,37 +314,37 @@ namespace Client.MirScenes.Dialogs
 
             switch (Gender)
             {
-                case MirGender.Male:
+                case MirGender.男性:
                     MaleButton.Index = 2421;
                     break;
-                case MirGender.Female:
+                case MirGender.女性:
                     FemaleButton.Index = 2424;
                     break;
             }
 
             switch (Class)
             {
-                case MirClass.Warrior:
+                case MirClass.战士:
                     WarriorButton.Index = 2427;
                     Description.Text = WarriorDescription;
                     CharacterDisplay.Index = (byte)Gender == 0 ? 20 : 300; //220 : 500;
                     break;
-                case MirClass.Wizard:
+                case MirClass.法师:
                     WizardButton.Index = 2430;
                     Description.Text = WizardDescription;
                     CharacterDisplay.Index = (byte)Gender == 0 ? 40 : 320; //240 : 520;
                     break;
-                case MirClass.Taoist:
+                case MirClass.道士:
                     TaoistButton.Index = 2433;
                     Description.Text = TaoistDescription;
                     CharacterDisplay.Index = (byte)Gender == 0 ? 60 : 340; //260 : 540;
                     break;
-                case MirClass.Assassin:
+                case MirClass.刺客:
                     AssassinButton.Index = 2436;
                     Description.Text = AssassinDescription;
                     CharacterDisplay.Index = (byte)Gender == 0 ? 80 : 360; //280 : 560;
                     break;
-                case MirClass.Archer:
+                case MirClass.弓箭:
                     ArcherButton.Index = 2439;
                     Description.Text = ArcherDescription;
                     CharacterDisplay.Index = (byte)Gender == 0 ? 100 : 140; //160 : 180;

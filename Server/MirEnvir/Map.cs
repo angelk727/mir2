@@ -511,7 +511,8 @@ namespace Server.MirEnvir
                 MessageQueue.Enqueue(ex);
             }
 
-            MessageQueue.Enqueue("Failed to Load Map: " + Info.FileName);
+            MessageQueue.Enqueue("加载地图失败: " + Info.Title);
+            MessageQueue.Enqueue("文件名: " + Info.FileName);
             return false;
         }
 
@@ -860,7 +861,7 @@ namespace Server.MirEnvir
             HumanObject player = (HumanObject)data[0];
             UserMagic magic = (UserMagic)data[1];
 
-            if (player == null || player.Info == null) return;
+            if (player == null || player.Info == null || player.Node == null) return;
 
             int value, value2;
             Point location;
@@ -932,7 +933,32 @@ namespace Server.MirEnvir
 
                     monster.Master.Pets.Add(monster);
                     break;
+                case Spell.Stonetrap:
+                    monster = (MonsterObject)data[2];
+                    front = (Point)data[3];
 
+                    if (monster.Master.Dead) return;
+
+                    if (ValidPoint(front))
+                        monster.Spawn(this, front);
+                    else
+                        monster.Spawn(player.CurrentMap, player.CurrentLocation);
+
+                    monster.Master.Pets.Add(monster);
+                    break;
+                //case Spell.Stonetrap:
+                //    monster = (MonsterObject)data[2];
+                //    front = (Point)data[3];
+
+                //    if (monster.Master.Dead) return;
+
+                //    if (ValidPoint(front))
+                //        monster.Spawn(this, front);
+                //    else
+                //        monster.Spawn(player.CurrentMap, player.CurrentLocation);
+
+                //    monster.Master.Pets.Add(monster);
+                //    break;
                 #endregion
 
                 #region FireBang, IceStorm
@@ -1004,6 +1030,9 @@ namespace Server.MirEnvir
                             for (int i = 0; i < cell.Objects.Count; i++)
                             {
                                 MapObject target = cell.Objects[i];
+
+                                if (target.Node == null) continue;
+
                                 switch (target.Race)
                                 {
                                     case ObjectType.Monster:
@@ -1011,7 +1040,7 @@ namespace Server.MirEnvir
                                         //Only targets
                                         if (target.IsFriendlyTarget(player))
                                         {
-                                            target.AddBuff(BuffType.Hiding, player, (Settings.Second * value), new Stats());
+                                            target.AddBuff(BuffType.隐身术, player, (Settings.Second * value), new Stats());
                                             target.OperateTime = 0;
                                             train = true;
                                         }
@@ -1033,7 +1062,7 @@ namespace Server.MirEnvir
                 case Spell.BlessedArmour:
                     value = (int)data[2];
                     location = (Point)data[3];
-                    BuffType type = magic.Spell == Spell.SoulShield ? BuffType.SoulShield : BuffType.BlessedArmour;
+                    BuffType type = magic.Spell == Spell.SoulShield ? BuffType.幽灵盾 : BuffType.神圣战甲术;
 
                     for (int y = location.Y - 3; y <= location.Y + 3; y++)
                     {
@@ -1052,6 +1081,9 @@ namespace Server.MirEnvir
                             for (int i = 0; i < cell.Objects.Count; i++)
                             {
                                 MapObject target = cell.Objects[i];
+
+                                if (target.Node == null) continue;
+
                                 switch (target.Race)
                                 {
                                     case ObjectType.Monster:
@@ -1062,7 +1094,7 @@ namespace Server.MirEnvir
                                         {
                                             var stats = new Stats
                                             {
-                                                [type == BuffType.SoulShield ? Stat.MaxMAC : Stat.MaxAC] = target.Level / 7 + 4
+                                                [type == BuffType.幽灵盾 ? Stat.MaxMAC : Stat.MaxAC] = target.Level / 7 + 4
                                             };
 
                                             target.AddBuff(type, player, Settings.Second * value, stats);
@@ -1255,6 +1287,7 @@ namespace Server.MirEnvir
                                 {
                                     case ObjectType.Monster:
                                     case ObjectType.Player:
+                                    case ObjectType.Hero: //自添加群体治疗 英雄可享用
                                         //Only targets
                                         if (target.IsFriendlyTarget(player))
                                         {
@@ -1280,7 +1313,7 @@ namespace Server.MirEnvir
                 case Spell.ThunderStorm:
                 case Spell.FlameField:
                 case Spell.NapalmShot:
-                case Spell.StormEscape:
+                //case Spell.StormEscape: //自添加雷仙风原代码
                     value = (int)data[2];
                     location = (Point)data[3];
                     for (int y = location.Y - 2; y <= location.Y + 2; y++)
@@ -1307,6 +1340,148 @@ namespace Server.MirEnvir
                                         //Only targets
                                         if (!target.IsAttackTarget(player)) break;
                                         target.Attacked(player, magic.Spell == Spell.ThunderStorm && !target.Undead ? value / 10 : value, DefenceType.MAC, false);
+                                        train = true;
+                                        break;
+                                }
+                            }
+
+                        }
+                    }
+
+                    break;
+
+                #endregion
+
+                #region StormEscape //自修改雷仙风
+
+                case Spell.StormEscape:
+                    value = (int)data[2];
+                    location = (Point)data[3];
+                    for (int y = location.Y - 2; y <= location.Y + 2; y++)
+                    {
+                        if (y < 0) continue;
+                        if (y >= Height) break;
+
+                        for (int x = location.X - 2; x <= location.X + 2; x++)
+                        {
+                            if (x < 0) continue;
+                            if (x >= Width) break;
+
+                            cell = GetCell(x, y);
+
+                            if (!cell.Valid || cell.Objects == null) continue;
+
+                            for (int i = 0; i < cell.Objects.Count; i++)
+                            {
+                                MapObject target = cell.Objects[i];
+                                switch (target.Race)
+                                {
+                                    case ObjectType.Monster:
+                                    case ObjectType.Player:
+                                        if (!target.IsAttackTarget(player)) break;
+                                        {
+                                            target.ApplyPoison(new Poison { PType = PoisonType.LRParalysis, Duration = magic.Level + 2, TickSpeed = 1000 }, player);
+                                            target.OperateTime = 0;
+                                        }
+                                        break;
+                                }
+                            }
+                            train = true;
+                            break;
+                        }
+
+                    }
+
+                    break;
+
+                #endregion
+
+                #region StormEscapeRare //自添加雷仙风秘籍
+
+                case Spell.StormEscapeRare:
+                    value = (int)data[2];
+                    location = (Point)data[3];
+                    for (int y = location.Y - 2; y <= location.Y + 2; y++)
+                    {
+                        if (y < 0) continue;
+                        if (y >= Height) break;
+
+                        for (int x = location.X - 2; x <= location.X + 2; x++)
+                        {
+                            if (x < 0) continue;
+                            if (x >= Width) break;
+
+                            cell = GetCell(x, y);
+
+                            if (!cell.Valid || cell.Objects == null) continue;
+
+                            for (int i = 0; i < cell.Objects.Count; i++)
+                            {
+                                MapObject target = cell.Objects[i];
+                                switch (target.Race)
+                                {
+                                    case ObjectType.Monster:
+                                    case ObjectType.Player:
+                                        //Only targets
+                                        if (!target.IsAttackTarget(player)) break;
+                                        if (target.Attacked(player, magic.Spell == Spell.ThunderStorm && !target.Undead ? value / 10 : value, DefenceType.MAC, false) <= 0) return;
+                                        {
+                                            target.ApplyPoison(new Poison { PType = PoisonType.LRParalysis, Duration = magic.Level + 2, TickSpeed = 1000 }, player);
+                                            target.OperateTime = 0;
+                                        }
+                                        break;
+
+                                }
+                            }
+                            train = true;
+                            break;
+                        }
+
+                    }
+
+                    break;
+
+                #endregion
+
+                #region MoonMist
+
+                case Spell.MoonMist:
+
+                    value = (int)data[2];
+                    location = (Point)data[3];
+                    for (int y = location.Y - 2; y <= location.Y + 2; y++)
+                    {
+                        if (y < 0) continue;
+                        if (y >= Height) break;
+
+                        for (int x = location.X - 2; x <= location.X + 2; x++)
+                        {
+                            if (x < 0) continue;
+                            if (x >= Width) break;
+
+                            cell = GetCell(x, y);
+
+                            if (!cell.Valid || cell.Objects == null) continue;
+
+                            for (int i = 0; i < cell.Objects.Count; i++)
+                            {
+                                MapObject target = cell.Objects[i];
+                                switch (target.Race)
+                                {
+                                    case ObjectType.Monster:
+                                    case ObjectType.Player:
+                                        //Only targets
+                                        if (!target.IsAttackTarget(player)) break;
+
+                                        if (target.Attacked(player, magic.Spell == Spell.ThunderStorm && !target.Undead ? value / 10 : value, DefenceType.AC, false) <= 0)
+                                        {
+                                            if (target.Undead)
+                                            {
+                                                target.ApplyPoison(new Poison { PType = PoisonType.Stun, Duration = magic.Level + 2, TickSpeed = 1000 }, player);
+                                            }
+                                            break;
+                                        }
+
                                         train = true;
                                         break;
                                 }
@@ -1478,7 +1653,7 @@ namespace Server.MirEnvir
                                                         target.ApplyPoison(new Poison
                                                         {
                                                             Owner = player,
-                                                            Duration = target.Race == ObjectType.Player ? 2 : 5 + Envir.Random.Next(player.Stats[Stat.Freezing]),
+                                                            Duration = target.Race == ObjectType.Player ? 2 : 5 + Envir.Random.Next(player.Stats[Stat.冰冻伤害]),
                                                             PType = PoisonType.Frozen,
                                                             TickSpeed = 1000,
                                                         }, player);
@@ -1675,6 +1850,73 @@ namespace Server.MirEnvir
 
                 #endregion
 
+                #region HealingcircleRare //自添加
+
+                case Spell.HealingcircleRare:
+                    value = (int)data[2];
+                    location = (Point)data[3];
+
+                    train = true;
+                    show = true;
+
+                    for (int y = location.Y - 3; y <= location.Y + 3; y++)
+                    {
+                        if (y < 0) continue;
+                        if (y >= Height) break;
+
+                        for (int x = location.X - 3; x <= location.X + 3; x++)
+                        {
+                            if (x < 0) continue;
+                            if (x >= Width) break;
+
+                            cell = GetCell(x, y);
+
+                            if (!cell.Valid) continue;
+
+                            bool cast = true;
+                            if (cell.Objects != null)
+                                for (int o = 0; o < cell.Objects.Count; o++)
+                                {
+                                    MapObject target = cell.Objects[o];
+                                    switch (target.Race)
+                                    {
+                                        case ObjectType.Monster:
+                                        case ObjectType.Player:
+                                        case ObjectType.Hero:
+
+                                            if (target.Race != ObjectType.Spell || ((SpellObject)target).Spell != Spell.HealingcircleRare) continue;
+
+                                            cast = false;
+                                            break;
+                                    }
+                                }
+
+                            if (!cast) continue;
+
+                            SpellObject ob = new SpellObject
+                            {
+                                Spell = Spell.HealingcircleRare,
+                                Value = value,
+                                ExpireTime = Envir.Time + 20000,
+                                TickSpeed = 1200,
+                                Caster = player,
+                                CurrentLocation = new Point(x, y),
+                                CastLocation = location,
+                                Show = show,
+                                CurrentMap = this,
+                                StartTime = Envir.Time + 800,
+                            };
+
+                            show = false;
+
+                            AddObject(ob);
+                            ob.Spawned();
+                        }
+                    }
+                    break;
+
+                #endregion
+
                 #region TrapHexagon
 
                 case Spell.TrapHexagon:
@@ -1782,6 +2024,9 @@ namespace Server.MirEnvir
                             for (int i = 0; i < cell.Objects.Count; i++)
                             {
                                 MapObject target = cell.Objects[i];
+
+                                if (target.Node == null) continue;
+
                                 switch (target.Race)
                                 {
                                     case ObjectType.Monster:
@@ -1792,17 +2037,17 @@ namespace Server.MirEnvir
                                         //Only targets
                                         if (target.IsAttackTarget(player))
                                         {
-                                            target.ApplyPoison(new Poison { PType = PoisonType.Slow, Duration = value, TickSpeed = 1000, Value = value2 }, player);
+                                            target.ApplyPoison(new Poison { PType = PoisonType.Slow, Duration = value, TickSpeed = 1000, Value = value2, Owner = player }, player);
 
                                             var stats = new Stats
                                             {
-                                                [Stat.MaxDCRatePercent] = value2 * -1,
-                                                [Stat.MaxMCRatePercent] = value2 * -1,
-                                                [Stat.MaxSCRatePercent] = value2 * -1,
-                                                [Stat.AttackSpeedRatePercent] = target.Race == ObjectType.Player ? value2 * -1 : 0
+                                                [Stat.最大物理攻击数率] = value2 * -1,
+                                                [Stat.最大魔法攻击数率] = value2 * -1,
+                                                [Stat.最大道术攻击数率] = value2 * -1,
+                                                [Stat.攻击速度数率] = target.Race == ObjectType.Player ? value2 * -1 : 0
                                             };
 
-                                            target.AddBuff(BuffType.Curse, player, Settings.Second * value, stats);
+                                            target.AddBuff(BuffType.诅咒术, player, Settings.Second * value, stats);
                                             target.OperateTime = 0;
                                             train = true;
                                         }
@@ -2008,8 +2253,8 @@ namespace Server.MirEnvir
                     value = (int)data[2];
                     location = (Point)data[3];
 
-                    bool hasVampBuff = (player.Buffs.Any(ex => ex.Type == BuffType.VampireShot));
-                    bool hasPoisonBuff = (player.Buffs.Any(ex => ex.Type == BuffType.PoisonShot));
+                    bool hasVampBuff = (player.Buffs.Any(ex => ex.Type == BuffType.吸血地闪));
+                    bool hasPoisonBuff = (player.Buffs.Any(ex => ex.Type == BuffType.毒魔闪));
 
                     for (int y = location.Y - 2; y <= location.Y + 2; y++)
                     {
@@ -2056,7 +2301,7 @@ namespace Server.MirEnvir
                                                 Owner = player,
                                                 PType = PoisonType.Green,
                                                 TickSpeed = 2000,
-                                                Value = value / 15 + magic.Level + 1 + Envir.Random.Next(player.Stats[Stat.PoisonAttack])
+                                                Value = value / 15 + magic.Level + 1 + Envir.Random.Next(player.Stats[Stat.毒素伤害])
                                             }, player);
                                             target.OperateTime = 0;
                                         }
@@ -2071,12 +2316,12 @@ namespace Server.MirEnvir
                     if (hasVampBuff)
                     {
                         //Expire
-                        player.AddBuff(BuffType.VampireShot, player, Settings.Second * 1, new Stats());
+                        player.AddBuff(BuffType.吸血地闪, player, Settings.Second * 1, new Stats());
                     }
                     if (hasPoisonBuff)
                     {
                         //Expire
-                        player.AddBuff(BuffType.PoisonShot, player, Settings.Second * 1, new Stats());
+                        player.AddBuff(BuffType.毒魔闪, player, Settings.Second * 1, new Stats());
                     }
                     break;
 
@@ -2202,8 +2447,67 @@ namespace Server.MirEnvir
                     }
                     break;
 
+                #endregion
+                #region HealingCircle
+
+                case Spell.HealingCircle:
+                    value = (int)data[2];
+                    location = (Point)data[3];
+
+                    train = true;
+                    show = true;
+
+                    for (int y = location.Y - 1; y <= location.Y + 1; y++)
+                    {
+                        if (y < 0) continue;
+                        if (y >= Height) break;
+
+                        for (int x = location.X - 1; x <= location.X + 1; x++)
+                        {
+                            if (x < 0) continue;
+                            if (x >= Width) break;
+
+                            cell = GetCell(x, y);
+
+                            if (!cell.Valid) continue;
+
+                            bool cast = true;
+                            if (cell.Objects != null)
+                                for (int o = 0; o < cell.Objects.Count; o++)
+                                {
+                                    MapObject target = cell.Objects[o];
+                                    if (target.Race != ObjectType.Spell || ((SpellObject)target).Spell != Spell.HealingCircle) continue;
+
+                                    cast = false;
+                                    break;
+                                }
+
+                            if (!cast) continue;
+
+                            SpellObject ob = new SpellObject
+                            {
+                                Spell = Spell.HealingCircle,
+                                Value = value,
+                                ExpireTime = Envir.Time + (10000) + (5000 * magic.Level),
+                                TickSpeed = 400,
+                                Caster = player,
+                                CurrentLocation = new Point(x, y),
+                                CastLocation = location,
+                                Show = show,
+                                CurrentMap = this,
+                            };
+
+                            show = false;
+
+                            AddObject(ob);
+                            ob.Spawned();
+                        }
+                    }
+
+                    break;
+
                     #endregion
-            }
+        }
 
             if (train)
                 player.LevelMagic(magic);

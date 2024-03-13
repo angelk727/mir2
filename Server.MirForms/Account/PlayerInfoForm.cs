@@ -1,8 +1,8 @@
-﻿using Server.MirDatabase;
-using Server.MirObjects;
-using System;
+﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using Server.MirDatabase;
+using Server.MirObjects;
 
 namespace Server
 {
@@ -48,7 +48,7 @@ namespace Server
 
             PKPointsLabel.Text = Character.PKPoints.ToString();
             CurrentIPLabel.Text = Character.AccountInfo.LastIP;
-            OnlineTimeLabel.Text = Character.LastLoginDate > Character.LastLogoutDate ? (SMain.Envir.Now - Character.LastLoginDate).TotalMinutes.ToString("##") + " minutes" : "Offline";
+            OnlineTimeLabel.Text = Character.LastLoginDate > Character.LastLogoutDate ? (SMain.Envir.Now - Character.LastLoginDate).TotalMinutes.ToString("##") + " 分钟" : "离线";
 
             ChatBanExpiryTextBox.Text = Character.ChatBanExpiryDate.ToString();
         }
@@ -80,7 +80,7 @@ namespace Server
             if (Character.Player == null) return;
 
             Character.Player.Connection.SendDisconnect(4);
-            //also update account so player can't log back in for x minutes?
+            //同时更新帐户，使玩家在x分钟内无法重新登录？
         }
 
         private void KillButton_Click(object sender, EventArgs e)

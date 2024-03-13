@@ -404,7 +404,7 @@ namespace Server
 
         private void RISDeleteIndexbutton_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Are you sure you want to delete the last index?", "Delete?", MessageBoxButtons.YesNo) != DialogResult.Yes) return;
+            if (MessageBox.Show("是否要删除最后一条目录？", "Delete?", MessageBoxButtons.YesNo) != DialogResult.Yes) return;
             RandomItemStatsChanged = true;
             RISIndexcomboBox.Items.Remove(Settings.RandomItemStatsList.Count - 1);
             Settings.RandomItemStatsList.RemoveAt(Settings.RandomItemStatsList.Count - 1);
@@ -1544,7 +1544,7 @@ namespace Server
                 if (!int.TryParse(e.FormattedValue.ToString(), out _))
                 {
                     e.Cancel = true;
-                    classGridView.Rows[e.RowIndex].ErrorText = "the value must be an integer";
+                    classGridView.Rows[e.RowIndex].ErrorText = "该值必须是整数";
                 }
             }
             else if (e.ColumnIndex == 3 || e.ColumnIndex == 4)
@@ -1552,7 +1552,7 @@ namespace Server
                 if (!float.TryParse(e.FormattedValue.ToString(), out _))
                 {
                     e.Cancel = true;
-                    classGridView.Rows[e.RowIndex].ErrorText = "the value must be a decimal";
+                    classGridView.Rows[e.RowIndex].ErrorText = "该值必须是十进制";
                 }
             }
         }
@@ -1624,7 +1624,7 @@ namespace Server
                 if (!int.TryParse(e.FormattedValue.ToString(), out _))
                 {
                     e.Cancel = true;
-                    classCapGridView.Rows[e.RowIndex].ErrorText = "the value must be an integer";
+                    classCapGridView.Rows[e.RowIndex].ErrorText = "该值必须是整数";
                 }
             }
         }
@@ -1734,7 +1734,7 @@ namespace Server
 
                 if (classStats.Stats.Any(x => x.Type == type))
                 {
-                    MessageBox.Show(string.Format($"The stat '{type}' exists more than once so will not be saved."));
+                    MessageBox.Show(string.Format($"这个 '{type}' 已多次统计将不再保存"));
                     continue;
                 }
 
@@ -1775,5 +1775,15 @@ namespace Server
         }
 
         #endregion
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click_1(object sender, EventArgs e)
+        {
+
+        }
     }
 }

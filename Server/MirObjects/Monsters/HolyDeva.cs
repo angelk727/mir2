@@ -6,7 +6,7 @@ namespace Server.MirObjects.Monsters
     public class HolyDeva : MonsterObject
     {
         public long FearTime;
-        public byte AttackRange = 6;
+        public byte AttackRange = 7;
         public bool Summoned;
 
         protected internal HolyDeva(MonsterInfo info)
@@ -36,7 +36,7 @@ namespace Server.MirObjects.Monsters
             ActionTime = Envir.Time + 300;
             AttackTime = Envir.Time + AttackSpeed;
 
-            int damage = GetAttackPower(Stats[Stat.MinDC], Stats[Stat.MaxDC]);
+            int damage = GetAttackPower(Stats[Stat.MinMC], Stats[Stat.MaxMC]);
             if (damage == 0) return;
 
             DelayedAction action = new DelayedAction(DelayedType.RangeDamage, Envir.Time + 500, Target, damage, DefenceType.MAC);

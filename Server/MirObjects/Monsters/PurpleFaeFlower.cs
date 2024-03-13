@@ -1,6 +1,4 @@
-﻿using System;
-using System.Drawing;
-using Server.MirDatabase;
+﻿using Server.MirDatabase;
 using Server.MirEnvir;
 using S = ServerPackets;
 
@@ -18,7 +16,7 @@ namespace Server.MirObjects.Monsters
         protected override bool InAttackRange()
         {
             return CurrentMap == Target.CurrentMap && CanFly(Target.CurrentLocation) && Functions.InRange(CurrentLocation, Target.CurrentLocation, Info.ViewRange);
-            // ADDED CANFLY SO THAT PROJECTILE MOBS CANNOT SHOOT THROUGH WALLS
+            // 增加了CANFLY，使投掷物无法穿过墙壁
         }
 
         protected override void Attack()

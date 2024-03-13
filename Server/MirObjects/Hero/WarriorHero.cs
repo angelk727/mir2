@@ -1,15 +1,6 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using C = ClientPackets;
 using Server.MirDatabase;
 using Server.MirEnvir;
-using Server.MirNetwork;
-using S = ServerPackets;
-using System.Text.RegularExpressions;
-using Server.MirObjects.Monsters;
 
 namespace Server.MirObjects
 {
@@ -39,14 +30,14 @@ namespace Server.MirObjects
             if (Target != null)
             {
                 UserMagic magic = GetMagic(Spell.Rage);
-                if (CanUseMagic(magic) && !HasBuff(BuffType.Rage))
+                if (CanUseMagic(magic) && !HasBuff(BuffType.剑气爆))
                 {
                     BeginMagic(magic.Spell, Direction, ObjectID, CurrentLocation);
                     return;
                 }
 
                 magic = GetMagic(Spell.ProtectionField);
-                if (CanUseMagic(magic) && !HasBuff(BuffType.ProtectionField))
+                if (CanUseMagic(magic) && !HasBuff(BuffType.护身气幕))
                 {
                     BeginMagic(magic.Spell, Direction, ObjectID, CurrentLocation);
                     return;

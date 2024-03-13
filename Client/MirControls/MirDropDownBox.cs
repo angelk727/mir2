@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Linq;
-using System.Windows.Forms;
-using System.Drawing;
-using Client.MirGraphics;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Windows.Forms;
+using Client.MirGraphics;
 
 namespace Client.MirControls
 {

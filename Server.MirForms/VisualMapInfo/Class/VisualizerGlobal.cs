@@ -1,7 +1,7 @@
-﻿using Server.MirDatabase;
-using System;
+﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
+using Server.MirDatabase;
 
 namespace Server.MirForms.VisualMapInfo.Class
 {

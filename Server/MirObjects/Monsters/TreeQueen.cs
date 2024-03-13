@@ -1,21 +1,18 @@
 ﻿using System.Collections.Generic;
-using System;
 using System.Drawing;
 using Server.MirDatabase;
 using Server.MirEnvir;
 using S = ServerPackets;
-using System.Linq;
-using System.Text;
 
 namespace Server.MirObjects.Monsters
 {
     public class TreeQueen : MonsterObject
     {
-        protected override bool CanMove { get { return false; } }
-        protected override bool CanRegen { get { return false; } }
+        protected override bool CanMove { get { return false; } } //不能移动
+        protected override bool CanRegen { get { return false; } } //不能再生
 
-        private readonly int _rootSpreadMin = 5;
-        private readonly int _rootSpreadMax = 15;
+        private readonly int _rootSpreadMin = 5; //根须伸展最小范围
+        private readonly int _rootSpreadMax = 15; //根须伸展最大范围
         private readonly int _rootCount = 5;
         private long _rootSpawnTime;
 
@@ -187,11 +184,9 @@ namespace Server.MirObjects.Monsters
             }
         }
 
-        private void SpawnMassRoots()
+        private void SpawnMassRoots() //？？？
         {
             if (Dead) return;
-
-            Broadcast(new S.ObjectRangeAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation, TargetID = Target.ObjectID, Type = 1 });
 
             var count = CurrentMap.Players.Count;
 
@@ -200,6 +195,8 @@ namespace Server.MirObjects.Monsters
             var target = CurrentMap.Players[Envir.Random.Next(count)];
 
             var location = target.CurrentLocation;
+
+            Broadcast(new S.ObjectRangeAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation, TargetID = target.ObjectID, Type = 1 });
 
             for (int y = location.Y - 3; y <= location.Y + 3; y++)
             {
@@ -311,14 +308,14 @@ namespace Server.MirObjects.Monsters
 
         public override void Spawned()
         {
-            // Begin timers (stops players from being bombarded with attacks when they enter the room / map).
+            // 开始计时（阻止玩家进入房间/地图时受到攻击）
             _rootSpawnTime = Envir.Time + (Settings.Second * 5);
             _groundRootSpawnTime = Envir.Time + (Settings.Second * 15);
 
             base.Spawned();
         }
 
-        protected override void ProcessTarget()
+        protected override void ProcessTarget() //？？？？
         {
             if (CurrentMap.Players.Count == 0) return;
 
@@ -347,9 +344,7 @@ namespace Server.MirObjects.Monsters
                 _groundRootSpawnTime = Envir.Time + (Settings.Second * (_notNear ? next : next * _nearMultiplier));
             }
 
-            if (!CanAttack) return;
-
-            if (Target == null) return;
+            if (Target == null || !CanAttack) return;
 
             if (InAttackRange() && CanAttack)
             {

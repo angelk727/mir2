@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using Server.MirDatabase;
 using Server.MirEnvir;
-using System.Diagnostics;
 
 namespace Server
 {
@@ -37,7 +37,7 @@ namespace Server
         {
             if (_selectedQuestInfos.Count == 0) return;
 
-            if (MessageBox.Show("Are you sure you want to remove the selected Quests?", "Remove Quests?", MessageBoxButtons.YesNo) != DialogResult.Yes) return;
+            if (MessageBox.Show("确认要删除信息", "删除任务信息?", MessageBoxButtons.YesNo) != DialogResult.Yes) return;
 
             for (int i = 0; i < _selectedQuestInfos.Count; i++) Envir.Remove(_selectedQuestInfos[i]);
 
@@ -178,7 +178,7 @@ namespace Server
 
             if (!data.StartsWith("Quest", StringComparison.OrdinalIgnoreCase))
             {
-                MessageBox.Show("Cannot Paste, Copied data is not Quest Information.");
+                MessageBox.Show("操作失败：复制的数据不是任务信息");
                 return;
             }
 
@@ -211,6 +211,7 @@ namespace Server
 
             SaveFileDialog sfd = new SaveFileDialog();
             sfd.InitialDirectory = Path.Combine(Application.StartupPath, "Exports");
+            sfd.FileName = "5_任务数据";
             sfd.Filter = "Text File|*.txt";
             sfd.ShowDialog();
 
@@ -223,7 +224,7 @@ namespace Server
                     sw.WriteLine(Quests[j].ToText());
                 }
             }
-            MessageBox.Show("Quest Export complete");
+            MessageBox.Show("任务数据导出完成");
         }
 
 
@@ -251,7 +252,7 @@ namespace Server
                 QuestInfo.FromText(m);
 
             UpdateInterface();
-            MessageBox.Show("Quest Import complete");
+            MessageBox.Show("任务信息导入完成");
         }
 
         private void QNameTextBox_TextChanged(object sender, EventArgs e)

@@ -108,7 +108,7 @@ namespace ShadowMerger
             catch (Exception ex)
             {
                 throw new Exception(
-                  string.Format("Values are topmost={0} btm={1} left={2} right={3}", topmost, bottommost, leftmost, rightmost),
+                  string.Format("最高值={0} 底={1} 左={2} 右={3}", topmost, bottommost, leftmost, rightmost),
                   ex);
             }
         }

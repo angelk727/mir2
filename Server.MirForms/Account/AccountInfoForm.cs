@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using Server.MirDatabase;
 using Server.MirEnvir;
+using System.Security.Principal;
 
 namespace Server
 {
@@ -279,7 +280,7 @@ namespace Server
         
         private void DayBanButton_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Are you sure you want to ban the selected Accounts?", "Ban Selected.", MessageBoxButtons.YesNoCancel) != DialogResult.Yes) return;
+            if (MessageBox.Show("是否禁用选定账户", "禁用账户", MessageBoxButtons.YesNoCancel) != DialogResult.Yes) return;
 
             DateTime expiry = SMain.Envir.Now.AddDays(1);
 
@@ -298,7 +299,7 @@ namespace Server
 
         private void WeekBanButton_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Are you sure you want to ban the selected Accounts?", "Ban Selected.", MessageBoxButtons.YesNoCancel) != DialogResult.Yes) return;
+            if (MessageBox.Show("是否禁用选定账户", "禁用账户", MessageBoxButtons.YesNoCancel) != DialogResult.Yes) return;
 
             DateTime expiry = SMain.Envir.Now.AddDays(7);
 
@@ -317,7 +318,7 @@ namespace Server
 
         private void PermBanButton_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Are you sure you want to ban the selected Accounts?", "Ban Selected.", MessageBoxButtons.YesNoCancel) != DialogResult.Yes) return;
+            if (MessageBox.Show("是否禁用选定账户", "禁用账户", MessageBoxButtons.YesNoCancel) != DialogResult.Yes) return;
 
 
             AccountInfoListView.BeginUpdate();
@@ -416,12 +417,12 @@ namespace Server
         {
             if (SMain.Envir.Running)
             {
-                MessageBox.Show("Cannot wipe characters whilst the server is running", "Notice",
+                MessageBox.Show("服务器运行中不能删除账户数据", "通知",
                 MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
                 return;
             }
 
-            if (MessageBox.Show("Are you sure you want to wipe all characters from the database?", "Notice",
+            if (MessageBox.Show("是否删除数据库中所有账户数据", "通知",
                  MessageBoxButtons.YesNo, MessageBoxIcon.Asterisk) == DialogResult.Yes)
             {
                 for (int i = 0; i < SMain.Envir.AccountList.Count; i++)
@@ -434,7 +435,7 @@ namespace Server
                 SMain.Envir.Auctions.Clear();
                 SMain.Envir.GuildList.Clear();
 
-                MessageBox.Show("All characters and associated data has been cleared", "Notice", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                MessageBox.Show("所有账户相关数据已清除", "通知", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
 
             }
         }
@@ -452,7 +453,7 @@ namespace Server
                     _selectedAccountInfos[i].RequirePasswordChange = true;
                     PasswordChangeCheckBox.CheckState = CheckState.Checked;
                     Update(AccountInfoListView.SelectedItems[i], _selectedAccountInfos[i]);
-                    MessageBox.Show("Password Changed");
+                    MessageBox.Show("密码已变更");
                 }
 
                 AutoResize();
@@ -472,6 +473,32 @@ namespace Server
             }
             AutoResize();
             AccountInfoListView.EndUpdate();
+        }
+        private void DelAccButton_Click(object sender, EventArgs e)
+        {
+            if (AccountInfoListView.SelectedItems.Count > 0)
+            {
+                // Ask for confirmation
+                DialogResult result = MessageBox.Show("您确定要删除此帐户吗？", "永久删除账户确认", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
+                    // Get the selected account from the ListViewItem's Tag property
+                    AccountInfo accInfo = (AccountInfo)AccountInfoListView.SelectedItems[0].Tag;
+
+                    // Remove the selected account from AccountList
+                    if (SMain.Envir.AccountList.Contains(accInfo))
+                    {
+                        SMain.Envir.AccountList.Remove(accInfo);
+                    }
+
+                    // Remove the selected item from AccountInfoListView
+                    AccountInfoListView.SelectedItems[0].Remove();
+                }
+            }
+            else
+            {
+                MessageBox.Show("请选择要删除的帐户");
+            }
         }
     }
 }

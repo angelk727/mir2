@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using Server.MirDatabase;
 using Server.MirEnvir;
-using S = ServerPackets;
 
 namespace Server.MirObjects.Monsters
 {
@@ -49,9 +45,9 @@ namespace Server.MirObjects.Monsters
                 int damage = GetAttackPower(Stats[Stat.MinDC], Stats[Stat.MaxDC]);
                 if (damage == 0) return;
 
-                if (targets[i].Attacked(this, damage, DefenceType.ACAgility) <= 0) continue;
+                if (targets[i].Attacked(this, damage, DefenceType.MAC) <= 0) continue;
 
-                if (Envir.Random.Next(Settings.PoisonResistWeight) >= targets[i].Stats[Stat.PoisonResist])
+                if (Envir.Random.Next(Settings.PoisonResistWeight) >= targets[i].Stats[Stat.毒物躲避])
                 {
                     if (Envir.Random.Next(5) == 0)
                     {

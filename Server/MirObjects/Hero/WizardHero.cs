@@ -1,15 +1,5 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using C = ClientPackets;
+﻿using System.Linq;
 using Server.MirDatabase;
-using Server.MirEnvir;
-using Server.MirNetwork;
-using S = ServerPackets;
-using System.Text.RegularExpressions;
-using Server.MirObjects.Monsters;
 
 namespace Server.MirObjects
 {
@@ -33,14 +23,7 @@ namespace Server.MirObjects
             if (Target != null)
             {
                 UserMagic magic = GetMagic(Spell.MagicShield);
-                if (CanUseMagic(magic) && !HasBuff(BuffType.MagicShield))
-                {
-                    BeginMagic(magic.Spell, Direction, ObjectID, CurrentLocation);
-                    return;
-                }
-
-                magic = GetMagic(Spell.MagicBooster);
-                if (CanUseMagic(magic) && !HasBuff(BuffType.MagicBooster))
+                if (CanUseMagic(magic) && !HasBuff(BuffType.魔法盾))
                 {
                     BeginMagic(magic.Spell, Direction, ObjectID, CurrentLocation);
                     return;
@@ -71,16 +54,23 @@ namespace Server.MirObjects
                 }
             }
 
-            if (TargetDistance < 3 && SurroundedCount > 1)
+            if (SurroundedCount > 1)
             {
-                magic = GetMagic(Spell.FlameField);
-                if (CanUseMagic(magic))
-                {
-                    BeginMagic(magic.Spell, Direction, Target.ObjectID, Target.CurrentLocation);
-                    return;
-                }
-
                 magic = GetMagic(Spell.ThunderStorm);
+                if (CanUseMagic(magic) && Target.Undead)
+                {
+                    BeginMagic(magic.Spell, Direction, Target.ObjectID, Target.CurrentLocation);
+                    return;
+                }
+
+                magic = GetMagic(Spell.IceStorm);
+                if (CanUseMagic(magic))
+                {
+                    BeginMagic(magic.Spell, Direction, Target.ObjectID, Target.CurrentLocation);
+                    return;
+                }
+
+                magic = GetMagic(Spell.FireBang);
                 if (CanUseMagic(magic))
                 {
                     BeginMagic(magic.Spell, Direction, Target.ObjectID, Target.CurrentLocation);
@@ -88,22 +78,8 @@ namespace Server.MirObjects
                 }
             }
 
-            magic = GetMagic(Spell.FlameDisruptor);
-            if (CanUseMagic(magic))
-            {
-                BeginMagic(magic.Spell, Direction, Target.ObjectID, Target.CurrentLocation);
-                return;
-            }
-
-            magic = GetMagic(Spell.Vampirism);
-            if (CanUseMagic(magic))
-            {
-                BeginMagic(magic.Spell, Direction, Target.ObjectID, Target.CurrentLocation);
-                return;
-            }
-
-            magic = GetMagic(Spell.FrostCrunch);
-            if (CanUseMagic(magic))
+            magic = GetMagic(Spell.TurnUndead);
+            if (CanUseMagic(magic) && Target.Undead && Target.Level <= Level + 2)
             {
                 BeginMagic(magic.Spell, Direction, Target.ObjectID, Target.CurrentLocation);
                 return;
@@ -115,8 +91,43 @@ namespace Server.MirObjects
                 BeginMagic(magic.Spell, Direction, Target.ObjectID, Target.CurrentLocation);
                 return;
             }
+ 
+            magic = GetMagic(Spell.Vampirism);
+            if (CanUseMagic(magic))
+            {
+                BeginMagic(magic.Spell, Direction, Target.ObjectID, Target.CurrentLocation);
+                return;
+            }
+
+            magic = GetMagic(Spell.Lightning);
+            if (CanUseMagic(magic) && TargetDistance < 3)
+            {
+                BeginMagic(magic.Spell, Direction, Target.ObjectID, Target.CurrentLocation);
+                return;
+            }
+
+            magic = GetMagic(Spell.HellFire);
+            if (CanUseMagic(magic) && TargetDistance < 3)
+            {
+                BeginMagic(magic.Spell, Direction, Target.ObjectID, Target.CurrentLocation);
+                return;
+            }
+
+            magic = GetMagic(Spell.GreatFireBall);
+            if (CanUseMagic(magic))
+            {
+                BeginMagic(magic.Spell, Direction, Target.ObjectID, Target.CurrentLocation);
+                return;
+            }
 
             magic = GetMagic(Spell.FireBall);
+            if (CanUseMagic(magic))
+            {
+                BeginMagic(magic.Spell, Direction, Target.ObjectID, Target.CurrentLocation);
+                return;
+            }
+
+            magic = GetMagic(Spell.IceStorm);
             if (CanUseMagic(magic))
             {
                 BeginMagic(magic.Spell, Direction, Target.ObjectID, Target.CurrentLocation);

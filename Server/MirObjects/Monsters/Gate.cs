@@ -1,19 +1,19 @@
 ﻿using System;
-using Server.MirDatabase;
-using Server.MirEnvir;
-using S = ServerPackets;
-using System.Collections.Generic;
 using System.Drawing;
+using Server.MirDatabase;
+using S = ServerPackets;
 
 namespace Server.MirObjects.Monsters
 {
     public class Gate : CastleGate
     {
+        public int DoorStage { get; private set; }
+
         protected internal Gate(MonsterInfo info) : base(info)
         {
             switch (info.Effect)
             {
-                case 1: //Sabuk Door
+                case 1: //沙巴克城门
                     BlockArray = new Point[]
                     {
                         new Point(0, -1),
@@ -66,13 +66,33 @@ namespace Server.MirObjects.Monsters
                         new Point(-1, -1),
                         new Point(1, 1),
                         };
-
                     }
                     break;
             }
            
             Direction = MirDirection.Up;
         }
+
+        protected override void ProcessAI()
+        {
+            if (Info.Effect != 1 || Dead || !Closed) return;
+
+            if (HealthPercent < 60 && HealthPercent > 30)
+            {
+                DoorStage = 1;
+            }
+            else if (HealthPercent < 30 && HealthPercent > 0)
+            {
+                DoorStage = 2;
+            }
+            else
+            {
+                DoorStage = 0;
+            }
+
+            base.ProcessAI();
+        }
+
         public override void Despawn()
         {
             base.Despawn();
@@ -100,6 +120,7 @@ namespace Server.MirObjects.Monsters
             if (!Closed) return;
 
             Direction = (MirDirection)6;
+
             Closed = false;
 
             Broadcast(new S.ObjectAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation, Type = 0 });

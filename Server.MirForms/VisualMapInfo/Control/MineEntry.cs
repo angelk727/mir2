@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Drawing;
+using System.Web.UI.WebControls;
 using System.Windows.Forms;
 using Microsoft.VisualBasic.PowerPacks;
 using Server.MirForms.VisualMapInfo.Class;
-using System.Web.UI.WebControls;
 
 namespace Server.MirForms.VisualMapInfo.Control
 {
@@ -24,14 +24,14 @@ namespace Server.MirForms.VisualMapInfo.Control
             get => (ushort)(tempRange);
             set
             {
+                tempRange = 0;
+
                 if (value > 0)
                     tempRange = (ushort)(value);
-                else
-                    tempRange = 1;
 
                 RegionHighlight.Size = new Size(
-                    (tempRange * 2) * VisualizerGlobal.ZoomLevel,
-                    (tempRange * 2) * VisualizerGlobal.ZoomLevel);
+                    tempRange * 2 * VisualizerGlobal.ZoomLevel,
+                    tempRange * 2 * VisualizerGlobal.ZoomLevel);
 
                 RegionHighlight.Left = (X - value) * VisualizerGlobal.ZoomLevel;
                 RegionHighlight.Top = (Y - value) * VisualizerGlobal.ZoomLevel;

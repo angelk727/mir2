@@ -1,5 +1,5 @@
-﻿using Server.MirDatabase;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Server.MirDatabase;
 using S = ServerPackets;
 
 namespace Server.MirObjects.Monsters
@@ -94,7 +94,7 @@ namespace Server.MirObjects.Monsters
                     [Stat.MaxSC] = damage * -1
                 };
 
-                target.AddBuff(BuffType.RhinoPriestDebuff, this, Settings.Second * (5 + damage), stats);
+                target.AddBuff(BuffType.惩戒真言, this, Settings.Second * (5 + damage), stats);
             }
         }
     }

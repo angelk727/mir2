@@ -64,7 +64,7 @@
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(44, 13);
             this.label3.TabIndex = 12;
-            this.label3.Text = "Spread:";
+            this.label3.Text = "展开:";
             // 
             // Y
             // 
@@ -89,7 +89,7 @@
             this.DoneButton.Name = "DoneButton";
             this.DoneButton.Size = new System.Drawing.Size(105, 24);
             this.DoneButton.TabIndex = 9;
-            this.DoneButton.Text = "Done";
+            this.DoneButton.Text = "完成";
             this.DoneButton.UseVisualStyleBackColor = true;
             this.DoneButton.Click += new System.EventHandler(this.DoneButton_Click);
             // 
@@ -125,7 +125,7 @@
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(37, 13);
             this.label4.TabIndex = 16;
-            this.label4.Text = "Delay:";
+            this.label4.Text = "延迟:";
             // 
             // Count
             // 
@@ -142,7 +142,7 @@
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(38, 13);
             this.label5.TabIndex = 14;
-            this.label5.Text = "Count:";
+            this.label5.Text = "总数:";
             // 
             // label6
             // 
@@ -167,7 +167,7 @@
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(39, 13);
             this.label7.TabIndex = 20;
-            this.label7.Text = "Route:";
+            this.label7.Text = "线路:";
             // 
             // Direction
             // 
@@ -199,7 +199,7 @@
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(45, 13);
             this.label9.TabIndex = 24;
-            this.label9.Text = "RDelay:";
+            this.label9.Text = "R延时:";
             // 
             // label10
             // 
@@ -238,7 +238,7 @@
             this.MaximizeBox = false;
             this.Name = "RespawnsDetailForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Respawns";
+            this.Text = "复活";
             this.ResumeLayout(false);
             this.PerformLayout();
 

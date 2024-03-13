@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using Server.MirDatabase;
 using Server.MirEnvir;
 using S = ServerPackets;
@@ -80,7 +76,7 @@ namespace Server.MirObjects.Monsters
             Direction = Functions.DirectionFromPoint(CurrentLocation, Target.CurrentLocation);
             Broadcast(new S.ObjectAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation });
 
-            int damage = GetAttackPower(Stats[Stat.MinDC], Stats[Stat.MaxDC]);
+            int damage = GetAttackPower(Stats[Stat.MinSC], Stats[Stat.MaxSC]);
             if (damage == 0) return;
 
             LineAttack(damage, 2);

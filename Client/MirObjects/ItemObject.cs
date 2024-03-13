@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
+﻿using System.Drawing;
+using System.Text.RegularExpressions;
 using Client.MirGraphics;
 using Client.MirScenes;
 using S = ServerPackets;
-using System.Text.RegularExpressions;
 
 namespace Client.MirObjects
 {
@@ -48,7 +44,7 @@ namespace Client.MirObjects
         }
         public void Load(S.ObjectGold info)
         {
-            Name = string.Format("Gold ({0:###,###,###})", info.Gold);
+            Name = string.Format("金币 ({0:###,###,###})", info.Gold);
 
 
             BodyLibrary = Libraries.FloorItems;

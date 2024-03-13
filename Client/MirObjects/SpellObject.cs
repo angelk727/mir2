@@ -1,9 +1,9 @@
-﻿using Client.MirGraphics;
-using Client.MirScenes;
-using Client.MirSounds;
-using System;
+﻿using System;
 using System.Drawing;
 using System.Linq;
+using Client.MirGraphics;
+using Client.MirScenes;
+using Client.MirSounds;
 using S = ServerPackets;
 
 namespace Client.MirObjects
@@ -21,9 +21,10 @@ namespace Client.MirObjects
         }
 
         public Spell Spell;
+        public Point AnimationOffset = new Point(0, 0); //默认：C# 8.0使用new Point(0, 0)、 C# 9.0使用new(0, 0); 
         public int FrameCount, FrameInterval, FrameIndex;
-        public bool Repeat, Ended;
-        
+        public bool Repeat, Ended, DrawBehind;
+
 
         public SpellObject(uint objectID) : base(objectID)
         {
@@ -38,6 +39,7 @@ namespace Client.MirObjects
             Direction = info.Direction;
             Repeat = true;
             Ended = false;
+            DrawBehind = false;
 
             switch (Spell)
             {
@@ -71,7 +73,7 @@ namespace Client.MirObjects
                     Blend = false;
                     break;
                 case Spell.Blizzard:
-                    CurrentLocation.Y = Math.Max(0, CurrentLocation.Y - 20);
+                    AnimationOffset = new Point(0, -20);
                     BodyLibrary = Libraries.Magic2;
                     DrawFrame = 1550;
                     FrameInterval = 100;
@@ -81,8 +83,8 @@ namespace Client.MirObjects
                     Repeat = false;
                     break;
                 case Spell.MeteorStrike:
-                    MapControl.Effects.Add(new Effect(Libraries.Magic2, 1600, 10, 800, CurrentLocation) { Repeat = true, RepeatUntil = CMain.Time + 3000 });
-                    CurrentLocation.Y = Math.Max(0, CurrentLocation.Y - 20);
+                    AnimationOffset = new Point(0, -20);
+                    MapControl.Effects.Add(new Effect(Libraries.Magic2, 1600, 10, 800, CurrentLocation) { DrawBehind = true, Repeat = true, RepeatUntil = CMain.Time + 3000 });
                     BodyLibrary = Libraries.Magic2;
                     DrawFrame = 1610;
                     FrameInterval = 100;
@@ -90,6 +92,17 @@ namespace Client.MirObjects
                     Light = 3;
                     Blend = true;
                     Repeat = false;
+                    break;
+                case Spell.HealingcircleRare: //自添加阴阳五行阵-秘籍
+                    DrawColour = Color.FromArgb(100, 255, 200, 150); 
+                    BodyLibrary = Libraries.Magic3;
+                    DrawFrame = 630;
+                    FrameInterval = 100;
+                    FrameCount = 11;
+                    Light = 5;
+                    Blend = true;
+                    Repeat = true;
+                    DrawBehind = true;
                     break;
                 case Spell.Rubble:
                     if (Direction == 0)
@@ -103,8 +116,8 @@ namespace Client.MirObjects
                     }
                     break;
                 case Spell.Reincarnation:
-                    BodyLibrary = Libraries.Magic2;
-                    DrawFrame = 1680;
+                    BodyLibrary = Libraries.Magic;
+                    DrawFrame = 4020;
                     FrameInterval = 100;
                     FrameCount = 10;
                     Light = 1;
@@ -119,7 +132,7 @@ namespace Client.MirObjects
                         FrameInterval = 100;
                         FrameCount = 9;
                         Repeat = false;
-                        SoundManager.PlaySound(20000 + 124 * 10 + 5);//Boom for all players in range
+                        SoundManager.PlaySound(20000 + 124 * 10 + 5);//范围内的所有玩家都能听到隆隆声
                     }
                     else
                     {
@@ -161,11 +174,11 @@ namespace Client.MirObjects
                     FrameCount = 0;
                     Blend = false;
                     break;
-                case Spell.GeneralMeowMeowThunder:                
-                    MapControl.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.GeneralMeowMeow], 522, 7, 700, CurrentLocation) { Blend = true });
+                case Spell.GeneralMeowMeowThunder: //341            
+                    MapControl.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.GeneralMeowMeow], 562, 7, 700, CurrentLocation) { Blend = true });
                     SoundManager.PlaySound(8321);
                     break;
-                case Spell.StoneGolemQuake:
+                case Spell.StoneGolemQuake: //362
                     BodyLibrary = Libraries.Monsters[(ushort)Monster.StoneGolem];
                     DrawFrame = 368 + (int)Direction * 8;
                     FrameInterval = 100;
@@ -175,46 +188,49 @@ namespace Client.MirObjects
                     Repeat = false;
                     SoundManager.PlaySound(8304);
                     break;
-                case Spell.EarthGolemPile:
+                case Spell.EarthGolemPile: //363
                     BodyLibrary = Libraries.Monsters[(ushort)Monster.EarthGolem];
                     DrawFrame = 441;
                     FrameInterval = 100;
-                    FrameCount = 8;
+                    FrameCount = 12;
                     Light = 0;
                     Blend = false;
                     Repeat = false;
                     SoundManager.PlaySound(8331);
                     break;
-                case Spell.TreeQueenMassRoots:
+                case Spell.TreeQueenMassRoots: //365
                     BodyLibrary = Libraries.Monsters[(ushort)Monster.TreeQueen];
                     DrawFrame = 82;
                     FrameInterval = 100;
                     FrameCount = 15;
                     Blend = false;
                     Repeat = false;
+                    DrawBehind = true;
                     SoundManager.PlaySound(8341);
-                    MapControl.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.TreeQueen], 97, 14, 1400, CurrentLocation) { Blend = true });
+                    MapControl.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.TreeQueen], 97, 15, 1400, CurrentLocation) { Blend = true });
                     break;
-                case Spell.TreeQueenGroundRoots:
+                case Spell.TreeQueenGroundRoots: //365
                     BodyLibrary = Libraries.Monsters[(ushort)Monster.TreeQueen];
                     DrawFrame = 48;
                     FrameInterval = 100;
                     FrameCount = 9;
                     Blend = false;
                     Repeat = false;
+                    DrawBehind = true;
                     SoundManager.PlaySound(8342);
                     MapControl.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.TreeQueen], 57, 9, 900, CurrentLocation) { Blend = true });
                     break;
-                case Spell.TreeQueenRoot:
+                case Spell.TreeQueenRoot: //365
                     BodyLibrary = Libraries.Monsters[(ushort)Monster.TreeQueen];
-                    DrawFrame = 111;
+                    DrawFrame = 112;
                     FrameInterval = 100;
                     FrameCount = 15;
                     Blend = false;
                     Repeat = false;
+                    DrawBehind = true;
                     SoundManager.PlaySound(8343);
                     break;
-                case Spell.TucsonGeneralRock:
+                case Spell.TucsonGeneralRock: //354
                     MapControl.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.TucsonGeneral], 552, 20, 2000, CurrentLocation) { Repeat = false, Blend = false });
                     BodyLibrary = Libraries.Monsters[(ushort)Monster.TucsonGeneral];
                     DrawFrame = 572;
@@ -231,6 +247,14 @@ namespace Client.MirObjects
                     FrameCount = 8;
                     Blend = true;
                     break;
+                case Spell.HealingCircle:
+                    BodyLibrary = Libraries.Magic3;
+                    DrawFrame = 630;
+                    FrameInterval = 80;
+                    FrameCount = 11;
+                    Light = 3;
+                    Blend = true;
+                    break;
                 case Spell.FlyingStatueIceTornado:
                     BodyLibrary = Libraries.Monsters[(ushort)Monster.FlyingStatue];
                     DrawFrame = 314;
@@ -240,16 +264,16 @@ namespace Client.MirObjects
                     Repeat = false;
                     SoundManager.PlaySound(8303);
                     break;
-                case Spell.DarkOmaKingNuke:
+                case Spell.DarkOmaKingNuke: //378
                     BodyLibrary = Libraries.Monsters[(ushort)Monster.DarkOmaKing];
-                    DrawFrame = 1630 + (int)Direction * 9;
+                    DrawFrame = 1670 + (int)Direction * 9;
                     FrameInterval = 100;
                     FrameCount = 9;
                     Blend = true;
                     Repeat = false;
                     SoundManager.PlaySound(((ushort)Monster.DarkOmaKing * 10) + 9);
                     break;
-                case Spell.HornedSorcererDustTornado:
+                case Spell.HornedSorcererDustTornado: //406
                     BodyLibrary = Libraries.Monsters[(ushort)Monster.HornedSorceror];
                     DrawFrame = 634;
                     FrameInterval = 100;
@@ -258,24 +282,150 @@ namespace Client.MirObjects
                     Repeat = true;
                     SoundManager.PlaySound(8306);
                     break;
-                case Spell.HornedCommanderRockFall:
+                case Spell.HornedCommanderRockFall: //409
                     BodyLibrary = Libraries.Monsters[(ushort)Monster.HornedCommander];
-                    DrawFrame = 1066;
+                    DrawFrame = 1178;
                     FrameInterval = 100;
                     FrameCount = 12;
                     Blend = true;
                     Repeat = true;
-                    SoundManager.PlaySound(8456);
+                    SoundManager.PlaySound(4089);
                     break;
-                case Spell.HornedCommanderRockSpike:
+                case Spell.HornedCommanderRockSpike: //409
                     BodyLibrary = Libraries.Monsters[(ushort)Monster.HornedCommander];
-                    DrawFrame = 1190;
+                    DrawFrame = 1358;
                     FrameInterval = 100;
                     FrameCount = 9;
                     Blend = false;
                     Repeat = true;
                     SoundManager.PlaySound(8457);
-                    MapControl.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.HornedCommander], 1199, 9, 900, CurrentLocation) { Blend = true });
+                    MapControl.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.HornedCommander], 1367, 9, 900, CurrentLocation) { Blend = true });
+                    break;
+                case Spell.HornedCommanderShield: //409
+                    BodyLibrary = Libraries.Monsters[(ushort)Monster.HornedCommander];
+                    DrawColour = Color.White;
+                    DrawFrame = 1341;
+                    FrameInterval = 100;
+                    FrameCount = 17;
+                    Light = 5;
+                    Blend = true;
+                    Repeat = true;
+                    DrawBehind = true;
+                    break;
+                case Spell.YangDragonFlame: //414
+                    DrawColour = Color.FromArgb(200, 200, 200, 200);
+                    BodyLibrary = Libraries.Monsters[(ushort)Monster.ChieftainSword];                    
+                    DrawFrame = 1088;
+                    FrameInterval = 100;
+                    FrameCount = 10;
+                    Light = 3;
+                    Blend = true;
+                    Repeat = false;
+                    break;
+                case Spell.YangDragonIcyBurst: //414
+                    DrawColour = Color.FromArgb(180, 200, 200, 180);
+                    BodyLibrary = Libraries.Monsters[(ushort)Monster.ChieftainSword];
+                    DrawFrame = 1314;
+                    FrameInterval = 200;
+                    FrameCount = 5;
+                    Light = 3;
+                    Blend = true;
+                    Repeat = false;
+                    MapControl.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.ChieftainSword], 1319, 12, 1200, CurrentLocation, CMain.Time + 1000) { Blend = true });
+                    break;               
+                case Spell.ShardGuardianIceBomb: //476
+                    DrawColour = Color.FromArgb(158, 158, 158, 255);
+                    BodyLibrary = Libraries.Monsters[(ushort)Monster.ShardGuardian];
+                    DrawFrame = 502;
+                    FrameInterval = 100;
+                    FrameCount = 15;
+                    Light = 2;
+                    Blend = true;
+                    Repeat = false;
+                    MapControl.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.ShardGuardian], 536, 8, 800, CurrentLocation, CMain.Time + 1500) { Blend = true, DrawBehind = true });
+                    break;
+                case Spell.GroundFissure: //498
+                    BodyLibrary = Libraries.Monsters[(ushort)Monster.MysteriousMonk];
+                    DrawFrame = 744 + (int)Direction * 10;
+                    FrameInterval = 100;
+                    FrameCount = 10;
+                    Light = 2;
+                    Blend = true;
+                    Repeat = false;
+                    DrawBehind = true;
+                    MapControl.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.MysteriousMonk], 824 + (int)Direction * 10, 10, 1000, CurrentLocation) { Blend = true });
+                    break;
+                case Spell.SkeletonBomb: //508
+                    DrawColour = Color.FromArgb(158, 158, 158, 255);
+                    BodyLibrary = Libraries.Monsters[(ushort)Monster.Swain];
+                    DrawFrame = 528;
+                    FrameInterval = 100;
+                    FrameCount = 13;
+                    Light = 2;
+                    Blend = true;
+                    Repeat = false;
+                    MapControl.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Swain], 541, 10, 1000, CurrentLocation, CMain.Time + 1300) { Blend = true, DrawBehind = true });
+                    break;
+                case Spell.FlameExplosion: //509
+                    DrawColour = Color.FromArgb(180, 180, 180, 255);
+                    BodyLibrary = Libraries.Monsters[(ushort)Monster.Swain1];
+                    DrawFrame = 699;
+                    FrameInterval = 200;
+                    FrameCount = 9;
+                    Light = 3;
+                    Blend = true;
+                    Repeat = false;
+                    DrawBehind = true;
+                    MapControl.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Swain1], 708, 5, 1000, CurrentLocation, CMain.Time + 1800) { Blend = true});
+                    break;
+                case Spell.ButcherFlyAxe: //516
+                    BodyLibrary = Libraries.Monsters[(ushort)Monster.Butcher];
+                    DrawFrame = 685;
+                    FrameInterval = 100;
+                    FrameCount = 5;
+                    Blend = true;
+                    Repeat = true;
+                    SoundManager.PlaySound(8306);
+                    MapControl.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Butcher], 680, 5, 1000, CurrentLocation) { Blend = true });
+                    break;
+                case Spell.RiklebitesRollCall: //518            
+                    MapControl.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Riklebites], 1102, 10, 2000, CurrentLocation) { Blend = true, DrawBehind = true });
+                    break;
+                case Spell.RiklebitesBlast: //518
+                    DrawColour = Color.FromArgb(200, 200, 200, 200);
+                    BodyLibrary = Libraries.Monsters[(ushort)Monster.Riklebites];
+                    DrawFrame = 1067;
+                    FrameInterval = 200;
+                    FrameCount = 6;
+                    Light = 3;
+                    Blend = true;
+                    Repeat = false;
+                    DrawBehind = false;
+                    MapControl.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Riklebites], 1073, 11, 1100, CurrentLocation) { Blend = true, DrawBehind = true });
+                    break;
+                case Spell.SwordFormation: //550
+                    DrawColour = Color.FromArgb(180, 200, 200, 160);
+                    BodyLibrary = Libraries.Monsters[(ushort)Monster.修士剑客];
+                    DrawFrame = 450;
+                    FrameInterval = 100;
+                    FrameCount = 10;
+                    Light = 3;
+                    Blend = true;
+                    Repeat = false;
+                    DrawBehind = true;
+                    MapControl.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.修士剑客], 460, 8, 800, CurrentLocation, CMain.Time + 1000) { Blend = true});
+                    break;
+                case Spell.尊者旋风: //564
+                    BodyLibrary = Libraries.Monsters[(ushort)Monster.尊者之魂];
+                    DrawColour = Color.FromArgb(180, 255, 200, 180);
+                    LightColour = Color.White;
+                    Light = 3;
+                    DrawFrame = 916;
+                    FrameInterval = 100;
+                    FrameCount = 20;
+                    Blend = true;
+                    Repeat = true;
+                    SoundManager.PlaySound(8306);
                     break;
             }
 
@@ -300,16 +450,22 @@ namespace Client.MirObjects
                     case Spell.TucsonGeneralRock:
                         if (FrameIndex == 10) SoundManager.PlaySound(8305);
                         break;
-                    case Spell.HornedSorcererDustTornado:
+                    case Spell.HornedSorcererDustTornado: //406
                         if (FrameIndex == 0 && CMain.Random.Next(3) == 0) SoundManager.PlaySound(8306);
                         break;
-                    case Spell.HornedCommanderRockSpike:
+                    case Spell.ButcherFlyAxe: //516
+                        if (FrameIndex == 0 && CMain.Random.Next(3) == 0) SoundManager.PlaySound(8306);
+                        break;
+                    case Spell.HornedCommanderRockSpike:  //409
                         if (Ended)
                         {
-                            DrawFrame = 1198;
+                            DrawFrame = 1366;
                             FrameCount = 1;
                             FrameIndex = 0;
                         }
+                        break;
+                    case Spell.尊者旋风: //564
+                        if (FrameIndex == 0 && CMain.Random.Next(3) == 0) SoundManager.PlaySound(8306);
                         break;
                 }
             }
@@ -325,9 +481,20 @@ namespace Client.MirObjects
             if (BodyLibrary == null) return;
 
             if (Blend)
-                BodyLibrary.DrawBlend(DrawFrame + FrameIndex, DrawLocation, DrawColour, true, 0.8F);
+            {
+                BodyLibrary.DrawBlend(
+                    DrawFrame + FrameIndex,
+                    AnimationOffset == default ? DrawLocation : GetDrawWithOffset(),
+                    DrawColour, true,
+                    0.8F);
+            }
             else
-                BodyLibrary.Draw(DrawFrame + FrameIndex, DrawLocation, DrawColour, true);
+            {
+                BodyLibrary.Draw(DrawFrame + FrameIndex,
+                    AnimationOffset == default ? DrawLocation : GetDrawWithOffset(),
+                    DrawColour,
+                    true);
+            }
         }
 
         public override bool MouseOver(Point p)
@@ -341,6 +508,18 @@ namespace Client.MirObjects
 
         public override void DrawEffects(bool effectsEnabled)
         { 
+        }
+
+        private Point GetDrawWithOffset()
+        {
+            Point newDrawLocation = new Point(
+                (CurrentLocation.X + AnimationOffset.X - User.Movement.X + MapControl.OffSetX) * MapControl.CellWidth,
+                (CurrentLocation.Y + AnimationOffset.Y - User.Movement.Y + MapControl.OffSetY) * MapControl.CellHeight);
+
+            newDrawLocation.Offset(GlobalDisplayLocationOffset);
+            newDrawLocation.Offset(User.OffSetMove);
+
+            return newDrawLocation;
         }
     }
 }

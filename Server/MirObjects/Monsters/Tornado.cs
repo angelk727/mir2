@@ -1,6 +1,5 @@
-using Server.MirDatabase;
 using System.Collections.Generic;
-using System.Drawing;
+using Server.MirDatabase;
 using S = ServerPackets;
 
 namespace Server.MirObjects.Monsters
@@ -52,7 +51,7 @@ namespace Server.MirObjects.Monsters
             }
 
             ShockTime = 0;
-            ActionTime = Envir.Time + 300;
+            ActionTime = Envir.Time + 500;
             AttackTime = Envir.Time + AttackSpeed;
         }
     }

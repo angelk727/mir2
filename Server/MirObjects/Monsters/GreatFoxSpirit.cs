@@ -53,7 +53,7 @@ namespace Server.MirObjects.Monsters
         protected override void ProcessTarget()
         {
             if (Target == null) return;
-            //remark: does this mean nobody gets teleported if the main target is standing closeby + does it mean it always try's to teleport the person with lowest x/y coords?)
+            //备注：这是否意味着如果主要目标站在附近，没有人会被传送+这是否意味著它总是试图传送x/y坐标最低的人？）
             if (Functions.MaxDistance(CurrentLocation, Target.CurrentLocation) > 3 && Envir.Random.Next(10) == 0 && Envir.Time >= RecallTime)
             {
                 RecallTime = Envir.Time + 10000;
@@ -64,7 +64,7 @@ namespace Server.MirObjects.Monsters
                     {
                         if (Functions.MaxDistance(CurrentLocation, targets[i].CurrentLocation) > 3)
                         {
-                            if (Envir.Random.Next(Settings.MagicResistWeight) < targets[i].Stats[Stat.MagicResist]) continue;
+                            if (Envir.Random.Next(Settings.MagicResistWeight) < targets[i].Stats[Stat.魔法躲避]) continue;
                             if (!targets[i].Teleport(CurrentMap, Functions.PointMove(CurrentLocation, (MirDirection)((byte)Envir.Random.Next(7)), 1)))
                             targets[i].Teleport(CurrentMap, CurrentLocation);
                             return;

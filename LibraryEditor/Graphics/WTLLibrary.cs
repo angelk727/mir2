@@ -1,10 +1,10 @@
-﻿using ManagedSquish;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Threading.Tasks;
+using ManagedSquish;
 
 namespace LibraryEditor
 {

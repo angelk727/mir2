@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Drawing;
 using System.IO;
+using System.IO.Compression;
+using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading;
+using Client.MirObjects;
 using SlimDX;
 using SlimDX.Direct3D9;
-using System.IO.Compression;
 using Frame = Client.MirObjects.Frame;
-using Client.MirObjects;
-using System.Text.RegularExpressions;
-using System.Linq;
 
 namespace Client.MirGraphics
 {
@@ -22,6 +22,7 @@ namespace Client.MirGraphics
             Prguse = new MLibrary(Settings.DataPath + "Prguse"),
             Prguse2 = new MLibrary(Settings.DataPath + "Prguse2"),
             Prguse3 = new MLibrary(Settings.DataPath + "Prguse3"),
+            StateitemEffect = new MLibrary(Settings.DataPath + "StateitemEffect"), //自添加
             BuffIcon = new MLibrary(Settings.DataPath + "BuffIcon"),
             Help = new MLibrary(Settings.DataPath + "Help"),
             MiniMap = new MLibrary(Settings.DataPath + "MMap"),
@@ -64,9 +65,13 @@ namespace Client.MirGraphics
                                           AArmours,
                                           AWeaponsL,
                                           AWeaponsR,
+                                          AWeaponEffectL,//自添加
+                                          AWeaponEffectR,
                                           AHair,
                                           AHumEffect,
                                           ARArmours,
+                                          ARWeaponsEffect, //自添加
+                                          ARWeaponsEffectS,
                                           ARWeapons,
                                           ARWeaponsS,
                                           ARHair,
@@ -93,18 +98,22 @@ namespace Client.MirGraphics
             InitLibrary(ref CWeaponEffect, Settings.CWeaponEffectPath, "00");
             InitLibrary(ref CHumEffect, Settings.CHumEffectPath, "00");
 
-            //Assassin
+            //刺客
             InitLibrary(ref AArmours, Settings.AArmourPath, "00");
             InitLibrary(ref AHair, Settings.AHairPath, "00");
             InitLibrary(ref AWeaponsL, Settings.AWeaponPath, "00", " L");
             InitLibrary(ref AWeaponsR, Settings.AWeaponPath, "00", " R");
+            InitLibrary(ref AWeaponEffectL, Settings.AWeaponEffectPath, "00", " L"); //自添加
+            InitLibrary(ref AWeaponEffectR, Settings.AWeaponEffectPath, "00", " R");
             InitLibrary(ref AHumEffect, Settings.AHumEffectPath, "00");
 
-            //Archer
+            //弓箭
             InitLibrary(ref ARArmours, Settings.ARArmourPath, "00");
             InitLibrary(ref ARHair, Settings.ARHairPath, "00");
             InitLibrary(ref ARWeapons, Settings.ARWeaponPath, "00");
             InitLibrary(ref ARWeaponsS, Settings.ARWeaponPath, "00", " S");
+            InitLibrary(ref ARWeaponsEffect, Settings.ARWeaponEffectPath, "00"); //自添加
+            InitLibrary(ref ARWeaponsEffectS, Settings.ARWeaponEffectPath, "00", " S");
             InitLibrary(ref ARHumEffect, Settings.ARHumEffectPath, "00");
 
             //Other
@@ -230,13 +239,16 @@ namespace Client.MirGraphics
 
             Title.Initialize();
             Progress++;
+
+            StateitemEffect.Initialize(); //自添加
+            Progress++;
         }
 
         private static void LoadGameLibraries()
         {
             Count = MapLibs.Length + Monsters.Length + Gates.Length + Flags.Length + Siege.Length + NPCs.Length + CArmours.Length +
                 CHair.Length + CWeapons.Length + CWeaponEffect.Length + AArmours.Length + AHair.Length + AWeaponsL.Length + AWeaponsR.Length +
-                ARArmours.Length + ARHair.Length + ARWeapons.Length + ARWeaponsS.Length +
+                AWeaponEffectL.Length + AWeaponEffectR.Length +ARArmours.Length + ARHair.Length + ARWeapons.Length + ARWeaponsS.Length + ARWeaponsEffect.Length + ARWeaponsEffectS.Length +
                 CHumEffect.Length + AHumEffect.Length + ARHumEffect.Length + Mounts.Length + Fishing.Length + Pets.Length +
                 Transform.Length + TransformMounts.Length + TransformEffect.Length + TransformWeaponEffect.Length + 18;
 
@@ -375,6 +387,18 @@ namespace Client.MirGraphics
                 Progress++;
             }
 
+            for (int i = 0; i < AWeaponEffectL.Length; i++) //自添加
+            {
+                AWeaponsL[i].Initialize();
+                Progress++;
+            }
+
+            for (int i = 0; i < AWeaponEffectR.Length; i++) //自添加
+            {
+                AWeaponsR[i].Initialize();
+                Progress++;
+            }
+
             for (int i = 0; i < ARArmours.Length; i++)
             {
                 ARArmours[i].Initialize();
@@ -396,6 +420,18 @@ namespace Client.MirGraphics
             for (int i = 0; i < ARWeaponsS.Length; i++)
             {
                 ARWeaponsS[i].Initialize();
+                Progress++;
+            }
+
+            for (int i = 0; i < ARWeaponsEffect.Length; i++) //自添加
+            {
+                ARWeaponsEffect[i].Initialize();
+                Progress++;
+            }
+
+            for (int i = 0; i < ARWeaponsEffectS.Length; i++) //自添加
+            {
+                ARWeaponsEffectS[i].Initialize();
                 Progress++;
             }
 
@@ -505,7 +541,7 @@ namespace Client.MirGraphics
                 int currentVersion = _reader.ReadInt32();
                 if (currentVersion < 2)
                 {
-                    System.Windows.Forms.MessageBox.Show("Wrong version, expecting lib version: " + LibVersion.ToString() + " found version: " + currentVersion.ToString() + ".", _fileName, System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error, System.Windows.Forms.MessageBoxDefaultButton.Button1);
+                    System.Windows.Forms.MessageBox.Show("版本错误，lib可用版本： " + LibVersion.ToString() + " 找到的版本： " + currentVersion.ToString() + ".", _fileName, System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error, System.Windows.Forms.MessageBoxDefaultButton.Button1);
                     System.Windows.Forms.Application.Exit();
                     return;
                 }
@@ -881,7 +917,7 @@ namespace Client.MirGraphics
             Shadow = reader.ReadByte();
             Length = reader.ReadInt32();
 
-            //check if there's a second layer and read it
+            //检查是否有第二层并读
             HasMask = ((Shadow >> 7) == 1) ? true : false;
             if (HasMask)
             {

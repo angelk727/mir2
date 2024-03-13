@@ -1,16 +1,12 @@
-﻿using Server.MirEnvir;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Web.UI.WebControls;
 using System.Windows.Forms;
+using Server.MirEnvir;
 
 namespace Server.Database
 {
@@ -79,6 +75,7 @@ namespace Server.Database
             ItemPrice.ValueType = typeof(uint);
             ItemToolTip.ValueType = typeof(string);
 
+            StartItem.ValueType = typeof(bool);
             NeedIdentify.ValueType = typeof(bool);
             ShowGroupPickup.ValueType = typeof(bool);
             GlobalDropNotify.ValueType = typeof(bool);
@@ -234,6 +231,7 @@ namespace Server.Database
                 row["ItemPrice"] = item.Price;
                 row["ItemToolTip"] = item.ToolTip;
 
+                row["StartItem"] = item.StartItem;
                 row["NeedIdentify"] = item.NeedIdentify;
                 row["ShowGroupPickup"] = item.ShowGroupPickup;
                 row["GlobalDropNotify"] = item.GlobalDropNotify;
@@ -336,6 +334,7 @@ namespace Server.Database
                 item.Slots = (byte)row.Cells["ItemSlots"].Value;
                 item.Weight = (byte)row.Cells["ItemWeight"].Value;
 
+                item.StartItem = (bool)row.Cells["StartItem"].Value;
                 item.NeedIdentify = (bool)row.Cells["NeedIdentify"].Value;
                 item.ShowGroupPickup = (bool)row.Cells["ShowGroupPickup"].Value;
                 item.GlobalDropNotify = (bool)row.Cells["GlobalDropNotify"].Value;
@@ -349,7 +348,7 @@ namespace Server.Database
                 item.Light = (byte)Math.Min(byte.MaxValue, light);
                 item.Durability = (ushort)row.Cells["ItemDurability"].Value;
                 item.Price = (uint)row.Cells["ItemPrice"].Value;
-                item.ToolTip = (string)row.Cells["ItemToolTip"].Value;
+                item.ToolTip = row.Cells["ItemToolTip"].Value.ToString();
 
                 item.Stats.Clear();
                 item.Bind = BindMode.None;
@@ -427,33 +426,33 @@ namespace Server.Database
             if (col.ValueType == typeof(int) && col.Name != "StatAttackSpeed" && int.TryParse(val, out int val1) && val1 < 0)
             {
                 e.Cancel = true;
-                itemInfoGridView.Rows[e.RowIndex].ErrorText = "the value must be a positive integer";
+                itemInfoGridView.Rows[e.RowIndex].ErrorText = "该值必须是正整数";
             }
 
             if (col.ValueType == typeof(int) && !int.TryParse(val, out _))
             {
                 e.Cancel = true;
-                itemInfoGridView.Rows[e.RowIndex].ErrorText = "the value must be an integer";
+                itemInfoGridView.Rows[e.RowIndex].ErrorText = "该值必须是整数";
             }
             else if (col.ValueType == typeof(byte) && !byte.TryParse(val, out _))
             {
                 e.Cancel = true;
-                itemInfoGridView.Rows[e.RowIndex].ErrorText = "the value must be a byte";
+                itemInfoGridView.Rows[e.RowIndex].ErrorText = "该值必须是一个字节";
             }
             else if (col.ValueType == typeof(short) && !short.TryParse(val, out _))
             {
                 e.Cancel = true;
-                itemInfoGridView.Rows[e.RowIndex].ErrorText = "the value must be a short";
+                itemInfoGridView.Rows[e.RowIndex].ErrorText = "值必须是短的";
             }
             else if (col.ValueType == typeof(ushort) && !ushort.TryParse(val, out _))
             {
                 e.Cancel = true;
-                itemInfoGridView.Rows[e.RowIndex].ErrorText = "the value must be a ushort";
+                itemInfoGridView.Rows[e.RowIndex].ErrorText = "该值必须是 0-65535之间的无符号整数值";
             }
             else if (col.ValueType == typeof(long) && !long.TryParse(val, out _))
             {
                 e.Cancel = true;
-                itemInfoGridView.Rows[e.RowIndex].ErrorText = "the value must be a long";
+                itemInfoGridView.Rows[e.RowIndex].ErrorText = "该值必须是长的";
             }
         }
 
@@ -541,7 +540,7 @@ namespace Server.Database
         {
             var specialCols = new string[]
             {
-                "NeedIdentify", "ShowGroupPickup","GlobalDropNotify","ClassBased","LevelBased","CanMine","CanFastRun","CanAwakening"
+                "StartItem", "NeedIdentify", "ShowGroupPickup", "GlobalDropNotify", "ClassBased", "LevelBased", "CanMine", "CanFastRun", "CanAwakening"
             };
 
             if (rBtnViewSpecial.Checked)
@@ -614,7 +613,7 @@ namespace Server.Database
                     if (columns.Length < 2)
                     {
                         fileError = true;
-                        MessageBox.Show("No columns to import.");
+                        MessageBox.Show("没有要导入的列");
                     }
 
                     if (!fileError)
@@ -639,7 +638,7 @@ namespace Server.Database
                             if (cells.Length != columns.Length)
                             {
                                 fileError = true;
-                                MessageBox.Show($"Row {i} column count does not match the headers column count.");
+                                MessageBox.Show($"{i} 行列数与标题列数不匹配");
                                 break;
                             }
 
@@ -670,7 +669,7 @@ namespace Server.Database
                                     if (dataColumn == null)
                                     {
                                         fileError = true;
-                                        MessageBox.Show($"Column {column} was not found.");
+                                        MessageBox.Show($"未找到列 {column}");
                                         break;
                                     }
 
@@ -695,12 +694,12 @@ namespace Server.Database
 
                                 itemInfoGridView.EndEdit();
                             }
-                            catch(Exception ex)
+                            catch (Exception ex)
                             {
                                 fileError = true;
                                 itemInfoGridView.EndEdit();
 
-                                MessageBox.Show($"Error when importing item {cells[0]}. {ex.Message}");
+                                MessageBox.Show($"导入数据出错 {cells[0]}. {ex.Message}");
                                 continue;
                             }
 
@@ -716,13 +715,13 @@ namespace Server.Database
                         {
                             itemInfoGridView.EditMode = DataGridViewEditMode.EditOnKeystrokeOrF2;
 
-                            MessageBox.Show($"{rowsEdited} items have been imported.");
+                            MessageBox.Show($"{rowsEdited} 行数据导入成功");
                         }
                     }
                 }
                 else
                 {
-                    MessageBox.Show("No rows to import.");
+                    MessageBox.Show("没有要导入的数据");
                 }
             }
         }
@@ -733,7 +732,7 @@ namespace Server.Database
             {
                 SaveFileDialog sfd = new SaveFileDialog();
                 sfd.Filter = "CSV (*.csv)|*.csv";
-                sfd.FileName = "ItemInfo Output.csv";
+                sfd.FileName = "2_物品数据.csv";
                 bool fileError = false;
                 if (sfd.ShowDialog() == DialogResult.OK)
                 {
@@ -746,7 +745,7 @@ namespace Server.Database
                         catch (IOException ex)
                         {
                             fileError = true;
-                            MessageBox.Show("It wasn't possible to write the data to the disk." + ex.Message);
+                            MessageBox.Show("无法将数据写入" + ex.Message);
                         }
                     }
                     if (!fileError)
@@ -806,18 +805,18 @@ namespace Server.Database
                             }
 
                             File.WriteAllLines(sfd.FileName, outputCsv, Encoding.UTF8);
-                            MessageBox.Show("Data Exported Successfully.", "Info");
+                            MessageBox.Show("物品数据导出成功", "导出信息");
                         }
                         catch (Exception ex)
                         {
-                            MessageBox.Show("Error :" + ex.Message);
+                            MessageBox.Show("错误:" + ex.Message);
                         }
                     }
                 }
             }
             else
             {
-                MessageBox.Show("No Items To Export.", "Info");
+                MessageBox.Show("没有要导出的物品数据", "导出信息");
             }
         }
 
@@ -831,8 +830,8 @@ namespace Server.Database
             row.Cells["ItemType"].Value = (ItemType)0;
             row.Cells["ItemGrade"].Value = (ItemGrade)0;
             row.Cells["ItemRequiredType"].Value = (RequiredType)0;
-            row.Cells["ItemRequiredGender"].Value = RequiredGender.None;
-            row.Cells["ItemRequiredClass"].Value = RequiredClass.None;
+            row.Cells["ItemRequiredGender"].Value = RequiredGender.性别不限;
+            row.Cells["ItemRequiredClass"].Value = RequiredClass.全职业;
             row.Cells["ItemSet"].Value = (ItemSet)0;
             row.Cells["ItemRandomStatsId"].Value = (byte)0;
             row.Cells["ItemRequiredAmount"].Value = (byte)0;
@@ -848,6 +847,7 @@ namespace Server.Database
             row.Cells["ItemPrice"].Value = (uint)0;
             row.Cells["ItemToolTip"].Value = (string)"";
 
+            row.Cells["StartItem"].Value = false;
             row.Cells["NeedIdentify"].Value = false;
             row.Cells["ShowGroupPickup"].Value = false;
             row.Cells["GlobalDropNotify"].Value = false;
@@ -907,6 +907,23 @@ namespace Server.Database
         private void itemInfoGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
+        }
+
+        private void Gameshop_button_Click(object sender, EventArgs e)
+        {
+            foreach (DataGridViewRow row in itemInfoGridView.Rows)
+            {
+                if (row.Selected && row.Cells["ItemIndex"].Value != null)
+                {
+                    int index = (int)row.Cells["ItemIndex"].Value;
+
+                    var item = Envir.ItemInfoList.FirstOrDefault(x => x.Index == index);
+
+                    Envir.AddToGameShop(item);
+                }
+            }
+
+            Envir.SaveDB();
         }
     }
 }

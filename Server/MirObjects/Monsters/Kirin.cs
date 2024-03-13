@@ -3,7 +3,6 @@ using System.Drawing;
 using Server.MirDatabase;
 using Server.MirEnvir;
 using S = ServerPackets;
-using System.Collections.Generic;
 
 namespace Server.MirObjects.Monsters
 {
@@ -77,7 +76,6 @@ namespace Server.MirObjects.Monsters
                 return;
             }
 
-            //MoveTo(Target.CurrentLocation);
         }
 
         protected override void Attack()
@@ -105,7 +103,35 @@ namespace Server.MirObjects.Monsters
             }
             else
             {
-                base.Attack();
+                Broadcast(new S.ObjectAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation, Type = 0 });
+
+                MirDirection jumpDir = Functions.DirectionFromPoint(CurrentLocation, Target.CurrentLocation);
+
+                Point location;
+
+                for (int i = 0; i < 1; i++)
+                {
+                    location = Functions.PointMove(CurrentLocation, jumpDir, 1);
+                    if (!CurrentMap.ValidPoint(location)) return;
+                }
+
+                for (int i = 0; i < 1; i++)
+                {
+                    location = Functions.PointMove(CurrentLocation, jumpDir, 1);
+
+                    CurrentMap.GetCell(CurrentLocation).Remove(this);
+                    RemoveObjects(jumpDir, 1);
+                    CurrentLocation = location;
+                    CurrentMap.GetCell(CurrentLocation).Add(this);
+                    AddObjects(jumpDir, 1);
+
+                    LineAttack(damage, 2);
+
+                    {
+                        DelayedAction action = new DelayedAction(DelayedType.Damage, Envir.Time + 350, location, damage, DefenceType.AC);
+                        CurrentMap.ActionList.Add(action);
+                    }
+                }
             }
 
             if (Target.Dead)
@@ -168,7 +194,7 @@ namespace Server.MirObjects.Monsters
                                 {
                                     if (target.Attacked(this, Damage, DefenceType.MAC) > 0)
                                     {
-                                        if (Envir.Random.Next(Settings.PoisonResistWeight) >= target.Stats[Stat.PoisonResist])
+                                        if (Envir.Random.Next(Settings.PoisonResistWeight) >= target.Stats[Stat.毒物躲避])
                                         {
                                             if (Envir.Random.Next(5) == 0)
                                             {

@@ -1,12 +1,8 @@
-﻿using Microsoft.Win32;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using Microsoft.Win32;
 
 namespace Client.Utils
 {
@@ -80,7 +76,7 @@ namespace Client.Utils
                         }
                         else
                         {
-                            if (MessageBox.Show("Internet Explorer is not installed in the system. Do you want to download and install it?", null, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question) == DialogResult.Yes)
+                            if (MessageBox.Show("系统中未安装 IE 您想下载并安装它吗？", null, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question) == DialogResult.Yes)
                             {
                                 OpenDefaultBrowser("http://windows.microsoft.com/zh-cn/internet-explorer/download-ie");
                             }

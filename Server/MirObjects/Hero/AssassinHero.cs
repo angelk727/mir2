@@ -1,21 +1,12 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using C = ClientPackets;
 using Server.MirDatabase;
-using Server.MirEnvir;
 using Server.MirNetwork;
-using S = ServerPackets;
-using System.Text.RegularExpressions;
-using Server.MirObjects.Monsters;
 
 namespace Server.MirObjects
 {
     public class AssassinHero : HeroObject
     {
-        private bool HasHeavenlySword;
+        private bool HasHeavenlySword, HasPoisonSword;
         public AssassinHero(CharacterInfo info, PlayerObject owner) : base(info, owner) { }
         protected override void Load(CharacterInfo info, MirConnection connection)
         {
@@ -47,14 +38,7 @@ namespace Server.MirObjects
             if (Target != null)
             {
                 UserMagic magic = GetMagic(Spell.Haste);
-                if (CanUseMagic(magic) && !HasBuff(BuffType.Haste))
-                {
-                    BeginMagic(magic.Spell, Direction, ObjectID, CurrentLocation);
-                    return;
-                }
-
-                magic = GetMagic(Spell.LightBody);
-                if (CanUseMagic(magic) && !HasBuff(BuffType.LightBody))
+                if (CanUseMagic(magic) && !HasBuff(BuffType.体迅风))
                 {
                     BeginMagic(magic.Spell, Direction, ObjectID, CurrentLocation);
                     return;
@@ -66,8 +50,21 @@ namespace Server.MirObjects
             if (Target == null || Target.Dead) return;
             TargetDistance = Functions.MaxDistance(CurrentLocation, Target.CurrentLocation);
             Direction = Functions.DirectionFromPoint(CurrentLocation, Target.CurrentLocation);
+            UserMagic magic;
+            UserItem poisonItem = GetPoison(1);
 
-            UserMagic magic = GetMagic(Spell.HeavenlySword);
+            magic = GetMagic(Spell.PoisonSword);
+            HasPoisonSword = CanCast && CanUseMagic(magic);
+            if (HasPoisonSword && TargetDistance == 1 && poisonItem != null)
+            {
+                if (poisonItem.Info.Shape == 1)
+                {
+                    BeginMagic(magic.Spell, Direction, Target.ObjectID, Target.CurrentLocation);
+                    return;
+                }
+            }
+
+            magic = GetMagic(Spell.HeavenlySword);
             HasHeavenlySword = CanCast && CanUseMagic(magic);
             if (HasHeavenlySword && TargetDistance == 2)
             {

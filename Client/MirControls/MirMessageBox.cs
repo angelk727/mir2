@@ -1,8 +1,6 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Windows.Forms;
 using Client.MirGraphics;
-using Client.MirScenes;
 
 namespace Client.MirControls
 {

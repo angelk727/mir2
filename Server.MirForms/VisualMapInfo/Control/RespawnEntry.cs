@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using Microsoft.VisualBasic.PowerPacks;
-using Server.MirForms.VisualMapInfo.Class;
-using Server.MirEnvir;
 using Server.MirDatabase;
-using System.Collections.Generic;
+using Server.MirEnvir;
+using Server.MirForms.VisualMapInfo.Class;
 
 namespace Server.MirForms.VisualMapInfo.Control
 {
@@ -35,10 +36,10 @@ namespace Server.MirForms.VisualMapInfo.Control
             get => (ushort)(tempRange);
             set
             {
+                tempRange = 0;
+
                 if (value > 0)
                     tempRange = (ushort)(value);
-                else
-                    tempRange = 1;
 
                 RegionHighlight.Size = new Size(
                     (tempRange * 2) * VisualizerGlobal.ZoomLevel,
@@ -196,10 +197,9 @@ namespace Server.MirForms.VisualMapInfo.Control
 
         private void RespawnEntry_Load(object sender, EventArgs e)
         {
-
             for (int i = 0; i < Envir.MonsterInfoList.Count; i++) MonsterComboBox.Items.Add(Envir.MonsterInfoList[i]);
 
-            MonsterComboBox.SelectedIndex = MonsterIndex-1; //-1
+            MonsterComboBox.SelectedItem = Envir.MonsterInfoList.FirstOrDefault(x => x.Index == MonsterIndex);
 
             Details.Text =
                 $"C               D            X: {X.ToString()} | Y: {Y.ToString()} | Range: {Range.ToString()}";

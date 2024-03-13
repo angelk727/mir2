@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Linq;
-using System.Diagnostics;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Runtime.InteropServices;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace LibraryViewer
@@ -106,9 +104,9 @@ namespace LibraryViewer
 
 
             if (ImageList.Images.Count < 1)
-                MessageBox.Show("No images seem to be found.\nMake sure you choose the right prefix!");
+                MessageBox.Show("找不到图像\n确定选择了正确的前缀?");
             else
-                MessageBox.Show("Folder processing finally finished.\nTime Taken: " + sw.Elapsed.TotalMilliseconds + "ms");
+                MessageBox.Show("文件处理完成\n消耗时间: " + sw.Elapsed.TotalMilliseconds + "ms");
         }
 
         private void PreviewListView_SelectedIndexChanged(object sender, EventArgs e)

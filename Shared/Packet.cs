@@ -30,7 +30,13 @@ public abstract class Packet
                 short id = reader.ReadInt16();
 
                 p = IsServer ? GetClientPacket(id) : GetServerPacket(id);
-                if (p == null) return null;
+                if (p == null)
+                {
+                    //防止服务器在“循环”中卡住（仅在该连接上）
+                    //如果传入的数据损坏/无效>只需删除所有数据，而不是一遍又一遍地尝试处理它
+                    extra = new byte[0];
+                    return null;
+                }
 
                 p.ReadPacket(reader);
             }
@@ -641,6 +647,10 @@ public abstract class Packet
                 return new S.GroupInvite();
             case (short)ServerPacketIds.AddMember:
                 return new S.AddMember();
+            case (short)ServerPacketIds.GroupMembersMap:
+                return new S.GroupMembersMap();
+            case (short)ServerPacketIds.SendMemberLocation:
+                return new S.SendMemberLocation();
             case (short)ServerPacketIds.Revived:
                 return new S.Revived();
             case (short)ServerPacketIds.ObjectRevived:
@@ -799,7 +809,7 @@ public abstract class Packet
                 return new S.UserDashAttack();
             case (short)ServerPacketIds.ObjectDashAttack:
                 return new S.ObjectDashAttack();
-            case (short)ServerPacketIds.UserAttackMove://Warrior Skill - SlashingBurst
+            case (short)ServerPacketIds.UserAttackMove://战士技能 - SlashingBurst
                 return new S.UserAttackMove();
             case (short)ServerPacketIds.CombineItem:
                 return new S.CombineItem();

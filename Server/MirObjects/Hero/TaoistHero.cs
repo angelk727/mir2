@@ -1,15 +1,6 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Drawing;
+﻿using System.Collections.Generic;
 using System.Linq;
-using C = ClientPackets;
 using Server.MirDatabase;
-using Server.MirEnvir;
-using Server.MirNetwork;
-using S = ServerPackets;
-using System.Text.RegularExpressions;
-using Server.MirObjects.Monsters;
 
 namespace Server.MirObjects
 {
@@ -74,21 +65,21 @@ namespace Server.MirObjects
                 if (Target != null)
                 {
                     magic = GetMagic(Spell.SoulShield);
-                    if (CanUseMagic(magic) && item != null && !target.HasBuff(BuffType.SoulShield))
+                    if (CanUseMagic(magic) && item != null && !target.HasBuff(BuffType.幽灵盾))
                     {
                         BeginMagic(magic.Spell, direction, target.ObjectID, target.CurrentLocation);
                         return;
                     }
 
                     magic = GetMagic(Spell.BlessedArmour);
-                    if (CanUseMagic(magic) && item != null && !target.HasBuff(BuffType.BlessedArmour))
+                    if (CanUseMagic(magic) && item != null && !target.HasBuff(BuffType.神圣战甲术))
                     {
                         BeginMagic(magic.Spell, direction, target.ObjectID, target.CurrentLocation);
                         return;
                     }
 
                     magic = GetMagic(Spell.UltimateEnhancer);
-                    if (CanUseMagic(magic) && item != null && !target.HasBuff(BuffType.UltimateEnhancer))
+                    if (CanUseMagic(magic) && item != null && !target.HasBuff(BuffType.无极真气))
                     {
                         BeginMagic(magic.Spell, direction, target.ObjectID, target.CurrentLocation);
                         return;
@@ -121,7 +112,7 @@ namespace Server.MirObjects
             if (amuletItem == null) return;
 
             magic = GetMagic(Spell.Curse);
-            if (CanUseMagic(magic) && !Target.HasBuff(BuffType.Curse))
+            if (CanUseMagic(magic) && !Target.HasBuff(BuffType.诅咒术))
             {
                 BeginMagic(magic.Spell, Direction, Target.ObjectID, Target.CurrentLocation);
                 return;

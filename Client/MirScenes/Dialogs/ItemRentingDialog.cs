@@ -1,10 +1,9 @@
-﻿using Client.MirControls;
+﻿using System.Drawing;
+using System.Windows.Forms;
+using Client.MirControls;
 using Client.MirGraphics;
 using Client.MirNetwork;
 using Client.MirSounds;
-using System.Drawing;
-using System.Windows.Forms;
-
 using C = ClientPackets;
 
 namespace Client.MirScenes.Dialogs
@@ -150,7 +149,7 @@ namespace Client.MirScenes.Dialogs
 
         public void InputRentalPeroid()
         {
-            var inputBox = new MirInputBox($"How long would you like to rent {RentalItem.FriendlyName} to {GameScene.Scene.GuestItemRentDialog.GuestName} for? (1 to 30 days).");
+            var inputBox = new MirInputBox($"你想租用多长时间 {RentalItem.FriendlyName} to {GameScene.Scene.GuestItemRentDialog.GuestName} for? (1到30天).");
 
             inputBox.OKButton.Click += (o1, e1) =>
             {

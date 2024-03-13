@@ -1,11 +1,11 @@
-﻿using Server.MirDatabase;
-using Server.MirEnvir;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using Server.MirDatabase;
+using Server.MirEnvir;
 
 namespace Server.MirForms
 {
@@ -13,7 +13,6 @@ namespace Server.MirForms
     {
         public static Envir EditEnvir = null;
 
-        private static int _endIndex = 0;
         public static string Path = string.Empty;
 
         private static List<String> errors = new List<String>();
@@ -26,10 +25,8 @@ namespace Server.MirForms
             if (EditEnvir == null) return;
 
             var lines = File.ReadAllLines(Path);
-            _endIndex = EditEnvir.MapIndex; // Last map index number
             for (int i = 0; i < lines.Length; i++)
             {
-
                 if (lines[i].StartsWith("[")) // Read map info
                 {
                     lines[i] = System.Text.RegularExpressions.Regex.Replace(lines[i], @"\s+", " "); // Clear white-space
@@ -39,7 +36,7 @@ namespace Server.MirForms
                     if (lines[i].Contains(';'))
                         lines[i] = lines[i].Substring(0, lines[i].IndexOf(";", System.StringComparison.Ordinal));
 
-                    MirDatabase.MapInfo newMapInfo = new MirDatabase.MapInfo { Index = ++_endIndex };
+                    MirDatabase.MapInfo newMapInfo = new MirDatabase.MapInfo { Index = ++EditEnvir.MapIndex };
 
                     var a = lines[i].Split(']'); // Split map info into [0] = MapFile MapName 0 || [1] = Attributes
                     string[] b = a[0].Split(' ');
@@ -82,7 +79,8 @@ namespace Server.MirForms
                     if (newMapInfo.NoReconnect)
                     {
                         int index = mapAttributes.FindIndex(x => x.StartsWith("NORECONNECT(".ToUpper()));
-                        newMapInfo.NoReconnectMap = newMapInfo.NoReconnectMap == string.Empty ? "0" : mapAttributes[index].TrimStart("NORECONNECT(".ToCharArray()).TrimEnd(')');
+                        //newMapInfo.NoReconnectMap = newMapInfo.NoReconnectMap == string.Empty ? "0" : mapAttributes[index].TrimStart("NORECONNECT(".ToCharArray()).TrimEnd(')');
+                        newMapInfo.NoReconnectMap = Convert.ToString(mapAttributes[index].TrimStart("NORECONNECT(".ToCharArray()).TrimEnd(')'));//修改下线地图不能导入 暂未发现问题
                     }
 
                     if (mapAttributes.Any(x => x.StartsWith("MINIMAP(".ToUpper())))
@@ -110,7 +108,7 @@ namespace Server.MirForms
                         int index = mapAttributes.FindIndex(x => x.StartsWith("MUSIC(".ToUpper()));
                         newMapInfo.Music = Convert.ToUInt16(mapAttributes[index].TrimStart("MUSIC(".ToCharArray()).TrimEnd(')'));
                     }
-                    if (mapAttributes.Any(x => x.StartsWith("LIGHT(".ToUpper()))) // Check if there is a LIGHT attribute and get its value
+                    if (mapAttributes.Any(x => x.StartsWith("LIGHT(".ToUpper()))) //检查是否有LIGHT属性并获取其值
                     {
                         int index = mapAttributes.FindIndex(x => x.StartsWith("LIGHT(".ToUpper()));
                         switch (mapAttributes[index].TrimStart("LIGHT(".ToCharArray()).TrimEnd(')'))
@@ -146,7 +144,8 @@ namespace Server.MirForms
                     EditEnvir.MapInfoList.Add(newMapInfo); // Add map to list
                 }
                 else if (lines[i].StartsWith(";")) continue;
-                else errors.Add("Error on Line " + i + ": " + lines[i] + "");
+                else
+                    continue;
             }
 
             for (int j = 0; j < EditEnvir.MapInfoList.Count; j++)
@@ -182,11 +181,11 @@ namespace Server.MirForms
                                 newMovement.ShowOnBigMap = true;
                                 lines[k] = lines[k].Replace("SHOWONBIGMAP", "");
                             }
-                            if (lines[k].Contains("ICON"))
+                            if (lines[k].Contains("BIGMAPICON"))
                             {
-                                int iconLocation = lines[k].IndexOf(" ICON");
+                                int iconLocation = lines[k].IndexOf(" BIGMAPICON");
                                 string icon = lines[k].Substring(iconLocation);
-                                int iconIndex = int.Parse(icon.Replace("ICON(", "").Replace(")", "")); //get value
+                                int iconIndex = int.Parse(icon.Replace("BIGMAPICON(", "").Replace(")", "")); //get value
                                 newMovement.Icon = iconIndex;
                                 lines[k] = lines[k].Remove(iconLocation);
                             }
@@ -255,7 +254,12 @@ namespace Server.MirForms
                                 }
                             }
 
-                            if (toMap < 0) continue;
+                            if (toMap < 0)
+                            {
+                                errors.Add("目标地图连接失败: " + lines[k] + "");
+                                continue;
+                            }
+
                             newMovement.MapIndex = toMap;
                             newMovement.Source = new Point(int.Parse(d[0]), int.Parse(d[1]));
                             newMovement.Destination = new Point(int.Parse(e[0]), int.Parse(e[1]));
@@ -323,7 +327,7 @@ namespace Server.MirForms
         }
         public static void End()
         {
-            SMain.Enqueue(String.Join("MapInfo Import Report:", errors.Count > 0 ? "" : "No Errors"));
+            SMain.Enqueue(String.Join("地图信息导入报告:", errors.Count > 0 ? "" : "导入地图信息完成"));
             foreach (String error in errors)
                 SMain.Enqueue(error);
         }
@@ -437,7 +441,7 @@ namespace Server.MirForms
                             Count = Convert.ToInt16(Line[5]),
                             Delay = Convert.ToInt16(Line[6]),
                             Direction = (Line.Length >= 8) ? Convert.ToInt16(Line[7]) : 0,
-                            RoutePath = (Line.Length >= 9) ? Line[8] : string.Empty
+                            RoutePath = (Line.Length >= 9) ? Line[8] : string.Empty                    
                         };
 
                         monGenList.Add(MonGenItem);

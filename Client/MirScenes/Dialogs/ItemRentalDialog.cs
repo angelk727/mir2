@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using Client.MirControls;
-using Client.MirGraphics;
-using Client.MirSounds;
 using System.Drawing;
 using System.Globalization;
 using System.Windows.Forms;
+using Client.MirControls;
+using Client.MirGraphics;
 using Client.MirNetwork;
-
+using Client.MirSounds;
 using C = ClientPackets;
 
 namespace Client.MirScenes.Dialogs

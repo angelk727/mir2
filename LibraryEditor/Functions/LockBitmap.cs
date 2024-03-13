@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ShadowMerger
 {
@@ -40,7 +36,7 @@ namespace ShadowMerger
 
                 if (Depth != 8 && Depth != 24 && Depth != 32)
                 {
-                    throw new ArgumentException("Only 8, 24 and 32 bpp images are supported.");
+                    throw new ArgumentException("仅支持8、24和32 位图图像");
                 }
 
                 bitmapData = source.LockBits(rect, ImageLockMode.ReadWrite,

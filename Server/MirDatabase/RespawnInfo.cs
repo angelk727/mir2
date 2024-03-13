@@ -1,8 +1,6 @@
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 using Server.MirEnvir;
 
 namespace Server.MirDatabase
@@ -22,7 +20,7 @@ namespace Server.MirDatabase
         public string RoutePath = string.Empty;
         public int RespawnIndex;
         public bool SaveRespawnTime = false;
-        public ushort RespawnTicks; //leave 0 if not using this system!
+        public ushort RespawnTicks; //如果不使用此系统，请保留0！
 
         public RespawnInfo()
         {

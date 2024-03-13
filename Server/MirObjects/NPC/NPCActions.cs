@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace Server.MirObjects
 {
@@ -107,6 +105,8 @@ namespace Server.MirObjects
         RollYut,
         Drop,
         ReviveHero,
-        SealHero
+        SealHero,
+		ConquestRepairAll,
+		GiveGuildExp //自添加增加行会经验
     }
 }

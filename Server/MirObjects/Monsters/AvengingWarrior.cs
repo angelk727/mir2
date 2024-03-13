@@ -1,5 +1,5 @@
-﻿using Server.MirDatabase;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Server.MirDatabase;
 using S = ServerPackets;
 
 namespace Server.MirObjects.Monsters
@@ -64,7 +64,7 @@ namespace Server.MirObjects.Monsters
 
             if (target.Attacked(this, damage, defence) <= 0) return;
 
-            PoisonTarget(Target, 5, 8, PoisonType.Red);
+            PoisonTarget(target, 5, 8, PoisonType.Red);
         }
 
         protected override void ProcessTarget()

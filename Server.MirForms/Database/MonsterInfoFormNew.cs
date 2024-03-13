@@ -1,17 +1,11 @@
-﻿using Server.MirDatabase;
-using Server.MirEnvir;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System;
 using System.Data;
-using System.Drawing;
-using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Web.UI.WebControls;
 using System.Windows.Forms;
+using Server.MirDatabase;
+using Server.MirEnvir;
 
 namespace Server.Database
 {
@@ -54,7 +48,7 @@ namespace Server.Database
             Modified.ValueType = typeof(bool);
             MonsterIndex.ValueType = typeof(int);
             MonsterName.ValueType = typeof(string);
-            MonsterAI.ValueType = typeof(byte);
+            MonsterAI.ValueType = typeof(ushort); //自添加AI扩容
             MonsterEffect.ValueType = typeof(byte);
             MonsterLevel.ValueType = typeof(ushort);
             MonsterLight.ValueType = typeof(byte);
@@ -228,7 +222,7 @@ namespace Server.Database
  
                 monster.Name = (string)row.Cells["MonsterName"].Value;
                 monster.Image = (Monster)row.Cells["MonsterImage"].Value;
-                monster.AI = (byte)row.Cells["MonsterAI"].Value;
+                monster.AI = (ushort)row.Cells["MonsterAI"].Value; //自添加AI扩容
                 monster.Level = (ushort)row.Cells["MonsterLevel"].Value;
                 monster.Effect = (byte)row.Cells["MonsterEffect"].Value;
                 monster.Light = (byte)row.Cells["MonsterLight"].Value;
@@ -294,33 +288,33 @@ namespace Server.Database
             if (col.ValueType == typeof(int) && int.TryParse(val, out int val1) && val1 < 0)
             {
                 e.Cancel = true;
-                monsterInfoGridView.Rows[e.RowIndex].ErrorText = "the value must be a positive integer";
+                monsterInfoGridView.Rows[e.RowIndex].ErrorText = "值必须是正整数";
             }
 
             if (col.ValueType == typeof(int) && !int.TryParse(val, out _))
             {
                 e.Cancel = true;
-                monsterInfoGridView.Rows[e.RowIndex].ErrorText = "the value must be an integer";
+                monsterInfoGridView.Rows[e.RowIndex].ErrorText = "值必须是整数";
             }
             else if (col.ValueType == typeof(byte) && !byte.TryParse(val, out _))
             {
                 e.Cancel = true;
-                monsterInfoGridView.Rows[e.RowIndex].ErrorText = "the value must be a byte";
+                monsterInfoGridView.Rows[e.RowIndex].ErrorText = "值必须是一个字节";
             }
             else if (col.ValueType == typeof(short) && !short.TryParse(val, out _))
             {
                 e.Cancel = true;
-                monsterInfoGridView.Rows[e.RowIndex].ErrorText = "the value must be a short";
+                monsterInfoGridView.Rows[e.RowIndex].ErrorText = "值必须是-32768~32767";
             }
             else if (col.ValueType == typeof(ushort) && !ushort.TryParse(val, out _))
             {
                 e.Cancel = true;
-                monsterInfoGridView.Rows[e.RowIndex].ErrorText = "the value must be a ushort";
+                monsterInfoGridView.Rows[e.RowIndex].ErrorText = "值必须是0~65535";
             }
             else if (col.ValueType == typeof(long) && !long.TryParse(val, out _))
             {
                 e.Cancel = true;
-                monsterInfoGridView.Rows[e.RowIndex].ErrorText = "the value must be a long";
+                monsterInfoGridView.Rows[e.RowIndex].ErrorText = "值必须是long型";
             }
         }
 
@@ -402,7 +396,7 @@ namespace Server.Database
                     if (columns.Length < 2)
                     {
                         fileError = true;
-                        MessageBox.Show("No columns to import.");
+                        MessageBox.Show("没有要导入的列");
                     }
 
                     if (!fileError)
@@ -410,6 +404,8 @@ namespace Server.Database
                         monsterInfoGridView.EditMode = DataGridViewEditMode.EditProgrammatically;
 
                         int rowsEdited = 0;
+
+                        this.monsterInfoGridView.CurrentCell = this.monsterInfoGridView[1, 0]; //自添加修复怪物导入时数据库的问题
 
                         for (int i = 1; i < rows.Length; i++)
                         {
@@ -425,7 +421,7 @@ namespace Server.Database
                             if (cells.Length != columns.Length)
                             {
                                 fileError = true;
-                                MessageBox.Show($"Row {i} column count does not match the headers column count.");
+                                MessageBox.Show($"这行 {i} 列数与标题列数不匹配");
                                 break;
                             }
 
@@ -433,7 +429,10 @@ namespace Server.Database
 
                             try
                             {
-                                monsterInfoGridView.BeginEdit(true);
+                                if (dataRow != null)
+                                {
+                                    monsterInfoGridView.BeginEdit(true);
+                                }
 
                                 if (dataRow == null)
                                 {
@@ -456,7 +455,7 @@ namespace Server.Database
                                     if (dataColumn == null)
                                     {
                                         fileError = true;
-                                        MessageBox.Show($"Column {column} was not found.");
+                                        MessageBox.Show($"找不到列 {column} ");
                                         break;
                                     }
 
@@ -479,7 +478,7 @@ namespace Server.Database
                                 fileError = true;
                                 monsterInfoGridView.EndEdit();
 
-                                MessageBox.Show($"Error when importing item {cells[0]}. {ex.Message}");
+                                MessageBox.Show($"导入时出错 {cells[0]}. {ex.Message}");
                                 continue;
                             }
 
@@ -494,13 +493,13 @@ namespace Server.Database
                         if (!fileError)
                         {
                             monsterInfoGridView.EditMode = DataGridViewEditMode.EditOnKeystrokeOrF2;
-                            MessageBox.Show($"{rowsEdited} monsters have been imported.");
+                            MessageBox.Show($"{rowsEdited} 怪物数据导入完成");
                         }
                     }
                 }
                 else
                 {
-                    MessageBox.Show("No rows to import.");
+                    MessageBox.Show("没有要导入的行");
                 }
             }
         }
@@ -511,7 +510,7 @@ namespace Server.Database
             {
                 SaveFileDialog sfd = new SaveFileDialog();
                 sfd.Filter = "CSV (*.csv)|*.csv";
-                sfd.FileName = "MonsterInfo Output.csv";
+                sfd.FileName = "3_怪物数据.csv";
                 bool fileError = false;
                 if (sfd.ShowDialog() == DialogResult.OK)
                 {
@@ -524,7 +523,7 @@ namespace Server.Database
                         catch (IOException ex)
                         {
                             fileError = true;
-                            MessageBox.Show("It wasn't possible to write the data to the disk." + ex.Message);
+                            MessageBox.Show("无法将数据写入" + ex.Message);
                         }
                     }
                     if (!fileError)
@@ -559,18 +558,18 @@ namespace Server.Database
                             }
 
                             File.WriteAllLines(sfd.FileName, outputCsv, Encoding.UTF8);
-                            MessageBox.Show("Data Exported Successfully.", "Info");
+                            MessageBox.Show("怪物数据导出成功", "导出信息");
                         }
                         catch (Exception ex)
                         {
-                            MessageBox.Show("Error :" + ex.Message);
+                            MessageBox.Show("错误 :" + ex.Message);
                         }
                     }
                 }
             }
             else
             {
-                MessageBox.Show("No Monsters To Export.", "Info");
+                MessageBox.Show("没有怪物数据可导出", "导出信息");
             }
         }
 
@@ -582,7 +581,7 @@ namespace Server.Database
 
             row.Cells["MonsterName"].Value = "";
             row.Cells["MonsterImage"].Value = (Monster)0;
-            row.Cells["MonsterAI"].Value = (byte)0;
+            row.Cells["MonsterAI"].Value = (ushort)0; //自添加AI扩容
             row.Cells["MonsterLevel"].Value = (ushort)0;
             row.Cells["MonsterEffect"].Value = (byte)0;
             row.Cells["MonsterLight"].Value = (byte)0;

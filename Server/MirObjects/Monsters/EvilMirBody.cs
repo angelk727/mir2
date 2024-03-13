@@ -1,5 +1,4 @@
 ﻿using Server.MirDatabase;
-using S = ServerPackets;
 
 namespace Server.MirObjects.Monsters
 {
@@ -43,7 +42,7 @@ namespace Server.MirObjects.Monsters
                 if (Envir.DragonSystem.LinkedMonster != null)
                 {
                     MonsterObject ob = Envir.DragonSystem.LinkedMonster;
-                    if (attacker.Info.AI == 6)
+                    if (attacker.Info.AI == 980)
                         EXPOwner = null;
 
                     else if (attacker.Master != null)

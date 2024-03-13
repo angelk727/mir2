@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 using Server.MirEnvir;
 
@@ -29,8 +28,8 @@ namespace Server.MirDatabase
         public string Name = string.Empty;
 
         public Monster Image;
-        public byte AI, Effect, ViewRange = 7, CoolEye;
-        public ushort Level;
+        public byte Effect, ViewRange = 7, CoolEye; //自添加AI扩容 去除
+        public ushort AI, Level; //自添加AI扩容 增加
 
         public byte Light;
 
@@ -59,7 +58,7 @@ namespace Server.MirDatabase
             Name = reader.ReadString();
 
             Image = (Monster) reader.ReadUInt16();
-            AI = reader.ReadByte();
+            AI = reader.ReadUInt16();////自添加AI扩容
             Effect = reader.ReadByte();
 
             if (Envir.LoadVersion < 62)
@@ -82,7 +81,7 @@ namespace Server.MirDatabase
             if (Envir.LoadVersion <= 84)
             {
                 Stats = new Stats();
-                Stats[Stat.HP] = (int)reader.ReadUInt32(); //Monster form prevented greater than ushort, so this should never overflow.
+                Stats[Stat.HP] = (int)reader.ReadUInt32(); //怪物形态阻止了大于ushort，所以这永远不应该溢出
             }
 
             if (Envir.LoadVersion < 62)
@@ -117,8 +116,8 @@ namespace Server.MirDatabase
 
             if (Envir.LoadVersion <= 84)
             {
-                Stats[Stat.Accuracy] = reader.ReadByte();
-                Stats[Stat.Agility] = reader.ReadByte();
+                Stats[Stat.准确] = reader.ReadByte();
+                Stats[Stat.敏捷] = reader.ReadByte();
             }
 
             Light = reader.ReadByte();
@@ -151,7 +150,7 @@ namespace Server.MirDatabase
             writer.Write(Name);
 
             writer.Write((ushort) Image);
-            writer.Write(AI);
+            writer.Write((ushort) AI);//自添加AI扩容
             writer.Write(Effect);
             writer.Write(Level);
             writer.Write(ViewRange);
@@ -186,7 +185,7 @@ namespace Server.MirDatabase
             if (!ushort.TryParse(data[1], out image)) return;
             info.Image = (Monster) image;
 
-            if (!byte.TryParse(data[2], out info.AI)) return;
+            if (!ushort.TryParse(data[2], out info.AI)) return;//自添加AI扩容
             if (!byte.TryParse(data[3], out info.Effect)) return;
             if (!ushort.TryParse(data[4], out info.Level)) return;
             if (!byte.TryParse(data[5], out info.ViewRange)) return;
@@ -357,7 +356,7 @@ namespace Server.MirDatabase
 
                 if (drop == null)
                 {
-                    MessageQueue.Enqueue(string.Format("Could not load Drop: {0}, Line {1}", name, lines[i]));
+                    MessageQueue.Enqueue(string.Format("未能加载 {0} 所需物品: {1}", name, lines[i]));
                     continue;
                 }
 
@@ -413,7 +412,7 @@ namespace Server.MirDatabase
 
                 if (drop == null)
                 {
-                    MessageQueue.Enqueue(string.Format("Could not load Drop: {0}, Line {1}", name, line));
+                    MessageQueue.Enqueue(string.Format("未能加载 {0} 掉落物品: {1}}", name, line));
                     continue;
                 }
 

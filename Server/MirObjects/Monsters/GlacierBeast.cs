@@ -1,6 +1,5 @@
-using Server.MirDatabase;
 using System.Collections.Generic;
-using S = ServerPackets;
+using Server.MirDatabase;
 
 namespace Server.MirObjects.Monsters
 {

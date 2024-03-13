@@ -1,10 +1,7 @@
-﻿using Server.MirEnvir;
-using Server.MirObjects;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
-using Server.MirObjects.Monsters;
+using Server.MirEnvir;
 
 namespace Server.MirDatabase
 {
@@ -34,8 +31,8 @@ namespace Server.MirDatabase
         public byte StartHour = 0;
         public int WarLength = 60;
 
-        public ConquestType Type = ConquestType.Request;
-        public ConquestGame Game = ConquestGame.CapturePalace;
+        public ConquestType Type = ConquestType.申请启动;
+        public ConquestGame Game = ConquestGame.占领皇宫;
 
         public bool Monday;
         public bool Tuesday;

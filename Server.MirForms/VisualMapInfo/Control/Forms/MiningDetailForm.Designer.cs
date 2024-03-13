@@ -52,7 +52,7 @@
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(42, 13);
             this.label3.TabIndex = 19;
-            this.label3.Text = "Range:";
+            this.label3.Text = "范围:";
             // 
             // Y
             // 
@@ -77,7 +77,7 @@
             this.DoneButton.Name = "DoneButton";
             this.DoneButton.Size = new System.Drawing.Size(122, 24);
             this.DoneButton.TabIndex = 16;
-            this.DoneButton.Text = "Done";
+            this.DoneButton.Text = "完成";
             this.DoneButton.UseVisualStyleBackColor = true;
             this.DoneButton.Click += new System.EventHandler(this.DoneButton_Click);
             // 
@@ -114,7 +114,7 @@
             this.MaximizeBox = false;
             this.Name = "MiningDetailForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Mining";
+            this.Text = "采矿";
             this.ResumeLayout(false);
             this.PerformLayout();
 

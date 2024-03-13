@@ -1,12 +1,12 @@
-﻿using Server.MirDatabase;
-using Server.MirEnvir;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Server.MirDatabase;
+using Server.MirEnvir;
 using S = ServerPackets;
 
 namespace Server.MirObjects
@@ -518,7 +518,7 @@ namespace Server.MirObjects
                     {
                         listPath = quoteMatch.Groups[1].Captures[0].Value;
                     }
-                    
+
                     fileName = Path.Combine(Settings.NPCPath, listPath + ".txt");
 
                     if (!File.Exists(fileName)) return;
@@ -534,7 +534,7 @@ namespace Server.MirObjects
                     acts.Add(new NPCActions(ActionType.Break));
                     break;
 
-                //cant use stored var
+                //不能使用变量存储
                 case "ADDNAMELIST":
                     if (parts.Length < 2) return;
 
@@ -556,7 +556,7 @@ namespace Server.MirObjects
                     acts.Add(new NPCActions(ActionType.AddNameList, fileName));
                     break;
 
-                //cant use stored var
+                //不能使用变量存储
                 case "ADDGUILDNAMELIST":
                     if (parts.Length < 2) return;
 
@@ -577,7 +577,7 @@ namespace Server.MirObjects
 
                     acts.Add(new NPCActions(ActionType.AddGuildNameList, fileName));
                     break;
-                //cant use stored var
+                //不能使用变量存储
                 case "DELNAMELIST":
                     if (parts.Length < 2) return;
 
@@ -597,7 +597,7 @@ namespace Server.MirObjects
                         acts.Add(new NPCActions(ActionType.DelNameList, fileName));
                     break;
 
-                //cant use stored var
+                //不能使用变量存储
                 case "DELGUILDNAMELIST":
                     if (parts.Length < 2) return;
 
@@ -616,7 +616,7 @@ namespace Server.MirObjects
                     if (File.Exists(fileName))
                         acts.Add(new NPCActions(ActionType.DelGuildNameList, fileName));
                     break;
-                //cant use stored var
+                //不能使用变量存储
                 case "CLEARNAMELIST":
                     if (parts.Length < 2) return;
 
@@ -635,7 +635,7 @@ namespace Server.MirObjects
                     if (File.Exists(fileName))
                         acts.Add(new NPCActions(ActionType.ClearNameList, fileName));
                     break;
-                //cant use stored var
+                //不能使用变量存储
                 case "CLEARGUILDNAMELIST":
                     if (parts.Length < 2) return;
 
@@ -742,7 +742,7 @@ namespace Server.MirObjects
 
                 case "REMOVESKILL":
                     if (parts.Length < 2) return;
-                    
+
                     acts.Add(new NPCActions(ActionType.RemoveSkill, parts[1]));
                     break;
 
@@ -1025,8 +1025,8 @@ namespace Server.MirObjects
                     acts.Add(new NPCActions(ActionType.SetConquestRate, parts[1], parts[2]));
                     break;
                 case "STARTCONQUEST":
-                    if (parts.Length < 3) return;
-                    acts.Add(new NPCActions(ActionType.StartConquest, parts[1], parts[2]));
+                    if (parts.Length < 2) return;
+                    acts.Add(new NPCActions(ActionType.StartConquest, parts[1]));
                     break;
                 case "SCHEDULECONQUEST":
                     if (parts.Length < 2) return;
@@ -1041,7 +1041,7 @@ namespace Server.MirObjects
                     acts.Add(new NPCActions(ActionType.CloseGate, parts[1], parts[2]));
                     break;
                 case "OPENBROWSER":
-                    if (parts.Length < 2) return;                    
+                    if (parts.Length < 2) return;
                     acts.Add(new NPCActions(ActionType.OpenBrowser, parts[1]));
                     break;
                 case "GETRANDOMTEXT":
@@ -1110,8 +1110,20 @@ namespace Server.MirObjects
                 case "REVIVEHERO":
                     acts.Add(new NPCActions(ActionType.ReviveHero));
                     break;
+
                 case "SEALHERO":
                     acts.Add(new NPCActions(ActionType.SealHero));
+                    break;
+
+                case "CONQUESTREPAIRALL":
+                    if (parts.Length < 2) return;
+
+                    acts.Add(new NPCActions(ActionType.ConquestRepairAll, parts[1]));
+                    break;
+                case "GIVEGUILDEXP": //自添加增加行会经验
+                    if (parts.Length < 2) return;
+
+                    acts.Add(new NPCActions(ActionType.GiveGuildExp, parts[1]));
                     break;
             }
         }
@@ -1139,7 +1151,7 @@ namespace Server.MirObjects
             var oneValRegex = new Regex(@"(.*?)\(((.*?))\)");
             var twoValRegex = new Regex(@"(.*?)\(((.*?),(.*?))\)");
             ConquestObject Conquest;
-            ConquestGuildArcherInfo Archer;
+            ConquestGuildArcherInfo 弓箭;
             ConquestGuildGateInfo Gate;
             ConquestGuildWallInfo Wall;
             ConquestGuildSiegeInfo Siege;
@@ -1179,20 +1191,20 @@ namespace Server.MirObjects
                     {
 
                         Conquest = Envir.Conquests.FirstOrDefault(x => x.Info.Index == intVal1);
-                        if (Conquest == null) return "Not Found";
+                        if (Conquest == null) return "未设置";
 
-                        Archer = Conquest.ArcherList.FirstOrDefault(x => x.Index == intVal2);
-                        if (Archer == null) return "Not Found";
+                        弓箭 = Conquest.ArcherList.FirstOrDefault(x => x.Index == intVal2);
+                        if (弓箭 == null) return "未设置";
 
-                        if (Archer.Info.Name == "" || Archer.Info.Name == null)
+                        if (弓箭.Info.Name == "" || 弓箭.Info.Name == null)
                             newValue = "Conquest Guard";
                         else
-                            newValue = Archer.Info.Name;
+                            newValue = 弓箭.Info.Name;
 
-                        if (Archer.GetRepairCost() == 0)
-                            newValue += " - [ Still Alive ]";
+                        if (弓箭.GetRepairCost() == 0)
+                            newValue += " - [ 正常状态 ]";
                         else
-                            newValue += " - [ " + Archer.GetRepairCost().ToString("#,##0") + " gold ]";
+                            newValue += " - [ " + 弓箭.GetRepairCost().ToString("#,##0") + " 金币雇佣 ]";
                     }
                     break;
                 case "CONQUESTGATE()":
@@ -1202,10 +1214,10 @@ namespace Server.MirObjects
                     if (int.TryParse(val1.Replace("%", ""), out intVal1) && int.TryParse(val2.Replace("%", ""), out intVal2))
                     {
                         Conquest = Envir.Conquests.FirstOrDefault(x => x.Info.Index == intVal1);
-                        if (Conquest == null) return "Not Found";
+                        if (Conquest == null) return "未设置";
 
                         Gate = Conquest.GateList.FirstOrDefault(x => x.Index == intVal2);
-                        if (Gate == null) return "Not Found";
+                        if (Gate == null) return "未设置";
 
                         if (Gate.Info.Name == "" || Gate.Info.Name == null)
                             newValue = "Conquest Gate";
@@ -1213,9 +1225,9 @@ namespace Server.MirObjects
                             newValue = Gate.Info.Name;
 
                         if (Gate.GetRepairCost() == 0)
-                            newValue += " - [ No Repair Required ]";
+                            newValue += " - [ 无需维修 ]";
                         else
-                            newValue += " - [ " + Gate.GetRepairCost().ToString("#,##0") + " gold ]";
+                            newValue += " - [ " + Gate.GetRepairCost().ToString("#,##0") + " 金币维修 ]";
                     }
                     break;
                 case "CONQUESTWALL()":
@@ -1225,10 +1237,10 @@ namespace Server.MirObjects
                     if (int.TryParse(val1.Replace("%", ""), out intVal1) && int.TryParse(val2.Replace("%", ""), out intVal2))
                     {
                         Conquest = Envir.Conquests.FirstOrDefault(x => x.Info.Index == intVal1);
-                        if (Conquest == null) return "Not Found";
+                        if (Conquest == null) return "未设置";
 
                         Wall = Conquest.WallList.FirstOrDefault(x => x.Index == intVal2);
-                        if (Wall == null) return "Not Found";
+                        if (Wall == null) return "未设置";
 
                         if (Wall.Info.Name == "" || Wall.Info.Name == null)
                             newValue = "Conquest Wall";
@@ -1236,9 +1248,9 @@ namespace Server.MirObjects
                             newValue = Wall.Info.Name;
 
                         if (Wall.GetRepairCost() == 0)
-                            newValue += " - [ No Repair Required ]";
+                            newValue += " - [ 无需维修 ]";
                         else
-                            newValue += " - [ " + Wall.GetRepairCost().ToString("#,##0") + " gold ]";
+                            newValue += " - [ " + Wall.GetRepairCost().ToString("#,##0") + " 金币维修 ]";
                     }
                     break;
                 case "CONQUESTSIEGE()":
@@ -1248,10 +1260,10 @@ namespace Server.MirObjects
                     if (int.TryParse(val1.Replace("%", ""), out intVal1) && int.TryParse(val2.Replace("%", ""), out intVal2))
                     {
                         Conquest = Envir.Conquests.FirstOrDefault(x => x.Info.Index == intVal1);
-                        if (Conquest == null) return "Not Found";
+                        if (Conquest == null) return "未设置";
 
                         Siege = Conquest.SiegeList.FirstOrDefault(x => x.Index == intVal2);
-                        if (Siege == null) return "Not Found";
+                        if (Siege == null) return "未设置";
 
                         if (Siege.Info.Name == "" || Siege.Info.Name == null)
                             newValue = "Conquest Siege";
@@ -1259,9 +1271,9 @@ namespace Server.MirObjects
                             newValue = Siege.Info.Name;
 
                         if (Siege.GetRepairCost() == 0)
-                            newValue += " - [ Still Alive ]";
+                            newValue += " - [ 正常状态 ]";
                         else
-                            newValue += " - [ " + Siege.GetRepairCost().ToString("#,##0") + " gold ]";
+                            newValue += " - [ " + Siege.GetRepairCost().ToString("#,##0") + " 金币 ]";
                     }
                     break;
                 case "CONQUESTOWNER()":
@@ -1271,7 +1283,7 @@ namespace Server.MirObjects
                     {
                         Conquest = Envir.Conquests.FirstOrDefault(x => x.Info.Index == intVal1);
                         if (Conquest == null) return string.Empty;
-                        if (Conquest.Guild == null) return "No Owner";
+                        if (Conquest.Guild == null) return "虚位以待";
 
                         newValue = Conquest.Guild.Name;
                     }
@@ -1304,12 +1316,12 @@ namespace Server.MirObjects
                     if (int.TryParse(val1.Replace("%", ""), out intVal1))
                     {
                         Conquest = Envir.Conquests.FirstOrDefault(x => x.Info.Index == intVal1);
-                        if (Conquest == null) return "Conquest Not Found";
-                        if (Conquest.GuildInfo.AttackerID == -1) return "No War Scheduled";
+                        if (Conquest == null) return "无主之城";
+                        if (Conquest.GuildInfo.AttackerID == -1) return "暂无战事";
 
                         if (Envir.Guilds.FirstOrDefault(x => x.Guildindex == Conquest.GuildInfo.AttackerID) == null)
                         {
-                            newValue = "No War Scheduled";
+                            newValue = "暂无攻城";
                         }
                         else
                         {
@@ -1365,56 +1377,56 @@ namespace Server.MirObjects
                     newValue = player.Account.Credit.ToString(CultureInfo.InvariantCulture);
                     break;
                 case "ARMOUR":
-                    newValue = player.Info.Equipment[(int)EquipmentSlot.Armour] != null ?
-                        player.Info.Equipment[(int)EquipmentSlot.Armour].FriendlyName : "No Armour";
+                    newValue = player.Info.Equipment[(int)EquipmentSlot.盔甲] != null ?
+                        player.Info.Equipment[(int)EquipmentSlot.盔甲].FriendlyName : "空";
                     break;
                 case "WEAPON":
-                    newValue = player.Info.Equipment[(int)EquipmentSlot.Weapon] != null ?
-                        player.Info.Equipment[(int)EquipmentSlot.Weapon].FriendlyName : "No Weapon";
+                    newValue = player.Info.Equipment[(int)EquipmentSlot.武器] != null ?
+                        player.Info.Equipment[(int)EquipmentSlot.武器].FriendlyName : "空";
                     break;
                 case "RING_L":
-                    newValue = player.Info.Equipment[(int)EquipmentSlot.RingL] != null ?
-                        player.Info.Equipment[(int)EquipmentSlot.RingL].FriendlyName : "No Ring";
+                    newValue = player.Info.Equipment[(int)EquipmentSlot.左戒指] != null ?
+                        player.Info.Equipment[(int)EquipmentSlot.左戒指].FriendlyName : "空";
                     break;
                 case "RING_R":
-                    newValue = player.Info.Equipment[(int)EquipmentSlot.RingR] != null ?
-                        player.Info.Equipment[(int)EquipmentSlot.RingR].FriendlyName : "No Ring";
+                    newValue = player.Info.Equipment[(int)EquipmentSlot.右戒指] != null ?
+                        player.Info.Equipment[(int)EquipmentSlot.右戒指].FriendlyName : "空";
                     break;
                 case "BRACELET_L":
-                    newValue = player.Info.Equipment[(int)EquipmentSlot.BraceletL] != null ?
-                        player.Info.Equipment[(int)EquipmentSlot.BraceletL].FriendlyName : "No Bracelet";
+                    newValue = player.Info.Equipment[(int)EquipmentSlot.左手镯] != null ?
+                        player.Info.Equipment[(int)EquipmentSlot.左手镯].FriendlyName : "空";
                     break;
                 case "BRACELET_R":
-                    newValue = player.Info.Equipment[(int)EquipmentSlot.BraceletR] != null ?
-                        player.Info.Equipment[(int)EquipmentSlot.BraceletR].FriendlyName : "No Bracelet";
+                    newValue = player.Info.Equipment[(int)EquipmentSlot.右手镯] != null ?
+                        player.Info.Equipment[(int)EquipmentSlot.右手镯].FriendlyName : "空";
                     break;
                 case "NECKLACE":
-                    newValue = player.Info.Equipment[(int)EquipmentSlot.Necklace] != null ?
-                        player.Info.Equipment[(int)EquipmentSlot.Necklace].FriendlyName : "No Necklace";
+                    newValue = player.Info.Equipment[(int)EquipmentSlot.项链] != null ?
+                        player.Info.Equipment[(int)EquipmentSlot.项链].FriendlyName : "空";
                     break;
                 case "BELT":
-                    newValue = player.Info.Equipment[(int)EquipmentSlot.Belt] != null ?
-                        player.Info.Equipment[(int)EquipmentSlot.Belt].FriendlyName : "No Belt";
+                    newValue = player.Info.Equipment[(int)EquipmentSlot.腰带] != null ?
+                        player.Info.Equipment[(int)EquipmentSlot.腰带].FriendlyName : "空";
                     break;
                 case "BOOTS":
-                    newValue = player.Info.Equipment[(int)EquipmentSlot.Boots] != null ?
-                        player.Info.Equipment[(int)EquipmentSlot.Boots].FriendlyName : "No Boots";
+                    newValue = player.Info.Equipment[(int)EquipmentSlot.靴子] != null ?
+                        player.Info.Equipment[(int)EquipmentSlot.靴子].FriendlyName : "空";
                     break;
                 case "HELMET":
-                    newValue = player.Info.Equipment[(int)EquipmentSlot.Helmet] != null ?
-                        player.Info.Equipment[(int)EquipmentSlot.Helmet].FriendlyName : "No Helmet";
+                    newValue = player.Info.Equipment[(int)EquipmentSlot.头盔] != null ?
+                        player.Info.Equipment[(int)EquipmentSlot.头盔].FriendlyName : "空";
                     break;
                 case "AMULET":
-                    newValue = player.Info.Equipment[(int)EquipmentSlot.Amulet] != null ?
-                        player.Info.Equipment[(int)EquipmentSlot.Amulet].FriendlyName : "No Amulet";
+                    newValue = player.Info.Equipment[(int)EquipmentSlot.护身符] != null ?
+                        player.Info.Equipment[(int)EquipmentSlot.护身符].FriendlyName : "空";
                     break;
                 case "STONE":
-                    newValue = player.Info.Equipment[(int)EquipmentSlot.Stone] != null ?
-                        player.Info.Equipment[(int)EquipmentSlot.Stone].FriendlyName : "No Stone";
+                    newValue = player.Info.Equipment[(int)EquipmentSlot.守护石] != null ?
+                        player.Info.Equipment[(int)EquipmentSlot.守护石].FriendlyName : "空";
                     break;
                 case "TORCH":
-                    newValue = player.Info.Equipment[(int)EquipmentSlot.Torch] != null ?
-                        player.Info.Equipment[(int)EquipmentSlot.Torch].FriendlyName : "No Torch";
+                    newValue = player.Info.Equipment[(int)EquipmentSlot.照明物] != null ?
+                        player.Info.Equipment[(int)EquipmentSlot.照明物].FriendlyName : "空";
                     break;
 
                 case "DATE":
@@ -1432,19 +1444,37 @@ namespace Server.MirObjects
                 case "GUILDWARFEE":
                     newValue = Settings.Guild_WarCost.ToString();
                     break;
-
                 case "PARCELAMOUNT":
                     newValue = player.GetMailAwaitingCollectionAmount().ToString();
                     break;
                 case "GUILDNAME":
-                    if (player.MyGuild == null) return "No Guild";
+                    if (player.MyGuild == null) return "未入行会";
                     else
-                        newValue = player.MyGuild.Name + " Guild";
+                        newValue = player.MyGuild.Name;//原代码: newValue = player.MyGuild.Name + " Guild";
                     break;
                 case "ROLLRESULT":
                     newValue = player.NPCData.TryGetValue("NPCRollResult", out object _rollResult) ? _rollResult.ToString() : "Not Rolled";
                     break;
-
+                case "MOUNTLOYALTY":
+                    if (!player.Mount.HasMount)
+                    {
+                        newValue = "No Mount";
+                    }
+                    else
+                    {
+                        newValue = $"{player.Info.Equipment[(int)EquipmentSlot.坐骑].CurrentDura} ({player.Info.Equipment[(int)EquipmentSlot.坐骑].MaxDura}";
+                    }
+                    break;
+                case "MOUNT":
+                    if (player.Mount.HasMount)
+                    {
+                        newValue = player.Info.Equipment[(int)EquipmentSlot.坐骑].FriendlyName;
+                    }
+                    else
+                    {
+                        newValue = "No Mount";
+                    }
+                    break;
                 default:
                     newValue = string.Empty;
                     break;
@@ -1657,7 +1687,7 @@ namespace Server.MirObjects
                         }
                         catch (ArgumentException)
                         {
-                            MessageQueue.Enqueue(string.Format("Incorrect operator: {0}, Page: {1}", param[1], Key));
+                            MessageQueue.Enqueue(string.Format("操作不正确: {0}, 页: {1}", param[1], Key));
                             return true;
                         }
                         break;
@@ -1715,7 +1745,7 @@ namespace Server.MirObjects
                             }
                             catch (ArgumentException)
                             {
-                                MessageQueue.Enqueue(string.Format("Incorrect operator: {0}, Page: {1}", param[0], Key));
+                                MessageQueue.Enqueue(string.Format("操作不正确: {0}, 页: {1}", param[0], Key));
                                 return true;
                             }
                         }
@@ -1860,7 +1890,7 @@ namespace Server.MirObjects
                         }
                         catch (ArgumentException)
                         {
-                            MessageQueue.Enqueue(string.Format("Incorrect operator: {0}, Page: {1}", param[1], Key));
+                            MessageQueue.Enqueue(string.Format("操作不正确: {0}, 页: {1}", param[1], Key));
                             return true;
                         }
                         break;
@@ -1917,7 +1947,7 @@ namespace Server.MirObjects
                             }
                             catch (ArgumentException)
                             {
-                                MessageQueue.Enqueue(string.Format("Incorrect operator: {0}, Page: {1}", param[0], Key));
+                                MessageQueue.Enqueue(string.Format("操作不正确: {0}, 页: {1}", param[0], Key));
                                 return true;
                             }
                         }
@@ -1936,7 +1966,7 @@ namespace Server.MirObjects
                         }
                         catch (ArgumentException)
                         {
-                            MessageQueue.Enqueue(string.Format("Incorrect operator: {0}, Page: {1}", param[0], Key));
+                            MessageQueue.Enqueue(string.Format("操作不正确: {0}, 页: {1}", param[0], Key));
                             return true;
                         }
                         break;
@@ -1953,7 +1983,7 @@ namespace Server.MirObjects
                         }
                         catch (ArgumentException)
                         {
-                            MessageQueue.Enqueue(string.Format("Incorrect operator: {0}, Page: {1}", param[0], Key));
+                            MessageQueue.Enqueue(string.Format("操作不正确: {0}, 页: {1}", param[0], Key));
                             return true;
                         }
                         break;
@@ -1970,7 +2000,7 @@ namespace Server.MirObjects
                         }
                         catch (ArgumentException)
                         {
-                            MessageQueue.Enqueue(string.Format("Incorrect operator: {0}, Page: {1}", param[0], Key));
+                            MessageQueue.Enqueue(string.Format("操作不正确: {0}, 页: {1}", param[0], Key));
                             return true;
                         }
                         break;
@@ -2082,7 +2112,7 @@ namespace Server.MirObjects
                             failed = true;
                             break;
                         }
-                        
+
                         read = File.ReadAllLines(param[0]);
                         failed = player.MyGuild == null || !read.Contains(player.MyGuild.Name);
                         break;
@@ -2104,7 +2134,7 @@ namespace Server.MirObjects
                         }
                         catch (ArgumentException)
                         {
-                            MessageQueue.Enqueue(string.Format("Incorrect operator: {0}, Page: {1}", param[0], Key));
+                            MessageQueue.Enqueue(string.Format("操作不正确: {0}, 页: {1}", param[0], Key));
                             return true;
                         }
                         break;
@@ -2232,7 +2262,7 @@ namespace Server.MirObjects
                         failed = (player.GroupMembers == null || !Compare(param[0], player.GroupMembers.Count, tempInt));
                         break;
                     case CheckType.GroupCheckNearby:
-                        target = new Point(-1,-1);
+                        target = new Point(-1, -1);
                         for (int j = 0; j < player.CurrentMap.NPCs.Count; j++)
                         {
                             NPCObject ob = player.CurrentMap.NPCs[j];
@@ -2298,7 +2328,7 @@ namespace Server.MirObjects
                         }
                         catch (ArgumentException)
                         {
-                            MessageQueue.Enqueue(string.Format("Incorrect operator: {0}, Page: {1}", param[1], Key));
+                            MessageQueue.Enqueue(string.Format("操作不正确: {0}, 页: {1}", param[1], Key));
                             return true;
                         }
                         break;
@@ -2389,7 +2419,7 @@ namespace Server.MirObjects
                         }
                         catch (ArgumentException)
                         {
-                            MessageQueue.Enqueue(string.Format("Incorrect operator: {0}, Page: {1}", param[0], Key));
+                            MessageQueue.Enqueue(string.Format("操作不正确: {0}, 页: {1}", param[0], Key));
                             return true;
                         }
                         break;
@@ -2409,20 +2439,20 @@ namespace Server.MirObjects
                                 break;
                             }
 
-                            ConquestGuildArcherInfo Archer = Conquest.ArcherList.FirstOrDefault(g => g.Info.Index == tempInt2);
-                            if (Archer == null || Archer.GetRepairCost() == 0)
+                            ConquestGuildArcherInfo 弓箭 = Conquest.ArcherList.FirstOrDefault(g => g.Info.Index == tempInt2);
+                            if (弓箭 == null || 弓箭.GetRepairCost() == 0)
                             {
                                 failed = true;
                                 break;
                             }
                             if (player.MyGuild != null)
-                                failed = (player.MyGuild.Gold < Archer.GetRepairCost());
+                                failed = (player.MyGuild.Gold < 弓箭.GetRepairCost());
                             else
                                 failed = true;
                         }
                         catch (ArgumentException)
                         {
-                            MessageQueue.Enqueue(string.Format("Incorrect operator: {0}, Page: {1}", param[0], Key));
+                            MessageQueue.Enqueue(string.Format("操作不正确: {0}, 页: {1}", param[0], Key));
                             return true;
                         }
                         break;
@@ -2455,7 +2485,7 @@ namespace Server.MirObjects
                         }
                         catch (ArgumentException)
                         {
-                            MessageQueue.Enqueue(string.Format("Incorrect operator: {0}, Page: {1}", param[0], Key));
+                            MessageQueue.Enqueue(string.Format("操作不正确: {0}, 页: {1}", param[0], Key));
                             return true;
                         }
                         break;
@@ -2488,7 +2518,7 @@ namespace Server.MirObjects
                         }
                         catch (ArgumentException)
                         {
-                            MessageQueue.Enqueue(string.Format("Incorrect operator: {0}, Page: {1}", param[0], Key));
+                            MessageQueue.Enqueue(string.Format("操作不正确: {0}, 页: {1}", param[0], Key));
                             return true;
                         }
                         break;
@@ -2521,7 +2551,7 @@ namespace Server.MirObjects
                         }
                         catch (ArgumentException)
                         {
-                            MessageQueue.Enqueue(string.Format("Incorrect operator: {0}, Page: {1}", param[0], Key));
+                            MessageQueue.Enqueue(string.Format("操作不正确: {0}, 页: {1}", param[0], Key));
                             return true;
                         }
                         break;
@@ -2532,7 +2562,7 @@ namespace Server.MirObjects
                             failed = true;
                             break;
                         }
-                        
+
                         if (player.MyGuild == null)
                         {
                             failed = true;
@@ -2565,7 +2595,7 @@ namespace Server.MirObjects
                         }
                         catch (ArgumentException)
                         {
-                            MessageQueue.Enqueue(string.Format("Incorrect operator: {0}, Page: {1}", param[0], Key));
+                            MessageQueue.Enqueue(string.Format("操作不正确: {0}, 页: {1}", param[0], Key));
                             return true;
                         }
                         break;
@@ -2592,7 +2622,7 @@ namespace Server.MirObjects
                         }
                         catch (ArgumentException)
                         {
-                            MessageQueue.Enqueue(string.Format("Incorrect operator: {0}, Page: {1}", param[0], Key));
+                            MessageQueue.Enqueue(string.Format("操作不正确: {0}, 页: {1}", param[0], Key));
                             return true;
                         }
                         break;
@@ -2631,7 +2661,7 @@ namespace Server.MirObjects
                             }
                             catch (ArgumentException)
                             {
-                                MessageQueue.Enqueue(string.Format("Incorrect operator: {0}, Page: {1}", param[0], Key));
+                                MessageQueue.Enqueue(string.Format("操作不正确: {0}, 页: {1}", param[0], Key));
                                 return true;
                             }
                         }
@@ -2893,7 +2923,7 @@ namespace Server.MirObjects
 
                             if (info == null)
                             {
-                                MessageQueue.Enqueue(string.Format("Failed to get ItemInfo: {0}, Page: {1}", param[0], Key));
+                                MessageQueue.Enqueue(string.Format("无法获取物品信息: {0}, 页: {1}", param[0], Key));
                                 break;
                             }
 
@@ -2903,7 +2933,7 @@ namespace Server.MirObjects
 
                                 if (item == null)
                                 {
-                                    MessageQueue.Enqueue(string.Format("Failed to create UserItem: {0}, Page: {1}", param[0], Key));
+                                    MessageQueue.Enqueue(string.Format("无法创建用户物品: {0}, 页: {1}", param[0], Key));
                                     return;
                                 }
 
@@ -2918,7 +2948,7 @@ namespace Server.MirObjects
                                     item.Count = item.Info.StackSize;
                                 }
 
-                                if (player.CanGainItem(item, false))
+                                if (player.CanGainItem(item))
                                     player.GainItem(item);
                             }
                         }
@@ -2934,7 +2964,7 @@ namespace Server.MirObjects
 
                             if (info == null)
                             {
-                                MessageQueue.Enqueue(string.Format("Failed to get ItemInfo: {0}, Page: {1}", param[0], Key));
+                                MessageQueue.Enqueue(string.Format("无法获取物品信息: {0}, 页: {1}", param[0], Key));
                                 break;
                             }
 
@@ -3133,11 +3163,11 @@ namespace Server.MirObjects
                         {
                             switch (player.Info.Gender)
                             {
-                                case MirGender.Male:
-                                    player.Info.Gender = MirGender.Female;
+                                case MirGender.男性:
+                                    player.Info.Gender = MirGender.女性;
                                     break;
-                                case MirGender.Female:
-                                    player.Info.Gender = MirGender.Male;
+                                case MirGender.女性:
+                                    player.Info.Gender = MirGender.男性;
                                     break;
                             }
                         }
@@ -3167,20 +3197,20 @@ namespace Server.MirObjects
 
                             switch (mirClass)
                             {
-                                case MirClass.Warrior:
-                                    player.Info.Class = MirClass.Warrior;
+                                case MirClass.战士:
+                                    player.Info.Class = MirClass.战士;
                                     break;
-                                case MirClass.Taoist:
-                                    player.Info.Class = MirClass.Taoist;
+                                case MirClass.道士:
+                                    player.Info.Class = MirClass.道士;
                                     break;
-                                case MirClass.Wizard:
-                                    player.Info.Class = MirClass.Wizard;
+                                case MirClass.法师:
+                                    player.Info.Class = MirClass.法师;
                                     break;
-                                case MirClass.Assassin:
-                                    player.Info.Class = MirClass.Assassin;
+                                case MirClass.刺客:
+                                    player.Info.Class = MirClass.刺客;
                                     break;
-                                case MirClass.Archer:
-                                    player.Info.Class = MirClass.Archer;
+                                case MirClass.弓箭:
+                                    player.Info.Class = MirClass.弓箭;
                                     break;
                             }
                         }
@@ -3466,7 +3496,7 @@ namespace Server.MirObjects
                                 }
                                 catch (ArgumentException)
                                 {
-                                    MessageQueue.Enqueue(string.Format("Incorrect operator: {0}, Page: {1}", param[1], Key));
+                                    MessageQueue.Enqueue(string.Format("操作不正确: {0}, 页: {1}", param[1], Key));
                                 }
                             }
                             else
@@ -3568,7 +3598,7 @@ namespace Server.MirObjects
 
                             if (info == null)
                             {
-                                MessageQueue.Enqueue(string.Format("Failed to get ItemInfo: {0}, Page: {1}", param[0], Key));
+                                MessageQueue.Enqueue(string.Format("无法获取物品信息: {0}, 页: {1}", param[0], Key));
                                 break;
                             }
 
@@ -3578,7 +3608,7 @@ namespace Server.MirObjects
 
                                 if (item == null)
                                 {
-                                    MessageQueue.Enqueue(string.Format("Failed to create UserItem: {0}, Page: {1}", param[0], Key));
+                                    MessageQueue.Enqueue(string.Format("无法创建用户物品: {0}, 页: {1}", param[0], Key));
                                     return;
                                 }
 
@@ -3680,12 +3710,19 @@ namespace Server.MirObjects
                             if (conquestArcher.ArcherMonster != null)
                                 if (!conquestArcher.ArcherMonster.Dead) return;
 
-                            if (player.MyGuild == null || player.MyGuild.Gold < conquestArcher.GetRepairCost()) return;
+                            if (player.IsGM)
+                            {
+                                conquestArcher.Spawn(true);
+                            }
+                            else
+                            {
+                                if (player.MyGuild == null || player.MyGuild.Gold < conquestArcher.GetRepairCost()) return;
 
-                            player.MyGuild.Gold -= conquestArcher.GetRepairCost();
-                            player.MyGuild.SendServerPacket(new S.GuildStorageGoldChange() { Type = 2, Amount = conquestArcher.GetRepairCost() });
+                                player.MyGuild.Gold -= conquestArcher.GetRepairCost();
+                                player.MyGuild.SendServerPacket(new S.GuildStorageGoldChange() { Type = 2, Amount = conquestArcher.GetRepairCost() });
 
-                            conquestArcher.Spawn(true);
+                                conquestArcher.Spawn(true);
+                            }
                         }
                         break;
                     case ActionType.ConquestGate:
@@ -3698,12 +3735,19 @@ namespace Server.MirObjects
                             ConquestGuildGateInfo conquestGate = conquest.GateList.FirstOrDefault(z => z.Index == tempInt);
                             if (conquestGate == null) return;
 
-                            if (player.MyGuild == null || player.MyGuild.Gold < conquestGate.GetRepairCost()) return;
+                            if (player.IsGM)
+                            {
+                                conquestGate.Repair();
+                            }
+                            else
+                            {
+                                if (player.MyGuild == null || player.MyGuild.Gold < conquestGate.GetRepairCost()) return;
 
-                            player.MyGuild.Gold -= (uint)conquestGate.GetRepairCost();
-                            player.MyGuild.SendServerPacket(new S.GuildStorageGoldChange() { Type = 2, Amount = (uint)conquestGate.GetRepairCost() });
+                                player.MyGuild.Gold -= (uint)conquestGate.GetRepairCost();
+                                player.MyGuild.SendServerPacket(new S.GuildStorageGoldChange() { Type = 2, Amount = (uint)conquestGate.GetRepairCost() });
 
-                            conquestGate.Repair();
+                                conquestGate.Repair();
+                            }
                         }
                         break;
                     case ActionType.ConquestWall:
@@ -3717,14 +3761,19 @@ namespace Server.MirObjects
 
                             if (conquestWall == null) return;
 
-                            uint repairCost = (uint)conquestWall.GetRepairCost();
+                            if (player.IsGM)
+                            {
+                                conquestWall.Repair();
+                            }
+                            else
+                            {
+                                if (player.MyGuild == null || player.MyGuild.Gold < conquestWall.GetRepairCost()) return;
 
-                            if (player.MyGuild == null || player.MyGuild.Gold < repairCost) return;
+                                player.MyGuild.Gold -= (uint)conquestWall.GetRepairCost();
+                                player.MyGuild.SendServerPacket(new S.GuildStorageGoldChange() { Type = 2, Amount = (uint)conquestWall.GetRepairCost() });
 
-                            player.MyGuild.Gold -= repairCost;
-                            player.MyGuild.SendServerPacket(new S.GuildStorageGoldChange() { Type = 2, Amount = repairCost });
-
-                            conquestWall.Repair();
+                                conquestWall.Repair();
+                            }
                         }
                         break;
                     case ActionType.ConquestSiege:
@@ -3742,12 +3791,19 @@ namespace Server.MirObjects
                                 if (!conquestSiege.Gate.Dead) return;
                             }
 
-                            if (player.MyGuild == null || player.MyGuild.Gold < conquestSiege.GetRepairCost()) return;
+                            if (player.IsGM)
+                            {
+                                conquestSiege.Repair();
+                            }
+                            else
+                            {
+                                if (player.MyGuild == null || player.MyGuild.Gold < conquestSiege.GetRepairCost()) return;
 
-                            player.MyGuild.Gold -= (uint)conquestSiege.GetRepairCost();
-                            player.MyGuild.SendServerPacket(new S.GuildStorageGoldChange() { Type = 2, Amount = (uint)conquestSiege.GetRepairCost() });
+                                player.MyGuild.Gold -= (uint)conquestSiege.GetRepairCost();
+                                player.MyGuild.SendServerPacket(new S.GuildStorageGoldChange() { Type = 2, Amount = (uint)conquestSiege.GetRepairCost() });
 
-                            conquestSiege.Repair();
+                                conquestSiege.Repair();
+                            } 
                         }
                         break;
                     case ActionType.TakeConquestGold:
@@ -3782,16 +3838,36 @@ namespace Server.MirObjects
                             if (!int.TryParse(param[0], out int tempInt)) return;
                             var conquest = Envir.Conquests.FirstOrDefault(z => z.Info.Index == tempInt);
                             if (conquest == null) return;
-                            ConquestGame tempGame;
-
-                            if (!ConquestGame.TryParse(param[1], out tempGame)) return;
 
                             if (!conquest.WarIsOn)
                             {
-                                conquest.StartType = ConquestType.Forced;
-                                conquest.GameType = tempGame;
-                                conquest.StartWar(tempGame);
+                                conquest.StartType = ConquestType.强制启动;
+                                conquest.StartWar(conquest.GameType);
+
+                                MessageQueue.Enqueue(string.Format("{0} 开始攻城战", conquest.Info.Name));
+
                             }
+                            else
+                            {
+                                conquest.WarIsOn = false;
+
+                                MessageQueue.Enqueue(string.Format("{0} 攻城结束", conquest.Info.Name));
+                            }
+
+                            foreach (var pl in Envir.Players)
+                            {
+                                if (conquest.WarIsOn)
+                                {
+                                    pl.ReceiveChat($"{conquest.Info.Name} 开始攻城战", ChatType.System);
+                                }
+                                else
+                                {
+                                    pl.ReceiveChat($"{conquest.Info.Name} 攻城战结束", ChatType.System);
+                                }
+
+                                pl.BroadcastInfo();
+                            }
+                                
                         }
                         break;
                     case ActionType.ScheduleConquest:
@@ -3842,7 +3918,7 @@ namespace Server.MirObjects
                             string randomTextPath = Path.Combine(Settings.NPCPath, param[0]);
                             if (!File.Exists(randomTextPath))
                             {
-                                MessageQueue.Enqueue(string.Format("the randomTextFile:{0} does not exist.", randomTextPath));
+                                MessageQueue.Enqueue(string.Format("随机文本文件:{0} 不存在", randomTextPath));
                             }
                             else
                             {
@@ -3969,7 +4045,7 @@ namespace Server.MirObjects
 
                             foreach (var drop in drops)
                             {
-                                var reward = drop.AttemptDrop(player?.Stats[Stat.ItemDropRatePercent] ?? 0, player?.Stats[Stat.GoldDropRatePercent] ?? 0);
+                                var reward = drop.AttemptDrop(player?.Stats[Stat.物品掉落数率] ?? 0, player?.Stats[Stat.金币收益数率] ?? 0);
 
                                 if (reward != null)
                                 {
@@ -3996,7 +4072,7 @@ namespace Server.MirObjects
 
                                         if (drop.QuestRequired) continue;
 
-                                        if (player.CanGainItem(item, false))
+                                        if (player.CanGainItem(item))
                                         {
                                             player.GainItem(item);
                                         }
@@ -4011,6 +4087,91 @@ namespace Server.MirObjects
                     case ActionType.SealHero:
                         player.SealHero();
                         break;
+                    case ActionType.ConquestRepairAll:
+                        {
+                            if(!player.IsGM)
+                            {
+                                player.ReceiveChat($"非游戏管理员，该命令对你不可用", ChatType.System);
+                                MessageQueue.Enqueue($"非管理员玩家: {player.Name} 发起了 @CONQUESTREPAIRALL 命令");
+                                return;
+                            }
+
+                            if (!int.TryParse(param[0], out int tempInt)) return;
+                            var conquest = Envir.Conquests.FirstOrDefault(z => z.Info.Index == tempInt);
+                            if (conquest == null) return;
+
+                            MessageQueue.Enqueue($"@CONQUESTREPAIRALL invoked by GM: {player.Name} on account index: {player.Info.AccountInfo.Index}");
+                            MessageQueue.Enqueue($"攻城战: {conquest.Info.Name}");
+
+                            if (conquest.Guild != null)
+                            {
+                                MessageQueue.Enqueue($"拥有者: {conquest.Guild.Name}");
+                            }
+                            else
+                            {
+                                MessageQueue.Enqueue($"当前没有拥有者");
+                            }
+
+                            int _fixed = 0;
+                            foreach (ConquestGuildArcherInfo archer in conquest.ArcherList)
+                            {
+                                if (archer.ArcherMonster != null &&
+                                    archer.ArcherMonster.Dead)
+                                {
+                                    archer.Spawn(true);
+                                    _fixed++;
+                                }
+                            }
+                            player.ReceiveChat($"恢复弓箭手: {_fixed}/{conquest.ArcherList.Count}", ChatType.System);
+                            MessageQueue.Enqueue($"恢复弓箭手: {_fixed}/{conquest.ArcherList.Count}");
+
+                            _fixed = 0;
+                            foreach (ConquestGuildGateInfo conquestGate in conquest.GateList)
+                            {
+                                if (conquestGate != null)
+                                {
+                                    conquestGate.Repair();
+                                    _fixed++;
+                                }
+                            }
+                            player.ReceiveChat($"恢复卫士: {_fixed}/{conquest.GateList.Count}", ChatType.System);
+                            MessageQueue.Enqueue($"恢复卫士: {_fixed}/{conquest.GateList.Count}");
+
+                            _fixed = 0;
+                            foreach (ConquestGuildWallInfo conquestWall in conquest.WallList)
+                            {
+                                if (conquestWall != null)
+                                {
+                                    conquestWall.Repair();
+                                    _fixed++;
+                                }
+                            }
+                            player.ReceiveChat($"修复城墙: {_fixed}/{conquest.WallList.Count}", ChatType.System);
+                            MessageQueue.Enqueue($"修复城墙: {_fixed}/{conquest.WallList.Count}");
+
+                            _fixed = 0;
+                            foreach (ConquestGuildSiegeInfo conquestSiege in conquest.SiegeList)
+                            {
+                                if (conquestSiege != null)
+                                {
+                                    conquestSiege.Repair();
+                                    _fixed++;
+                                }
+                            }
+                            player.ReceiveChat($"Sieges repaired: {_fixed}/{conquest.SiegeList.Count}", ChatType.System);
+                            MessageQueue.Enqueue($"Sieges repaired: {_fixed}/{conquest.SiegeList.Count}");
+
+                            break;
+                        }
+
+                    case ActionType.GiveGuildExp: //自添加增加行会经验
+                        {
+                            uint tempUint;
+                            if (!uint.TryParse(param[0], out tempUint)) return;
+                            player.MyGuild.GainExp(tempUint);
+                        }
+                        break;
+                
                 }
             }
         }
@@ -4155,7 +4316,7 @@ namespace Server.MirObjects
                                 }
                                 catch (ArgumentException)
                                 {
-                                    MessageQueue.Enqueue(string.Format("Incorrect operator: {0}, Page: {1}", param[1], Key));
+                                    MessageQueue.Enqueue(string.Format("操作不正确: {0}, 页: {1}", param[1], Key));
                                 }
                             }
                             else
@@ -4270,7 +4431,7 @@ namespace Server.MirObjects
                 case ">=": return left.CompareTo(right) >= 0;
                 case "==": return left.Equals(right);
                 case "!=": return !left.Equals(right);
-                default: throw new ArgumentException("Invalid comparison operator: {0}", op);
+                default: throw new ArgumentException("无效的-比较运算符: {0}", op);
             }
         }
 
@@ -4282,7 +4443,7 @@ namespace Server.MirObjects
                 case "-": return left - right;
                 case "*": return left * right;
                 case "/": return left / right;
-                default: throw new ArgumentException("Invalid sum operator: {0}", op);
+                default: throw new ArgumentException("无效的-和运算符: {0}", op);
             }
         }
     }

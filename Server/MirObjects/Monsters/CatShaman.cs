@@ -1,5 +1,5 @@
-﻿using Server.MirDatabase;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Server.MirDatabase;
 using S = ServerPackets;
 
 namespace Server.MirObjects.Monsters
@@ -86,7 +86,7 @@ namespace Server.MirObjects.Monsters
 
             if (poison && finalDamage > 0)
             {
-                PoisonTarget(Target, 5, 5, PoisonType.Red, 1000);
+                PoisonTarget(target, 5, 5, PoisonType.Red, 1000);
             }
         }
 

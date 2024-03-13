@@ -72,7 +72,7 @@ namespace Server.MirObjects
 
         public override string Name
         {
-            get { return Master == null ? CustomName : (Dead ? CustomName : string.Format("{0}_{1}'s Pet", CustomName, Master.Name)); }
+            get { return Master == null ? CustomName : (Dead ? CustomName : string.Format("{0}_{1}的灵物", CustomName, Master.Name)); }
             set { throw new NotSupportedException(); }
         }
         protected override bool CanAttack
@@ -138,7 +138,7 @@ namespace Server.MirObjects
 
             if (Fullness == 0)//unable to operate with food level 0
             {
-                CreatureTimedSay("I'm starving!!.");
+                CreatureTimedSay("我很饥饿");
                 return;
             }
 
@@ -196,14 +196,14 @@ namespace Server.MirObjects
 
                 switch (PetType)
                 {
-                    case IntelligentCreatureType.BabyDragon:
-                    case IntelligentCreatureType.OlympicFlame:
+                    case IntelligentCreatureType.龙蛋:
+                    case IntelligentCreatureType.火娃:
                         if (Envir.Random.Next(10) > 5)
                             Broadcast(new S.ObjectAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation, Type = 1 });
                         else
                             Broadcast(new S.ObjectAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation, Type = 2 });
                         break;
-                    case IntelligentCreatureType.BabySnowMan:
+                    case IntelligentCreatureType.雪人:
                         Broadcast(new S.ObjectAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation, Type = 1 });
                         break;
                     default:
@@ -322,7 +322,7 @@ namespace Server.MirObjects
 
             if (Fullness < CreatureRules.MinimalFullness) return;
 
-            //do automatic pickup/find
+            //自动拾取/查找
             if (CreatureRules.AutoPickupEnabled && CurrentPickupMode == IntelligentCreaturePickupMode.Automatic)
             {
                 FindItemTarget();
@@ -460,10 +460,16 @@ namespace Server.MirObjects
             }
 
             bool remove = false;
-            if (TargetList[0] == null) remove = true;
-            if (TargetList[0].Race != ObjectType.Item) remove = true;
-            if (TargetList[0].Owner != null && TargetList[0].Owner != this && TargetList[0].Owner != Master && !IsMasterGroupMember(TargetList[0].Owner)) remove = true;
-            if (remove || TargetListTargetClean || TargetList[0].CurrentMap != CurrentMap)
+            MapObject targ = TargetList[0];
+            if (targ == null)
+                remove = true;
+            else
+            {
+                if (targ.CurrentMap != CurrentMap) remove = true;
+                if (targ.Race != ObjectType.Item) remove = true;
+                if (targ.Owner != null && targ.Owner != this && targ.Owner != Master && !IsMasterGroupMember(targ.Owner)) remove = true;
+            }
+            if (remove || TargetListTargetClean)
             {
                 TargetList.RemoveAt(0);
                 TargetListTargetClean = false;
@@ -471,7 +477,7 @@ namespace Server.MirObjects
                 return;
             }
 
-            Target = TargetList[0];
+            Target = targ;
 
             if (Target.CurrentLocation == CurrentLocation || (!CheckAndMoveTo(Target.CurrentLocation) && Functions.InRange(CurrentLocation, Target.CurrentLocation, 1)))
             {
@@ -550,7 +556,7 @@ namespace Server.MirObjects
             ActionTime = Envir.Time + 300;
             AttackTime = Envir.Time + AttackSpeed;
 
-            DecreaseFullness(1);//use some food for operation
+            DecreaseFullness(1);//灵物：给一些食物做动作
             IncreasePearlProduction();
         }
 
@@ -565,7 +571,7 @@ namespace Server.MirObjects
             ActionTime = Envir.Time + 300;
             AttackTime = Envir.Time + AttackSpeed;
 
-            DecreaseFullness(1);//use some food for operation
+            DecreaseFullness(1);//灵物：给一些食物做动作
             IncreasePearlProduction();
             return true;
         }
@@ -580,15 +586,16 @@ namespace Server.MirObjects
         {
             if (Dead || Master == null) return;
 
-            Cell cell = CurrentMap.GetCell(Target.CurrentLocation);
-            if (!cell.Valid || cell.Objects == null) return;
+            if (!CurrentMap.ValidPoint(location)) return;
+            Cell cell = CurrentMap.GetCell(location);
+            if (cell.Objects == null) return;
 
 
             int count = cell.Objects.Count;
 
             for (int i = 0; i < count; i++)
             {
-                PickUpItem(Target.CurrentLocation);
+                PickUpItem(location);
             }
         }
 
@@ -596,8 +603,9 @@ namespace Server.MirObjects
         {
             if (Dead || Master == null) return;
 
+            if (!CurrentMap.ValidPoint(location)) return;
             Cell cell = CurrentMap.GetCell(location);
-            if (!cell.Valid || cell.Objects == null) return;
+            if (cell.Objects == null) return;
             for (int i = 0; i < cell.Objects.Count; i++)
             {
                 MapObject ob = cell.Objects[i];
@@ -613,11 +621,11 @@ namespace Server.MirObjects
 
                     if (item.Item.Info.ShowGroupPickup && IsMasterGroupMember(Master))
                         for (int j = 0; j < Master.GroupMembers.Count; j++)
-                            Master.GroupMembers[j].ReceiveChat(Name + " Picked up: {" + item.Item.FriendlyName + "}", ChatType.Hint);
+                            Master.GroupMembers[j].ReceiveChat(Name + " 捡起 {" + item.Item.FriendlyName + "}", ChatType.Hint);
 
-                    if (item.Item.Info.Grade == ItemGrade.Mythical || item.Item.Info.Grade == ItemGrade.Legendary || item.Item.Info.Grade == ItemGrade.Heroic)
+                    if (item.Item.Info.Grade == ItemGrade.神物 || item.Item.Info.Grade == ItemGrade.圣物 || item.Item.Info.Grade == ItemGrade.英雄)
                     {
-                        Master.ReceiveChat("Pet Picked up: {" + item.Item.FriendlyName + "}", ChatType.Hint);
+                        Master.ReceiveChat("灵物捡起 {" + item.Item.FriendlyName + "}", ChatType.Hint);
                         ((PlayerObject)Master).Enqueue(new S.IntelligentCreaturePickup { ObjectID = ObjectID });
                     }
 
@@ -640,27 +648,27 @@ namespace Server.MirObjects
 
         private bool CheckItemAgainstFilter(ItemType iType)
         {
-            //dont use this method to check for gold.
-            //instaid just do a simple check like -->>      if (ItemFilter.PetPickupAll || ItemFilter.PetPickupGold)
+            //不要用这种方法检查金币
+            //instaid 只是做一个简单的检查 -->>      if (ItemFilter.PetPickupAll || ItemFilter.PetPickupGold)
             if (ItemFilter.PetPickupAll) return true;
 
             switch (iType)
             {
-                case ItemType.Nothing:// <---- im not sure if any item will ever hold this ItemType but better to prevent then cure
+                case ItemType.杂物:// <---- 我不确定是否有任何物品会保存此物品类型，但最好先预防
                     return false;
-                case ItemType.Weapon:
+                case ItemType.武器:
                     return ItemFilter.PetPickupWeapons;
-                case ItemType.Armour:
+                case ItemType.盔甲:
                     return ItemFilter.PetPickupArmours;
-                case ItemType.Helmet:
+                case ItemType.头盔:
                     return ItemFilter.PetPickupHelmets;
-                case ItemType.Boots:
+                case ItemType.靴子:
                     return ItemFilter.PetPickupBoots;
-                case ItemType.Belt:
+                case ItemType.腰带:
                     return ItemFilter.PetPickupBelts;
-                case ItemType.Necklace:
-                case ItemType.Bracelet:
-                case ItemType.Ring:
+                case ItemType.项链:
+                case ItemType.手镯:
+                case ItemType.戒指:
                     return ItemFilter.PetPickupAccessories;
                 default:
                     return ItemFilter.PetPickupOthers;
@@ -691,8 +699,8 @@ namespace Server.MirObjects
             if (Fullness >= 10000) return;
             FullnessTicker = Envir.Time + FullnessDelay;
             Fullness += amount;
-            if (Fullness < CreatureRules.MinimalFullness) CreatureSay("*Hmmm*");
-            else CreatureSay("*Burp*");
+            if (Fullness < CreatureRules.MinimalFullness) CreatureSay("*嗯嗯*");
+            else CreatureSay("*嗝嗝*");
             if (Fullness > 10000) Fullness = 10000;
         }
 
@@ -705,7 +713,7 @@ namespace Server.MirObjects
                 FullnessTicker = Envir.Time + FullnessDelay;
                 Fullness -= amount;
                 if (Fullness < 0) Fullness = 0;
-                if (Fullness < CreatureRules.MinimalFullness) CreatureTimedSay("*Me Hungry*");
+                if (Fullness < CreatureRules.MinimalFullness) CreatureTimedSay("*我很饥饿*");
             }
         }
 
@@ -774,7 +782,7 @@ namespace Server.MirObjects
 
         public override void ReceiveChat(string text, ChatType type)
         {
-            if (type == ChatType.WhisperIn) CreatureSay("What?");
+            if (type == ChatType.WhisperIn) CreatureSay("什么？");
         }
 
         public override bool IsAttackTarget(HumanObject attacker)

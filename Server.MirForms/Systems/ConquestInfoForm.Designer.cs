@@ -250,24 +250,24 @@
             this.Info_tab.Padding = new System.Windows.Forms.Padding(3);
             this.Info_tab.Size = new System.Drawing.Size(396, 216);
             this.Info_tab.TabIndex = 0;
-            this.Info_tab.Text = "Info";
+            this.Info_tab.Text = "信息";
             this.Info_tab.UseVisualStyleBackColor = true;
             // 
             // label34
             // 
             this.label34.AutoSize = true;
             this.label34.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label34.Location = new System.Drawing.Point(13, 131);
+            this.label34.Location = new System.Drawing.Point(19, 124);
             this.label34.Name = "label34";
-            this.label34.Size = new System.Drawing.Size(67, 16);
+            this.label34.Size = new System.Drawing.Size(68, 16);
             this.label34.TabIndex = 64;
-            this.label34.Text = "War Mode";
+            this.label34.Text = "战争模式";
             // 
             // WarMode_combo
             // 
             this.WarMode_combo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.WarMode_combo.FormattingEnabled = true;
-            this.WarMode_combo.Location = new System.Drawing.Point(16, 147);
+            this.WarMode_combo.Location = new System.Drawing.Point(16, 143);
             this.WarMode_combo.Name = "WarMode_combo";
             this.WarMode_combo.Size = new System.Drawing.Size(221, 22);
             this.WarMode_combo.TabIndex = 63;
@@ -277,11 +277,11 @@
             // 
             this.label33.AutoSize = true;
             this.label33.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label33.Location = new System.Drawing.Point(13, 83);
+            this.label33.Location = new System.Drawing.Point(19, 81);
             this.label33.Name = "label33";
             this.label33.Size = new System.Drawing.Size(68, 16);
             this.label33.TabIndex = 62;
-            this.label33.Text = "Start Type";
+            this.label33.Text = "启动类型";
             // 
             // WarType_combo
             // 
@@ -296,35 +296,35 @@
             // Index_textbox
             // 
             this.Index_textbox.Enabled = false;
-            this.Index_textbox.Location = new System.Drawing.Point(316, 6);
+            this.Index_textbox.Location = new System.Drawing.Point(315, 32);
             this.Index_textbox.Name = "Index_textbox";
             this.Index_textbox.ReadOnly = true;
-            this.Index_textbox.Size = new System.Drawing.Size(54, 22);
+            this.Index_textbox.Size = new System.Drawing.Size(35, 22);
             this.Index_textbox.TabIndex = 3;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(273, 8);
+            this.label2.Location = new System.Drawing.Point(244, 35);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(44, 16);
+            this.label2.Size = new System.Drawing.Size(68, 16);
             this.label2.TabIndex = 2;
-            this.label2.Text = "Index:";
+            this.label2.Text = "城堡编号";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(14, 36);
+            this.label1.Location = new System.Drawing.Point(18, 38);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(41, 16);
+            this.label1.Size = new System.Drawing.Size(68, 16);
             this.label1.TabIndex = 1;
-            this.label1.Text = "Name";
+            this.label1.Text = "城堡名称";
             // 
             // Name_textbox
             // 
-            this.Name_textbox.Location = new System.Drawing.Point(16, 52);
+            this.Name_textbox.Location = new System.Drawing.Point(16, 56);
             this.Name_textbox.Name = "Name_textbox";
             this.Name_textbox.Size = new System.Drawing.Size(221, 22);
             this.Name_textbox.TabIndex = 0;
@@ -351,7 +351,7 @@
             this.Maps_tab.Name = "Maps_tab";
             this.Maps_tab.Size = new System.Drawing.Size(396, 216);
             this.Maps_tab.TabIndex = 2;
-            this.Maps_tab.Text = "Maps";
+            this.Maps_tab.Text = "地图";
             this.Maps_tab.UseVisualStyleBackColor = true;
             // 
             // FullMap_checkbox
@@ -359,9 +359,9 @@
             this.FullMap_checkbox.AutoSize = true;
             this.FullMap_checkbox.Location = new System.Drawing.Point(34, 129);
             this.FullMap_checkbox.Name = "FullMap_checkbox";
-            this.FullMap_checkbox.Size = new System.Drawing.Size(65, 17);
+            this.FullMap_checkbox.Size = new System.Drawing.Size(62, 17);
             this.FullMap_checkbox.TabIndex = 51;
-            this.FullMap_checkbox.Text = "Full Map";
+            this.FullMap_checkbox.Text = "全地图";
             this.FullMap_checkbox.UseVisualStyleBackColor = true;
             this.FullMap_checkbox.CheckedChanged += new System.EventHandler(this.FullMap_checkbox_CheckedChanged);
             // 
@@ -379,11 +379,11 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(86, 91);
+            this.label6.Location = new System.Drawing.Point(79, 92);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(32, 16);
+            this.label6.Size = new System.Drawing.Size(38, 16);
             this.label6.TabIndex = 49;
-            this.label6.Text = "Size";
+            this.label6.Text = "范围";
             // 
             // Size_textbox
             // 
@@ -397,7 +397,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(18, 104);
+            this.label5.Location = new System.Drawing.Point(17, 104);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(15, 16);
             this.label5.TabIndex = 47;
@@ -407,7 +407,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(18, 77);
+            this.label4.Location = new System.Drawing.Point(16, 77);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(16, 16);
             this.label4.TabIndex = 46;
@@ -417,11 +417,11 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(17, 57);
+            this.label3.Location = new System.Drawing.Point(37, 57);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(55, 16);
+            this.label3.Size = new System.Drawing.Size(38, 16);
             this.label3.TabIndex = 44;
-            this.label3.Text = "Location";
+            this.label3.Text = "位置";
             // 
             // LocX_textbox
             // 
@@ -453,11 +453,11 @@
             // 
             this.label12.AutoSize = true;
             this.label12.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label12.Location = new System.Drawing.Point(177, 14);
+            this.label12.Location = new System.Drawing.Point(183, 12);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(145, 16);
+            this.label12.Size = new System.Drawing.Size(123, 16);
             this.label12.TabIndex = 40;
-            this.label12.Text = "Extra Maps (Shops, Etc)";
+            this.label12.Text = "附加地图(商店等)";
             // 
             // ExtraMaps_combo
             // 
@@ -472,11 +472,11 @@
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(14, 14);
+            this.label7.Location = new System.Drawing.Point(20, 12);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(89, 16);
+            this.label7.Size = new System.Drawing.Size(83, 16);
             this.label7.TabIndex = 38;
-            this.label7.Text = "Conquest Map";
+            this.label7.Text = "攻城战地图";
             // 
             // ConquestMap_combo
             // 
@@ -514,18 +514,18 @@
             this.Times_tab.Name = "Times_tab";
             this.Times_tab.Size = new System.Drawing.Size(396, 216);
             this.Times_tab.TabIndex = 5;
-            this.Times_tab.Text = "Times";
+            this.Times_tab.Text = "时间";
             this.Times_tab.UseVisualStyleBackColor = true;
             // 
             // label32
             // 
             this.label32.AutoSize = true;
             this.label32.Cursor = System.Windows.Forms.Cursors.Default;
-            this.label32.Location = new System.Drawing.Point(125, 50);
+            this.label32.Location = new System.Drawing.Point(129, 49);
             this.label32.Name = "label32";
-            this.label32.Size = new System.Drawing.Size(40, 13);
+            this.label32.Size = new System.Drawing.Size(31, 13);
             this.label32.TabIndex = 73;
-            this.label32.Text = "Length";
+            this.label32.Text = "时长";
             // 
             // WarTimes_gb
             // 
@@ -541,7 +541,7 @@
             this.WarTimes_gb.Size = new System.Drawing.Size(108, 166);
             this.WarTimes_gb.TabIndex = 72;
             this.WarTimes_gb.TabStop = false;
-            this.WarTimes_gb.Text = "War Days";
+            this.WarTimes_gb.Text = "攻城日期";
             this.WarTimes_gb.Enter += new System.EventHandler(this.WarTimes_gb_Enter);
             // 
             // Sat_checkbox
@@ -549,9 +549,9 @@
             this.Sat_checkbox.AutoSize = true;
             this.Sat_checkbox.Location = new System.Drawing.Point(12, 120);
             this.Sat_checkbox.Name = "Sat_checkbox";
-            this.Sat_checkbox.Size = new System.Drawing.Size(70, 17);
+            this.Sat_checkbox.Size = new System.Drawing.Size(62, 17);
             this.Sat_checkbox.TabIndex = 77;
-            this.Sat_checkbox.Text = "Saturday";
+            this.Sat_checkbox.Text = "星期六";
             this.Sat_checkbox.UseVisualStyleBackColor = true;
             this.Sat_checkbox.CheckedChanged += new System.EventHandler(this.Sat_checkbox_CheckedChanged);
             // 
@@ -562,7 +562,7 @@
             this.Sun_checkbox.Name = "Sun_checkbox";
             this.Sun_checkbox.Size = new System.Drawing.Size(62, 17);
             this.Sun_checkbox.TabIndex = 78;
-            this.Sun_checkbox.Text = "Sunday";
+            this.Sun_checkbox.Text = "星期日";
             this.Sun_checkbox.UseVisualStyleBackColor = true;
             this.Sun_checkbox.CheckedChanged += new System.EventHandler(this.Sun_checkbox_CheckedChanged);
             // 
@@ -571,9 +571,9 @@
             this.Fri_checkbox.AutoSize = true;
             this.Fri_checkbox.Location = new System.Drawing.Point(12, 100);
             this.Fri_checkbox.Name = "Fri_checkbox";
-            this.Fri_checkbox.Size = new System.Drawing.Size(56, 17);
+            this.Fri_checkbox.Size = new System.Drawing.Size(62, 17);
             this.Fri_checkbox.TabIndex = 76;
-            this.Fri_checkbox.Text = "Friday";
+            this.Fri_checkbox.Text = "星期五";
             this.Fri_checkbox.UseVisualStyleBackColor = true;
             this.Fri_checkbox.CheckedChanged += new System.EventHandler(this.Fri_checkbox_CheckedChanged);
             // 
@@ -582,9 +582,9 @@
             this.Thu_checkbox.AutoSize = true;
             this.Thu_checkbox.Location = new System.Drawing.Point(12, 80);
             this.Thu_checkbox.Name = "Thu_checkbox";
-            this.Thu_checkbox.Size = new System.Drawing.Size(71, 17);
+            this.Thu_checkbox.Size = new System.Drawing.Size(62, 17);
             this.Thu_checkbox.TabIndex = 75;
-            this.Thu_checkbox.Text = "Thursday";
+            this.Thu_checkbox.Text = "星期四";
             this.Thu_checkbox.UseVisualStyleBackColor = true;
             this.Thu_checkbox.CheckedChanged += new System.EventHandler(this.Thu_checkbox_CheckedChanged);
             // 
@@ -593,9 +593,9 @@
             this.Tue_checkbox.AutoSize = true;
             this.Tue_checkbox.Location = new System.Drawing.Point(12, 40);
             this.Tue_checkbox.Name = "Tue_checkbox";
-            this.Tue_checkbox.Size = new System.Drawing.Size(67, 17);
+            this.Tue_checkbox.Size = new System.Drawing.Size(62, 17);
             this.Tue_checkbox.TabIndex = 73;
-            this.Tue_checkbox.Text = "Tuesday";
+            this.Tue_checkbox.Text = "星期二";
             this.Tue_checkbox.UseVisualStyleBackColor = true;
             this.Tue_checkbox.CheckedChanged += new System.EventHandler(this.Tue_checkbox_CheckedChanged);
             // 
@@ -604,9 +604,9 @@
             this.Wed_checkbox.AutoSize = true;
             this.Wed_checkbox.Location = new System.Drawing.Point(12, 60);
             this.Wed_checkbox.Name = "Wed_checkbox";
-            this.Wed_checkbox.Size = new System.Drawing.Size(83, 17);
+            this.Wed_checkbox.Size = new System.Drawing.Size(62, 17);
             this.Wed_checkbox.TabIndex = 74;
-            this.Wed_checkbox.Text = "Wednesday";
+            this.Wed_checkbox.Text = "星期三";
             this.Wed_checkbox.UseVisualStyleBackColor = true;
             this.Wed_checkbox.CheckedChanged += new System.EventHandler(this.Wed_checkbox_CheckedChanged);
             // 
@@ -615,9 +615,9 @@
             this.Mon_checkbox.AutoSize = true;
             this.Mon_checkbox.Location = new System.Drawing.Point(12, 20);
             this.Mon_checkbox.Name = "Mon_checkbox";
-            this.Mon_checkbox.Size = new System.Drawing.Size(64, 17);
+            this.Mon_checkbox.Size = new System.Drawing.Size(62, 17);
             this.Mon_checkbox.TabIndex = 71;
-            this.Mon_checkbox.Text = "Monday";
+            this.Mon_checkbox.Text = "星期一";
             this.Mon_checkbox.UseVisualStyleBackColor = true;
             this.Mon_checkbox.CheckedChanged += new System.EventHandler(this.Mon_checkbox_CheckedChanged);
             // 
@@ -656,21 +656,21 @@
             // 
             this.label31.AutoSize = true;
             this.label31.Cursor = System.Windows.Forms.Cursors.Default;
-            this.label31.Location = new System.Drawing.Point(125, 9);
+            this.label31.Location = new System.Drawing.Point(130, 8);
             this.label31.Name = "label31";
-            this.label31.Size = new System.Drawing.Size(57, 13);
+            this.label31.Size = new System.Drawing.Size(55, 13);
             this.label31.TabIndex = 61;
-            this.label31.Text = "Start Hour";
+            this.label31.Text = "开始时间";
             // 
             // label35
             // 
             this.label35.AutoSize = true;
             this.label35.Cursor = System.Windows.Forms.Cursors.Default;
-            this.label35.Location = new System.Drawing.Point(199, 67);
+            this.label35.Location = new System.Drawing.Point(204, 68);
             this.label35.Name = "label35";
-            this.label35.Size = new System.Drawing.Size(52, 13);
+            this.label35.Size = new System.Drawing.Size(39, 13);
             this.label35.TabIndex = 74;
-            this.label35.Text = "(minutes)";
+            this.label35.Text = "(分钟)";
             // 
             // games_tab
             // 
@@ -679,7 +679,7 @@
             this.games_tab.Name = "games_tab";
             this.games_tab.Size = new System.Drawing.Size(396, 216);
             this.games_tab.TabIndex = 8;
-            this.games_tab.Text = "Games";
+            this.games_tab.Text = "据点";
             this.games_tab.UseVisualStyleBackColor = true;
             // 
             // GameTabs
@@ -702,24 +702,24 @@
             this.palace_tab.Padding = new System.Windows.Forms.Padding(3);
             this.palace_tab.Size = new System.Drawing.Size(382, 184);
             this.palace_tab.TabIndex = 1;
-            this.palace_tab.Text = "Palace";
+            this.palace_tab.Text = "王宫";
             this.palace_tab.UseVisualStyleBackColor = true;
             // 
             // label8
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(6, 3);
+            this.label8.Location = new System.Drawing.Point(12, 5);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(73, 16);
+            this.label8.Size = new System.Drawing.Size(68, 16);
             this.label8.TabIndex = 41;
-            this.label8.Text = "Palace Map";
+            this.label8.Text = "王宫地图";
             // 
             // PalaceMap_combo
             // 
             this.PalaceMap_combo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.PalaceMap_combo.FormattingEnabled = true;
-            this.PalaceMap_combo.Location = new System.Drawing.Point(9, 19);
+            this.PalaceMap_combo.Location = new System.Drawing.Point(9, 24);
             this.PalaceMap_combo.Name = "PalaceMap_combo";
             this.PalaceMap_combo.Size = new System.Drawing.Size(145, 21);
             this.PalaceMap_combo.TabIndex = 40;
@@ -732,7 +732,7 @@
             this.king_tab.Name = "king_tab";
             this.king_tab.Size = new System.Drawing.Size(382, 184);
             this.king_tab.TabIndex = 2;
-            this.king_tab.Text = "King";
+            this.king_tab.Text = "国王";
             this.king_tab.UseVisualStyleBackColor = true;
             // 
             // Objective_gb
@@ -748,17 +748,17 @@
             this.Objective_gb.Size = new System.Drawing.Size(184, 74);
             this.Objective_gb.TabIndex = 52;
             this.Objective_gb.TabStop = false;
-            this.Objective_gb.Text = "Objective";
+            this.Objective_gb.Text = "目标点";
             // 
             // label28
             // 
             this.label28.AutoSize = true;
             this.label28.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label28.Location = new System.Drawing.Point(77, 47);
+            this.label28.Location = new System.Drawing.Point(70, 48);
             this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(32, 16);
+            this.label28.Size = new System.Drawing.Size(38, 16);
             this.label28.TabIndex = 56;
-            this.label28.Text = "Size";
+            this.label28.Text = "范围";
             // 
             // ObSize_textbox
             // 
@@ -772,7 +772,7 @@
             // 
             this.label29.AutoSize = true;
             this.label29.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label29.Location = new System.Drawing.Point(94, 19);
+            this.label29.Location = new System.Drawing.Point(93, 20);
             this.label29.Name = "label29";
             this.label29.Size = new System.Drawing.Size(15, 16);
             this.label29.TabIndex = 54;
@@ -782,7 +782,7 @@
             // 
             this.label30.AutoSize = true;
             this.label30.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label30.Location = new System.Drawing.Point(18, 19);
+            this.label30.Location = new System.Drawing.Point(32, 20);
             this.label30.Name = "label30";
             this.label30.Size = new System.Drawing.Size(16, 16);
             this.label30.TabIndex = 53;
@@ -790,7 +790,7 @@
             // 
             // ObLocX_textbox
             // 
-            this.ObLocX_textbox.Location = new System.Drawing.Point(35, 17);
+            this.ObLocX_textbox.Location = new System.Drawing.Point(50, 18);
             this.ObLocX_textbox.Name = "ObLocX_textbox";
             this.ObLocX_textbox.Size = new System.Drawing.Size(41, 21);
             this.ObLocX_textbox.TabIndex = 52;
@@ -798,7 +798,7 @@
             // 
             // ObLocY_textbox
             // 
-            this.ObLocY_textbox.Location = new System.Drawing.Point(110, 17);
+            this.ObLocY_textbox.Location = new System.Drawing.Point(110, 18);
             this.ObLocY_textbox.Name = "ObLocY_textbox";
             this.ObLocY_textbox.Size = new System.Drawing.Size(48, 21);
             this.ObLocY_textbox.TabIndex = 50;
@@ -814,7 +814,7 @@
             this.control_tab.Name = "control_tab";
             this.control_tab.Size = new System.Drawing.Size(382, 184);
             this.control_tab.TabIndex = 3;
-            this.control_tab.Text = "Control";
+            this.control_tab.Text = "控制点";
             this.control_tab.UseVisualStyleBackColor = true;
             // 
             // RemoveControl_button
@@ -853,17 +853,17 @@
             this.Control_gb.Size = new System.Drawing.Size(178, 172);
             this.Control_gb.TabIndex = 25;
             this.Control_gb.TabStop = false;
-            this.Control_gb.Text = "Edit";
+            this.Control_gb.Text = "编辑";
             // 
             // label44
             // 
             this.label44.AutoSize = true;
             this.label44.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label44.Location = new System.Drawing.Point(6, 104);
+            this.label44.Location = new System.Drawing.Point(9, 105);
             this.label44.Name = "label44";
-            this.label44.Size = new System.Drawing.Size(60, 16);
+            this.label44.Size = new System.Drawing.Size(53, 16);
             this.label44.TabIndex = 47;
-            this.label44.Text = "Filename";
+            this.label44.Text = "文件名";
             // 
             // ControlFilename_textbox
             // 
@@ -877,15 +877,15 @@
             // 
             this.label48.AutoSize = true;
             this.label48.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label48.Location = new System.Drawing.Point(6, 56);
+            this.label48.Location = new System.Drawing.Point(9, 63);
             this.label48.Name = "label48";
-            this.label48.Size = new System.Drawing.Size(41, 16);
+            this.label48.Size = new System.Drawing.Size(38, 16);
             this.label48.TabIndex = 45;
-            this.label48.Text = "Name";
+            this.label48.Text = "名称";
             // 
             // ControlName_textbox
             // 
-            this.ControlName_textbox.Location = new System.Drawing.Point(6, 75);
+            this.ControlName_textbox.Location = new System.Drawing.Point(6, 81);
             this.ControlName_textbox.Name = "ControlName_textbox";
             this.ControlName_textbox.Size = new System.Drawing.Size(163, 21);
             this.ControlName_textbox.TabIndex = 46;
@@ -895,17 +895,17 @@
             // 
             this.label49.AutoSize = true;
             this.label49.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label49.Location = new System.Drawing.Point(6, 14);
+            this.label49.Location = new System.Drawing.Point(31, 15);
             this.label49.Name = "label49";
-            this.label49.Size = new System.Drawing.Size(55, 16);
+            this.label49.Size = new System.Drawing.Size(38, 16);
             this.label49.TabIndex = 44;
-            this.label49.Text = "Location";
+            this.label49.Text = "位置";
             // 
             // label50
             // 
             this.label50.AutoSize = true;
             this.label50.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label50.Location = new System.Drawing.Point(94, 34);
+            this.label50.Location = new System.Drawing.Point(98, 35);
             this.label50.Name = "label50";
             this.label50.Size = new System.Drawing.Size(15, 16);
             this.label50.TabIndex = 16;
@@ -923,7 +923,7 @@
             // 
             this.label51.AutoSize = true;
             this.label51.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label51.Location = new System.Drawing.Point(6, 34);
+            this.label51.Location = new System.Drawing.Point(10, 34);
             this.label51.Name = "label51";
             this.label51.Size = new System.Drawing.Size(16, 16);
             this.label51.TabIndex = 15;
@@ -961,7 +961,7 @@
             this.Guards_tab.Name = "Guards_tab";
             this.Guards_tab.Size = new System.Drawing.Size(396, 216);
             this.Guards_tab.TabIndex = 1;
-            this.Guards_tab.Text = "Archers";
+            this.Guards_tab.Text = "弓箭手";
             this.Guards_tab.UseVisualStyleBackColor = true;
             // 
             // RemoveGuard_button
@@ -1002,21 +1002,21 @@
             this.Archer_gb.Size = new System.Drawing.Size(185, 203);
             this.Archer_gb.TabIndex = 17;
             this.Archer_gb.TabStop = false;
-            this.Archer_gb.Text = "Edit";
+            this.Archer_gb.Text = "编辑";
             // 
             // label23
             // 
             this.label23.AutoSize = true;
             this.label23.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label23.Location = new System.Drawing.Point(13, 102);
+            this.label23.Location = new System.Drawing.Point(18, 108);
             this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(77, 16);
+            this.label23.Size = new System.Drawing.Size(68, 16);
             this.label23.TabIndex = 47;
-            this.label23.Text = "Recruit Cost";
+            this.label23.Text = "招聘金额";
             // 
             // ArcherCost_textbox
             // 
-            this.ArcherCost_textbox.Location = new System.Drawing.Point(15, 121);
+            this.ArcherCost_textbox.Location = new System.Drawing.Point(15, 126);
             this.ArcherCost_textbox.Name = "ArcherCost_textbox";
             this.ArcherCost_textbox.Size = new System.Drawing.Size(164, 21);
             this.ArcherCost_textbox.TabIndex = 48;
@@ -1026,15 +1026,15 @@
             // 
             this.label14.AutoSize = true;
             this.label14.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label14.Location = new System.Drawing.Point(13, 53);
+            this.label14.Location = new System.Drawing.Point(19, 66);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(41, 16);
+            this.label14.Size = new System.Drawing.Size(38, 16);
             this.label14.TabIndex = 45;
-            this.label14.Text = "Name";
+            this.label14.Text = "名称";
             // 
             // ArcherName_textbox
             // 
-            this.ArcherName_textbox.Location = new System.Drawing.Point(16, 72);
+            this.ArcherName_textbox.Location = new System.Drawing.Point(16, 84);
             this.ArcherName_textbox.Name = "ArcherName_textbox";
             this.ArcherName_textbox.Size = new System.Drawing.Size(163, 21);
             this.ArcherName_textbox.TabIndex = 46;
@@ -1044,21 +1044,21 @@
             // 
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.Location = new System.Drawing.Point(12, 152);
+            this.label11.Location = new System.Drawing.Point(19, 150);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(32, 16);
+            this.label11.Size = new System.Drawing.Size(38, 16);
             this.label11.TabIndex = 43;
-            this.label11.Text = "Mob";
+            this.label11.Text = "调用";
             // 
             // label13
             // 
             this.label13.AutoSize = true;
             this.label13.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label13.Location = new System.Drawing.Point(12, 11);
+            this.label13.Location = new System.Drawing.Point(32, 24);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(55, 16);
+            this.label13.Size = new System.Drawing.Size(38, 16);
             this.label13.TabIndex = 44;
-            this.label13.Text = "Location";
+            this.label13.Text = "位置";
             // 
             // ArcherIndex_combo
             // 
@@ -1074,7 +1074,7 @@
             // 
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(104, 30);
+            this.label9.Location = new System.Drawing.Point(108, 44);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(15, 16);
             this.label9.TabIndex = 16;
@@ -1082,7 +1082,7 @@
             // 
             // ArchYLoc_textbox
             // 
-            this.ArchYLoc_textbox.Location = new System.Drawing.Point(125, 28);
+            this.ArchYLoc_textbox.Location = new System.Drawing.Point(125, 42);
             this.ArchYLoc_textbox.Name = "ArchYLoc_textbox";
             this.ArchYLoc_textbox.Size = new System.Drawing.Size(54, 21);
             this.ArchYLoc_textbox.TabIndex = 12;
@@ -1092,7 +1092,7 @@
             // 
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(13, 30);
+            this.label10.Location = new System.Drawing.Point(11, 43);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(16, 16);
             this.label10.TabIndex = 15;
@@ -1100,7 +1100,7 @@
             // 
             // ArchXLoc_textbox
             // 
-            this.ArchXLoc_textbox.Location = new System.Drawing.Point(29, 28);
+            this.ArchXLoc_textbox.Location = new System.Drawing.Point(29, 42);
             this.ArchXLoc_textbox.Name = "ArchXLoc_textbox";
             this.ArchXLoc_textbox.Size = new System.Drawing.Size(54, 21);
             this.ArchXLoc_textbox.TabIndex = 14;
@@ -1130,7 +1130,7 @@
             this.Gates_tab.Name = "Gates_tab";
             this.Gates_tab.Size = new System.Drawing.Size(396, 216);
             this.Gates_tab.TabIndex = 3;
-            this.Gates_tab.Text = "Gates";
+            this.Gates_tab.Text = "城门";
             this.Gates_tab.UseVisualStyleBackColor = true;
             // 
             // RemoveGate_button
@@ -1171,21 +1171,21 @@
             this.Gates_gb.Size = new System.Drawing.Size(185, 200);
             this.Gates_gb.TabIndex = 20;
             this.Gates_gb.TabStop = false;
-            this.Gates_gb.Text = "Edit";
+            this.Gates_gb.Text = "编辑";
             // 
             // label24
             // 
             this.label24.AutoSize = true;
             this.label24.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label24.Location = new System.Drawing.Point(13, 104);
+            this.label24.Location = new System.Drawing.Point(19, 109);
             this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(77, 16);
+            this.label24.Size = new System.Drawing.Size(68, 16);
             this.label24.TabIndex = 51;
-            this.label24.Text = "Recruit Cost";
+            this.label24.Text = "城门费用";
             // 
             // GateCost_textbox
             // 
-            this.GateCost_textbox.Location = new System.Drawing.Point(16, 123);
+            this.GateCost_textbox.Location = new System.Drawing.Point(16, 127);
             this.GateCost_textbox.Name = "GateCost_textbox";
             this.GateCost_textbox.Size = new System.Drawing.Size(163, 21);
             this.GateCost_textbox.TabIndex = 52;
@@ -1195,15 +1195,15 @@
             // 
             this.label25.AutoSize = true;
             this.label25.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label25.Location = new System.Drawing.Point(13, 54);
+            this.label25.Location = new System.Drawing.Point(19, 67);
             this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(41, 16);
+            this.label25.Size = new System.Drawing.Size(38, 16);
             this.label25.TabIndex = 49;
-            this.label25.Text = "Name";
+            this.label25.Text = "名称";
             // 
             // GateName_textbox
             // 
-            this.GateName_textbox.Location = new System.Drawing.Point(16, 73);
+            this.GateName_textbox.Location = new System.Drawing.Point(16, 85);
             this.GateName_textbox.Name = "GateName_textbox";
             this.GateName_textbox.Size = new System.Drawing.Size(163, 21);
             this.GateName_textbox.TabIndex = 50;
@@ -1213,21 +1213,21 @@
             // 
             this.label16.AutoSize = true;
             this.label16.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label16.Location = new System.Drawing.Point(13, 153);
+            this.label16.Location = new System.Drawing.Point(19, 151);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(32, 16);
+            this.label16.Size = new System.Drawing.Size(38, 16);
             this.label16.TabIndex = 43;
-            this.label16.Text = "Mob";
+            this.label16.Text = "调用";
             // 
             // label17
             // 
             this.label17.AutoSize = true;
             this.label17.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label17.Location = new System.Drawing.Point(12, 12);
+            this.label17.Location = new System.Drawing.Point(32, 25);
             this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(55, 16);
+            this.label17.Size = new System.Drawing.Size(38, 16);
             this.label17.TabIndex = 44;
-            this.label17.Text = "Location";
+            this.label17.Text = "位置";
             // 
             // GateIndex_combo
             // 
@@ -1243,7 +1243,7 @@
             // 
             this.label18.AutoSize = true;
             this.label18.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label18.Location = new System.Drawing.Point(104, 32);
+            this.label18.Location = new System.Drawing.Point(108, 45);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(15, 16);
             this.label18.TabIndex = 16;
@@ -1251,7 +1251,7 @@
             // 
             // GateYLoc_textbox
             // 
-            this.GateYLoc_textbox.Location = new System.Drawing.Point(125, 31);
+            this.GateYLoc_textbox.Location = new System.Drawing.Point(125, 43);
             this.GateYLoc_textbox.Name = "GateYLoc_textbox";
             this.GateYLoc_textbox.Size = new System.Drawing.Size(54, 21);
             this.GateYLoc_textbox.TabIndex = 12;
@@ -1261,7 +1261,7 @@
             // 
             this.label19.AutoSize = true;
             this.label19.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label19.Location = new System.Drawing.Point(13, 32);
+            this.label19.Location = new System.Drawing.Point(11, 45);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(16, 16);
             this.label19.TabIndex = 15;
@@ -1269,7 +1269,7 @@
             // 
             // GateXLoc_textbox
             // 
-            this.GateXLoc_textbox.Location = new System.Drawing.Point(29, 30);
+            this.GateXLoc_textbox.Location = new System.Drawing.Point(29, 43);
             this.GateXLoc_textbox.Name = "GateXLoc_textbox";
             this.GateXLoc_textbox.Size = new System.Drawing.Size(51, 21);
             this.GateXLoc_textbox.TabIndex = 14;
@@ -1299,7 +1299,7 @@
             this.Walls_tab.Name = "Walls_tab";
             this.Walls_tab.Size = new System.Drawing.Size(396, 216);
             this.Walls_tab.TabIndex = 4;
-            this.Walls_tab.Text = "Walls";
+            this.Walls_tab.Text = "城墙";
             this.Walls_tab.UseVisualStyleBackColor = true;
             // 
             // RemoveWall_button
@@ -1340,22 +1340,22 @@
             this.Walls_gb.Size = new System.Drawing.Size(185, 207);
             this.Walls_gb.TabIndex = 23;
             this.Walls_gb.TabStop = false;
-            this.Walls_gb.Text = "Edit";
+            this.Walls_gb.Text = "编辑";
             this.Walls_gb.Enter += new System.EventHandler(this.Walls_gb_Enter);
             // 
             // label26
             // 
             this.label26.AutoSize = true;
             this.label26.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label26.Location = new System.Drawing.Point(13, 104);
+            this.label26.Location = new System.Drawing.Point(19, 107);
             this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(77, 16);
+            this.label26.Size = new System.Drawing.Size(68, 16);
             this.label26.TabIndex = 55;
-            this.label26.Text = "Recruit Cost";
+            this.label26.Text = "城门费用";
             // 
             // WallCost_textbox
             // 
-            this.WallCost_textbox.Location = new System.Drawing.Point(16, 120);
+            this.WallCost_textbox.Location = new System.Drawing.Point(16, 125);
             this.WallCost_textbox.Name = "WallCost_textbox";
             this.WallCost_textbox.Size = new System.Drawing.Size(163, 21);
             this.WallCost_textbox.TabIndex = 56;
@@ -1365,15 +1365,15 @@
             // 
             this.label27.AutoSize = true;
             this.label27.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label27.Location = new System.Drawing.Point(13, 55);
+            this.label27.Location = new System.Drawing.Point(19, 65);
             this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(41, 16);
+            this.label27.Size = new System.Drawing.Size(38, 16);
             this.label27.TabIndex = 53;
-            this.label27.Text = "Name";
+            this.label27.Text = "名称";
             // 
             // WallName_textbox
             // 
-            this.WallName_textbox.Location = new System.Drawing.Point(16, 71);
+            this.WallName_textbox.Location = new System.Drawing.Point(16, 83);
             this.WallName_textbox.Name = "WallName_textbox";
             this.WallName_textbox.Size = new System.Drawing.Size(163, 21);
             this.WallName_textbox.TabIndex = 54;
@@ -1383,21 +1383,21 @@
             // 
             this.label15.AutoSize = true;
             this.label15.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label15.Location = new System.Drawing.Point(13, 151);
+            this.label15.Location = new System.Drawing.Point(19, 149);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(32, 16);
+            this.label15.Size = new System.Drawing.Size(38, 16);
             this.label15.TabIndex = 43;
-            this.label15.Text = "Mob";
+            this.label15.Text = "调用";
             // 
             // label20
             // 
             this.label20.AutoSize = true;
             this.label20.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label20.Location = new System.Drawing.Point(13, 12);
+            this.label20.Location = new System.Drawing.Point(32, 23);
             this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(55, 16);
+            this.label20.Size = new System.Drawing.Size(38, 16);
             this.label20.TabIndex = 44;
-            this.label20.Text = "Location";
+            this.label20.Text = "位置";
             // 
             // WallIndex_combo
             // 
@@ -1413,7 +1413,7 @@
             // 
             this.label21.AutoSize = true;
             this.label21.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label21.Location = new System.Drawing.Point(106, 30);
+            this.label21.Location = new System.Drawing.Point(110, 42);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(15, 16);
             this.label21.TabIndex = 16;
@@ -1421,7 +1421,7 @@
             // 
             // WallYLoc_textbox
             // 
-            this.WallYLoc_textbox.Location = new System.Drawing.Point(127, 28);
+            this.WallYLoc_textbox.Location = new System.Drawing.Point(127, 40);
             this.WallYLoc_textbox.Name = "WallYLoc_textbox";
             this.WallYLoc_textbox.Size = new System.Drawing.Size(52, 21);
             this.WallYLoc_textbox.TabIndex = 12;
@@ -1431,7 +1431,7 @@
             // 
             this.label22.AutoSize = true;
             this.label22.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label22.Location = new System.Drawing.Point(13, 30);
+            this.label22.Location = new System.Drawing.Point(11, 43);
             this.label22.Name = "label22";
             this.label22.Size = new System.Drawing.Size(16, 16);
             this.label22.TabIndex = 15;
@@ -1439,7 +1439,7 @@
             // 
             // WallXLoc_textbox
             // 
-            this.WallXLoc_textbox.Location = new System.Drawing.Point(29, 28);
+            this.WallXLoc_textbox.Location = new System.Drawing.Point(29, 41);
             this.WallXLoc_textbox.Name = "WallXLoc_textbox";
             this.WallXLoc_textbox.Size = new System.Drawing.Size(51, 21);
             this.WallXLoc_textbox.TabIndex = 14;
@@ -1469,7 +1469,7 @@
             this.Siege_tab.Name = "Siege_tab";
             this.Siege_tab.Size = new System.Drawing.Size(396, 216);
             this.Siege_tab.TabIndex = 6;
-            this.Siege_tab.Text = "Siege";
+            this.Siege_tab.Text = "围攻";
             this.Siege_tab.UseVisualStyleBackColor = true;
             // 
             // RemoveSiege_button
@@ -1510,21 +1510,21 @@
             this.Siege_gb.Size = new System.Drawing.Size(185, 203);
             this.Siege_gb.TabIndex = 21;
             this.Siege_gb.TabStop = false;
-            this.Siege_gb.Text = "Edit";
+            this.Siege_gb.Text = "编辑";
             // 
             // label36
             // 
             this.label36.AutoSize = true;
             this.label36.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label36.Location = new System.Drawing.Point(12, 105);
+            this.label36.Location = new System.Drawing.Point(19, 108);
             this.label36.Name = "label36";
-            this.label36.Size = new System.Drawing.Size(77, 16);
+            this.label36.Size = new System.Drawing.Size(68, 16);
             this.label36.TabIndex = 47;
-            this.label36.Text = "Recruit Cost";
+            this.label36.Text = "调用费用";
             // 
             // SiegeCost_textbox
             // 
-            this.SiegeCost_textbox.Location = new System.Drawing.Point(16, 121);
+            this.SiegeCost_textbox.Location = new System.Drawing.Point(16, 126);
             this.SiegeCost_textbox.Name = "SiegeCost_textbox";
             this.SiegeCost_textbox.Size = new System.Drawing.Size(163, 21);
             this.SiegeCost_textbox.TabIndex = 48;
@@ -1534,15 +1534,15 @@
             // 
             this.label37.AutoSize = true;
             this.label37.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label37.Location = new System.Drawing.Point(13, 56);
+            this.label37.Location = new System.Drawing.Point(19, 66);
             this.label37.Name = "label37";
-            this.label37.Size = new System.Drawing.Size(41, 16);
+            this.label37.Size = new System.Drawing.Size(38, 16);
             this.label37.TabIndex = 45;
-            this.label37.Text = "Name";
+            this.label37.Text = "名称";
             // 
             // SiegeName_textbox
             // 
-            this.SiegeName_textbox.Location = new System.Drawing.Point(16, 72);
+            this.SiegeName_textbox.Location = new System.Drawing.Point(16, 84);
             this.SiegeName_textbox.Name = "SiegeName_textbox";
             this.SiegeName_textbox.Size = new System.Drawing.Size(163, 21);
             this.SiegeName_textbox.TabIndex = 46;
@@ -1552,21 +1552,21 @@
             // 
             this.label38.AutoSize = true;
             this.label38.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label38.Location = new System.Drawing.Point(12, 152);
+            this.label38.Location = new System.Drawing.Point(19, 150);
             this.label38.Name = "label38";
-            this.label38.Size = new System.Drawing.Size(32, 16);
+            this.label38.Size = new System.Drawing.Size(38, 16);
             this.label38.TabIndex = 43;
-            this.label38.Text = "Mob";
+            this.label38.Text = "调用";
             // 
             // label39
             // 
             this.label39.AutoSize = true;
             this.label39.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label39.Location = new System.Drawing.Point(12, 12);
+            this.label39.Location = new System.Drawing.Point(32, 24);
             this.label39.Name = "label39";
-            this.label39.Size = new System.Drawing.Size(55, 16);
+            this.label39.Size = new System.Drawing.Size(38, 16);
             this.label39.TabIndex = 44;
-            this.label39.Text = "Location";
+            this.label39.Text = "位置";
             // 
             // SiegeIndex_combo
             // 
@@ -1582,7 +1582,7 @@
             // 
             this.label40.AutoSize = true;
             this.label40.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label40.Location = new System.Drawing.Point(104, 30);
+            this.label40.Location = new System.Drawing.Point(108, 43);
             this.label40.Name = "label40";
             this.label40.Size = new System.Drawing.Size(15, 16);
             this.label40.TabIndex = 16;
@@ -1590,7 +1590,7 @@
             // 
             // SiegeYLoc_textbox
             // 
-            this.SiegeYLoc_textbox.Location = new System.Drawing.Point(125, 28);
+            this.SiegeYLoc_textbox.Location = new System.Drawing.Point(125, 41);
             this.SiegeYLoc_textbox.Name = "SiegeYLoc_textbox";
             this.SiegeYLoc_textbox.Size = new System.Drawing.Size(54, 21);
             this.SiegeYLoc_textbox.TabIndex = 12;
@@ -1600,7 +1600,7 @@
             // 
             this.label41.AutoSize = true;
             this.label41.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label41.Location = new System.Drawing.Point(13, 30);
+            this.label41.Location = new System.Drawing.Point(11, 44);
             this.label41.Name = "label41";
             this.label41.Size = new System.Drawing.Size(16, 16);
             this.label41.TabIndex = 15;
@@ -1608,7 +1608,7 @@
             // 
             // SiegeXLoc_textbox
             // 
-            this.SiegeXLoc_textbox.Location = new System.Drawing.Point(29, 28);
+            this.SiegeXLoc_textbox.Location = new System.Drawing.Point(29, 42);
             this.SiegeXLoc_textbox.Name = "SiegeXLoc_textbox";
             this.SiegeXLoc_textbox.Size = new System.Drawing.Size(54, 21);
             this.SiegeXLoc_textbox.TabIndex = 14;
@@ -1639,7 +1639,7 @@
             this.flags_tab.Padding = new System.Windows.Forms.Padding(3);
             this.flags_tab.Size = new System.Drawing.Size(396, 216);
             this.flags_tab.TabIndex = 7;
-            this.flags_tab.Text = "Flags";
+            this.flags_tab.Text = "旗帜";
             this.flags_tab.UseVisualStyleBackColor = true;
             // 
             // RemoveFlag_button
@@ -1678,17 +1678,17 @@
             this.Flag_gb.Size = new System.Drawing.Size(185, 203);
             this.Flag_gb.TabIndex = 21;
             this.Flag_gb.TabStop = false;
-            this.Flag_gb.Text = "Edit";
+            this.Flag_gb.Text = "编辑";
             // 
             // label42
             // 
             this.label42.AutoSize = true;
             this.label42.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label42.Location = new System.Drawing.Point(12, 105);
+            this.label42.Location = new System.Drawing.Point(19, 103);
             this.label42.Name = "label42";
-            this.label42.Size = new System.Drawing.Size(60, 16);
+            this.label42.Size = new System.Drawing.Size(53, 16);
             this.label42.TabIndex = 47;
-            this.label42.Text = "Filename";
+            this.label42.Text = "文件名";
             // 
             // FlagFilename_textbox
             // 
@@ -1702,15 +1702,15 @@
             // 
             this.label43.AutoSize = true;
             this.label43.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label43.Location = new System.Drawing.Point(13, 56);
+            this.label43.Location = new System.Drawing.Point(19, 61);
             this.label43.Name = "label43";
-            this.label43.Size = new System.Drawing.Size(41, 16);
+            this.label43.Size = new System.Drawing.Size(38, 16);
             this.label43.TabIndex = 45;
-            this.label43.Text = "Name";
+            this.label43.Text = "名称";
             // 
             // FlagName_textbox
             // 
-            this.FlagName_textbox.Location = new System.Drawing.Point(16, 72);
+            this.FlagName_textbox.Location = new System.Drawing.Point(16, 79);
             this.FlagName_textbox.Name = "FlagName_textbox";
             this.FlagName_textbox.Size = new System.Drawing.Size(163, 21);
             this.FlagName_textbox.TabIndex = 46;
@@ -1720,17 +1720,17 @@
             // 
             this.label45.AutoSize = true;
             this.label45.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label45.Location = new System.Drawing.Point(12, 12);
+            this.label45.Location = new System.Drawing.Point(32, 18);
             this.label45.Name = "label45";
-            this.label45.Size = new System.Drawing.Size(55, 16);
+            this.label45.Size = new System.Drawing.Size(38, 16);
             this.label45.TabIndex = 44;
-            this.label45.Text = "Location";
+            this.label45.Text = "位置";
             // 
             // label46
             // 
             this.label46.AutoSize = true;
             this.label46.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label46.Location = new System.Drawing.Point(104, 30);
+            this.label46.Location = new System.Drawing.Point(107, 39);
             this.label46.Name = "label46";
             this.label46.Size = new System.Drawing.Size(15, 16);
             this.label46.TabIndex = 16;
@@ -1738,7 +1738,7 @@
             // 
             // FlagYLoc_textbox
             // 
-            this.FlagYLoc_textbox.Location = new System.Drawing.Point(125, 28);
+            this.FlagYLoc_textbox.Location = new System.Drawing.Point(124, 37);
             this.FlagYLoc_textbox.Name = "FlagYLoc_textbox";
             this.FlagYLoc_textbox.Size = new System.Drawing.Size(54, 21);
             this.FlagYLoc_textbox.TabIndex = 12;
@@ -1748,7 +1748,7 @@
             // 
             this.label47.AutoSize = true;
             this.label47.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label47.Location = new System.Drawing.Point(13, 30);
+            this.label47.Location = new System.Drawing.Point(11, 38);
             this.label47.Name = "label47";
             this.label47.Size = new System.Drawing.Size(16, 16);
             this.label47.TabIndex = 15;
@@ -1756,7 +1756,7 @@
             // 
             // FlagXLoc_textbox
             // 
-            this.FlagXLoc_textbox.Location = new System.Drawing.Point(29, 28);
+            this.FlagXLoc_textbox.Location = new System.Drawing.Point(29, 36);
             this.FlagXLoc_textbox.Name = "FlagXLoc_textbox";
             this.FlagXLoc_textbox.Size = new System.Drawing.Size(54, 21);
             this.FlagXLoc_textbox.TabIndex = 14;
@@ -1807,7 +1807,7 @@
             this.Controls.Add(this.ConquestInfoListBox);
             this.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Name = "ConquestInfoForm";
-            this.Text = "Conquest Config";
+            this.Text = "城堡设置";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ConquestInfoForm_FormClosed);
             this.Load += new System.EventHandler(this.ConquestInfoForm_Load);
             this.Main_tabs.ResumeLayout(false);

@@ -1,8 +1,8 @@
-﻿using Server.MirDatabase;
+﻿using System;
+using System.Windows.Forms;
+using Server.MirDatabase;
 using Server.MirEnvir;
 using Server.MirObjects;
-using System;
-using System.Windows.Forms;
 
 namespace Server.MirForms.Systems
 {
@@ -44,8 +44,8 @@ namespace Server.MirForms.Systems
             MaxMCTextBox.Text = monster.Stats[Stat.MaxMC].ToString();
             MinSCTextBox.Text = monster.Stats[Stat.MinSC].ToString();
             MaxSCTextBox.Text = monster.Stats[Stat.MaxSC].ToString();
-            AccuracyTextBox.Text = monster.Stats[Stat.Accuracy].ToString();
-            AgilityTextBox.Text = monster.Stats[Stat.Agility].ToString();
+            AccuracyTextBox.Text = monster.Stats[Stat.准确].ToString();
+            AgilityTextBox.Text = monster.Stats[Stat.敏捷].ToString();
             ASpeedTextBox.Text = monster.AttackSpeed.ToString();
             MSpeedTextBox.Text = monster.MoveSpeed.ToString();
         }
@@ -73,14 +73,14 @@ namespace Server.MirForms.Systems
                 monster.Stats[Stat.MaxMC] = ushort.Parse(MaxMCTextBox.Text);
                 monster.Stats[Stat.MinSC] = ushort.Parse(MinSCTextBox.Text);
                 monster.Stats[Stat.MaxSC] = ushort.Parse(MaxSCTextBox.Text);
-                monster.Stats[Stat.Accuracy] = byte.Parse(AccuracyTextBox.Text);
-                monster.Stats[Stat.Agility] = byte.Parse(AgilityTextBox.Text);
+                monster.Stats[Stat.准确] = byte.Parse(AccuracyTextBox.Text);
+                monster.Stats[Stat.敏捷] = byte.Parse(AgilityTextBox.Text);
                 monster.AttackSpeed = ushort.Parse(ASpeedTextBox.Text);
                 monster.MoveSpeed = ushort.Parse(MSpeedTextBox.Text);
             }
             catch
             {
-                MessageBox.Show("Value validation failed. Please correct before updating", "Notice",
+                MessageBox.Show("验证失败！请在更新前验证", "Notice",
                 MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
                 return;
             }

@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using System.Windows.Forms;
 using Server.MirDatabase;
 using Server.MirEnvir;
+using Image = System.Drawing.Image;
 
 namespace Server
 {
@@ -542,10 +543,16 @@ namespace Server
 
             List<bool> selected = new List<bool>();
 
-            for (int i = 0; i < RespawnInfoListBox.Items.Count; i++) selected.Add(RespawnInfoListBox.GetSelected(i));
+            for (int i = 0; i < RespawnInfoListBox.Items.Count; i++) 
+                selected.Add(RespawnInfoListBox.GetSelected(i));
+
             RespawnInfoListBox.Items.Clear();
-            for (int i = 0; i < _info.Respawns.Count; i++) RespawnInfoListBox.Items.Add(_info.Respawns[i]);
-            for (int i = 0; i < selected.Count; i++) RespawnInfoListBox.SetSelected(i, selected[i]);
+
+            for (int i = 0; i < _info.Respawns.Count; i++) 
+                RespawnInfoListBox.Items.Add(_info.Respawns[i]);
+
+            for (int i = 0; i < selected.Count; i++) 
+                RespawnInfoListBox.SetSelected(i, selected[i]);
 
             RespawnInfoListBox.SelectedIndexChanged += RespawnInfoListBox_SelectedIndexChanged;
         }
@@ -586,7 +593,7 @@ namespace Server
         {
             if (_selectedMapInfos.Count == 0) return;
 
-            if (MessageBox.Show("Are you sure you want to remove the selected maps?", "Remove Maps?", MessageBoxButtons.YesNo) != DialogResult.Yes) return;
+            if (MessageBox.Show("是否删除选定的地图", "删除地图", MessageBoxButtons.YesNo) != DialogResult.Yes) return;
 
             for (int i = 0; i < _selectedMapInfos.Count; i++) Envir.Remove(_selectedMapInfos[i]);
 
@@ -622,20 +629,32 @@ namespace Server
         }
         private void MiniMapTextBox_TextChanged(object sender, EventArgs e)
         {
-            if (ActiveControl != sender) return;
-
-            ushort temp;
-
-            if (!ushort.TryParse(ActiveControl.Text, out temp))
+            if (!ushort.TryParse(MiniMapTextBox.Text, out ushort temp))
             {
-                ActiveControl.BackColor = Color.Red;
+                MiniMapTextBox.BackColor = Color.Red;
                 return;
             }
             ActiveControl.BackColor = SystemColors.Window;
-
+            MiniMapTextBox.BackColor = SystemColors.Window;
 
             for (int i = 0; i < _selectedMapInfos.Count; i++)
                 _selectedMapInfos[i].MiniMap = temp;
+
+            LoadImage(temp);
+        }
+        private void LoadImage(ushort miniMapValue)
+        {
+            string imagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Envir", "Previews", "Minimaps", miniMapValue + ".bmp");
+
+            if (File.Exists(imagePath))
+            {
+                MinimapPreview.Image = Image.FromFile(imagePath);
+                MinimapPreview.SizeMode = PictureBoxSizeMode.StretchImage;
+            }
+            else
+            {
+                MinimapPreview.Image = null;
+            }
         }
         private void LightsComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -644,8 +663,6 @@ namespace Server
             for (int i = 0; i < _selectedMapInfos.Count; i++)
                 _selectedMapInfos[i].Light = (LightSetting)LightsComboBox.SelectedItem;
         }
-
-
         private void AddSZButton_Click(object sender, EventArgs e)
         {
             if (_info == null) return;
@@ -657,7 +674,7 @@ namespace Server
         {
             if (_selectedSafeZoneInfos.Count == 0) return;
 
-            if (MessageBox.Show("Are you sure you want to remove the selected SafeZones?", "Remove SafeZones?", MessageBoxButtons.YesNo) != DialogResult.Yes) return;
+            if (MessageBox.Show("是否删除选定的安全区", "删除安全区", MessageBoxButtons.YesNo) != DialogResult.Yes) return;
 
             for (int i = 0; i < _selectedSafeZoneInfos.Count; i++) _info.SafeZones.Remove(_selectedSafeZoneInfos[i]);
 
@@ -732,8 +749,6 @@ namespace Server
             RefreshSafeZoneList();
         }
 
-
-
         private void AddRButton_Click(object sender, EventArgs e)
         {
             if (_info == null) return;
@@ -745,7 +760,7 @@ namespace Server
         {
             if (_selectedRespawnInfos.Count == 0) return;
 
-            if (MessageBox.Show("Are you sure you want to remove the selected Respawns?", "Remove Respawns?", MessageBoxButtons.YesNo) != DialogResult.Yes) return;
+            if (MessageBox.Show("是否删除选定的刷怪点", "删除刷怪点", MessageBoxButtons.YesNo) != DialogResult.Yes) return;
 
             for (int i = 0; i < _selectedRespawnInfos.Count; i++) _info.Respawns.Remove(_selectedRespawnInfos[i]);
 
@@ -863,7 +878,7 @@ namespace Server
             {
                 if (chkRespawnEnableTick.Checked)
                 {
-                    _selectedRespawnInfos[i].RespawnTicks = Math.Max((ushort)1, temp);//you can never have respawnticks set to 0 or it would bug the entire thing really
+                    _selectedRespawnInfos[i].RespawnTicks = Math.Max((ushort)1, temp);//不能将respawnticks设置为0，否则它会bug整个事件
                     _selectedRespawnInfos[i].Delay = 0;
                 }
                 else
@@ -914,7 +929,7 @@ namespace Server
 
             if (!data.StartsWith("Respawn", StringComparison.OrdinalIgnoreCase))
             {
-                MessageBox.Show("Cannot Paste, Copied data is not Respawn Information.");
+                MessageBox.Show("无法粘贴，复制的数据不是刷怪点信息");
                 return;
             }
 
@@ -935,9 +950,6 @@ namespace Server
         }
         //RCopy
 
-
-
-
         private void AddMButton_Click(object sender, EventArgs e)
         {
             if (_info == null) return;
@@ -949,7 +961,7 @@ namespace Server
         {
             if (_selectedMovementInfos.Count == 0) return;
 
-            if (MessageBox.Show("Are you sure you want to remove the selected Movements?", "Remove Movements?", MessageBoxButtons.YesNo) != DialogResult.Yes) return;
+            if (MessageBox.Show("是否删除选定的地图出入点", "删除地图出入点", MessageBoxButtons.YesNo) != DialogResult.Yes) return;
 
             for (int i = 0; i < _selectedMovementInfos.Count; i++) _info.Movements.Remove(_selectedMovementInfos[i]);
 
@@ -1072,16 +1084,16 @@ namespace Server
 
             if (!data.StartsWith("Map", StringComparison.OrdinalIgnoreCase))
             {
-                MessageBox.Show("Cannot Paste, Copied data is not Map Information.");
+                MessageBox.Show("无法粘贴，复制的数据不是有效信息");
                 return;
             }
 
 
-            string[] monsters = data.Split(new[] { '\t' }, StringSplitOptions.RemoveEmptyEntries);
+            string[] maps = data.Split(new[] { '\t' }, StringSplitOptions.RemoveEmptyEntries);
 
 
-            for (int i = 1; i < monsters.Length; i++)
-                MapInfo.FromText(monsters[i]);
+            for (int i = 1; i < maps.Length; i++)
+                MapInfo.FromText(maps[i]);
 
             UpdateInterface();
         }
@@ -1273,7 +1285,7 @@ namespace Server
         {
             if (_selectedMineZones.Count == 0) return;
 
-            if (MessageBox.Show("Are you sure you want to remove the selected MineZones?", "Remove MineZones?", MessageBoxButtons.YesNo) != DialogResult.Yes) return;
+            if (MessageBox.Show("是否删除选定矿区", "删除矿区", MessageBoxButtons.YesNo) != DialogResult.Yes) return;
 
             for (int i = 0; i < _selectedMineZones.Count; i++) _info.MineZones.Remove(_selectedMineZones[i]);
             UpdateMineZoneInterface();
@@ -1381,6 +1393,7 @@ namespace Server
 
             MirForms.ConvertMapInfo.End();
             UpdateInterface();
+            MessageBox.Show("地图数据导入完成");
 
         }
         private void ExportMapInfoButton_Click(object sender, EventArgs e)
@@ -1389,7 +1402,7 @@ namespace Server
 
             SaveFileDialog sfd = new SaveFileDialog();
             sfd.InitialDirectory = Path.Combine(Application.StartupPath, "Exports");
-            sfd.FileName = "MapInfoExport";
+            sfd.FileName = "1_地图数据";
             sfd.Filter = "Text File|*.txt";
             sfd.ShowDialog();
 
@@ -1449,7 +1462,7 @@ namespace Server
                     }
                 }
             }
-            MessageBox.Show("Map Info Export Complete");
+            MessageBox.Show("地图数据导出完成");
         }
         private String PrintMapAttributes(MapInfo map)
         {
@@ -1517,7 +1530,7 @@ namespace Server
             if (!hasImported) return;
 
             UpdateInterface();
-            MessageBox.Show("MonGen Import complete");
+            MessageBox.Show("刷怪数据导入完成");
         }
         private void ExportMonGenButton_Click(object sender, EventArgs e)
         {
@@ -1525,6 +1538,7 @@ namespace Server
 
             SaveFileDialog sfd = new SaveFileDialog();
             sfd.InitialDirectory = Path.Combine(Application.StartupPath, "Exports");
+            sfd.FileName = "6_刷怪数据";
             sfd.Filter = "Text File|*.txt";
             sfd.ShowDialog();
 
@@ -1554,7 +1568,7 @@ namespace Server
                     }
                 }
             }
-            MessageBox.Show("MonGen Export complete");
+            MessageBox.Show("刷怪数据导出完成");
         }
 
         private void VisualizerButton_Click(object sender, EventArgs e)

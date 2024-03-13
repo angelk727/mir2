@@ -1,13 +1,11 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Collections.Generic;
 using Server.MirDatabase;
 using Server.MirEnvir;
 using S = ServerPackets;
-using System.Collections.Generic;
 
 namespace Server.MirObjects.Monsters
 {
-    //TODO - Has a retreat Animation, can't get motion accurate
+    //TODO - 具有后退动画，无法获得精确的运动
 
     public class ChieftainArcher : MonsterObject
     {

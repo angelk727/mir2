@@ -84,7 +84,7 @@
             // 
             this.openMenuItem.Name = "openMenuItem";
             this.openMenuItem.Size = new System.Drawing.Size(103, 22);
-            this.openMenuItem.Text = "Open";
+            this.openMenuItem.Text = "打开";
             this.openMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // ImageList
@@ -166,7 +166,7 @@
             this.checkCenter.Name = "checkCenter";
             this.checkCenter.Size = new System.Drawing.Size(57, 17);
             this.checkCenter.TabIndex = 5;
-            this.checkCenter.Text = "Center";
+            this.checkCenter.Text = "居中";
             this.checkCenter.UseVisualStyleBackColor = true;
             this.checkCenter.CheckedChanged += new System.EventHandler(this.checkCenter_CheckedChanged);
             // 
@@ -179,7 +179,7 @@
             this.checkBackground.Name = "checkBackground";
             this.checkBackground.Size = new System.Drawing.Size(84, 17);
             this.checkBackground.TabIndex = 4;
-            this.checkBackground.Text = "Background";
+            this.checkBackground.Text = "背景";
             this.checkBackground.UseVisualStyleBackColor = true;
             this.checkBackground.CheckedChanged += new System.EventHandler(this.checkBackground_CheckedChanged);
             // 
@@ -199,7 +199,7 @@
             this.LblHeight.Name = "LblHeight";
             this.LblHeight.Size = new System.Drawing.Size(41, 13);
             this.LblHeight.TabIndex = 2;
-            this.LblHeight.Text = "Height:";
+            this.LblHeight.Text = "高度:";
             // 
             // LibNameLabel
             // 

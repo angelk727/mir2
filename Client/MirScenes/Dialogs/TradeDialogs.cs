@@ -1,14 +1,9 @@
-﻿using Client.MirControls;
+﻿using System.Drawing;
+using System.Windows.Forms;
+using Client.MirControls;
 using Client.MirGraphics;
 using Client.MirNetwork;
 using Client.MirSounds;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using C = ClientPackets;
 
 namespace Client.MirScenes.Dialogs
@@ -88,7 +83,7 @@ namespace Client.MirScenes.Dialogs
             {
                 if (GameScene.SelectedCell == null && GameScene.Gold > 0)
                 {
-                    MirAmountBox amountBox = new MirAmountBox("Trade Amount:", 116, GameScene.Gold);
+                    MirAmountBox amountBox = new MirAmountBox("交易金额:", 116, GameScene.Gold);
 
                     amountBox.OKButton.Click += (c, a) =>
                     {

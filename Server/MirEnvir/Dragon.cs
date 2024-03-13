@@ -70,7 +70,7 @@ namespace Server.MirEnvir
                 MonsterInfo info = Envir.GetMonsterInfo(Info.MonsterName);
                 if (info == null)
                 {
-                    MessageQueue.Enqueue("Failed to load Dragon (bad monster name): " + Info.MonsterName);
+                    MessageQueue.Enqueue("破天魔龙加载失败因为使用了不可用的怪物名: " + Info.MonsterName);
                     return false;
                 }
                 LinkedMonster = MonsterObject.GetMonster(info);
@@ -78,13 +78,13 @@ namespace Server.MirEnvir
                 Map map = Envir.GetMapByNameAndInstance(Info.MapFileName);
                 if (map == null)
                 {
-                    MessageQueue.Enqueue("Failed to load Dragon (bad map name): " + Info.MapFileName);
+                    MessageQueue.Enqueue("破天魔龙加载失败因为使用了不可用的地图名: " + Info.MapFileName);
                     return false;
                 }
 
                 if (Info.Location.X > map.Width || Info.Location.Y > map.Height)
                 {
-                    MessageQueue.Enqueue("Failed to load Dragon (bad map XY): " + Info.MapFileName);
+                    MessageQueue.Enqueue("破天魔龙加载失败因为使用了不可用的坐标X|Y: " + Info.MapFileName);
                     return false;
                 }
 
@@ -120,7 +120,7 @@ namespace Server.MirEnvir
                 MessageQueue.Enqueue(ex);
             }
 
-            MessageQueue.Enqueue("Failed to load Dragon");
+            MessageQueue.Enqueue("破天魔龙加载失败");
             return false;
         }
         public void GainExp(int ammount)
@@ -136,9 +136,9 @@ namespace Server.MirEnvir
         }
         public void LevelUp()
         {
-            Drop(Info.Level);//i would suggest having the max level drop be empty or 'trash' > that way you stop ppl from exploiting it
+            Drop(Info.Level);//建议将最大掉落设为空或'trash'，这样可以阻止玩家利用它
             if (Info.Level < Globals.MaxDragonLevel) Info.Level = (byte)(Math.Max(1, (Info.Level + 1)));
-            //if it reaches max level > make it stay that level for 6*deleveldelay and then reset to 0, rather then letting ppl farm it by making it drop every hour
+            //如果它达到最大级别>使其保持该级别6*deleveldelay，然后重置为0，而不是让ppl每小时降低一次
             if (Info.Level == Globals.MaxDragonLevel)
                 DeLevelTime = Envir.Time + (6 * DeLevelDelay);
         }

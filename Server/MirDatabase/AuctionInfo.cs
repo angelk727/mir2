@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using Server.MirEnvir;
 
 namespace Server.MirDatabase
@@ -98,9 +95,9 @@ namespace Server.MirDatabase
                 case MarketItemType.GameShop:
                     return "";
                 case MarketItemType.Consign:
-                    return userMatch ? (Sold ? "Sold" : (Expired ? "Expired" : "For Sale")) : SellerInfo.Name;
+                    return userMatch ? (Sold ? "已售出" : (Expired ? "Expired" : "待售中")) : SellerInfo.Name;
                 case MarketItemType.Auction:
-                    return userMatch ? (Sold ? "Sold" : (Expired ? "Expired" : CurrentBid > Price ? "Bid Met" : "No Bid")) : SellerInfo.Name;
+                    return userMatch ? (Sold ? "已售出" : (Expired ? "Expired" : CurrentBid > Price ? "竞价中" : "无竞价")) : SellerInfo.Name;
             }
 
             return "";

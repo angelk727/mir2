@@ -1,15 +1,11 @@
-﻿using Client.MirControls;
+﻿using System;
+using System.Drawing;
+using System.Windows.Forms;
+using Client.MirControls;
 using Client.MirGraphics;
 using Client.MirNetwork;
 using Client.MirObjects;
 using Client.MirSounds;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using C = ClientPackets;
 
 namespace Client.MirScenes.Dialogs
@@ -155,7 +151,7 @@ namespace Client.MirScenes.Dialogs
 
         private void SwitchType()
         {
-            UserItem MountItem = GameScene.User.Equipment[(int)EquipmentSlot.Mount];
+            UserItem MountItem = GameScene.User.Equipment[(int)EquipmentSlot.坐骑];
             UserItem[] MountSlots = null;
 
             if (MountItem != null)
@@ -186,7 +182,7 @@ namespace Client.MirScenes.Dialogs
                     break;
                 case 5:
                     Index = 167;
-                    StartIndex = 1330;
+                    StartIndex = 1470;
                     MountName.Size = new Size(260, 15);
                     MountLoyalty.Size = new Size(260, 15);
                     MountImage.Location = new Point(0, 70);
@@ -217,15 +213,72 @@ namespace Client.MirScenes.Dialogs
             }
             else
             {
-                MountImage.Index = StartIndex + (GameScene.User.MountType * 20);
+                switch (GameScene.User.MountType)
+                        {
+                            case 0:
+                                if (GameScene.User.MountType == 0)
+                                    MountImage.Index = 1170;
+                                break;
+                            case 1:
+                                if (GameScene.User.MountType == 1)
+                                    MountImage.Index = 1190;
+                                break;
+                            case 2:
+                                if (GameScene.User.MountType == 2)
+                                    MountImage.Index = 1210;
+                                break;
+                            case 3:
+                                if (GameScene.User.MountType == 3)
+                                    MountImage.Index = 1230;
+                                break;
+                            case 4:
+                                if (GameScene.User.MountType == 4)
+                                    MountImage.Index = 1250;
+                                break;
+                            case 5:
+                                if (GameScene.User.MountType == 5)
+                                    MountImage.Index = 1270;
+                                break;
+                            case 6:
+                                if (GameScene.User.MountType == 6)
+                                    MountImage.Index = 1290;
+                                break;
+                            case 7:
+                                if (GameScene.User.MountType == 7)
+                                    MountImage.Index = 1470;
+                                break;
+                            case 8:
+                                if (GameScene.User.MountType == 8)
+                                    MountImage.Index = 1490;
+                                break;
+                            case 9:
+                                if (GameScene.User.MountType == 9)
+                                    MountImage.Index = 1510;
+                                break;
+                            case 10:
+                                if (GameScene.User.MountType == 10)
+                                    MountImage.Index = 1530;
+                                break;
+                            case 11:
+                                if (GameScene.User.MountType == 11)
+                                    MountImage.Index = 1550;
+                                break;
+                            case 12:
+                                if (GameScene.User.MountType == 12)
+                                    MountImage.Index = 1450; //这里是客户端文件新添加的16张动作图片
+                                break;
+                            default:
+                                break;
+                        }
+                //MountImage.Index = StartIndex + (GameScene.User.MountType * 20);//源代码这种写法简单暴力
                 MountImage.Animated = true;
 
-                UserItem item = MapObject.User.Equipment[(int)EquipmentSlot.Mount];
+                UserItem item = MapObject.User.Equipment[(int)EquipmentSlot.坐骑];
 
                 if (item != null)
                 {
                     MountName.Text = item.FriendlyName;
-                    MountLoyalty.Text = string.Format("{0} / {1} Loyalty", item.CurrentDura, item.MaxDura);
+                    MountLoyalty.Text = string.Format("{0} / {1} 忠诚度", item.CurrentDura, item.MaxDura);
                 }
             }
 
@@ -234,7 +287,7 @@ namespace Client.MirScenes.Dialogs
         public bool CanRide()
         {
             if (GameScene.User.MountType < 0 || GameScene.User.MountTime + 500 > CMain.Time) return false;
-            if (GameScene.User.CurrentAction != MirAction.Standing && GameScene.User.CurrentAction != MirAction.MountStanding) return false;
+            if (GameScene.User.CurrentAction != MirAction.站立动作 && GameScene.User.CurrentAction != MirAction.坐骑站立) return false;
 
             return true;
         }

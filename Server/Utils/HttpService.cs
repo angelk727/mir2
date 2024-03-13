@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.IO;
 using System.Net;
 using System.Text;
@@ -20,7 +20,7 @@ namespace Server.Library.Utils
             if (!HttpListener.IsSupported)
             {
                 throw new InvalidOperationException(
-                    "To use HttpListener the operating system must be Windows XP SP2 or Server 2003 or higher.");
+                    "要使用Http服务器，操作系统必须是Windows XP SP2或Server 2003或更高版本");
             }
             string[] prefixes = { Host };
 
@@ -32,11 +32,11 @@ namespace Server.Library.Utils
                     _listener.Prefixes.Add(s);
                 }
                 _listener.Start();
-                MessageQueue.Instance.Enqueue("HttpService started.");
+                MessageQueue.Instance.Enqueue("Http服务器 成功开启");
             }
             catch (Exception err)
             {
-                MessageQueue.Instance.Enqueue("HttpService start failed! Error:" + err);
+                MessageQueue.Instance.Enqueue("Http服务器 启动失败! 错误:" + err);
                 return;
             }
 

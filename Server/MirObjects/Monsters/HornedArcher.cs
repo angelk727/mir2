@@ -1,5 +1,5 @@
-﻿using Server.MirDatabase;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Server.MirDatabase;
 using S = ServerPackets;
 
 namespace Server.MirObjects.Monsters
@@ -89,6 +89,8 @@ namespace Server.MirObjects.Monsters
 
                 for (int i = 0; i < friends.Count; i++)
                 {
+                    if (friends[i].Node == null) continue;
+
                     if (Info.Effect == 0)
                     {
                         var stats = new Stats { [Stat.MinDC] = min, [Stat.MaxDC] = max, [Stat.MinMC] = min, [Stat.MaxMC] = max };
@@ -99,7 +101,11 @@ namespace Server.MirObjects.Monsters
                         var stats = new Stats { [Stat.MinAC] = min, [Stat.MaxAC] = max, [Stat.MinMAC] = min, [Stat.MaxMAC] = max };
                         friends[i].AddBuff(BuffType.ColdArcherBuff, this, Settings.Second * 10, stats);
                     }
-
+                    else if (Info.Effect == 2)
+                    {
+                        var stats = new Stats { [Stat.MinMAC] = min, [Stat.MaxMAC] = max, [Stat.MinDC] = min, [Stat.MaxDC] = max };
+                        friends[i].AddBuff(BuffType.ColdArcherBuff, this, Settings.Second * 10, stats);
+                    }
                     friends[i].OperateTime = 0;
                 }
             }

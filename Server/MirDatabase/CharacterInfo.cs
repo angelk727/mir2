@@ -101,7 +101,7 @@ namespace Server.MirDatabase
         public MountInfo Mount;
 
         public Dictionary<int, int> GSpurchases = new Dictionary<int, int>();
-        public int[] Rank = new int[2];//dont save this in db!(and dont send it to clients :p)
+        public int[] Rank = new int[2];//不要把这个保存在数据库中！（不要发送给客户：p）
         
         public int MaximumHeroCount = 1;
         public HeroInfo[] Heroes;
@@ -684,7 +684,7 @@ namespace Server.MirDatabase
 
         public bool HasMount
         {
-            get { return Player.Info.Equipment[(int)EquipmentSlot.Mount] != null; }
+            get { return Player.Info.Equipment[(int)EquipmentSlot.坐骑] != null; }
         }
 
         private bool RidingMount
@@ -695,7 +695,7 @@ namespace Server.MirDatabase
 
         public UserItem[] Slots
         {
-            get { return Player.Info.Equipment[(int)EquipmentSlot.Mount].Slots; }
+            get { return Player.Info.Equipment[(int)EquipmentSlot.坐骑].Slots; }
         }
 
 

@@ -1,12 +1,10 @@
-﻿using System;
-using System.Drawing;
+﻿using System.Collections.Generic;
 using Server.MirDatabase;
 using Server.MirEnvir;
 using S = ServerPackets;
-using System.Collections.Generic;
 
 namespace Server.MirObjects.Monsters
-{   
+{
     public class SandSnail : MonsterObject
     {   
         protected internal SandSnail(MonsterInfo info)

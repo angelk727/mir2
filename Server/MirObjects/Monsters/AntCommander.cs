@@ -1,5 +1,5 @@
-﻿using Server.MirDatabase;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Server.MirDatabase;
 using S = ServerPackets;
 
 namespace Server.MirObjects.Monsters
@@ -50,12 +50,28 @@ namespace Server.MirObjects.Monsters
                         }
                         break;
                     case 1:
+                         {
+                            Broadcast(new S.ObjectAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation, Type = 1 });
+
+                            int damage = GetAttackPower(Stats[Stat.MinDC], Stats[Stat.MaxDC]);
+                            if (damage == 0) return;
+
+                            PoisonTarget(Target, 4, 5, PoisonType.Slow, 1000);
+                            FullmoonAttack(damage, 600, DefenceType.ACAgility, 1, 2);
+
+                            DelayedAction action = new DelayedAction(DelayedType.Damage, Envir.Time + 600, Target, damage * 2, DefenceType.ACAgility, true);
+                            ActionList.Add(action);
+                        }
+                        break;
                     case 5:
                         {
                             Broadcast(new S.ObjectAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation, Type = 1 });
 
                             int damage = GetAttackPower(Stats[Stat.MinDC], Stats[Stat.MaxDC]) * 2;
                             if (damage == 0) return;
+
+                            FullmoonAttack(damage, 600, DefenceType.ACAgility);
+                            PoisonTarget(Target, 2, 5, PoisonType.Dazed, 1000);
 
                             DelayedAction action = new DelayedAction(DelayedType.Damage, Envir.Time + 600, Target, damage, DefenceType.ACAgility, true);
                             ActionList.Add(action);
@@ -111,25 +127,25 @@ namespace Server.MirObjects.Monsters
             }
         }
 
-        protected override void CompleteAttack(IList<object> data)
-        {
-            MapObject target = (MapObject)data[0];
-            int damage = (int)data[1];
-            DefenceType defence = (DefenceType)data[2];
-            bool poison = (bool)data[3];
+        //protected override void CompleteAttack(IList<object> data)
+        //{
+        //    MapObject target = (MapObject)data[0];
+        //    int damage = (int)data[1];
+        //    DefenceType defence = (DefenceType)data[2];
+        //    bool poison = (bool)data[3];
 
-            if (target == null || !target.IsAttackTarget(this) || target.CurrentMap != CurrentMap || target.Node == null) return;
+        //    if (target == null || !target.IsAttackTarget(this) || target.CurrentMap != CurrentMap || target.Node == null) return;
 
-            if (target.Attacked(this, damage, defence) <= 0) return;
+        //    if (target.Attacked(this, damage, defence) <= 0) return;
 
-            var finalDamage = target.Attacked(this, damage, defence);
+        //    var finalDamage = target.Attacked(this, damage, defence);
 
-            if (finalDamage > 0 && poison)
-            {
-                PoisonTarget(target, 4, 5, PoisonType.Slow, 1000);
-                PoisonTarget(target, 2, 5, PoisonType.Dazed, 1000);
-            }
-        }
+        //    if (finalDamage > 0 && poison)
+        //    {
+        //        PoisonTarget(target, 4, 5, PoisonType.Slow, 1000);
+        //        PoisonTarget(target, 2, 5, PoisonType.Dazed, 1000);
+        //    }
+        //}
 
         protected override void ProcessTarget()
         {

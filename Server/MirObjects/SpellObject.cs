@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Text;
 using Server.MirEnvir;
 using S = ServerPackets;
 
@@ -31,12 +29,12 @@ namespace Server.MirObjects
 
         public long TickTime, StartTime;
         public MapObject Caster;
-        public int Value, TickSpeed, BonusDmg;
+        public int Value, TickSpeed, BonusDmg, Healingdmg;
         public Spell Spell;
         public Point CastLocation;
         public bool Show, Decoration;
 
-        //ExplosiveTrap
+        //爆炸陷阱
         public int ExplosiveTrapID;
         public int ExplosiveTrapCount;
         public bool DetonatedTrap;
@@ -57,7 +55,7 @@ namespace Server.MirObjects
 
             if (Caster != null && Caster.Node == null) Caster = null;
 
-            if (Envir.Time > ExpireTime || ((Spell == Spell.FireWall || Spell == Spell.Portal || Spell == Spell.ExplosiveTrap || Spell == Spell.Reincarnation) && Caster == null) || (Spell == Spell.TrapHexagon && Target != null) || (Spell == Spell.Trap && Target != null))
+            if (Envir.Time > ExpireTime || ((Spell == Spell.FireWall || Spell == Spell.Portal || Spell == Spell.ExplosiveTrap || Spell == Spell.Reincarnation || Spell == Spell.HealingCircle && Caster == null || Spell == Spell.HealingcircleRare) && Caster == null) || (Spell == Spell.TrapHexagon && Target != null) || (Spell == Spell.Trap && Target != null))
             {
                 if (Spell == Spell.TrapHexagon && Target != null || Spell == Spell.Trap && Target != null)
                 {
@@ -72,7 +70,7 @@ namespace Server.MirObjects
                     ((HumanObject)Caster).ReincarnationExpireTime = Envir.Time + 6000;
                 }
 
-                if (Spell == Spell.Blizzard || Spell == Spell.MeteorStrike)
+                if ((Spell == Spell.Blizzard || Spell == Spell.MeteorStrike) &&  Caster != null)
                 {
                     ((HumanObject)Caster).ActiveBlizzard = false;
                 }
@@ -91,7 +89,15 @@ namespace Server.MirObjects
                     return;
                 }
             }
-
+            if (Spell == Spell.HealingcircleRare) //自添加阴阳五行阵-秘籍
+            {
+                if (CurrentMap != null && (CurrentMap != Caster?.CurrentMap || CurrentMap.Info.Index != CurrentMapIndex))
+                {
+                    CurrentMap.RemoveObject(this);
+                    Despawn();
+                    return;
+                }
+            }
             if (Spell == Spell.Reincarnation && !((HumanObject)Caster).ActiveReincarnation)
             {
                 CurrentMap.RemoveObject(this);
@@ -105,15 +111,21 @@ namespace Server.MirObjects
                 Despawn();
                 return;
             }
-
+            if (Caster != null && Spell == Spell.HealingCircle && FindObject(Caster.ObjectID, 20) == null)
+            {
+                CurrentMap.RemoveObject(this);
+                Despawn();
+                return;
+            }
             if (Envir.Time < TickTime) return;
             TickTime = Envir.Time + TickSpeed;
 
             Cell cell = CurrentMap.GetCell(CurrentLocation);
             for (int i = 0; i < cell.Objects.Count; i++)
-            {
-                ProcessSpell(cell.Objects[i]);
-            }
+                if (cell != null)
+                {
+                    ProcessSpell(cell.Objects[i]);
+                }
 
             if ((Spell == Spell.MapLava) || (Spell == Spell.MapLightning)) Value = 0;
         }
@@ -131,9 +143,9 @@ namespace Server.MirObjects
                         ob.Attacked(((HumanObject)Caster), Value, DefenceType.MAC, false);
                     }
                     break;
-                case Spell.Healing: //SafeZone
+                case Spell.Healing: //SafeZone 安全区治愈 添加了对英雄的判断
                     {
-                        if (ob.Race != ObjectType.Player && (ob.Race != ObjectType.Monster || ob.Master == null || ob.Master.Race != ObjectType.Player)) return;
+                        if (!(ob.Race == ObjectType.Player || ob.Race == ObjectType.Hero || (ob.Race == ObjectType.Monster && ob.Master != null && ob.Master.Race == ObjectType.Player))) return;
                         if (ob.Dead || ob.HealAmount != 0 || ob.PercentHealth == 100) return;
 
                         ob.HealAmount += 25;
@@ -168,7 +180,7 @@ namespace Server.MirObjects
                         if (!ob.Dead && Envir.Random.Next(8) == 0)
                             ob.ApplyPoison(new Poison
                             {
-                                Duration = 5 + Envir.Random.Next(Caster.Stats[Stat.Freezing]),
+                                Duration = 5 + Envir.Random.Next(Caster.Stats[Stat.冰冻伤害]),
                                 Owner = Caster,
                                 PType = PoisonType.Slow,
                                 TickSpeed = 2000,
@@ -182,6 +194,30 @@ namespace Server.MirObjects
                         if (Caster != null && ((HumanObject)Caster).ActiveBlizzard == false) return;
                         if (!ob.IsAttackTarget(Caster)) return;
                         ob.Attacked(((HumanObject)Caster), Value, DefenceType.MAC, false);
+                    }
+                    break;
+                case Spell.HealingcircleRare: //自添加阴阳五行阵-秘籍
+                    {
+                        if (ob == null) return;
+
+                        if (ob.Race == ObjectType.Player || ob.Race == ObjectType.Hero || (ob.Race == ObjectType.Monster && ob.Master != null && ob.Master.Race == ObjectType.Player))
+                        {
+                            if (ob.IsAttackTarget(Caster)) return;
+                            if (ob.Dead || ob.HealAmount != 0 || ob.PercentHealth >= 100) return;
+
+                            ob.HealAmount += 25;
+                            Broadcast(new S.ObjectEffect { ObjectID = ob.ObjectID, Effect = SpellEffect.Healing });
+                        }
+                        else if (ob.Race == ObjectType.Monster && ob.IsAttackTarget(Caster) && !ob.Dead)
+                        {
+                            ob.Attacked(Caster as HumanObject, Value, DefenceType.MAC, false);
+                            Broadcast(new S.ObjectEffect { ObjectID = ob.ObjectID, Effect = SpellEffect.HealingcircleRare });
+                            if (Envir.Random.Next(10) >= 2)
+                            {
+                                Broadcast(new S.ObjectEffect { ObjectID = ob.ObjectID, Effect = SpellEffect.HealingcircleRare1 });
+                                ob.ApplyPoison(new Poison { PType = PoisonType.Green, Duration = 2, TickSpeed = 1000 }, this);
+                            }
+                        }
                     }
                     break;
                 case Spell.ExplosiveTrap:
@@ -213,7 +249,7 @@ namespace Server.MirObjects
                         ob.Struck(Value, DefenceType.MAC);
                     }
                     break;
-                case Spell.GeneralMeowMeowThunder:
+                case Spell.GeneralMeowMeowThunder: //341
                     {
                         if (ob.Race != ObjectType.Player && ob.Race != ObjectType.Monster) return;
                         if (ob.Dead) return;
@@ -283,7 +319,7 @@ namespace Server.MirObjects
                         ob.Struck(Value, DefenceType.AC);
                     }
                     break;
-                case Spell.TucsonGeneralRock:
+                case Spell.TucsonGeneralRock: //354
                     {
                         if (ob.Race != ObjectType.Player && ob.Race != ObjectType.Monster) return;
                         if (ob.Dead) return;
@@ -346,7 +382,7 @@ namespace Server.MirObjects
                         ob.ApplyPoison(new Poison { PType = PoisonType.Dazed, Duration = 5, TickSpeed = 1000 }, this);
                     }
                     break;
-                case Spell.HornedSorcererDustTornado:
+                case Spell.HornedSorcererDustTornado: //406
                     {
                         if (ob.Race != ObjectType.Player && ob.Race != ObjectType.Monster) return;
                         if (ob.Dead) return;
@@ -357,8 +393,8 @@ namespace Server.MirObjects
                         ob.Struck(Value, DefenceType.AC);
                     }
                     break;
-                case Spell.HornedCommanderRockFall:
-                case Spell.HornedCommanderRockSpike:
+                case Spell.HornedCommanderRockFall: //409
+                case Spell.HornedCommanderRockSpike: //409
                     {
                         if (ob.Race != ObjectType.Player && ob.Race != ObjectType.Monster) return;
                         if (ob.Dead) return;
@@ -367,6 +403,154 @@ namespace Server.MirObjects
 
                         if (Value == 0) return;
                         ob.Struck(Value, DefenceType.AC);
+                    }
+                    break;
+                case Spell.HealingCircle:
+                    if (ob.Race != ObjectType.Player && ob.Race != ObjectType.Monster && ob.Race != ObjectType.Hero) return;
+
+                    if (Caster == ob || (Caster.GroupMembers != null && Caster.GroupMembers.Contains(ob)) || (ob.Master != null && Caster.GroupMembers != null && Caster.GroupMembers.Contains(ob.Master)))
+                    {
+                        if (ob.Dead || ob.HealAmount != 0 || ob.PercentHealth == 100) return;
+
+                        ob.HealAmount += 25;
+                        Broadcast(new S.ObjectEffect { ObjectID = ob.ObjectID, Effect = SpellEffect.Healing });
+                    }
+                    else if (ob.IsAttackTarget(Caster))
+                    {
+                        if (ob.Dead) return;
+
+                        if (!ob.IsAttackTarget(Caster)) return;
+
+                        if (Value == 0) return;
+                        ob.Struck(Value, DefenceType.MAC);
+
+                        ob.ApplyPoison(new Poison
+                        {
+                            Owner = Caster,
+                            Duration = ob.Race == ObjectType.Player ? 4 : 5 + Envir.Random.Next(5),
+                            PType = PoisonType.Slow,
+                            TickSpeed = 1000,
+                        }, Caster);
+                        ob.OperateTime = 0;
+                    }
+                    break;
+                case Spell.YangDragonFlame: //414
+                    {
+                        if (ob.Race != ObjectType.Player && ob.Race != ObjectType.Monster && ob.Race != ObjectType.Hero) return;
+                        if (ob.Dead) return;
+                        if (ob == Caster) return;
+                        if (!ob.IsAttackTarget(Caster)) return;
+                        if (Value == 0) return;
+
+                        ob.Struck(Value, DefenceType.AC);
+                    }
+                    break;
+                case Spell.YangDragonIcyBurst: //414
+                    {
+                        if (ob.Race != ObjectType.Player && ob.Race != ObjectType.Monster && ob.Race != ObjectType.Hero) return;
+                        if (ob.Dead) return;
+                        if (ob == Caster) return;
+                        if (!ob.IsAttackTarget(Caster)) return;
+                        if (Value == 0) return;
+
+                        ob.Struck(Value, DefenceType.AC);
+                    }
+                    break;
+                case Spell.ShardGuardianIceBomb: //476
+                    {
+                        if (ob.Race != ObjectType.Player && ob.Race != ObjectType.Monster && ob.Race != ObjectType.Hero) return;
+                        if (ob.Dead) return;
+                        if (ob == Caster) return;
+                        if (!ob.IsAttackTarget(Caster)) return;
+
+                        if (Value == 0) return;
+                        ob.Struck(Value, DefenceType.AC);
+                    }
+                    break;
+                case Spell.GroundFissure: //498
+                    {
+                        if (ob.Dead) return;
+                        if (ob == Caster) return;
+                        if (!ob.IsAttackTarget(Caster)) return;
+                        if (Value == 0) return;
+
+                        ob.Struck(Value, DefenceType.AC);
+                    }
+                    break;
+                case Spell.SkeletonBomb: //508
+                    {
+                        if (ob.Race != ObjectType.Player && ob.Race != ObjectType.Monster && ob.Race != ObjectType.Hero) return;
+                        if (ob.Dead) return;
+                        if (ob == Caster) return;
+                        if (!ob.IsAttackTarget(Caster)) return;
+                        if (Value == 0) return;
+
+                        ob.Struck(Value, DefenceType.AC);
+                    }
+                    break;
+                case Spell.FlameExplosion: //509
+                    {
+                        if (ob.Race != ObjectType.Player && ob.Race != ObjectType.Monster && ob.Race != ObjectType.Hero) return;
+                        if (ob.Dead) return;
+                        if (ob == Caster) return;
+                        if (!ob.IsAttackTarget(Caster)) return;
+                        if (Value == 0) return;
+
+                        ob.Struck(Value, DefenceType.AC);
+                    }
+                    break;
+                case Spell.ButcherFlyAxe: //516
+                    {
+                        if (ob.Race != ObjectType.Player && ob.Race != ObjectType.Monster && ob.Race != ObjectType.Hero) return;
+                        if (ob.Dead) return;
+                        if (ob == Caster) return;
+                        if (!ob.IsAttackTarget(Caster)) return;
+                        if (Value == 0) return;
+
+                        ob.Struck(Value, DefenceType.AC);
+                    }
+                    break;
+                case Spell.RiklebitesRollCall: //518
+                    {
+                        if (ob.Dead) return;
+                        if (ob == Caster) return;
+                        if (!ob.IsAttackTarget(Caster)) return;
+                        if (Value == 0) return;
+
+                        ob.Struck(Value, DefenceType.AC);
+                    }
+                    break;
+                case Spell.RiklebitesBlast: //518
+                    {
+                        if (ob.Race != ObjectType.Player && ob.Race != ObjectType.Monster && ob.Race != ObjectType.Hero) return;
+                        if (ob.Dead) return;
+                        if (ob == Caster) return;
+                        if (!ob.IsAttackTarget(Caster)) return;
+                        if (Value == 0) return;
+
+                        ob.Struck(Value, DefenceType.AC);
+                    }
+                    break;
+                case Spell.SwordFormation: //550
+                    {
+                        if (ob.Race != ObjectType.Player && ob.Race != ObjectType.Monster && ob.Race != ObjectType.Hero) return;
+                        if (ob.Dead) return;
+                        if (ob == Caster) return;
+                        if (!ob.IsAttackTarget(Caster)) return;
+                        if (Value == 0) return;
+
+                        ob.Struck(Value, DefenceType.AC);
+                    }
+                    break;
+                case Spell.尊者旋风: //564
+                    {
+                        if (ob.Race != ObjectType.Player && ob.Race != ObjectType.Monster && ob.Race != ObjectType.Hero) return;
+                        if (ob.Dead) return;
+                        if (ob == Caster) return;
+                        if (!ob.IsAttackTarget(Caster)) return;
+                        if (Value == 0) return;
+
+                        ob.Struck(Value, DefenceType.MAC);
                     }
                     break;
             }
@@ -375,7 +559,7 @@ namespace Server.MirObjects
         public void DetonateTrapNow()
         {
             DetonatedTrap = true;
-            Broadcast(GetInfo());
+            Broadcast(GetInfo()); //新增游戏卡顿测试标注项
             ExpireTime = Envir.Time + 1000;
         }
 
@@ -479,9 +663,21 @@ namespace Server.MirObjects
                 case Spell.TreeQueenGroundRoots:
                 case Spell.FlyingStatueIceTornado:
                 case Spell.DarkOmaKingNuke:
-                case Spell.HornedSorcererDustTornado:
-                case Spell.HornedCommanderRockFall:
-                case Spell.HornedCommanderRockSpike:
+                case Spell.HornedSorcererDustTornado: //406
+                case Spell.HornedCommanderRockFall: //409                
+                case Spell.HornedCommanderRockSpike: //409
+                case Spell.HealingCircle:
+                case Spell.HealingcircleRare://自添加阴阳五行阵-秘籍
+                case Spell.YangDragonFlame: //414
+                case Spell.YangDragonIcyBurst: //414
+                case Spell.ShardGuardianIceBomb: //476
+                case Spell.GroundFissure: //498
+                case Spell.SkeletonBomb: //508
+                case Spell.FlameExplosion: //509
+                case Spell.ButcherFlyAxe: //516
+                case Spell.RiklebitesBlast: //518
+                case Spell.SwordFormation: //550
+                case Spell.尊者旋风: //564
                     if (!Show)
                         return null;
 

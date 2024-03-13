@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Globalization;
-using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using Client.MirControls;
 using Client.MirGraphics;
@@ -12,19 +9,13 @@ using Client.MirNetwork;
 using Client.MirObjects;
 using Client.MirSounds;
 using SlimDX;
-using SlimDX.Direct3D9;
-using Font = System.Drawing.Font;
-using S = ServerPackets;
 using C = ClientPackets;
-using Effect = Client.MirObjects.Effect;
-
-using Client.MirScenes.Dialogs;
-using System.Drawing.Imaging;
+using Font = System.Drawing.Font;
 
 namespace Client.MirScenes.Dialogs
 {
     public sealed class BigMapDialog : MirImageControl
-    {        
+    {
         MirLabel CoordinateLabel, TitleLabel;
         public MirButton CloseButton, ScrollUpButton, ScrollDownButton, ScrollBar, WorldButton, MyLocationButton, TeleportToButton, SearchButton;
         public MirTextBox SearchTextBox;
@@ -87,7 +78,7 @@ namespace Client.MirScenes.Dialogs
                     TeleportToButton.Enabled = false;
                 }
             }
-        }         
+        }
 
         private BigMapRecord currentRecord;
         public BigMapRecord CurrentRecord
@@ -103,22 +94,24 @@ namespace Client.MirScenes.Dialogs
                 SetButtonsVisibility(true);
             }
         }
+
         public BigMapDialog()
         {
             Index = 820;
             Library = Libraries.Title;
+            Movable = true;//大地图窗口可移动
             Sort = true;
             Location = Center;
-            NotControl = false;            
+            NotControl = false;
 
             ScrollUpButton = new MirButton
             {
                 Index = 197,
-                HoverIndex = 198,                
+                HoverIndex = 198,
                 PressedIndex = 199,
                 Location = new Point(Size.Width - 21, 48),
                 Library = Libraries.Prguse2,
-                Parent = this,                
+                Parent = this,
                 Sound = SoundList.ButtonA,
             };
             ScrollUpButton.Click += (o, e) => ScrollUp();
@@ -183,11 +176,12 @@ namespace Client.MirScenes.Dialogs
             };
             MyLocationButton.Click += (o, e) => TargetMyLocation();
 
+
             TeleportToButton = new MirButton
             {
                 Index = 821,
                 HoverIndex = 822,
-                PressedIndex = 823, 
+                PressedIndex = 823,
                 DisabledIndex = 823,
                 Enabled = false,
                 Location = new Point(Size.Width - 122, 432),
@@ -202,11 +196,12 @@ namespace Client.MirScenes.Dialogs
                 Index = 1340,
                 HoverIndex = 1341,
                 PressedIndex = 1342,
-                Enabled = false,
+                Enabled = true,
                 Location = new Point(23, Size.Height - 36),
                 Library = Libraries.Prguse2,
                 Parent = this,
                 Sound = SoundList.ButtonA,
+                Hint = "搜索NPC"
             };
             SearchButton.Click += (o, e) => Search();
 
@@ -218,7 +213,6 @@ namespace Client.MirScenes.Dialogs
                 Size = new Size(130, 10),
                 MaxLength = Globals.MaxChatLength
             };
-            SearchTextBox.TextBox.TextChanged += SearchTextBox_TextChanged;
             SearchTextBox.TextBox.KeyPress += SearchTextBox_KeyPress;
 
             ViewPort = new BigMapViewPort()
@@ -246,7 +240,7 @@ namespace Client.MirScenes.Dialogs
             };
 
             WorldMap = new WorldMapImage()
-            {                
+            {
                 Parent = this,
                 Location = new Point(10, 0)
             };
@@ -261,7 +255,9 @@ namespace Client.MirScenes.Dialogs
                 PressedIndex = 362,
                 Sound = SoundList.ButtonA,
             };
-            CloseButton.Click += (o, e) => Hide();            
+            CloseButton.Click += (o, e) => Hide();
+
+            SearchTextBox.Enabled = false;
         }
 
         private void MakeCoordinateLabel()
@@ -295,8 +291,13 @@ namespace Client.MirScenes.Dialogs
 
         public override void Show()
         {
+            var map = GameScene.Scene.MapControl;
+            if (map.BigMap <= 0) return;
+
+            SearchTextBox.Enabled = false;
+
             base.Show();
-            TargetMyLocation();            
+            TargetMyLocation();
         }
 
         private void TargetMyLocation()
@@ -346,7 +347,7 @@ namespace Client.MirScenes.Dialogs
         private void SetMovementButtonsVisibility(bool visible)
         {
             foreach (var button in currentRecord.MovementButtons.Values)
-                button.Visible = visible;            
+                button.Visible = visible;
         }
         private void SetNPCButtonVisibility(bool visible)
         {
@@ -367,7 +368,7 @@ namespace Client.MirScenes.Dialogs
             ScrollBar.Visible = true;
             var scrollHeight = ScrollDownButton.Location.Y - ScrollUpButton.Location.Y - 32;
             var extraRows = currentRecord.NPCButtons.Count - MaximumRows;
-            GapPerRow = scrollHeight / (float)extraRows;            
+            GapPerRow = scrollHeight / (float)extraRows;
         }
 
         public void BigMap_MouseWheel(object sender, MouseEventArgs e)
@@ -405,12 +406,12 @@ namespace Client.MirScenes.Dialogs
         {
             if (SelectedNPC == null || !SelectedNPC.Info.CanTeleportTo) return;
 
-            MirMessageBox messageBox = new MirMessageBox($"Teleport to this NPC for {GameScene.TeleportToNPCCost} Gold?", MirMessageBoxButtons.YesNo);
+            MirMessageBox messageBox = new MirMessageBox($" 花费{GameScene.TeleportToNPCCost}金币移动到此NPC ", MirMessageBoxButtons.YesNo);
             messageBox.YesButton.Click += (o, e) =>
             {
                 if (GameScene.Gold < GameScene.TeleportToNPCCost)
                 {
-                    MirMessageBox messageBox2 = new MirMessageBox("Not enough Gold.", MirMessageBoxButtons.OK);
+                    MirMessageBox messageBox2 = new MirMessageBox("金币不足", MirMessageBoxButtons.OK);
                     messageBox2.Show();
                     return;
                 }
@@ -422,15 +423,18 @@ namespace Client.MirScenes.Dialogs
 
         private void Search()
         {
+            if (!SearchTextBox.Enabled)
+            {
+                SearchTextBox.Enabled = true;
+                SearchTextBox.SetFocus();
+            }
+
+            if (!string.IsNullOrWhiteSpace(SearchTextBox.Text) && SearchTextBox.Text.Length > 2) return;
+
             if (CMain.Now < NextSearchTime) return;
 
             NextSearchTime = CMain.Now.AddSeconds(1);
             Network.Enqueue(new C.SearchMap { Text = SearchTextBox.Text });
-        }
-
-        private void SearchTextBox_TextChanged(object sender, EventArgs e)
-        {
-            SearchButton.Enabled = !string.IsNullOrWhiteSpace(SearchTextBox.Text) && SearchTextBox.Text.Length > 2;
         }
 
         public void SearchTextBox_KeyPress(object sender, KeyPressEventArgs e)
@@ -469,7 +473,8 @@ namespace Client.MirScenes.Dialogs
 
     public class WorldMapImage : MirImageControl
     {
-        private MirImageControl Border, Clouds;
+        private new MirImageControl Border;
+        private MirImageControl Clouds;
         private List<MirButton> ButtonList = new List<MirButton>();
         private MirLabel TitleLabel;
         public WorldMapImage()
@@ -487,7 +492,7 @@ namespace Client.MirScenes.Dialogs
                 NotControl = true,
                 Visible = true,
                 Blending = true
-                
+
             };
 
             Border = new MirImageControl()
@@ -551,6 +556,9 @@ namespace Client.MirScenes.Dialogs
 
         int BigMap_MouseCoordsProcessing_OffsetX, BigMap_MouseCoordsProcessing_OffsetY;
 
+        public MirImageControl[] Players;
+        public static Dictionary<string, Point> PlayerLocations = new Dictionary<string, Point>();
+
         public BigMapViewPort()
         {
             NotControl = false;
@@ -574,9 +582,23 @@ namespace Client.MirScenes.Dialogs
                 NotControl = true
             };
 
+            Players = new MirImageControl[Globals.MaxGroup];
+            for (int i = 0; i < Players.Length; i++)
+            {
+                Players[i] = new MirImageControl
+                {
+                    Index = 1350,
+                    Library = Libraries.Prguse2,
+                    Parent = this,
+                    NotControl = false,
+                    Visible = false,
+                };
+            }
+
             BeforeDraw += (o, e) => OnBeforeDraw();
             MouseMove += UpdateBigMapCoordinates;
             ParentChanged += (o, e) => SetParent();
+            MouseDown += OnMouseClick;
         }
 
         private void SetParent()
@@ -592,17 +614,37 @@ namespace Client.MirScenes.Dialogs
             ParentDialog.MouseLocation = new Point(MouseCoordsOnBigMap_MapValue_X, MouseCoordsOnBigMap_MapValue_Y);
         }
 
+
+        private void OnMouseClick(object sender, MouseEventArgs e)
+        {
+            int X = (int)((e.Location.X - BigMap_MouseCoordsProcessing_OffsetX) / ScaleX);
+            int Y = (int)((e.Location.Y - BigMap_MouseCoordsProcessing_OffsetY) / ScaleY);
+
+            var path = GameScene.Scene.MapControl.PathFinder.FindPath(MapObject.User.CurrentLocation, new Point(X, Y));
+
+            if (path == null || path.Count == 0)
+            {
+                GameScene.Scene.ChatDialog.ReceiveChat("目标地点不可用,无适宜的路线", ChatType.System);
+            }
+            else
+            {
+                GameScene.Scene.MapControl.CurrentPath = path;
+                GameScene.Scene.MapControl.AutoPath = true;
+            }
+        }
+
+
         private void OnBeforeDraw()
         {
             if (!Parent.Visible) return;
 
-            MouseMove -= UpdateBigMapCoordinates;            
+            MouseMove -= UpdateBigMapCoordinates;
 
             BigMapRecord currentRecord;
             if (!GameScene.MapInfoList.TryGetValue(ParentDialog.TargetMapIndex, out currentRecord))
                 return;
 
-            ParentDialog.CurrentRecord = currentRecord;              
+            ParentDialog.CurrentRecord = currentRecord;
             int index = currentRecord.MapInfo.BigMap;
 
             if (index <= 0)
@@ -614,7 +656,7 @@ namespace Client.MirScenes.Dialogs
             Rectangle viewRect = new Rectangle(0, 0, Math.Min(568, Size.Width), Math.Min(380, Size.Height));
 
             viewRect.X = 14 + (568 - viewRect.Width) / 2;
-            viewRect.Y = 52 + (380 - viewRect.Height) / 2;            
+            viewRect.Y = 52 + (380 - viewRect.Height) / 2;
 
             Location = viewRect.Location;
             Size = viewRect.Size;
@@ -662,7 +704,7 @@ namespace Client.MirScenes.Dialogs
                     else
                         if (ob is PlayerObject)
                         colour = Color.FromArgb(255, 255, 255);
-                    else if (ob is NPCObject || ob.AI == 6)
+                    else if (ob is NPCObject || ob.AI == 980) //自添加AI扩容
                         colour = Color.FromArgb(0, 255, 50);
                     else
                         colour = Color.FromArgb(255, 0, 0);
@@ -672,8 +714,52 @@ namespace Client.MirScenes.Dialogs
 
                 x = MapObject.User.CurrentLocation.X * ScaleX;
                 y = MapObject.User.CurrentLocation.Y * ScaleY;
-                var s = UserRadarDot.Size;                
+                var s = UserRadarDot.Size;
                 UserRadarDot.Location = new Point((int)x - s.Width / 2, (int)y - s.Height / 2);
+
+                if (GroupDialog.GroupList.Count > 0)
+                {
+                    for (int i = 0; i < GameScene.Scene.GroupDialog.GroupMembers.Length; i++)
+                    {
+                        string groupMembersName = GameScene.Scene.GroupDialog.GroupMembers[i].Text;
+                        Players[i].Visible = false;
+
+                        foreach (var groupMembersMap in GroupDialog.GroupMembersMap.Where(x => x.Key == groupMembersName && x.Value == map.Title))
+                        {
+                            foreach (var groupMemberLocation in PlayerLocations.Where(x => x.Key == groupMembersMap.Key))
+                            {
+
+                                float alteredX = ((groupMemberLocation.Value.X - startPointX) * ScaleX);
+                                float alteredY = ((groupMemberLocation.Value.Y - startPointY) * ScaleY);
+
+                                if (groupMembersName != MapObject.User.Name)
+                                    Players[i].Visible = true;
+
+                                Players[i].Hint = groupMemberLocation.Key;
+                                Players[i].Location = new Point((int)(alteredX - 0.5F) - 3, (int)(alteredY - 0.5F) - 3);
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < Players.Length; i++)
+                    {
+                        Players[i].Visible = false;
+                    }
+                }
+
+
+
+
+
+            }
+            else
+            {
+                for (int i = 0; i < Players.Length; i++)
+                {
+                    Players[i].Visible = false;
+                }
             }
 
             foreach (var record in ParentDialog.CurrentRecord.MovementButtons)
@@ -726,7 +812,7 @@ namespace Client.MirScenes.Dialogs
                     if (splitName[s] == string.Empty) continue;
                     if (s == splitName.Count() - 1)
                         name += splitName[s];
-                    else name += $"({splitName[s]})";
+                    else name += $"『{splitName[s]}』"; //英文格式：else name += $"({splitName[s]})";
                 }
             }
 
@@ -775,6 +861,6 @@ namespace Client.MirScenes.Dialogs
         public List<BigMapNPCRow> NPCButtons = new List<BigMapNPCRow>();
 
         public BigMapRecord() { }
-    }  
-   
+    }
+
 }

@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.IO;
-using Server.MirEnvir;
 using System.Drawing;
+using System.Linq;
 using Server.MirDatabase;
-using Server.MirObjects.Monsters;
+using Server.MirEnvir;
 
 namespace Server.MirObjects
 {
@@ -92,7 +89,7 @@ namespace Server.MirObjects
 
         public void Bind()
         {
-            //Bind Info to Saved Archer objects or create new objects
+            //将信息绑定到保存的弓箭对象或创建新对象
             for (var j = 0; j < Info.ConquestGuards.Count; j++)
             {
                 var tempArcher = GuildInfo.ArcherList.FirstOrDefault(x => x.Index == Info.ConquestGuards[j].Index);
@@ -108,7 +105,7 @@ namespace Server.MirObjects
                 }
             }
 
-            //Remove archers that have been removed from DB
+            //删除已移除的弓箭手的DB
             for (var j = 0; j < GuildInfo.ArcherList.Count; j++)
             {
                 if (GuildInfo.ArcherList[j].Info == null)
@@ -117,7 +114,7 @@ namespace Server.MirObjects
                 }
             }
 
-            //Bind Info to Saved Gate objects or create new objects
+            //将信息绑定到保存的门对象或创建新对象
             for (var j = 0; j < Info.ConquestGates.Count; j++)
             {
                 var tempGate = GuildInfo.GateList.FirstOrDefault(x => x.Index == Info.ConquestGates[j].Index);
@@ -133,13 +130,13 @@ namespace Server.MirObjects
                 }
             }
 
-            //Bind Info to Saved Flag objects or create new objects
+            //将信息绑定到保存的标志对象或创建新对象
             for (var j = 0; j < Info.ConquestFlags.Count; j++)
             {
                 GuildInfo.FlagList.Add(new ConquestGuildFlagInfo { Info = Info.ConquestFlags[j], Index = Info.ConquestFlags[j].Index, Conquest = this });
             }
 
-            //Remove Gates that have been removed from DB
+            //移除已从中移除的大门DB
             for (var j = 0; j < GuildInfo.GateList.Count; j++)
             {
                 if (GuildInfo.GateList[j].Info == null)
@@ -148,7 +145,7 @@ namespace Server.MirObjects
                 }
             }
 
-            //Bind Info to Saved Wall objects or create new objects
+            //将信息绑定到保存的墙对象或创建新对象
             for (var j = 0; j < Info.ConquestWalls.Count; j++)
             {
                 var tempWall = GuildInfo.WallList.FirstOrDefault(x => x.Index == Info.ConquestWalls[j].Index);
@@ -164,7 +161,7 @@ namespace Server.MirObjects
                 }
             }
 
-            //Remove Walls that have been removed from DB
+            //删除已从中删除的墙DB
             for (var j = 0; j < GuildInfo.WallList.Count; j++)
             {
                 if (GuildInfo.WallList[j].Info == null)
@@ -174,7 +171,7 @@ namespace Server.MirObjects
             }
 
 
-            //Bind Info to Saved Siege objects or create new objects
+            //将信息绑定到保存的围攻对象或创建新对象
             for (var j = 0; j < Info.ConquestSieges.Count; j++)
             {
                 var tempSiege = GuildInfo.SiegeList.FirstOrDefault(x => x.Index == Info.ConquestSieges[j].Index);
@@ -190,7 +187,7 @@ namespace Server.MirObjects
                 }
             }
 
-            //Remove Siege that have been removed from DB
+            //移除已移除的围城DB
             for (var j = 0; j < GuildInfo.SiegeList.Count; j++)
             {
                 if (GuildInfo.SiegeList[j].Info == null)
@@ -199,7 +196,7 @@ namespace Server.MirObjects
                 }
             }
 
-            //Bind Info to Saved Flag objects or create new objects
+            //将信息绑定到保存的标志对象或创建新对象
             for (var j = 0; j < Info.ControlPoints.Count; j++)
             {
                 ConquestGuildFlagInfo cp;
@@ -323,7 +320,7 @@ namespace Server.MirObjects
         {
             if (WarIsOn)
             {
-                if (StartType == ConquestType.Forced)
+                if (StartType == ConquestType.强制启动)
                 {
                     WarStartTime = Envir.Now;
                     WarEndTime = WarStartTime.AddMinutes(Info.WarLength);
@@ -334,14 +331,14 @@ namespace Server.MirObjects
 
                 switch (GameType)
                 {
-                    case ConquestGame.CapturePalace:
+                    case ConquestGame.占领皇宫:
                         break;
-                    case ConquestGame.KingOfHill:
+                    case ConquestGame.争夺国王:
                         CreateZone(true);
                         break;
-                    case ConquestGame.Random:
+                    case ConquestGame.随机模式:
                         break;
-                    case ConquestGame.Classic:
+                    case ConquestGame.经典模式:
                         break;
                 }
 
@@ -358,21 +355,21 @@ namespace Server.MirObjects
 
                 switch (StartType)
                 {
-                    case ConquestType.Request:
+                    case ConquestType.申请启动:
                         GuildInfo.AttackerID = -1;
                         break;
                 }
 
                 switch (GameType)
                 {
-                    case ConquestGame.CapturePalace:
+                    case ConquestGame.占领皇宫:
                         break;
-                    case ConquestGame.KingOfHill:
+                    case ConquestGame.争夺国王:
                         CreateZone(false);
                         break;
-                    case ConquestGame.Random:
+                    case ConquestGame.随机模式:
                         break;
-                    case ConquestGame.Classic:
+                    case ConquestGame.经典模式:
                         break;
                 }
             }
@@ -474,12 +471,12 @@ namespace Server.MirObjects
             int finish = ((Info.StartHour * 60) + Info.WarLength);
             int now = ((Envir.Now.Hour * 60) + Envir.Now.Minute);
 
-            if (WarIsOn && StartType == ConquestType.Forced && WarEndTime <= Envir.Now)
+            if (WarIsOn && StartType == ConquestType.强制启动 && WarEndTime <= Envir.Now)
             {
                 EndWar(Info.Game);
             }
             
-            if (StartType != ConquestType.Forced)
+            if (StartType != ConquestType.强制启动)
             {
                 if (WarIsOn && (now > start && finish <= now))
                 {
@@ -489,7 +486,7 @@ namespace Server.MirObjects
                 {
                     if (!WarIsOn)
                     {
-                        if (Info.Type == ConquestType.Request)
+                        if (Info.Type == ConquestType.申请启动)
                         {
                             if (GuildInfo.AttackerID != -1)
                             {
@@ -514,7 +511,7 @@ namespace Server.MirObjects
         public void Process()
         {
             if (ScheduleTimer < Envir.Time) AutoSchedule();
-            if (WarIsOn && (GameType == ConquestGame.KingOfHill || GameType == ConquestGame.Classic || GameType == ConquestGame.ControlPoints)) ScorePoints();
+            if (WarIsOn && (GameType == ConquestGame.争夺国王 || GameType == ConquestGame.经典模式 || GameType == ConquestGame.征服模式)) ScorePoints();
         }
 
         public void Reset()
@@ -556,7 +553,7 @@ namespace Server.MirObjects
 
         public void TakeConquest(PlayerObject player = null, GuildObject winningGuild = null)
         {
-            if (winningGuild == null && (player == null || player.MyGuild == null || player.MyGuild.Conquest != null)) return;
+            if (winningGuild == null && (player == null || player.MyGuild == null || player.MyGuild.Conquest != null || player.Dead)) return;
             if (winningGuild != null && winningGuild.Conquest != null) return;
             if (player != null && player.MyGuild != null && player.MyGuild.Conquest != null) return;
 
@@ -564,9 +561,8 @@ namespace Server.MirObjects
 
             switch (GameType)
             {
-                case ConquestGame.CapturePalace:
-                    if (player == null) return;
-                    if (StartType == ConquestType.Request)
+                case ConquestGame.占领皇宫:
+                    if (StartType == ConquestType.申请启动)
                         if (player.MyGuild.Guildindex != GuildInfo.AttackerID) break;
 
                     if (Guild != null)
@@ -581,9 +577,9 @@ namespace Server.MirObjects
                     player.MyGuild.Conquest = this;
                     EndWar(GameType);
                     break;
-                case ConquestGame.KingOfHill:
-                case ConquestGame.Classic:
-                    if (StartType == ConquestType.Request)
+                case ConquestGame.争夺国王:
+                case ConquestGame.经典模式:
+                    if (StartType == ConquestType.申请启动)
                         if (winningGuild.Guildindex != GuildInfo.AttackerID) break;
 
                     if (Guild != null)
@@ -597,7 +593,13 @@ namespace Server.MirObjects
                     Guild = winningGuild;
                     Guild.Conquest = this;
                     break;
-                case ConquestGame.ControlPoints:
+                case ConquestGame.征服模式:
+
+                    if (Guild != null)
+                    {
+                        tmpPrevious = Guild;
+                    }
+
                     GuildInfo.Owner = winningGuild.Guildindex;
                     Guild = winningGuild;
                     Guild.Conquest = this;
@@ -619,10 +621,15 @@ namespace Server.MirObjects
                 FlagList[i].UpdateColour();
             }
 
-            if (Guild != null)
+            if (Guild != null &&
+                (tmpPrevious == null || Guild != tmpPrevious))
             {
                 UpdatePlayers(Guild);
-                if (tmpPrevious != null) UpdatePlayers(tmpPrevious);
+                if (tmpPrevious != null)
+                {
+                    tmpPrevious.Conquest = null;
+                    UpdatePlayers(tmpPrevious);
+                }
                 GuildInfo.NeedSave = true;
             }
         }
@@ -715,7 +722,7 @@ namespace Server.MirObjects
 
             switch (GameType)
             {
-                case ConquestGame.ControlPoints:
+                case ConquestGame.征服模式:
                     {
                         int points;
 
@@ -794,7 +801,7 @@ namespace Server.MirObjects
                         }
                     }
                     break;
-                case ConquestGame.KingOfHill:
+                case ConquestGame.争夺国王:
                     {
                         int points;
 
@@ -802,7 +809,7 @@ namespace Server.MirObjects
                         {
                             if (ConquestMap.Players[i].WarZone && ConquestMap.Players[i].MyGuild != null && !ConquestMap.Players[i].Dead && Functions.InRange(Info.KingLocation, ConquestMap.Players[i].CurrentLocation, Info.KingSize))
                             {
-                                if (StartType == ConquestType.Request && ConquestMap.Players[i].MyGuild.Guildindex != GuildInfo.AttackerID) continue;
+                                if (StartType == ConquestType.申请启动 && ConquestMap.Players[i].MyGuild.Guildindex != GuildInfo.AttackerID) continue;
 
                                 if (ConquestMap.Players[i].MyGuild.Conquest != null && ConquestMap.Players[i].MyGuild.Conquest != this) continue;
 
@@ -866,7 +873,7 @@ namespace Server.MirObjects
                         }
                     }
                     break;
-                case ConquestGame.Classic:
+                case ConquestGame.经典模式:
                     int guildCounter = 0;
                     GuildObject takingGuild = null;
                     for (int i = 0; i < PalaceMap.Players.Count; i++)
@@ -888,7 +895,7 @@ namespace Server.MirObjects
 
                     if (guildCounter == 1 && takingGuild != Guild)
                     {
-                        if (StartType == ConquestType.Request && takingGuild.Guildindex != GuildInfo.AttackerID) return;
+                        if (StartType == ConquestType.申请启动 && takingGuild.Guildindex != GuildInfo.AttackerID) return;
 
                         TakeConquest(null, takingGuild);
                     }
@@ -903,6 +910,9 @@ namespace Server.MirObjects
         public void StartWar(ConquestGame type)
         {
             WarIsOn = true;
+
+            foreach (var pl in Envir.Players)
+                pl.BroadcastInfo();
         }
 
         public void EndWar(ConquestGame type)
@@ -911,7 +921,7 @@ namespace Server.MirObjects
 
             switch(type)
             {
-                case ConquestGame.ControlPoints:
+                case ConquestGame.征服模式:
                     Dictionary<GuildObject, int> controlledPoints = new Dictionary<GuildObject, int>();
                     int count = 0;
 
@@ -954,6 +964,9 @@ namespace Server.MirObjects
 
                     break;
             }
+
+            foreach (var pl in Envir.Players)
+                pl.BroadcastInfo();
         }
     }
 }

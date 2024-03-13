@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Text;
 using Client.MirScenes;
 using Client.MirScenes.Dialogs;
 using S = ServerPackets;
@@ -156,20 +155,20 @@ namespace Client.MirObjects
             SetLibraries();
             SetEffects();
 
-            Stats[Stat.HP] += (Stats[Stat.HP] * Stats[Stat.HPRatePercent]) / 100;
-            Stats[Stat.MP] += (Stats[Stat.MP] * Stats[Stat.MPRatePercent]) / 100;
-            Stats[Stat.MaxAC] += (Stats[Stat.MaxAC] * Stats[Stat.MaxACRatePercent]) / 100;
-            Stats[Stat.MaxMAC] += (Stats[Stat.MaxMAC] * Stats[Stat.MaxMACRatePercent]) / 100;
+            Stats[Stat.HP] += (Stats[Stat.HP] * Stats[Stat.生命值数率]) / 100;
+            Stats[Stat.MP] += (Stats[Stat.MP] * Stats[Stat.法力值数率]) / 100;
+            Stats[Stat.MaxAC] += (Stats[Stat.MaxAC] * Stats[Stat.最大防御数率]) / 100;
+            Stats[Stat.MaxMAC] += (Stats[Stat.MaxMAC] * Stats[Stat.最大魔御数率]) / 100;
 
-            Stats[Stat.MaxDC] += (Stats[Stat.MaxDC] * Stats[Stat.MaxDCRatePercent]) / 100;
-            Stats[Stat.MaxMC] += (Stats[Stat.MaxMC] * Stats[Stat.MaxMCRatePercent]) / 100;
-            Stats[Stat.MaxSC] += (Stats[Stat.MaxSC] * Stats[Stat.MaxSCRatePercent]) / 100;
-            Stats[Stat.AttackSpeed] += (Stats[Stat.AttackSpeed] * Stats[Stat.AttackSpeedRatePercent]) / 100;
+            Stats[Stat.MaxDC] += (Stats[Stat.MaxDC] * Stats[Stat.最大物理攻击数率]) / 100;
+            Stats[Stat.MaxMC] += (Stats[Stat.MaxMC] * Stats[Stat.最大魔法攻击数率]) / 100;
+            Stats[Stat.MaxSC] += (Stats[Stat.MaxSC] * Stats[Stat.最大道术攻击数率]) / 100;
+            Stats[Stat.攻击速度] += (Stats[Stat.攻击速度] * Stats[Stat.攻击速度数率]) / 100;
 
             RefreshStatCaps();
 
             if (this == User && Light < 3) Light = 3;
-            AttackSpeed = 1400 - ((Stats[Stat.AttackSpeed] * 60) + Math.Min(370, (Level * 14)));
+            AttackSpeed = 1400 - ((Stats[Stat.攻击速度] * 60) + Math.Min(370, (Level * 14)));
             if (AttackSpeed < 550) AttackSpeed = 550;
 
             PercentHealth = (byte)(HP / (float)Stats[Stat.HP] * 100);
@@ -225,27 +224,28 @@ namespace Client.MirObjects
 
                 ItemInfo realItem = Functions.GetRealItem(temp.Info, Level, Class, GameScene.ItemInfoList);
 
-                if (realItem.Type == ItemType.Weapon || realItem.Type == ItemType.Torch)
+                if (realItem.Type == ItemType.武器 || realItem.Type == ItemType.照明物)
                     CurrentHandWeight = (int)Math.Min(int.MaxValue, CurrentHandWeight + temp.Weight);
                 else
                     CurrentWearWeight = (int)Math.Min(int.MaxValue, CurrentWearWeight + temp.Weight);
 
                 if (temp.CurrentDura == 0 && realItem.Durability > 0) continue;
 
-                if (realItem.Type == ItemType.Armour)
+                if (realItem.Type == ItemType.盔甲)
                 {
                     Armour = realItem.Shape;
                     WingEffect = realItem.Effect;
                 }
-                if (realItem.Type == ItemType.Weapon)
+                if (realItem.Type == ItemType.武器)
                 {
                     Weapon = realItem.Shape;
                     WeaponEffect = realItem.Effect;
                 }
 
-                if (realItem.Type == ItemType.Mount)
+                if (realItem.Type == ItemType.坐骑)
                 {
                     MountType = realItem.Shape;
+                    //RealItem.Effect; //在这里写坐骑特效代码？
                 }
 
                 if (temp.Info.IsFishingRod) continue;
@@ -281,7 +281,7 @@ namespace Client.MirObjects
 
                 RefreshSocketStats(temp);
 
-                if (realItem.Set == ItemSet.None) continue;
+                if (realItem.Set == ItemSet.非套装) continue;
 
                 ItemSets itemSet = ItemSets.Where(set => set.Set == realItem.Set && !set.Type.Contains(realItem.Type) && !set.SetComplete).FirstOrDefault();
 
@@ -296,7 +296,7 @@ namespace Client.MirObjects
                 }
 
                 //Mir Set
-                if (realItem.Set == ItemSet.Mir)
+                if (realItem.Set == ItemSet.天龙套装)
                 {
                     if (!MirSet.Contains((EquipmentSlot)i))
                         MirSet.Add((EquipmentSlot)i);
@@ -305,9 +305,9 @@ namespace Client.MirObjects
 
             if (ItemMode.HasFlag(SpecialItemMode.Muscle))
             {
-                Stats[Stat.BagWeight] = Stats[Stat.BagWeight] * 2;
-                Stats[Stat.WearWeight] = Stats[Stat.WearWeight] * 2;
-                Stats[Stat.HandWeight] = Stats[Stat.HandWeight] * 2;
+                Stats[Stat.背包负重] = Stats[Stat.背包负重] * 2;
+                Stats[Stat.装备负重] = Stats[Stat.装备负重] * 2;
+                Stats[Stat.腕力负重] = Stats[Stat.腕力负重] * 2;
             }
         }
 
@@ -316,12 +316,12 @@ namespace Client.MirObjects
         {
             if (equipItem == null) return;
 
-            if (equipItem.Info.Type == ItemType.Weapon && equipItem.Info.IsFishingRod)
+            if (equipItem.Info.Type == ItemType.武器 && equipItem.Info.IsFishingRod)
             {
                 return;
             }
 
-            if (equipItem.Info.Type == ItemType.Mount && !RidingMount)
+            if (equipItem.Info.Type == ItemType.坐骑 && !RidingMount)
             {
                 return;
             }
@@ -333,7 +333,7 @@ namespace Client.MirObjects
                 if (temp == null) continue;
                 ItemInfo realItem = Functions.GetRealItem(temp.Info, Level, Class, GameScene.ItemInfoList);
 
-                if (realItem.Type == ItemType.Weapon || realItem.Type == ItemType.Torch)
+                if (realItem.Type == ItemType.武器 || realItem.Type == ItemType.照明物)
                     CurrentHandWeight = (int)Math.Min(int.MaxValue, CurrentHandWeight + temp.Weight);
                 else
                     CurrentWearWeight = (int)Math.Min(int.MaxValue, CurrentWearWeight + temp.Weight);
@@ -355,167 +355,217 @@ namespace Client.MirObjects
         {
             foreach (var s in ItemSets)
             {
-                if ((s.Set == ItemSet.Smash) &&
-                    ((s.Type.Contains(ItemType.Ring) && s.Type.Contains(ItemType.Bracelet)) || (s.Type.Contains(ItemType.Ring) && s.Type.Contains(ItemType.Necklace)) || (s.Type.Contains(ItemType.Bracelet) && s.Type.Contains(ItemType.Necklace))))
+                if (s.Set == ItemSet.破碎套装)
                 {
-                    Stats[Stat.AttackSpeed] += 2;
+                    if (s.Type.Contains(ItemType.项链) && s.Type.Contains(ItemType.戒指) && s.Type.Contains(ItemType.手镯))
+                    {
+                        Stats[Stat.MinDC] += 1;
+                        Stats[Stat.MaxDC] += 3;
+                    }
+                    if (s.Type.Contains(ItemType.戒指) && s.Type.Contains(ItemType.手镯))
+                    {
+                        Stats[Stat.攻击速度] += 2;
+                        return;
+                    }
                 }
 
-                if ((s.Set == ItemSet.Purity) && (s.Type.Contains(ItemType.Ring)) && (s.Type.Contains(ItemType.Bracelet)))
+                if ((s.Set == ItemSet.灵玉套装) && (s.Type.Contains(ItemType.戒指)) && (s.Type.Contains(ItemType.手镯)))
                 {
-                    Stats[Stat.Holy] += 3;
+                    Stats[Stat.神圣] += 3;
                 }
 
-                if ((s.Set == ItemSet.HwanDevil) && (s.Type.Contains(ItemType.Ring)) && (s.Type.Contains(ItemType.Bracelet)))
+                if ((s.Set == ItemSet.幻魔石套) && (s.Type.Contains(ItemType.戒指)) && (s.Type.Contains(ItemType.手镯)))
                 {
-                    Stats[Stat.WearWeight] += 5;
-                    Stats[Stat.BagWeight] += 20;
+                    Stats[Stat.装备负重] += 5;
+                    Stats[Stat.背包负重] += 20;
                 }
 
-                if ((s.Set == ItemSet.DarkGhost) && (s.Type.Contains(ItemType.Necklace)) && (s.Type.Contains(ItemType.Bracelet)))
+                if ((s.Set == ItemSet.鏃未套装) && (s.Type.Contains(ItemType.项链)) && (s.Type.Contains(ItemType.手镯)))
                 {
                     Stats[Stat.HP] += 25;
+                }
+
+                if (s.Set == ItemSet.圣龙套装)
+                {
+                    if (Equipment[(int)EquipmentSlot.左戒指] != null && Equipment[(int)EquipmentSlot.右戒指] != null)
+                    {
+                        bool activateRing = false;
+
+                        if (Equipment[(int)EquipmentSlot.左戒指].Info.Name.StartsWith("双花") &&
+                            Equipment[(int)EquipmentSlot.左戒指].Info.Set == ItemSet.圣龙套装 &&
+                            Equipment[(int)EquipmentSlot.右戒指].Info.Name.StartsWith("双绿") &&
+                            Equipment[(int)EquipmentSlot.右戒指].Info.Set == ItemSet.圣龙套装)
+                        {
+                            activateRing = true;
+                        }
+
+                        if (Equipment[(int)EquipmentSlot.右戒指].Info.Name.StartsWith("双花") &&
+                            Equipment[(int)EquipmentSlot.右戒指].Info.Set == ItemSet.圣龙套装 &&
+                            Equipment[(int)EquipmentSlot.左戒指].Info.Name.StartsWith("双绿") &&
+                            Equipment[(int)EquipmentSlot.左戒指].Info.Set == ItemSet.圣龙套装)
+                        {
+                            activateRing = true;
+                        }
+
+                        if (activateRing)
+                        {
+                            Stats[Stat.MaxDC] += 5;
+                            Stats[Stat.MaxMC] += 5;
+                            Stats[Stat.MaxSC] += 5;
+                            return;
+                        }
+                    }
+                }
+
+                if (s.Set == ItemSet.神龙套装) //需在ItemData.cs中设置套装件数
+                {
+                    if (s.Type.Contains(ItemType.戒指) && s.Type.Contains(ItemType.项链))
+                    {
+                        Stats[Stat.MaxDC] += 8;
+                        Stats[Stat.MaxMC] += 8;
+                        Stats[Stat.MaxSC] += 8;
+                    }
+                    if (s.Type.Contains(ItemType.盔甲) && s.Type.Contains(ItemType.戒指) && s.Type.Contains(ItemType.手镯) && s.Type.Contains(ItemType.项链))
+                    {
+                        Stats[Stat.最大防御数率] += 20;
+                    }
                 }
 
                 if (!s.SetComplete) continue;
 
                 switch (s.Set)
                 {
-                    case ItemSet.Mundane:
+                    case ItemSet.世轮套装:
                         Stats[Stat.HP] += 50;
                         break;
-                    case ItemSet.NokChi:
+                    case ItemSet.绿翠套装:
                         Stats[Stat.MP] += 50;
                         break;
-                    case ItemSet.TaoProtect:
+                    case ItemSet.道护套装:
                         Stats[Stat.HP] += 30;
                         Stats[Stat.MP] += 30;
                         break;
-                    case ItemSet.RedOrchid:
-                        Stats[Stat.Accuracy] += 2;
-                        Stats[Stat.HPDrainRatePercent] += 10;
+                    case ItemSet.赤兰套装:
+                        Stats[Stat.准确] += 2;
+                        Stats[Stat.吸血数率] += 10;
                         break;
-                    case ItemSet.RedFlower:
+                    case ItemSet.密火套装:
                         Stats[Stat.HP] += 50;
-                        Stats[Stat.MP] -= 25;
+                        Stats[Stat.MP] -= 50;
                         break;
-                    case ItemSet.Smash:
-                        Stats[Stat.MinDC] += 1;
-                        Stats[Stat.MaxDC] += 3;
-                        break;
-                    case ItemSet.HwanDevil:
+                    case ItemSet.幻魔石套:
                         Stats[Stat.MinMC] += 1;
                         Stats[Stat.MaxMC] += 2;
                         break;
-                    case ItemSet.Purity:
+                    case ItemSet.灵玉套装:
                         Stats[Stat.MinSC] += 1;
                         Stats[Stat.MaxSC] += 2;
                         break;
-                    case ItemSet.FiveString:
+                    case ItemSet.五玄套装:
                         Stats[Stat.HP] += (int)(((double)Stats[Stat.HP] / 100) * 30);
                         Stats[Stat.MinAC] += 2;
                         Stats[Stat.MaxAC] += 2;
                         break;
-                    case ItemSet.Spirit:
+                    case ItemSet.祈祷套装:
                         Stats[Stat.MinDC] += 2;
                         Stats[Stat.MaxDC] += 5;
-                        Stats[Stat.AttackSpeed] += 2;
+                        Stats[Stat.攻击速度] += 2;
                         break;
-                    case ItemSet.Bone:
+                    case ItemSet.白骨套装:
                         Stats[Stat.MaxAC] += 2;
                         Stats[Stat.MaxMC] += 1;
                         Stats[Stat.MaxSC] += 1;
                         break;
-                    case ItemSet.Bug:
+                    case ItemSet.虫血套装:
                         Stats[Stat.MaxDC] += 1;
                         Stats[Stat.MaxMC] += 1;
                         Stats[Stat.MaxSC] += 1;
                         Stats[Stat.MaxMAC] += 1;
-                        Stats[Stat.PoisonResist] += 1;
+                        Stats[Stat.毒物躲避] += 1;
                         break;
-                    case ItemSet.WhiteGold:
+                    case ItemSet.白金套装:
                         Stats[Stat.MaxDC] += 2;
                         Stats[Stat.MaxAC] += 2;
                         break;
-                    case ItemSet.WhiteGoldH:
+                    case ItemSet.强白金套:
                         Stats[Stat.MaxDC] += 3;
                         Stats[Stat.HP] += 30;
-                        Stats[Stat.AttackSpeed] += 2;
+                        Stats[Stat.攻击速度] += 2;
                         break;
-                    case ItemSet.RedJade:
+                    case ItemSet.红玉套装:
                         Stats[Stat.MaxMC] += 2;
                         Stats[Stat.MaxMAC] += 2;
                         break;
-                    case ItemSet.RedJadeH:
+                    case ItemSet.强红玉套:
                         Stats[Stat.MaxMC] += 2;
                         Stats[Stat.MP] += 40;
-                        Stats[Stat.Agility] += 2;
+                        Stats[Stat.敏捷] += 2;
                         break;
-                    case ItemSet.Nephrite:
+                    case ItemSet.软玉套装:
                         Stats[Stat.MaxSC] += 2;
                         Stats[Stat.MaxAC] += 1;
                         Stats[Stat.MaxMAC] += 1;
                         break;
-                    case ItemSet.NephriteH:
+                    case ItemSet.强软玉套:
                         Stats[Stat.MaxSC] += 2;
                         Stats[Stat.HP] += 15;
                         Stats[Stat.MP] += 20;
-                        Stats[Stat.Holy] += 1;
-                        Stats[Stat.Accuracy] += 1;
+                        Stats[Stat.神圣] += 1;
+                        Stats[Stat.准确] += 1;
                         break;
-                    case ItemSet.Whisker1:
+                    case ItemSet.贵人战套:
                         Stats[Stat.MaxDC] += 1;
-                        Stats[Stat.BagWeight] += 25;
+                        Stats[Stat.背包负重] += 25;
                         break;
-                    case ItemSet.Whisker2:
+                    case ItemSet.贵人法套:
                         Stats[Stat.MaxMC] += 1;
-                        Stats[Stat.BagWeight] += 17;
+                        Stats[Stat.背包负重] += 17;
                         break;
-                    case ItemSet.Whisker3:
+                    case ItemSet.贵人道套:
                         Stats[Stat.MaxSC] += 1;
-                        Stats[Stat.BagWeight] += 17;
+                        Stats[Stat.背包负重] += 17;
                         break;
-                    case ItemSet.Whisker4:
+                    case ItemSet.贵人刺套:
                         Stats[Stat.MaxDC] += 1;
-                        Stats[Stat.BagWeight] += 20;
+                        Stats[Stat.背包负重] += 20;
                         break;
-                    case ItemSet.Whisker5:
+                    case ItemSet.贵人弓套:
                         Stats[Stat.MaxDC] += 1;
-                        Stats[Stat.BagWeight] += 17;
+                        Stats[Stat.背包负重] += 17;
                         break;
-                    case ItemSet.Hyeolryong:
+                    case ItemSet.龙血套装:
                         Stats[Stat.MaxSC] += 2;
                         Stats[Stat.HP] += 15;
                         Stats[Stat.MP] += 20;
-                        Stats[Stat.Holy] += 1;
-                        Stats[Stat.Accuracy] += 1;
+                        Stats[Stat.神圣] += 1;
+                        Stats[Stat.准确] += 1;
                         break;
-                    case ItemSet.Monitor:
-                        Stats[Stat.MagicResist] += 1;
-                        Stats[Stat.PoisonResist] += 1;
+                    case ItemSet.监视套装:
+                        Stats[Stat.魔法躲避] += 1;
+                        Stats[Stat.毒物躲避] += 1;
                         break;
-                    case ItemSet.Oppressive:
+                    case ItemSet.暴压套装:
                         Stats[Stat.MaxAC] += 1;
-                        Stats[Stat.Agility] += 1;
+                        Stats[Stat.敏捷] += 1;
                         break;
-                    case ItemSet.BlueFrost:
+                    case ItemSet.青玉套装:
                         Stats[Stat.MinDC] += 1;
                         Stats[Stat.MaxDC] += 1;
                         Stats[Stat.MinMC] += 1;
                         Stats[Stat.MaxMC] += 1;
-                        Stats[Stat.HandWeight] += 1;
-                        Stats[Stat.WearWeight] += 2;
+                        Stats[Stat.腕力负重] += 1;
+                        Stats[Stat.装备负重] += 2;
                         break;
-                    case ItemSet.BlueFrostH:
+                    case ItemSet.强青玉套:
                         Stats[Stat.MinDC] += 1;
                         Stats[Stat.MaxDC] += 2;
                         Stats[Stat.MaxMC] += 2;
-                        Stats[Stat.Accuracy] += 1;
+                        Stats[Stat.准确] += 1;
                         Stats[Stat.HP] += 50;
                         break;
-                    case ItemSet.DarkGhost:
+                    case ItemSet.鏃未套装:
                         Stats[Stat.MP] += 25;
-                        Stats[Stat.AttackSpeed] += 2;
+                        Stats[Stat.攻击速度] += 2;
                         break;
                 }
             }
@@ -523,66 +573,49 @@ namespace Client.MirObjects
 
         private void RefreshMirSetStats()
         {
-            if (MirSet.Count() == 10)
+            if (MirSet.Contains(EquipmentSlot.武器) && MirSet.Contains(EquipmentSlot.盔甲))
             {
-                Stats[Stat.MaxAC] += 1;
-                Stats[Stat.MaxMAC] += 1;
-                Stats[Stat.BagWeight] += 70;
-                Stats[Stat.Luck] += 2;
-                Stats[Stat.AttackSpeed] += 2;
-                Stats[Stat.HP] += 70;
-                Stats[Stat.MP] += 80;
-                Stats[Stat.MagicResist] += 6;
-                Stats[Stat.PoisonResist] += 6;
+                Stats[Stat.攻击增伤] += 15;
             }
-
-            if (MirSet.Contains(EquipmentSlot.RingL) && MirSet.Contains(EquipmentSlot.RingR))
+            if (MirSet.Contains(EquipmentSlot.头盔) && MirSet.Contains(EquipmentSlot.靴子) && MirSet.Contains(EquipmentSlot.腰带))
             {
-                Stats[Stat.MaxMAC] += 1;
-                Stats[Stat.MaxAC] += 1;
+                Stats[Stat.MaxDC] += 3;
+                Stats[Stat.MaxMC] += 3;
+                Stats[Stat.MaxSC] += 3;
+                Stats[Stat.腕力负重] += 20;
             }
-            if (MirSet.Contains(EquipmentSlot.BraceletL) && MirSet.Contains(EquipmentSlot.BraceletR))
+            if (MirSet.Contains(EquipmentSlot.项链) &&
+               (MirSet.Contains(EquipmentSlot.左手镯) || MirSet.Contains(EquipmentSlot.右手镯)) &&
+               (MirSet.Contains(EquipmentSlot.左戒指) || MirSet.Contains(EquipmentSlot.右戒指)))
             {
-                Stats[Stat.MinAC] += 1;
+                Stats[Stat.MinDC] += 2;
+                Stats[Stat.MaxDC] += 6;
+                Stats[Stat.MinMC] += 2;
+                Stats[Stat.MaxMC] += 6;
+                Stats[Stat.MinSC] += 2;
+                Stats[Stat.MaxSC] += 6;
+                Stats[Stat.攻击速度] += 2;
+                Stats[Stat.背包负重] += 60;
+                Stats[Stat.装备负重] += 30;
+                Stats[Stat.腕力负重] += 30;
+            }
+            if (MirSet.Contains(EquipmentSlot.盔甲) &&
+                MirSet.Contains(EquipmentSlot.武器) &&
+                MirSet.Contains(EquipmentSlot.头盔) &&
+                MirSet.Contains(EquipmentSlot.靴子) &&
+                MirSet.Contains(EquipmentSlot.腰带) &&
+                MirSet.Contains(EquipmentSlot.项链) &&
+               (MirSet.Contains(EquipmentSlot.左手镯) || MirSet.Contains(EquipmentSlot.右手镯)) &&
+               (MirSet.Contains(EquipmentSlot.左戒指) || MirSet.Contains(EquipmentSlot.右戒指)))
+            {
+                Stats[Stat.MinAC] += 2;
+                Stats[Stat.MaxAC] += 6;
                 Stats[Stat.MinMAC] += 1;
-            }
-            if ((MirSet.Contains(EquipmentSlot.RingL) | MirSet.Contains(EquipmentSlot.RingR)) && (MirSet.Contains(EquipmentSlot.BraceletL) | MirSet.Contains(EquipmentSlot.BraceletR)) && MirSet.Contains(EquipmentSlot.Necklace))
-            {
-                Stats[Stat.MaxMAC] += 1;
-                Stats[Stat.MaxAC] += 1;
-                Stats[Stat.BagWeight] += 30;
-                Stats[Stat.WearWeight] += 17;
-            }
-            if (MirSet.Contains(EquipmentSlot.RingL) && MirSet.Contains(EquipmentSlot.RingR) && MirSet.Contains(EquipmentSlot.BraceletL) && MirSet.Contains(EquipmentSlot.BraceletR) && MirSet.Contains(EquipmentSlot.Necklace))
-            {
-                Stats[Stat.MaxMAC] += 1;
-                Stats[Stat.MaxAC] += 1;
-                Stats[Stat.BagWeight] += 20;
-                Stats[Stat.WearWeight] += 10;
-            }
-            if (MirSet.Contains(EquipmentSlot.Armour) && MirSet.Contains(EquipmentSlot.Helmet) && MirSet.Contains(EquipmentSlot.Weapon))
-            {
-                Stats[Stat.MaxDC] += 2;
-                Stats[Stat.MaxMC] += 1;
-                Stats[Stat.MaxSC] += 1;
-                Stats[Stat.Agility] += 1;
-            }
-            if (MirSet.Contains(EquipmentSlot.Armour) && MirSet.Contains(EquipmentSlot.Boots) && MirSet.Contains(EquipmentSlot.Belt))
-            {
-                Stats[Stat.MaxDC] += 1;
-                Stats[Stat.MaxMC] += 1;
-                Stats[Stat.MaxSC] += 1;
-                Stats[Stat.HandWeight] += 17;
-            }
-            if (MirSet.Contains(EquipmentSlot.Armour) && MirSet.Contains(EquipmentSlot.Boots) && MirSet.Contains(EquipmentSlot.Belt) && MirSet.Contains(EquipmentSlot.Helmet) && MirSet.Contains(EquipmentSlot.Weapon))
-            {
-                Stats[Stat.MinDC] += 1;
-                Stats[Stat.MaxDC] += 1;
-                Stats[Stat.MinMC] += 1;
-                Stats[Stat.MaxMC] += 1;
-                Stats[Stat.MinSC] += 1;
-                Stats[Stat.MaxSC] += 1;
-                Stats[Stat.HandWeight] += 17;
+                Stats[Stat.MaxMAC] += 4;
+                Stats[Stat.幸运] += 2;
+                Stats[Stat.HP] += 100;
+                Stats[Stat.MP] += 100;
+                Stats[Stat.中毒恢复] += 2;
             }
         }
 
@@ -596,17 +629,17 @@ namespace Client.MirObjects
                 switch (magic.Spell)
                 {
                     case Spell.Fencing:
-                        Stats[Stat.Accuracy] += magic.Level * 3;
+                        Stats[Stat.准确] += magic.Level * 3;
                         //Stats[Stat.MaxAC] += (magic.Level + 1) * 3;
                         break;
                     case Spell.Slaying:
-                    // case Spell.FatalSword:
-                        Stats[Stat.Accuracy] += magic.Level;
+                        // case Spell.FatalSword:
+                        Stats[Stat.准确] += magic.Level;
                         Stats[Stat.MaxDC] += slayingLvPlus[magic.Level];
                         break;
                     case Spell.SpiritSword:
-                        Stats[Stat.Accuracy] += spiritSwordLvPlus[magic.Level];
-                        // Stats[Stat.Accuracy] += magic.Level;
+                        Stats[Stat.准确] += spiritSwordLvPlus[magic.Level];
+                        // Stats[Stat.准确] += magic.Level;
                         // Stats[Stat.MaxDC] += (int)(Stats[Stat.MaxSC] * (magic.Level + 1) * 0.1F);
                         break;
                 }
@@ -626,10 +659,10 @@ namespace Client.MirObjects
 
                 switch (buff.Type)
                 {
-                    case BuffType.SwiftFeet:
+                    case BuffType.轻身步:
                         Sprint = true;
                         break;
-                    case BuffType.Transform:
+                    case BuffType.变形效果:
                         if (buff.Paused) continue;
                         TransformType = (short)buff.Values[0];
                         FastRun = true;
@@ -722,111 +755,65 @@ namespace Client.MirObjects
 
         public void GetMaxGain(UserItem item)
         {
-            if (CurrentBagWeight + item.Weight <= Stats[Stat.BagWeight] && FreeSpace(Inventory) > 0) return;
+            int freeSpace = FreeSpace(Inventory);
 
-            ushort min = 0;
-            ushort max = item.Count;
-
-            if (CurrentBagWeight >= Stats[Stat.BagWeight])
+            if (freeSpace > 0)
             {
-
-            }
-
-            if (item.Info.Type == ItemType.Amulet)
-            {
-                for (int i = 0; i < Inventory.Length; i++)
-                {
-                    UserItem bagItem = Inventory[i];
-
-                    if (bagItem == null || bagItem.Info != item.Info) continue;
-
-                    if (bagItem.Count + item.Count <= bagItem.Info.StackSize)
-                    {
-                        item.Count = max;
-                        return;
-                    }
-                    item.Count = (ushort)(bagItem.Info.StackSize - bagItem.Count);
-                    min += item.Count;
-                    if (min >= max)
-                    {
-                        item.Count = max;
-                        return;
-                    }
-                }
-
-                if (min == 0)
-                {
-                    GameScene.Scene.ChatDialog.ReceiveChat(FreeSpace(Inventory) == 0 ? GameLanguage.NoBagSpace : "You do not have enough weight.", ChatType.System);
-
-                    item.Count = 0;
-                    return;
-                }
-
-                item.Count = min;
                 return;
             }
 
-            if (CurrentBagWeight + item.Weight > Stats[Stat.BagWeight])
+            ushort canGain = 0;
+
+            foreach (UserItem inventoryItem in Inventory)
             {
-                item.Count = (ushort)(Math.Max((Stats[Stat.BagWeight] - CurrentBagWeight), ushort.MinValue) / item.Info.Weight);
-                max = item.Count;
-                if (item.Count == 0)
+                if (inventoryItem.Info != item.Info)
                 {
-                    GameScene.Scene.ChatDialog.ReceiveChat("You do not have enough weight.", ChatType.System);
+                    continue;
+                }
+
+                int availableStack = inventoryItem.Info.StackSize - inventoryItem.Count;
+
+                if (availableStack == 0)
+                {
+                    continue;
+                }
+
+                canGain += (ushort)availableStack;
+
+                if (canGain >= item.Count)
+                {
                     return;
                 }
             }
 
-            if (item.Info.StackSize > 1)
+            if (canGain == 0)
             {
-                for (int i = 0; i < Inventory.Length; i++)
-                {
-                    UserItem bagItem = Inventory[i];
-
-                    if (bagItem == null) return;
-                    if (bagItem.Info != item.Info) continue;
-
-                    if (bagItem.Count + item.Count <= bagItem.Info.StackSize)
-                    {
-                        item.Count = max;
-                        return;
-                    }
-
-                    item.Count = (ushort)(bagItem.Info.StackSize - bagItem.Count);
-                    min += item.Count;
-                    if (min >= max)
-                    {
-                        item.Count = max;
-                        return;
-                    }
-                }
-
-                if (min == 0)
-                {
-                    GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.NoBagSpace, ChatType.System);
-                    item.Count = 0;
-                }
-            }
-            else
-            {
-                GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.NoBagSpace, ChatType.System);
                 item.Count = 0;
+                return;
             }
 
+            item.Count = canGain;
         }
         private int FreeSpace(UserItem[] array)
         {
-            int count = 0;
-            for (int i = 0; i < array.Length; i++)
-                count++;
-            return count;
+            int freeSlots = 0;
+
+            foreach (UserItem slot in array)
+            {
+                if (slot == null)
+                {
+                    freeSlots++;
+                }
+            }
+
+            return freeSlots;
         }
 
         public override void SetAction()
         {
             if (QueuedAction != null && !GameScene.Observing)
             {
-                if ((ActionFeed.Count == 0) || (ActionFeed.Count == 1 && NextAction.Action == MirAction.Stance))
+                if ((ActionFeed.Count == 0) || (ActionFeed.Count == 1 && NextAction.Action == MirAction.站立姿势))
                 {
                     ActionFeed.Clear();
                     ActionFeed.Add(QueuedAction);
@@ -843,7 +830,7 @@ namespace Client.MirObjects
             base.ProcessFrames();
 
             if (clear) QueuedAction = null;
-            if ((CurrentAction == MirAction.Standing || CurrentAction == MirAction.MountStanding || CurrentAction == MirAction.Stance || CurrentAction == MirAction.Stance2 || CurrentAction == MirAction.DashFail) && (QueuedAction != null || NextAction != null))
+            if ((CurrentAction == MirAction.站立动作 || CurrentAction == MirAction.坐骑站立 || CurrentAction == MirAction.站立姿势 || CurrentAction == MirAction.站立姿势2 || CurrentAction == MirAction.冲击失败) && (QueuedAction != null || NextAction != null))
                 SetAction();
         }
 

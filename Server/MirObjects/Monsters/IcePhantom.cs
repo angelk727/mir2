@@ -1,4 +1,6 @@
-﻿using Server.MirDatabase;
+﻿using System.Collections.Generic;
+using Server.MirDatabase;
+using Server.MirEnvir;
 using S = ServerPackets;
 
 namespace Server.MirObjects.Monsters
@@ -41,13 +43,54 @@ namespace Server.MirObjects.Monsters
 
             if (!ranged)
             {
-                Broadcast(new S.ObjectAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation });
 
-                int damage = GetAttackPower(Stats[Stat.MinDC], Stats[Stat.MaxDC]);
-                if (damage == 0) return;
+                switch (Envir.Random.Next(4))
+                {
+                    case 0:
+                        {
+                            Broadcast(new S.ObjectAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation, Type = 0 });
 
-                DelayedAction action = new DelayedAction(DelayedType.Damage, Envir.Time + 350, Target, damage, DefenceType.ACAgility);
-                ActionList.Add(action);
+                            int damage = GetAttackPower(Stats[Stat.MinDC], Stats[Stat.MaxDC]);
+                            if (damage == 0) return;
+
+                            DelayedAction action = new DelayedAction(DelayedType.Damage, Envir.Time + 350, Target, damage, DefenceType.ACAgility);
+                            ActionList.Add(action);
+                        }
+                        break;
+                    case 1:
+                        {
+                            Broadcast(new S.ObjectAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation, Type = 0 });
+
+                            int damage = GetAttackPower(Stats[Stat.MinDC], Stats[Stat.MaxDC]);
+                            if (damage == 0) return;
+
+                            DelayedAction action = new DelayedAction(DelayedType.Damage, Envir.Time + 350, Target, damage * 2, DefenceType.ACAgility);
+                            ActionList.Add(action);
+                        }
+                        break;
+                    case 2:
+                        {
+                            Broadcast(new S.ObjectAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation, Type = 0 });
+
+                            int damage = GetAttackPower(Stats[Stat.MinDC], Stats[Stat.MaxDC]);
+                            if (damage == 0) return;
+                            HalfmoonAttack(damage);
+                            DelayedAction action = new DelayedAction(DelayedType.Damage, Envir.Time + 350, Target, damage, DefenceType.AC);
+                            ActionList.Add(action);
+                        }
+                        break;
+                    case 3:
+                        {
+                            Broadcast(new S.ObjectAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation, Type = 0 });
+
+                            int damage = GetAttackPower(Stats[Stat.MinDC], Stats[Stat.MaxDC]);
+                            if (damage == 0) return;
+                            HalfmoonAttack(damage);
+                            DelayedAction action = new DelayedAction(DelayedType.Damage, Envir.Time + 350, Target, damage * 2, DefenceType.AC);
+                            ActionList.Add(action);
+                        }
+                        break;
+                }
             }
             else
             {
@@ -55,7 +98,7 @@ namespace Server.MirObjects.Monsters
 
                 int damage = GetAttackPower(Stats[Stat.MinMC], Stats[Stat.MaxMC]);
                 if (damage == 0) return;
-                
+
                 DelayedAction action = new DelayedAction(DelayedType.RangeDamage, Envir.Time + 500, Target, damage, DefenceType.MAC);
                 ActionList.Add(action);
             }
@@ -78,6 +121,28 @@ namespace Server.MirObjects.Monsters
             }
 
             MoveTo(Target.CurrentLocation);
+        }
+
+        public override void Die()
+        {
+            ActionList.Add(new DelayedAction(DelayedType.Die, Envir.Time + 2000));
+            base.Die();
+        }
+
+        protected override void CompleteDeath(IList<object> data)
+        {
+            List<MapObject> targets = FindAllTargets(1, CurrentLocation, false);
+            if (targets.Count == 0) return;
+
+            for (int i = 0; i < targets.Count; i++)
+            {
+                int damage = GetAttackPower(Stats[Stat.MinDC], Stats[Stat.MaxDC]);
+                if (damage == 0) return;
+
+                if (targets[i].Attacked(this, damage, DefenceType.ACAgility) <= 0) return;
+
+                PoisonTarget(Target, 9, 5, PoisonType.Frozen, 1000);
+            }
         }
     }
 }

@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Drawing;
+using System.Collections.Generic;
 using Server.MirDatabase;
 using Server.MirEnvir;
 using S = ServerPackets;
-using System.Collections.Generic;
 
 namespace Server.MirObjects.Monsters
 {
@@ -45,12 +44,45 @@ namespace Server.MirObjects.Monsters
 
             if (!range && Envir.Random.Next(3) > 0)
             {
-                Broadcast(new S.ObjectAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation });
 
-                int damage = GetAttackPower(Stats[Stat.MinDC], Stats[Stat.MaxDC]);
-                if (damage == 0) return;
+                switch (Envir.Random.Next(3))
+                {
+                    case 0:
+                        {
+                            Broadcast(new S.ObjectAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation });
 
-                HalfmoonAttack(damage);
+                            int damage = GetAttackPower(Stats[Stat.MinDC], Stats[Stat.MaxDC]);
+                            if (damage == 0) return;
+
+                            HalfmoonAttack(damage);
+                        }
+                        break;
+                    case 1:
+                        {
+                            Broadcast(new S.ObjectAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation });
+
+                            int damage = GetAttackPower(Stats[Stat.MinDC], Stats[Stat.MaxDC]);
+                            if (damage == 0) return;
+
+                            HalfmoonAttack(damage);
+                            DelayedAction action = new DelayedAction(DelayedType.Damage, Envir.Time + 350, Target, damage * 2, DefenceType.AC);
+                            ActionList.Add(action);
+                        }
+                        break;
+                    case 2:
+                        {
+                            Broadcast(new S.ObjectAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation });
+
+                            int damage = GetAttackPower(Stats[Stat.MinDC], Stats[Stat.MaxDC]);
+                            if (damage == 0) return;
+
+                            HalfmoonAttack(damage);
+                            SinglePushAttack(damage);
+                            DelayedAction action = new DelayedAction(DelayedType.Damage, Envir.Time + 350, Target, damage, DefenceType.AC);
+                            ActionList.Add(action);
+                        }
+                        break;
+                }
             }
             else
             {

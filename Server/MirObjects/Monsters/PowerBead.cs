@@ -1,10 +1,9 @@
-﻿using Server.MirDatabase;
-using Server.MirEnvir;
-using System;
-using System.Collections.Generic;
-using S = ServerPackets;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
+using Server.MirDatabase;
+using Server.MirEnvir;
+using S = ServerPackets;
 
 namespace Server.MirObjects.Monsters
 {
@@ -34,7 +33,7 @@ namespace Server.MirObjects.Monsters
         protected override void ProcessSearch()
         {
             if (Envir.Time < SearchTime) return;
-            if (Master != null && (Master.PMode == PetMode.MoveOnly || Master.PMode == PetMode.None)) return;
+            if (Master != null && (Master.PMode == PetMode.MoveOnly || Master.PMode == PetMode.None || Master.PMode == PetMode.FocusMasterTarget)) return;
 
             SearchTime = Envir.Time + SearchDelay;
 
@@ -139,7 +138,7 @@ namespace Server.MirObjects.Monsters
                     var protect = GetAttackPower(Stats[Stat.MinDC], Stats[Stat.MaxDC]);
                     if (protect == 0) return;
 
-                    target.AddBuff(BuffType.PowerBeadBuff, this, Info.AttackSpeed, new Stats { [Stat.MaxAC] = protect, [Stat.MaxMAC] = protect });
+                    target.AddBuff(BuffType.御体之力, this, Info.AttackSpeed, new Stats { [Stat.MaxAC] = protect, [Stat.MaxMAC] = protect });
                     target.OperateTime = 0;
                 }
             }
@@ -168,7 +167,7 @@ namespace Server.MirObjects.Monsters
 
         public static bool SpawnRandom(MonsterObject owner, Point spawn)
         {
-            var beads = Envir.MonsterInfoList.Where(x => x.AI == 149).ToList();
+            var beads = Envir.MonsterInfoList.Where(x => x.AI == 375).ToList();
 
             if (beads.Count > 0)
             {

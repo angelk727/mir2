@@ -32,20 +32,20 @@ namespace Server
 
             WarType_combo.Items.AddRange(Enum.GetValues(typeof(ConquestType)).Cast<object>().ToArray());
             WarMode_combo.Items.AddRange(Enum.GetValues(typeof(ConquestGame)).Cast<object>().ToArray());
-            WarType_combo.Items.Remove(ConquestType.Forced);
+            WarType_combo.Items.Remove(ConquestType.强制启动);
 
             for (int i = 0; i < Envir.MonsterInfoList.Count; i++)
             {
-                if (Envir.MonsterInfoList[i].AI == 80)
+                if (Envir.MonsterInfoList[i].AI == 960)
                     ArcherIndex_combo.Items.Add(Envir.MonsterInfoList[i]);
 
-                if (Envir.MonsterInfoList[i].AI == 81)
+                if (Envir.MonsterInfoList[i].AI == 950)
                     GateIndex_combo.Items.Add(Envir.MonsterInfoList[i]);
 
-                if (Envir.MonsterInfoList[i].AI == 82)
+                if (Envir.MonsterInfoList[i].AI == 951)
                     WallIndex_combo.Items.Add(Envir.MonsterInfoList[i]);
 
-                if (Envir.MonsterInfoList[i].AI == 213)
+                if (Envir.MonsterInfoList[i].AI == 961)
                     SiegeIndex_combo.Items.Add(Envir.MonsterInfoList[i]);
             }
 

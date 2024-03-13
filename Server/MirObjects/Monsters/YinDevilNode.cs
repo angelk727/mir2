@@ -31,11 +31,11 @@ namespace Server.MirObjects.Monsters
                 Target = targets[i];
                 if (Target == null || !Target.IsFriendlyTarget(this) || Target.CurrentMap != CurrentMap || Target.Node == null) continue;
 
-                BuffType type = Info.AI == 41 ? BuffType.BlessedArmour : BuffType.UltimateEnhancer;
+                BuffType type = Info.AI == 216 ? BuffType.神圣战甲术 : BuffType.无极真气;
 
                 var stats = new Stats
                 {
-                    [type == BuffType.BlessedArmour ? Stat.MaxAC : Stat.MaxDC] = Target.Level / 7 + 4
+                    [type == BuffType.神圣战甲术 ? Stat.MaxAC : Stat.MaxDC] = Target.Level / 7 + 4
                 };
 
                 Target.AddBuff(type, this, Settings.Second * 5, stats);

@@ -1,9 +1,8 @@
-﻿using Server.MirEnvir;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
+using Server.MirEnvir;
 using Server.MirObjects;
 
 namespace Server.MirDatabase
@@ -38,7 +37,7 @@ namespace Server.MirDatabase
             ItemInfo itemInfo = Envir.GetItemInfo(name);
             if (itemInfo == null)
             {
-                MessageQueue.Enqueue(string.Format("Could not find Item: {0}", name));
+                MessageQueue.Enqueue(string.Format("缺少物品: {0}", name));
                 return;
             }
 
@@ -103,7 +102,7 @@ namespace Server.MirDatabase
 
                             if (info == null)
                             {
-                                MessageQueue.Enqueue(string.Format("Could not find Tool: {0}, Recipe: {1}", lines[i], recipe));
+                                MessageQueue.Enqueue(string.Format("合成配方: {1} 中缺少工具: {0}", lines[i], recipe));
                                 continue;
                             }
 
@@ -120,7 +119,7 @@ namespace Server.MirDatabase
 
                             if (info == null)
                             {
-                                MessageQueue.Enqueue(string.Format("Could not find Ingredient: {0}, Recipe: {1}", lines[i], recipe));
+                                MessageQueue.Enqueue(string.Format("合成配方: {1} 中缺少材料: {0}", lines[i], recipe));
                                 continue;
                             }
 
@@ -181,7 +180,7 @@ namespace Server.MirDatabase
                             }
                             catch
                             {
-                                MessageQueue.Enqueue(string.Format("Could not parse option: {0}, Value: {1}", data[0], data[1]));
+                                MessageQueue.Enqueue(string.Format("无法分析 {0}, 的值: {1}", data[0], data[1]));
                                 continue;
                             }
                         }
