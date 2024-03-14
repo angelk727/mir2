@@ -423,13 +423,22 @@ namespace Server.MirObjects
         {
             Broadcast(GetInfo());
             return;
-        } 
+        }
 
         public bool IsAttackTarget(MapObject attacker)
         {
             if (attacker == null || attacker.Node == null) return false;
-            if (Dead || InSafeZone || attacker.InSafeZone || attacker == this) return false;
-            
+            if (Dead || attacker == this) return false;
+
+            var flag = true;
+            if (Race == ObjectType.Monster)
+            {
+                // 检查怪物是否为练功师的AI - 允许在安全区内作为攻击目标
+                if (((MonsterObject)this).Info.AI == 984)
+                    flag = false;
+            }
+            if (flag && (InSafeZone || attacker.InSafeZone)) return false;
+
             switch (attacker.Race)
             {
                 case ObjectType.Player:
