@@ -430,15 +430,15 @@ namespace Server
             // mapInfoToolStripMenuItem
             // 
             this.mapInfoToolStripMenuItem.Name = "mapInfoToolStripMenuItem";
-            this.mapInfoToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
-            this.mapInfoToolStripMenuItem.Text = "地图信息";
+            this.mapInfoToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
+            this.mapInfoToolStripMenuItem.Text = "地图信息(导入导出)";
             this.mapInfoToolStripMenuItem.Click += new System.EventHandler(this.mapInfoToolStripMenuItem_Click);
             // 
             // itemInfoToolStripMenuItem
             // 
             this.itemInfoToolStripMenuItem.Name = "itemInfoToolStripMenuItem";
             //this.itemInfoToolStripMenuItem.ShowShortcutKeys = false;
-            this.itemInfoToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.itemInfoToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
             this.itemInfoToolStripMenuItem.Text = "物品信息";
             //this.itemInfoToolStripMenuItem.Visible = false; //关闭老物品信息服务器显示
             this.itemInfoToolStripMenuItem.Click += new System.EventHandler(this.itemInfoToolStripMenuItem_Click);
@@ -446,7 +446,7 @@ namespace Server
             // monsterInfoToolStripMenuItem
             // 
             this.monsterInfoToolStripMenuItem.Name = "monsterInfoToolStripMenuItem";
-            this.monsterInfoToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.monsterInfoToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
             this.monsterInfoToolStripMenuItem.Text = "怪物信息";
             //this.monsterInfoToolStripMenuItem.Visible = false; //关闭老怪物信息服务器显示
             this.monsterInfoToolStripMenuItem.Click += new System.EventHandler(this.monsterInfoToolStripMenuItem_Click);
@@ -454,42 +454,42 @@ namespace Server
             // itemNEWToolStripMenuItem
             // 
             this.itemNEWToolStripMenuItem.Name = "itemNEWToolStripMenuItem";
-            this.itemNEWToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
-            this.itemNEWToolStripMenuItem.Text = "物品编辑器";
+            this.itemNEWToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
+            this.itemNEWToolStripMenuItem.Text = "物品编辑(导入导出)";
             this.itemNEWToolStripMenuItem.Click += new System.EventHandler(this.itemNEWToolStripMenuItem_Click);
             // 
             // monsterExperimentalToolStripMenuItem
             // 
             this.monsterExperimentalToolStripMenuItem.Name = "monsterExperimentalToolStripMenuItem";
-            this.monsterExperimentalToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
-            this.monsterExperimentalToolStripMenuItem.Text = "怪物编辑器";
+            this.monsterExperimentalToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
+            this.monsterExperimentalToolStripMenuItem.Text = "怪物编辑(导入导出)";
             this.monsterExperimentalToolStripMenuItem.Click += new System.EventHandler(this.monsterExperimentalToolStripMenuItem_Click);
             // 
             // nPCInfoToolStripMenuItem
             // 
             this.nPCInfoToolStripMenuItem.Name = "nPCInfoToolStripMenuItem";
-            this.nPCInfoToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
-            this.nPCInfoToolStripMenuItem.Text = "NPC信息";
+            this.nPCInfoToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
+            this.nPCInfoToolStripMenuItem.Text = "NPC信息(导入导出)";
             this.nPCInfoToolStripMenuItem.Click += new System.EventHandler(this.nPCInfoToolStripMenuItem_Click);
             // 
             // questInfoToolStripMenuItem
             // 
             this.questInfoToolStripMenuItem.Name = "questInfoToolStripMenuItem";
-            this.questInfoToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
-            this.questInfoToolStripMenuItem.Text = "任务系统";
+            this.questInfoToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
+            this.questInfoToolStripMenuItem.Text = "任务系统(导入导出)";
             this.questInfoToolStripMenuItem.Click += new System.EventHandler(this.questInfoToolStripMenuItem_Click);
             // 
             // magicInfoToolStripMenuItem
             // 
             this.magicInfoToolStripMenuItem.Name = "magicInfoToolStripMenuItem";
-            this.magicInfoToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.magicInfoToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
             this.magicInfoToolStripMenuItem.Text = "技能信息";
             this.magicInfoToolStripMenuItem.Click += new System.EventHandler(this.magicInfoToolStripMenuItem_Click);
             // 
             // gameshopToolStripMenuItem
             // 
             this.gameshopToolStripMenuItem.Name = "gameshopToolStripMenuItem";
-            this.gameshopToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.gameshopToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
             this.gameshopToolStripMenuItem.Text = "游戏商城";
             this.gameshopToolStripMenuItem.Click += new System.EventHandler(this.gameshopToolStripMenuItem_Click);
             // 
@@ -508,14 +508,14 @@ namespace Server
             // serverToolStripMenuItem
             // 
             this.serverToolStripMenuItem.Name = "serverToolStripMenuItem";
-            this.serverToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.serverToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.serverToolStripMenuItem.Text = "服务器配置";
             this.serverToolStripMenuItem.Click += new System.EventHandler(this.serverToolStripMenuItem_Click);
             // 
             // balanceToolStripMenuItem
             // 
             this.balanceToolStripMenuItem.Name = "balanceToolStripMenuItem";
-            this.balanceToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.balanceToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.balanceToolStripMenuItem.Text = "游戏平衡性调整";
             this.balanceToolStripMenuItem.Click += new System.EventHandler(this.balanceToolStripMenuItem_Click);
             // 
@@ -535,7 +535,7 @@ namespace Server
             this.conquestToolStripMenuItem,
             this.respawnsToolStripMenuItem});
             this.systemToolStripMenuItem.Name = "systemToolStripMenuItem";
-            this.systemToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.systemToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.systemToolStripMenuItem.Text = "游戏系统";
             // 
             // dragonSystemToolStripMenuItem
@@ -625,14 +625,14 @@ namespace Server
             // monsterTunerToolStripMenuItem
             // 
             this.monsterTunerToolStripMenuItem.Name = "monsterTunerToolStripMenuItem";
-            this.monsterTunerToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.monsterTunerToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.monsterTunerToolStripMenuItem.Text = "怪物调整";
             this.monsterTunerToolStripMenuItem.Click += new System.EventHandler(this.monsterTunerToolStripMenuItem_Click);
             // 
             // dropBuilderToolStripMenuItem
             // 
             this.dropBuilderToolStripMenuItem.Name = "dropBuilderToolStripMenuItem";
-            this.dropBuilderToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.dropBuilderToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
             this.dropBuilderToolStripMenuItem.Text = "物品掉落设置";
             this.dropBuilderToolStripMenuItem.Click += new System.EventHandler(this.dropBuilderToolStripMenuItem_Click);
             // 

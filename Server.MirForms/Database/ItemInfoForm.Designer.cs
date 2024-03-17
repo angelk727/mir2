@@ -45,6 +45,7 @@
             this.ItemInfoPanel = new System.Windows.Forms.Panel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.ItemsPreview = new System.Windows.Forms.PictureBox();
             this.label57 = new System.Windows.Forms.Label();
             this.SlotsTextBox = new System.Windows.Forms.TextBox();
             this.globalDropNotify_CheckBox = new System.Windows.Forms.CheckBox();
@@ -210,6 +211,7 @@
             this.ItemInfoPanel.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ItemsPreview)).BeginInit();
             this.tabPage2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tabPage3.SuspendLayout();
@@ -368,6 +370,7 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.ItemsPreview);
             this.tabPage1.Controls.Add(this.label57);
             this.tabPage1.Controls.Add(this.SlotsTextBox);
             this.tabPage1.Controls.Add(this.globalDropNotify_CheckBox);
@@ -425,6 +428,15 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "常规";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // ItemsPreview
+            // 
+            this.ItemsPreview.Location = new System.Drawing.Point(254, 72);
+            this.ItemsPreview.Name = "ItemsPreview";
+            this.ItemsPreview.Size = new System.Drawing.Size(46, 44);
+            this.ItemsPreview.TabIndex = 64;
+            this.ItemsPreview.TabStop = false;
+            this.ItemsPreview.Click += new System.EventHandler(this.ItemsPreview_Click);
             // 
             // label57
             // 
@@ -2110,6 +2122,7 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ItemsPreview)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
             this.groupBox1.ResumeLayout(false);
@@ -2303,5 +2316,6 @@
         private System.Windows.Forms.TextBox GoldRatetextBox;
         private System.Windows.Forms.TextBox DropRatetextBox;
         private System.Windows.Forms.TextBox DamageReductiontextBox;
+        private System.Windows.Forms.PictureBox ItemsPreview;
     }
 }

@@ -574,20 +574,40 @@ namespace Server
         }
         private void ImageTextBox_TextChanged(object sender, EventArgs e)
         {
+            if (sender is TextBox textBox)
+            {
+                if (!string.IsNullOrEmpty(textBox.Text) && ushort.TryParse(textBox.Text, out ushort imageNumber))
+                {
+                    LoadImage(imageNumber);
+                }
+            }
+
             if (ActiveControl != sender) return;
 
-            ushort temp;
-
-            if (!ushort.TryParse(ActiveControl.Text, out temp))
+            if (!ushort.TryParse(ActiveControl.Text, out ushort temp))
             {
                 ActiveControl.BackColor = Color.Red;
                 return;
             }
             ActiveControl.BackColor = SystemColors.Window;
 
-
             for (int i = 0; i < _selectedItemInfos.Count; i++)
                 _selectedItemInfos[i].Image = temp;
+        }
+        private void LoadImage(ushort imageValue)
+        {
+            string filename = $"{imageValue}.bmp";
+            string imagePath = Path.Combine(Environment.CurrentDirectory, "Envir", "Previews", "Items", filename);
+
+            if (File.Exists(imagePath))
+            {
+                using FileStream fs = new FileStream(imagePath, FileMode.Open, FileAccess.Read);
+                ItemsPreview.Image = Image.FromStream(fs);
+            }
+            else
+            {
+                ItemsPreview.Image = null;
+            }
         }
         private void DuraTextBox_TextChanged(object sender, EventArgs e)
         {
