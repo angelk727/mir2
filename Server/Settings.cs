@@ -34,6 +34,7 @@ namespace Server
             MinimapsPath = Path.Combine(EnvirPath, "Previews", "Minimaps"),
             NPCPreviewPath = Path.Combine(EnvirPath, "Previews", "NPC"),
             ItemsPreviewPath = Path.Combine(EnvirPath, "Previews", "Items"),
+            MonstersPreviewPath = Path.Combine(EnvirPath, "Previews", "Monsters"),
             Previews = Path.Combine(EnvirPath, "Previews");
 
         private static readonly InIReader Reader = new InIReader(Path.Combine(ConfigPath, "Setup.ini"));
@@ -526,7 +527,9 @@ namespace Server
             string ItemsPreviewPath = Path.Combine(EnvirPath, "Previews", "Items");
             if (!Directory.Exists(ItemsPreviewPath))
                 Directory.CreateDirectory(ItemsPreviewPath);
-
+            string MonstersPreviewPath = Path.Combine(EnvirPath, "Previews", "Monsters");
+            if (!Directory.Exists(MonstersPreviewPath))
+                Directory.CreateDirectory(MonstersPreviewPath);
             string fileName = Path.Combine(Settings.NPCPath, DefaultNPCFilename + ".txt");
 
             if (!File.Exists(fileName))

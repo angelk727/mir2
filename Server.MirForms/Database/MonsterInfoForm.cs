@@ -107,7 +107,10 @@ namespace Server
 
             ImageComboBox.SelectedItem = null;
             ImageComboBox.SelectedItem = info.Image;
-            fileNameLabel.Text = ((int)info.Image).ToString() + ".Lib";
+            fileNameLabel.Text = ((ushort)info.Image).ToString() + ".Lib";
+            ushort imageValue = (ushort)info.Image;
+            LoadImage(imageValue);
+
             AITextBox.Text = info.AI.ToString();
             EffectTextBox.Text = info.Effect.ToString();
             LevelTextBox.Text = info.Level.ToString();
@@ -650,6 +653,22 @@ namespace Server
             {
                 _selectedMonsterInfos[i].Image = (Monster)ImageComboBox.SelectedItem;
                 fileNameLabel.Text = ((int)((Monster)ImageComboBox.SelectedItem)).ToString() + ".Lib";
+            }
+        }
+        private void LoadImage(ushort imageValue)
+        {
+            string filename = $"{imageValue}.bmp";
+            string imagePath = Path.Combine(Environment.CurrentDirectory, "Envir", "Previews", "Monsters", filename);
+
+            if (File.Exists(imagePath))
+            {
+                using FileStream fs = new FileStream(imagePath, FileMode.Open, FileAccess.Read);
+
+                MonstersPreview.Image = Image.FromStream(fs);
+            }
+            else
+            {
+                MonstersPreview.Image = null;
             }
         }
 

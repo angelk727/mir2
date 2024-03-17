@@ -436,7 +436,6 @@
             this.ItemsPreview.Size = new System.Drawing.Size(46, 44);
             this.ItemsPreview.TabIndex = 64;
             this.ItemsPreview.TabStop = false;
-            this.ItemsPreview.Click += new System.EventHandler(this.ItemsPreview_Click);
             // 
             // label57
             // 
