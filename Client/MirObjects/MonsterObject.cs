@@ -188,6 +188,7 @@ namespace Client.MirObjects
                 case Monster.阿福:
                 case Monster.治疗拉拉:
                 case Monster.猫咪超人:
+                case Monster.龙宝宝:
                     BodyLibrary = Libraries.Pets[((ushort)BaseImage) - 10000];
                     break;
                 case Monster.HellBomb1:
@@ -508,6 +509,7 @@ namespace Client.MirObjects
                 case Monster.阿福:
                 case Monster.治疗拉拉:
                 case Monster.猫咪超人:
+                case Monster.龙宝宝:
                     BodyLibrary = Libraries.Pets[((ushort)BaseImage) - 10000];
                     break;
             }
@@ -5009,6 +5011,7 @@ namespace Client.MirObjects
                 case Monster.阿福:
                 case Monster.治疗拉拉:
                 case Monster.猫咪超人:
+                case Monster.龙宝宝:
                     SoundManager.PlaySound(petSound);
                     break;
             }
@@ -7661,6 +7664,17 @@ namespace Client.MirObjects
                             break;
                     }
                     break;
+                case Monster.龙宝宝: //Pet16
+                    switch (CurrentAction)
+                    {
+                        case MirAction.近距攻击1:
+                            Libraries.Pets[(ushort)Monster.龙宝宝 - 10000].DrawBlend((304 + FrameIndex + (int)Direction * 6), DrawLocation, Color.White, true);
+                            break;
+                        case MirAction.近距攻击2:
+                            Libraries.Pets[(ushort)Monster.龙宝宝 - 10000].DrawBlend((352 + FrameIndex + (int)Direction * 10), DrawLocation, Color.White, true);
+                            break;
+                    }
+                    break;
 
             } //END OF DRAW EFFECTS
         }
@@ -7697,6 +7711,7 @@ namespace Client.MirObjects
                 case Monster.阿福:
                 case Monster.治疗拉拉:
                 case Monster.猫咪超人:
+                case Monster.龙宝宝:
                     yOffset = -20;
                     break;
             }
@@ -7773,6 +7788,7 @@ namespace Client.MirObjects
                 case Monster.阿福:
                 case Monster.治疗拉拉:
                 case Monster.猫咪超人:
+                case Monster.龙宝宝:
                     yOffset = 20;
                     break;
             }

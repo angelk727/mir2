@@ -1119,11 +1119,19 @@ namespace Client.MirScenes.Dialogs
                     AnimExDelay = 300;
                     break;
                 case IntelligentCreatureType.猫咪超人:
-                    AnimDefaultIdx = 1751;
+                    AnimDefaultIdx = 1750;
                     AnimDefaultCount = 4;
                     AnimDefaultDelay = 300;
-                    AnimExIdx = 1761;
+                    AnimExIdx = 1760;
                     AnimExCount = 18;
+                    AnimExDelay = 300;
+                    break;
+                case IntelligentCreatureType.龙宝宝:
+                    AnimDefaultIdx = 1790;
+                    AnimDefaultCount = 6;
+                    AnimDefaultDelay = 300;
+                    AnimExIdx = 1800;
+                    AnimExCount = 16;
                     AnimExDelay = 300;
                     break;
                 case IntelligentCreatureType.None:

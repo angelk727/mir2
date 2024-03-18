@@ -196,38 +196,19 @@ namespace Server.MirObjects
 
                 switch (PetType)
                 {
+                    case IntelligentCreatureType.雪人:
+                        int attackType2 = Envir.Random.Next(0, 2);
+                        Broadcast(new S.ObjectAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation, Type = (byte)attackType2 });
+                        break;
                     case IntelligentCreatureType.龙蛋:
                     case IntelligentCreatureType.火娃:
-                        if (Envir.Random.Next(10) > 5)
-                            Broadcast(new S.ObjectAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation, Type = 1 });
-                        else
-                            Broadcast(new S.ObjectAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation, Type = 2 });
-                        break;
-                    case IntelligentCreatureType.雪人:
-                        Broadcast(new S.ObjectAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation, Type = 1 });
+                    case IntelligentCreatureType.龙宝宝:
+                        int attackType3 = Envir.Random.Next(0, 3);
+                        Broadcast(new S.ObjectAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation, Type = (byte)attackType3 });
                         break;
                     default:
-                        switch(Envir.Random.Next(10))
-                        {
-                            case 0:
-                                Broadcast(new S.ObjectAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation });
-                                break;
-                            case 1:
-                            case 2:
-                            case 3:
-                                Broadcast(new S.ObjectAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation, Type = 1 });
-                                break;
-                            case 4:
-                            case 5:
-                            case 6:
-                                Broadcast(new S.ObjectAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation, Type = 2 });
-                                break;
-                            case 7:
-                            case 8:
-                            case 9:
-                                Broadcast(new S.ObjectAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation, Type = 3 });
-                                break;
-                        }
+                        int attackType4 = Envir.Random.Next(0, 4);
+                        Broadcast(new S.ObjectAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation, Type = (byte)attackType4 });
                         break;
                 }
             }
@@ -293,12 +274,12 @@ namespace Server.MirObjects
             if (Master != null)
             {
                 if (!Functions.InRange(CurrentLocation, Master.CurrentLocation, 2))
-                    MoveTo(Functions.PointMove(Master.CurrentLocation,Master.Direction, -2));
+                    MoveTo(Functions.PointMove(Master.CurrentLocation, Master.Direction, -2));
                 else
                     if (Envir.Random.Next(100) >= 60) ProcessAnimVariant();//random anims
             }
         }
-        
+
         protected override void ProcessTarget()
         {
             if (Target == null || !CanAttack) return;
@@ -315,7 +296,7 @@ namespace Server.MirObjects
                 return;
             }
         }
-        
+
         protected override void FindTarget()
         {
             if (Dead) return;
@@ -424,7 +405,7 @@ namespace Server.MirObjects
                                 if (!((PlayerObject)Master).CanGainItem(item.Item)) continue;
                                 if (CheckItemAgainstFilter(item.Item.Info.Type))
                                 {
-                                    if(item.Item.Info.Grade >= ItemFilter.PickupGrade)
+                                    if (item.Item.Info.Grade >= ItemFilter.PickupGrade)
                                         TargetList.Add(ob);
                                     break;
                                 }

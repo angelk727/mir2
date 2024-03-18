@@ -197,6 +197,7 @@ public enum IntelligentCreatureType : byte
     阿福 = 13,
     治疗拉拉 = 14,
     猫咪超人 = 15,
+    龙宝宝 = 16,
 }
 
 //2 blank mob files
@@ -756,6 +757,7 @@ public enum Monster : ushort
     阿福 = 10013,
     治疗拉拉 = 10014,
     猫咪超人 = 10015,
+    龙宝宝 = 10016,
 }
 
 public enum MirAction : byte

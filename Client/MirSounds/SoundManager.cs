@@ -341,6 +341,7 @@ namespace Client.MirSounds
             PetFoxey = 10513,
             PetMedicalRat = 10514,
             PetCatSuperman = 10515,
+            PetDragonBaby = 10516,
             PetPickup = 10520;
     }
 }
