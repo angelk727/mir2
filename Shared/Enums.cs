@@ -331,10 +331,6 @@ public enum Monster : ushort
     RedTurtle = 183,
     GreenTurtle = 184,
     BlueTurtle = 185,
-    Catapult1 = 186,
-    Catapult2 = 187,
-    OldSpittingSpider = 188,
-    OldNammandWall = 189,
     RoninGhoul = 190,  //Mon20.wil
     ToxicGhoul = 191,
     BoneCaptain = 192,
@@ -726,17 +722,18 @@ public enum Monster : ushort
     GiGateSouth = 954,
     GiGateEast = 955,
     GiGateWest = 956,
-    SSabukWall1 = 957,
-    SSabukWall2 = 958,
-    SSabukWall3 = 959,
-    NammandGate1 = 960, //Not Coded
-    NammandGate2 = 961, //Not Coded
-    SabukWallSection = 962, //Not Coded
-    NammandWallSection = 963, //Not Coded
-    FrozenDoor = 964, //寒冰之门 同怪物：287 Blank3 单点门可删除
+    SSabukWall1 = 957, //沙巴克左城墙
+    SSabukWall2 = 958, //沙巴克中城墙
+    SSabukWall3 = 959, //沙巴克右城墙
+    NammandGate1 = 960, //南蛮城外城门
+    NammandGate2 = 961, //南蛮城内城门
+    SabukWallSection = 962, //沙巴克城墙
+    NammandWallSection = 963, //南蛮城墙
+    FrozenDoor = 964, //寒冰之门 同怪物：287 Blank3 可删除
     GonRyunDoor = 965, //燃烧的昆仑大门
     UnderPassDoor1 = 966, //地下通道门
     UnderPassDoor2 = 967, //地下通道门
+    InDunFences = 968, //毒妖村栅栏
 
     //Flags 1000 ~ 1100
 

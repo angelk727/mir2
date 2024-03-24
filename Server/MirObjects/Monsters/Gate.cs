@@ -7,8 +7,6 @@ namespace Server.MirObjects.Monsters
 {
     public class Gate : CastleGate
     {
-        public int DoorStage { get; private set; }
-
         protected internal Gate(MonsterInfo info) : base(info)
         {
             switch (info.Effect)
@@ -73,26 +71,6 @@ namespace Server.MirObjects.Monsters
             Direction = MirDirection.Up;
         }
 
-        protected override void ProcessAI()
-        {
-            if (Info.Effect != 1 || Dead || !Closed) return;
-
-            if (HealthPercent < 60 && HealthPercent > 30)
-            {
-                DoorStage = 1;
-            }
-            else if (HealthPercent < 30 && HealthPercent > 0)
-            {
-                DoorStage = 2;
-            }
-            else
-            {
-                DoorStage = 0;
-            }
-
-            base.ProcessAI();
-        }
-
         public override void Despawn()
         {
             base.Despawn();
@@ -117,9 +95,9 @@ namespace Server.MirObjects.Monsters
 
         public override void OpenDoor()
         {
-            if (!Closed) return;
+            if (!Closed || HP <= 0) return;
 
-            Direction = (MirDirection)6;
+            Direction = (MirDirection)8;
 
             Closed = false;
 
@@ -141,7 +119,7 @@ namespace Server.MirObjects.Monsters
 
         public override void CloseDoor()
         {
-            if (Closed) return;
+            if (Closed || HP <= 0) return;
 
             Direction = (MirDirection)(3 - GetDamageLevel());
 

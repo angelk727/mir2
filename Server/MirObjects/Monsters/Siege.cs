@@ -11,7 +11,7 @@ namespace Server.MirObjects.Monsters
         public ConquestObject Conquest;
         public int WallIndex;
 
-        private bool _stationary;
+        //private bool _stationary;
         //private bool _canRepair;
         //private bool _canTeleport;
 
@@ -25,8 +25,8 @@ namespace Server.MirObjects.Monsters
                 return 6;
             }
         }
-
-        protected override bool CanMove => base.CanMove && !_stationary;
+        protected override bool CanMove { get { return false; } }
+        //protected override bool CanMove => base.CanMove && !_stationary;
 
         public override bool IsAttackTarget(MonsterObject attacker) { return false; }
 
@@ -48,17 +48,17 @@ namespace Server.MirObjects.Monsters
                     //_minAttackRange = 0;
                     break;
                 case 3: //Ballista
-                    _stationary = true;
+                    //_stationary = true;
                     //_canRepair = true;
                     //_minAttackRange = 0;
                     break;
                 case 4: //Trebuchet
-                    _stationary = true;
+                    //_stationary = true;
                     //_canRepair = true;
                     //_minAttackRange = 10;
                     break;
                 case 5: //CanonTrebuchet
-                    _stationary = true;
+                    //_stationary = true;
                     //_canRepair = true;
                     //_minAttackRange = 7;
                     break;

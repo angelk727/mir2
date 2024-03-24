@@ -170,6 +170,7 @@ namespace Client.MirObjects
                 case Monster.GonRyunDoor: //965
                 case Monster.UnderPassDoor1: //966
                 case Monster.UnderPassDoor2: //967
+                case Monster.InDunFences: //968
                     BodyLibrary = Libraries.Gates[((ushort)BaseImage) - 950];
                     break;
                 case Monster.小猪:
@@ -274,7 +275,7 @@ namespace Client.MirObjects
                     Frames = FrameSet.CaveStatue[(byte)Direction];
                     break;
                 case Monster.SabukGate://沙巴克城门 对应 Frames.cs 中的设置
-                    Frames = FrameSet.SabukGate[(byte)Direction];
+                    Frames = FrameSet.Gates[((ushort)BaseImage) - 950];
                     break;
                 default:
                     if (BodyLibrary != null)
@@ -1240,8 +1241,8 @@ namespace Client.MirObjects
                             case Monster.HellBolt: //276
                                 Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.HellBolt], 325, 10, Frame.Count * Frame.Interval, this));
                                 break;
-                            case Monster.SabukGate:
-                                Effects.Add(new Effect(Libraries.Gates[(ushort)Monster.SabukGate - 950], 24, 10, Frame.Count * Frame.Interval, this) { Light = -1 });
+                            case Monster.SabukGate: //950 沙巴克大门
+                                Effects.Add(new Effect(Libraries.Gates[(ushort)Monster.SabukGate - 950], 41, 10, Frame.Count * Frame.Interval, this) { Light = -1 });
                                 break;
                             case Monster.WingedTigerLord: //229
                                 Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.WingedTigerLord], 650 + (int)Direction * 5, 5, Frame.Count * FrameInterval, this));

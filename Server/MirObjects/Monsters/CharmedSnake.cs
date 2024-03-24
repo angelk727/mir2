@@ -60,7 +60,7 @@ namespace Server.MirObjects.Monsters
             if (Dead) return;
 
             ProcessSearch();
-            //todo ProcessRoaming(); needs no master follow just target roaming
+            //todo ProcessRoaming(); 不需要主跟随，只需要目标漫游
             ProcessTarget();
         }
 
@@ -69,7 +69,7 @@ namespace Server.MirObjects.Monsters
             if (Envir.Time < SearchTime) return;
             SearchTime = Envir.Time + SearchDelay;
 
-            //Stacking or Infront of master - Move
+            //堆叠或主控前方-移动
             bool stacking = false;
 
             Cell cell = CurrentMap.GetCell(CurrentLocation);

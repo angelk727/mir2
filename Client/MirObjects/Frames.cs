@@ -7,7 +7,7 @@ namespace Client.MirObjects
     {
         public static FrameSet Player;
         public static FrameSet DefaultNPC, DefaultMonster;
-        public static List<FrameSet> DragonStatue, GreatFoxSpirit, HellBomb, CaveStatue, SabukGate; //自添加沙巴克大门
+        public static List<FrameSet> DragonStatue, GreatFoxSpirit, HellBomb, CaveStatue, Gates; //自添加门类
 
         static FrameSet()
         {
@@ -161,29 +161,11 @@ namespace Client.MirObjects
             frame.Add(MirAction.死后尸体, new Frame(27, 1, -1, 100) { Blend = false });
             #endregion
 
-            #region SabukGate //沙巴克城大门
-            //SabukGate1 阶段1
-            SabukGate = new List<FrameSet> { (frame = new FrameSet()) };
-            frame.Add(MirAction.站立动作, new Frame(0, 1, -1, 500) { Blend = false });
-            frame.Add(MirAction.被击动作, new Frame(0, 4, -4, 200) { Blend = false });
-            frame.Add(MirAction.死亡动作, new Frame(24, 10, -10, 200) { Blend = false });
-            frame.Add(MirAction.死后尸体, new Frame(33, 1, -1, 2000) { Blend = false });
-            frame.Add(MirAction.近距攻击1, new Frame(56, 6, -6, 200) { Blend = false });
-            frame.Add(MirAction.近距攻击2, new Frame(64, 6, -6, 200) { Blend = false });
-
-            //SabukGate2 阶段2
-            SabukGate.Add(frame = new FrameSet());
-            frame.Add(MirAction.站立动作, new Frame(8, 1, -1, 500) { Blend = false });
-            frame.Add(MirAction.被击动作, new Frame(8, 4, -4, 200) { Blend = false });
-            frame.Add(MirAction.死亡动作, new Frame(24, 10, -10, 200) { Blend = false });
-            frame.Add(MirAction.死后尸体, new Frame(33, 1, -1, 2000) { Blend = false });
-            frame.Add(MirAction.近距攻击1, new Frame(56, 6, -6, 200) { Blend = false });
-            frame.Add(MirAction.近距攻击2, new Frame(64, 6, -6, 200) { Blend = false });
-
-            //SabukGate3 阶段3
-            SabukGate.Add(frame = new FrameSet());
-            frame.Add(MirAction.站立动作, new Frame(16, 1, -1, 500) { Blend = false });
-            frame.Add(MirAction.被击动作, new Frame(16, 4, -4, 200) { Blend = false });
+            #region Gates //门类
+            //SabukGate //沙巴克城大门
+            Gates = new List<FrameSet> { (frame = new FrameSet()) };
+            frame.Add(MirAction.站立动作, new Frame(0, 1, 7, 500) { Blend = false });
+            frame.Add(MirAction.被击动作, new Frame(1, 3, 5, 200) { Blend = false });
             frame.Add(MirAction.死亡动作, new Frame(24, 10, -10, 200) { Blend = false });
             frame.Add(MirAction.死后尸体, new Frame(33, 1, -1, 2000) { Blend = false });
             frame.Add(MirAction.近距攻击1, new Frame(56, 6, -6, 200) { Blend = false });

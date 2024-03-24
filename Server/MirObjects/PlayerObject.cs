@@ -3797,7 +3797,7 @@ namespace Server.MirObjects
                             }
                             else
                             {
-                                ReceiveChat(string.Format("You must type /Gates Open or /Gates Close."), ChatType.System);
+                                ReceiveChat(string.Format("必须输入 /打开城门 或 /关闭城门"), ChatType.System);
                                 return;
                             }
 
