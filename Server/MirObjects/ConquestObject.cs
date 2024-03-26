@@ -424,7 +424,7 @@ namespace Server.MirObjects
             }
 
 
-            //Set NPCs to invisible
+            //将NPC设置为不可见
             Map npcMap;
             NPCObject npcTemp;
 
@@ -747,12 +747,12 @@ namespace Server.MirObjects
                                 if (points == 0)
                                 {
                                     controlFlagPoints[ConquestMap.Players[i].MyGuild] = 1;
-                                    ConquestMap.Players[i].MyGuild.SendOutputMessage(string.Format("Gaining control of {1} {0:P0}", ((double)controlFlagPoints[ConquestMap.Players[i].MyGuild] / MAX_CONTROL_POINTS), controlFlag.Info.Name));
+                                    ConquestMap.Players[i].MyGuild.SendOutputMessage(string.Format("获得的控制权 {1} {0:P0}", ((double)controlFlagPoints[ConquestMap.Players[i].MyGuild] / MAX_CONTROL_POINTS), controlFlag.Info.Name));
                                 }
                                 else if (points < MAX_CONTROL_POINTS)
                                 {
                                     controlFlagPoints[ConquestMap.Players[i].MyGuild] += 1;
-                                    ConquestMap.Players[i].MyGuild.SendOutputMessage(string.Format("Gaining control of {1} {0:P0}", ((double)controlFlagPoints[ConquestMap.Players[i].MyGuild] / MAX_CONTROL_POINTS), controlFlag.Info.Name));
+                                    ConquestMap.Players[i].MyGuild.SendOutputMessage(string.Format("获得的控制权 {1} {0:P0}", ((double)controlFlagPoints[ConquestMap.Players[i].MyGuild] / MAX_CONTROL_POINTS), controlFlag.Info.Name));
                                 }
 
                                 List<GuildObject> guilds = controlFlagPoints.Keys.ToList();

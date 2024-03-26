@@ -67,7 +67,7 @@ namespace Server.MirObjects.Monsters
                     }
                     break;
             }
-           
+
             Direction = MirDirection.Up;
         }
 
@@ -80,7 +80,7 @@ namespace Server.MirObjects.Monsters
             CheckDirection();
 
             if (!Conquest.WarIsOn || attacker.MyGuild != null && Conquest.GuildInfo.Owner == attacker.MyGuild.Guildindex) damage = 0;
-             
+
             return base.Attacked(attacker, damage, type, damageWeapon);
         }
 
@@ -132,12 +132,19 @@ namespace Server.MirObjects.Monsters
 
         public override void RepairGate()
         {
-            if (HP == 0)
-                Revive(Stats[Stat.HP], false);
-            else
-                SetHP(Stats[Stat.HP]);
+            {
+                MirDirection originalDirection = Direction;
 
-            CheckDirection();
+                if (HP <= 0)
+                {
+                    Revive(Stats[Stat.HP], false);
+                    CheckDirection();
+                }
+                else
+                    SetHP(Stats[Stat.HP]);
+                Direction = originalDirection;
+                Broadcast(new S.ObjectTurn { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation });
+            }
         }
 
         protected override int GetDamageLevel()

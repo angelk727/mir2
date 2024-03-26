@@ -470,10 +470,8 @@ namespace Server.MirDatabase
             }
             else
             {
-                Gate.HP = Gate.Stats[Stat.HP];
+                Gate.RepairGate();
             }
-
-            Gate.CheckDirection();
         }
     }
 
