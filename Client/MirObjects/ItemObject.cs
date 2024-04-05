@@ -1,8 +1,7 @@
-﻿using System.Drawing;
-using System.Text.RegularExpressions;
-using Client.MirGraphics;
+﻿using Client.MirGraphics;
 using Client.MirScenes;
 using S = ServerPackets;
+using System.Text.RegularExpressions;
 
 namespace Client.MirObjects
 {

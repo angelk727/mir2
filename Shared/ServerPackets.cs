@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
+﻿using System.Drawing;
 
 namespace ServerPackets
 {
@@ -2219,9 +2216,9 @@ namespace ServerPackets
         public Color NameColour;
         public Point Location;
         public Monster Image;
-        public ushort AI; //自添加AI扩容
+        public ushort AI;
         public MirDirection Direction;
-        public byte Effect, Light; //自添加AI扩容
+        public byte Effect, Light;
         public bool Dead, Skeleton;
         public PoisonType Poison;
         public bool Hidden, Extra;
@@ -2240,7 +2237,7 @@ namespace ServerPackets
             Image = (Monster)reader.ReadUInt16();
             Direction = (MirDirection)reader.ReadByte();
             Effect = reader.ReadByte();
-            AI = reader.ReadUInt16(); //自添加AI扩容
+            AI = reader.ReadUInt16();
             Light = reader.ReadByte();
             Dead = reader.ReadBoolean();
             Skeleton = reader.ReadBoolean();
@@ -2268,7 +2265,7 @@ namespace ServerPackets
             writer.Write((ushort)Image);
             writer.Write((byte)Direction);
             writer.Write(Effect);
-            writer.Write((ushort)AI);//自添加AI扩容
+            writer.Write((ushort)AI);
             writer.Write(Light);
             writer.Write(Dead);
             writer.Write(Skeleton);
@@ -4211,15 +4208,15 @@ namespace ServerPackets
         public byte Reason;
 
         /*
-         * 0: 角色死亡
-         * 1: 未与信托商交谈
-         * 2: 物品已出售
-         * 3: 过期
-         * 4: 金币不足
-         * 5: 超重或背包空间不足
-         * 6: 不能购买自己的物品
-         * 7: 与信托商距离太远
-         * 8: 金币到达上限
+         * 0: Dead.
+         * 1: Not talking to TrustMerchant.
+         * 2: Already Sold.
+         * 3: Expired.
+         * 4: Not enough Gold.
+         * 5: Not enough bag space.
+         * 6: You cannot buy your own items.
+         * 7: Trust Merchant is too far.
+         * 8: Too much Gold.
          */
 
         protected override void ReadPacket(BinaryReader reader)
@@ -5420,7 +5417,7 @@ namespace ServerPackets
         }
     }
 
-    public sealed class UserAttackMove : Packet//战士技能 - 日闪移动数据包 
+    public sealed class UserAttackMove : Packet//warrior skill - SlashingBurst move packet 
     {
         public override short Index
         {

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Windows.Forms;
-using Client.MirControls;
+﻿using Client.MirControls;
 using Client.MirGraphics;
 using Client.MirNetwork;
 using Client.MirSounds;
@@ -633,7 +628,7 @@ namespace Client.MirScenes.Dialogs
             var drapery = new Filter { Index = 2, Title = "防具类物品", Type = null };
             var accessory = new Filter { Index = 3, Title = "首饰类物品", Type = null };
             var consumable = new Filter { Index = 4, Title = "消耗类物品", Type = null };
-            var Mounts = new Filter { Index = 5, Title = "坐骑类物品", Type = null };
+            var enhancement = new Filter { Index = 5, Title = "增强类物品", Type = null };
             var book = new Filter { Index = 6, Title = "技能书", Type = null };
             var crafting = new Filter { Index = 7, Title = "工艺类物品", Type = null };
 
@@ -642,7 +637,7 @@ namespace Client.MirScenes.Dialogs
             Filters.Add(drapery);
             Filters.Add(accessory);
             Filters.Add(consumable);
-            Filters.Add(Mounts);
+            Filters.Add(enhancement);
             Filters.Add(book);
             Filters.Add(crafting);
 
@@ -651,7 +646,6 @@ namespace Client.MirScenes.Dialogs
             drapery.SubFilters.Add(new Filter { Index = 203, Title = "腰带类", Type = ItemType.腰带 });
             drapery.SubFilters.Add(new Filter { Index = 204, Title = "靴子类", Type = ItemType.靴子 });
             drapery.SubFilters.Add(new Filter { Index = 205, Title = "守护石", Type = ItemType.守护石 });
-            drapery.SubFilters.Add(new Filter { Index = 206, Title = "宝玉神珠", Type = ItemType.宝玉神珠 });
 
             accessory.SubFilters.Add(new Filter { Index = 301, Title = "项链类", Type = ItemType.项链 });
             accessory.SubFilters.Add(new Filter { Index = 302, Title = "手镯类", Type = ItemType.手镯 });
@@ -662,8 +656,8 @@ namespace Client.MirScenes.Dialogs
             consumable.SubFilters.Add(new Filter { Index = 403, Title = "卷轴类", Type = ItemType.卷轴 });
             consumable.SubFilters.Add(new Filter { Index = 404, Title = "特殊消耗类", Type = ItemType.特殊消耗品 });
 
-            Mounts.SubFilters.Add(new Filter { Index = 501, Title = "坐骑", Type = ItemType.坐骑 });
-            Mounts.SubFilters.Add(new Filter { Index = 502, Title = "坐骑食物", Type = ItemType.坐骑食物 });
+            enhancement.SubFilters.Add(new Filter { Index = 501, Title = "宝玉", Type = ItemType.宝玉神珠, MinShape = 3, MaxShape = 3 });
+            enhancement.SubFilters.Add(new Filter { Index = 502, Title = "神珠", Type = ItemType.宝玉神珠, MinShape = 4, MaxShape = 4 });
 
             book.SubFilters.Add(new Filter { Index = 601, Title = "战士", Type = ItemType.技能书, MaxShape = 30 });
             book.SubFilters.Add(new Filter { Index = 602, Title = "法师", Type = ItemType.技能书, MinShape = 31, MaxShape = 60 });
@@ -687,7 +681,7 @@ namespace Client.MirScenes.Dialogs
             int current = 0;
             int skipped = Skip;
 
-            //处理所有按钮和标签
+            //Dispose all buttons and labels
             foreach (var item in FilterButtons)
                 item.Dispose();
 

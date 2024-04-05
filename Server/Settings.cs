@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
 using Server.MirDatabase;
 using Server.MirObjects;
 
@@ -33,8 +30,6 @@ namespace Server
             NoticePath = Path.Combine(EnvirPath, "Notice.txt"),
             MinimapsPath = Path.Combine(EnvirPath, "Previews", "Minimaps"),
             NPCPreviewPath = Path.Combine(EnvirPath, "Previews", "NPC"),
-            ItemsPreviewPath = Path.Combine(EnvirPath, "Previews", "Items"),
-            MonstersPreviewPath = Path.Combine(EnvirPath, "Previews", "Monsters"),
             Previews = Path.Combine(EnvirPath, "Previews");
 
         private static readonly InIReader Reader = new InIReader(Path.Combine(ConfigPath, "Setup.ini"));
@@ -45,7 +40,7 @@ namespace Server
         public static string VersionPath = Path.Combine(".", "Mir2.Exe");
         public static bool CheckVersion = true;
         public static List<byte[]> VersionHashes;
-        public static string GMPassword = "@9396399"; //登录管理员@login命令密码
+        public static string GMPassword = "@9396399";
         public static bool Multithreaded = true;
         public static int ThreadLimit = 2;
         public static bool TestServer = false;
@@ -66,9 +61,12 @@ namespace Server
 
         public static ushort Port = 7000,
                              TimeOut = 10000,
-                             MaxUser = 500, //允许最大服务器登录人数
+                             MaxUser = 500,
                              RelogDelay = 50,
-                             MaxIP = 5;
+                             MaxIP = 5,
+                             MaxPacket = 50;
+
+        public static int IPBlockSeconds = 5;
 
         //HTTP
         public static bool StartHTTPService = false;
@@ -350,6 +348,7 @@ namespace Server
             TimeOut = Reader.ReadUInt16("Network", "TimeOut", TimeOut);
             MaxUser = Reader.ReadUInt16("Network", "MaxUser", MaxUser);
             MaxIP = Reader.ReadUInt16("Network", "MaxIP", MaxIP);
+            MaxPacket = Reader.ReadUInt16("Network", "MaxPacket", MaxPacket);
 
             //HTTP
             StartHTTPService = Reader.ReadBoolean("Network", "StartHTTPService", StartHTTPService);
@@ -524,12 +523,7 @@ namespace Server
             string MinimapsPath = Path.Combine(EnvirPath, "Previews", "Minimaps");
             if (!Directory.Exists(MinimapsPath))
                 Directory.CreateDirectory(MinimapsPath);
-            string ItemsPreviewPath = Path.Combine(EnvirPath, "Previews", "Items");
-            if (!Directory.Exists(ItemsPreviewPath))
-                Directory.CreateDirectory(ItemsPreviewPath);
-            string MonstersPreviewPath = Path.Combine(EnvirPath, "Previews", "Monsters");
-            if (!Directory.Exists(MonstersPreviewPath))
-                Directory.CreateDirectory(MonstersPreviewPath);
+
             string fileName = Path.Combine(Settings.NPCPath, DefaultNPCFilename + ".txt");
 
             if (!File.Exists(fileName))

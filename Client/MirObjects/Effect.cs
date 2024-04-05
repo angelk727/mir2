@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using Client.MirGraphics;
+﻿using Client.MirGraphics;
 using Client.MirScenes;
 using Client.MirSounds;
 

@@ -1,12 +1,11 @@
-﻿using System;
-using Server.MirDatabase;
+﻿using Server.MirDatabase;
 using Server.MirNetwork;
 
 namespace Server.MirObjects
 {
     public class AssassinHero : HeroObject
     {
-        private bool HasHeavenlySword, HasPoisonSword;
+        private bool HasHeavenlySword;
         public AssassinHero(CharacterInfo info, PlayerObject owner) : base(info, owner) { }
         protected override void Load(CharacterInfo info, MirConnection connection)
         {
@@ -43,6 +42,13 @@ namespace Server.MirObjects
                     BeginMagic(magic.Spell, Direction, ObjectID, CurrentLocation);
                     return;
                 }
+
+                magic = GetMagic(Spell.LightBody);
+                if (CanUseMagic(magic) && !HasBuff(BuffType.风身术))
+                {
+                    BeginMagic(magic.Spell, Direction, ObjectID, CurrentLocation);
+                    return;
+                }
             }
         }
         protected override void ProcessAttack()
@@ -50,21 +56,8 @@ namespace Server.MirObjects
             if (Target == null || Target.Dead) return;
             TargetDistance = Functions.MaxDistance(CurrentLocation, Target.CurrentLocation);
             Direction = Functions.DirectionFromPoint(CurrentLocation, Target.CurrentLocation);
-            UserMagic magic;
-            UserItem poisonItem = GetPoison(1);
 
-            magic = GetMagic(Spell.PoisonSword);
-            HasPoisonSword = CanCast && CanUseMagic(magic);
-            if (HasPoisonSword && TargetDistance == 1 && poisonItem != null)
-            {
-                if (poisonItem.Info.Shape == 1)
-                {
-                    BeginMagic(magic.Spell, Direction, Target.ObjectID, Target.CurrentLocation);
-                    return;
-                }
-            }
-
-            magic = GetMagic(Spell.HeavenlySword);
+            UserMagic magic = GetMagic(Spell.HeavenlySword);
             HasHeavenlySword = CanCast && CanUseMagic(magic);
             if (HasHeavenlySword && TargetDistance == 2)
             {

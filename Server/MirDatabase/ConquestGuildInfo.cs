@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using Server.MirEnvir;
+﻿using Server.MirEnvir;
 using Server.MirObjects;
 using Server.MirObjects.Monsters;
 
@@ -137,7 +135,7 @@ namespace Server.MirDatabase
             MonsterInfo monsterInfo = Envir.GetMonsterInfo(Info.MobIndex);
 
             if (monsterInfo == null) return;
-            if (monsterInfo.AI != 243) return; //自添加AI扩容
+            if (monsterInfo.AI != 243) return;
 
             if (monsterInfo.AI == 243)
             {
@@ -320,7 +318,7 @@ namespace Server.MirDatabase
 
             if (monsterInfo == null) return;
 
-            if (monsterInfo.AI != 951) return; //自添加AI扩容
+            if (monsterInfo.AI != 951) return;
 
             Wall = (Wall)MonsterObject.GetMonster(monsterInfo);
 
@@ -419,7 +417,7 @@ namespace Server.MirDatabase
             MonsterInfo monsterInfo = Envir.GetMonsterInfo(Info.MobIndex);
 
             if (monsterInfo == null) return;
-            if (monsterInfo.AI != 950) return; //自添加AI扩容
+            if (monsterInfo.AI != 950) return;
 
             Gate = (Gate)MonsterObject.GetMonster(monsterInfo);
 
@@ -522,7 +520,7 @@ namespace Server.MirDatabase
             MonsterInfo monsterInfo = Envir.GetMonsterInfo(Info.MobIndex);
 
             if (monsterInfo == null) return;
-            if (monsterInfo.AI != 960) return; //自添加AI扩容
+            if (monsterInfo.AI != 960) return;
 
             ArcherMonster = (ConquestArcher)MonsterObject.GetMonster(monsterInfo);
 

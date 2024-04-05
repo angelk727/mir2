@@ -1,16 +1,10 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Diagnostics;
-using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.Drawing.Text;
-using System.IO;
-using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security;
-using System.Threading;
-using System.Windows.Forms;
 using Client.MirControls;
 using Client.MirGraphics;
 using Client.MirNetwork;
@@ -72,8 +66,7 @@ namespace Client
 
 
             SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.Selectable, true);
-            //FormBorderStyle = Settings.FullScreen || Settings.Borderless ? FormBorderStyle.None : FormBorderStyle.FixedDialog;
-            FormBorderStyle = Settings.FullScreen ? FormBorderStyle.None : FormBorderStyle.FixedDialog;//有边框
+            FormBorderStyle = Settings.FullScreen ? FormBorderStyle.None : FormBorderStyle.FixedDialog;
 
             Graphics = CreateGraphics();
             Graphics.SmoothingMode = SmoothingMode.AntiAlias;
@@ -93,6 +86,8 @@ namespace Client
 
                 LoadMouseCursors();
                 SetMouseCursor(MouseCursor.Default);
+
+                SlimDX.Configuration.EnableObjectTracking = true;
 
                 DXManager.Create();
                 SoundManager.Create();
@@ -411,6 +406,7 @@ namespace Client
             catch (Direct3D9Exception ex)
             {
                 DXManager.DeviceLost = true;
+                SaveError(ex.ToString());
             }
             catch (Exception ex)
             {
@@ -573,9 +569,8 @@ namespace Client
         {
             Settings.FullScreen = !Settings.FullScreen;
 
-            //Program.Form.FormBorderStyle = Settings.FullScreen || Settings.Borderless ? FormBorderStyle.None : FormBorderStyle.FixedDialog;
 
-            Program.Form.FormBorderStyle = Settings.FullScreen ? FormBorderStyle.None : FormBorderStyle.FixedDialog; //有边框
+            Program.Form.FormBorderStyle = Settings.FullScreen ? FormBorderStyle.None : FormBorderStyle.FixedDialog;
 
             DXManager.Parameters.Windowed = !Settings.FullScreen;
 
@@ -658,9 +653,9 @@ namespace Client
             DXManager.Device.Present();
             DXManager.ResetDevice();
 
-            Program.Form.CenterToScreen();
+            if (!Settings.FullScreen)
+                Program.Form.CenterToScreen();
         }
-            
 
         #region ScreenCapture
 
@@ -704,6 +699,13 @@ namespace Client
             {
                 GameScene.Scene.ChatDialog.ReceiveChat(string.Format(GameLanguage.CannotLeaveGame, (GameScene.LogTime - CMain.Time) / 1000), ChatType.System);
                 e.Cancel = true;
+            }
+            else
+            {
+                Settings.Save();
+
+                DXManager.Dispose();
+                SoundManager.Dispose();
             }
         }
 
@@ -780,7 +782,7 @@ namespace Client
             IntPtr hCurs = LoadCursorFromFile(path);
             if (hCurs == IntPtr.Zero) throw new Win32Exception();
             var curs = new Cursor(hCurs);
-            // 注意：将光标强制指向该句柄，以确保它被正确释放。
+            // Note: force the cursor to own the handle so it gets released properly
             //var fi = typeof(Cursor).GetField("ownHandle", BindingFlags.NonPublic | BindingFlags.Instance);
             //fi.SetValue(curs, true);
             return curs;

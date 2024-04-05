@@ -1,8 +1,4 @@
-﻿using System;
-using System.Drawing;
-using System.Linq;
-using System.Windows.Forms;
-using Server.MirEnvir;
+﻿using Server.MirEnvir;
 using Shared.Extensions;
 
 namespace Server
@@ -1775,15 +1771,5 @@ namespace Server
         }
 
         #endregion
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label1_Click_1(object sender, EventArgs e)
-        {
-
-        }
     }
 }

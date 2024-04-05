@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Drawing;
+﻿using System.Drawing;
 using Server.MirDatabase;
 using Server.MirEnvir;
 using S = ServerPackets;
@@ -33,7 +32,8 @@ namespace Server.MirObjects.Monsters
             ShockTime = 0;
 
             Direction = Functions.DirectionFromPoint(CurrentLocation, Target.CurrentLocation);
-            bool ranged = CurrentLocation == Target.CurrentLocation || !Functions.InRange(CurrentLocation, Target.CurrentLocation, 1);
+            bool ranged = CurrentLocation == Target.CurrentLocation || !Functions.InRange(CurrentLocation, Target.CurrentLocation, 1);
+
 
             ActionTime = Envir.Time + 300;
             AttackTime = Envir.Time + AttackSpeed;
@@ -68,7 +68,9 @@ namespace Server.MirObjects.Monsters
 
             else
             //普通攻击
-            {
+            {
+
+
                 Broadcast(new S.ObjectAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation, Type = 0 });
 
                 int damage = GetAttackPower(Stats[Stat.MinDC], Stats[Stat.MaxDC]);
@@ -77,7 +79,8 @@ namespace Server.MirObjects.Monsters
                 DelayedAction action = new DelayedAction(DelayedType.Damage, Envir.Time + 500, Target, damage, DefenceType.ACAgility, false);
                 ActionList.Add(action);
             }
-
+
+
             if (Envir.Random.Next(3) == 0)
             {
                 ActionTime = Envir.Time + 500;
@@ -87,7 +90,8 @@ namespace Server.MirObjects.Monsters
             else
             {
                 MoveTo(Target.CurrentLocation);
-            }
+            }
+
         }
 
         protected override void ProcessTarget()
@@ -111,25 +115,25 @@ namespace Server.MirObjects.Monsters
 
         private void AxeThump() //蓄力重击
         {
-                byte stompLoops = (byte)Envir.Random.Next(5, 10);
-                int stompDuration = stompLoops * 100;
+            byte stompLoops = (byte)Envir.Random.Next(5, 10);
+            int stompDuration = stompLoops * 100;
 
-                _AxeThumpTime = Envir.Time + 5000;
+            _AxeThumpTime = Envir.Time + 5000;
 
-                ActionTime = Envir.Time + (stompDuration) + 500;
-                AttackTime = Envir.Time + (stompDuration) + 500 + AttackSpeed;
+            ActionTime = Envir.Time + (stompDuration) + 500;
+            AttackTime = Envir.Time + (stompDuration) + 500 + AttackSpeed;
 
-                Broadcast(new S.ObjectAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation, Type = 2, Level = stompLoops });
+            Broadcast(new S.ObjectAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation, Type = 2, Level = stompLoops });
 
-                int damage = GetAttackPower(Stats[Stat.MinDC], Stats[Stat.MaxDC]) * stompLoops;
-                if (damage == 0) return;
-                LineAttack(damage, 7, 300, DefenceType.MACAgility);
+            int damage = GetAttackPower(Stats[Stat.MinDC], Stats[Stat.MaxDC]) * stompLoops;
+            if (damage == 0) return;
+            LineAttack(damage, 7, 300, DefenceType.MACAgility);
 
-                DelayedAction action = new DelayedAction(DelayedType.Damage, Envir.Time + stompDuration + 500, Target, damage, DefenceType.AC, true);
-                ActionList.Add(action);
+            DelayedAction action = new DelayedAction(DelayedType.Damage, Envir.Time + stompDuration + 500, Target, damage, DefenceType.AC, true);
+            ActionList.Add(action);
 
-                return;
-            }
+            return;
+        }
 
         private void FlyAxe() //飞斧攻击
         {
@@ -150,21 +154,21 @@ namespace Server.MirObjects.Monsters
 
             var location = target.CurrentLocation;
 
-            for (int y = location.Y - 3; y <= location.Y + 3; y++)
+            Parallel.For(location.Y - 3, location.Y + 4, y =>
             {
-                if (y < 0) continue;
-                if (y >= CurrentMap.Height) break;
+                if (y < 0) return;
+                if (y >= CurrentMap.Height) return;
 
-                for (int x = location.X - 3; x <= location.X + 3; x++)
+                Parallel.For(location.X - 3, location.X + 4, x =>
                 {
-                    if (x < 0) continue;
-                    if (x >= CurrentMap.Width) break;
+                    if (x < 0) return;
+                    if (x >= CurrentMap.Width) return;
 
-                    if (x == CurrentLocation.X && y == CurrentLocation.Y) continue;
+                    if (x == CurrentLocation.X && y == CurrentLocation.Y) return;
 
                     var cell = CurrentMap.GetCell(x, y);
 
-                    if (!cell.Valid) continue;
+                    if (!cell.Valid) return;
 
                     int damage = GetAttackPower(Stats[Stat.MinMC], Stats[Stat.MinMC]);
 
@@ -188,8 +192,8 @@ namespace Server.MirObjects.Monsters
 
                     DelayedAction action = new DelayedAction(DelayedType.Spawn, Envir.Time + start, ob);
                     CurrentMap.ActionList.Add(action);
-                }
-            }
+                });
+            });
         }
 
         private void Thrust(MapObject target) //旋风冲击
@@ -217,7 +221,7 @@ namespace Server.MirObjects.Monsters
                 int damage = Stats[Stat.MaxDC];
 
                 if (damage > 0)
-                FullmoonAttack(damage);
+                    FullmoonAttack(damage);
                 {
                     DelayedAction action = new DelayedAction(DelayedType.RangeDamage, Envir.Time + 500, location, damage, DefenceType.AC);
                     ActionList.Add(action);
@@ -238,7 +242,8 @@ namespace Server.MirObjects.Monsters
             if (Envir.Time > _BuffTime)
                 _BuffTime = Envir.Time + 30000;
 
-            {
+            {
+
                 var min = Stats[Stat.MinAC];
                 var max = Stats[Stat.MaxAC];
                 var stats = new Stats

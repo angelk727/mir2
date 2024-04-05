@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using Server.MirDatabase;
+﻿using Server.MirDatabase;
 using Server.MirEnvir;
 using Server.MirNetwork;
 using Server.MirObjects.Monsters;
+using System.Numerics;
 using S = ServerPackets;
 
 namespace Server.MirObjects
@@ -272,7 +270,7 @@ namespace Server.MirObjects
                 CounterAttack = false;
             }
 
-            //if (ReincarnationReady && Envir.Time >= ReincarnationExpireTime) //修改复活术删除代码片段
+            //if (ReincarnationReady && Envir.Time >= ReincarnationExpireTime)
             //{
             //    ReincarnationReady = false;
             //    ActiveReincarnation = false;
@@ -350,7 +348,7 @@ namespace Server.MirObjects
                 for (int i = 0; i < Info.Equipment.Length; i++)
                 {
                     item = Info.Equipment[i];
-                    if (item == null || !item.DuraChanged) continue; // || item.Info.Type == ItemType.坐骑
+                    if (item == null || !item.DuraChanged) continue; // || item.Info.Type == ItemType.Mount
                     item.DuraChanged = false;
                     Enqueue(new S.DuraChanged { UniqueID = item.UniqueID, CurrentDura = item.CurrentDura });
                 }
@@ -631,7 +629,7 @@ namespace Server.MirObjects
             if (healthRegen > 0)
             {
                 ChangeHP(healthRegen);
-                BroadcastDamageIndicator(DamageType.HpRegen, healthRegen); //自添加飘窗显示
+                BroadcastDamageIndicator(DamageType.HpRegen, healthRegen);
             }
 
             if (HP == Stats[Stat.HP])
@@ -682,7 +680,7 @@ namespace Server.MirObjects
                         }
 
                         PoisonDamage(-poison.Value, poison.Owner);
-                        BroadcastDamageIndicator(DamageType.Poisoning, -poison.Value); //自添加飘窗显示
+                        BroadcastDamageIndicator(DamageType.Poisoning, -poison.Value);
 
                         if (Dead) break;
                         RegenTime = Envir.Time + RegenDelay;
@@ -758,7 +756,7 @@ namespace Server.MirObjects
                             DelayedAction action = new DelayedAction(DelayedType.Magic, Envir.Time, poison.Owner, caster.GetMagic(Spell.DelayedExplosion), poison.Value, this.CurrentLocation);
                             CurrentMap.ActionList.Add(action);
                             break;
-                        case ObjectType.Monster://这是适当的，所以如果有一天有人选择使用它，它可以被怪物使用
+                        case ObjectType.Monster://this is in place so it could be used by mobs if one day someone chooses to
                             Attacked((MonsterObject)poison.Owner, poison.Value, DefenceType.MAC);
                             break;
                     }
@@ -998,7 +996,8 @@ namespace Server.MirObjects
 
             if (this is HeroObject hero)
             {
-                if (message == GameLanguage.WeaponCurse || message == GameLanguage.WeaponLuck)
+                if (message == GameLanguage.WeaponCurse ||
+                    message == GameLanguage.WeaponLuck)
                 {
                     hero.Owner.Enqueue(new S.RefreshItem { Item = item });
                 }
@@ -1255,19 +1254,19 @@ namespace Server.MirObjects
                 case ItemType.灵物:
                     switch (item.Info.Shape)
                     {
-                        case 20://镜子重命名灵物
+                        case 20://mirror rename creature
                             if (Info.IntelligentCreatures.Count == 0) return false;
                             break;
-                        case 21://灵物石
+                        case 21://creature stone
                             break;
-                        case 22://坚果维持食物水平
+                        case 22://nuts maintain food levels
                             if (!CreatureSummoned)
                             {
                                 ReceiveChat("唤出灵物后使用", ChatType.System);
                                 return false;
                             }
                             break;
-                        case 23://灵物食品
+                        case 23://basic creature food
                             if (!CreatureSummoned)
                             {
                                 ReceiveChat("与灵物一起时才能使用", ChatType.System);
@@ -1290,7 +1289,7 @@ namespace Server.MirObjects
                                 }
                                 return false;
                             }
-                        case 24://神奇药丸使灵物恢复活力
+                        case 24://wonderpill vitalize creature
                             if (!CreatureSummoned)
                             {
                                 ReceiveChat("只能与灵物一起时使用", ChatType.System);
@@ -1313,11 +1312,11 @@ namespace Server.MirObjects
                                 }
                                 return false;
                             }
-                        case 25://坚固的箱子
+                        case 25://Strongbox
                             break;
-                        case 26://神奇药物
+                        case 26://Wonderdrugs
                             break;
-                        case 27://幸运饼干
+                        case 27://Fortunecookies
                             break;
                     }
                     break;
@@ -1733,7 +1732,7 @@ namespace Server.MirObjects
             RefreshBuffs();
             RefreshGuildBuffs();
 
-            //添加任何数率百分比更改
+            //Add any rate percent changes
 
             Stats[Stat.HP] += (Stats[Stat.HP] * Stats[Stat.生命值数率]) / 100;
             Stats[Stat.MP] += (Stats[Stat.MP] * Stats[Stat.法力值数率]) / 100;
@@ -1835,7 +1834,7 @@ namespace Server.MirObjects
                 if (realItem.Type == ItemType.坐骑)
                 {
                     Mount.MountType = realItem.Shape;
-                    //RealItem.Effect; //在这里写坐骑特效代码？
+                    //RealItem.Effect;
                 }
 
                 if (temp.Info.IsFishingRod) continue;
@@ -1963,7 +1962,7 @@ namespace Server.MirObjects
                 }
             }
 
-            //TODO - 添加套装属性
+            //TODO - Add Socket bonuses
         }
         private void RefreshItemSetStats()
         {
@@ -2031,7 +2030,7 @@ namespace Server.MirObjects
                     }
                 }
 
-                if (s.Set == ItemSet.神龙套装) //需在ItemData.cs中设置套装件数
+                if (s.Set == ItemSet.神龙套装)
                 {
                     if (s.Type.Contains(ItemType.戒指) && s.Type.Contains(ItemType.项链))
                     {
@@ -2977,9 +2976,9 @@ namespace Server.MirObjects
 
             Point target = Functions.PointMove(CurrentLocation, dir, 1);
 
-            //damabeBase = 来自你的装备的原始伤害（加上来自moonlight 和 darkbody的额外加成）
+            //damabeBase = the original damage from your gear (+ bonus from moonlight and darkbody)
             int damageBase = GetAttackPower(Stats[Stat.MinDC], Stats[Stat.MaxDC]);
-            //damageFinal = 加上你即将使用的技能后的伤害量
+            //damageFinal = the damage you're gonna do with skills added
             int damageFinal;
 
             if (MoonLightAttack || DarkBodyAttack)
@@ -3025,7 +3024,7 @@ namespace Server.MirObjects
                 return;
             }
 
-            damageFinal = damageBase;//如果没有使用技能
+            damageFinal = damageBase;//incase we're not using skills
             for (int i = 0; i < cell.Objects.Count; i++)
             {
                 MapObject ob = cell.Objects[i];
@@ -3053,11 +3052,11 @@ namespace Server.MirObjects
                     }
                 }
 
-                //神圣属性的计算方法，（仅限不死类目标）
+                //Only undead targets
                 if (ob.Undead)
                 {
                     damageBase = Math.Min(int.MaxValue, damageBase + Stats[Stat.神圣]);
-                    damageFinal = damageBase;//如果我们没有使用技能的情况下
+                    damageFinal = damageBase;//incase we're not using skills
                 }
 
                 #region FatalSword
@@ -3293,10 +3292,10 @@ namespace Server.MirObjects
             {
                 if (Info.Equipment[(int)EquipmentSlot.武器] == null) return;
                 if (!Info.Equipment[(int)EquipmentSlot.武器].Info.CanMine) return;
-                if (Info.Equipment[(int)EquipmentSlot.武器].CurrentDura <= 0)//停用耐久度为0的功能。如果希望该物品被破坏销毁，请使用下方的选项
+                if (Info.Equipment[(int)EquipmentSlot.武器].CurrentDura <= 0)//Stop dura 0 working. use below if you wish to break the item.
                     /*{
-                        Enqueue(new S.DeleteItem { UniqueID = Info.Equipment[(int)EquipmentSlot.武器].UniqueID, Count = Info.Equipment[(int)EquipmentSlot.武器].Count });
-                        Info.Equipment[(int)EquipmentSlot.武器] = null;
+                        Enqueue(new S.DeleteItem { UniqueID = Info.Equipment[(int)EquipmentSlot.Weapon].UniqueID, Count = Info.Equipment[(int)EquipmentSlot.Weapon].Count });
+                        Info.Equipment[(int)EquipmentSlot.Weapon] = null;
                         RefreshStats();*/
                     return;
                 /*}*/
@@ -3308,7 +3307,7 @@ namespace Server.MirObjects
                     Mine.StonesLeft--;
                     if (Envir.Random.Next(100) < (Mine.Mine.HitRate + (Info.Equipment[(int)EquipmentSlot.武器].GetTotal(Stat.准确)) * 10))
                     {
-                        //在地面上增加一些碎石效果（或增加已有的碎石）
+                        //create some rubble on the floor (or increase whats there)
                         SpellObject Rubble = null;
                         Cell minecell = CurrentMap.GetCell(CurrentLocation);
                         for (int i = 0; i < minecell.Objects.Count; i++)
@@ -3342,7 +3341,7 @@ namespace Server.MirObjects
                             ActionList.Add(new DelayedAction(DelayedType.Mine, Envir.Time + 400, Rubble));
                         }
 
-                        //检查是否获取一个采矿率的增加
+                        //check if we get a payout
                         if (Envir.Random.Next(100) < (Mine.Mine.DropRate + Stats[Stat.采矿出矿数率]))
                         {
                             GetMinePayout(Mine.Mine);
@@ -3374,7 +3373,7 @@ namespace Server.MirObjects
         {
             int cost = magic.Info.BaseCost + magic.Info.LevelCost * magic.Level;
             Spell spell = magic.Spell;
-            if (spell == Spell.Teleport || spell == Spell.Blink || spell == Spell.StormEscape || spell == Spell.StormEscapeRare) //自添加
+            if (spell == Spell.Teleport || spell == Spell.Blink || spell == Spell.StormEscape || spell == Spell.StormEscapeRare)
             {
                 if (Stats[Stat.传送技法力消耗数率] > 0)
                 {
@@ -3509,7 +3508,7 @@ namespace Server.MirObjects
                     }
                     Healing(target, magic);
                     break;
-                case Spell.HealingRare: //自添加治愈秘籍
+                case Spell.HealingRare:
                     if (target == null)
                     {
                         target = this;
@@ -3557,10 +3556,10 @@ namespace Server.MirObjects
                 case Spell.ImmortalSkin:
                     ImmortalSkin(magic, out cast);
                     break;
-                case Spell.ImmortalSkinRare: //自添加金刚不坏秘籍
+                case Spell.ImmortalSkinRare:
                     ImmortalSkinRare(magic, out cast);
                     break;
-                case Spell.HeavenlySecrets:  //自添加天上秘术
+                case Spell.HeavenlySecrets:
                     HeavenlySecrets(magic, out cast);
                     break;
                 case Spell.FireBang:
@@ -3599,7 +3598,7 @@ namespace Server.MirObjects
                         //Start teleport.
                         ActionList.Add(new DelayedAction(DelayedType.Magic, Envir.Time + 750, magic, location));
                     break;
-                case Spell.StormEscapeRare: //自添加雷仙风秘籍
+                case Spell.StormEscapeRare:
                     ThunderStorm(magic);
                     if (spell == Spell.FlameField)
                         SpellTime = Envir.Time + 2500;
@@ -3609,7 +3608,7 @@ namespace Server.MirObjects
                 case Spell.MagicShield:
                     ActionList.Add(new DelayedAction(DelayedType.Magic, Envir.Time + 500, magic, magic.GetPower(GetAttackPower(Stats[Stat.MinMC], Stats[Stat.MaxMC]) + 15)));
                     break;
-                case Spell.GreatFireBallRare: //自添加大火球秘籍
+                case Spell.GreatFireBallRare:
                     GreatFireBallRare(target, magic, out cast);
                     break;
                 case Spell.FlameDisruptor:
@@ -3648,7 +3647,7 @@ namespace Server.MirObjects
                 case Spell.Entrapment:
                     Entrapment(target, magic);
                     break;
-                case Spell.EntrapmentRare: //自添加
+                case Spell.EntrapmentRare:
                     EntrapmentRare(target, magic);
                     break;
                 case Spell.BladeAvalanche:
@@ -3669,8 +3668,8 @@ namespace Server.MirObjects
                 case Spell.MeteorStrike:
                     MeteorStrike(magic, spellTargetLock ? (target != null ? target.CurrentLocation : location) : location, out cast);
                     break;
-                case Spell.HealingcircleRare: //添加阴阳五行阵-秘籍
-                    HealingcircleRare(magic, target == null ? location : target.CurrentLocation, out cast);
+                case Spell.HealingcircleRare:
+                    HealingcircleRare(magic, spellTargetLock ? (target != null ? target.CurrentLocation : location) : location, out cast);
                     break;
                 case Spell.IceThrust:
                     IceThrust(magic);
@@ -3684,7 +3683,7 @@ namespace Server.MirObjects
                 case Spell.TrapHexagon:
                     TrapHexagon(magic, spellTargetLock ? (target != null ? target.CurrentLocation : location) : location, out cast);
                     break;
-                case Spell.Reincarnation: //复活术
+                case Spell.Reincarnation:
                     if (target == null)
                     {
                         for (int i = CurrentMap.Players.Count - 1; i >= 0; i--)
@@ -3854,7 +3853,7 @@ namespace Server.MirObjects
             }
             else
             {
-                ObtainElement(true);//通过施法收集法球
+                ObtainElement(true);//gather orb through casting
                 LevelMagic(magic);
                 return false;
             }
@@ -4189,7 +4188,7 @@ namespace Server.MirObjects
                target.Undead &&
                target.IsAttackTarget(this))
             {
-                // 对不死系宠物的逻辑
+                // undead pet logic
                 if (target.Master is PlayerObject master)
                 {
                     if (master.PKPoints < 200 &&
@@ -4230,7 +4229,7 @@ namespace Server.MirObjects
 
             ActionList.Add(action);
         }
-        private void GreatFireBallRare(MapObject target, UserMagic magic, out bool cast)  //自添加大火球秘籍
+        private void GreatFireBallRare(MapObject target, UserMagic magic, out bool cast)
         {
             cast = false;
 
@@ -4327,7 +4326,7 @@ namespace Server.MirObjects
             ActionList.Add(new DelayedAction(DelayedType.Magic, Envir.Time + 500, magic, bonus));
         }
 
-        private void HeavenlySecrets(UserMagic magic, out bool cast) //自添加天上秘术
+        private void HeavenlySecrets(UserMagic magic, out bool cast)
         {
             cast = true;
 
@@ -4704,7 +4703,6 @@ namespace Server.MirObjects
 
                 CurrentMap.AddObject(ob);
                 ob.Spawned();
-
                 ConsumeItem(item, 1);
                 
                 DelayedAction action = new DelayedAction(DelayedType.Magic, ExpireTime, magic, target);
@@ -4900,7 +4898,7 @@ namespace Server.MirObjects
 
             ActionList.Add(action);
         }
-        private void HealingRare(MapObject target, UserMagic magic) //自添加治愈秘术秘籍
+        private void HealingRare(MapObject target, UserMagic magic)
         {
             if (target == null || !target.IsFriendlyTarget(this)) return;
 
@@ -4910,7 +4908,7 @@ namespace Server.MirObjects
 
             ActionList.Add(action);
         }
-        private void HealingcircleRare(UserMagic magic, Point location, out bool cast) //自添加阴阳五行阵-秘籍
+        private void HealingcircleRare(UserMagic magic, Point location, out bool cast)
         {
             cast = false;
             UserItem item = GetAmulet(3);
@@ -4938,7 +4936,7 @@ namespace Server.MirObjects
 
             ActionList.Add(action);
         }
-        private void EntrapmentRare(MapObject target, UserMagic magic) //自添加捕绳剑秘籍 未完成
+        private void EntrapmentRare(MapObject target, UserMagic magic)
         {
             if (target == null || !target.IsAttackTarget(this)) return;
 
@@ -4983,7 +4981,7 @@ namespace Server.MirObjects
                         {
                             case ObjectType.Monster:
                             case ObjectType.Player:
-                                //仅限目标
+                                //Only targets
                                 if (target.IsAttackTarget(this))
                                 {
                                     if (target.Attacked(this, j <= 1 ? damageFinal : (int)(damageFinal * 0.6), DefenceType.MAC, false) > 0)
@@ -5186,7 +5184,7 @@ namespace Server.MirObjects
                 _target?.Attacked(this, magic.GetDamage(0), DefenceType.None, false);
                 LevelMagic(magic);
 
-                Broadcast(new S.ObjectDash { ObjectID = ObjectID, Direction = Direction, Location = Front });
+                // Broadcast(new S.ObjectDash { ObjectID = ObjectID, Direction = Direction, Location = Front });
             }
 
             long now = Envir.Time;
@@ -5258,7 +5256,7 @@ namespace Server.MirObjects
             ActionList.Add(new DelayedAction(DelayedType.Magic, Envir.Time + 500, magic));
 
         }
-        private void ImmortalSkinRare(UserMagic magic, out bool cast)//自添加技能
+        private void ImmortalSkinRare(UserMagic magic, out bool cast)
         {
             cast = true;
 
@@ -5273,7 +5271,7 @@ namespace Server.MirObjects
 
             int damageBase = GetAttackPower(Stats[Stat.MinDC], Stats[Stat.MaxDC]);
             if (Envir.Random.Next(0, 100) <= Stats[Stat.准确])
-                damageBase += damageBase;//暴击应该做两次攻击，而不是双最大攻击！
+                damageBase += damageBase;//crit should do something like double dmg, not double max dc dmg!
             int damageFinal = magic.GetDamage(damageBase);
 
 
@@ -5311,9 +5309,9 @@ namespace Server.MirObjects
         }
         private void MoonLight(UserMagic magic)
         {
-            var time = Settings.Second * 15; //var time = GetAttackPower(Stats[Stat.MinAC], Stats[Stat.MaxAC]); 修改为固定时间15秒
+            var time = Settings.Second * 15; //var time = GetAttackPower(Stats[Stat.MinAC], Stats[Stat.MaxAC]);
 
-            AddBuff(BuffType.月影术, this, (time + (magic.Level * 5000)), new Stats()); //AddBuff(BuffType.月影术, this, (time + (magic.Level + 1) * 5) * 500, new Stats()); 修改为每级增加5秒
+            AddBuff(BuffType.月影术, this, (time + (magic.Level * 5000)), new Stats()); //AddBuff(BuffType.月影术, this, (time + (magic.Level + 1) * 5) * 500, new Stats());
 
             LevelMagic(magic);
         }
@@ -5416,7 +5414,7 @@ namespace Server.MirObjects
         {
             int damageBase = GetAttackPower(Stats[Stat.MinDC], Stats[Stat.MaxDC]);
             if (Envir.Random.Next(0, 100) <= Stats[Stat.准确])
-                damageBase += damageBase;//暴击应该像双倍攻击，而不是双倍最大DC攻击！
+                damageBase += damageBase;//crit should do something like double dmg, not double max dc dmg!
             int damageFinal = magic.GetDamage(damageBase);
 
             MirDirection backDir = Functions.ReverseDirection(Direction);
@@ -5542,7 +5540,7 @@ namespace Server.MirObjects
                     }
                 }
             }
-            if (success) //从技术上讲，这会使flashdash在施放时而不是命中时变为lvl（如果不命中，则不会变为lvl！）
+            if (success) //technicaly this makes flashdash lvl when it casts rather then when it hits (it wont lvl if it's not hitting!)
                 LevelMagic(magic);
 
             magic.CastTime = Envir.Time;
@@ -5563,10 +5561,10 @@ namespace Server.MirObjects
             int dmgpenalty = 100;
             switch (Info.MentalState)
             {
-                case 1: //特技射击
+                case 1: //trickshot
                     dmgpenalty = 55 + (Info.MentalStateLvl * 5);
                     break;
-                case 2: //群体攻击
+                case 2: //group attack
                     dmgpenalty = 80;
                     break;
             }
@@ -5703,7 +5701,7 @@ namespace Server.MirObjects
             CurrentMap.ActionList.Add(action);
         }
 
-        public void DoKnockback(MapObject target, UserMagic magic)//元素射击-反击
+        public void DoKnockback(MapObject target, UserMagic magic)//ElementalShot - knockback
         {
             Cell cell = CurrentMap.GetCell(target.CurrentLocation);
             if (!cell.Valid || cell.Objects == null) return;
@@ -5848,7 +5846,7 @@ namespace Server.MirObjects
 
         private bool FireBounce(MapObject target, UserMagic magic, MapObject source, int bounce = -1)
         {
-            if (target == null || !target.IsAttackTarget(this) || !CanFly(target.CurrentLocation) || bounce == 0) return false;
+            if (target == null || !target.IsAttackTarget(this) || !source.CanFly(target.CurrentLocation) || bounce == 0) return false;
 
             int damage = magic.GetDamage(GetAttackPower(Stats[Stat.MinMC], Stats[Stat.MaxMC]));
 
@@ -5953,7 +5951,7 @@ namespace Server.MirObjects
 
                 case Spell.FireBall:
                 case Spell.GreatFireBall:
-                case Spell.GreatFireBallRare:  //自添加大火球秘籍
+                case Spell.GreatFireBallRare:
                 case Spell.ThunderBolt:
                 case Spell.SoulFireBall:
                 case Spell.FlameDisruptor:
@@ -5983,7 +5981,7 @@ namespace Server.MirObjects
 
                     if (target.Race == ObjectType.Monster)
                     {
-                        var targets = ((MonsterObject)target).FindAllNearby(3, target.CurrentLocation).Where(x => x != target && x.IsAttackTarget(this)).ToList();
+                        var targets = ((MonsterObject)target).FindAllNearby(3, target.CurrentLocation).Where(x => x != target && x.IsAttackTarget(this) && target.CanFly(x.CurrentLocation)).ToList();
 
                         if (targets.Count > 0)
                         {
@@ -6067,7 +6065,7 @@ namespace Server.MirObjects
 
                 #endregion
 
-                #region HealingRare //添加治愈秘籍
+                #region HealingRare
 
                 case Spell.HealingRare:
                     value = (int)data[1];
@@ -6146,7 +6144,7 @@ namespace Server.MirObjects
                     break;
                 #endregion
 
-                #region StormEscapeRare //自添加雷仙风秘籍
+                #region StormEscapeRare
                 case Spell.StormEscapeRare:
                     location = (Point)data[1];
                     if (CurrentMap.Info.NoTeleport)
@@ -6252,7 +6250,7 @@ namespace Server.MirObjects
                     break;
                 #endregion
 
-                #region ImmortalSkinRare //自添加金刚不坏秘籍 未完成
+                #region ImmortalSkinRare
 
                 case Spell.ImmortalSkinRare:
                     {
@@ -6268,7 +6266,7 @@ namespace Server.MirObjects
                     break;
                 #endregion
 
-                #region HeavenlySecrets //自添加天上秘术
+                #region HeavenlySecrets
 
                 case Spell.HeavenlySecrets:
                     {
@@ -6314,7 +6312,7 @@ namespace Server.MirObjects
                         monster = (MonsterObject)data[1];
                         if (monster == null || !monster.IsAttackTarget(this) || monster.CurrentMap != CurrentMap || monster.Node == null) return;
 
-                        if (this is HeroObject hero) //自添加 对英雄的判断 如果直接使用this 会导致崩溃
+                        if (this is HeroObject hero)
                         {
                             monster.LastHitter = monster.EXPOwner = hero.Owner;
                         }
@@ -6324,6 +6322,7 @@ namespace Server.MirObjects
                         }
 
                         monster.LastHitTime = Envir.Time + 5000;
+                        monster.EXPOwner = this;
                         monster.EXPOwnerTime = Envir.Time + 5000;
                         monster.Die();
                         LevelMagic(magic);
@@ -6408,7 +6407,8 @@ namespace Server.MirObjects
 
                 #region Reincarnation
 
-                case Spell.Reincarnation: //复活术
+                case Spell.Reincarnation:
+
                     if (ReincarnationReady)
                     {
                         ReceiveChat("激活目标复活", ChatType.System);
@@ -6446,7 +6446,7 @@ namespace Server.MirObjects
 
                 #endregion
 
-                #region EntrapmentRare //自添加
+                #region EntrapmentRare
 
                 case Spell.EntrapmentRare:
                     value = (int)data[1];
@@ -6581,7 +6581,7 @@ namespace Server.MirObjects
                     {
                         //destroy orbs
                         ElementsLevel = 0;
-                        ObtainElement(false);//更新并发送给客户
+                        ObtainElement(false);//update and send to client
                         return;
                     }
                     if (target.Attacked(this, value, DefenceType.MAC, false) > 0)
@@ -6590,7 +6590,7 @@ namespace Server.MirObjects
 
                     //destroy orbs
                     ElementsLevel = 0;
-                    ObtainElement(false);//更新并发送给客户
+                    ObtainElement(false);//update and send to client
                     break;
 
                 #endregion
@@ -6675,7 +6675,7 @@ namespace Server.MirObjects
 
                     if (centerTarget == null) return;
 
-                    //只有中心目标才具有效果
+                    //only the centertarget holds the effect
                     centerTarget.BindingShotCenter = true;
                     centerTarget.Broadcast(new S.SetBindingShot { ObjectID = centerTarget.ObjectID, Enabled = true, Value = value });
 
@@ -6830,7 +6830,7 @@ namespace Server.MirObjects
 
                     if (Pets.Count(x => x.Race == ObjectType.Monster) >= 2) return;
 
-                    //把它留下来用于未来召唤护身符
+                    //left it in for future summon amulets
                     //UserItem item = GetAmulet(5);
                     //if (item == null) return;
 
@@ -7250,7 +7250,7 @@ namespace Server.MirObjects
                 return 0;
             }
 
-            //魔法盾，元素屏障
+            //MagicShield, ElementalBarrier
             if (Stats[Stat.伤害降低数率] > 0)
             {
                 damage -= (damage * Stats[Stat.伤害降低数率]) / 100;
@@ -7268,7 +7268,7 @@ namespace Server.MirObjects
                 RemoveBuff(BuffType.烈火身);
             }
 
-            //能量防护罩
+            //EnergyShield
             if (Stats[Stat.气功盾恢复数率] > 0)
             {
                 if (Envir.Random.Next(100) < Stats[Stat.气功盾恢复数率])
@@ -7955,7 +7955,7 @@ namespace Server.MirObjects
 
             UserItem clonedItem = item.Clone();
 
-            Enqueue(new S.GainedItem { Item = clonedItem }); //克隆是因为我们可能会改变数量
+            Enqueue(new S.GainedItem { Item = clonedItem }); //Cloned because we are probably going to change the amount.
 
             AddItem(item);
             RefreshBagWeight();

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Windows.Forms;
-using Client.MirControls;
+﻿using Client.MirControls;
 using Client.MirGraphics;
 using Client.MirNetwork;
 using Client.MirScenes.Dialogs;
@@ -26,10 +22,8 @@ namespace Client.MirScenes
 
         public SelectScene(List<SelectInfo> characters)
         {
-            SoundManager.PlaySound(SoundList.SelectMusic, true);
-            Disposing += (o, e) => SoundManager.StopSound(SoundList.SelectMusic);
-            //SoundManager.PlayMusic(SoundList.SelectMusic, true);
-            //Disposing += (o, e) => SoundManager.StopMusic();
+            SoundManager.PlayMusic(SoundList.SelectMusic, true);
+            Disposing += (o, e) => SoundManager.StopMusic();
 
             Characters = characters;
             SortList();
@@ -38,7 +32,7 @@ namespace Client.MirScenes
 
             Background = new MirImageControl
             {
-                Index = 64, //默认：//Index = 65,
+                Index = 64,
                 Library = Libraries.Prguse,
                 Parent = this,
             };
@@ -48,12 +42,14 @@ namespace Client.MirScenes
                 Index = 40,
                 Library = Libraries.Title,
                 Parent = this,
-                Location = new Point(358, 15) //默认：Location = new Point(468, 20)
+                Location = new Point(358, 15)
+				//Location = new Point(468, 20)
             };
 
             ServerLabel = new MirLabel
             {
-                Location = new Point(322, 44), //默认：Location = new Point(432, 60),
+                Location = new Point(322, 44),
+				//Location = new Point(432, 60),
                 Parent = Background,
                 Size = new Size(155, 17),
                 Text = "Legend of Mir 2",
@@ -133,7 +129,7 @@ namespace Client.MirScenes
                 FadeInRate = 0.1F,
                 Index = 220,
                 Library = Libraries.ChrSel,
-                Location = new Point(200, 300), //默认：Location = new Point(260, 420),
+                Location = new Point(200, 300),
                 Parent = Background,
                 UseOffSet = true,
                 Visible = false
@@ -148,7 +144,7 @@ namespace Client.MirScenes
 
             CharacterButtons[0] = new CharacterButton
             {
-                Location = new Point(447, 122), //默认：Location = new Point(637, 194),
+                Location = new Point(447, 122),
                 Parent = Background,
                 Sound = SoundList.ButtonA,
             };
@@ -162,7 +158,7 @@ namespace Client.MirScenes
 
             CharacterButtons[1] = new CharacterButton
             {
-                Location = new Point(447, 226), //默认：Location = new Point(637, 298),
+                Location = new Point(447, 226),
                 Parent = Background,
                 Sound = SoundList.ButtonA,
             };
@@ -175,7 +171,7 @@ namespace Client.MirScenes
 
             CharacterButtons[2] = new CharacterButton
             {
-                Location = new Point(447, 330), //默认：Location = new Point(637, 402),
+                Location = new Point(447, 330),
                 Parent = Background,
                 Sound = SoundList.ButtonA,
             };
@@ -189,7 +185,7 @@ namespace Client.MirScenes
 
             CharacterButtons[3] = new CharacterButton
             {
-                Location = new Point(447, 434), //默认：Location = new Point(637, 506),
+                Location = new Point(447, 434),
                 Parent = Background,
                 Sound = SoundList.ButtonA,
             };
@@ -203,7 +199,7 @@ namespace Client.MirScenes
 
             LastAccessLabel = new MirLabel
             {
-                Location = new Point(140, 509), //默认：Location = new Point(265, 609),
+                Location = new Point(140, 509),
                 Parent = Background,
                 Size = new Size(180, 21),
                 DrawFormat = TextFormatFlags.Left | TextFormatFlags.VerticalCenter,
@@ -211,7 +207,7 @@ namespace Client.MirScenes
             };
             LastAccessLabelLabel = new MirLabel
             {
-                Location = new Point(-80, -1), //默认：Location = new Point(-65, 0),
+                Location = new Point(-80, -1),
                 Parent = LastAccessLabel,
                 Text = "上次联机:",
                 Size = new Size(100, 21),
@@ -430,9 +426,9 @@ namespace Client.MirScenes
 
             long time = CMain.Time + p.Milliseconds;
 
-            MirMessageBox message = new MirMessageBox(string.Format("账户登录失败 {0} 秒", Math.Ceiling(p.Milliseconds / 1000M)));
+            MirMessageBox message = new MirMessageBox(string.Format("账户登录失败 再次登录时间 {0} 秒", Math.Ceiling(p.Milliseconds / 1000M)));
 
-            message.BeforeDraw += (o, e) => message.Label.Text = string.Format("账户登录失败 {0} 秒", Math.Ceiling((time - CMain.Time) / 1000M));
+            message.BeforeDraw += (o, e) => message.Label.Text = string.Format("账户登录失败 再次登录时间 {0} 秒", Math.Ceiling((time - CMain.Time) / 1000M));
 
 
             message.AfterDraw += (o, e) =>
@@ -462,13 +458,13 @@ namespace Client.MirScenes
                     MirMessageBox.Show("服务器维护禁止登录");
                     break;
                 case 1:
-                    MirMessageBox.Show("没有登录");
+                    MirMessageBox.Show("尚未登录");
                     break;
                 case 2:
-                    MirMessageBox.Show("没有角色");
+                    MirMessageBox.Show("没有激活角色");
                     break;
                 case 3:
-                    MirMessageBox.Show("没有活动地图/或新手出生点");
+                    MirMessageBox.Show("无效地图或没有新手出生点");
                     break;
                 case 4:
 

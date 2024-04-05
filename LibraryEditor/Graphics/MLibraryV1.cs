@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ManagedSquish;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -7,7 +8,6 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using ManagedSquish;
 
 namespace LibraryEditor
 {
@@ -138,8 +138,7 @@ namespace LibraryEditor
         {
             string fileName = Path.ChangeExtension(FileName, ".Lib");
 
-            string file = Path.GetFileNameWithoutExtension(fileName);
-            fileName = fileName.Replace(file, file + "-converted");
+            fileName = fileName.Replace(".Lib", "-converted.Lib");
 
             if (File.Exists(fileName))
                 File.Delete(fileName);

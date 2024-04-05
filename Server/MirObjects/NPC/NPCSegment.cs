@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Text.RegularExpressions;
-using Server.MirDatabase;
+﻿using Server.MirDatabase;
 using Server.MirEnvir;
+using System.Globalization;
+using System.Numerics;
+using System.Text.RegularExpressions;
 using S = ServerPackets;
+using Timer = Server.MirEnvir.Timer;
 
 namespace Server.MirObjects
 {
@@ -534,7 +532,7 @@ namespace Server.MirObjects
                     acts.Add(new NPCActions(ActionType.Break));
                     break;
 
-                //不能使用变量存储
+                //cant use stored var
                 case "ADDNAMELIST":
                     if (parts.Length < 2) return;
 
@@ -556,7 +554,7 @@ namespace Server.MirObjects
                     acts.Add(new NPCActions(ActionType.AddNameList, fileName));
                     break;
 
-                //不能使用变量存储
+                //cant use stored var
                 case "ADDGUILDNAMELIST":
                     if (parts.Length < 2) return;
 
@@ -577,7 +575,7 @@ namespace Server.MirObjects
 
                     acts.Add(new NPCActions(ActionType.AddGuildNameList, fileName));
                     break;
-                //不能使用变量存储
+                //cant use stored var
                 case "DELNAMELIST":
                     if (parts.Length < 2) return;
 
@@ -597,7 +595,7 @@ namespace Server.MirObjects
                         acts.Add(new NPCActions(ActionType.DelNameList, fileName));
                     break;
 
-                //不能使用变量存储
+                //cant use stored var
                 case "DELGUILDNAMELIST":
                     if (parts.Length < 2) return;
 
@@ -616,7 +614,7 @@ namespace Server.MirObjects
                     if (File.Exists(fileName))
                         acts.Add(new NPCActions(ActionType.DelGuildNameList, fileName));
                     break;
-                //不能使用变量存储
+                //cant use stored var
                 case "CLEARNAMELIST":
                     if (parts.Length < 2) return;
 
@@ -635,7 +633,7 @@ namespace Server.MirObjects
                     if (File.Exists(fileName))
                         acts.Add(new NPCActions(ActionType.ClearNameList, fileName));
                     break;
-                //不能使用变量存储
+                //cant use stored var
                 case "CLEARGUILDNAMELIST":
                     if (parts.Length < 2) return;
 
@@ -1120,7 +1118,7 @@ namespace Server.MirObjects
 
                     acts.Add(new NPCActions(ActionType.ConquestRepairAll, parts[1]));
                     break;
-                case "GIVEGUILDEXP": //自添加增加行会经验
+                case "GIVEGUILDEXP":
                     if (parts.Length < 2) return;
 
                     acts.Add(new NPCActions(ActionType.GiveGuildExp, parts[1]));
@@ -1316,12 +1314,12 @@ namespace Server.MirObjects
                     if (int.TryParse(val1.Replace("%", ""), out intVal1))
                     {
                         Conquest = Envir.Conquests.FirstOrDefault(x => x.Info.Index == intVal1);
-                        if (Conquest == null) return "无主之城";
-                        if (Conquest.GuildInfo.AttackerID == -1) return "暂无战事";
+                        if (Conquest == null) return "Conquest Not Found";
+                        if (Conquest.GuildInfo.AttackerID == -1) return "No War Scheduled";
 
                         if (Envir.Guilds.FirstOrDefault(x => x.Guildindex == Conquest.GuildInfo.AttackerID) == null)
                         {
-                            newValue = "暂无攻城";
+                            newValue = "No War Scheduled";
                         }
                         else
                         {
@@ -1450,7 +1448,7 @@ namespace Server.MirObjects
                 case "GUILDNAME":
                     if (player.MyGuild == null) return "未入行会";
                     else
-                        newValue = player.MyGuild.Name;//原代码: newValue = player.MyGuild.Name + " Guild";
+                        newValue = player.MyGuild.Name; //newValue = player.MyGuild.Name + " Guild";
                     break;
                 case "ROLLRESULT":
                     newValue = player.NPCData.TryGetValue("NPCRollResult", out object _rollResult) ? _rollResult.ToString() : "Not Rolled";
@@ -4164,7 +4162,7 @@ namespace Server.MirObjects
                             break;
                         }
 
-                    case ActionType.GiveGuildExp: //自添加增加行会经验
+                    case ActionType.GiveGuildExp:
                         {
                             uint tempUint;
                             if (!uint.TryParse(param[0], out tempUint)) return;

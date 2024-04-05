@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text.RegularExpressions;
-using System.Windows.Forms;
+﻿using System.Text.RegularExpressions;
 using Client.MirControls;
 using Client.MirGraphics;
 using Client.MirNetwork;
 using Client.MirObjects;
 using Client.MirSounds;
 using SlimDX;
-using C = ClientPackets;
 using Font = System.Drawing.Font;
+using C = ClientPackets;
 
 namespace Client.MirScenes.Dialogs
 {
@@ -29,7 +24,7 @@ namespace Client.MirScenes.Dialogs
         public MirLabel HealthLabel, ManaLabel, TopLabel, BottomLabel, LevelLabel, CharacterName, ExperienceLabel, GoldLabel, WeightLabel, SpaceLabel, AModeLabel, PModeLabel, SModeLabel;
         public HeroInfoPanel HeroInfoPanel;
         public HeroBehaviourPanel HeroBehaviourPanel;
-        public HeroAIDialog HeroAIDialog;//自添加英雄
+        public HeroAIDialog HeroAIDialog;
 
         public MirButton HeroMenuButton, HeroSummonButton;
 
@@ -344,7 +339,7 @@ namespace Client.MirScenes.Dialogs
                 Size = new Size(20, 20),
                 Sound = SoundList.ButtonA,
                 Visible = false,
-                Hint = string.Format(GameLanguage.HeroSummon) //新添加
+                Hint = string.Format(GameLanguage.HeroSummon)
             };
             HeroSummonButton.Click += (o, e) =>
             {
@@ -1430,7 +1425,7 @@ namespace Client.MirScenes.Dialogs
                 Location = new Point(Settings.Resolution != 800 ? 552 : 328, 1),
                 Sound = SoundList.ButtonA,
                 Hint = "投诉",
-                Visible = false //投诉功能未开发，目前关闭. 投诉窗口见: ReportDialog.cs
+                Visible = false
             };
             ReportButton.Click += (o, e) =>
             {
@@ -1833,7 +1828,7 @@ namespace Client.MirScenes.Dialogs
                 Location = new Point(109, 3),
                 Library = Libraries.Prguse,
                 Sound = SoundList.ButtonA,
-                Hint = string.Format(GameLanguage.MiniMap, CMain.InputKeys.GetKey(KeybindOptions.Minimap)) //自添加
+                Hint = string.Format(GameLanguage.MiniMap, CMain.InputKeys.GetKey(KeybindOptions.Minimap))
                 //Hint = "MiniMap (" + CMain.InputKeys.GetKey(KeybindOptions.Minimap) + ")"
             };
             ToggleButton.Click += (o, e) => Toggle();
@@ -1941,7 +1936,7 @@ namespace Client.MirScenes.Dialogs
                 {
                     colour = Color.FromArgb(255, 255, 255);
                 }
-                else if (ob is NPCObject || ob.AI == 980) //自添加AI扩容
+                else if (ob is NPCObject || ob.AI == 980)
                 {
                     colour = Color.FromArgb(0, 255, 50);
                 }
@@ -2168,7 +2163,7 @@ namespace Client.MirScenes.Dialogs
                     {
                         int genderOffset = MapObject.User.Gender == MirGender.男性 ? 0 : 1;
 
-                        switch (RealItem.Effect)//自添加衣服内观特效:mir2-master\Client\MirScenes\Dialogs\文件夹下1、CharacterDialog 2、MainDialogs两个
+                        switch (RealItem.Effect)
                         {
                             case 1:
                                 if (RealItem.Effect == 1)
@@ -2200,7 +2195,7 @@ namespace Client.MirScenes.Dialogs
                     {
                         if (RealItem.Effect > 0)
                         {
-                            switch (RealItem.Effect)//自添加武器内观特效:mir2-master\Client\MirScenes\Dialogs\文件夹下1、CharacterDialog 2、MainDialogs两个
+                            switch (RealItem.Effect)
                             {
                                 case 21:
                                     if (RealItem.Effect == 21)
@@ -2963,7 +2958,6 @@ namespace Client.MirScenes.Dialogs
             };
             MusicSoundBar.MouseDown += MusicSoundBar_MouseMove;
             MusicSoundBar.MouseMove += MusicSoundBar_MouseMove;
-            MusicSoundBar.MouseUp += MusicSoundBar_MouseUp;
             MusicSoundBar.BeforeDraw += MusicSoundBar_BeforeDraw;
 
             MusicVolumeBar = new MirImageControl
@@ -3062,6 +3056,9 @@ namespace Client.MirScenes.Dialogs
             Settings.Volume = volume;
 
             double percent = Settings.Volume / 100D;
+
+            SoundBar.Hint = $"{Settings.Volume}%";
+
             if (percent > 1) percent = 1;
 
             VolumeBar.Location = percent > 0 ? new Point(159 + (int)((SoundBar.Size.Width - 2) * percent), 218) : new Point(159, 218);
@@ -3072,6 +3069,9 @@ namespace Client.MirScenes.Dialogs
             if (SoundBar.Library == null) return;
 
             double percent = Settings.Volume / 100D;
+
+            SoundBar.Hint = $"{Settings.Volume}%";
+
             if (percent > 1) percent = 1;
             if (percent > 0)
             {
@@ -3092,6 +3092,9 @@ namespace Client.MirScenes.Dialogs
             if (MusicSoundBar.Library == null) return;
 
             double percent = Settings.MusicVolume / 100D;
+
+            MusicSoundBar.Hint = $"{Settings.MusicVolume}%";
+
             if (percent > 1) percent = 1;
             if (percent > 0)
             {
@@ -3107,24 +3110,6 @@ namespace Client.MirScenes.Dialogs
                 MusicVolumeBar.Location = new Point(159, 244);
         }
 
-        public void MusicSoundBar_MouseUp(object sender, MouseEventArgs e)
-        {
-            if (SoundManager.MusicVol <= -2900)
-                SoundManager.MusicVol = -3000;
-            if (SoundManager.MusicVol >= -100)
-                SoundManager.MusicVol = 0;
-
-
-            //SoundManager.Device.Dispose();
-            //SoundManager.Create();
-            //SoundManager.PlayMusic(SoundList.Music, true);
-
-            if (SoundManager.Music == null) return;
-
-            SoundManager.Music.SetVolume(SoundManager.MusicVol);
-
-        }
-
         private void MusicSoundBar_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.Button != MouseButtons.Left || MusicSoundBar != ActiveControl) return;
@@ -3134,8 +3119,10 @@ namespace Client.MirScenes.Dialogs
             byte volume = (byte)(p.X / (double)MusicSoundBar.Size.Width * 100);
             Settings.MusicVolume = volume;
 
-
             double percent = Settings.MusicVolume / 100D;
+
+            MusicSoundBar.Hint = $"{Settings.MusicVolume}%";
+
             if (percent > 1) percent = 1;
 
             MusicVolumeBar.Location = percent > 0 ? new Point(159 + (int)((MusicSoundBar.Size.Width - 2) * percent), 244) : new Point(159, 244);
@@ -3651,10 +3638,10 @@ namespace Client.MirScenes.Dialogs
             KeyLabel.Text = Magic.Key == 0 ? string.Empty : string.Format("{0}{1}F{2}",
                 Prefixes[(Magic.Key - 1) / 8],
                 Magic.Key > 8 ? Environment.NewLine : string.Empty,
-            (Magic.Key - 1) % 8 + 1); //游戏技能注释
+                (Magic.Key - 1) % 8 + 1);
 
-            switch (magic.Spell) //战士技能
-            { 
+            switch (magic.Spell)
+            {  //Warrior
                 case Spell.Fencing:
                     SkillButton.Hint = string.Format("基本剑术：\n被动技能\n根据技能等级提高准确", Magic.Level, Magic.Level == 0 ? Magic.Level1 : Magic.Level == 1 ? Magic.Level2 : Magic.Level == 2 ? Magic.Level3 : 0);
                     break;
@@ -3712,7 +3699,7 @@ namespace Client.MirScenes.Dialogs
                 case Spell.ImmortalSkinRare:
                     SkillButton.Hint = string.Format("金刚不坏-秘籍：\n主动技能\n金刚护体降低自身攻击力来提升防御力", Magic.Level, Magic.Level == 0 ? Magic.Level1 : Magic.Level == 1 ? Magic.Level2 : Magic.Level == 2 ? Magic.Level3 : 0);
                     break;
-                //法师技能
+                //Wizard
                 case Spell.FireBall:
                     SkillButton.Hint = string.Format("火球术：\n主动技能\n掷出一枚火球造成远程伤害", Magic.Level, Magic.Level == 0 ? Magic.Level1 : Magic.Level == 1 ? Magic.Level2 : Magic.Level == 2 ? Magic.Level3 : 0, Magic.BaseCost);
                     break;
@@ -3800,7 +3787,7 @@ namespace Client.MirScenes.Dialogs
                 case Spell.StormEscapeRare:
                     SkillButton.Hint = string.Format("雷仙风-秘籍：\n主动技能\n麻痹周围目标\n瞬移到指定位置并恢复生命值\n20秒内使用的一个技能不消耗法力值", Magic.Level, Magic.Level == 0 ? Magic.Level1 : Magic.Level == 1 ? Magic.Level2 : Magic.Level == 2 ? Magic.Level3 : 0, Magic.BaseCost);
                     break;
-                //道士技能
+                //Taoist
                 case Spell.SpiritSword:
                     SkillButton.Hint = string.Format("精神力战法：\n被动技能\n提升自身准确", Magic.Level, Magic.Level == 0 ? Magic.Level1 : Magic.Level == 1 ? Magic.Level2 : Magic.Level == 2 ? Magic.Level3 : 0, Magic.BaseCost);
                     break;
@@ -3883,7 +3870,7 @@ namespace Client.MirScenes.Dialogs
                     SkillButton.Hint = string.Format("阴阳五行阵-秘籍：\n主动技能\n治疗区域内友方目标\n对敌方造成法术伤害并附加毒伤害", Magic.Level, Magic.Level == 0 ? Magic.Level1 : Magic.Level == 1 ? Magic.Level2 : Magic.Level == 2 ? Magic.Level3 : 0, Magic.BaseCost);
                     break;
 
-                //刺客技能
+                //Assassin
                 case Spell.FatalSword:
                     SkillButton.Hint = string.Format("绝命剑法：\n被动技能\n增加攻击伤害", Magic.Level, Magic.Level == 0 ? Magic.Level1 : Magic.Level == 1 ? Magic.Level2 : Magic.Level == 2 ? Magic.Level3 : 0, Magic.BaseCost);
                     break;
@@ -3935,8 +3922,6 @@ namespace Client.MirScenes.Dialogs
                 case Spell.CatTongue:
                     SkillButton.Hint = string.Format("猫舌兰：\n主动技能\n发射猫舌形状的暗器\n击中目标自身有几率异常状态\n技能等级越高技能重置时间越短\n进入异常状态几率越大", Magic.Level, Magic.Level == 0 ? Magic.Level1 : Magic.Level == 1 ? Magic.Level2 : Magic.Level == 2 ? Magic.Level3 : 0, Magic.BaseCost);
                     break;
-
-                //弓箭技能
                 case Spell.Focus:
                     SkillButton.Hint = string.Format("必中闪：\n被动技能\n射出弓箭可造成额外伤害\n目标越远伤害高\n伤害取决于距离和技能等级", Magic.Level, Magic.Level == 0 ? Magic.Level1 : Magic.Level == 1 ? Magic.Level2 : Magic.Level == 2 ? Magic.Level3 : 0, Magic.BaseCost);
                     break;

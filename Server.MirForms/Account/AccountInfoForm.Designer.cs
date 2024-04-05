@@ -29,552 +29,733 @@ namespace Server
         /// </summary>
         private void InitializeComponent()
         {
-            this.CreateButton = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
-            this.FilterTextBox = new System.Windows.Forms.TextBox();
-            this.RefreshButton = new System.Windows.Forms.Button();
-            this.AccountInfoPanel = new System.Windows.Forms.Panel();
-            this.DelAccButton = new System.Windows.Forms.Button();
-            this.PasswordChangeCheckBox = new System.Windows.Forms.CheckBox();
-            this.setPasswordButton = new System.Windows.Forms.Button();
-            this.AdminCheckBox = new System.Windows.Forms.CheckBox();
-            this.PermBanButton = new System.Windows.Forms.Button();
-            this.WeekBanButton = new System.Windows.Forms.Button();
-            this.DayBanButton = new System.Windows.Forms.Button();
-            this.BannedCheckBox = new System.Windows.Forms.CheckBox();
-            this.ExpiryDateTextBox = new System.Windows.Forms.TextBox();
-            this.label14 = new System.Windows.Forms.Label();
-            this.BanReasonTextBox = new System.Windows.Forms.TextBox();
-            this.label13 = new System.Windows.Forms.Label();
-            this.LastDateTextBox = new System.Windows.Forms.TextBox();
-            this.label11 = new System.Windows.Forms.Label();
-            this.LastIPTextBox = new System.Windows.Forms.TextBox();
-            this.label12 = new System.Windows.Forms.Label();
-            this.CreationDateTextBox = new System.Windows.Forms.TextBox();
-            this.label9 = new System.Windows.Forms.Label();
-            this.CreationIPTextBox = new System.Windows.Forms.TextBox();
-            this.label10 = new System.Windows.Forms.Label();
-            this.EMailTextBox = new System.Windows.Forms.TextBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.AnswerTextBox = new System.Windows.Forms.TextBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.QuestionTextBox = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.BirthDateTextBox = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.UserNameTextBox = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.AccountIDTextBox = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
-            this.FilterPlayerTextBox = new System.Windows.Forms.TextBox();
-            this.AccountInfoListView = new CustomFormControl.ListViewNF();
-            this.indexHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.accountIDHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.userNameHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.adminHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.bannedHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.banReasonHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.expiryDateHeader = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.MatchFilterCheckBox = new System.Windows.Forms.CheckBox();
-            this.WipeCharButton = new System.Windows.Forms.Button();
-            this.AccountInfoPanel.SuspendLayout();
-            this.SuspendLayout();
+            CreateButton = new Button();
+            label1 = new Label();
+            FilterTextBox = new TextBox();
+            RefreshButton = new Button();
+            AccountInfoPanel = new Panel();
+            Delaccbtn = new Button();
+            CharactersListView = new ListView();
+            characterName = new ColumnHeader();
+            characterClass = new ColumnHeader();
+            characterLevel = new ColumnHeader();
+            characterPKPoints = new ColumnHeader();
+            characterGuild = new ColumnHeader();
+            characterStatus = new ColumnHeader();
+            LastIPSearch = new Button();
+            CreationIPSearch = new Button();
+            PasswordChangeCheckBox = new CheckBox();
+            setPasswordButton = new Button();
+            AdminCheckBox = new CheckBox();
+            PermBanButton = new Button();
+            WeekBanButton = new Button();
+            DayBanButton = new Button();
+            BannedCheckBox = new CheckBox();
+            ExpiryDateTextBox = new TextBox();
+            label14 = new Label();
+            BanReasonTextBox = new TextBox();
+            label13 = new Label();
+            LastDateTextBox = new TextBox();
+            label11 = new Label();
+            LastIPTextBox = new TextBox();
+            label12 = new Label();
+            CreationDateTextBox = new TextBox();
+            label9 = new Label();
+            CreationIPTextBox = new TextBox();
+            label10 = new Label();
+            EMailTextBox = new TextBox();
+            label8 = new Label();
+            AnswerTextBox = new TextBox();
+            label7 = new Label();
+            QuestionTextBox = new TextBox();
+            label6 = new Label();
+            BirthDateTextBox = new TextBox();
+            label5 = new Label();
+            UserNameTextBox = new TextBox();
+            label4 = new Label();
+            label3 = new Label();
+            AccountIDTextBox = new TextBox();
+            label2 = new Label();
+            label15 = new Label();
+            FilterPlayerTextBox = new TextBox();
+            AccountInfoListView = new CustomFormControl.ListViewNF();
+            indexHeader = new ColumnHeader();
+            accountIDHeader = new ColumnHeader();
+            userNameHeader = new ColumnHeader();
+            adminHeader = new ColumnHeader();
+            bannedHeader = new ColumnHeader();
+            banReasonHeader = new ColumnHeader();
+            expiryDateHeader = new ColumnHeader();
+            Gold = new ColumnHeader();
+            GameGold = new ColumnHeader();
+            MatchFilterCheckBox = new CheckBox();
+            WipeCharButton = new Button();
+            ServerGoldTextBox = new TextBox();
+            TotalServerGold = new Label();
+            ServerCreditTextBox = new TextBox();
+            TotalServerCredit = new Label();
+            FilterIPTextBox = new TextBox();
+            label16 = new Label();
+            AccountInfoPanel.SuspendLayout();
+            SuspendLayout();
             // 
             // CreateButton
             // 
-            this.CreateButton.Location = new System.Drawing.Point(12, 11);
-            this.CreateButton.Name = "CreateButton";
-            this.CreateButton.Size = new System.Drawing.Size(75, 21);
-            this.CreateButton.TabIndex = 9;
-            this.CreateButton.Text = "创建";
-            this.CreateButton.UseVisualStyleBackColor = true;
-            this.CreateButton.Click += new System.EventHandler(this.CreateButton_Click);
+            CreateButton.Location = new Point(14, 16);
+            CreateButton.Margin = new Padding(4, 3, 4, 3);
+            CreateButton.Name = "CreateButton";
+            CreateButton.Size = new Size(88, 31);
+            CreateButton.TabIndex = 9;
+            CreateButton.Text = "创建账户";
+            CreateButton.UseVisualStyleBackColor = true;
+            CreateButton.Click += CreateButton_Click;
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 41);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(65, 12);
-            this.label1.TabIndex = 11;
-            this.label1.Text = "筛选账户ID";
+            label1.AutoSize = true;
+            label1.Location = new Point(14, 54);
+            label1.Margin = new Padding(4, 0, 4, 0);
+            label1.Name = "label1";
+            label1.Size = new Size(76, 17);
+            label1.TabIndex = 11;
+            label1.Text = "匹配账户 ID:";
             // 
             // FilterTextBox
             // 
-            this.FilterTextBox.Location = new System.Drawing.Point(80, 36);
-            this.FilterTextBox.Name = "FilterTextBox";
-            this.FilterTextBox.Size = new System.Drawing.Size(100, 21);
-            this.FilterTextBox.TabIndex = 12;
+            FilterTextBox.Location = new Point(125, 51);
+            FilterTextBox.Margin = new Padding(4, 3, 4, 3);
+            FilterTextBox.Name = "FilterTextBox";
+            FilterTextBox.Size = new Size(116, 23);
+            FilterTextBox.TabIndex = 12;
             // 
             // RefreshButton
             // 
-            this.RefreshButton.Location = new System.Drawing.Point(390, 32);
-            this.RefreshButton.Name = "RefreshButton";
-            this.RefreshButton.Size = new System.Drawing.Size(75, 21);
-            this.RefreshButton.TabIndex = 13;
-            this.RefreshButton.Text = "刷新";
-            this.RefreshButton.UseVisualStyleBackColor = true;
-            this.RefreshButton.Click += new System.EventHandler(this.RefreshButton_Click);
+            RefreshButton.Location = new Point(678, 51);
+            RefreshButton.Margin = new Padding(4, 3, 4, 3);
+            RefreshButton.Name = "RefreshButton";
+            RefreshButton.Size = new Size(88, 31);
+            RefreshButton.TabIndex = 13;
+            RefreshButton.Text = "刷新";
+            RefreshButton.UseVisualStyleBackColor = true;
+            RefreshButton.Click += RefreshButton_Click;
             // 
             // AccountInfoPanel
             // 
-            this.AccountInfoPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.AccountInfoPanel.Controls.Add(this.DelAccButton);
-            this.AccountInfoPanel.Controls.Add(this.PasswordChangeCheckBox);
-            this.AccountInfoPanel.Controls.Add(this.setPasswordButton);
-            this.AccountInfoPanel.Controls.Add(this.AdminCheckBox);
-            this.AccountInfoPanel.Controls.Add(this.PermBanButton);
-            this.AccountInfoPanel.Controls.Add(this.WeekBanButton);
-            this.AccountInfoPanel.Controls.Add(this.DayBanButton);
-            this.AccountInfoPanel.Controls.Add(this.BannedCheckBox);
-            this.AccountInfoPanel.Controls.Add(this.ExpiryDateTextBox);
-            this.AccountInfoPanel.Controls.Add(this.label14);
-            this.AccountInfoPanel.Controls.Add(this.BanReasonTextBox);
-            this.AccountInfoPanel.Controls.Add(this.label13);
-            this.AccountInfoPanel.Controls.Add(this.LastDateTextBox);
-            this.AccountInfoPanel.Controls.Add(this.label11);
-            this.AccountInfoPanel.Controls.Add(this.LastIPTextBox);
-            this.AccountInfoPanel.Controls.Add(this.label12);
-            this.AccountInfoPanel.Controls.Add(this.CreationDateTextBox);
-            this.AccountInfoPanel.Controls.Add(this.label9);
-            this.AccountInfoPanel.Controls.Add(this.CreationIPTextBox);
-            this.AccountInfoPanel.Controls.Add(this.label10);
-            this.AccountInfoPanel.Controls.Add(this.EMailTextBox);
-            this.AccountInfoPanel.Controls.Add(this.label8);
-            this.AccountInfoPanel.Controls.Add(this.AnswerTextBox);
-            this.AccountInfoPanel.Controls.Add(this.label7);
-            this.AccountInfoPanel.Controls.Add(this.QuestionTextBox);
-            this.AccountInfoPanel.Controls.Add(this.label6);
-            this.AccountInfoPanel.Controls.Add(this.BirthDateTextBox);
-            this.AccountInfoPanel.Controls.Add(this.label5);
-            this.AccountInfoPanel.Controls.Add(this.UserNameTextBox);
-            this.AccountInfoPanel.Controls.Add(this.label4);
-            this.AccountInfoPanel.Controls.Add(this.label3);
-            this.AccountInfoPanel.Controls.Add(this.AccountIDTextBox);
-            this.AccountInfoPanel.Controls.Add(this.label2);
-            this.AccountInfoPanel.Location = new System.Drawing.Point(12, 222);
-            this.AccountInfoPanel.Name = "AccountInfoPanel";
-            this.AccountInfoPanel.Size = new System.Drawing.Size(616, 193);
-            this.AccountInfoPanel.TabIndex = 14;
+            AccountInfoPanel.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            AccountInfoPanel.Controls.Add(Delaccbtn);
+            AccountInfoPanel.Controls.Add(CharactersListView);
+            AccountInfoPanel.Controls.Add(LastIPSearch);
+            AccountInfoPanel.Controls.Add(CreationIPSearch);
+            AccountInfoPanel.Controls.Add(PasswordChangeCheckBox);
+            AccountInfoPanel.Controls.Add(setPasswordButton);
+            AccountInfoPanel.Controls.Add(AdminCheckBox);
+            AccountInfoPanel.Controls.Add(PermBanButton);
+            AccountInfoPanel.Controls.Add(WeekBanButton);
+            AccountInfoPanel.Controls.Add(DayBanButton);
+            AccountInfoPanel.Controls.Add(BannedCheckBox);
+            AccountInfoPanel.Controls.Add(ExpiryDateTextBox);
+            AccountInfoPanel.Controls.Add(label14);
+            AccountInfoPanel.Controls.Add(BanReasonTextBox);
+            AccountInfoPanel.Controls.Add(label13);
+            AccountInfoPanel.Controls.Add(LastDateTextBox);
+            AccountInfoPanel.Controls.Add(label11);
+            AccountInfoPanel.Controls.Add(LastIPTextBox);
+            AccountInfoPanel.Controls.Add(label12);
+            AccountInfoPanel.Controls.Add(CreationDateTextBox);
+            AccountInfoPanel.Controls.Add(label9);
+            AccountInfoPanel.Controls.Add(CreationIPTextBox);
+            AccountInfoPanel.Controls.Add(label10);
+            AccountInfoPanel.Controls.Add(EMailTextBox);
+            AccountInfoPanel.Controls.Add(label8);
+            AccountInfoPanel.Controls.Add(AnswerTextBox);
+            AccountInfoPanel.Controls.Add(label7);
+            AccountInfoPanel.Controls.Add(QuestionTextBox);
+            AccountInfoPanel.Controls.Add(label6);
+            AccountInfoPanel.Controls.Add(BirthDateTextBox);
+            AccountInfoPanel.Controls.Add(label5);
+            AccountInfoPanel.Controls.Add(UserNameTextBox);
+            AccountInfoPanel.Controls.Add(label4);
+            AccountInfoPanel.Controls.Add(label3);
+            AccountInfoPanel.Controls.Add(AccountIDTextBox);
+            AccountInfoPanel.Controls.Add(label2);
+            AccountInfoPanel.Location = new Point(14, 314);
+            AccountInfoPanel.Margin = new Padding(4, 3, 4, 3);
+            AccountInfoPanel.Name = "AccountInfoPanel";
+            AccountInfoPanel.Size = new Size(1248, 275);
+            AccountInfoPanel.TabIndex = 14;
             // 
-            // DelAccButton
+            // Delaccbtn
             // 
-            this.DelAccButton.Location = new System.Drawing.Point(200, 69);
-            this.DelAccButton.Name = "DelAccButton";
-            this.DelAccButton.Size = new System.Drawing.Size(88, 23);
-            this.DelAccButton.TabIndex = 40;
-            this.DelAccButton.Text = "删除账户";
-            this.DelAccButton.UseVisualStyleBackColor = true;
-            this.DelAccButton.Click += new System.EventHandler(this.DelAccButton_Click);
+            Delaccbtn.Location = new Point(694, 235);
+            Delaccbtn.Margin = new Padding(4, 3, 4, 3);
+            Delaccbtn.Name = "Delaccbtn";
+            Delaccbtn.Size = new Size(88, 31);
+            Delaccbtn.TabIndex = 40;
+            Delaccbtn.Text = "删除账户";
+            Delaccbtn.UseVisualStyleBackColor = true;
+            Delaccbtn.Click += Delaccbtn_Click;
+            // 
+            // CharactersListView
+            // 
+            CharactersListView.Columns.AddRange(new ColumnHeader[] { characterName, characterClass, characterLevel, characterPKPoints, characterGuild, characterStatus });
+            CharactersListView.GridLines = true;
+            CharactersListView.Location = new Point(701, 0);
+            CharactersListView.Name = "CharactersListView";
+            CharactersListView.Scrollable = false;
+            CharactersListView.Size = new Size(546, 184);
+            CharactersListView.TabIndex = 39;
+            CharactersListView.UseCompatibleStateImageBehavior = false;
+            CharactersListView.View = View.Details;
+            // 
+            // characterName
+            // 
+            characterName.Text = "名称";
+            characterName.Width = 80;
+            // 
+            // characterClass
+            // 
+            characterClass.Text = "职业";
+            characterClass.Width = 80;
+            // 
+            // characterLevel
+            // 
+            characterLevel.Text = "等级";
+            // 
+            // characterPKPoints
+            // 
+            characterPKPoints.Text = "PK点数";
+            characterPKPoints.Width = 59;
+            // 
+            // characterGuild
+            // 
+            characterGuild.Text = "所属公会";
+            characterGuild.Width = 100;
+            // 
+            // characterStatus
+            // 
+            characterStatus.Text = "职位";
+            characterStatus.Width = 163;
+            // 
+            // LastIPSearch
+            // 
+            LastIPSearch.Location = new Point(583, 92);
+            LastIPSearch.Name = "LastIPSearch";
+            LastIPSearch.Size = new Size(25, 26);
+            LastIPSearch.TabIndex = 38;
+            LastIPSearch.Text = "🔎";
+            LastIPSearch.UseVisualStyleBackColor = true;
+            LastIPSearch.Click += LastIPSearch_Click;
+            // 
+            // CreationIPSearch
+            // 
+            CreationIPSearch.Location = new Point(583, 24);
+            CreationIPSearch.Name = "CreationIPSearch";
+            CreationIPSearch.Size = new Size(25, 26);
+            CreationIPSearch.TabIndex = 37;
+            CreationIPSearch.Text = "🔎";
+            CreationIPSearch.UseVisualStyleBackColor = true;
+            CreationIPSearch.Click += CreationIPSearch_Click;
             // 
             // PasswordChangeCheckBox
             // 
-            this.PasswordChangeCheckBox.AutoSize = true;
-            this.PasswordChangeCheckBox.Location = new System.Drawing.Point(184, 45);
-            this.PasswordChangeCheckBox.Name = "PasswordChangeCheckBox";
-            this.PasswordChangeCheckBox.Size = new System.Drawing.Size(72, 16);
-            this.PasswordChangeCheckBox.TabIndex = 34;
-            this.PasswordChangeCheckBox.Text = "登录变更";
-            this.PasswordChangeCheckBox.UseVisualStyleBackColor = true;
-            this.PasswordChangeCheckBox.CheckedChanged += new System.EventHandler(this.PasswordChangeCheckBox_CheckedChanged);
+            PasswordChangeCheckBox.AutoSize = true;
+            PasswordChangeCheckBox.Location = new Point(216, 57);
+            PasswordChangeCheckBox.Margin = new Padding(4, 3, 4, 3);
+            PasswordChangeCheckBox.Name = "PasswordChangeCheckBox";
+            PasswordChangeCheckBox.Size = new Size(99, 21);
+            PasswordChangeCheckBox.TabIndex = 34;
+            PasswordChangeCheckBox.Text = "首次登录变更";
+            PasswordChangeCheckBox.UseVisualStyleBackColor = true;
+            PasswordChangeCheckBox.CheckedChanged += PasswordChangeCheckBox_CheckedChanged;
             // 
             // setPasswordButton
             // 
-            this.setPasswordButton.Location = new System.Drawing.Point(95, 41);
-            this.setPasswordButton.Name = "setPasswordButton";
-            this.setPasswordButton.Size = new System.Drawing.Size(84, 23);
-            this.setPasswordButton.TabIndex = 33;
-            this.setPasswordButton.Text = "设置密码";
-            this.setPasswordButton.UseVisualStyleBackColor = true;
-            this.setPasswordButton.Click += new System.EventHandler(this.button1_Click);
+            setPasswordButton.Location = new Point(111, 53);
+            setPasswordButton.Margin = new Padding(4, 3, 4, 3);
+            setPasswordButton.Name = "setPasswordButton";
+            setPasswordButton.Size = new Size(98, 31);
+            setPasswordButton.TabIndex = 33;
+            setPasswordButton.Text = "设置密码";
+            setPasswordButton.UseVisualStyleBackColor = true;
+            setPasswordButton.Click += button1_Click;
             // 
             // AdminCheckBox
             // 
-            this.AdminCheckBox.AutoSize = true;
-            this.AdminCheckBox.Location = new System.Drawing.Point(199, 16);
-            this.AdminCheckBox.Name = "AdminCheckBox";
-            this.AdminCheckBox.Size = new System.Drawing.Size(60, 16);
-            this.AdminCheckBox.TabIndex = 32;
-            this.AdminCheckBox.Text = "管理员";
-            this.AdminCheckBox.UseVisualStyleBackColor = true;
-            this.AdminCheckBox.CheckedChanged += new System.EventHandler(this.AdminCheckBox_CheckedChanged);
+            AdminCheckBox.AutoSize = true;
+            AdminCheckBox.Location = new Point(241, 23);
+            AdminCheckBox.Margin = new Padding(4, 3, 4, 3);
+            AdminCheckBox.Name = "AdminCheckBox";
+            AdminCheckBox.Size = new Size(87, 21);
+            AdminCheckBox.TabIndex = 32;
+            AdminCheckBox.Text = "管理员模式";
+            AdminCheckBox.UseVisualStyleBackColor = true;
+            AdminCheckBox.CheckedChanged += AdminCheckBox_CheckedChanged;
             // 
             // PermBanButton
             // 
-            this.PermBanButton.Location = new System.Drawing.Point(511, 165);
-            this.PermBanButton.Name = "PermBanButton";
-            this.PermBanButton.Size = new System.Drawing.Size(75, 21);
-            this.PermBanButton.TabIndex = 31;
-            this.PermBanButton.Text = "禁用一月";
-            this.PermBanButton.UseVisualStyleBackColor = true;
-            this.PermBanButton.Click += new System.EventHandler(this.PermBanButton_Click);
+            PermBanButton.Location = new Point(598, 235);
+            PermBanButton.Margin = new Padding(4, 3, 4, 3);
+            PermBanButton.Name = "PermBanButton";
+            PermBanButton.Size = new Size(88, 31);
+            PermBanButton.TabIndex = 31;
+            PermBanButton.Text = "禁用一月";
+            PermBanButton.UseVisualStyleBackColor = true;
+            PermBanButton.Click += PermBanButton_Click;
             // 
             // WeekBanButton
             // 
-            this.WeekBanButton.Location = new System.Drawing.Point(430, 166);
-            this.WeekBanButton.Name = "WeekBanButton";
-            this.WeekBanButton.Size = new System.Drawing.Size(75, 21);
-            this.WeekBanButton.TabIndex = 30;
-            this.WeekBanButton.Text = "禁用一周";
-            this.WeekBanButton.UseVisualStyleBackColor = true;
-            this.WeekBanButton.Click += new System.EventHandler(this.WeekBanButton_Click);
+            WeekBanButton.Location = new Point(502, 235);
+            WeekBanButton.Margin = new Padding(4, 3, 4, 3);
+            WeekBanButton.Name = "WeekBanButton";
+            WeekBanButton.Size = new Size(88, 31);
+            WeekBanButton.TabIndex = 30;
+            WeekBanButton.Text = "禁用一周";
+            WeekBanButton.UseVisualStyleBackColor = true;
+            WeekBanButton.Click += WeekBanButton_Click;
             // 
             // DayBanButton
             // 
-            this.DayBanButton.Location = new System.Drawing.Point(349, 166);
-            this.DayBanButton.Name = "DayBanButton";
-            this.DayBanButton.Size = new System.Drawing.Size(75, 21);
-            this.DayBanButton.TabIndex = 29;
-            this.DayBanButton.Text = "禁用一日";
-            this.DayBanButton.UseVisualStyleBackColor = true;
-            this.DayBanButton.Click += new System.EventHandler(this.DayBanButton_Click);
+            DayBanButton.Location = new Point(407, 235);
+            DayBanButton.Margin = new Padding(4, 3, 4, 3);
+            DayBanButton.Name = "DayBanButton";
+            DayBanButton.Size = new Size(88, 31);
+            DayBanButton.TabIndex = 29;
+            DayBanButton.Text = "禁用一日";
+            DayBanButton.UseVisualStyleBackColor = true;
+            DayBanButton.Click += DayBanButton_Click;
             // 
             // BannedCheckBox
             // 
-            this.BannedCheckBox.AutoSize = true;
-            this.BannedCheckBox.Location = new System.Drawing.Point(517, 144);
-            this.BannedCheckBox.Name = "BannedCheckBox";
-            this.BannedCheckBox.Size = new System.Drawing.Size(48, 16);
-            this.BannedCheckBox.TabIndex = 28;
-            this.BannedCheckBox.Text = "禁用";
-            this.BannedCheckBox.UseVisualStyleBackColor = true;
-            this.BannedCheckBox.CheckedChanged += new System.EventHandler(this.BannedCheckBox_CheckedChanged);
+            BannedCheckBox.AutoSize = true;
+            BannedCheckBox.Location = new Point(610, 204);
+            BannedCheckBox.Margin = new Padding(4, 3, 4, 3);
+            BannedCheckBox.Name = "BannedCheckBox";
+            BannedCheckBox.Size = new Size(51, 21);
+            BannedCheckBox.TabIndex = 28;
+            BannedCheckBox.Text = "禁用";
+            BannedCheckBox.UseVisualStyleBackColor = true;
+            BannedCheckBox.CheckedChanged += BannedCheckBox_CheckedChanged;
             // 
             // ExpiryDateTextBox
             // 
-            this.ExpiryDateTextBox.Location = new System.Drawing.Point(394, 142);
-            this.ExpiryDateTextBox.Name = "ExpiryDateTextBox";
-            this.ExpiryDateTextBox.Size = new System.Drawing.Size(120, 21);
-            this.ExpiryDateTextBox.TabIndex = 27;
-            this.ExpiryDateTextBox.TextChanged += new System.EventHandler(this.ExpiryDateTextBox_TextChanged);
+            ExpiryDateTextBox.Location = new Point(460, 202);
+            ExpiryDateTextBox.Margin = new Padding(4, 3, 4, 3);
+            ExpiryDateTextBox.Name = "ExpiryDateTextBox";
+            ExpiryDateTextBox.Size = new Size(139, 23);
+            ExpiryDateTextBox.TabIndex = 27;
+            ExpiryDateTextBox.TextChanged += ExpiryDateTextBox_TextChanged;
             // 
             // label14
             // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(314, 146);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(77, 12);
-            this.label14.TabIndex = 26;
-            this.label14.Text = "账户解封日期";
+            label14.AutoSize = true;
+            label14.Location = new Point(378, 205);
+            label14.Margin = new Padding(4, 0, 4, 0);
+            label14.Name = "label14";
+            label14.Size = new Size(83, 17);
+            label14.TabIndex = 26;
+            label14.Text = "账户解封日期:";
             // 
             // BanReasonTextBox
             // 
-            this.BanReasonTextBox.Location = new System.Drawing.Point(394, 118);
-            this.BanReasonTextBox.Name = "BanReasonTextBox";
-            this.BanReasonTextBox.Size = new System.Drawing.Size(192, 21);
-            this.BanReasonTextBox.TabIndex = 25;
-            this.BanReasonTextBox.TextChanged += new System.EventHandler(this.BanReasonTextBox_TextChanged);
+            BanReasonTextBox.Location = new Point(460, 168);
+            BanReasonTextBox.Margin = new Padding(4, 3, 4, 3);
+            BanReasonTextBox.Name = "BanReasonTextBox";
+            BanReasonTextBox.Size = new Size(223, 23);
+            BanReasonTextBox.TabIndex = 25;
+            BanReasonTextBox.TextChanged += BanReasonTextBox_TextChanged;
             // 
             // label13
             // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(314, 122);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(77, 12);
-            this.label13.TabIndex = 24;
-            this.label13.Text = "账号禁用事由";
+            label13.AutoSize = true;
+            label13.Location = new Point(372, 171);
+            label13.Margin = new Padding(4, 0, 4, 0);
+            label13.Name = "label13";
+            label13.Size = new Size(83, 17);
+            label13.TabIndex = 24;
+            label13.Text = "账户禁用事由:";
             // 
             // LastDateTextBox
             // 
-            this.LastDateTextBox.Location = new System.Drawing.Point(394, 89);
-            this.LastDateTextBox.Name = "LastDateTextBox";
-            this.LastDateTextBox.ReadOnly = true;
-            this.LastDateTextBox.Size = new System.Drawing.Size(120, 21);
-            this.LastDateTextBox.TabIndex = 23;
+            LastDateTextBox.Location = new Point(460, 125);
+            LastDateTextBox.Margin = new Padding(4, 3, 4, 3);
+            LastDateTextBox.Name = "LastDateTextBox";
+            LastDateTextBox.ReadOnly = true;
+            LastDateTextBox.Size = new Size(139, 23);
+            LastDateTextBox.TabIndex = 23;
             // 
             // label11
             // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(314, 93);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(77, 12);
-            this.label11.TabIndex = 22;
-            this.label11.Text = "最后登录日期";
+            label11.AutoSize = true;
+            label11.Location = new Point(374, 128);
+            label11.Margin = new Padding(4, 0, 4, 0);
+            label11.Name = "label11";
+            label11.Size = new Size(83, 17);
+            label11.TabIndex = 22;
+            label11.Text = "最后登录日期:";
             // 
             // LastIPTextBox
             // 
-            this.LastIPTextBox.Location = new System.Drawing.Point(394, 65);
-            this.LastIPTextBox.Name = "LastIPTextBox";
-            this.LastIPTextBox.ReadOnly = true;
-            this.LastIPTextBox.Size = new System.Drawing.Size(101, 21);
-            this.LastIPTextBox.TabIndex = 21;
+            LastIPTextBox.Location = new Point(460, 91);
+            LastIPTextBox.Margin = new Padding(4, 3, 4, 3);
+            LastIPTextBox.Name = "LastIPTextBox";
+            LastIPTextBox.ReadOnly = true;
+            LastIPTextBox.Size = new Size(116, 23);
+            LastIPTextBox.TabIndex = 21;
             // 
             // label12
             // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(326, 69);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(65, 12);
-            this.label12.TabIndex = 20;
-            this.label12.Text = "近期登录IP";
+            label12.AutoSize = true;
+            label12.Location = new Point(382, 94);
+            label12.Margin = new Padding(4, 0, 4, 0);
+            label12.Name = "label12";
+            label12.Size = new Size(74, 17);
+            label12.TabIndex = 20;
+            label12.Text = "近期登录 IP:";
             // 
             // CreationDateTextBox
             // 
-            this.CreationDateTextBox.Location = new System.Drawing.Point(394, 41);
-            this.CreationDateTextBox.Name = "CreationDateTextBox";
-            this.CreationDateTextBox.ReadOnly = true;
-            this.CreationDateTextBox.Size = new System.Drawing.Size(118, 21);
-            this.CreationDateTextBox.TabIndex = 19;
+            CreationDateTextBox.Location = new Point(460, 57);
+            CreationDateTextBox.Margin = new Padding(4, 3, 4, 3);
+            CreationDateTextBox.Name = "CreationDateTextBox";
+            CreationDateTextBox.ReadOnly = true;
+            CreationDateTextBox.Size = new Size(139, 23);
+            CreationDateTextBox.TabIndex = 19;
             // 
             // label9
             // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(338, 45);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(53, 12);
-            this.label9.TabIndex = 18;
-            this.label9.Text = "创建日期";
+            label9.AutoSize = true;
+            label9.Location = new Point(365, 60);
+            label9.Margin = new Padding(4, 0, 4, 0);
+            label9.Name = "label9";
+            label9.Size = new Size(83, 17);
+            label9.TabIndex = 18;
+            label9.Text = "账户创建日期:";
             // 
             // CreationIPTextBox
             // 
-            this.CreationIPTextBox.Location = new System.Drawing.Point(394, 17);
-            this.CreationIPTextBox.Name = "CreationIPTextBox";
-            this.CreationIPTextBox.ReadOnly = true;
-            this.CreationIPTextBox.Size = new System.Drawing.Size(98, 21);
-            this.CreationIPTextBox.TabIndex = 17;
+            CreationIPTextBox.Location = new Point(460, 23);
+            CreationIPTextBox.Margin = new Padding(4, 3, 4, 3);
+            CreationIPTextBox.Name = "CreationIPTextBox";
+            CreationIPTextBox.ReadOnly = true;
+            CreationIPTextBox.Size = new Size(116, 23);
+            CreationIPTextBox.TabIndex = 17;
             // 
             // label10
             // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(326, 21);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(65, 12);
-            this.label10.TabIndex = 16;
-            this.label10.Text = "创建账户IP";
+            label10.AutoSize = true;
+            label10.Location = new Point(380, 26);
+            label10.Margin = new Padding(4, 0, 4, 0);
+            label10.Name = "label10";
+            label10.Size = new Size(74, 17);
+            label10.TabIndex = 16;
+            label10.Text = "创建账户 IP:";
             // 
             // EMailTextBox
             // 
-            this.EMailTextBox.Location = new System.Drawing.Point(95, 166);
-            this.EMailTextBox.Name = "EMailTextBox";
-            this.EMailTextBox.Size = new System.Drawing.Size(192, 21);
-            this.EMailTextBox.TabIndex = 15;
-            this.EMailTextBox.TextChanged += new System.EventHandler(this.EMailTextBox_TextChanged);
+            EMailTextBox.Location = new Point(111, 236);
+            EMailTextBox.Margin = new Padding(4, 3, 4, 3);
+            EMailTextBox.Name = "EMailTextBox";
+            EMailTextBox.Size = new Size(223, 23);
+            EMailTextBox.TabIndex = 15;
+            EMailTextBox.TextChanged += EMailTextBox_TextChanged;
             // 
             // label8
             // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(33, 170);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(59, 12);
-            this.label8.TabIndex = 14;
-            this.label8.Text = "EMail地址";
+            label8.AutoSize = true;
+            label8.Location = new Point(14, 239);
+            label8.Margin = new Padding(4, 0, 4, 0);
+            label8.Name = "label8";
+            label8.Size = new Size(71, 17);
+            label8.TabIndex = 14;
+            label8.Text = "EMail 地址:";
             // 
             // AnswerTextBox
             // 
-            this.AnswerTextBox.Location = new System.Drawing.Point(95, 142);
-            this.AnswerTextBox.Name = "AnswerTextBox";
-            this.AnswerTextBox.Size = new System.Drawing.Size(132, 21);
-            this.AnswerTextBox.TabIndex = 13;
-            this.AnswerTextBox.TextChanged += new System.EventHandler(this.AnswerTextBox_TextChanged);
+            AnswerTextBox.Location = new Point(111, 202);
+            AnswerTextBox.Margin = new Padding(4, 3, 4, 3);
+            AnswerTextBox.Name = "AnswerTextBox";
+            AnswerTextBox.Size = new Size(153, 23);
+            AnswerTextBox.TabIndex = 13;
+            AnswerTextBox.TextChanged += AnswerTextBox_TextChanged;
             // 
             // label7
             // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(39, 146);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(53, 12);
-            this.label7.TabIndex = 12;
-            this.label7.Text = "密码答案";
+            label7.AutoSize = true;
+            label7.Location = new Point(51, 205);
+            label7.Margin = new Padding(4, 0, 4, 0);
+            label7.Name = "label7";
+            label7.Size = new Size(59, 17);
+            label7.TabIndex = 12;
+            label7.Text = "密码答案:";
             // 
             // QuestionTextBox
             // 
-            this.QuestionTextBox.Location = new System.Drawing.Point(95, 118);
-            this.QuestionTextBox.Name = "QuestionTextBox";
-            this.QuestionTextBox.Size = new System.Drawing.Size(132, 21);
-            this.QuestionTextBox.TabIndex = 11;
-            this.QuestionTextBox.TextChanged += new System.EventHandler(this.QuestionTextBox_TextChanged);
+            QuestionTextBox.Location = new Point(111, 168);
+            QuestionTextBox.Margin = new Padding(4, 3, 4, 3);
+            QuestionTextBox.Name = "QuestionTextBox";
+            QuestionTextBox.Size = new Size(153, 23);
+            QuestionTextBox.TabIndex = 11;
+            QuestionTextBox.TextChanged += QuestionTextBox_TextChanged;
             // 
             // label6
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(39, 123);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(53, 12);
-            this.label6.TabIndex = 10;
-            this.label6.Text = "密码问题";
+            label6.AutoSize = true;
+            label6.Location = new Point(43, 171);
+            label6.Margin = new Padding(4, 0, 4, 0);
+            label6.Name = "label6";
+            label6.Size = new Size(59, 17);
+            label6.TabIndex = 10;
+            label6.Text = "密码问题:";
             // 
             // BirthDateTextBox
             // 
-            this.BirthDateTextBox.Location = new System.Drawing.Point(95, 94);
-            this.BirthDateTextBox.Name = "BirthDateTextBox";
-            this.BirthDateTextBox.Size = new System.Drawing.Size(100, 21);
-            this.BirthDateTextBox.TabIndex = 9;
-            this.BirthDateTextBox.TextChanged += new System.EventHandler(this.BirthDateTextBox_TextChanged);
+            BirthDateTextBox.Location = new Point(111, 134);
+            BirthDateTextBox.Margin = new Padding(4, 3, 4, 3);
+            BirthDateTextBox.Name = "BirthDateTextBox";
+            BirthDateTextBox.Size = new Size(84, 23);
+            BirthDateTextBox.TabIndex = 9;
+            BirthDateTextBox.TextChanged += BirthDateTextBox_TextChanged;
             // 
             // label5
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(39, 98);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(53, 12);
-            this.label5.TabIndex = 8;
-            this.label5.Text = "出生日期";
+            label5.AutoSize = true;
+            label5.Location = new Point(37, 137);
+            label5.Margin = new Padding(4, 0, 4, 0);
+            label5.Name = "label5";
+            label5.Size = new Size(59, 17);
+            label5.TabIndex = 8;
+            label5.Text = "出生日期:";
             // 
             // UserNameTextBox
             // 
-            this.UserNameTextBox.Location = new System.Drawing.Point(95, 70);
-            this.UserNameTextBox.Name = "UserNameTextBox";
-            this.UserNameTextBox.Size = new System.Drawing.Size(100, 21);
-            this.UserNameTextBox.TabIndex = 7;
-            this.UserNameTextBox.TextChanged += new System.EventHandler(this.UserNameTextBox_TextChanged);
+            UserNameTextBox.Location = new Point(111, 100);
+            UserNameTextBox.Margin = new Padding(4, 3, 4, 3);
+            UserNameTextBox.Name = "UserNameTextBox";
+            UserNameTextBox.Size = new Size(116, 23);
+            UserNameTextBox.TabIndex = 7;
+            UserNameTextBox.TextChanged += UserNameTextBox_TextChanged;
             // 
             // label4
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(39, 74);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(53, 12);
-            this.label4.TabIndex = 6;
-            this.label4.Text = "账户名称";
+            label4.AutoSize = true;
+            label4.Location = new Point(30, 103);
+            label4.Margin = new Padding(4, 0, 4, 0);
+            label4.Name = "label4";
+            label4.Size = new Size(59, 17);
+            label4.TabIndex = 6;
+            label4.Text = "账户名称:";
             // 
             // label3
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(65, 46);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(29, 12);
-            this.label3.TabIndex = 4;
-            this.label3.Text = "密码";
+            label3.AutoSize = true;
+            label3.Location = new Point(38, 57);
+            label3.Margin = new Padding(4, 0, 4, 0);
+            label3.Name = "label3";
+            label3.Size = new Size(35, 17);
+            label3.TabIndex = 4;
+            label3.Text = "密码:";
             // 
             // AccountIDTextBox
             // 
-            this.AccountIDTextBox.Location = new System.Drawing.Point(95, 13);
-            this.AccountIDTextBox.Name = "AccountIDTextBox";
-            this.AccountIDTextBox.Size = new System.Drawing.Size(100, 21);
-            this.AccountIDTextBox.TabIndex = 3;
-            this.AccountIDTextBox.TextChanged += new System.EventHandler(this.AccountIDTextBox_TextChanged);
+            AccountIDTextBox.Location = new Point(111, 18);
+            AccountIDTextBox.Margin = new Padding(4, 3, 4, 3);
+            AccountIDTextBox.Name = "AccountIDTextBox";
+            AccountIDTextBox.Size = new Size(116, 23);
+            AccountIDTextBox.TabIndex = 3;
+            AccountIDTextBox.TextChanged += AccountIDTextBox_TextChanged;
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(45, 17);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(47, 12);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "账户ID:";
+            label2.AutoSize = true;
+            label2.Location = new Point(29, 23);
+            label2.Margin = new Padding(4, 0, 4, 0);
+            label2.Name = "label2";
+            label2.Size = new Size(48, 17);
+            label2.TabIndex = 2;
+            label2.Text = "账户ID:";
             // 
             // label15
             // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(199, 41);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(53, 12);
-            this.label15.TabIndex = 15;
-            this.label15.Text = "过滤玩家";
+            label15.AutoSize = true;
+            label15.Location = new Point(250, 54);
+            label15.Margin = new Padding(4, 0, 4, 0);
+            label15.Name = "label15";
+            label15.Size = new Size(59, 17);
+            label15.TabIndex = 15;
+            label15.Text = "匹配玩家:";
             // 
             // FilterPlayerTextBox
             // 
-            this.FilterPlayerTextBox.Location = new System.Drawing.Point(255, 36);
-            this.FilterPlayerTextBox.Name = "FilterPlayerTextBox";
-            this.FilterPlayerTextBox.Size = new System.Drawing.Size(100, 21);
-            this.FilterPlayerTextBox.TabIndex = 16;
+            FilterPlayerTextBox.Location = new Point(331, 51);
+            FilterPlayerTextBox.Margin = new Padding(4, 3, 4, 3);
+            FilterPlayerTextBox.Name = "FilterPlayerTextBox";
+            FilterPlayerTextBox.Size = new Size(116, 23);
+            FilterPlayerTextBox.TabIndex = 16;
             // 
             // AccountInfoListView
             // 
-            this.AccountInfoListView.AllowColumnReorder = true;
-            this.AccountInfoListView.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.AccountInfoListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.indexHeader,
-            this.accountIDHeader,
-            this.userNameHeader,
-            this.adminHeader,
-            this.bannedHeader,
-            this.banReasonHeader,
-            this.expiryDateHeader});
-            this.AccountInfoListView.FullRowSelect = true;
-            this.AccountInfoListView.GridLines = true;
-            this.AccountInfoListView.HideSelection = false;
-            this.AccountInfoListView.Location = new System.Drawing.Point(10, 60);
-            this.AccountInfoListView.Name = "AccountInfoListView";
-            this.AccountInfoListView.Size = new System.Drawing.Size(618, 156);
-            this.AccountInfoListView.Sorting = System.Windows.Forms.SortOrder.Ascending;
-            this.AccountInfoListView.TabIndex = 8;
-            this.AccountInfoListView.UseCompatibleStateImageBehavior = false;
-            this.AccountInfoListView.View = System.Windows.Forms.View.Details;
-            this.AccountInfoListView.SelectedIndexChanged += new System.EventHandler(this.AccountInfoListView_SelectedIndexChanged);
+            AccountInfoListView.AllowColumnReorder = true;
+            AccountInfoListView.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            AccountInfoListView.Columns.AddRange(new ColumnHeader[] { indexHeader, accountIDHeader, userNameHeader, adminHeader, bannedHeader, banReasonHeader, expiryDateHeader, Gold, GameGold });
+            AccountInfoListView.FullRowSelect = true;
+            AccountInfoListView.GridLines = true;
+            AccountInfoListView.Location = new Point(12, 85);
+            AccountInfoListView.Margin = new Padding(4, 3, 4, 3);
+            AccountInfoListView.Name = "AccountInfoListView";
+            AccountInfoListView.Size = new Size(1249, 219);
+            AccountInfoListView.Sorting = SortOrder.Ascending;
+            AccountInfoListView.TabIndex = 8;
+            AccountInfoListView.UseCompatibleStateImageBehavior = false;
+            AccountInfoListView.View = View.Details;
+            AccountInfoListView.SelectedIndexChanged += AccountInfoListView_SelectedIndexChanged;
             // 
             // indexHeader
             // 
-            this.indexHeader.Text = "编号";
+            indexHeader.Text = "序号";
             // 
             // accountIDHeader
             // 
-            this.accountIDHeader.Text = "账户ID";
-            this.accountIDHeader.Width = 92;
+            accountIDHeader.Text = "账户 ID";
+            accountIDHeader.Width = 92;
             // 
             // userNameHeader
             // 
-            this.userNameHeader.Text = "角色名";
-            this.userNameHeader.Width = 75;
+            userNameHeader.Text = "账户名称";
+            userNameHeader.Width = 75;
             // 
             // adminHeader
             // 
-            this.adminHeader.Text = "管理员";
-            this.adminHeader.Width = 73;
+            adminHeader.Text = "管理员";
+            adminHeader.Width = 73;
             // 
             // bannedHeader
             // 
-            this.bannedHeader.Text = "禁用";
-            this.bannedHeader.Width = 54;
+            bannedHeader.Text = "禁用";
+            bannedHeader.Width = 54;
             // 
             // banReasonHeader
             // 
-            this.banReasonHeader.Text = "禁用事由";
-            this.banReasonHeader.Width = 74;
+            banReasonHeader.Text = "禁用原因";
+            banReasonHeader.Width = 74;
             // 
             // expiryDateHeader
             // 
-            this.expiryDateHeader.Text = "截至日期";
-            this.expiryDateHeader.Width = 81;
+            expiryDateHeader.Text = "封禁日期";
+            expiryDateHeader.Width = 81;
+            // 
+            // Gold
+            // 
+            Gold.Text = "金币";
+            Gold.Width = 100;
+            // 
+            // GameGold
+            // 
+            GameGold.Text = "信用币";
+            GameGold.Width = 70;
             // 
             // MatchFilterCheckBox
             // 
-            this.MatchFilterCheckBox.AutoSize = true;
-            this.MatchFilterCheckBox.Location = new System.Drawing.Point(468, 35);
-            this.MatchFilterCheckBox.Name = "MatchFilterCheckBox";
-            this.MatchFilterCheckBox.Size = new System.Drawing.Size(72, 16);
-            this.MatchFilterCheckBox.TabIndex = 17;
-            this.MatchFilterCheckBox.Text = "匹配筛选";
-            this.MatchFilterCheckBox.UseVisualStyleBackColor = true;
+            MatchFilterCheckBox.AutoSize = true;
+            MatchFilterCheckBox.Location = new Point(774, 57);
+            MatchFilterCheckBox.Margin = new Padding(4, 3, 4, 3);
+            MatchFilterCheckBox.Name = "MatchFilterCheckBox";
+            MatchFilterCheckBox.Size = new Size(75, 21);
+            MatchFilterCheckBox.TabIndex = 17;
+            MatchFilterCheckBox.Text = "匹配筛选";
+            MatchFilterCheckBox.UseVisualStyleBackColor = true;
             // 
             // WipeCharButton
             // 
-            this.WipeCharButton.Location = new System.Drawing.Point(93, 11);
-            this.WipeCharButton.Name = "WipeCharButton";
-            this.WipeCharButton.Size = new System.Drawing.Size(77, 21);
-            this.WipeCharButton.TabIndex = 18;
-            this.WipeCharButton.Text = "删除所有";
-            this.WipeCharButton.UseVisualStyleBackColor = true;
-            this.WipeCharButton.Click += new System.EventHandler(this.WipeCharButton_Click);
+            WipeCharButton.Location = new Point(108, 16);
+            WipeCharButton.Margin = new Padding(4, 3, 4, 3);
+            WipeCharButton.Name = "WipeCharButton";
+            WipeCharButton.Size = new Size(134, 31);
+            WipeCharButton.TabIndex = 18;
+            WipeCharButton.Text = "删除所有账户";
+            WipeCharButton.UseVisualStyleBackColor = true;
+            WipeCharButton.Click += WipeCharButton_Click;
+            // 
+            // ServerGoldTextBox
+            // 
+            ServerGoldTextBox.Location = new Point(356, 18);
+            ServerGoldTextBox.Name = "ServerGoldTextBox";
+            ServerGoldTextBox.ReadOnly = true;
+            ServerGoldTextBox.Size = new Size(153, 23);
+            ServerGoldTextBox.TabIndex = 22;
+            // 
+            // TotalServerGold
+            // 
+            TotalServerGold.AutoSize = true;
+            TotalServerGold.Location = new Point(252, 22);
+            TotalServerGold.Name = "TotalServerGold";
+            TotalServerGold.Size = new Size(95, 17);
+            TotalServerGold.TabIndex = 21;
+            TotalServerGold.Text = "服务器金币总数:";
+            // 
+            // ServerCreditTextBox
+            // 
+            ServerCreditTextBox.Location = new Point(627, 22);
+            ServerCreditTextBox.Name = "ServerCreditTextBox";
+            ServerCreditTextBox.ReadOnly = true;
+            ServerCreditTextBox.Size = new Size(153, 23);
+            ServerCreditTextBox.TabIndex = 24;
+            // 
+            // TotalServerCredit
+            // 
+            TotalServerCredit.AutoSize = true;
+            TotalServerCredit.Location = new Point(520, 25);
+            TotalServerCredit.Name = "TotalServerCredit";
+            TotalServerCredit.Size = new Size(107, 17);
+            TotalServerCredit.TabIndex = 23;
+            TotalServerCredit.Text = "服务器信用币总数:";
+            // 
+            // FilterIPTextBox
+            // 
+            FilterIPTextBox.Location = new Point(541, 51);
+            FilterIPTextBox.Margin = new Padding(4, 3, 4, 3);
+            FilterIPTextBox.Name = "FilterIPTextBox";
+            FilterIPTextBox.Size = new Size(116, 23);
+            FilterIPTextBox.TabIndex = 26;
+            // 
+            // label16
+            // 
+            label16.AutoSize = true;
+            label16.Location = new Point(460, 54);
+            label16.Margin = new Padding(4, 0, 4, 0);
+            label16.Name = "label16";
+            label16.Size = new Size(46, 17);
+            label16.TabIndex = 25;
+            label16.Text = "匹配IP:";
             // 
             // AccountInfoForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(640, 426);
-            this.Controls.Add(this.WipeCharButton);
-            this.Controls.Add(this.MatchFilterCheckBox);
-            this.Controls.Add(this.FilterPlayerTextBox);
-            this.Controls.Add(this.label15);
-            this.Controls.Add(this.AccountInfoPanel);
-            this.Controls.Add(this.RefreshButton);
-            this.Controls.Add(this.FilterTextBox);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.CreateButton);
-            this.Controls.Add(this.AccountInfoListView);
-            this.Name = "AccountInfoForm";
-            this.Text = "账户信息列表";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.AccountInfoForm_FormClosed);
-            this.AccountInfoPanel.ResumeLayout(false);
-            this.AccountInfoPanel.PerformLayout();
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleDimensions = new SizeF(7F, 17F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(1276, 603);
+            Controls.Add(FilterIPTextBox);
+            Controls.Add(label16);
+            Controls.Add(ServerCreditTextBox);
+            Controls.Add(TotalServerCredit);
+            Controls.Add(ServerGoldTextBox);
+            Controls.Add(TotalServerGold);
+            Controls.Add(WipeCharButton);
+            Controls.Add(MatchFilterCheckBox);
+            Controls.Add(FilterPlayerTextBox);
+            Controls.Add(label15);
+            Controls.Add(AccountInfoPanel);
+            Controls.Add(RefreshButton);
+            Controls.Add(FilterTextBox);
+            Controls.Add(label1);
+            Controls.Add(CreateButton);
+            Controls.Add(AccountInfoListView);
+            Margin = new Padding(4, 3, 4, 3);
+            Name = "AccountInfoForm";
+            Text = "账户信息窗口";
+            FormClosed += AccountInfoForm_FormClosed;
+            AccountInfoPanel.ResumeLayout(false);
+            AccountInfoPanel.PerformLayout();
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -628,6 +809,23 @@ namespace Server
         private System.Windows.Forms.Button WipeCharButton;
         private System.Windows.Forms.Button setPasswordButton;
         private System.Windows.Forms.CheckBox PasswordChangeCheckBox;
-        private System.Windows.Forms.Button DelAccButton;
+        private Button LastIPSearch;
+        private Button CreationIPSearch;
+        private ListView CharactersListView;
+        private ColumnHeader characterName;
+        private ColumnHeader characterClass;
+        private ColumnHeader characterLevel;
+        private ColumnHeader characterPKPoints;
+        private ColumnHeader characterGuild;
+        private ColumnHeader Gold;
+        private ColumnHeader GameGold;
+        private ColumnHeader characterStatus;
+        private TextBox ServerGoldTextBox;
+        private Label TotalServerGold;
+        private TextBox ServerCreditTextBox;
+        private Label TotalServerCredit;
+        private Button Delaccbtn;
+        private TextBox FilterIPTextBox;
+        private Label label16;
     }
 }

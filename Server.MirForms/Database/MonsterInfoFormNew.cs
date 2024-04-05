@@ -1,11 +1,7 @@
-﻿using System;
-using System.Data;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
-using Server.MirDatabase;
+﻿using Server.MirDatabase;
 using Server.MirEnvir;
+using System.Data;
+using System.Text;
 
 namespace Server.Database
 {
@@ -48,7 +44,7 @@ namespace Server.Database
             Modified.ValueType = typeof(bool);
             MonsterIndex.ValueType = typeof(int);
             MonsterName.ValueType = typeof(string);
-            MonsterAI.ValueType = typeof(ushort); //自添加AI扩容
+            MonsterAI.ValueType = typeof(ushort);
             MonsterEffect.ValueType = typeof(byte);
             MonsterLevel.ValueType = typeof(ushort);
             MonsterLight.ValueType = typeof(byte);
@@ -222,7 +218,7 @@ namespace Server.Database
  
                 monster.Name = (string)row.Cells["MonsterName"].Value;
                 monster.Image = (Monster)row.Cells["MonsterImage"].Value;
-                monster.AI = (ushort)row.Cells["MonsterAI"].Value; //自添加AI扩容
+                monster.AI = (ushort)row.Cells["MonsterAI"].Value;
                 monster.Level = (ushort)row.Cells["MonsterLevel"].Value;
                 monster.Effect = (byte)row.Cells["MonsterEffect"].Value;
                 monster.Light = (byte)row.Cells["MonsterLight"].Value;
@@ -405,7 +401,7 @@ namespace Server.Database
 
                         int rowsEdited = 0;
 
-                        this.monsterInfoGridView.CurrentCell = this.monsterInfoGridView[1, 0]; //自添加修复怪物导入时数据库的问题
+                        this.monsterInfoGridView.CurrentCell = this.monsterInfoGridView[1, 0];
 
                         for (int i = 1; i < rows.Length; i++)
                         {
@@ -581,7 +577,7 @@ namespace Server.Database
 
             row.Cells["MonsterName"].Value = "";
             row.Cells["MonsterImage"].Value = (Monster)0;
-            row.Cells["MonsterAI"].Value = (ushort)0; //自添加AI扩容
+            row.Cells["MonsterAI"].Value = (ushort)0;
             row.Cells["MonsterLevel"].Value = (ushort)0;
             row.Cells["MonsterEffect"].Value = (byte)0;
             row.Cells["MonsterLight"].Value = (byte)0;

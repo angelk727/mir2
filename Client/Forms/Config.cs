@@ -1,7 +1,7 @@
-﻿using System;
-using System.Threading;
-using System.Windows.Forms;
-using Client;
+﻿using Client;
+using System.Resources;
+using System.Reflection;
+using Client.Resolution;
 
 namespace Launcher
 {
@@ -19,36 +19,51 @@ namespace Launcher
             this.AutoStart_label.Text = GameLanguage.Autostart;
             this.ID_l.Text = GameLanguage.Usrname;
             this.Password_l.Text = GameLanguage.Password;
-        }
 
+            DrawSupportedResolutions();
+        }
+                                   
         private void Res1_pb_Click(object sender, EventArgs e)
         {
-            resolutionChoice(1024);
+            resolutionChoice(eSupportedResolution.w1024h768);
+
         }
 
-        public void resolutionChoice(int res)
+        public void resolutionChoice(eSupportedResolution res)
         {
-            Res2_pb.Image = Client.Properties.Resources.Radio_Unactive;
-            Res3_pb.Image = Client.Properties.Resources.Radio_Unactive;
-            Res4_pb.Image = Client.Properties.Resources.Radio_Unactive;
-            Res5_pb.Image = Client.Properties.Resources.Radio_Unactive;
+            Res2_pb.Image = Client.Resources.Images.Radio_Unactive;
+            Res3_pb.Image = Client.Resources.Images.Radio_Unactive;
+            Res4_pb.Image = Client.Resources.Images.Radio_Unactive;
+            Res5_pb.Image = Client.Resources.Images.Radio_Unactive;
 
-            if (res == 1024) Res2_pb.Image = Client.Properties.Resources.Config_Radio_On;
-            else if (res == 1366) Res3_pb.Image = Client.Properties.Resources.Config_Radio_On;
-            else if (res == 1280) Res4_pb.Image = Client.Properties.Resources.Config_Radio_On;
-            else if (res == 1920) Res5_pb.Image = Client.Properties.Resources.Config_Radio_On;
+            switch (res)
+            {
+                case eSupportedResolution.w1024h768:
+                    Res2_pb.Image = Client.Resources.Images.Config_Radio_On;
+                    break;
+                case eSupportedResolution.w1366h768:
+                    Res3_pb.Image = Client.Resources.Images.Config_Radio_On;
+                    break;
+                case eSupportedResolution.w1280h720:
+                    Res4_pb.Image = Client.Resources.Images.Config_Radio_On;
+                    break;
+                case eSupportedResolution.w1920h1080:
+                    Res5_pb.Image = Client.Resources.Images.Config_Radio_On;
+                    break;
 
-            Settings.Resolution = res;
+            }
+
+            Settings.Resolution = (int)res;
         }
 
         private void Res2_pb_Click(object sender, EventArgs e)
         {
-            resolutionChoice(1024);
+            resolutionChoice(eSupportedResolution.w1024h768);
         }
 
         private void Res3_pb_Click(object sender, EventArgs e)
         {
-            resolutionChoice(1366);
+            resolutionChoice(eSupportedResolution.w1366h768);
         }
 
         private void Config_VisibleChanged(object sender, EventArgs e)
@@ -57,19 +72,23 @@ namespace Launcher
             {
                 AccountLogin_txt.Text = Settings.AccountID;
                 AccountPass_txt.Text = Settings.Password;
-                resolutionChoice(Settings.Resolution);
+                resolutionChoice((eSupportedResolution)Settings.Resolution);
 
-                if (Settings.FullScreen) Fullscreen_pb.Image = Client.Properties.Resources.Config_Check_On;
-                else Fullscreen_pb.Image = Client.Properties.Resources.Config_Check_Off1;
+                Fullscreen_pb.Image = Settings.FullScreen
+                    ? Client.Resources.Images.Config_Check_On
+                    : Client.Resources.Images.Config_Check_Off1;
 
-                if (Settings.FPSCap) FPScap_pb.Image = Client.Properties.Resources.Config_Check_On;
-                else FPScap_pb.Image = Client.Properties.Resources.Config_Check_Off1;
+                FPScap_pb.Image = Settings.FPSCap
+                    ? Client.Resources.Images.Config_Check_On
+                    : Client.Resources.Images.Config_Check_Off1;
 
-                if (Settings.TopMost) OnTop_pb.Image = Client.Properties.Resources.Config_Check_On;
-                else OnTop_pb.Image = Client.Properties.Resources.Config_Check_Off1;
+                OnTop_pb.Image = Settings.TopMost
+                    ? Client.Resources.Images.Config_Check_On
+                    : Client.Resources.Images.Config_Check_Off1;
 
-                if (Settings.P_AutoStart) AutoStart_pb.Image = Client.Properties.Resources.Config_Check_On;
-                else AutoStart_pb.Image = Client.Properties.Resources.Config_Check_Off1;
+                AutoStart_pb.Image = Settings.P_AutoStart
+                    ? Client.Resources.Images.Config_Check_On
+                    : Client.Resources.Images.Config_Check_Off1;
 
                 this.ActiveControl = label4;
             }
@@ -114,52 +133,56 @@ namespace Launcher
         {
             Settings.FullScreen = !Settings.FullScreen;
 
-            if (Settings.FullScreen) Fullscreen_pb.Image = Client.Properties.Resources.Config_Check_On;
-            else Fullscreen_pb.Image = Client.Properties.Resources.Config_Check_Off1;
+            Fullscreen_pb.Image = Settings.FullScreen
+                    ? Client.Resources.Images.Config_Check_On
+                    : Client.Resources.Images.Config_Check_Off1;
         }
 
         private void FPScap_pb_Click(object sender, EventArgs e)
         {
             Settings.FPSCap = !Settings.FPSCap;
 
-            if (Settings.FPSCap) FPScap_pb.Image = Client.Properties.Resources.Config_Check_On;
-            else FPScap_pb.Image = Client.Properties.Resources.Config_Check_Off1;
+            FPScap_pb.Image = Settings.FPSCap
+                    ? Client.Resources.Images.Config_Check_On
+                    : Client.Resources.Images.Config_Check_Off1;
         }
 
         private void OnTop_pb_Click(object sender, EventArgs e)
         {
             Settings.TopMost = !Settings.TopMost;
 
-            if (Settings.TopMost) OnTop_pb.Image = Client.Properties.Resources.Config_Check_On;
-            else OnTop_pb.Image = Client.Properties.Resources.Config_Check_Off1;
+            OnTop_pb.Image = Settings.TopMost
+                    ? Client.Resources.Images.Config_Check_On
+                    : Client.Resources.Images.Config_Check_Off1;
         }
 
         private void AutoStart_pb_Click(object sender, EventArgs e)
         {
             Settings.P_AutoStart = !Settings.P_AutoStart;
 
-            if (Settings.P_AutoStart) AutoStart_pb.Image = Client.Properties.Resources.Config_Check_On;
-            else AutoStart_pb.Image = Client.Properties.Resources.Config_Check_Off1;
+            AutoStart_pb.Image = Settings.P_AutoStart
+                    ? Client.Resources.Images.Config_Check_On
+                    : Client.Resources.Images.Config_Check_Off1;
         }
 
         private void CleanFiles_pb_MouseDown(object sender, MouseEventArgs e)
         {
-            CleanFiles_pb.Image = Client.Properties.Resources.CheckF_Pressed;
+            CleanFiles_pb.Image = Client.Resources.Images.CheckF_Pressed;
         }
 
         private void CleanFiles_pb_MouseUp(object sender, MouseEventArgs e)
         {
-            CleanFiles_pb.Image = Client.Properties.Resources.CheckF_Base2;
+            CleanFiles_pb.Image = Client.Resources.Images.CheckF_Base2;
         }
 
         private void CleanFiles_pb_MouseEnter(object sender, EventArgs e)
         {
-            CleanFiles_pb.Image = Client.Properties.Resources.CheckF_Hover;
+            CleanFiles_pb.Image = Client.Resources.Images.CheckF_Hover;
         }
 
         private void CleanFiles_pb_MouseLeave(object sender, EventArgs e)
         {
-            CleanFiles_pb.Image = Client.Properties.Resources.CheckF_Base2;
+            CleanFiles_pb.Image = Client.Resources.Images.CheckF_Base2;
         }
 
         private void CleanFiles_pb_Click(object sender, EventArgs e)
@@ -175,12 +198,47 @@ namespace Launcher
 
         private void Res4_pb_Click(object sender, EventArgs e)
         {
-            resolutionChoice(1280);
+            resolutionChoice(eSupportedResolution.w1280h720);
         }
 
         private void Res5_pb_Click(object sender, EventArgs e)
         {
-            resolutionChoice(1920);
+            resolutionChoice(eSupportedResolution.w1920h1080);
+        }
+
+        private void DrawSupportedResolutions()
+        {
+            Res2_pb.Enabled = false;
+            label2.ForeColor = Color.Red;
+            Res4_pb.Enabled = false;
+            label5.ForeColor = Color.Red;
+            Res3_pb.Enabled = false;
+            label3.ForeColor = Color.Red;
+            Res5_pb.Enabled = false;
+            label1.ForeColor = Color.Red;
+
+            foreach (eSupportedResolution supportedResolution in DisplayResolutions.DisplaySupportedResolutions)
+            {
+                switch (supportedResolution)
+                {
+                    case (eSupportedResolution.w1024h768):
+                        Res2_pb.Enabled = true;
+                        label2.ForeColor = Color.Gray;
+                        break;
+                    case (eSupportedResolution.w1280h720):
+                        Res4_pb.Enabled = true;
+                        label5.ForeColor = Color.Gray;
+                        break;
+                    case (eSupportedResolution.w1366h768):
+                        Res3_pb.Enabled = true;
+                        label3.ForeColor = Color.Gray;
+                        break;
+                    case (eSupportedResolution.w1920h1080):
+                        Res5_pb.Enabled = true;
+                        label1.ForeColor = Color.Gray;
+                        break;
+                }
+            }
         }
     }
 }

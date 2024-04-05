@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace LibraryEditor
@@ -95,6 +96,7 @@ namespace LibraryEditor
 
                 if (_nType == 0)
                 {
+                    _fStream.Seek(48, SeekOrigin.Begin);
                     _palette = new int[_bReader.ReadInt32()];
                     _fStream.Seek(4, SeekOrigin.Current);
                     _version = _bReader.ReadInt32();

@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Drawing;
+﻿using System.Drawing;
 using Server.MirDatabase;
 using Server.MirEnvir;
 using S = ServerPackets;
@@ -12,7 +11,7 @@ namespace Server.MirObjects.Monsters
 
         public bool HenshinMode = false;
 
-        public long BuffTime;
+        private long _BuffTime;
 
         protected internal ShardGuardian(MonsterInfo info)
             : base(info)
@@ -58,7 +57,7 @@ namespace Server.MirObjects.Monsters
 
             MoveTo(Target.CurrentLocation);
 
-            if (Envir.Time > BuffTime)
+            if (Envir.Time > _BuffTime)
             {
                 var friends = FindAllFriends(Info.ViewRange, CurrentLocation);
 
@@ -76,14 +75,14 @@ namespace Server.MirObjects.Monsters
 
                     ActionList.Add(action);
 
-                    BuffTime = Envir.Time + 60000;
+                    _BuffTime = Envir.Time + 60000;
                     ActionTime = Envir.Time + 300;
                     AttackTime = Envir.Time + AttackSpeed;
                     ShockTime = 0;
                     return;
                 }
 
-                BuffTime = Envir.Time + 30000;
+                _BuffTime = Envir.Time + 30000;
             }
 
             base.ProcessTarget();

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Windows.Forms;
-using Server.MirEnvir;
+﻿using Server.MirEnvir;
 
 namespace Server.MirForms.DropBuilder
 {
@@ -151,7 +147,7 @@ namespace Server.MirForms.DropBuilder
                 listBoxTransform
             };
 
-            // 将怪物添加到列表
+            // Add monsters to list
             for (int i = 0; i < Envir.MonsterInfoList.Count; i++)
             {
                 listBoxMonsters.Items.Add(new MonsterDropInfo { Name = Envir.MonsterInfoList[i].Name, Path = Envir.MonsterInfoList[i].DropPath });
@@ -162,10 +158,10 @@ namespace Server.MirForms.DropBuilder
             labelMonsterList.Text = $"怪物总数: {Envir.MonsterInfoList.Count}";
         }
 
-        // 获取服务器数据
+        // Gets server data
         public Envir Envir => SMain.EditEnvir;
 
-        // 更新这个掉落物品的文件
+        // Updates the drop file text
         private void UpdateDropFile()
         {
             textBoxDropList.Clear();
@@ -334,7 +330,7 @@ namespace Server.MirForms.DropBuilder
             SaveDropFile();
         }
 
-        // 物品标签更改, 绘制适当的物品
+        // Item tab change, draw appropriate items
         private void tabControlSeperateItems_SelectedIndexChanged(object sender, EventArgs e)
         {
             TabControl Tab = (TabControl)sender;
@@ -479,13 +475,13 @@ namespace Server.MirForms.DropBuilder
             }
         }
         
-        // 更新结果以显示已筛选的结果
+        // Update the results to show them filtered
         private void FilterValueChange(object sender, EventArgs e)
         {
             tabControlSeperateItems_SelectedIndexChanged(tabControlSeperateItems, null);
         }
 
-        // 将物品添加到掉落列表
+        // Add the item to the drop list
         private void buttonAdd_Click(object sender, EventArgs e)
         {
             int dropChance;
@@ -494,7 +490,7 @@ namespace Server.MirForms.DropBuilder
 
             if (dropChance < 1) dropChance = 1;
 
-            string Quest = QuestOnlyCheckBox.Checked ? "Q" : "";
+            string quest = QuestOnlyCheckBox.Checked ? "Q" : "";
 
             try
             {
@@ -502,59 +498,59 @@ namespace Server.MirForms.DropBuilder
                 {
                     case "武器":
                         武器.Add(new DropItem { Name = listBoxWeapon.SelectedItem.ToString().Replace(" ", string.Empty), Odds =
-                            $"1/{dropChance}", Quest = Quest });
+                            $"1/{dropChance}", Quest = quest });
                         break;
                     case "盔甲":
                         盔甲.Add(new DropItem { Name = listBoxArmour.SelectedItem.ToString().Replace(" ", string.Empty), Odds =
-                            $"1/{dropChance}", Quest = Quest });
+                            $"1/{dropChance}", Quest = quest });
                         break;
                     case "头盔":
                         头盔.Add(new DropItem { Name = listBoxHelmet.SelectedItem.ToString().Replace(" ", string.Empty), Odds =
-                            $"1/{dropChance}", Quest = Quest });
+                            $"1/{dropChance}", Quest = quest });
                         break;
                     case "项链":
                         项链.Add(new DropItem { Name = listBoxNecklace.SelectedItem.ToString().Replace(" ", string.Empty), Odds =
-                            $"1/{dropChance}", Quest = Quest });
+                            $"1/{dropChance}", Quest = quest });
                         break;
                     case "手镯":
                         手镯.Add(new DropItem { Name = listBoxBracelet.SelectedItem.ToString().Replace(" ", string.Empty), Odds =
-                            $"1/{dropChance}", Quest = Quest });
+                            $"1/{dropChance}", Quest = quest });
                         break;
                     case "戒指":
                         戒指.Add(new DropItem { Name = listBoxRing.SelectedItem.ToString().Replace(" ", string.Empty), Odds =
-                            $"1/{dropChance}", Quest = Quest });
+                            $"1/{dropChance}", Quest = quest });
                         break;
                     case "护身符":
                         护身符.Add(new DropItem { Name = listBoxAmulet.SelectedItem.ToString().Replace(" ", string.Empty), Odds =
-                            $"1/{dropChance}", Quest = Quest });
+                            $"1/{dropChance}", Quest = quest });
                         break;
                     case "腰带":
                         腰带.Add(new DropItem { Name = listBoxBelt.SelectedItem.ToString().Replace(" ", string.Empty), Odds =
-                            $"1/{dropChance}", Quest = Quest });
+                            $"1/{dropChance}", Quest = quest });
                         break;
                     case "靴子":
                         靴子.Add(new DropItem { Name = listBoxBoot.SelectedItem.ToString().Replace(" ", string.Empty), Odds =
-                            $"1/{dropChance}", Quest = Quest });
+                            $"1/{dropChance}", Quest = quest });
                         break;
                     case "守护石":
                         守护石.Add(new DropItem { Name = listBoxStone.SelectedItem.ToString().Replace(" ", string.Empty), Odds =
-                            $"1/{dropChance}", Quest = Quest });
+                            $"1/{dropChance}", Quest = quest });
                         break;
                     case "照明物":
                         照明物.Add(new DropItem { Name = listBoxTorch.SelectedItem.ToString().Replace(" ", string.Empty), Odds =
-                            $"1/{dropChance}", Quest = Quest });
+                            $"1/{dropChance}", Quest = quest });
                         break;
                     case "药水":
                         药水.Add(new DropItem { Name = listBoxPotion.SelectedItem.ToString().Replace(" ", string.Empty), Odds =
-                            $"1/{dropChance}", Quest = Quest });
+                            $"1/{dropChance}", Quest = quest });
                         break;
                     case "矿石":
                         矿石.Add(new DropItem { Name = listBoxOre.SelectedItem.ToString().Replace(" ", string.Empty), Odds =
-                            $"1/{dropChance}", Quest = Quest });
+                            $"1/{dropChance}", Quest = quest });
                         break;
                     case "肉":
                         肉.Add(new DropItem { Name = listBoxMeat.SelectedItem.ToString().Replace(" ", string.Empty), Odds =
-                            $"1/{dropChance}", Quest = Quest });
+                            $"1/{dropChance}", Quest = quest });
                         break;
                     case "工艺材料":
                         工艺材料.Add(new DropItem { Name = listBoxCraftingMaterial.SelectedItem.ToString().Replace(" ", string.Empty), Odds =
@@ -563,91 +559,91 @@ namespace Server.MirForms.DropBuilder
                         break;
                     case "卷轴":
                         卷轴.Add(new DropItem { Name = listBoxScroll.SelectedItem.ToString().Replace(" ", string.Empty), Odds =
-                            $"1/{dropChance}", Quest = Quest });
+                            $"1/{dropChance}", Quest = quest });
                         break;
                     case "宝玉神珠":
                         宝玉神珠.Add(new DropItem { Name = listBoxGem.SelectedItem.ToString().Replace(" ", string.Empty), Odds =
-                            $"1/{dropChance}", Quest = Quest });
+                            $"1/{dropChance}", Quest = quest });
                         break;
                     case "坐骑":
                         坐骑.Add(new DropItem { Name = listBoxMount.SelectedItem.ToString().Replace(" ", string.Empty), Odds =
-                            $"1/{dropChance}", Quest = Quest });
+                            $"1/{dropChance}", Quest = quest });
                         break;
                     case "技能书":
                         技能书.Add(new DropItem { Name = listBoxBook.SelectedItem.ToString().Replace(" ", string.Empty), Odds =
-                            $"1/{dropChance}", Quest = Quest });
+                            $"1/{dropChance}", Quest = quest });
                         break;
                     case "杂物":
                         杂物.Add(new DropItem { Name = listBoxNothing.SelectedItem.ToString().Replace(" ", string.Empty), Odds =
-                            $"1/{dropChance}", Quest = Quest });
+                            $"1/{dropChance}", Quest = quest });
                         break;
                     case "特殊消耗品":
                         特殊消耗品.Add(new DropItem { Name = listBoxScript.SelectedItem.ToString().Replace(" ", string.Empty), Odds =
-                            $"1/{dropChance}", Quest = Quest });
+                            $"1/{dropChance}", Quest = quest });
                         break;
                     case "缰绳":
                         缰绳.Add(new DropItem { Name = listBoxReins.SelectedItem.ToString().Replace(" ", string.Empty), Odds =
-                            $"1/{dropChance}", Quest = Quest });
+                            $"1/{dropChance}", Quest = quest });
                         break;
                     case "铃铛":
                         铃铛.Add(new DropItem { Name = listBoxBells.SelectedItem.ToString().Replace(" ", string.Empty), Odds =
-                            $"1/{dropChance}", Quest = Quest });
+                            $"1/{dropChance}", Quest = quest });
                         break;
                     case "马鞍":
                         马鞍.Add(new DropItem { Name = listBoxSaddle.SelectedItem.ToString().Replace(" ", string.Empty), Odds =
-                            $"1/{dropChance}", Quest = Quest });
+                            $"1/{dropChance}", Quest = quest });
                         break;
                     case "蝴蝶结":
                         蝴蝶结.Add(new DropItem { Name = listBoxRibbon.SelectedItem.ToString().Replace(" ", string.Empty), Odds =
-                            $"1/{dropChance}", Quest = Quest });
+                            $"1/{dropChance}", Quest = quest });
                         break;
                     case "面甲":
                         面甲.Add(new DropItem { Name = listBoxMask.SelectedItem.ToString().Replace(" ", string.Empty), Odds =
-                            $"1/{dropChance}", Quest = Quest });
+                            $"1/{dropChance}", Quest = quest });
                         break;
                     case "坐骑食物":
                         坐骑食物.Add(new DropItem { Name = listBoxFood.SelectedItem.ToString().Replace(" ", string.Empty), Odds =
-                            $"1/{dropChance}", Quest = Quest });
+                            $"1/{dropChance}", Quest = quest });
                         break;
                     case "鱼钩":
                         鱼钩.Add(new DropItem { Name = listBoxHook.SelectedItem.ToString().Replace(" ", string.Empty), Odds =
-                            $"1/{dropChance}", Quest = Quest });
+                            $"1/{dropChance}", Quest = quest });
                         break;
                     case "鱼漂":
                         鱼漂.Add(new DropItem { Name = listBoxFloat.SelectedItem.ToString().Replace(" ", string.Empty), Odds =
-                            $"1/{dropChance}", Quest = Quest });
+                            $"1/{dropChance}", Quest = quest });
                         break;
                     case "鱼饵":
                         鱼饵.Add(new DropItem { Name = listBoxBait.SelectedItem.ToString().Replace(" ", string.Empty), Odds =
-                            $"1/{dropChance}", Quest = Quest });
+                            $"1/{dropChance}", Quest = quest });
                         break;
                     case "探鱼器":
                         探鱼器.Add(new DropItem { Name = listBoxFinder.SelectedItem.ToString().Replace(" ", string.Empty), Odds =
-                            $"1/{dropChance}", Quest = Quest });
+                            $"1/{dropChance}", Quest = quest });
                         break;
                     case "摇轮":
                         摇轮.Add(new DropItem { Name = listBoxReel.SelectedItem.ToString().Replace(" ", string.Empty), Odds =
-                            $"1/{dropChance}", Quest = Quest });
+                            $"1/{dropChance}", Quest = quest });
                         break;
                     case "鱼":
                         鱼.Add(new DropItem { Name = listBoxFish.SelectedItem.ToString().Replace(" ", string.Empty), Odds =
-                            $"1/{dropChance}", Quest = Quest });
+                            $"1/{dropChance}", Quest = quest });
                         break;
                     case "任务物品":
                         任务物品.Add(new DropItem { Name = listBoxQuest.SelectedItem.ToString().Replace(" ", string.Empty), Odds =
-                            $"1/{dropChance}", Quest = Quest });
+                            $"1/{dropChance}", Quest = quest });
                         break;
                     case "觉醒物品":
                         觉醒物品.Add(new DropItem { Name = listBoxAwakening.SelectedItem.ToString().Replace(" ", string.Empty), Odds =
-                            $"1/{dropChance}", Quest = Quest });
+                            $"1/{dropChance}", Quest = quest });
                         break;
                     case "灵物":
                         灵物.Add(new DropItem { Name = listBoxPets.SelectedItem.ToString().Replace(" ", string.Empty), Odds =
-                            $"1/{dropChance}", Quest = Quest });
+                            $"1/{dropChance}", Quest = quest });
                         break;
                     case "外形物品":
                         外形物品.Add(new DropItem { Name = listBoxTransform.SelectedItem.ToString().Replace(" ", string.Empty), Odds =
-                            $"1/{dropChance}", Quest = Quest });
+                            $"1/{dropChance}", Quest = quest });
                         break;
                 }
 
@@ -659,7 +655,7 @@ namespace Server.MirForms.DropBuilder
             }
         }
 
-        // 选择另一个怪物
+        // Choose another monster.
         private void listBoxMonsters_SelectedItemChanged(object sender, EventArgs e)
         {
             // Empty List<DropItem>'s
@@ -698,7 +694,7 @@ namespace Server.MirForms.DropBuilder
 
         }
 
-        // 读取这个怪物的掉落文件 XXX.txt
+        // Load the monster.txt drop file.
         private void LoadDropFile(bool edit)
         {
             var lines = (edit == false) ? File.ReadAllLines(GetPathOfSelectedItem()) : textBoxDropList.Lines;
@@ -776,14 +772,14 @@ namespace Server.MirForms.DropBuilder
                             var workingLine = lines[k].Split(' ');
                             if (workingLine.Length < 2) continue;
 
-                            var Quest = "";
+                            var quest = "";
 
                             if(workingLine.Length > 2 && workingLine[2] == "Q")
                             {
-                                Quest = workingLine[2];
+                                quest = workingLine[2];
                             }
 
-                            DropItem newDropItem = new DropItem { Odds = workingLine[0], Name = workingLine[1], Quest = Quest };
+                            DropItem newDropItem = new DropItem { Odds = workingLine[0], Name = workingLine[1], Quest = quest };
                             switch (i)
                             {
                                 case 0:
@@ -906,7 +902,7 @@ namespace Server.MirForms.DropBuilder
             }
         }
 
-        // 保存这个怪物的掉落文件 XXX.txt
+        // Save the monster.txt drop file
         private void SaveDropFile()
         {
             var dropFile = GetPathOfSelectedItem();

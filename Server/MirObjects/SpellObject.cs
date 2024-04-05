@@ -1,7 +1,5 @@
-﻿using System;
 using System.Drawing;
-using System.Linq;
-using Server.MirEnvir;
+﻿using Server.MirEnvir;
 using S = ServerPackets;
 
 
@@ -34,7 +32,7 @@ namespace Server.MirObjects
         public Point CastLocation;
         public bool Show, Decoration;
 
-        //爆炸陷阱
+        //ExplosiveTrap
         public int ExplosiveTrapID;
         public int ExplosiveTrapCount;
         public bool DetonatedTrap;
@@ -89,7 +87,7 @@ namespace Server.MirObjects
                     return;
                 }
             }
-            if (Spell == Spell.HealingcircleRare) //自添加阴阳五行阵-秘籍
+            if (Spell == Spell.HealingcircleRare)
             {
                 if (CurrentMap != null && (CurrentMap != Caster?.CurrentMap || CurrentMap.Info.Index != CurrentMapIndex))
                 {
@@ -143,7 +141,7 @@ namespace Server.MirObjects
                         ob.Attacked(((HumanObject)Caster), Value, DefenceType.MAC, false);
                     }
                     break;
-                case Spell.Healing: //SafeZone 安全区治愈 添加了对英雄的判断
+                case Spell.Healing: //SafeZone
                     {
                         if (!(ob.Race == ObjectType.Player || ob.Race == ObjectType.Hero || (ob.Race == ObjectType.Monster && ob.Master != null && ob.Master.Race == ObjectType.Player))) return;
                         if (ob.Dead || ob.HealAmount != 0 || ob.PercentHealth == 100) return;
@@ -196,7 +194,7 @@ namespace Server.MirObjects
                         ob.Attacked(((HumanObject)Caster), Value, DefenceType.MAC, false);
                     }
                     break;
-                case Spell.HealingcircleRare: //自添加阴阳五行阵-秘籍
+                case Spell.HealingcircleRare:
                     {
                         if (ob == null) return;
 
@@ -249,7 +247,7 @@ namespace Server.MirObjects
                         ob.Struck(Value, DefenceType.MAC);
                     }
                     break;
-                case Spell.GeneralMeowMeowThunder: //341
+                case Spell.GeneralMeowMeowThunder:
                     {
                         if (ob.Race != ObjectType.Player && ob.Race != ObjectType.Monster) return;
                         if (ob.Dead) return;
@@ -319,7 +317,7 @@ namespace Server.MirObjects
                         ob.Struck(Value, DefenceType.AC);
                     }
                     break;
-                case Spell.TucsonGeneralRock: //354
+                case Spell.TucsonGeneralRock:
                     {
                         if (ob.Race != ObjectType.Player && ob.Race != ObjectType.Monster) return;
                         if (ob.Dead) return;
@@ -382,7 +380,7 @@ namespace Server.MirObjects
                         ob.ApplyPoison(new Poison { PType = PoisonType.Dazed, Duration = 5, TickSpeed = 1000 }, this);
                     }
                     break;
-                case Spell.HornedSorcererDustTornado: //406
+                case Spell.HornedSorcererDustTornado:
                     {
                         if (ob.Race != ObjectType.Player && ob.Race != ObjectType.Monster) return;
                         if (ob.Dead) return;
@@ -393,8 +391,8 @@ namespace Server.MirObjects
                         ob.Struck(Value, DefenceType.AC);
                     }
                     break;
-                case Spell.HornedCommanderRockFall: //409
-                case Spell.HornedCommanderRockSpike: //409
+                case Spell.HornedCommanderRockFall:
+                case Spell.HornedCommanderRockSpike:
                     {
                         if (ob.Race != ObjectType.Player && ob.Race != ObjectType.Monster) return;
                         if (ob.Dead) return;
@@ -434,7 +432,7 @@ namespace Server.MirObjects
                         ob.OperateTime = 0;
                     }
                     break;
-                case Spell.YangDragonFlame: //414
+                case Spell.YangDragonFlame:
                     {
                         if (ob.Race != ObjectType.Player && ob.Race != ObjectType.Monster && ob.Race != ObjectType.Hero) return;
                         if (ob.Dead) return;
@@ -445,7 +443,7 @@ namespace Server.MirObjects
                         ob.Struck(Value, DefenceType.AC);
                     }
                     break;
-                case Spell.YangDragonIcyBurst: //414
+                case Spell.YangDragonIcyBurst:
                     {
                         if (ob.Race != ObjectType.Player && ob.Race != ObjectType.Monster && ob.Race != ObjectType.Hero) return;
                         if (ob.Dead) return;
@@ -456,7 +454,7 @@ namespace Server.MirObjects
                         ob.Struck(Value, DefenceType.AC);
                     }
                     break;
-                case Spell.ShardGuardianIceBomb: //476
+                case Spell.ShardGuardianIceBomb:
                     {
                         if (ob.Race != ObjectType.Player && ob.Race != ObjectType.Monster && ob.Race != ObjectType.Hero) return;
                         if (ob.Dead) return;
@@ -467,7 +465,7 @@ namespace Server.MirObjects
                         ob.Struck(Value, DefenceType.AC);
                     }
                     break;
-                case Spell.GroundFissure: //498
+                case Spell.GroundFissure:
                     {
                         if (ob.Dead) return;
                         if (ob == Caster) return;
@@ -477,18 +475,7 @@ namespace Server.MirObjects
                         ob.Struck(Value, DefenceType.AC);
                     }
                     break;
-                case Spell.SkeletonBomb: //508
-                    {
-                        if (ob.Race != ObjectType.Player && ob.Race != ObjectType.Monster && ob.Race != ObjectType.Hero) return;
-                        if (ob.Dead) return;
-                        if (ob == Caster) return;
-                        if (!ob.IsAttackTarget(Caster)) return;
-                        if (Value == 0) return;
-
-                        ob.Struck(Value, DefenceType.AC);
-                    }
-                    break;
-                case Spell.FlameExplosion: //509
+                case Spell.SkeletonBomb:
                     {
                         if (ob.Race != ObjectType.Player && ob.Race != ObjectType.Monster && ob.Race != ObjectType.Hero) return;
                         if (ob.Dead) return;
@@ -499,7 +486,7 @@ namespace Server.MirObjects
                         ob.Struck(Value, DefenceType.AC);
                     }
                     break;
-                case Spell.ButcherFlyAxe: //516
+                case Spell.FlameExplosion:
                     {
                         if (ob.Race != ObjectType.Player && ob.Race != ObjectType.Monster && ob.Race != ObjectType.Hero) return;
                         if (ob.Dead) return;
@@ -510,17 +497,7 @@ namespace Server.MirObjects
                         ob.Struck(Value, DefenceType.AC);
                     }
                     break;
-                case Spell.RiklebitesRollCall: //518
-                    {
-                        if (ob.Dead) return;
-                        if (ob == Caster) return;
-                        if (!ob.IsAttackTarget(Caster)) return;
-                        if (Value == 0) return;
-
-                        ob.Struck(Value, DefenceType.AC);
-                    }
-                    break;
-                case Spell.RiklebitesBlast: //518
+                case Spell.ButcherFlyAxe:
                     {
                         if (ob.Race != ObjectType.Player && ob.Race != ObjectType.Monster && ob.Race != ObjectType.Hero) return;
                         if (ob.Dead) return;
@@ -531,7 +508,17 @@ namespace Server.MirObjects
                         ob.Struck(Value, DefenceType.AC);
                     }
                     break;
-                case Spell.SwordFormation: //550
+                case Spell.RiklebitesRollCall:
+                    {
+                        if (ob.Dead) return;
+                        if (ob == Caster) return;
+                        if (!ob.IsAttackTarget(Caster)) return;
+                        if (Value == 0) return;
+
+                        ob.Struck(Value, DefenceType.AC);
+                    }
+                    break;
+                case Spell.RiklebitesBlast:
                     {
                         if (ob.Race != ObjectType.Player && ob.Race != ObjectType.Monster && ob.Race != ObjectType.Hero) return;
                         if (ob.Dead) return;
@@ -542,7 +529,18 @@ namespace Server.MirObjects
                         ob.Struck(Value, DefenceType.AC);
                     }
                     break;
-                case Spell.尊者旋风: //564
+                case Spell.SwordFormation:
+                    {
+                        if (ob.Race != ObjectType.Player && ob.Race != ObjectType.Monster && ob.Race != ObjectType.Hero) return;
+                        if (ob.Dead) return;
+                        if (ob == Caster) return;
+                        if (!ob.IsAttackTarget(Caster)) return;
+                        if (Value == 0) return;
+
+                        ob.Struck(Value, DefenceType.AC);
+                    }
+                    break;
+                case Spell.尊者旋风:
                     {
                         if (ob.Race != ObjectType.Player && ob.Race != ObjectType.Monster && ob.Race != ObjectType.Hero) return;
                         if (ob.Dead) return;
@@ -559,7 +557,7 @@ namespace Server.MirObjects
         public void DetonateTrapNow()
         {
             DetonatedTrap = true;
-            Broadcast(GetInfo()); //新增游戏卡顿测试标注项
+            Broadcast(GetInfo());
             ExpireTime = Envir.Time + 1000;
         }
 
@@ -663,21 +661,21 @@ namespace Server.MirObjects
                 case Spell.TreeQueenGroundRoots:
                 case Spell.FlyingStatueIceTornado:
                 case Spell.DarkOmaKingNuke:
-                case Spell.HornedSorcererDustTornado: //406
-                case Spell.HornedCommanderRockFall: //409                
-                case Spell.HornedCommanderRockSpike: //409
+                case Spell.HornedSorcererDustTornado:
+                case Spell.HornedCommanderRockFall:
+                case Spell.HornedCommanderRockSpike:
                 case Spell.HealingCircle:
-                case Spell.HealingcircleRare://自添加阴阳五行阵-秘籍
-                case Spell.YangDragonFlame: //414
-                case Spell.YangDragonIcyBurst: //414
-                case Spell.ShardGuardianIceBomb: //476
-                case Spell.GroundFissure: //498
-                case Spell.SkeletonBomb: //508
-                case Spell.FlameExplosion: //509
-                case Spell.ButcherFlyAxe: //516
-                case Spell.RiklebitesBlast: //518
-                case Spell.SwordFormation: //550
-                case Spell.尊者旋风: //564
+                case Spell.HealingcircleRare:
+                case Spell.YangDragonFlame:
+                case Spell.YangDragonIcyBurst:
+                case Spell.ShardGuardianIceBomb:
+                case Spell.GroundFissure:
+                case Spell.SkeletonBomb:
+                case Spell.FlameExplosion:
+                case Spell.ButcherFlyAxe:
+                case Spell.RiklebitesBlast:
+                case Spell.SwordFormation:
+                case Spell.尊者旋风:
                     if (!Show)
                         return null;
 

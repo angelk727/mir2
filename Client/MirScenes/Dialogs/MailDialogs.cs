@@ -1,10 +1,7 @@
-﻿using System;
-using System.Drawing;
-using System.Windows.Forms;
-using Client.MirControls;
+﻿using Client.MirControls;
 using Client.MirGraphics;
-using Client.MirNetwork;
 using Client.MirSounds;
+using Client.MirNetwork;
 using C = ClientPackets;
 
 namespace Client.MirScenes.Dialogs
@@ -14,7 +11,7 @@ namespace Client.MirScenes.Dialogs
         MirImageControl TitleLabel;
         MirButton HelpButton, CloseButton;
         MirLabel TitleTypeLabel, TitleSenderLabel, TitleMessageLabel;
-        //发送/回复（只有在索引存在时才能回复，如果没有，按钮将消失）/读取/删除/阻止列表/错误报告（新系统？？）
+        //Send / Reply (Can only reply if index exists, button will disapear if not) / Read / Delete / Block List / Bug Report (new system??)
 
         MirLabel PageLabel;
         MirButton PreviousButton, NextButton;
@@ -37,7 +34,7 @@ namespace Client.MirScenes.Dialogs
             Sort = true;
             Location = new Point((Settings.ScreenWidth - Size.Width) - 150, 5);
 
-            //TitleLabel = new MirImageControl //此处代码可省略，因为客户端LIB有显示
+            //TitleLabel = new MirImageControl
             //{
             //    Index = 7,
             //    Library = Libraries.Title,
@@ -171,7 +168,7 @@ namespace Client.MirScenes.Dialogs
 
                     inputBox.OKButton.Click += (o1, e1) =>
                     {
-                        //公开信对话框，输入名称
+                        //open letter dialog, pass in name
                         GameScene.Scene.MailComposeLetterDialog.ComposeMail(inputBox.InputTextBox.Text);
                         
                         inputBox.Dispose();
@@ -552,7 +549,7 @@ namespace Client.MirScenes.Dialogs
 
                 if (!Mail.Opened)
                 {
-                    //如果未收集包裹，则将未读邮件移至第二个位置
+                    //move unread to second position if not collected parcel
                     UnreadImage.Location = new Point(20, 17);
                 }
             }
@@ -560,7 +557,7 @@ namespace Client.MirScenes.Dialogs
             {
                 if (Mail.Locked)
                 {
-                    //如果锁定，将未读内容移动到第二个位置
+                    //move unread to second position if locked
                     UnreadImage.Location = new Point(20, 17);
                 }
             }
@@ -630,7 +627,7 @@ namespace Client.MirScenes.Dialogs
                 Parent = this,
                 Font = new Font(Settings.FontName, 8F),
                 ForeColour = Color.White,
-                Location = new Point(70, 32), //默认：(70, 35)
+                Location = new Point(70, 32),
                 Size = new Size(150, 15),
                 NotControl = true,
             };

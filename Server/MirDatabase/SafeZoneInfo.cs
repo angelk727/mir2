@@ -1,7 +1,5 @@
-﻿using System.Drawing;
-using System.IO;
-
-namespace Server.MirDatabase
+using System.Drawing;
+﻿namespace Server.MirDatabase
 {
     public class SafeZoneInfo
     {

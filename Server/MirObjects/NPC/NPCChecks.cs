@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Server.MirObjects
+﻿namespace Server.MirObjects
 {
     public class NPCChecks
     {

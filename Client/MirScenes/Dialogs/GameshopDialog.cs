@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Windows.Forms;
-using Client.MirControls;
+﻿using Client.MirControls;
 using Client.MirGraphics;
 using Client.MirSounds;
 

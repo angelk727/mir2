@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
+﻿using System.Drawing;
 
 namespace ClientPackets
 {
@@ -2281,7 +2278,7 @@ namespace ClientPackets
     {
         public override short Index { get { return (short)ClientPacketIds.GuildBuffUpdate; } }
 
-        public byte Action = 0; //0 = 请求列表, 1 = 请求启用buff, 2 = 请求激活buff
+        public byte Action = 0; //0 = request list, 1 = request a buff to be enabled, 2 = request a buff to be activated
         public int Id;
 
         protected override void ReadPacket(BinaryReader reader)

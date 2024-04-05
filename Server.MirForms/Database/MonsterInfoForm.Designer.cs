@@ -28,865 +28,928 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.MonsterInfoPanel = new System.Windows.Forms.Panel();
-            this.MonstersPreview = new System.Windows.Forms.PictureBox();
-            this.label13 = new System.Windows.Forms.Label();
-            this.DropPathTextBox = new System.Windows.Forms.TextBox();
-            this.fileNameLabel = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.UndeadCheckBox = new System.Windows.Forms.CheckBox();
-            this.AutoRevCheckBox = new System.Windows.Forms.CheckBox();
-            this.ImageComboBox = new System.Windows.Forms.ComboBox();
-            this.label10 = new System.Windows.Forms.Label();
-            this.CoolEyeTextBox = new System.Windows.Forms.TextBox();
-            this.label12 = new System.Windows.Forms.Label();
-            this.CanTameCheckBox = new System.Windows.Forms.CheckBox();
-            this.CanPushCheckBox = new System.Windows.Forms.CheckBox();
-            this.ViewRangeTextBox = new System.Windows.Forms.TextBox();
-            this.label33 = new System.Windows.Forms.Label();
-            this.LightTextBox = new System.Windows.Forms.TextBox();
-            this.label9 = new System.Windows.Forms.Label();
-            this.ExperienceTextBox = new System.Windows.Forms.TextBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.MSpeedTextBox = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.ASpeedTextBox = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.LevelTextBox = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.EffectTextBox = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.AITextBox = new System.Windows.Forms.TextBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.AgilityTextBox = new System.Windows.Forms.TextBox();
-            this.label26 = new System.Windows.Forms.Label();
-            this.AccuracyTextBox = new System.Windows.Forms.TextBox();
-            this.label27 = new System.Windows.Forms.Label();
-            this.HPTextBox = new System.Windows.Forms.TextBox();
-            this.label25 = new System.Windows.Forms.Label();
-            this.MaxSCTextBox = new System.Windows.Forms.TextBox();
-            this.label22 = new System.Windows.Forms.Label();
-            this.MinSCTextBox = new System.Windows.Forms.TextBox();
-            this.label23 = new System.Windows.Forms.Label();
-            this.MaxMCTextBox = new System.Windows.Forms.TextBox();
-            this.label18 = new System.Windows.Forms.Label();
-            this.MinMCTextBox = new System.Windows.Forms.TextBox();
-            this.label19 = new System.Windows.Forms.Label();
-            this.MaxDCTextBox = new System.Windows.Forms.TextBox();
-            this.label20 = new System.Windows.Forms.Label();
-            this.MinDCTextBox = new System.Windows.Forms.TextBox();
-            this.label21 = new System.Windows.Forms.Label();
-            this.MaxMACTextBox = new System.Windows.Forms.TextBox();
-            this.label16 = new System.Windows.Forms.Label();
-            this.MinMACTextBox = new System.Windows.Forms.TextBox();
-            this.label17 = new System.Windows.Forms.Label();
-            this.MaxACTextBox = new System.Windows.Forms.TextBox();
-            this.label15 = new System.Windows.Forms.Label();
-            this.MinACTextBox = new System.Windows.Forms.TextBox();
-            this.label14 = new System.Windows.Forms.Label();
-            this.MonsterNameTextBox = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.MonsterIndexTextBox = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.RemoveButton = new System.Windows.Forms.Button();
-            this.AddButton = new System.Windows.Forms.Button();
-            this.MonsterInfoListBox = new System.Windows.Forms.ListBox();
-            this.PasteMButton = new System.Windows.Forms.Button();
-            this.CopyMButton = new System.Windows.Forms.Button();
-            this.DropBuilderButton = new System.Windows.Forms.Button();
-            this.tabControl1.SuspendLayout();
-            this.tabPage1.SuspendLayout();
-            this.MonsterInfoPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.MonstersPreview)).BeginInit();
-            this.SuspendLayout();
+            tabControl1 = new TabControl();
+            tabPage1 = new TabPage();
+            MonsterInfoPanel = new Panel();
+            MonstersPreview = new PictureBox();
+            fileNameLabel = new Label();
+            label11 = new Label();
+            UndeadCheckBox = new CheckBox();
+            AutoRevCheckBox = new CheckBox();
+            ImageComboBox = new ComboBox();
+            label10 = new Label();
+            CoolEyeTextBox = new TextBox();
+            label12 = new Label();
+            CanTameCheckBox = new CheckBox();
+            CanPushCheckBox = new CheckBox();
+            ViewRangeTextBox = new TextBox();
+            label33 = new Label();
+            LightTextBox = new TextBox();
+            label9 = new Label();
+            ExperienceTextBox = new TextBox();
+            label7 = new Label();
+            MSpeedTextBox = new TextBox();
+            label6 = new Label();
+            ASpeedTextBox = new TextBox();
+            label5 = new Label();
+            LevelTextBox = new TextBox();
+            label4 = new Label();
+            EffectTextBox = new TextBox();
+            label2 = new Label();
+            AITextBox = new TextBox();
+            label8 = new Label();
+            AgilityTextBox = new TextBox();
+            label26 = new Label();
+            AccuracyTextBox = new TextBox();
+            label27 = new Label();
+            HPTextBox = new TextBox();
+            label25 = new Label();
+            MaxSCTextBox = new TextBox();
+            label22 = new Label();
+            MinSCTextBox = new TextBox();
+            label23 = new Label();
+            MaxMCTextBox = new TextBox();
+            label18 = new Label();
+            MinMCTextBox = new TextBox();
+            label19 = new Label();
+            MaxDCTextBox = new TextBox();
+            label20 = new Label();
+            MinDCTextBox = new TextBox();
+            label21 = new Label();
+            MaxMACTextBox = new TextBox();
+            label16 = new Label();
+            MinMACTextBox = new TextBox();
+            label17 = new Label();
+            MaxACTextBox = new TextBox();
+            label15 = new Label();
+            MinACTextBox = new TextBox();
+            label14 = new Label();
+            MonsterNameTextBox = new TextBox();
+            label3 = new Label();
+            MonsterIndexTextBox = new TextBox();
+            label1 = new Label();
+            RemoveButton = new Button();
+            AddButton = new Button();
+            MonsterInfoListBox = new ListBox();
+            PasteMButton = new Button();
+            CopyMButton = new Button();
+            DropBuilderButton = new Button();
+            DropPathTextBox = new TextBox();
+            label13 = new Label();
+            tabControl1.SuspendLayout();
+            tabPage1.SuspendLayout();
+            MonsterInfoPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)MonstersPreview).BeginInit();
+            SuspendLayout();
             // 
             // tabControl1
             // 
-            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Location = new System.Drawing.Point(174, 38);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(635, 335);
-            this.tabControl1.TabIndex = 16;
+            tabControl1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            tabControl1.Controls.Add(tabPage1);
+            tabControl1.Location = new Point(203, 54);
+            tabControl1.Margin = new Padding(4);
+            tabControl1.Name = "tabControl1";
+            tabControl1.SelectedIndex = 0;
+            tabControl1.Size = new Size(741, 432);
+            tabControl1.TabIndex = 16;
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.MonsterInfoPanel);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(627, 309);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "信息";
-            this.tabPage1.UseVisualStyleBackColor = true;
+            tabPage1.Controls.Add(MonsterInfoPanel);
+            tabPage1.Location = new Point(4, 26);
+            tabPage1.Margin = new Padding(4);
+            tabPage1.Name = "tabPage1";
+            tabPage1.Padding = new Padding(4);
+            tabPage1.Size = new Size(733, 402);
+            tabPage1.TabIndex = 0;
+            tabPage1.Text = "信息";
+            tabPage1.UseVisualStyleBackColor = true;
             // 
             // MonsterInfoPanel
             // 
-            this.MonsterInfoPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.MonsterInfoPanel.Controls.Add(this.MonstersPreview);
-            this.MonsterInfoPanel.Controls.Add(this.label13);
-            this.MonsterInfoPanel.Controls.Add(this.DropPathTextBox);
-            this.MonsterInfoPanel.Controls.Add(this.fileNameLabel);
-            this.MonsterInfoPanel.Controls.Add(this.label11);
-            this.MonsterInfoPanel.Controls.Add(this.UndeadCheckBox);
-            this.MonsterInfoPanel.Controls.Add(this.AutoRevCheckBox);
-            this.MonsterInfoPanel.Controls.Add(this.ImageComboBox);
-            this.MonsterInfoPanel.Controls.Add(this.label10);
-            this.MonsterInfoPanel.Controls.Add(this.CoolEyeTextBox);
-            this.MonsterInfoPanel.Controls.Add(this.label12);
-            this.MonsterInfoPanel.Controls.Add(this.CanTameCheckBox);
-            this.MonsterInfoPanel.Controls.Add(this.CanPushCheckBox);
-            this.MonsterInfoPanel.Controls.Add(this.ViewRangeTextBox);
-            this.MonsterInfoPanel.Controls.Add(this.label33);
-            this.MonsterInfoPanel.Controls.Add(this.LightTextBox);
-            this.MonsterInfoPanel.Controls.Add(this.label9);
-            this.MonsterInfoPanel.Controls.Add(this.ExperienceTextBox);
-            this.MonsterInfoPanel.Controls.Add(this.label7);
-            this.MonsterInfoPanel.Controls.Add(this.MSpeedTextBox);
-            this.MonsterInfoPanel.Controls.Add(this.label6);
-            this.MonsterInfoPanel.Controls.Add(this.ASpeedTextBox);
-            this.MonsterInfoPanel.Controls.Add(this.label5);
-            this.MonsterInfoPanel.Controls.Add(this.LevelTextBox);
-            this.MonsterInfoPanel.Controls.Add(this.label4);
-            this.MonsterInfoPanel.Controls.Add(this.EffectTextBox);
-            this.MonsterInfoPanel.Controls.Add(this.label2);
-            this.MonsterInfoPanel.Controls.Add(this.AITextBox);
-            this.MonsterInfoPanel.Controls.Add(this.label8);
-            this.MonsterInfoPanel.Controls.Add(this.AgilityTextBox);
-            this.MonsterInfoPanel.Controls.Add(this.label26);
-            this.MonsterInfoPanel.Controls.Add(this.AccuracyTextBox);
-            this.MonsterInfoPanel.Controls.Add(this.label27);
-            this.MonsterInfoPanel.Controls.Add(this.HPTextBox);
-            this.MonsterInfoPanel.Controls.Add(this.label25);
-            this.MonsterInfoPanel.Controls.Add(this.MaxSCTextBox);
-            this.MonsterInfoPanel.Controls.Add(this.label22);
-            this.MonsterInfoPanel.Controls.Add(this.MinSCTextBox);
-            this.MonsterInfoPanel.Controls.Add(this.label23);
-            this.MonsterInfoPanel.Controls.Add(this.MaxMCTextBox);
-            this.MonsterInfoPanel.Controls.Add(this.label18);
-            this.MonsterInfoPanel.Controls.Add(this.MinMCTextBox);
-            this.MonsterInfoPanel.Controls.Add(this.label19);
-            this.MonsterInfoPanel.Controls.Add(this.MaxDCTextBox);
-            this.MonsterInfoPanel.Controls.Add(this.label20);
-            this.MonsterInfoPanel.Controls.Add(this.MinDCTextBox);
-            this.MonsterInfoPanel.Controls.Add(this.label21);
-            this.MonsterInfoPanel.Controls.Add(this.MaxMACTextBox);
-            this.MonsterInfoPanel.Controls.Add(this.label16);
-            this.MonsterInfoPanel.Controls.Add(this.MinMACTextBox);
-            this.MonsterInfoPanel.Controls.Add(this.label17);
-            this.MonsterInfoPanel.Controls.Add(this.MaxACTextBox);
-            this.MonsterInfoPanel.Controls.Add(this.label15);
-            this.MonsterInfoPanel.Controls.Add(this.MinACTextBox);
-            this.MonsterInfoPanel.Controls.Add(this.label14);
-            this.MonsterInfoPanel.Controls.Add(this.MonsterNameTextBox);
-            this.MonsterInfoPanel.Controls.Add(this.label3);
-            this.MonsterInfoPanel.Controls.Add(this.MonsterIndexTextBox);
-            this.MonsterInfoPanel.Controls.Add(this.label1);
-            this.MonsterInfoPanel.Enabled = false;
-            this.MonsterInfoPanel.Location = new System.Drawing.Point(3, 6);
-            this.MonsterInfoPanel.Name = "MonsterInfoPanel";
-            this.MonsterInfoPanel.Size = new System.Drawing.Size(618, 300);
-            this.MonsterInfoPanel.TabIndex = 11;
+            MonsterInfoPanel.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            MonsterInfoPanel.Controls.Add(MonstersPreview);
+            MonsterInfoPanel.Controls.Add(label13);
+            MonsterInfoPanel.Controls.Add(DropPathTextBox);
+            MonsterInfoPanel.Controls.Add(fileNameLabel);
+            MonsterInfoPanel.Controls.Add(label11);
+            MonsterInfoPanel.Controls.Add(UndeadCheckBox);
+            MonsterInfoPanel.Controls.Add(AutoRevCheckBox);
+            MonsterInfoPanel.Controls.Add(ImageComboBox);
+            MonsterInfoPanel.Controls.Add(label10);
+            MonsterInfoPanel.Controls.Add(CoolEyeTextBox);
+            MonsterInfoPanel.Controls.Add(label12);
+            MonsterInfoPanel.Controls.Add(CanTameCheckBox);
+            MonsterInfoPanel.Controls.Add(CanPushCheckBox);
+            MonsterInfoPanel.Controls.Add(ViewRangeTextBox);
+            MonsterInfoPanel.Controls.Add(label33);
+            MonsterInfoPanel.Controls.Add(LightTextBox);
+            MonsterInfoPanel.Controls.Add(label9);
+            MonsterInfoPanel.Controls.Add(ExperienceTextBox);
+            MonsterInfoPanel.Controls.Add(label7);
+            MonsterInfoPanel.Controls.Add(MSpeedTextBox);
+            MonsterInfoPanel.Controls.Add(label6);
+            MonsterInfoPanel.Controls.Add(ASpeedTextBox);
+            MonsterInfoPanel.Controls.Add(label5);
+            MonsterInfoPanel.Controls.Add(LevelTextBox);
+            MonsterInfoPanel.Controls.Add(label4);
+            MonsterInfoPanel.Controls.Add(EffectTextBox);
+            MonsterInfoPanel.Controls.Add(label2);
+            MonsterInfoPanel.Controls.Add(AITextBox);
+            MonsterInfoPanel.Controls.Add(label8);
+            MonsterInfoPanel.Controls.Add(AgilityTextBox);
+            MonsterInfoPanel.Controls.Add(label26);
+            MonsterInfoPanel.Controls.Add(AccuracyTextBox);
+            MonsterInfoPanel.Controls.Add(label27);
+            MonsterInfoPanel.Controls.Add(HPTextBox);
+            MonsterInfoPanel.Controls.Add(label25);
+            MonsterInfoPanel.Controls.Add(MaxSCTextBox);
+            MonsterInfoPanel.Controls.Add(label22);
+            MonsterInfoPanel.Controls.Add(MinSCTextBox);
+            MonsterInfoPanel.Controls.Add(label23);
+            MonsterInfoPanel.Controls.Add(MaxMCTextBox);
+            MonsterInfoPanel.Controls.Add(label18);
+            MonsterInfoPanel.Controls.Add(MinMCTextBox);
+            MonsterInfoPanel.Controls.Add(label19);
+            MonsterInfoPanel.Controls.Add(MaxDCTextBox);
+            MonsterInfoPanel.Controls.Add(label20);
+            MonsterInfoPanel.Controls.Add(MinDCTextBox);
+            MonsterInfoPanel.Controls.Add(label21);
+            MonsterInfoPanel.Controls.Add(MaxMACTextBox);
+            MonsterInfoPanel.Controls.Add(label16);
+            MonsterInfoPanel.Controls.Add(MinMACTextBox);
+            MonsterInfoPanel.Controls.Add(label17);
+            MonsterInfoPanel.Controls.Add(MaxACTextBox);
+            MonsterInfoPanel.Controls.Add(label15);
+            MonsterInfoPanel.Controls.Add(MinACTextBox);
+            MonsterInfoPanel.Controls.Add(label14);
+            MonsterInfoPanel.Controls.Add(MonsterNameTextBox);
+            MonsterInfoPanel.Controls.Add(label3);
+            MonsterInfoPanel.Controls.Add(MonsterIndexTextBox);
+            MonsterInfoPanel.Controls.Add(label1);
+            MonsterInfoPanel.Enabled = false;
+            MonsterInfoPanel.Location = new Point(4, 8);
+            MonsterInfoPanel.Margin = new Padding(4);
+            MonsterInfoPanel.Name = "MonsterInfoPanel";
+            MonsterInfoPanel.Size = new Size(721, 382);
+            MonsterInfoPanel.TabIndex = 11;
             // 
             // MonstersPreview
             // 
-            this.MonstersPreview.Location = new System.Drawing.Point(436, 54);
-            this.MonstersPreview.Name = "MonstersPreview";
-            this.MonstersPreview.Size = new System.Drawing.Size(168, 218);
-            this.MonstersPreview.TabIndex = 64;
-            this.MonstersPreview.TabStop = false;
-            // 
+            MonstersPreview.Location = new Point(527, 80);
+            MonstersPreview.Name = "MonstersPreview";
+            MonstersPreview.Size = new Size(168, 218);
+            MonstersPreview.TabIndex = 64;
+            MonstersPreview.TabStop = false;
+            //
             // fileNameLabel
             // 
-            this.fileNameLabel.AutoSize = true;
-            this.fileNameLabel.Location = new System.Drawing.Point(539, 34);
-            this.fileNameLabel.Name = "fileNameLabel";
-            this.fileNameLabel.Size = new System.Drawing.Size(41, 12);
-            this.fileNameLabel.TabIndex = 90;
-            this.fileNameLabel.Text = "-1.Lib";
+            fileNameLabel.AutoSize = true;
+            fileNameLabel.Location = new Point(629, 48);
+            fileNameLabel.Margin = new Padding(4, 0, 4, 0);
+            fileNameLabel.Name = "fileNameLabel";
+            fileNameLabel.Size = new Size(40, 17);
+            fileNameLabel.TabIndex = 90;
+            fileNameLabel.Text = "-1.Lib";
             // 
             // label11
             // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(464, 33);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(65, 12);
-            this.label11.TabIndex = 89;
-            this.label11.Text = "客户端调用";
+            label11.AutoSize = true;
+            label11.Location = new Point(541, 47);
+            label11.Margin = new Padding(4, 0, 4, 0);
+            label11.Name = "label11";
+            label11.Size = new Size(68, 17);
+            label11.TabIndex = 89;
+            label11.Text = "客户端调用";
             // 
             // UndeadCheckBox
             // 
-            this.UndeadCheckBox.AutoSize = true;
-            this.UndeadCheckBox.Location = new System.Drawing.Point(345, 251);
-            this.UndeadCheckBox.Name = "UndeadCheckBox";
-            this.UndeadCheckBox.Size = new System.Drawing.Size(60, 16);
-            this.UndeadCheckBox.TabIndex = 88;
-            this.UndeadCheckBox.Text = "亡灵类";
-            this.UndeadCheckBox.UseVisualStyleBackColor = true;
-            this.UndeadCheckBox.CheckedChanged += new System.EventHandler(this.UndeadCheckBox_CheckedChanged);
+            UndeadCheckBox.AutoSize = true;
+            UndeadCheckBox.Location = new Point(360, 314);
+            UndeadCheckBox.Margin = new Padding(4);
+            UndeadCheckBox.Name = "UndeadCheckBox";
+            UndeadCheckBox.Size = new Size(63, 21);
+            UndeadCheckBox.TabIndex = 88;
+            UndeadCheckBox.Text = "亡灵类";
+            UndeadCheckBox.UseVisualStyleBackColor = true;
+            UndeadCheckBox.CheckedChanged += UndeadCheckBox_CheckedChanged;
             // 
             // AutoRevCheckBox
             // 
-            this.AutoRevCheckBox.AutoSize = true;
-            this.AutoRevCheckBox.Location = new System.Drawing.Point(345, 229);
-            this.AutoRevCheckBox.Name = "AutoRevCheckBox";
-            this.AutoRevCheckBox.Size = new System.Drawing.Size(60, 16);
-            this.AutoRevCheckBox.TabIndex = 87;
-            this.AutoRevCheckBox.Text = "非卫士";
-            this.AutoRevCheckBox.UseVisualStyleBackColor = true;
-            this.AutoRevCheckBox.CheckedChanged += new System.EventHandler(this.AutoRevCheckBox_CheckedChanged);
+            AutoRevCheckBox.AutoSize = true;
+            AutoRevCheckBox.Location = new Point(169, 314);
+            AutoRevCheckBox.Margin = new Padding(4);
+            AutoRevCheckBox.Name = "AutoRevCheckBox";
+            AutoRevCheckBox.Size = new Size(63, 21);
+            AutoRevCheckBox.TabIndex = 87;
+            AutoRevCheckBox.Text = "非卫士";
+            AutoRevCheckBox.UseVisualStyleBackColor = true;
+            AutoRevCheckBox.CheckedChanged += AutoRevCheckBox_CheckedChanged;
             // 
             // ImageComboBox
             // 
-            this.ImageComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.ImageComboBox.FormattingEnabled = true;
-            this.ImageComboBox.Location = new System.Drawing.Point(290, 29);
-            this.ImageComboBox.Name = "ImageComboBox";
-            this.ImageComboBox.Size = new System.Drawing.Size(128, 20);
-            this.ImageComboBox.Sorted = true;
-            this.ImageComboBox.TabIndex = 85;
-            this.ImageComboBox.SelectedIndexChanged += new System.EventHandler(this.ImageComboBox_SelectedIndexChanged);
+            ImageComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            ImageComboBox.FormattingEnabled = true;
+            ImageComboBox.Location = new Point(328, 45);
+            ImageComboBox.Margin = new Padding(4);
+            ImageComboBox.Name = "ImageComboBox";
+            ImageComboBox.Size = new Size(149, 25);
+            ImageComboBox.Sorted = true;
+            ImageComboBox.TabIndex = 85;
+            ImageComboBox.SelectedIndexChanged += ImageComboBox_SelectedIndexChanged;
             // 
             // label10
             // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(210, 34);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(77, 12);
-            this.label10.TabIndex = 86;
-            this.label10.Text = "数据库怪物名";
+            label10.AutoSize = true;
+            label10.Location = new Point(245, 49);
+            label10.Margin = new Padding(4, 0, 4, 0);
+            label10.Name = "label10";
+            label10.Size = new Size(80, 17);
+            label10.TabIndex = 86;
+            label10.Text = "数据库怪物名";
             // 
             // CoolEyeTextBox
             // 
-            this.CoolEyeTextBox.Location = new System.Drawing.Point(297, 84);
-            this.CoolEyeTextBox.MaxLength = 3;
-            this.CoolEyeTextBox.Name = "CoolEyeTextBox";
-            this.CoolEyeTextBox.Size = new System.Drawing.Size(30, 21);
-            this.CoolEyeTextBox.TabIndex = 83;
-            this.CoolEyeTextBox.TextChanged += new System.EventHandler(this.CoolEyeTextBox_TextChanged);
+            CoolEyeTextBox.Location = new Point(443, 149);
+            CoolEyeTextBox.Margin = new Padding(4);
+            CoolEyeTextBox.MaxLength = 3;
+            CoolEyeTextBox.Name = "CoolEyeTextBox";
+            CoolEyeTextBox.Size = new Size(34, 23);
+            CoolEyeTextBox.TabIndex = 83;
+            CoolEyeTextBox.TextChanged += CoolEyeTextBox_TextChanged;
             // 
             // label12
             // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(241, 89);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(53, 12);
-            this.label12.TabIndex = 84;
-            this.label12.Text = "是否反隐";
+            label12.AutoSize = true;
+            label12.Location = new Point(378, 156);
+            label12.Margin = new Padding(4, 0, 4, 0);
+            label12.Name = "label12";
+            label12.Size = new Size(56, 17);
+            label12.TabIndex = 84;
+            label12.Text = "是否反隐";
             // 
             // CanTameCheckBox
             // 
-            this.CanTameCheckBox.AutoSize = true;
-            this.CanTameCheckBox.Location = new System.Drawing.Point(345, 207);
-            this.CanTameCheckBox.Name = "CanTameCheckBox";
-            this.CanTameCheckBox.Size = new System.Drawing.Size(60, 16);
-            this.CanTameCheckBox.TabIndex = 82;
-            this.CanTameCheckBox.Text = "可诱惑";
-            this.CanTameCheckBox.UseVisualStyleBackColor = true;
-            this.CanTameCheckBox.CheckedChanged += new System.EventHandler(this.CanTameCheckBox_CheckedChanged);
+            CanTameCheckBox.AutoSize = true;
+            CanTameCheckBox.Location = new Point(262, 314);
+            CanTameCheckBox.Margin = new Padding(4);
+            CanTameCheckBox.Name = "CanTameCheckBox";
+            CanTameCheckBox.Size = new Size(63, 21);
+            CanTameCheckBox.TabIndex = 82;
+            CanTameCheckBox.Text = "可诱惑";
+            CanTameCheckBox.UseVisualStyleBackColor = true;
+            CanTameCheckBox.CheckedChanged += CanTameCheckBox_CheckedChanged;
             // 
             // CanPushCheckBox
             // 
-            this.CanPushCheckBox.AutoSize = true;
-            this.CanPushCheckBox.Location = new System.Drawing.Point(345, 185);
-            this.CanPushCheckBox.Name = "CanPushCheckBox";
-            this.CanPushCheckBox.Size = new System.Drawing.Size(60, 16);
-            this.CanPushCheckBox.TabIndex = 81;
-            this.CanPushCheckBox.Text = "可推动";
-            this.CanPushCheckBox.UseVisualStyleBackColor = true;
-            this.CanPushCheckBox.CheckedChanged += new System.EventHandler(this.CanPushCheckBox_CheckedChanged);
+            CanPushCheckBox.AutoSize = true;
+            CanPushCheckBox.Location = new Point(66, 314);
+            CanPushCheckBox.Margin = new Padding(4);
+            CanPushCheckBox.Name = "CanPushCheckBox";
+            CanPushCheckBox.Size = new Size(63, 21);
+            CanPushCheckBox.TabIndex = 81;
+            CanPushCheckBox.Text = "可推动";
+            CanPushCheckBox.UseVisualStyleBackColor = true;
+            CanPushCheckBox.CheckedChanged += CanPushCheckBox_CheckedChanged;
             // 
             // ViewRangeTextBox
             // 
-            this.ViewRangeTextBox.Location = new System.Drawing.Point(202, 85);
-            this.ViewRangeTextBox.MaxLength = 3;
-            this.ViewRangeTextBox.Name = "ViewRangeTextBox";
-            this.ViewRangeTextBox.Size = new System.Drawing.Size(28, 21);
-            this.ViewRangeTextBox.TabIndex = 79;
-            this.ViewRangeTextBox.TextChanged += new System.EventHandler(this.ViewRangeTextBox_TextChanged);
+            ViewRangeTextBox.Location = new Point(443, 116);
+            ViewRangeTextBox.Margin = new Padding(4);
+            ViewRangeTextBox.MaxLength = 3;
+            ViewRangeTextBox.Name = "ViewRangeTextBox";
+            ViewRangeTextBox.Size = new Size(34, 23);
+            ViewRangeTextBox.TabIndex = 79;
+            ViewRangeTextBox.TextChanged += ViewRangeTextBox_TextChanged;
             // 
             // label33
             // 
-            this.label33.AutoSize = true;
-            this.label33.Location = new System.Drawing.Point(146, 89);
-            this.label33.Name = "label33";
-            this.label33.Size = new System.Drawing.Size(53, 12);
-            this.label33.TabIndex = 80;
-            this.label33.Text = "视觉范围";
+            label33.AutoSize = true;
+            label33.Location = new Point(377, 121);
+            label33.Margin = new Padding(4, 0, 4, 0);
+            label33.Name = "label33";
+            label33.Size = new Size(56, 17);
+            label33.TabIndex = 80;
+            label33.Text = "视觉范围";
             // 
             // LightTextBox
             // 
-            this.LightTextBox.Location = new System.Drawing.Point(297, 58);
-            this.LightTextBox.MaxLength = 3;
-            this.LightTextBox.Name = "LightTextBox";
-            this.LightTextBox.Size = new System.Drawing.Size(30, 21);
-            this.LightTextBox.TabIndex = 6;
-            this.LightTextBox.TextChanged += new System.EventHandler(this.LightTextBox_TextChanged);
+            LightTextBox.Location = new Point(443, 80);
+            LightTextBox.Margin = new Padding(4);
+            LightTextBox.MaxLength = 3;
+            LightTextBox.Name = "LightTextBox";
+            LightTextBox.Size = new Size(34, 23);
+            LightTextBox.TabIndex = 6;
+            LightTextBox.TextChanged += LightTextBox_TextChanged;
             // 
             // label9
             // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(253, 63);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(41, 12);
-            this.label9.TabIndex = 76;
-            this.label9.Text = "光亮度";
+            label9.AutoSize = true;
+            label9.Location = new Point(392, 86);
+            label9.Margin = new Padding(4, 0, 4, 0);
+            label9.Name = "label9";
+            label9.Size = new Size(44, 17);
+            label9.TabIndex = 76;
+            label9.Text = "光亮度";
             // 
             // ExperienceTextBox
             // 
-            this.ExperienceTextBox.Location = new System.Drawing.Point(237, 109);
-            this.ExperienceTextBox.MaxLength = 10;
-            this.ExperienceTextBox.Name = "ExperienceTextBox";
-            this.ExperienceTextBox.Size = new System.Drawing.Size(72, 21);
-            this.ExperienceTextBox.TabIndex = 8;
-            this.ExperienceTextBox.TextChanged += new System.EventHandler(this.ExperienceTextBox_TextChanged);
+            ExperienceTextBox.Location = new Point(268, 113);
+            ExperienceTextBox.Margin = new Padding(4);
+            ExperienceTextBox.MaxLength = 10;
+            ExperienceTextBox.Name = "ExperienceTextBox";
+            ExperienceTextBox.Size = new Size(83, 23);
+            ExperienceTextBox.TabIndex = 8;
+            ExperienceTextBox.TextChanged += ExperienceTextBox_TextChanged;
             // 
             // label7
             // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(169, 113);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(65, 12);
-            this.label7.TabIndex = 74;
-            this.label7.Text = "怪物经验值";
+            label7.AutoSize = true;
+            label7.Location = new Point(192, 119);
+            label7.Margin = new Padding(4, 0, 4, 0);
+            label7.Name = "label7";
+            label7.Size = new Size(68, 17);
+            label7.TabIndex = 74;
+            label7.Text = "怪物经验值";
             // 
             // MSpeedTextBox
             // 
-            this.MSpeedTextBox.Location = new System.Drawing.Point(293, 219);
-            this.MSpeedTextBox.MaxLength = 5;
-            this.MSpeedTextBox.Name = "MSpeedTextBox";
-            this.MSpeedTextBox.Size = new System.Drawing.Size(37, 21);
-            this.MSpeedTextBox.TabIndex = 22;
-            this.MSpeedTextBox.TextChanged += new System.EventHandler(this.MSpeedTextBox_TextChanged);
+            MSpeedTextBox.Location = new Point(443, 276);
+            MSpeedTextBox.Margin = new Padding(4);
+            MSpeedTextBox.MaxLength = 5;
+            MSpeedTextBox.Name = "MSpeedTextBox";
+            MSpeedTextBox.Size = new Size(34, 23);
+            MSpeedTextBox.TabIndex = 22;
+            MSpeedTextBox.TextChanged += MSpeedTextBox_TextChanged;
             // 
             // label6
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(237, 224);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(53, 12);
-            this.label6.TabIndex = 72;
-            this.label6.Text = "移动速度";
+            label6.AutoSize = true;
+            label6.Location = new Point(378, 282);
+            label6.Margin = new Padding(4, 0, 4, 0);
+            label6.Name = "label6";
+            label6.Size = new Size(56, 17);
+            label6.TabIndex = 72;
+            label6.Text = "移动速度";
             // 
             // ASpeedTextBox
             // 
-            this.ASpeedTextBox.Location = new System.Drawing.Point(292, 246);
-            this.ASpeedTextBox.MaxLength = 5;
-            this.ASpeedTextBox.Name = "ASpeedTextBox";
-            this.ASpeedTextBox.Size = new System.Drawing.Size(40, 21);
-            this.ASpeedTextBox.TabIndex = 21;
-            this.ASpeedTextBox.TextChanged += new System.EventHandler(this.ASpeedTextBox_TextChanged);
+            ASpeedTextBox.Location = new Point(443, 245);
+            ASpeedTextBox.Margin = new Padding(4);
+            ASpeedTextBox.MaxLength = 5;
+            ASpeedTextBox.Name = "ASpeedTextBox";
+            ASpeedTextBox.Size = new Size(34, 23);
+            ASpeedTextBox.TabIndex = 21;
+            ASpeedTextBox.TextChanged += ASpeedTextBox_TextChanged;
             // 
             // label5
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(235, 251);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(53, 12);
-            this.label5.TabIndex = 70;
-            this.label5.Text = "攻击速度";
+            label5.AutoSize = true;
+            label5.Location = new Point(377, 251);
+            label5.Margin = new Padding(4, 0, 4, 0);
+            label5.Name = "label5";
+            label5.Size = new Size(56, 17);
+            label5.TabIndex = 70;
+            label5.Text = "攻击速度";
             // 
             // LevelTextBox
             // 
-            this.LevelTextBox.Location = new System.Drawing.Point(89, 84);
-            this.LevelTextBox.MaxLength = 3;
-            this.LevelTextBox.Name = "LevelTextBox";
-            this.LevelTextBox.Size = new System.Drawing.Size(45, 21);
-            this.LevelTextBox.TabIndex = 5;
-            this.LevelTextBox.TextChanged += new System.EventHandler(this.LevelTextBox_TextChanged);
+            LevelTextBox.Location = new Point(102, 78);
+            LevelTextBox.Margin = new Padding(4);
+            LevelTextBox.MaxLength = 3;
+            LevelTextBox.Name = "LevelTextBox";
+            LevelTextBox.Size = new Size(54, 23);
+            LevelTextBox.TabIndex = 5;
+            LevelTextBox.TextChanged += LevelTextBox_TextChanged;
             // 
             // label4
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(33, 88);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(53, 12);
-            this.label4.TabIndex = 68;
-            this.label4.Text = "怪物等级";
+            label4.AutoSize = true;
+            label4.Location = new Point(43, 82);
+            label4.Margin = new Padding(4, 0, 4, 0);
+            label4.Name = "label4";
+            label4.Size = new Size(56, 17);
+            label4.TabIndex = 68;
+            label4.Text = "怪物等级";
             // 
             // EffectTextBox
             // 
-            this.EffectTextBox.Location = new System.Drawing.Point(200, 58);
-            this.EffectTextBox.MaxLength = 3;
-            this.EffectTextBox.Name = "EffectTextBox";
-            this.EffectTextBox.Size = new System.Drawing.Size(30, 21);
-            this.EffectTextBox.TabIndex = 4;
-            this.EffectTextBox.TextChanged += new System.EventHandler(this.EffectTextBox_TextChanged);
+            EffectTextBox.Location = new Point(317, 79);
+            EffectTextBox.Margin = new Padding(4);
+            EffectTextBox.MaxLength = 3;
+            EffectTextBox.Name = "EffectTextBox";
+            EffectTextBox.Size = new Size(34, 23);
+            EffectTextBox.TabIndex = 4;
+            EffectTextBox.TextChanged += EffectTextBox_TextChanged;
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(156, 63);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(41, 12);
-            this.label2.TabIndex = 66;
-            this.label2.Text = "特殊AI";
+            label2.AutoSize = true;
+            label2.Location = new Point(270, 82);
+            label2.Margin = new Padding(4, 0, 4, 0);
+            label2.Name = "label2";
+            label2.Size = new Size(44, 17);
+            label2.TabIndex = 66;
+            label2.Text = "特殊AI";
             // 
             // AITextBox
             // 
-            this.AITextBox.Location = new System.Drawing.Point(87, 58);
-            this.AITextBox.MaxLength = 3;
-            this.AITextBox.Name = "AITextBox";
-            this.AITextBox.Size = new System.Drawing.Size(47, 21);
-            this.AITextBox.TabIndex = 3;
-            this.AITextBox.TextChanged += new System.EventHandler(this.AITextBox_TextChanged);
+            AITextBox.Location = new Point(220, 79);
+            AITextBox.Margin = new Padding(4);
+            AITextBox.MaxLength = 3;
+            AITextBox.Name = "AITextBox";
+            AITextBox.Size = new Size(39, 23);
+            AITextBox.TabIndex = 3;
+            AITextBox.TextChanged += AITextBox_TextChanged;
             // 
             // label8
             // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(67, 62);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(17, 12);
-            this.label8.TabIndex = 64;
-            this.label8.Text = "AI";
+            label8.AutoSize = true;
+            label8.Location = new Point(197, 82);
+            label8.Margin = new Padding(4, 0, 4, 0);
+            label8.Name = "label8";
+            label8.Size = new Size(20, 17);
+            label8.TabIndex = 64;
+            label8.Text = "AI";
             // 
             // AgilityTextBox
             // 
-            this.AgilityTextBox.Location = new System.Drawing.Point(292, 165);
-            this.AgilityTextBox.MaxLength = 5;
-            this.AgilityTextBox.Name = "AgilityTextBox";
-            this.AgilityTextBox.Size = new System.Drawing.Size(37, 21);
-            this.AgilityTextBox.TabIndex = 20;
-            this.AgilityTextBox.TextChanged += new System.EventHandler(this.AgilityTextBox_TextChanged);
+            AgilityTextBox.Location = new Point(443, 214);
+            AgilityTextBox.Margin = new Padding(4);
+            AgilityTextBox.MaxLength = 5;
+            AgilityTextBox.Name = "AgilityTextBox";
+            AgilityTextBox.Size = new Size(34, 23);
+            AgilityTextBox.TabIndex = 20;
+            AgilityTextBox.TextChanged += AgilityTextBox_TextChanged;
             // 
             // label26
             // 
-            this.label26.AutoSize = true;
-            this.label26.Location = new System.Drawing.Point(247, 170);
-            this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(41, 12);
-            this.label26.TabIndex = 58;
-            this.label26.Text = "敏捷度";
+            label26.AutoSize = true;
+            label26.Location = new Point(392, 221);
+            label26.Margin = new Padding(4, 0, 4, 0);
+            label26.Name = "label26";
+            label26.Size = new Size(44, 17);
+            label26.TabIndex = 58;
+            label26.Text = "敏捷度";
             // 
             // AccuracyTextBox
             // 
-            this.AccuracyTextBox.Location = new System.Drawing.Point(291, 138);
-            this.AccuracyTextBox.MaxLength = 5;
-            this.AccuracyTextBox.Name = "AccuracyTextBox";
-            this.AccuracyTextBox.Size = new System.Drawing.Size(40, 21);
-            this.AccuracyTextBox.TabIndex = 19;
-            this.AccuracyTextBox.TextChanged += new System.EventHandler(this.AccuracyTextBox_TextChanged);
+            AccuracyTextBox.Location = new Point(443, 183);
+            AccuracyTextBox.Margin = new Padding(4);
+            AccuracyTextBox.MaxLength = 5;
+            AccuracyTextBox.Name = "AccuracyTextBox";
+            AccuracyTextBox.Size = new Size(34, 23);
+            AccuracyTextBox.TabIndex = 19;
+            AccuracyTextBox.TextChanged += AccuracyTextBox_TextChanged;
             // 
             // label27
             // 
-            this.label27.AutoSize = true;
-            this.label27.Location = new System.Drawing.Point(246, 144);
-            this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(41, 12);
-            this.label27.TabIndex = 56;
-            this.label27.Text = "准确度";
+            label27.AutoSize = true;
+            label27.Location = new Point(391, 190);
+            label27.Margin = new Padding(4, 0, 4, 0);
+            label27.Name = "label27";
+            label27.Size = new Size(44, 17);
+            label27.TabIndex = 56;
+            label27.Text = "准确度";
             // 
             // HPTextBox
             // 
-            this.HPTextBox.Location = new System.Drawing.Point(88, 110);
-            this.HPTextBox.MaxLength = 10;
-            this.HPTextBox.Name = "HPTextBox";
-            this.HPTextBox.Size = new System.Drawing.Size(72, 21);
-            this.HPTextBox.TabIndex = 7;
-            this.HPTextBox.TextChanged += new System.EventHandler(this.HPTextBox_TextChanged);
+            HPTextBox.Location = new Point(102, 113);
+            HPTextBox.Margin = new Padding(4);
+            HPTextBox.MaxLength = 10;
+            HPTextBox.Name = "HPTextBox";
+            HPTextBox.Size = new Size(83, 23);
+            HPTextBox.TabIndex = 7;
+            HPTextBox.TextChanged += HPTextBox_TextChanged;
             // 
             // label25
             // 
-            this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(20, 115);
-            this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(65, 12);
-            this.label25.TabIndex = 52;
-            this.label25.Text = "怪物生命值";
+            label25.AutoSize = true;
+            label25.Location = new Point(30, 116);
+            label25.Margin = new Padding(4, 0, 4, 0);
+            label25.Name = "label25";
+            label25.Size = new Size(68, 17);
+            label25.TabIndex = 52;
+            label25.Text = "怪物生命值";
             // 
             // MaxSCTextBox
             // 
-            this.MaxSCTextBox.Location = new System.Drawing.Point(179, 246);
-            this.MaxSCTextBox.MaxLength = 5;
-            this.MaxSCTextBox.Name = "MaxSCTextBox";
-            this.MaxSCTextBox.Size = new System.Drawing.Size(50, 21);
-            this.MaxSCTextBox.TabIndex = 18;
-            this.MaxSCTextBox.TextChanged += new System.EventHandler(this.MaxSCTextBox_TextChanged);
+            MaxSCTextBox.Location = new Point(293, 273);
+            MaxSCTextBox.Margin = new Padding(4);
+            MaxSCTextBox.MaxLength = 5;
+            MaxSCTextBox.Name = "MaxSCTextBox";
+            MaxSCTextBox.Size = new Size(58, 23);
+            MaxSCTextBox.TabIndex = 18;
+            MaxSCTextBox.TextChanged += MaxSCTextBox_TextChanged;
             // 
             // label22
             // 
-            this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(123, 250);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(53, 12);
-            this.label22.TabIndex = 50;
-            this.label22.Text = "最大道攻";
+            label22.AutoSize = true;
+            label22.Location = new Point(210, 276);
+            label22.Margin = new Padding(4, 0, 4, 0);
+            label22.Name = "label22";
+            label22.Size = new Size(80, 17);
+            label22.TabIndex = 50;
+            label22.Text = "最大道术攻击";
             // 
             // MinSCTextBox
             // 
-            this.MinSCTextBox.Location = new System.Drawing.Point(180, 220);
-            this.MinSCTextBox.MaxLength = 5;
-            this.MinSCTextBox.Name = "MinSCTextBox";
-            this.MinSCTextBox.Size = new System.Drawing.Size(50, 21);
-            this.MinSCTextBox.TabIndex = 17;
-            this.MinSCTextBox.TextChanged += new System.EventHandler(this.MinSCTextBox_TextChanged);
+            MinSCTextBox.Location = new Point(102, 276);
+            MinSCTextBox.Margin = new Padding(4);
+            MinSCTextBox.MaxLength = 5;
+            MinSCTextBox.Name = "MinSCTextBox";
+            MinSCTextBox.Size = new Size(58, 23);
+            MinSCTextBox.TabIndex = 17;
+            MinSCTextBox.TextChanged += MinSCTextBox_TextChanged;
             // 
             // label23
             // 
-            this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(124, 225);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(53, 12);
-            this.label23.TabIndex = 48;
-            this.label23.Text = "最小道攻";
+            label23.AutoSize = true;
+            label23.Location = new Point(20, 279);
+            label23.Margin = new Padding(4, 0, 4, 0);
+            label23.Name = "label23";
+            label23.Size = new Size(80, 17);
+            label23.TabIndex = 48;
+            label23.Text = "最小道术攻击";
             // 
             // MaxMCTextBox
             // 
-            this.MaxMCTextBox.Location = new System.Drawing.Point(68, 246);
-            this.MaxMCTextBox.MaxLength = 5;
-            this.MaxMCTextBox.Name = "MaxMCTextBox";
-            this.MaxMCTextBox.Size = new System.Drawing.Size(50, 21);
-            this.MaxMCTextBox.TabIndex = 16;
-            this.MaxMCTextBox.TextChanged += new System.EventHandler(this.MaxMCTextBox_TextChanged);
+            MaxMCTextBox.Location = new Point(293, 242);
+            MaxMCTextBox.Margin = new Padding(4);
+            MaxMCTextBox.MaxLength = 5;
+            MaxMCTextBox.Name = "MaxMCTextBox";
+            MaxMCTextBox.Size = new Size(58, 23);
+            MaxMCTextBox.TabIndex = 16;
+            MaxMCTextBox.TextChanged += MaxMCTextBox_TextChanged;
             // 
             // label18
             // 
-            this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(12, 250);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(53, 12);
-            this.label18.TabIndex = 46;
-            this.label18.Text = "最大魔攻";
+            label18.AutoSize = true;
+            label18.Location = new Point(210, 244);
+            label18.Margin = new Padding(4, 0, 4, 0);
+            label18.Name = "label18";
+            label18.Size = new Size(80, 17);
+            label18.TabIndex = 46;
+            label18.Text = "最大魔法攻击";
             // 
             // MinMCTextBox
             // 
-            this.MinMCTextBox.Location = new System.Drawing.Point(68, 221);
-            this.MinMCTextBox.MaxLength = 5;
-            this.MinMCTextBox.Name = "MinMCTextBox";
-            this.MinMCTextBox.Size = new System.Drawing.Size(50, 21);
-            this.MinMCTextBox.TabIndex = 15;
-            this.MinMCTextBox.TextChanged += new System.EventHandler(this.MinMCTextBox_TextChanged);
+            MinMCTextBox.Location = new Point(102, 245);
+            MinMCTextBox.Margin = new Padding(4);
+            MinMCTextBox.MaxLength = 5;
+            MinMCTextBox.Name = "MinMCTextBox";
+            MinMCTextBox.Size = new Size(58, 23);
+            MinMCTextBox.TabIndex = 15;
+            MinMCTextBox.TextChanged += MinMCTextBox_TextChanged;
             // 
             // label19
             // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(12, 225);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(53, 12);
-            this.label19.TabIndex = 44;
-            this.label19.Text = "最小魔攻";
+            label19.AutoSize = true;
+            label19.Location = new Point(20, 248);
+            label19.Margin = new Padding(4, 0, 4, 0);
+            label19.Name = "label19";
+            label19.Size = new Size(80, 17);
+            label19.TabIndex = 44;
+            label19.Text = "最小魔法攻击";
             // 
             // MaxDCTextBox
             // 
-            this.MaxDCTextBox.Location = new System.Drawing.Point(180, 194);
-            this.MaxDCTextBox.MaxLength = 5;
-            this.MaxDCTextBox.Name = "MaxDCTextBox";
-            this.MaxDCTextBox.Size = new System.Drawing.Size(50, 21);
-            this.MaxDCTextBox.TabIndex = 14;
-            this.MaxDCTextBox.TextChanged += new System.EventHandler(this.MaxDCTextBox_TextChanged);
+            MaxDCTextBox.Location = new Point(293, 211);
+            MaxDCTextBox.Margin = new Padding(4);
+            MaxDCTextBox.MaxLength = 5;
+            MaxDCTextBox.Name = "MaxDCTextBox";
+            MaxDCTextBox.Size = new Size(58, 23);
+            MaxDCTextBox.TabIndex = 14;
+            MaxDCTextBox.TextChanged += MaxDCTextBox_TextChanged;
             // 
             // label20
             // 
-            this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(124, 198);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(53, 12);
-            this.label20.TabIndex = 42;
-            this.label20.Text = "最大物攻";
+            label20.AutoSize = true;
+            label20.Location = new Point(210, 214);
+            label20.Margin = new Padding(4, 0, 4, 0);
+            label20.Name = "label20";
+            label20.Size = new Size(80, 17);
+            label20.TabIndex = 42;
+            label20.Text = "最大物理攻击";
             // 
             // MinDCTextBox
             // 
-            this.MinDCTextBox.Location = new System.Drawing.Point(68, 194);
-            this.MinDCTextBox.MaxLength = 5;
-            this.MinDCTextBox.Name = "MinDCTextBox";
-            this.MinDCTextBox.Size = new System.Drawing.Size(50, 21);
-            this.MinDCTextBox.TabIndex = 13;
-            this.MinDCTextBox.TextChanged += new System.EventHandler(this.MinDCTextBox_TextChanged);
+            MinDCTextBox.Location = new Point(102, 214);
+            MinDCTextBox.Margin = new Padding(4);
+            MinDCTextBox.MaxLength = 5;
+            MinDCTextBox.Name = "MinDCTextBox";
+            MinDCTextBox.Size = new Size(58, 23);
+            MinDCTextBox.TabIndex = 13;
+            MinDCTextBox.TextChanged += MinDCTextBox_TextChanged;
             // 
             // label21
             // 
-            this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(12, 199);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(53, 12);
-            this.label21.TabIndex = 40;
-            this.label21.Text = "最小物攻";
+            label21.AutoSize = true;
+            label21.Location = new Point(20, 217);
+            label21.Margin = new Padding(4, 0, 4, 0);
+            label21.Name = "label21";
+            label21.Size = new Size(80, 17);
+            label21.TabIndex = 40;
+            label21.Text = "最小物理攻击";
             // 
             // MaxMACTextBox
             // 
-            this.MaxMACTextBox.Location = new System.Drawing.Point(180, 167);
-            this.MaxMACTextBox.MaxLength = 5;
-            this.MaxMACTextBox.Name = "MaxMACTextBox";
-            this.MaxMACTextBox.Size = new System.Drawing.Size(50, 21);
-            this.MaxMACTextBox.TabIndex = 12;
-            this.MaxMACTextBox.TextChanged += new System.EventHandler(this.MaxMACTextBox_TextChanged);
+            MaxMACTextBox.Location = new Point(293, 180);
+            MaxMACTextBox.Margin = new Padding(4);
+            MaxMACTextBox.MaxLength = 5;
+            MaxMACTextBox.Name = "MaxMACTextBox";
+            MaxMACTextBox.Size = new Size(58, 23);
+            MaxMACTextBox.TabIndex = 12;
+            MaxMACTextBox.TextChanged += MaxMACTextBox_TextChanged;
             // 
             // label16
             // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(124, 171);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(53, 12);
-            this.label16.TabIndex = 38;
-            this.label16.Text = "最大魔防";
+            label16.AutoSize = true;
+            label16.Location = new Point(210, 184);
+            label16.Margin = new Padding(4, 0, 4, 0);
+            label16.Name = "label16";
+            label16.Size = new Size(80, 17);
+            label16.TabIndex = 38;
+            label16.Text = "最大魔法防御";
             // 
             // MinMACTextBox
             // 
-            this.MinMACTextBox.Location = new System.Drawing.Point(181, 142);
-            this.MinMACTextBox.MaxLength = 5;
-            this.MinMACTextBox.Name = "MinMACTextBox";
-            this.MinMACTextBox.Size = new System.Drawing.Size(50, 21);
-            this.MinMACTextBox.TabIndex = 11;
-            this.MinMACTextBox.TextChanged += new System.EventHandler(this.MinMACTextBox_TextChanged);
+            MinMACTextBox.Location = new Point(102, 180);
+            MinMACTextBox.Margin = new Padding(4);
+            MinMACTextBox.MaxLength = 5;
+            MinMACTextBox.Name = "MinMACTextBox";
+            MinMACTextBox.Size = new Size(58, 23);
+            MinMACTextBox.TabIndex = 11;
+            MinMACTextBox.TextChanged += MinMACTextBox_TextChanged;
             // 
             // label17
             // 
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(125, 146);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(53, 12);
-            this.label17.TabIndex = 14;
-            this.label17.Text = "最小魔防";
+            label17.AutoSize = true;
+            label17.Location = new Point(20, 184);
+            label17.Margin = new Padding(4, 0, 4, 0);
+            label17.Name = "label17";
+            label17.Size = new Size(80, 17);
+            label17.TabIndex = 14;
+            label17.Text = "最小魔法防御";
             // 
             // MaxACTextBox
             // 
-            this.MaxACTextBox.Location = new System.Drawing.Point(68, 167);
-            this.MaxACTextBox.MaxLength = 5;
-            this.MaxACTextBox.Name = "MaxACTextBox";
-            this.MaxACTextBox.Size = new System.Drawing.Size(50, 21);
-            this.MaxACTextBox.TabIndex = 10;
-            this.MaxACTextBox.TextChanged += new System.EventHandler(this.MaxACTextBox_TextChanged);
+            MaxACTextBox.Location = new Point(293, 149);
+            MaxACTextBox.Margin = new Padding(4);
+            MaxACTextBox.MaxLength = 5;
+            MaxACTextBox.Name = "MaxACTextBox";
+            MaxACTextBox.Size = new Size(58, 23);
+            MaxACTextBox.TabIndex = 10;
+            MaxACTextBox.TextChanged += MaxACTextBox_TextChanged;
             // 
             // label15
             // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(12, 173);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(53, 12);
-            this.label15.TabIndex = 34;
-            this.label15.Text = "最大物防";
+            label15.AutoSize = true;
+            label15.Location = new Point(210, 152);
+            label15.Margin = new Padding(4, 0, 4, 0);
+            label15.Name = "label15";
+            label15.Size = new Size(80, 17);
+            label15.TabIndex = 34;
+            label15.Text = "最大物理防御";
             // 
             // MinACTextBox
             // 
-            this.MinACTextBox.Location = new System.Drawing.Point(68, 142);
-            this.MinACTextBox.MaxLength = 5;
-            this.MinACTextBox.Name = "MinACTextBox";
-            this.MinACTextBox.Size = new System.Drawing.Size(50, 21);
-            this.MinACTextBox.TabIndex = 9;
-            this.MinACTextBox.TextChanged += new System.EventHandler(this.MinACTextBox_TextChanged);
+            MinACTextBox.Location = new Point(102, 149);
+            MinACTextBox.Margin = new Padding(4);
+            MinACTextBox.MaxLength = 5;
+            MinACTextBox.Name = "MinACTextBox";
+            MinACTextBox.Size = new Size(58, 23);
+            MinACTextBox.TabIndex = 9;
+            MinACTextBox.TextChanged += MinACTextBox_TextChanged;
             // 
             // label14
             // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(12, 147);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(53, 12);
-            this.label14.TabIndex = 32;
-            this.label14.Text = "最小物防";
+            label14.AutoSize = true;
+            label14.Location = new Point(20, 152);
+            label14.Margin = new Padding(4, 0, 4, 0);
+            label14.Name = "label14";
+            label14.Size = new Size(80, 17);
+            label14.TabIndex = 32;
+            label14.Text = "最小物理防御";
             // 
             // MonsterNameTextBox
             // 
-            this.MonsterNameTextBox.Location = new System.Drawing.Point(87, 31);
-            this.MonsterNameTextBox.Name = "MonsterNameTextBox";
-            this.MonsterNameTextBox.Size = new System.Drawing.Size(115, 21);
-            this.MonsterNameTextBox.TabIndex = 1;
-            this.MonsterNameTextBox.TextChanged += new System.EventHandler(this.MonsterNameTextBox_TextChanged);
+            MonsterNameTextBox.Location = new Point(102, 47);
+            MonsterNameTextBox.Margin = new Padding(4);
+            MonsterNameTextBox.Name = "MonsterNameTextBox";
+            MonsterNameTextBox.Size = new Size(134, 23);
+            MonsterNameTextBox.TabIndex = 1;
+            MonsterNameTextBox.TextChanged += MonsterNameTextBox_TextChanged;
             // 
             // label3
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(31, 36);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(53, 12);
-            this.label3.TabIndex = 8;
-            this.label3.Text = "怪物名称";
+            label3.AutoSize = true;
+            label3.Location = new Point(44, 50);
+            label3.Margin = new Padding(4, 0, 4, 0);
+            label3.Name = "label3";
+            label3.Size = new Size(56, 17);
+            label3.TabIndex = 8;
+            label3.Text = "怪物名称";
             // 
             // MonsterIndexTextBox
             // 
-            this.MonsterIndexTextBox.Location = new System.Drawing.Point(87, 6);
-            this.MonsterIndexTextBox.Name = "MonsterIndexTextBox";
-            this.MonsterIndexTextBox.ReadOnly = true;
-            this.MonsterIndexTextBox.Size = new System.Drawing.Size(47, 21);
-            this.MonsterIndexTextBox.TabIndex = 0;
+            MonsterIndexTextBox.Location = new Point(102, 16);
+            MonsterIndexTextBox.Margin = new Padding(4);
+            MonsterIndexTextBox.Name = "MonsterIndexTextBox";
+            MonsterIndexTextBox.ReadOnly = true;
+            MonsterIndexTextBox.Size = new Size(54, 23);
+            MonsterIndexTextBox.TabIndex = 0;
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(31, 11);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(53, 12);
-            this.label1.TabIndex = 4;
-            this.label1.Text = "怪物编号";
+            label1.AutoSize = true;
+            label1.Location = new Point(43, 20);
+            label1.Margin = new Padding(4, 0, 4, 0);
+            label1.Name = "label1";
+            label1.Size = new Size(56, 17);
+            label1.TabIndex = 4;
+            label1.Text = "怪物编号";
             // 
             // RemoveButton
             // 
-            this.RemoveButton.Location = new System.Drawing.Point(93, 11);
-            this.RemoveButton.Name = "RemoveButton";
-            this.RemoveButton.Size = new System.Drawing.Size(75, 21);
-            this.RemoveButton.TabIndex = 14;
-            this.RemoveButton.Text = "删除";
-            this.RemoveButton.UseVisualStyleBackColor = true;
-            this.RemoveButton.Click += new System.EventHandler(this.RemoveButton_Click);
+            RemoveButton.Location = new Point(108, 16);
+            RemoveButton.Margin = new Padding(4);
+            RemoveButton.Name = "RemoveButton";
+            RemoveButton.Size = new Size(88, 30);
+            RemoveButton.TabIndex = 14;
+            RemoveButton.Text = "删除";
+            RemoveButton.UseVisualStyleBackColor = true;
+            RemoveButton.Click += RemoveButton_Click;
             // 
             // AddButton
             // 
-            this.AddButton.Location = new System.Drawing.Point(12, 11);
-            this.AddButton.Name = "AddButton";
-            this.AddButton.Size = new System.Drawing.Size(75, 21);
-            this.AddButton.TabIndex = 13;
-            this.AddButton.Text = "添加";
-            this.AddButton.UseVisualStyleBackColor = true;
-            this.AddButton.Click += new System.EventHandler(this.AddButton_Click);
+            AddButton.Location = new Point(14, 16);
+            AddButton.Margin = new Padding(4);
+            AddButton.Name = "AddButton";
+            AddButton.Size = new Size(88, 30);
+            AddButton.TabIndex = 13;
+            AddButton.Text = "添加";
+            AddButton.UseVisualStyleBackColor = true;
+            AddButton.Click += AddButton_Click;
             // 
             // MonsterInfoListBox
             // 
-            this.MonsterInfoListBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.MonsterInfoListBox.FormattingEnabled = true;
-            this.MonsterInfoListBox.ItemHeight = 12;
-            this.MonsterInfoListBox.Location = new System.Drawing.Point(12, 38);
-            this.MonsterInfoListBox.Name = "MonsterInfoListBox";
-            this.MonsterInfoListBox.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.MonsterInfoListBox.Size = new System.Drawing.Size(156, 328);
-            this.MonsterInfoListBox.TabIndex = 15;
-            this.MonsterInfoListBox.SelectedIndexChanged += new System.EventHandler(this.MonsterInfoListBox_SelectedIndexChanged);
+            MonsterInfoListBox.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
+            MonsterInfoListBox.FormattingEnabled = true;
+            MonsterInfoListBox.ItemHeight = 17;
+            MonsterInfoListBox.Location = new Point(14, 54);
+            MonsterInfoListBox.Margin = new Padding(4);
+            MonsterInfoListBox.Name = "MonsterInfoListBox";
+            MonsterInfoListBox.SelectionMode = SelectionMode.MultiExtended;
+            MonsterInfoListBox.Size = new Size(181, 412);
+            MonsterInfoListBox.TabIndex = 15;
+            MonsterInfoListBox.SelectedIndexChanged += MonsterInfoListBox_SelectedIndexChanged;
             // 
             // PasteMButton
             // 
-            this.PasteMButton.Location = new System.Drawing.Point(220, 11);
-            this.PasteMButton.Name = "PasteMButton";
-            this.PasteMButton.Size = new System.Drawing.Size(44, 21);
-            this.PasteMButton.TabIndex = 22;
-            this.PasteMButton.Text = "粘贴";
-            this.PasteMButton.UseVisualStyleBackColor = true;
-            this.PasteMButton.Click += new System.EventHandler(this.PasteMButton_Click);
+            PasteMButton.Location = new Point(257, 16);
+            PasteMButton.Margin = new Padding(4);
+            PasteMButton.Name = "PasteMButton";
+            PasteMButton.Size = new Size(51, 30);
+            PasteMButton.TabIndex = 22;
+            PasteMButton.Text = "粘贴";
+            PasteMButton.UseVisualStyleBackColor = true;
+            PasteMButton.Click += PasteMButton_Click;
             // 
             // CopyMButton
             // 
-            this.CopyMButton.Location = new System.Drawing.Point(174, 11);
-            this.CopyMButton.Name = "CopyMButton";
-            this.CopyMButton.Size = new System.Drawing.Size(44, 21);
-            this.CopyMButton.TabIndex = 21;
-            this.CopyMButton.Text = "复制";
-            this.CopyMButton.UseVisualStyleBackColor = true;
+            CopyMButton.Location = new Point(203, 16);
+            CopyMButton.Margin = new Padding(4);
+            CopyMButton.Name = "CopyMButton";
+            CopyMButton.Size = new Size(51, 30);
+            CopyMButton.TabIndex = 21;
+            CopyMButton.Text = "复制";
+            CopyMButton.UseVisualStyleBackColor = true;
             // 
             // DropBuilderButton
             // 
-            this.DropBuilderButton.Location = new System.Drawing.Point(415, 11);
-            this.DropBuilderButton.Name = "DropBuilderButton";
-            this.DropBuilderButton.Size = new System.Drawing.Size(75, 21);
-            this.DropBuilderButton.TabIndex = 26;
-            this.DropBuilderButton.Text = "爆率";
-            this.DropBuilderButton.UseVisualStyleBackColor = true;
-            this.DropBuilderButton.Click += new System.EventHandler(this.DropBuilderButton_Click);
+            DropBuilderButton.Location = new Point(484, 16);
+            DropBuilderButton.Margin = new Padding(4);
+            DropBuilderButton.Name = "DropBuilderButton";
+            DropBuilderButton.Size = new Size(88, 30);
+            DropBuilderButton.TabIndex = 26;
+            DropBuilderButton.Text = "爆率";
+            DropBuilderButton.UseVisualStyleBackColor = true;
+            DropBuilderButton.Click += DropBuilderButton_Click;
             // 
             // DropPathTextBox
             // 
-            this.DropPathTextBox.Location = new System.Drawing.Point(88, 270);
-            this.DropPathTextBox.Name = "DropPathTextBox";
-            this.DropPathTextBox.Size = new System.Drawing.Size(330, 21);
-            this.DropPathTextBox.TabIndex = 91;
-            this.DropPathTextBox.TextChanged += new System.EventHandler(this.DropPathTextBox_TextChanged);
+            DropPathTextBox.Location = new Point(102, 343);
+            DropPathTextBox.Margin = new Padding(4);
+            DropPathTextBox.Name = "DropPathTextBox";
+            DropPathTextBox.Size = new Size(375, 23);
+            DropPathTextBox.TabIndex = 91;
+            DropPathTextBox.TextChanged += DropPathTextBox_TextChanged;
             // 
             // label13
             // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(7, 274);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(77, 12);
-            this.label13.TabIndex = 92;
-            this.label13.Text = "爆率文件路径";
+            label13.AutoSize = true;
+            label13.Location = new Point(8, 350);
+            label13.Margin = new Padding(4, 0, 4, 0);
+            label13.Name = "label13";
+            label13.Size = new Size(80, 17);
+            label13.TabIndex = 92;
+            label13.Text = "爆率文件路径";
             // 
             // MonsterInfoForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(821, 384);
-            this.Controls.Add(this.DropBuilderButton);
-            this.Controls.Add(this.PasteMButton);
-            this.Controls.Add(this.CopyMButton);
-            this.Controls.Add(this.tabControl1);
-            this.Controls.Add(this.RemoveButton);
-            this.Controls.Add(this.AddButton);
-            this.Controls.Add(this.MonsterInfoListBox);
-            this.Name = "MonsterInfoForm";
-            this.Text = "怪物信息列表";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MonsterInfoForm_FormClosed);
-            this.tabControl1.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
-            this.MonsterInfoPanel.ResumeLayout(false);
-            this.MonsterInfoPanel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.MonstersPreview)).EndInit();
-            this.ResumeLayout(false);
+            AutoScaleDimensions = new SizeF(7F, 17F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(958, 502);
+            Controls.Add(DropBuilderButton);
+            Controls.Add(PasteMButton);
+            Controls.Add(CopyMButton);
+            Controls.Add(tabControl1);
+            Controls.Add(RemoveButton);
+            Controls.Add(AddButton);
+            Controls.Add(MonsterInfoListBox);
+            Margin = new Padding(4);
+            Name = "MonsterInfoForm";
+            Text = "怪物信息列表";
+            FormClosed += MonsterInfoForm_FormClosed;
+            tabControl1.ResumeLayout(false);
+            tabPage1.ResumeLayout(false);
+            MonsterInfoPanel.ResumeLayout(false);
+            MonsterInfoPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)MonstersPreview).EndInit();
+            ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.Panel MonsterInfoPanel;
-        private System.Windows.Forms.CheckBox CanTameCheckBox;
-        private System.Windows.Forms.CheckBox CanPushCheckBox;
-        private System.Windows.Forms.TextBox ViewRangeTextBox;
-        private System.Windows.Forms.Label label33;
-        private System.Windows.Forms.TextBox LightTextBox;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.TextBox ExperienceTextBox;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.TextBox MSpeedTextBox;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.TextBox ASpeedTextBox;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox LevelTextBox;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.TextBox EffectTextBox;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox AITextBox;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TextBox AgilityTextBox;
-        private System.Windows.Forms.Label label26;
-        private System.Windows.Forms.TextBox AccuracyTextBox;
-        private System.Windows.Forms.Label label27;
-        private System.Windows.Forms.TextBox HPTextBox;
-        private System.Windows.Forms.Label label25;
-        private System.Windows.Forms.TextBox MaxSCTextBox;
-        private System.Windows.Forms.Label label22;
-        private System.Windows.Forms.TextBox MinSCTextBox;
-        private System.Windows.Forms.Label label23;
-        private System.Windows.Forms.TextBox MaxMCTextBox;
-        private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.TextBox MinMCTextBox;
-        private System.Windows.Forms.Label label19;
-        private System.Windows.Forms.TextBox MaxDCTextBox;
-        private System.Windows.Forms.Label label20;
-        private System.Windows.Forms.TextBox MinDCTextBox;
-        private System.Windows.Forms.Label label21;
-        private System.Windows.Forms.TextBox MaxMACTextBox;
-        private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.TextBox MinMACTextBox;
-        private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.TextBox MaxACTextBox;
-        private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.TextBox MinACTextBox;
-        private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.TextBox MonsterNameTextBox;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox MonsterIndexTextBox;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button RemoveButton;
-        private System.Windows.Forms.Button AddButton;
-        private System.Windows.Forms.ListBox MonsterInfoListBox;
-        private System.Windows.Forms.Button PasteMButton;
-        private System.Windows.Forms.Button CopyMButton;
-        private System.Windows.Forms.TextBox CoolEyeTextBox;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.ComboBox ImageComboBox;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.CheckBox UndeadCheckBox;
-        private System.Windows.Forms.CheckBox AutoRevCheckBox;
-        private System.Windows.Forms.Button DropBuilderButton;
-        private System.Windows.Forms.Label fileNameLabel;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.TextBox DropPathTextBox;
-        private System.Windows.Forms.PictureBox MonstersPreview;
+        private TabControl tabControl1;
+        private TabPage tabPage1;
+        private Panel MonsterInfoPanel;
+        private CheckBox CanTameCheckBox;
+        private CheckBox CanPushCheckBox;
+        private TextBox ViewRangeTextBox;
+        private Label label33;
+        private TextBox LightTextBox;
+        private Label label9;
+        private TextBox ExperienceTextBox;
+        private Label label7;
+        private TextBox MSpeedTextBox;
+        private Label label6;
+        private TextBox ASpeedTextBox;
+        private Label label5;
+        private TextBox LevelTextBox;
+        private Label label4;
+        private TextBox EffectTextBox;
+        private Label label2;
+        private TextBox AITextBox;
+        private Label label8;
+        private TextBox AgilityTextBox;
+        private Label label26;
+        private TextBox AccuracyTextBox;
+        private Label label27;
+        private TextBox HPTextBox;
+        private Label label25;
+        private TextBox MaxSCTextBox;
+        private Label label22;
+        private TextBox MinSCTextBox;
+        private Label label23;
+        private TextBox MaxMCTextBox;
+        private Label label18;
+        private TextBox MinMCTextBox;
+        private Label label19;
+        private TextBox MaxDCTextBox;
+        private Label label20;
+        private TextBox MinDCTextBox;
+        private Label label21;
+        private TextBox MaxMACTextBox;
+        private Label label16;
+        private TextBox MinMACTextBox;
+        private Label label17;
+        private TextBox MaxACTextBox;
+        private Label label15;
+        private TextBox MinACTextBox;
+        private Label label14;
+        private TextBox MonsterNameTextBox;
+        private Label label3;
+        private TextBox MonsterIndexTextBox;
+        private Label label1;
+        private Button RemoveButton;
+        private Button AddButton;
+        private ListBox MonsterInfoListBox;
+        private Button PasteMButton;
+        private Button CopyMButton;
+        private TextBox CoolEyeTextBox;
+        private Label label12;
+        private ComboBox ImageComboBox;
+        private Label label10;
+        private CheckBox UndeadCheckBox;
+        private CheckBox AutoRevCheckBox;
+        private Button DropBuilderButton;
+        private Label fileNameLabel;
+        private Label label11;
+        private Label label13;
+        private TextBox DropPathTextBox;
+        private PictureBox MonstersPreview;
     }
 }

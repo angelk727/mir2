@@ -1,7 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Linq;
 using System.Runtime.InteropServices;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace ShadowMerger
 {
@@ -48,9 +52,9 @@ namespace ShadowMerger
 
                 Marshal.Copy(Iptr, Pixels, 0, Pixels.Length);
             }
-            catch (Exception ex)
+            catch
             {
-                throw ex;
+                throw;
             }
         }
 
@@ -62,9 +66,9 @@ namespace ShadowMerger
 
                 source.UnlockBits(bitmapData);
             }
-            catch (Exception ex)
+            catch
             {
-                throw ex;
+                throw;
             }
         }
 

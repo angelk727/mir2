@@ -1,10 +1,8 @@
-﻿using System;
-using System.Diagnostics;
-using System.IO;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
-using System.Windows.Forms;
+﻿using System.Diagnostics;
 using Launcher;
+using System.Runtime.InteropServices;
+using System.Runtime.CompilerServices;
+using Client.Resolution;
 
 namespace Client
 {
@@ -41,6 +39,8 @@ namespace Client
 
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
+
+                CheckResolutionSetting();
 
                 if (Settings.P_Patcher) Application.Run(PForm = new Launcher.AMain());
                 else Application.Run(Form = new CMain());
@@ -114,21 +114,22 @@ namespace Client
 
             static RuntimePolicyHelper()
             {
-                ICLRRuntimeInfo clrRuntimeInfo =
-                    (ICLRRuntimeInfo)RuntimeEnvironment.GetRuntimeInterfaceAsObject(
-                        Guid.Empty,
-                        typeof(ICLRRuntimeInfo).GUID);
-                try
-                {
-                    clrRuntimeInfo.BindAsLegacyV2Runtime();
-                    LegacyV2RuntimeEnabledSuccessfully = true;
-                }
-                catch (COMException)
-                {
-                    // 这具有HRESULT含义 
-                    // "其他运行时已绑定到旧版CLR版本2激活策略。"
-                    LegacyV2RuntimeEnabledSuccessfully = false;
-                }
+                //ICLRRuntimeInfo clrRuntimeInfo =
+                //    (ICLRRuntimeInfo)RuntimeEnvironment.GetRuntimeInterfaceAsObject(
+                //        Guid.Empty,
+                //        typeof(ICLRRuntimeInfo).GUID);
+
+                //try
+                //{
+                //    clrRuntimeInfo.BindAsLegacyV2Runtime();
+                //    LegacyV2RuntimeEnabledSuccessfully = true;
+                //}
+                //catch (COMException)
+                //{
+                //    // This occurs with an HRESULT meaning 
+                //    // "A different runtime was already bound to the legacy CLR version 2 activation policy."
+                //    LegacyV2RuntimeEnabledSuccessfully = false;
+                //}
             }
 
             [ComImport]
@@ -149,6 +150,27 @@ namespace Client
 
                 [MethodImpl(MethodImplOptions.InternalCall, MethodCodeType = MethodCodeType.Runtime)]
                 void BindAsLegacyV2Runtime();
+            }
+        }
+
+        public static void CheckResolutionSetting()
+        {
+            var parsedOK = DisplayResolutions.GetDisplayResolutions();
+            if (!parsedOK)
+            {
+                MessageBox.Show("无法获取显示分辨率", "获取显示分辨率问题", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Environment.Exit(0);
+            }
+
+            if (!DisplayResolutions.IsSupported(Settings.Resolution))
+            {
+                MessageBox.Show($"客户端不支持 {Settings.Resolution} 将设置成默认分辨率 1024x768",
+                                "无效的客户端分辨率",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
+
+                Settings.Resolution = (int)eSupportedResolution.w1024h768;
+                Settings.Save();
             }
         }
 

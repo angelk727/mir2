@@ -28,780 +28,736 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.ConquestVisible_checkbox = new System.Windows.Forms.CheckBox();
-            this.NPCPreview = new System.Windows.Forms.PictureBox();
-            this.TeleportToCheckBox = new System.Windows.Forms.CheckBox();
-            this.label15 = new System.Windows.Forms.Label();
-            this.BigMapIconTextBox = new System.Windows.Forms.TextBox();
-            this.ShowBigMapCheckBox = new System.Windows.Forms.CheckBox();
-            this.label14 = new System.Windows.Forms.Label();
-            this.ConquestHidden_combo = new System.Windows.Forms.ComboBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.MapComboBox = new System.Windows.Forms.ComboBox();
-            this.label11 = new System.Windows.Forms.Label();
-            this.OpenNButton = new System.Windows.Forms.Button();
-            this.NFileNameTextBox = new System.Windows.Forms.TextBox();
-            this.label29 = new System.Windows.Forms.Label();
-            this.NRateTextBox = new System.Windows.Forms.TextBox();
-            this.ClearHButton = new System.Windows.Forms.Button();
-            this.NNameTextBox = new System.Windows.Forms.TextBox();
-            this.label13 = new System.Windows.Forms.Label();
-            this.NPCIndexTextBox = new System.Windows.Forms.TextBox();
-            this.label24 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.NImageTextBox = new System.Windows.Forms.TextBox();
-            this.NXTextBox = new System.Windows.Forms.TextBox();
-            this.label28 = new System.Windows.Forms.Label();
-            this.label30 = new System.Windows.Forms.Label();
-            this.NYTextBox = new System.Windows.Forms.TextBox();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.Flag_textbox = new System.Windows.Forms.TextBox();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.Day_combo = new System.Windows.Forms.ComboBox();
-            this.Class_combo = new System.Windows.Forms.ComboBox();
-            this.EndMin_num = new System.Windows.Forms.NumericUpDown();
-            this.EndHour_combo = new System.Windows.Forms.ComboBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.StartMin_num = new System.Windows.Forms.NumericUpDown();
-            this.StartHour_combo = new System.Windows.Forms.ComboBox();
-            this.TimeVisible_checkbox = new System.Windows.Forms.CheckBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.MaxLev_textbox = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.MinLev_textbox = new System.Windows.Forms.TextBox();
-            this.RemoveButton = new System.Windows.Forms.Button();
-            this.AddButton = new System.Windows.Forms.Button();
-            this.NPCInfoListBox = new System.Windows.Forms.ListBox();
-            this.PasteMButton = new System.Windows.Forms.Button();
-            this.CopyMButton = new System.Windows.Forms.Button();
-            this.ExportButton = new System.Windows.Forms.Button();
-            this.ImportButton = new System.Windows.Forms.Button();
-            this.ExportSelectedButton = new System.Windows.Forms.Button();
-            this.tabControl1.SuspendLayout();
-            this.tabPage1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.NPCPreview)).BeginInit();
-            this.tabPage2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.EndMin_num)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.StartMin_num)).BeginInit();
-            this.SuspendLayout();
+            tabControl1 = new TabControl();
+            tabPage1 = new TabPage();
+            NPCPreview = new PictureBox();
+            TeleportToCheckBox = new CheckBox();
+            label15 = new Label();
+            BigMapIconTextBox = new TextBox();
+            ShowBigMapCheckBox = new CheckBox();
+            label14 = new Label();
+            ConquestHidden_combo = new ComboBox();
+            label2 = new Label();
+            MapComboBox = new ComboBox();
+            label11 = new Label();
+            OpenNButton = new Button();
+            NFileNameTextBox = new TextBox();
+            label29 = new Label();
+            NRateTextBox = new TextBox();
+            ClearHButton = new Button();
+            NNameTextBox = new TextBox();
+            label13 = new Label();
+            NPCIndexTextBox = new TextBox();
+            label24 = new Label();
+            label1 = new Label();
+            NImageTextBox = new TextBox();
+            NXTextBox = new TextBox();
+            label28 = new Label();
+            label30 = new Label();
+            NYTextBox = new TextBox();
+            tabPage2 = new TabPage();
+            ConquestVisible_checkbox = new CheckBox();
+            Flag_textbox = new TextBox();
+            label12 = new Label();
+            label10 = new Label();
+            Day_combo = new ComboBox();
+            Class_combo = new ComboBox();
+            EndMin_num = new NumericUpDown();
+            EndHour_combo = new ComboBox();
+            label8 = new Label();
+            label9 = new Label();
+            StartMin_num = new NumericUpDown();
+            StartHour_combo = new ComboBox();
+            TimeVisible_checkbox = new CheckBox();
+            label7 = new Label();
+            MaxLev_textbox = new TextBox();
+            label6 = new Label();
+            label5 = new Label();
+            label4 = new Label();
+            label3 = new Label();
+            MinLev_textbox = new TextBox();
+            RemoveButton = new Button();
+            AddButton = new Button();
+            NPCInfoListBox = new ListBox();
+            PasteMButton = new Button();
+            CopyMButton = new Button();
+            ExportButton = new Button();
+            ImportButton = new Button();
+            ExportSelectedButton = new Button();
+            tabControl1.SuspendLayout();
+            tabPage1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)NPCPreview).BeginInit();
+            tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)EndMin_num).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)StartMin_num).BeginInit();
+            SuspendLayout();
             // 
             // tabControl1
             // 
-            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Location = new System.Drawing.Point(255, 38);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(598, 394);
-            this.tabControl1.TabIndex = 16;
+            tabControl1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            tabControl1.Controls.Add(tabPage1);
+            tabControl1.Controls.Add(tabPage2);
+            tabControl1.Location = new Point(298, 53);
+            tabControl1.Margin = new Padding(4, 3, 4, 3);
+            tabControl1.Name = "tabControl1";
+            tabControl1.SelectedIndex = 0;
+            tabControl1.Size = new Size(606, 384);
+            tabControl1.TabIndex = 16;
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.ConquestVisible_checkbox);
-            this.tabPage1.Controls.Add(this.NPCPreview);
-            this.tabPage1.Controls.Add(this.TeleportToCheckBox);
-            this.tabPage1.Controls.Add(this.label15);
-            this.tabPage1.Controls.Add(this.BigMapIconTextBox);
-            this.tabPage1.Controls.Add(this.ShowBigMapCheckBox);
-            this.tabPage1.Controls.Add(this.label14);
-            this.tabPage1.Controls.Add(this.ConquestHidden_combo);
-            this.tabPage1.Controls.Add(this.label2);
-            this.tabPage1.Controls.Add(this.MapComboBox);
-            this.tabPage1.Controls.Add(this.label11);
-            this.tabPage1.Controls.Add(this.OpenNButton);
-            this.tabPage1.Controls.Add(this.NFileNameTextBox);
-            this.tabPage1.Controls.Add(this.label29);
-            this.tabPage1.Controls.Add(this.NRateTextBox);
-            this.tabPage1.Controls.Add(this.ClearHButton);
-            this.tabPage1.Controls.Add(this.NNameTextBox);
-            this.tabPage1.Controls.Add(this.label13);
-            this.tabPage1.Controls.Add(this.NPCIndexTextBox);
-            this.tabPage1.Controls.Add(this.label24);
-            this.tabPage1.Controls.Add(this.label1);
-            this.tabPage1.Controls.Add(this.NImageTextBox);
-            this.tabPage1.Controls.Add(this.NXTextBox);
-            this.tabPage1.Controls.Add(this.label28);
-            this.tabPage1.Controls.Add(this.label30);
-            this.tabPage1.Controls.Add(this.NYTextBox);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(590, 368);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "信息";
-            this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // ConquestVisible_checkbox
-            // 
-            this.ConquestVisible_checkbox.AutoSize = true;
-            this.ConquestVisible_checkbox.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.ConquestVisible_checkbox.Location = new System.Drawing.Point(118, 227);
-            this.ConquestVisible_checkbox.Name = "ConquestVisible_checkbox";
-            this.ConquestVisible_checkbox.Size = new System.Drawing.Size(96, 16);
-            this.ConquestVisible_checkbox.TabIndex = 65;
-            this.ConquestVisible_checkbox.Text = "攻城期间可见";
-            this.ConquestVisible_checkbox.UseVisualStyleBackColor = true;
+            tabPage1.Controls.Add(NPCPreview);
+            tabPage1.Controls.Add(TeleportToCheckBox);
+            tabPage1.Controls.Add(label15);
+            tabPage1.Controls.Add(BigMapIconTextBox);
+            tabPage1.Controls.Add(ShowBigMapCheckBox);
+            tabPage1.Controls.Add(label14);
+            tabPage1.Controls.Add(ConquestHidden_combo);
+            tabPage1.Controls.Add(label2);
+            tabPage1.Controls.Add(MapComboBox);
+            tabPage1.Controls.Add(label11);
+            tabPage1.Controls.Add(OpenNButton);
+            tabPage1.Controls.Add(NFileNameTextBox);
+            tabPage1.Controls.Add(label29);
+            tabPage1.Controls.Add(NRateTextBox);
+            tabPage1.Controls.Add(ClearHButton);
+            tabPage1.Controls.Add(NNameTextBox);
+            tabPage1.Controls.Add(label13);
+            tabPage1.Controls.Add(NPCIndexTextBox);
+            tabPage1.Controls.Add(label24);
+            tabPage1.Controls.Add(label1);
+            tabPage1.Controls.Add(NImageTextBox);
+            tabPage1.Controls.Add(NXTextBox);
+            tabPage1.Controls.Add(label28);
+            tabPage1.Controls.Add(label30);
+            tabPage1.Controls.Add(NYTextBox);
+            tabPage1.Location = new Point(4, 26);
+            tabPage1.Margin = new Padding(4, 3, 4, 3);
+            tabPage1.Name = "tabPage1";
+            tabPage1.Padding = new Padding(4, 3, 4, 3);
+            tabPage1.Size = new Size(598, 354);
+            tabPage1.TabIndex = 0;
+            tabPage1.Text = "信息";
+            tabPage1.UseVisualStyleBackColor = true;
             // 
             // NPCPreview
             // 
-            this.NPCPreview.Location = new System.Drawing.Point(282, 5);
-            this.NPCPreview.Name = "NPCPreview";
-            this.NPCPreview.Size = new System.Drawing.Size(304, 358);
-            this.NPCPreview.TabIndex = 64;
-            this.NPCPreview.TabStop = false;
+            NPCPreview.Location = new Point(314, 3);
+            NPCPreview.Name = "NPCPreview";
+            NPCPreview.Size = new Size(282, 348);
+            NPCPreview.TabIndex = 64;
+            NPCPreview.TabStop = false;
             // 
             // TeleportToCheckBox
             // 
-            this.TeleportToCheckBox.AutoSize = true;
-            this.TeleportToCheckBox.Location = new System.Drawing.Point(21, 284);
-            this.TeleportToCheckBox.Name = "TeleportToCheckBox";
-            this.TeleportToCheckBox.Size = new System.Drawing.Size(84, 16);
-            this.TeleportToCheckBox.TabIndex = 63;
-            this.TeleportToCheckBox.Text = "是否可传送";
-            this.TeleportToCheckBox.UseVisualStyleBackColor = true;
-            this.TeleportToCheckBox.CheckedChanged += new System.EventHandler(this.TeleportToCheckBox_CheckedChanged);
+            TeleportToCheckBox.AutoSize = true;
+            TeleportToCheckBox.Location = new Point(220, 311);
+            TeleportToCheckBox.Margin = new Padding(4, 3, 4, 3);
+            TeleportToCheckBox.Name = "TeleportToCheckBox";
+            TeleportToCheckBox.Size = new Size(87, 21);
+            TeleportToCheckBox.TabIndex = 63;
+            TeleportToCheckBox.Text = "是否可传送";
+            TeleportToCheckBox.UseVisualStyleBackColor = true;
+            TeleportToCheckBox.CheckedChanged += TeleportToCheckBox_CheckedChanged;
             // 
             // label15
             // 
-            this.label15.AutoSize = true;
-            this.label15.Cursor = System.Windows.Forms.Cursors.Default;
-            this.label15.Location = new System.Drawing.Point(15, 311);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(41, 12);
-            this.label15.TabIndex = 62;
-            this.label15.Text = "图标号";
+            label15.AutoSize = true;
+            label15.Location = new Point(105, 312);
+            label15.Margin = new Padding(4, 0, 4, 0);
+            label15.Name = "label15";
+            label15.Size = new Size(59, 17);
+            label15.TabIndex = 62;
+            label15.Text = "显示图标:";
             // 
             // BigMapIconTextBox
             // 
-            this.BigMapIconTextBox.Location = new System.Drawing.Point(59, 306);
-            this.BigMapIconTextBox.MaxLength = 5;
-            this.BigMapIconTextBox.Name = "BigMapIconTextBox";
-            this.BigMapIconTextBox.Size = new System.Drawing.Size(37, 21);
-            this.BigMapIconTextBox.TabIndex = 61;
-            this.BigMapIconTextBox.TextChanged += new System.EventHandler(this.BigMapIconTextBox_TextChanged);
+            BigMapIconTextBox.Location = new Point(167, 309);
+            BigMapIconTextBox.Margin = new Padding(4, 3, 4, 3);
+            BigMapIconTextBox.MaxLength = 5;
+            BigMapIconTextBox.Name = "BigMapIconTextBox";
+            BigMapIconTextBox.Size = new Size(42, 23);
+            BigMapIconTextBox.TabIndex = 61;
+            BigMapIconTextBox.TextChanged += BigMapIconTextBox_TextChanged;
             // 
             // ShowBigMapCheckBox
             // 
-            this.ShowBigMapCheckBox.AutoSize = true;
-            this.ShowBigMapCheckBox.Location = new System.Drawing.Point(21, 262);
-            this.ShowBigMapCheckBox.Name = "ShowBigMapCheckBox";
-            this.ShowBigMapCheckBox.Size = new System.Drawing.Size(84, 16);
-            this.ShowBigMapCheckBox.TabIndex = 60;
-            this.ShowBigMapCheckBox.Text = "大地图显示";
-            this.ShowBigMapCheckBox.UseVisualStyleBackColor = true;
-            this.ShowBigMapCheckBox.CheckedChanged += new System.EventHandler(this.ShowBigMapCheckBox_CheckedChanged);
+            ShowBigMapCheckBox.AutoSize = true;
+            ShowBigMapCheckBox.Location = new Point(16, 311);
+            ShowBigMapCheckBox.Margin = new Padding(4, 3, 4, 3);
+            ShowBigMapCheckBox.Name = "ShowBigMapCheckBox";
+            ShowBigMapCheckBox.Size = new Size(87, 21);
+            ShowBigMapCheckBox.TabIndex = 60;
+            ShowBigMapCheckBox.Text = "大地图显示";
+            ShowBigMapCheckBox.UseVisualStyleBackColor = true;
+            ShowBigMapCheckBox.CheckedChanged += ShowBigMapCheckBox_CheckedChanged;
             // 
             // label14
             // 
-            this.label14.AutoSize = true;
-            this.label14.Cursor = System.Windows.Forms.Cursors.Default;
-            this.label14.Location = new System.Drawing.Point(7, 203);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(77, 12);
-            this.label14.TabIndex = 59;
-            this.label14.Text = "所属攻城城堡";
+            label14.AutoSize = true;
+            label14.Location = new Point(16, 272);
+            label14.Margin = new Padding(4, 0, 4, 0);
+            label14.Name = "label14";
+            label14.Size = new Size(83, 17);
+            label14.TabIndex = 59;
+            label14.Text = "所属攻城城堡:";
             // 
             // ConquestHidden_combo
             // 
-            this.ConquestHidden_combo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.ConquestHidden_combo.FormattingEnabled = true;
-            this.ConquestHidden_combo.Items.AddRange(new object[] {
-            "",
-            "战士",
-            "法师",
-            "道士",
-            "刺客",
-            "弓箭"});
-            this.ConquestHidden_combo.Location = new System.Drawing.Point(87, 199);
-            this.ConquestHidden_combo.Name = "ConquestHidden_combo";
-            this.ConquestHidden_combo.Size = new System.Drawing.Size(132, 20);
-            this.ConquestHidden_combo.TabIndex = 58;
-            this.ConquestHidden_combo.SelectedIndexChanged += new System.EventHandler(this.ConquestHidden_combo_SelectedIndexChanged);
+            ConquestHidden_combo.DropDownStyle = ComboBoxStyle.DropDownList;
+            ConquestHidden_combo.FormattingEnabled = true;
+            ConquestHidden_combo.Items.AddRange(new object[] { "", "战士", "法师", "道士", "刺客", "弓箭" });
+            ConquestHidden_combo.Location = new Point(102, 268);
+            ConquestHidden_combo.Margin = new Padding(4, 3, 4, 3);
+            ConquestHidden_combo.Name = "ConquestHidden_combo";
+            ConquestHidden_combo.Size = new Size(153, 25);
+            ConquestHidden_combo.TabIndex = 58;
+            ConquestHidden_combo.SelectedIndexChanged += ConquestHidden_combo_SelectedIndexChanged;
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(31, 92);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(53, 12);
-            this.label2.TabIndex = 32;
-            this.label2.Text = "所在地图";
+            label2.AutoSize = true;
+            label2.Location = new Point(40, 133);
+            label2.Margin = new Padding(4, 0, 4, 0);
+            label2.Name = "label2";
+            label2.Size = new Size(59, 17);
+            label2.TabIndex = 32;
+            label2.Text = "所在地图:";
             // 
             // MapComboBox
             // 
-            this.MapComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.MapComboBox.FormattingEnabled = true;
-            this.MapComboBox.Location = new System.Drawing.Point(87, 88);
-            this.MapComboBox.Name = "MapComboBox";
-            this.MapComboBox.Size = new System.Drawing.Size(132, 20);
-            this.MapComboBox.TabIndex = 31;
-            this.MapComboBox.SelectedIndexChanged += new System.EventHandler(this.MapComboBox_SelectedIndexChanged);
+            MapComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            MapComboBox.FormattingEnabled = true;
+            MapComboBox.Location = new Point(102, 129);
+            MapComboBox.Margin = new Padding(4, 3, 4, 3);
+            MapComboBox.Name = "MapComboBox";
+            MapComboBox.Size = new Size(153, 25);
+            MapComboBox.TabIndex = 31;
+            MapComboBox.SelectedIndexChanged += MapComboBox_SelectedIndexChanged;
             // 
             // label11
             // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(7, 40);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(77, 12);
-            this.label11.TabIndex = 23;
-            this.label11.Text = "脚本文件路径";
+            label11.AutoSize = true;
+            label11.Location = new Point(16, 64);
+            label11.Margin = new Padding(4, 0, 4, 0);
+            label11.Name = "label11";
+            label11.Size = new Size(83, 17);
+            label11.TabIndex = 23;
+            label11.Text = "脚本文件路径:";
             // 
             // OpenNButton
             // 
-            this.OpenNButton.Location = new System.Drawing.Point(144, 12);
-            this.OpenNButton.Name = "OpenNButton";
-            this.OpenNButton.Size = new System.Drawing.Size(75, 21);
-            this.OpenNButton.TabIndex = 30;
-            this.OpenNButton.Text = " 打开脚本";
-            this.OpenNButton.UseVisualStyleBackColor = true;
-            this.OpenNButton.Click += new System.EventHandler(this.OpenNButton_Click);
+            OpenNButton.Location = new Point(163, 21);
+            OpenNButton.Margin = new Padding(4, 3, 4, 3);
+            OpenNButton.Name = "OpenNButton";
+            OpenNButton.Size = new Size(88, 31);
+            OpenNButton.TabIndex = 30;
+            OpenNButton.Text = "打开脚本";
+            OpenNButton.UseVisualStyleBackColor = true;
+            OpenNButton.Click += OpenNButton_Click;
             // 
             // NFileNameTextBox
             // 
-            this.NFileNameTextBox.Location = new System.Drawing.Point(87, 36);
-            this.NFileNameTextBox.MaxLength = 50;
-            this.NFileNameTextBox.Name = "NFileNameTextBox";
-            this.NFileNameTextBox.Size = new System.Drawing.Size(180, 21);
-            this.NFileNameTextBox.TabIndex = 22;
-            this.NFileNameTextBox.TextChanged += new System.EventHandler(this.NFileNameTextBox_TextChanged);
+            NFileNameTextBox.Location = new Point(102, 61);
+            NFileNameTextBox.Margin = new Padding(4, 3, 4, 3);
+            NFileNameTextBox.MaxLength = 50;
+            NFileNameTextBox.Name = "NFileNameTextBox";
+            NFileNameTextBox.Size = new Size(209, 23);
+            NFileNameTextBox.TabIndex = 22;
+            NFileNameTextBox.TextChanged += NFileNameTextBox_TextChanged;
             // 
             // label29
             // 
-            this.label29.AutoSize = true;
-            this.label29.Cursor = System.Windows.Forms.Cursors.Default;
-            this.label29.Location = new System.Drawing.Point(126, 144);
-            this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(53, 12);
-            this.label29.TabIndex = 21;
-            this.label29.Text = "交易费率";
+            label29.AutoSize = true;
+            label29.Location = new Point(150, 200);
+            label29.Margin = new Padding(4, 0, 4, 0);
+            label29.Name = "label29";
+            label29.Size = new Size(59, 17);
+            label29.TabIndex = 21;
+            label29.Text = "交易费率:";
             // 
             // NRateTextBox
             // 
-            this.NRateTextBox.Location = new System.Drawing.Point(182, 139);
-            this.NRateTextBox.MaxLength = 3;
-            this.NRateTextBox.Name = "NRateTextBox";
-            this.NRateTextBox.Size = new System.Drawing.Size(37, 21);
-            this.NRateTextBox.TabIndex = 20;
-            this.NRateTextBox.TextChanged += new System.EventHandler(this.NRateTextBox_TextChanged);
+            NRateTextBox.Location = new Point(212, 197);
+            NRateTextBox.Margin = new Padding(4, 3, 4, 3);
+            NRateTextBox.MaxLength = 3;
+            NRateTextBox.Name = "NRateTextBox";
+            NRateTextBox.Size = new Size(42, 23);
+            NRateTextBox.TabIndex = 20;
+            NRateTextBox.TextChanged += NRateTextBox_TextChanged;
             // 
             // ClearHButton
             // 
-            this.ClearHButton.Location = new System.Drawing.Point(145, 166);
-            this.ClearHButton.Name = "ClearHButton";
-            this.ClearHButton.Size = new System.Drawing.Size(75, 21);
-            this.ClearHButton.TabIndex = 19;
-            this.ClearHButton.Text = "清除记录";
-            this.ClearHButton.UseVisualStyleBackColor = true;
+            ClearHButton.Location = new Point(181, 231);
+            ClearHButton.Margin = new Padding(4, 3, 4, 3);
+            ClearHButton.Name = "ClearHButton";
+            ClearHButton.Size = new Size(88, 31);
+            ClearHButton.TabIndex = 19;
+            ClearHButton.Text = "清除记录";
+            ClearHButton.UseVisualStyleBackColor = true;
             // 
             // NNameTextBox
             // 
-            this.NNameTextBox.Location = new System.Drawing.Point(87, 62);
-            this.NNameTextBox.Name = "NNameTextBox";
-            this.NNameTextBox.Size = new System.Drawing.Size(180, 21);
-            this.NNameTextBox.TabIndex = 14;
-            this.NNameTextBox.TextChanged += new System.EventHandler(this.NNameTextBox_TextChanged);
+            NNameTextBox.Location = new Point(102, 95);
+            NNameTextBox.Margin = new Padding(4, 3, 4, 3);
+            NNameTextBox.Name = "NNameTextBox";
+            NNameTextBox.Size = new Size(209, 23);
+            NNameTextBox.TabIndex = 14;
+            NNameTextBox.TextChanged += NNameTextBox_TextChanged;
             // 
             // label13
             // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(31, 66);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(53, 12);
-            this.label13.TabIndex = 15;
-            this.label13.Text = "游戏名称";
+            label13.AutoSize = true;
+            label13.Location = new Point(29, 98);
+            label13.Margin = new Padding(4, 0, 4, 0);
+            label13.Name = "label13";
+            label13.Size = new Size(59, 17);
+            label13.TabIndex = 15;
+            label13.Text = "游戏名称:";
             // 
             // NPCIndexTextBox
             // 
-            this.NPCIndexTextBox.Location = new System.Drawing.Point(87, 11);
-            this.NPCIndexTextBox.Name = "NPCIndexTextBox";
-            this.NPCIndexTextBox.ReadOnly = true;
-            this.NPCIndexTextBox.Size = new System.Drawing.Size(47, 21);
-            this.NPCIndexTextBox.TabIndex = 0;
+            NPCIndexTextBox.Location = new Point(102, 25);
+            NPCIndexTextBox.Margin = new Padding(4, 3, 4, 3);
+            NPCIndexTextBox.Name = "NPCIndexTextBox";
+            NPCIndexTextBox.ReadOnly = true;
+            NPCIndexTextBox.Size = new Size(54, 23);
+            NPCIndexTextBox.TabIndex = 0;
             // 
             // label24
             // 
-            this.label24.AutoSize = true;
-            this.label24.Cursor = System.Windows.Forms.Cursors.Default;
-            this.label24.Location = new System.Drawing.Point(19, 145);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(65, 12);
-            this.label24.TabIndex = 13;
-            this.label24.Text = "NPC外形LIB";
+            label24.AutoSize = true;
+            label24.Location = new Point(21, 201);
+            label24.Margin = new Padding(4, 0, 4, 0);
+            label24.Name = "label24";
+            label24.Size = new Size(78, 17);
+            label24.TabIndex = 13;
+            label24.Text = "NPC外形LIB:";
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(36, 16);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(47, 12);
-            this.label1.TabIndex = 4;
-            this.label1.Text = "NPC序号";
+            label1.AutoSize = true;
+            label1.Location = new Point(39, 28);
+            label1.Margin = new Padding(4, 0, 4, 0);
+            label1.Name = "label1";
+            label1.Size = new Size(60, 17);
+            label1.TabIndex = 4;
+            label1.Text = "NPC序号:";
             // 
             // NImageTextBox
             // 
-            this.NImageTextBox.Location = new System.Drawing.Point(87, 140);
-            this.NImageTextBox.MaxLength = 5;
-            this.NImageTextBox.Name = "NImageTextBox";
-            this.NImageTextBox.Size = new System.Drawing.Size(37, 21);
-            this.NImageTextBox.TabIndex = 11;
-            this.NImageTextBox.TextChanged += new System.EventHandler(this.NImageTextBox_TextChanged);
+            NImageTextBox.Location = new Point(102, 198);
+            NImageTextBox.Margin = new Padding(4, 3, 4, 3);
+            NImageTextBox.MaxLength = 5;
+            NImageTextBox.Name = "NImageTextBox";
+            NImageTextBox.Size = new Size(42, 23);
+            NImageTextBox.TabIndex = 11;
+            NImageTextBox.TextChanged += NImageTextBox_TextChanged;
             // 
             // NXTextBox
             // 
-            this.NXTextBox.Location = new System.Drawing.Point(87, 113);
-            this.NXTextBox.MaxLength = 5;
-            this.NXTextBox.Name = "NXTextBox";
-            this.NXTextBox.Size = new System.Drawing.Size(37, 21);
-            this.NXTextBox.TabIndex = 2;
-            this.NXTextBox.TextChanged += new System.EventHandler(this.NXTextBox_TextChanged);
+            NXTextBox.Location = new Point(102, 164);
+            NXTextBox.Margin = new Padding(4, 3, 4, 3);
+            NXTextBox.MaxLength = 5;
+            NXTextBox.Name = "NXTextBox";
+            NXTextBox.Size = new Size(42, 23);
+            NXTextBox.TabIndex = 2;
+            NXTextBox.TextChanged += NXTextBox_TextChanged;
             // 
             // label28
             // 
-            this.label28.AutoSize = true;
-            this.label28.Location = new System.Drawing.Point(138, 118);
-            this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(41, 12);
-            this.label28.TabIndex = 10;
-            this.label28.Text = "坐标 Y";
+            label28.AutoSize = true;
+            label28.Location = new Point(163, 167);
+            label28.Margin = new Padding(4, 0, 4, 0);
+            label28.Name = "label28";
+            label28.Size = new Size(46, 17);
+            label28.TabIndex = 10;
+            label28.Text = "坐标 Y:";
             // 
             // label30
             // 
-            this.label30.AutoSize = true;
-            this.label30.Location = new System.Drawing.Point(43, 118);
-            this.label30.Name = "label30";
-            this.label30.Size = new System.Drawing.Size(41, 12);
-            this.label30.TabIndex = 3;
-            this.label30.Text = "坐标 X";
+            label30.AutoSize = true;
+            label30.Location = new Point(52, 167);
+            label30.Margin = new Padding(4, 0, 4, 0);
+            label30.Name = "label30";
+            label30.Size = new Size(47, 17);
+            label30.TabIndex = 3;
+            label30.Text = "坐标 X:";
             // 
             // NYTextBox
             // 
-            this.NYTextBox.Location = new System.Drawing.Point(182, 113);
-            this.NYTextBox.MaxLength = 5;
-            this.NYTextBox.Name = "NYTextBox";
-            this.NYTextBox.Size = new System.Drawing.Size(37, 21);
-            this.NYTextBox.TabIndex = 3;
-            this.NYTextBox.TextChanged += new System.EventHandler(this.NYTextBox_TextChanged);
+            NYTextBox.Location = new Point(212, 164);
+            NYTextBox.Margin = new Padding(4, 3, 4, 3);
+            NYTextBox.MaxLength = 5;
+            NYTextBox.Name = "NYTextBox";
+            NYTextBox.Size = new Size(42, 23);
+            NYTextBox.TabIndex = 3;
+            NYTextBox.TextChanged += NYTextBox_TextChanged;
             // 
             // tabPage2
             // 
-            this.tabPage2.Controls.Add(this.Flag_textbox);
-            this.tabPage2.Controls.Add(this.label12);
-            this.tabPage2.Controls.Add(this.label10);
-            this.tabPage2.Controls.Add(this.Day_combo);
-            this.tabPage2.Controls.Add(this.Class_combo);
-            this.tabPage2.Controls.Add(this.EndMin_num);
-            this.tabPage2.Controls.Add(this.EndHour_combo);
-            this.tabPage2.Controls.Add(this.label8);
-            this.tabPage2.Controls.Add(this.label9);
-            this.tabPage2.Controls.Add(this.StartMin_num);
-            this.tabPage2.Controls.Add(this.StartHour_combo);
-            this.tabPage2.Controls.Add(this.TimeVisible_checkbox);
-            this.tabPage2.Controls.Add(this.label7);
-            this.tabPage2.Controls.Add(this.MaxLev_textbox);
-            this.tabPage2.Controls.Add(this.label6);
-            this.tabPage2.Controls.Add(this.label5);
-            this.tabPage2.Controls.Add(this.label4);
-            this.tabPage2.Controls.Add(this.label3);
-            this.tabPage2.Controls.Add(this.MinLev_textbox);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Size = new System.Drawing.Size(590, 368);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "定时可见";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            tabPage2.Controls.Add(ConquestVisible_checkbox);
+            tabPage2.Controls.Add(Flag_textbox);
+            tabPage2.Controls.Add(label12);
+            tabPage2.Controls.Add(label10);
+            tabPage2.Controls.Add(Day_combo);
+            tabPage2.Controls.Add(Class_combo);
+            tabPage2.Controls.Add(EndMin_num);
+            tabPage2.Controls.Add(EndHour_combo);
+            tabPage2.Controls.Add(label8);
+            tabPage2.Controls.Add(label9);
+            tabPage2.Controls.Add(StartMin_num);
+            tabPage2.Controls.Add(StartHour_combo);
+            tabPage2.Controls.Add(TimeVisible_checkbox);
+            tabPage2.Controls.Add(label7);
+            tabPage2.Controls.Add(MaxLev_textbox);
+            tabPage2.Controls.Add(label6);
+            tabPage2.Controls.Add(label5);
+            tabPage2.Controls.Add(label4);
+            tabPage2.Controls.Add(label3);
+            tabPage2.Controls.Add(MinLev_textbox);
+            tabPage2.Location = new Point(4, 26);
+            tabPage2.Margin = new Padding(4, 3, 4, 3);
+            tabPage2.Name = "tabPage2";
+            tabPage2.Size = new Size(598, 354);
+            tabPage2.TabIndex = 1;
+            tabPage2.Text = "定时可见";
+            tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // ConquestVisible_checkbox
+            // 
+            ConquestVisible_checkbox.AutoSize = true;
+            ConquestVisible_checkbox.CheckAlign = ContentAlignment.MiddleRight;
+            ConquestVisible_checkbox.Location = new Point(200, 182);
+            ConquestVisible_checkbox.Margin = new Padding(4, 3, 4, 3);
+            ConquestVisible_checkbox.Name = "ConquestVisible_checkbox";
+            ConquestVisible_checkbox.Size = new Size(99, 21);
+            ConquestVisible_checkbox.TabIndex = 56;
+            ConquestVisible_checkbox.Text = "攻城期间可见";
+            ConquestVisible_checkbox.UseVisualStyleBackColor = true;
+            ConquestVisible_checkbox.CheckedChanged += ConquestVisible_checkbox_CheckedChanged;
             // 
             // Flag_textbox
             // 
-            this.Flag_textbox.Location = new System.Drawing.Point(112, 99);
-            this.Flag_textbox.MaxLength = 3;
-            this.Flag_textbox.Name = "Flag_textbox";
-            this.Flag_textbox.Size = new System.Drawing.Size(49, 21);
-            this.Flag_textbox.TabIndex = 55;
-            this.Flag_textbox.TextChanged += new System.EventHandler(this.Flag_textbox_TextChanged);
+            Flag_textbox.Location = new Point(131, 142);
+            Flag_textbox.Margin = new Padding(4, 3, 4, 3);
+            Flag_textbox.MaxLength = 3;
+            Flag_textbox.Name = "Flag_textbox";
+            Flag_textbox.Size = new Size(56, 23);
+            Flag_textbox.TabIndex = 55;
+            Flag_textbox.TextChanged += Flag_textbox_TextChanged;
             // 
             // label12
             // 
-            this.label12.AutoSize = true;
-            this.label12.Cursor = System.Windows.Forms.Cursors.Default;
-            this.label12.Location = new System.Drawing.Point(56, 104);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(53, 12);
-            this.label12.TabIndex = 54;
-            this.label12.Text = "需要标志";
+            label12.AutoSize = true;
+            label12.Location = new Point(72, 146);
+            label12.Margin = new Padding(4, 0, 4, 0);
+            label12.Name = "label12";
+            label12.Size = new Size(56, 17);
+            label12.TabIndex = 54;
+            label12.Text = "需要标志";
             // 
             // label10
             // 
-            this.label10.AutoSize = true;
-            this.label10.Cursor = System.Windows.Forms.Cursors.Default;
-            this.label10.Location = new System.Drawing.Point(56, 79);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(53, 12);
-            this.label10.TabIndex = 53;
-            this.label10.Text = "日期显示";
+            label10.AutoSize = true;
+            label10.Location = new Point(72, 110);
+            label10.Margin = new Padding(4, 0, 4, 0);
+            label10.Name = "label10";
+            label10.Size = new Size(56, 17);
+            label10.TabIndex = 53;
+            label10.Text = "日期显示";
             // 
             // Day_combo
             // 
-            this.Day_combo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.Day_combo.FormattingEnabled = true;
-            this.Day_combo.Items.AddRange(new object[] {
-            "",
-            "Monday",
-            "Tuesday",
-            "Wednesday",
-            "Thursday",
-            "Friday",
-            "Saturday",
-            "Sunday"});
-            this.Day_combo.Location = new System.Drawing.Point(112, 75);
-            this.Day_combo.Name = "Day_combo";
-            this.Day_combo.Size = new System.Drawing.Size(163, 20);
-            this.Day_combo.TabIndex = 52;
-            this.Day_combo.SelectedIndexChanged += new System.EventHandler(this.Day_combo_SelectedIndexChanged);
+            Day_combo.DropDownStyle = ComboBoxStyle.DropDownList;
+            Day_combo.FormattingEnabled = true;
+            Day_combo.Items.AddRange(new object[] { "", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" });
+            Day_combo.Location = new Point(131, 106);
+            Day_combo.Margin = new Padding(4, 3, 4, 3);
+            Day_combo.Name = "Day_combo";
+            Day_combo.Size = new Size(190, 25);
+            Day_combo.TabIndex = 52;
+            Day_combo.SelectedIndexChanged += Day_combo_SelectedIndexChanged;
             // 
             // Class_combo
             // 
-            this.Class_combo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.Class_combo.FormattingEnabled = true;
-            this.Class_combo.Items.AddRange(new object[] {
-            "",
-            "战士",
-            "法师",
-            "道士",
-            "刺客",
-            "弓箭"});
-            this.Class_combo.Location = new System.Drawing.Point(112, 51);
-            this.Class_combo.Name = "Class_combo";
-            this.Class_combo.Size = new System.Drawing.Size(87, 20);
-            this.Class_combo.TabIndex = 51;
-            this.Class_combo.SelectedIndexChanged += new System.EventHandler(this.Class_combo_SelectedIndexChanged);
+            Class_combo.DropDownStyle = ComboBoxStyle.DropDownList;
+            Class_combo.FormattingEnabled = true;
+            Class_combo.Items.AddRange(new object[] { "", "战士", "法师", "道士", "刺客", "弓箭" });
+            Class_combo.Location = new Point(131, 66);
+            Class_combo.Margin = new Padding(4, 3, 4, 3);
+            Class_combo.Name = "Class_combo";
+            Class_combo.Size = new Size(101, 25);
+            Class_combo.TabIndex = 51;
+            Class_combo.SelectedIndexChanged += Class_combo_SelectedIndexChanged;
             // 
             // EndMin_num
             // 
-            this.EndMin_num.Location = new System.Drawing.Point(300, 198);
-            this.EndMin_num.Maximum = new decimal(new int[] {
-            59,
-            0,
-            0,
-            0});
-            this.EndMin_num.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.EndMin_num.Name = "EndMin_num";
-            this.EndMin_num.Size = new System.Drawing.Size(47, 21);
-            this.EndMin_num.TabIndex = 50;
-            this.EndMin_num.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.EndMin_num.ValueChanged += new System.EventHandler(this.EndMin_num_ValueChanged);
+            EndMin_num.Location = new Point(297, 251);
+            EndMin_num.Margin = new Padding(4, 3, 4, 3);
+            EndMin_num.Maximum = new decimal(new int[] { 59, 0, 0, 0 });
+            EndMin_num.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            EndMin_num.Name = "EndMin_num";
+            EndMin_num.Size = new Size(55, 23);
+            EndMin_num.TabIndex = 50;
+            EndMin_num.Value = new decimal(new int[] { 1, 0, 0, 0 });
+            EndMin_num.ValueChanged += EndMin_num_ValueChanged;
             // 
             // EndHour_combo
             // 
-            this.EndHour_combo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.EndHour_combo.FormattingEnabled = true;
-            this.EndHour_combo.Items.AddRange(new object[] {
-            "0",
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
-            "13",
-            "14",
-            "15",
-            "16",
-            "17",
-            "18",
-            "19",
-            "20",
-            "21",
-            "22",
-            "23"});
-            this.EndHour_combo.Location = new System.Drawing.Point(149, 197);
-            this.EndHour_combo.Name = "EndHour_combo";
-            this.EndHour_combo.Size = new System.Drawing.Size(49, 20);
-            this.EndHour_combo.TabIndex = 49;
-            this.EndHour_combo.SelectedIndexChanged += new System.EventHandler(this.EndHour_combo_SelectedIndexChanged);
+            EndHour_combo.DropDownStyle = ComboBoxStyle.DropDownList;
+            EndHour_combo.FormattingEnabled = true;
+            EndHour_combo.Items.AddRange(new object[] { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23" });
+            EndHour_combo.Location = new Point(131, 250);
+            EndHour_combo.Margin = new Padding(4, 3, 4, 3);
+            EndHour_combo.Name = "EndHour_combo";
+            EndHour_combo.Size = new Size(56, 25);
+            EndHour_combo.TabIndex = 49;
+            EndHour_combo.SelectedIndexChanged += EndHour_combo_SelectedIndexChanged;
             // 
             // label8
             // 
-            this.label8.AutoSize = true;
-            this.label8.Cursor = System.Windows.Forms.Cursors.Default;
-            this.label8.Location = new System.Drawing.Point(208, 202);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(89, 12);
-            this.label8.TabIndex = 48;
-            this.label8.Text = "结束时间(分钟)";
+            label8.AutoSize = true;
+            label8.Location = new Point(203, 254);
+            label8.Margin = new Padding(4, 0, 4, 0);
+            label8.Name = "label8";
+            label8.Size = new Size(91, 17);
+            label8.TabIndex = 48;
+            label8.Text = "结束时间(分钟):";
             // 
             // label9
             // 
-            this.label9.AutoSize = true;
-            this.label9.Cursor = System.Windows.Forms.Cursors.Default;
-            this.label9.Location = new System.Drawing.Point(58, 201);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(89, 12);
-            this.label9.TabIndex = 47;
-            this.label9.Text = "结束时间(小时)";
+            label9.AutoSize = true;
+            label9.Location = new Point(37, 254);
+            label9.Margin = new Padding(4, 0, 4, 0);
+            label9.Name = "label9";
+            label9.Size = new Size(91, 17);
+            label9.TabIndex = 47;
+            label9.Text = "结束时间(小时):";
             // 
             // StartMin_num
             // 
-            this.StartMin_num.Location = new System.Drawing.Point(300, 174);
-            this.StartMin_num.Maximum = new decimal(new int[] {
-            58,
-            0,
-            0,
-            0});
-            this.StartMin_num.Name = "StartMin_num";
-            this.StartMin_num.Size = new System.Drawing.Size(47, 21);
-            this.StartMin_num.TabIndex = 46;
-            this.StartMin_num.ValueChanged += new System.EventHandler(this.StartMin_num_ValueChanged);
+            StartMin_num.Location = new Point(297, 217);
+            StartMin_num.Margin = new Padding(4, 3, 4, 3);
+            StartMin_num.Maximum = new decimal(new int[] { 58, 0, 0, 0 });
+            StartMin_num.Name = "StartMin_num";
+            StartMin_num.Size = new Size(55, 23);
+            StartMin_num.TabIndex = 46;
+            StartMin_num.ValueChanged += StartMin_num_ValueChanged;
             // 
             // StartHour_combo
             // 
-            this.StartHour_combo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.StartHour_combo.FormattingEnabled = true;
-            this.StartHour_combo.Items.AddRange(new object[] {
-            "0",
-            "1",
-            "2",
-            "3",
-            "4",
-            "5",
-            "6",
-            "7",
-            "8",
-            "9",
-            "10",
-            "11",
-            "12",
-            "13",
-            "14",
-            "15",
-            "16",
-            "17",
-            "18",
-            "19",
-            "20",
-            "21",
-            "22",
-            "23"});
-            this.StartHour_combo.Location = new System.Drawing.Point(149, 173);
-            this.StartHour_combo.Name = "StartHour_combo";
-            this.StartHour_combo.Size = new System.Drawing.Size(49, 20);
-            this.StartHour_combo.TabIndex = 45;
-            this.StartHour_combo.SelectedIndexChanged += new System.EventHandler(this.StartHour_combo_SelectedIndexChanged);
+            StartHour_combo.DropDownStyle = ComboBoxStyle.DropDownList;
+            StartHour_combo.FormattingEnabled = true;
+            StartHour_combo.Items.AddRange(new object[] { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23" });
+            StartHour_combo.Location = new Point(131, 216);
+            StartHour_combo.Margin = new Padding(4, 3, 4, 3);
+            StartHour_combo.Name = "StartHour_combo";
+            StartHour_combo.Size = new Size(56, 25);
+            StartHour_combo.TabIndex = 45;
+            StartHour_combo.SelectedIndexChanged += StartHour_combo_SelectedIndexChanged;
             // 
             // TimeVisible_checkbox
             // 
-            this.TimeVisible_checkbox.AutoSize = true;
-            this.TimeVisible_checkbox.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.TimeVisible_checkbox.Location = new System.Drawing.Point(54, 129);
-            this.TimeVisible_checkbox.Name = "TimeVisible_checkbox";
-            this.TimeVisible_checkbox.Size = new System.Drawing.Size(120, 16);
-            this.TimeVisible_checkbox.TabIndex = 44;
-            this.TimeVisible_checkbox.Text = "仅在设定时间可见";
-            this.TimeVisible_checkbox.UseVisualStyleBackColor = true;
-            this.TimeVisible_checkbox.CheckedChanged += new System.EventHandler(this.TimeVisible_checkbox_CheckedChanged);
+            TimeVisible_checkbox.AutoSize = true;
+            TimeVisible_checkbox.CheckAlign = ContentAlignment.MiddleRight;
+            TimeVisible_checkbox.Location = new Point(35, 182);
+            TimeVisible_checkbox.Margin = new Padding(4, 3, 4, 3);
+            TimeVisible_checkbox.Name = "TimeVisible_checkbox";
+            TimeVisible_checkbox.Size = new Size(123, 21);
+            TimeVisible_checkbox.TabIndex = 44;
+            TimeVisible_checkbox.Text = "仅在设定时间可见";
+            TimeVisible_checkbox.UseVisualStyleBackColor = true;
+            TimeVisible_checkbox.CheckedChanged += TimeVisible_checkbox_CheckedChanged;
             // 
             // label7
             // 
-            this.label7.AutoSize = true;
-            this.label7.Cursor = System.Windows.Forms.Cursors.Default;
-            this.label7.Location = new System.Drawing.Point(180, 30);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(77, 12);
-            this.label7.TabIndex = 43;
-            this.label7.Text = "使用最高等级";
+            label7.AutoSize = true;
+            label7.Location = new Point(205, 35);
+            label7.Margin = new Padding(4, 0, 4, 0);
+            label7.Name = "label7";
+            label7.Size = new Size(83, 17);
+            label7.TabIndex = 43;
+            label7.Text = "使用最高等级:";
             // 
             // MaxLev_textbox
             // 
-            this.MaxLev_textbox.Location = new System.Drawing.Point(259, 25);
-            this.MaxLev_textbox.MaxLength = 3;
-            this.MaxLev_textbox.Name = "MaxLev_textbox";
-            this.MaxLev_textbox.Size = new System.Drawing.Size(49, 21);
-            this.MaxLev_textbox.TabIndex = 42;
-            this.MaxLev_textbox.TextChanged += new System.EventHandler(this.MaxLev_textbox_TextChanged);
+            MaxLev_textbox.Location = new Point(291, 32);
+            MaxLev_textbox.Margin = new Padding(4, 3, 4, 3);
+            MaxLev_textbox.MaxLength = 3;
+            MaxLev_textbox.Name = "MaxLev_textbox";
+            MaxLev_textbox.Size = new Size(56, 23);
+            MaxLev_textbox.TabIndex = 42;
+            MaxLev_textbox.TextChanged += MaxLev_textbox_TextChanged;
             // 
             // label6
             // 
-            this.label6.AutoSize = true;
-            this.label6.Cursor = System.Windows.Forms.Cursors.Default;
-            this.label6.Location = new System.Drawing.Point(32, 55);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(77, 12);
-            this.label6.TabIndex = 40;
-            this.label6.Text = "使用所需职业";
+            label6.AutoSize = true;
+            label6.Location = new Point(48, 70);
+            label6.Margin = new Padding(4, 0, 4, 0);
+            label6.Name = "label6";
+            label6.Size = new Size(80, 17);
+            label6.TabIndex = 40;
+            label6.Text = "使用所需职业";
             // 
             // label5
             // 
-            this.label5.AutoSize = true;
-            this.label5.Cursor = System.Windows.Forms.Cursors.Default;
-            this.label5.Location = new System.Drawing.Point(208, 178);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(89, 12);
-            this.label5.TabIndex = 37;
-            this.label5.Text = "出现时间(分钟)";
+            label5.AutoSize = true;
+            label5.Location = new Point(203, 220);
+            label5.Margin = new Padding(4, 0, 4, 0);
+            label5.Name = "label5";
+            label5.Size = new Size(91, 17);
+            label5.TabIndex = 37;
+            label5.Text = "出现时间(分钟):";
             // 
             // label4
             // 
-            this.label4.AutoSize = true;
-            this.label4.Cursor = System.Windows.Forms.Cursors.Default;
-            this.label4.Location = new System.Drawing.Point(58, 177);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(89, 12);
-            this.label4.TabIndex = 36;
-            this.label4.Text = "出现时间(小时)";
+            label4.AutoSize = true;
+            label4.Location = new Point(37, 220);
+            label4.Margin = new Padding(4, 0, 4, 0);
+            label4.Name = "label4";
+            label4.Size = new Size(91, 17);
+            label4.TabIndex = 36;
+            label4.Text = "出现时间(小时):";
             // 
             // label3
             // 
-            this.label3.AutoSize = true;
-            this.label3.Cursor = System.Windows.Forms.Cursors.Default;
-            this.label3.Location = new System.Drawing.Point(32, 29);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(77, 12);
-            this.label3.TabIndex = 34;
-            this.label3.Text = "使用最低等级";
+            label3.AutoSize = true;
+            label3.Location = new Point(45, 36);
+            label3.Margin = new Padding(4, 0, 4, 0);
+            label3.Name = "label3";
+            label3.Size = new Size(83, 17);
+            label3.TabIndex = 34;
+            label3.Text = "使用最低等级:";
             // 
             // MinLev_textbox
             // 
-            this.MinLev_textbox.Location = new System.Drawing.Point(112, 25);
-            this.MinLev_textbox.MaxLength = 3;
-            this.MinLev_textbox.Name = "MinLev_textbox";
-            this.MinLev_textbox.Size = new System.Drawing.Size(49, 21);
-            this.MinLev_textbox.TabIndex = 33;
-            this.MinLev_textbox.TextChanged += new System.EventHandler(this.MinLev_textbox_TextChanged);
+            MinLev_textbox.Location = new Point(131, 32);
+            MinLev_textbox.Margin = new Padding(4, 3, 4, 3);
+            MinLev_textbox.MaxLength = 3;
+            MinLev_textbox.Name = "MinLev_textbox";
+            MinLev_textbox.Size = new Size(56, 23);
+            MinLev_textbox.TabIndex = 33;
+            MinLev_textbox.TextChanged += MinLev_textbox_TextChanged;
             // 
             // RemoveButton
             // 
-            this.RemoveButton.Location = new System.Drawing.Point(93, 11);
-            this.RemoveButton.Name = "RemoveButton";
-            this.RemoveButton.Size = new System.Drawing.Size(75, 21);
-            this.RemoveButton.TabIndex = 14;
-            this.RemoveButton.Text = "删除";
-            this.RemoveButton.UseVisualStyleBackColor = true;
-            this.RemoveButton.Click += new System.EventHandler(this.RemoveButton_Click);
+            RemoveButton.Location = new Point(108, 16);
+            RemoveButton.Margin = new Padding(4, 3, 4, 3);
+            RemoveButton.Name = "RemoveButton";
+            RemoveButton.Size = new Size(88, 31);
+            RemoveButton.TabIndex = 14;
+            RemoveButton.Text = "删除";
+            RemoveButton.UseVisualStyleBackColor = true;
+            RemoveButton.Click += RemoveButton_Click;
             // 
             // AddButton
             // 
-            this.AddButton.Location = new System.Drawing.Point(12, 11);
-            this.AddButton.Name = "AddButton";
-            this.AddButton.Size = new System.Drawing.Size(75, 21);
-            this.AddButton.TabIndex = 13;
-            this.AddButton.Text = "添加";
-            this.AddButton.UseVisualStyleBackColor = true;
-            this.AddButton.Click += new System.EventHandler(this.AddButton_Click);
+            AddButton.Location = new Point(14, 16);
+            AddButton.Margin = new Padding(4, 3, 4, 3);
+            AddButton.Name = "AddButton";
+            AddButton.Size = new Size(88, 31);
+            AddButton.TabIndex = 13;
+            AddButton.Text = "添加";
+            AddButton.UseVisualStyleBackColor = true;
+            AddButton.Click += AddButton_Click;
             // 
             // NPCInfoListBox
             // 
-            this.NPCInfoListBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.NPCInfoListBox.FormattingEnabled = true;
-            this.NPCInfoListBox.ItemHeight = 12;
-            this.NPCInfoListBox.Location = new System.Drawing.Point(12, 38);
-            this.NPCInfoListBox.Name = "NPCInfoListBox";
-            this.NPCInfoListBox.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.NPCInfoListBox.Size = new System.Drawing.Size(237, 388);
-            this.NPCInfoListBox.TabIndex = 15;
-            this.NPCInfoListBox.SelectedIndexChanged += new System.EventHandler(this.NPCInfoListBox_SelectedIndexChanged);
+            NPCInfoListBox.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
+            NPCInfoListBox.FormattingEnabled = true;
+            NPCInfoListBox.ItemHeight = 17;
+            NPCInfoListBox.Location = new Point(14, 53);
+            NPCInfoListBox.Margin = new Padding(4, 3, 4, 3);
+            NPCInfoListBox.Name = "NPCInfoListBox";
+            NPCInfoListBox.SelectionMode = SelectionMode.MultiExtended;
+            NPCInfoListBox.Size = new Size(276, 378);
+            NPCInfoListBox.TabIndex = 15;
+            NPCInfoListBox.SelectedIndexChanged += NPCInfoListBox_SelectedIndexChanged;
             // 
             // PasteMButton
             // 
-            this.PasteMButton.Location = new System.Drawing.Point(255, 11);
-            this.PasteMButton.Name = "PasteMButton";
-            this.PasteMButton.Size = new System.Drawing.Size(75, 21);
-            this.PasteMButton.TabIndex = 22;
-            this.PasteMButton.Text = "粘贴";
-            this.PasteMButton.UseVisualStyleBackColor = true;
-            this.PasteMButton.Click += new System.EventHandler(this.PasteMButton_Click);
+            PasteMButton.Location = new Point(298, 16);
+            PasteMButton.Margin = new Padding(4, 3, 4, 3);
+            PasteMButton.Name = "PasteMButton";
+            PasteMButton.Size = new Size(88, 31);
+            PasteMButton.TabIndex = 22;
+            PasteMButton.Text = "粘贴";
+            PasteMButton.UseVisualStyleBackColor = true;
+            PasteMButton.Click += PasteMButton_Click;
             // 
             // CopyMButton
             // 
-            this.CopyMButton.Location = new System.Drawing.Point(174, 11);
-            this.CopyMButton.Name = "CopyMButton";
-            this.CopyMButton.Size = new System.Drawing.Size(75, 21);
-            this.CopyMButton.TabIndex = 21;
-            this.CopyMButton.Text = "复制";
-            this.CopyMButton.UseVisualStyleBackColor = true;
-            this.CopyMButton.Click += new System.EventHandler(this.CopyMButton_Click);
+            CopyMButton.Location = new Point(203, 16);
+            CopyMButton.Margin = new Padding(4, 3, 4, 3);
+            CopyMButton.Name = "CopyMButton";
+            CopyMButton.Size = new Size(88, 31);
+            CopyMButton.TabIndex = 21;
+            CopyMButton.Text = "复制";
+            CopyMButton.UseVisualStyleBackColor = true;
+            CopyMButton.Click += CopyMButton_Click;
             // 
             // ExportButton
             // 
-            this.ExportButton.Location = new System.Drawing.Point(701, 11);
-            this.ExportButton.Name = "ExportButton";
-            this.ExportButton.Size = new System.Drawing.Size(75, 21);
-            this.ExportButton.TabIndex = 23;
-            this.ExportButton.Text = "全部导出";
-            this.ExportButton.UseVisualStyleBackColor = true;
-            this.ExportButton.Click += new System.EventHandler(this.ExportAllButton_Click);
+            ExportButton.Location = new Point(818, 16);
+            ExportButton.Margin = new Padding(4, 3, 4, 3);
+            ExportButton.Name = "ExportButton";
+            ExportButton.Size = new Size(88, 31);
+            ExportButton.TabIndex = 23;
+            ExportButton.Text = "全部导出";
+            ExportButton.UseVisualStyleBackColor = true;
+            ExportButton.Click += ExportAllButton_Click;
             // 
             // ImportButton
             // 
-            this.ImportButton.Location = new System.Drawing.Point(498, 11);
-            this.ImportButton.Name = "ImportButton";
-            this.ImportButton.Size = new System.Drawing.Size(75, 21);
-            this.ImportButton.TabIndex = 24;
-            this.ImportButton.Text = "导入";
-            this.ImportButton.UseVisualStyleBackColor = true;
-            this.ImportButton.Click += new System.EventHandler(this.ImportButton_Click);
+            ImportButton.Location = new Point(581, 16);
+            ImportButton.Margin = new Padding(4, 3, 4, 3);
+            ImportButton.Name = "ImportButton";
+            ImportButton.Size = new Size(88, 31);
+            ImportButton.TabIndex = 24;
+            ImportButton.Text = "导入";
+            ImportButton.UseVisualStyleBackColor = true;
+            ImportButton.Click += ImportButton_Click;
             // 
             // ExportSelectedButton
             // 
-            this.ExportSelectedButton.Location = new System.Drawing.Point(578, 11);
-            this.ExportSelectedButton.Name = "ExportSelectedButton";
-            this.ExportSelectedButton.Size = new System.Drawing.Size(117, 21);
-            this.ExportSelectedButton.TabIndex = 25;
-            this.ExportSelectedButton.Text = "选择导出";
-            this.ExportSelectedButton.UseVisualStyleBackColor = true;
-            this.ExportSelectedButton.Click += new System.EventHandler(this.ExportSelected_Click);
+            ExportSelectedButton.Location = new Point(674, 16);
+            ExportSelectedButton.Margin = new Padding(4, 3, 4, 3);
+            ExportSelectedButton.Name = "ExportSelectedButton";
+            ExportSelectedButton.Size = new Size(136, 31);
+            ExportSelectedButton.TabIndex = 25;
+            ExportSelectedButton.Text = "选择导出";
+            ExportSelectedButton.UseVisualStyleBackColor = true;
+            ExportSelectedButton.Click += ExportSelected_Click;
             // 
             // NPCInfoForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(865, 443);
-            this.Controls.Add(this.ExportSelectedButton);
-            this.Controls.Add(this.ImportButton);
-            this.Controls.Add(this.ExportButton);
-            this.Controls.Add(this.PasteMButton);
-            this.Controls.Add(this.CopyMButton);
-            this.Controls.Add(this.tabControl1);
-            this.Controls.Add(this.RemoveButton);
-            this.Controls.Add(this.AddButton);
-            this.Controls.Add(this.NPCInfoListBox);
-            this.Name = "NPCInfoForm";
-            this.Text = "NPC信息列表";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.NPCInfoForm_FormClosed);
-            this.Load += new System.EventHandler(this.NPCInfoForm_Load);
-            this.tabControl1.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
-            this.tabPage1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.NPCPreview)).EndInit();
-            this.tabPage2.ResumeLayout(false);
-            this.tabPage2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.EndMin_num)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.StartMin_num)).EndInit();
-            this.ResumeLayout(false);
-
+            AutoScaleDimensions = new SizeF(7F, 17F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(917, 453);
+            Controls.Add(ExportSelectedButton);
+            Controls.Add(ImportButton);
+            Controls.Add(ExportButton);
+            Controls.Add(PasteMButton);
+            Controls.Add(CopyMButton);
+            Controls.Add(tabControl1);
+            Controls.Add(RemoveButton);
+            Controls.Add(AddButton);
+            Controls.Add(NPCInfoListBox);
+            Margin = new Padding(4, 3, 4, 3);
+            Name = "NPCInfoForm";
+            Text = "NPC信息列表";
+            FormClosed += NPCInfoForm_FormClosed;
+            Load += NPCInfoForm_Load;
+            tabControl1.ResumeLayout(false);
+            tabPage1.ResumeLayout(false);
+            tabPage1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)NPCPreview).EndInit();
+            tabPage2.ResumeLayout(false);
+            tabPage2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)EndMin_num).EndInit();
+            ((System.ComponentModel.ISupportInitialize)StartMin_num).EndInit();
+            ResumeLayout(false);
         }
 
         #endregion
@@ -860,7 +816,7 @@
         private System.Windows.Forms.TextBox BigMapIconTextBox;
         private System.Windows.Forms.CheckBox ShowBigMapCheckBox;
         private System.Windows.Forms.CheckBox TeleportToCheckBox;
-        private System.Windows.Forms.PictureBox NPCPreview;
-        private System.Windows.Forms.CheckBox ConquestVisible_checkbox;
+        private CheckBox ConquestVisible_checkbox;
+        private PictureBox NPCPreview;
     }
 }

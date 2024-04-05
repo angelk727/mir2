@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 
 public class ItemInfo
 {
@@ -58,8 +54,8 @@ public class ItemInfo
         get
         {
             string temp = Name;
-            temp = Regex.Replace(temp, @"\d+$", string.Empty); //隐藏结尾的数字
-            temp = Regex.Replace(temp, @"\[[^]]*\]", string.Empty); //隐藏方括号
+            temp = Regex.Replace(temp, @"\d+$", string.Empty); //hides end numbers
+            temp = Regex.Replace(temp, @"\[[^]]*\]", string.Empty); //hides square brackets
 
             return temp;
         }
@@ -200,7 +196,7 @@ public class ItemInfo
             ToolTip = reader.ReadString();
         }
 
-        if (version < 70) //在db版本70之前，所有专业人员都禁用结婚戒指，之后它成为服务器选项
+        if (version < 70) //before db version 70 all specialitems had wedding rings disabled, after that it became a server option
         {
             if ((Type == ItemType.戒指) && (Unique != SpecialItemMode.None))
                 Bind |= BindMode.NoWeddingRing;
@@ -625,7 +621,7 @@ public class UserItem
                 case ItemType.坐骑:
                     if (Info.Shape < 7)
                         size = 4;
-                    else if (Info.Shape < 13)//添加坐骑 坐骑数 默认：12
+                    else if (Info.Shape < 13)
                         size = 5;
                     break;
                 case ItemType.武器:
@@ -654,17 +650,17 @@ public class UserItem
                     {
                         switch (Info.Shape)
                         {
-                            case 0: //护身符
+                            case 0: //Amulet
                                 if (Count >= 300) return 3662;
                                 if (Count >= 200) return 3661;
                                 if (Count >= 100) return 3660;
                                 return 3660;
-                            case 1: //绿毒
+                            case 1: //Grey Poison
                                 if (Count >= 150) return 3675;
                                 if (Count >= 100) return 2960;
                                 if (Count >= 50) return 3674;
                                 return 3673;
-                            case 2: //黄毒
+                            case 2: //Yellow Poison
                                 if (Count >= 150) return 3672;
                                 if (Count >= 100) return 2961;
                                 if (Count >= 50) return 3671;
@@ -877,7 +873,7 @@ public class GameShopItem
 
 public class Awake
 {
-    //觉醒设置
+    //Awake Option
     public static byte AwakeSuccessRate = 70;
     public static byte AwakeHitRate = 70;
     public static int MaxAwakeLevel = 5;
@@ -991,7 +987,7 @@ public class Awake
 
     public int UpgradeAwake(UserItem item, AwakeType type, out bool[] isHit)
     {
-        //return -1 条件误差, -1 = 不能升级, 0 = 失败, 1 = 成功,  
+        //return -1 condition error, -1 = dont upgrade, 0 = failed, 1 = Succeed,  
         isHit = null;
         if (CheckAwakening(item, type) != true)
             return -1;
@@ -1118,7 +1114,7 @@ public class ItemRentalInformation
 }
 
 
-public class ItemSets //套装件数设置
+public class ItemSets
 {
     public ItemSet Set;
     public List<ItemType> Type;
@@ -1259,7 +1255,7 @@ public class RandomItemStat
         AccuracyStatChance = 20;
         AccuracyMaxStat = 2;
 
-        SlotChance = 0; //新添加
+        SlotChance = 0;
         SlotStatChance = 0;
         SlotMaxStat = 4;
     }

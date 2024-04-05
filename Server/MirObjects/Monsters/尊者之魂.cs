@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Drawing;
+﻿using System.Drawing;
 using Server.MirDatabase;
 using Server.MirEnvir;
 using S = ServerPackets;
@@ -10,6 +9,8 @@ namespace Server.MirObjects.Monsters
     {
         public byte AttackRange = 7;
         private long _SeniorTornadoTime;
+        //readonly int ResurrectionTime = 10000;
+        private long ResurrectionTime;
         public bool ResurrectionMark = false;
 
         protected internal 尊者之魂(MonsterInfo info)
@@ -249,20 +250,39 @@ namespace Server.MirObjects.Monsters
                 }
             }
         }
-         public override void Die()
-        {
-            if (ResurrectionMark == false)
-            {
-                ResurrectionMark = true;
-                Broadcast(new S.ObjectRevived{ ObjectID = ObjectID });
-                SetHP(MaxHealth);
-                ActionTime = Envir.Time + 1000;
+        // public override void Die()
+        //{
+        //    if (ResurrectionMark == false && Envir.Time > ResurrectionTime)
+        //    {
+        //        ResurrectionMark = true;
+        //        Broadcast(new S.ObjectRevived{ ObjectID = ObjectID });
+        //        SetHP(MaxHealth);
+        //        ActionTime = Envir.Time + 2000;
 
-            }
-            else
+        //    }
+        //    else
+        //    {
+        //        base.Die();
+        //    }
+        //}
+        public override void Die()
+        {
+
+            ResurrectionTime = (4 + Envir.Random.Next(20)) * 5000;
+            base.Die();
+        }
+
+        protected override void ProcessAI()
+        {
+            if (ResurrectionMark == false && Dead && Envir.Time > ResurrectionTime)
             {
-                base.Die();
+
+                ResurrectionMark = true;
+                int newhp = Stats[Stat.HP] * (100 - (25 * 2)) / 100;
+                Revive(newhp, false);
             }
+
+            base.ProcessAI();
         }
     }
 }

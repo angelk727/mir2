@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 
 namespace Server.MirObjects
 {
@@ -21,7 +20,7 @@ namespace Server.MirObjects
 
         public string ArgumentParse(string key)
         {
-            if (key.StartsWith("[@_")) return key; //默认NPC页面，因此不以这种方式使用参数
+            if (key.StartsWith("[@_")) return key; //Default NPC page so doesn't use arguments in this way
 
             Regex r = new Regex(@"\((.*)\)");
 

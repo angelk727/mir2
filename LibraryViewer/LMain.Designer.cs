@@ -28,319 +28,336 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.MainMenu = new System.Windows.Forms.MenuStrip();
-            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.openMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ImageList = new System.Windows.Forms.ImageList(this.components);
-            this.LibraryFolderDialog = new System.Windows.Forms.FolderBrowserDialog();
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-            this.DebugBox = new System.Windows.Forms.TextBox();
-            this.checkCenter = new System.Windows.Forms.CheckBox();
-            this.checkBackground = new System.Windows.Forms.CheckBox();
-            this.HeightLabel = new System.Windows.Forms.Label();
-            this.LblHeight = new System.Windows.Forms.Label();
-            this.LibNameLabel = new System.Windows.Forms.Label();
-            this.LibCountLabel = new System.Windows.Forms.Label();
-            this.WidthLabel = new System.Windows.Forms.Label();
-            this.LblLibName = new System.Windows.Forms.Label();
-            this.LblLibCount = new System.Windows.Forms.Label();
-            this.LblWidth = new System.Windows.Forms.Label();
-            this.ImageBox = new System.Windows.Forms.PictureBox();
-            this.PreviewListView = new LibraryViewer.FixedListView();
-            this.ExportImagesButton = new System.Windows.Forms.Button();
-            this.MainMenu.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
-            this.splitContainer1.Panel1.SuspendLayout();
-            this.splitContainer1.Panel2.SuspendLayout();
-            this.splitContainer1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
-            this.splitContainer2.Panel1.SuspendLayout();
-            this.splitContainer2.Panel2.SuspendLayout();
-            this.splitContainer2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ImageBox)).BeginInit();
-            this.SuspendLayout();
+            components = new System.ComponentModel.Container();
+            MainMenu = new MenuStrip();
+            fileToolStripMenuItem = new ToolStripMenuItem();
+            openMenuItem = new ToolStripMenuItem();
+            ImageList = new ImageList(components);
+            LibraryFolderDialog = new FolderBrowserDialog();
+            splitContainer1 = new SplitContainer();
+            splitContainer2 = new SplitContainer();
+            DebugBox = new TextBox();
+            checkCenter = new CheckBox();
+            checkBackground = new CheckBox();
+            HeightLabel = new Label();
+            LblHeight = new Label();
+            LibNameLabel = new Label();
+            LibCountLabel = new Label();
+            WidthLabel = new Label();
+            LblLibName = new Label();
+            LblLibCount = new Label();
+            LblWidth = new Label();
+            ImageBox = new PictureBox();
+            PreviewListView = new CustomFormControl.FixedListView();
+            ExportImagesButton = new Button();
+            MainMenu.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
+            splitContainer1.Panel1.SuspendLayout();
+            splitContainer1.Panel2.SuspendLayout();
+            splitContainer1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)splitContainer2).BeginInit();
+            splitContainer2.Panel1.SuspendLayout();
+            splitContainer2.Panel2.SuspendLayout();
+            splitContainer2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)ImageBox).BeginInit();
+            SuspendLayout();
             // 
             // MainMenu
             // 
-            this.MainMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem});
-            this.MainMenu.Location = new System.Drawing.Point(0, 0);
-            this.MainMenu.Name = "MainMenu";
-            this.MainMenu.Size = new System.Drawing.Size(863, 24);
-            this.MainMenu.TabIndex = 0;
-            this.MainMenu.Text = "menuStrip1";
+            MainMenu.Items.AddRange(new ToolStripItem[] { fileToolStripMenuItem });
+            MainMenu.Location = new Point(0, 0);
+            MainMenu.Name = "MainMenu";
+            MainMenu.Padding = new Padding(7, 3, 0, 3);
+            MainMenu.Size = new Size(1007, 27);
+            MainMenu.TabIndex = 0;
+            MainMenu.Text = "menuStrip1";
             // 
             // fileToolStripMenuItem
             // 
-            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.openMenuItem});
-            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
-            this.fileToolStripMenuItem.Text = "Folder";
+            fileToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { openMenuItem });
+            fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+            fileToolStripMenuItem.Size = new Size(92, 21);
+            fileToolStripMenuItem.Text = "选择库文件夹";
             // 
             // openMenuItem
             // 
-            this.openMenuItem.Name = "openMenuItem";
-            this.openMenuItem.Size = new System.Drawing.Size(103, 22);
-            this.openMenuItem.Text = "打开";
-            this.openMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
+            openMenuItem.Name = "openMenuItem";
+            openMenuItem.Size = new Size(100, 22);
+            openMenuItem.Text = "打开";
+            openMenuItem.Click += openToolStripMenuItem_Click;
             // 
             // ImageList
             // 
-            this.ImageList.ColorDepth = System.Windows.Forms.ColorDepth.Depth32Bit;
-            this.ImageList.ImageSize = new System.Drawing.Size(64, 64);
-            this.ImageList.TransparentColor = System.Drawing.Color.Transparent;
+            ImageList.ColorDepth = ColorDepth.Depth32Bit;
+            ImageList.ImageSize = new Size(64, 64);
+            ImageList.TransparentColor = Color.Transparent;
             // 
             // LibraryFolderDialog
             // 
-            this.LibraryFolderDialog.ShowNewFolderButton = false;
+            LibraryFolderDialog.ShowNewFolderButton = false;
             // 
             // splitContainer1
             // 
-            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 24);
-            this.splitContainer1.Name = "splitContainer1";
-            this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            splitContainer1.Dock = DockStyle.Fill;
+            splitContainer1.Location = new Point(0, 27);
+            splitContainer1.Margin = new Padding(4);
+            splitContainer1.Name = "splitContainer1";
+            splitContainer1.Orientation = Orientation.Horizontal;
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.splitContainer2);
-            this.splitContainer1.Panel1MinSize = 150;
+            splitContainer1.Panel1.Controls.Add(splitContainer2);
+            splitContainer1.Panel1MinSize = 150;
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.PreviewListView);
-            this.splitContainer1.Size = new System.Drawing.Size(863, 507);
-            this.splitContainer1.SplitterDistance = 250;
-            this.splitContainer1.TabIndex = 1;
+            splitContainer1.Panel2.Controls.Add(PreviewListView);
+            splitContainer1.Size = new Size(1007, 667);
+            splitContainer1.SplitterDistance = 328;
+            splitContainer1.SplitterWidth = 5;
+            splitContainer1.TabIndex = 1;
             // 
             // splitContainer2
             // 
-            this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer2.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer2.MinimumSize = new System.Drawing.Size(0, 200);
-            this.splitContainer2.Name = "splitContainer2";
+            splitContainer2.Dock = DockStyle.Fill;
+            splitContainer2.Location = new Point(0, 0);
+            splitContainer2.Margin = new Padding(4);
+            splitContainer2.MinimumSize = new Size(0, 262);
+            splitContainer2.Name = "splitContainer2";
             // 
             // splitContainer2.Panel1
             // 
-            this.splitContainer2.Panel1.Controls.Add(this.ExportImagesButton);
-            this.splitContainer2.Panel1.Controls.Add(this.DebugBox);
-            this.splitContainer2.Panel1.Controls.Add(this.checkCenter);
-            this.splitContainer2.Panel1.Controls.Add(this.checkBackground);
-            this.splitContainer2.Panel1.Controls.Add(this.HeightLabel);
-            this.splitContainer2.Panel1.Controls.Add(this.LblHeight);
-            this.splitContainer2.Panel1.Controls.Add(this.LibNameLabel);
-            this.splitContainer2.Panel1.Controls.Add(this.LibCountLabel);
-            this.splitContainer2.Panel1.Controls.Add(this.WidthLabel);
-            this.splitContainer2.Panel1.Controls.Add(this.LblLibName);
-            this.splitContainer2.Panel1.Controls.Add(this.LblLibCount);
-            this.splitContainer2.Panel1.Controls.Add(this.LblWidth);
-            this.splitContainer2.Panel1MinSize = 150;
+            splitContainer2.Panel1.Controls.Add(ExportImagesButton);
+            splitContainer2.Panel1.Controls.Add(DebugBox);
+            splitContainer2.Panel1.Controls.Add(checkCenter);
+            splitContainer2.Panel1.Controls.Add(checkBackground);
+            splitContainer2.Panel1.Controls.Add(HeightLabel);
+            splitContainer2.Panel1.Controls.Add(LblHeight);
+            splitContainer2.Panel1.Controls.Add(LibNameLabel);
+            splitContainer2.Panel1.Controls.Add(LibCountLabel);
+            splitContainer2.Panel1.Controls.Add(WidthLabel);
+            splitContainer2.Panel1.Controls.Add(LblLibName);
+            splitContainer2.Panel1.Controls.Add(LblLibCount);
+            splitContainer2.Panel1.Controls.Add(LblWidth);
+            splitContainer2.Panel1MinSize = 150;
             // 
             // splitContainer2.Panel2
             // 
-            this.splitContainer2.Panel2.Controls.Add(this.ImageBox);
-            this.splitContainer2.Panel2MinSize = 250;
-            this.splitContainer2.Size = new System.Drawing.Size(863, 250);
-            this.splitContainer2.SplitterDistance = 173;
-            this.splitContainer2.TabIndex = 0;
+            splitContainer2.Panel2.Controls.Add(ImageBox);
+            splitContainer2.Panel2MinSize = 250;
+            splitContainer2.Size = new Size(1007, 328);
+            splitContainer2.SplitterDistance = 201;
+            splitContainer2.SplitterWidth = 5;
+            splitContainer2.TabIndex = 0;
             // 
             // DebugBox
             // 
-            this.DebugBox.Location = new System.Drawing.Point(3, 182);
-            this.DebugBox.Multiline = true;
-            this.DebugBox.Name = "DebugBox";
-            this.DebugBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.DebugBox.Size = new System.Drawing.Size(168, 65);
-            this.DebugBox.TabIndex = 6;
-            this.DebugBox.Visible = false;
+            DebugBox.Location = new Point(4, 238);
+            DebugBox.Margin = new Padding(4);
+            DebugBox.Multiline = true;
+            DebugBox.Name = "DebugBox";
+            DebugBox.ScrollBars = ScrollBars.Both;
+            DebugBox.Size = new Size(195, 84);
+            DebugBox.TabIndex = 6;
+            DebugBox.Visible = false;
             // 
             // checkCenter
             // 
-            this.checkCenter.AutoSize = true;
-            this.checkCenter.Checked = true;
-            this.checkCenter.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkCenter.Location = new System.Drawing.Point(12, 106);
-            this.checkCenter.Name = "checkCenter";
-            this.checkCenter.Size = new System.Drawing.Size(57, 17);
-            this.checkCenter.TabIndex = 5;
-            this.checkCenter.Text = "居中";
-            this.checkCenter.UseVisualStyleBackColor = true;
-            this.checkCenter.CheckedChanged += new System.EventHandler(this.checkCenter_CheckedChanged);
+            checkCenter.AutoSize = true;
+            checkCenter.Checked = true;
+            checkCenter.CheckState = CheckState.Checked;
+            checkCenter.Location = new Point(14, 139);
+            checkCenter.Margin = new Padding(4);
+            checkCenter.Name = "checkCenter";
+            checkCenter.Size = new Size(51, 21);
+            checkCenter.TabIndex = 5;
+            checkCenter.Text = "居中";
+            checkCenter.UseVisualStyleBackColor = true;
+            checkCenter.CheckedChanged += checkCenter_CheckedChanged;
             // 
             // checkBackground
             // 
-            this.checkBackground.AutoSize = true;
-            this.checkBackground.Checked = true;
-            this.checkBackground.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBackground.Location = new System.Drawing.Point(12, 83);
-            this.checkBackground.Name = "checkBackground";
-            this.checkBackground.Size = new System.Drawing.Size(84, 17);
-            this.checkBackground.TabIndex = 4;
-            this.checkBackground.Text = "背景";
-            this.checkBackground.UseVisualStyleBackColor = true;
-            this.checkBackground.CheckedChanged += new System.EventHandler(this.checkBackground_CheckedChanged);
+            checkBackground.AutoSize = true;
+            checkBackground.Checked = true;
+            checkBackground.CheckState = CheckState.Checked;
+            checkBackground.Location = new Point(14, 109);
+            checkBackground.Margin = new Padding(4);
+            checkBackground.Name = "checkBackground";
+            checkBackground.Size = new Size(51, 21);
+            checkBackground.TabIndex = 4;
+            checkBackground.Text = "背景";
+            checkBackground.UseVisualStyleBackColor = true;
+            checkBackground.CheckedChanged += checkBackground_CheckedChanged;
             // 
             // HeightLabel
             // 
-            this.HeightLabel.AutoSize = true;
-            this.HeightLabel.Location = new System.Drawing.Point(56, 58);
-            this.HeightLabel.Name = "HeightLabel";
-            this.HeightLabel.Size = new System.Drawing.Size(65, 13);
-            this.HeightLabel.TabIndex = 3;
-            this.HeightLabel.Text = "<No Image>";
+            HeightLabel.AutoSize = true;
+            HeightLabel.Location = new Point(65, 76);
+            HeightLabel.Margin = new Padding(4, 0, 4, 0);
+            HeightLabel.Name = "HeightLabel";
+            HeightLabel.Size = new Size(38, 17);
+            HeightLabel.TabIndex = 3;
+            HeightLabel.Text = "<空>";
             // 
             // LblHeight
             // 
-            this.LblHeight.AutoSize = true;
-            this.LblHeight.Location = new System.Drawing.Point(12, 58);
-            this.LblHeight.Name = "LblHeight";
-            this.LblHeight.Size = new System.Drawing.Size(41, 13);
-            this.LblHeight.TabIndex = 2;
-            this.LblHeight.Text = "高度:";
+            LblHeight.AutoSize = true;
+            LblHeight.Location = new Point(14, 76);
+            LblHeight.Margin = new Padding(4, 0, 4, 0);
+            LblHeight.Name = "LblHeight";
+            LblHeight.Size = new Size(35, 17);
+            LblHeight.TabIndex = 2;
+            LblHeight.Text = "高度:";
             // 
             // LibNameLabel
             // 
-            this.LibNameLabel.AutoSize = true;
-            this.LibNameLabel.Location = new System.Drawing.Point(59, 24);
-            this.LibNameLabel.Name = "LibNameLabel";
-            this.LibNameLabel.Size = new System.Drawing.Size(80, 13);
-            this.LibNameLabel.TabIndex = 1;
-            this.LibNameLabel.Text = "<No Selection>";
+            LibNameLabel.AutoSize = true;
+            LibNameLabel.Location = new Point(69, 31);
+            LibNameLabel.Margin = new Padding(4, 0, 4, 0);
+            LibNameLabel.Name = "LibNameLabel";
+            LibNameLabel.Size = new Size(62, 17);
+            LibNameLabel.TabIndex = 1;
+            LibNameLabel.Text = "<无选择>";
             // 
             // LibCountLabel
             // 
-            this.LibCountLabel.AutoSize = true;
-            this.LibCountLabel.Location = new System.Drawing.Point(59, 9);
-            this.LibCountLabel.Name = "LibCountLabel";
-            this.LibCountLabel.Size = new System.Drawing.Size(13, 13);
-            this.LibCountLabel.TabIndex = 1;
-            this.LibCountLabel.Text = "0";
+            LibCountLabel.AutoSize = true;
+            LibCountLabel.Location = new Point(69, 12);
+            LibCountLabel.Margin = new Padding(4, 0, 4, 0);
+            LibCountLabel.Name = "LibCountLabel";
+            LibCountLabel.Size = new Size(15, 17);
+            LibCountLabel.TabIndex = 1;
+            LibCountLabel.Text = "0";
             // 
             // WidthLabel
             // 
-            this.WidthLabel.AutoSize = true;
-            this.WidthLabel.Location = new System.Drawing.Point(56, 45);
-            this.WidthLabel.Name = "WidthLabel";
-            this.WidthLabel.Size = new System.Drawing.Size(65, 13);
-            this.WidthLabel.TabIndex = 1;
-            this.WidthLabel.Text = "<No Image>";
+            WidthLabel.AutoSize = true;
+            WidthLabel.Location = new Point(65, 59);
+            WidthLabel.Margin = new Padding(4, 0, 4, 0);
+            WidthLabel.Name = "WidthLabel";
+            WidthLabel.Size = new Size(38, 17);
+            WidthLabel.TabIndex = 1;
+            WidthLabel.Text = "<空>";
             // 
             // LblLibName
             // 
-            this.LblLibName.AutoSize = true;
-            this.LblLibName.Location = new System.Drawing.Point(12, 24);
-            this.LblLibName.Name = "LblLibName";
-            this.LblLibName.Size = new System.Drawing.Size(37, 13);
-            this.LblLibName.TabIndex = 0;
-            this.LblLibName.Text = "Libfile:";
+            LblLibName.AutoSize = true;
+            LblLibName.Location = new Point(14, 31);
+            LblLibName.Margin = new Padding(4, 0, 4, 0);
+            LblLibName.Name = "LblLibName";
+            LblLibName.Size = new Size(57, 17);
+            LblLibName.TabIndex = 0;
+            LblLibName.Text = "LIB 文件:";
             // 
             // LblLibCount
             // 
-            this.LblLibCount.AutoSize = true;
-            this.LblLibCount.Location = new System.Drawing.Point(12, 9);
-            this.LblLibCount.Name = "LblLibCount";
-            this.LblLibCount.Size = new System.Drawing.Size(51, 13);
-            this.LblLibCount.TabIndex = 0;
-            this.LblLibCount.Text = "Libcount:";
+            LblLibCount.AutoSize = true;
+            LblLibCount.Location = new Point(14, 12);
+            LblLibCount.Margin = new Padding(4, 0, 4, 0);
+            LblLibCount.Name = "LblLibCount";
+            LblLibCount.Size = new Size(45, 17);
+            LblLibCount.TabIndex = 0;
+            LblLibCount.Text = "LIB 数:";
             // 
             // LblWidth
             // 
-            this.LblWidth.AutoSize = true;
-            this.LblWidth.Location = new System.Drawing.Point(12, 45);
-            this.LblWidth.Name = "LblWidth";
-            this.LblWidth.Size = new System.Drawing.Size(38, 13);
-            this.LblWidth.TabIndex = 0;
-            this.LblWidth.Text = "Width:";
+            LblWidth.AutoSize = true;
+            LblWidth.Location = new Point(14, 59);
+            LblWidth.Margin = new Padding(4, 0, 4, 0);
+            LblWidth.Name = "LblWidth";
+            LblWidth.Size = new Size(35, 17);
+            LblWidth.TabIndex = 0;
+            LblWidth.Text = "宽度:";
             // 
             // ImageBox
             // 
-            this.ImageBox.BackColor = System.Drawing.Color.White;
-            this.ImageBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.ImageBox.Location = new System.Drawing.Point(0, 0);
-            this.ImageBox.Name = "ImageBox";
-            this.ImageBox.Size = new System.Drawing.Size(686, 250);
-            this.ImageBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.ImageBox.TabIndex = 0;
-            this.ImageBox.TabStop = false;
+            ImageBox.BackColor = Color.White;
+            ImageBox.Dock = DockStyle.Fill;
+            ImageBox.Location = new Point(0, 0);
+            ImageBox.Margin = new Padding(4);
+            ImageBox.Name = "ImageBox";
+            ImageBox.Size = new Size(801, 328);
+            ImageBox.SizeMode = PictureBoxSizeMode.CenterImage;
+            ImageBox.TabIndex = 0;
+            ImageBox.TabStop = false;
             // 
             // PreviewListView
             // 
-            this.PreviewListView.BackgroundImageTiled = true;
-            this.PreviewListView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.PreviewListView.LargeImageList = this.ImageList;
-            this.PreviewListView.Location = new System.Drawing.Point(0, 0);
-            this.PreviewListView.Name = "PreviewListView";
-            this.PreviewListView.ShowItemToolTips = true;
-            this.PreviewListView.Size = new System.Drawing.Size(863, 253);
-            this.PreviewListView.TabIndex = 0;
-            this.PreviewListView.UseCompatibleStateImageBehavior = false;
-            this.PreviewListView.VirtualMode = true;
-            this.PreviewListView.RetrieveVirtualItem += new System.Windows.Forms.RetrieveVirtualItemEventHandler(this.PreviewListView_RetrieveVirtualItem);
-            this.PreviewListView.SelectedIndexChanged += new System.EventHandler(this.PreviewListView_SelectedIndexChanged);
+            PreviewListView.BackgroundImageTiled = true;
+            PreviewListView.Dock = DockStyle.Fill;
+            PreviewListView.LargeImageList = ImageList;
+            PreviewListView.Location = new Point(0, 0);
+            PreviewListView.Margin = new Padding(4);
+            PreviewListView.Name = "PreviewListView";
+            PreviewListView.ShowItemToolTips = true;
+            PreviewListView.Size = new Size(1007, 334);
+            PreviewListView.TabIndex = 0;
+            PreviewListView.UseCompatibleStateImageBehavior = false;
+            PreviewListView.VirtualMode = true;
+            PreviewListView.RetrieveVirtualItem += PreviewListView_RetrieveVirtualItem;
+            PreviewListView.SelectedIndexChanged += PreviewListView_SelectedIndexChanged;
             // 
             // ExportImagesButton
             // 
-            this.ExportImagesButton.Location = new System.Drawing.Point(12, 130);
-            this.ExportImagesButton.Name = "ExportImagesButton";
-            this.ExportImagesButton.Size = new System.Drawing.Size(84, 23);
-            this.ExportImagesButton.TabIndex = 7;
-            this.ExportImagesButton.Text = "Export Images";
-            this.ExportImagesButton.UseVisualStyleBackColor = true;
-            this.ExportImagesButton.Click += new System.EventHandler(this.ExportImagesButton_Click);
+            ExportImagesButton.Location = new Point(14, 170);
+            ExportImagesButton.Margin = new Padding(4);
+            ExportImagesButton.Name = "ExportImagesButton";
+            ExportImagesButton.Size = new Size(136, 30);
+            ExportImagesButton.TabIndex = 7;
+            ExportImagesButton.Text = "导出图像";
+            ExportImagesButton.UseVisualStyleBackColor = true;
+            ExportImagesButton.Click += ExportImagesButton_Click;
             // 
             // LMain
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(863, 531);
-            this.Controls.Add(this.splitContainer1);
-            this.Controls.Add(this.MainMenu);
-            this.MainMenuStrip = this.MainMenu;
-            this.Name = "LMain";
-            this.Text = "C# Library Viewer";
-            this.MainMenu.ResumeLayout(false);
-            this.MainMenu.PerformLayout();
-            this.splitContainer1.Panel1.ResumeLayout(false);
-            this.splitContainer1.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
-            this.splitContainer1.ResumeLayout(false);
-            this.splitContainer2.Panel1.ResumeLayout(false);
-            this.splitContainer2.Panel1.PerformLayout();
-            this.splitContainer2.Panel2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
-            this.splitContainer2.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.ImageBox)).EndInit();
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleDimensions = new SizeF(7F, 17F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(1007, 694);
+            Controls.Add(splitContainer1);
+            Controls.Add(MainMenu);
+            MainMenuStrip = MainMenu;
+            Margin = new Padding(4);
+            Name = "LMain";
+            Text = "C# Lib库查看器";
+            MainMenu.ResumeLayout(false);
+            MainMenu.PerformLayout();
+            splitContainer1.Panel1.ResumeLayout(false);
+            splitContainer1.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)splitContainer1).EndInit();
+            splitContainer1.ResumeLayout(false);
+            splitContainer2.Panel1.ResumeLayout(false);
+            splitContainer2.Panel1.PerformLayout();
+            splitContainer2.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)splitContainer2).EndInit();
+            splitContainer2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)ImageBox).EndInit();
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
 
-        private System.Windows.Forms.MenuStrip MainMenu;
-        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem openMenuItem;
-        private System.Windows.Forms.ImageList ImageList;
-        private System.Windows.Forms.FolderBrowserDialog LibraryFolderDialog;
-        private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.SplitContainer splitContainer2;
-        private System.Windows.Forms.CheckBox checkCenter;
-        private System.Windows.Forms.CheckBox checkBackground;
-        private System.Windows.Forms.Label HeightLabel;
-        private System.Windows.Forms.Label LblHeight;
-        private System.Windows.Forms.Label LibCountLabel;
-        private System.Windows.Forms.Label WidthLabel;
-        private System.Windows.Forms.Label LblLibCount;
-        private System.Windows.Forms.Label LblWidth;
-        private System.Windows.Forms.PictureBox ImageBox;
-        private FixedListView PreviewListView;
-        private System.Windows.Forms.Label LibNameLabel;
-        private System.Windows.Forms.Label LblLibName;
-        private System.Windows.Forms.TextBox DebugBox;
-        private System.Windows.Forms.Button ExportImagesButton;
+        private MenuStrip MainMenu;
+        private ToolStripMenuItem fileToolStripMenuItem;
+        private ToolStripMenuItem openMenuItem;
+        private ImageList ImageList;
+        private FolderBrowserDialog LibraryFolderDialog;
+        private SplitContainer splitContainer1;
+        private SplitContainer splitContainer2;
+        private CheckBox checkCenter;
+        private CheckBox checkBackground;
+        private Label HeightLabel;
+        private Label LblHeight;
+        private Label LibCountLabel;
+        private Label WidthLabel;
+        private Label LblLibCount;
+        private Label LblWidth;
+        private PictureBox ImageBox;
+        private CustomFormControl.FixedListView PreviewListView;
+        private Label LibNameLabel;
+        private Label LblLibName;
+        private TextBox DebugBox;
+        private Button ExportImagesButton;
     }
 }
 

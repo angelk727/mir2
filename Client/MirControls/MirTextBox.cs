@@ -1,11 +1,7 @@
-﻿using System;
-using System.Drawing;
-using System.Drawing.Imaging;
-using System.Linq;
-using System.Windows.Forms;
-using Client.MirGraphics;
+﻿using Client.MirGraphics;
 using SlimDX;
 using SlimDX.Direct3D9;
+using System.Drawing.Imaging;
 
 namespace Client.MirControls
 {

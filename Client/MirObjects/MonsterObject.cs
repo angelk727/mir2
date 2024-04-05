@@ -1,11 +1,9 @@
-﻿using System;
-using System.Drawing;
-using System.Linq;
-using Client.MirControls;
+﻿using Client.MirControls;
 using Client.MirGraphics;
 using Client.MirScenes;
 using Client.MirSounds;
 using S = ServerPackets;
+using Client.MirControls;
 
 namespace Client.MirObjects
 {
@@ -52,7 +50,7 @@ namespace Client.MirObjects
 
         public FrameSet Frames = new FrameSet();
         public Frame Frame;
-        public int FrameIndex, FrameInterval, EffectFrameIndex, EffectFrameInterval;
+        public int FrameIndex, FrameInterval, EffectFrameIndex, EffectFrameInterval; //新添加 ？？
 
         public uint TargetID;
         public Point TargetPoint;

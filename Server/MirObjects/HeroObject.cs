@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using Server.MirDatabase;
+﻿using Server.MirDatabase;
 using Server.MirEnvir;
 using Server.MirNetwork;
-using Server.MirObjects.Monsters;
 using S = ServerPackets;
+using Server.MirObjects.Monsters;
 
 namespace Server.MirObjects
 {
@@ -67,7 +64,7 @@ namespace Server.MirObjects
             }
         }
 
-        public const int SearchDelay = 3000, ViewRange = 8, RoamDelay = 1000, RevivalDelay = 2000, AutoPotDelay = 1000, HeroRecallDelay = 180000; //自添加
+        public const int SearchDelay = 3000, ViewRange = 8, RoamDelay = 1000, RevivalDelay = 2000, AutoPotDelay = 1000, HeroRecallDelay = 180000;
         public long RoamTime, AutoPotTime, HeroRecallTime;
 
         public override long BrownTime
@@ -407,15 +404,15 @@ namespace Server.MirObjects
                                 AddBuff(BuffType.落物纷飞, this, Settings.Minute * time, new Stats { [Stat.物品掉落数率] = item.GetTotal(Stat.幸运) });
                             }
                             break;
-                        case 6: //自添加慢速恢复%
+                        case 6:
                             PotHealthAmount = (ushort)Math.Min(ushort.MaxValue, PotHealthAmount + (Stats[Stat.HP] / 100) * (item.Info.Stats[Stat.生命值数率]));
                             PotManaAmount = (ushort)Math.Min(ushort.MaxValue, PotManaAmount + (Stats[Stat.MP] / 100) * (item.Info.Stats[Stat.法力值数率]));
                             break;
-                        case 7: //自添加快速恢复%
+                        case 7:
                             ChangeHP((Stats[Stat.HP] / 100) * (item.Info.Stats[Stat.生命值数率]));
                             ChangeMP((Stats[Stat.MP] / 100) * (item.Info.Stats[Stat.法力值数率]));
                             break;
-                        case 8: //自添加技能修炼速度
+                        case 8:
                             {
                                 int time = item.Info.Durability;
                                 AddBuff(BuffType.潜心修炼, this, Settings.Minute * time, new Stats { [Stat.技能熟练度倍率] = 2 });
@@ -774,7 +771,7 @@ namespace Server.MirObjects
             if (Owner.PMode == PetMode.MoveOnly || Owner.PMode == PetMode.None)
                 Target = null;
 
-            if (Owner.Info.HeroBehaviour == HeroBehaviour.原地) //自添加英雄窗口
+            if (Owner.Info.HeroBehaviour == HeroBehaviour.原地)
             {
                 MoveTo(Owner.CurrentLocation);
             };

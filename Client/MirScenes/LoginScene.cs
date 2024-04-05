@@ -1,18 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
 using System.Text.RegularExpressions;
-using System.Threading;
-using System.Windows.Forms;
 using Client.MirControls;
 using Client.MirGraphics;
 using Client.MirNetwork;
 using Client.MirSounds;
-using C = ClientPackets;
 using S = ServerPackets;
+using C = ClientPackets;
 
 namespace Client.MirScenes
 {
@@ -33,10 +26,8 @@ namespace Client.MirScenes
 
         public LoginScene()
         {
-            SoundManager.PlaySound(SoundList.IntroMusic, true);
-            Disposing += (o, e) => SoundManager.StopSound(SoundList.IntroMusic);
-            //SoundManager.PlayMusic(SoundList.IntroMusic, true);
-            //Disposing += (o, e) => SoundManager.StopMusic();
+            SoundManager.PlayMusic(SoundList.IntroMusic, true);
+            Disposing += (o, e) => SoundManager.StopMusic();
 
             _background = new MirAnimatedControl
                 {

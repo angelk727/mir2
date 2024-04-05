@@ -1,11 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Drawing;
-using System.Windows.Forms;
-using Client.MirControls;
+﻿using Client.MirControls;
 using Client.MirGraphics;
 using Client.MirScenes;
-using Client.MirScenes.Dialogs;
 using Client.MirSounds;
+using Client.MirScenes.Dialogs;
 using SlimDX;
 
 namespace Client.MirObjects
@@ -68,7 +65,7 @@ namespace Client.MirObjects
         public bool Dead, Hidden, SitDown, Sneaking;
         public PoisonType Poison;
         public long DeadTime;
-        public uint AI; //自添加AI扩容
+        public uint AI;
         public bool InTrapRock;
         public int JumpDistance;
 
@@ -241,10 +238,10 @@ namespace Client.MirObjects
                 case BuffType.金刚不坏:
                     Effects.Add(new BuffEffect(Libraries.Magic3, 570, 5, 1400, this, true, type) { Repeat = true });
                     break;
-                case BuffType.金刚不坏秘籍: //自添加金刚不坏秘籍
+                case BuffType.金刚不坏秘籍:
                     Effects.Add(new BuffEffect(Libraries.Magic3, 570, 5, 1400, this, true, type) { Repeat = true });
                     break;
-                case BuffType.天上秘术:  //自添加天上秘术
+                case BuffType.天上秘术:
                     Effects.Add(new BuffEffect(Libraries.Magic3, 210, 7, 1400, this, true, type) { Repeat = true });
                     break;
                 case BuffType.轻身步:
@@ -280,79 +277,79 @@ namespace Client.MirObjects
 				case BuffType.游戏管理:
 					Effects.Add(new BuffEffect(Libraries.CHumEffect[5], 0, 1, 1200, this, true, type) { Repeat = true });
 					break;
-                case BuffType.GeneralMeowMeowShield: //341
+                case BuffType.GeneralMeowMeowShield:
                     Effects.Add(new BuffEffect(Libraries.Monsters[(ushort)Monster.GeneralMeowMeow], 569, 7, 700, this, true, type) { Repeat = true, Light = 1 });
                     SoundManager.PlaySound(8322);
                     break;
-                case BuffType.御体之力: //377
+                case BuffType.御体之力:
                     Effects.Add(new BuffEffect(Libraries.Monsters[(ushort)Monster.PowerUpBead], 62, 6, 600, this, true, type) { Blend = true, Repeat = true });
                     break;
-                case BuffType.HornedArcherBuff: //401-0
+                case BuffType.HornedArcherBuff:
                     Effects.Add(effect = new BuffEffect(Libraries.Monsters[(ushort)Monster.HornedArcher], 524, 6, 600, this, true, type) { Repeat = false });
                     effect.Complete += (o, e) =>
                     {
                         Effects.Add(new BuffEffect(Libraries.Monsters[(ushort)Monster.HornedArcher], 530, 3, 1000, this, true, type) { Blend = true, Repeat = true });
                     };
                     break;
-                case BuffType.ColdArcherBuff: //401-1
+                case BuffType.ColdArcherBuff:
                     Effects.Add(effect = new BuffEffect(Libraries.Monsters[(ushort)Monster.HornedArcher], 533, 7, 700, this, true, type) { Repeat = false });
                     effect.Complete += (o, e) =>
                     {
                         Effects.Add(new BuffEffect(Libraries.Monsters[(ushort)Monster.HornedArcher], 540, 3, 1000, this, true, type) { Blend = true, Repeat = true });
                     };
                     break;
-                case BuffType.HornedColdArcherBuff: //401-2
+                case BuffType.HornedColdArcherBuff:
                     Effects.Add(effect = new BuffEffect(Libraries.Monsters[(ushort)Monster.HornedArcher], 543, 7, 700, this, true, type) { Repeat = false });
                     effect.Complete += (o, e) =>
                     {
                         Effects.Add(new BuffEffect(Libraries.Monsters[(ushort)Monster.HornedArcher], 550, 3, 1000, this, true, type) { Blend = true, Repeat = true });
                     };
                     break;
-                case BuffType.HornedWarriorShield: //404
+                case BuffType.HornedWarriorShield:
                     Effects.Add(new BuffEffect(Libraries.Monsters[(ushort)Monster.HornedWarrior], 960, 18, 1800, this, true, type) { Repeat = true });
                     break;
-                case BuffType.HornedCommanderShield://409
+                case BuffType.HornedCommanderShield:
                     Effects.Add(effect = new BuffEffect(Libraries.Monsters[(ushort)Monster.HornedCommander], 1341, 1, 100, this, true, type) { Repeat = false, Light = 1 });
                     effect.Complete += (o, e) =>
                     {
                         Effects.Add(new BuffEffect(Libraries.Monsters[(ushort)Monster.HornedCommander], 1342, 16, 1600, this, true, type) { Repeat = true, Light = 1 });
                     };
                     break;		
-                case BuffType.ChieftainSwordBuff: //414
+                case BuffType.ChieftainSwordBuff:
                     Effects.Add(effect = new BuffEffect(Libraries.Monsters[(ushort)Monster.ChieftainSword], 1331, 6, 100, this, true, type) { Repeat = false, Light = 1 });
                     effect.Complete += (o, e) =>
                     {
                         Effects.Add(new BuffEffect(Libraries.Monsters[(ushort)Monster.ChieftainSword], 1337, 3, 600, this, true, type) { Repeat = true, Light = 1 });
                     };
                     break;
-                case BuffType.寒冰护甲: //476
+                case BuffType.寒冰护甲:
                     Effects.Add(effect = new BuffEffect(Libraries.Monsters[(ushort)Monster.ShardGuardian], 517, 11, 800, this, true, type) { Repeat = false, Light = 1, DrawBehind = true });
                     effect.Complete += (o, e) =>
                     {
                         Effects.Add(new BuffEffect(Libraries.Monsters[(ushort)Monster.ShardGuardian], 528, 8, 1600, this, true, type) { Repeat = true, Light = 1 });
                     };
                     break;
-                case BuffType.ReaperPriestBuff: //487
+                case BuffType.ReaperPriestBuff:
                     Effects.Add(effect = new BuffEffect(Libraries.Monsters[(ushort)Monster.ReaperPriest], 497, 16, 800, this, true, type) { Repeat = false, Light = 1, DrawBehind = true });
                     effect.Complete += (o, e) =>
                     {
                         Effects.Add(new BuffEffect(Libraries.Monsters[(ushort)Monster.ReaperPriest], 479, 18, 1600, this, true, type) { Repeat = true, Light = 1 });
                     };
                     break;
-                case BuffType.至尊威严: //502
+                case BuffType.至尊威严:
                     Effects.Add(new BuffEffect(Libraries.Monsters[(ushort)Monster.NobleWarrior], 472, 6, 600, this, true, type) { Repeat = true, Light = 1 });
                     break;
-                case BuffType.伤口加深: //505
+                case BuffType.伤口加深:
                     Effects.Add(new BuffEffect(Libraries.Monsters[(ushort)Monster.NobleAssassin], 544, 6, 600, this, true, type) { Repeat = true, Light = 1 });
                     break;
-                case BuffType.死亡印记: //516
+                case BuffType.死亡印记:
                     Effects.Add(effect = new BuffEffect(Libraries.Monsters[(ushort)Monster.Butcher], 690, 1, 100, this, true, type) { Repeat = false, Light = 1 });
                     effect.Complete += (o, e) =>
                     {
                         Effects.Add(new BuffEffect(Libraries.Monsters[(ushort)Monster.Butcher], 690, 10, 1600, this, true, type) { Repeat = true, Light = 1 });
                     };
                     break;
-                case BuffType.RiklebitesShield: //518
+                case BuffType.RiklebitesShield:
                     Effects.Add(effect = new BuffEffect(Libraries.Monsters[(ushort)Monster.Riklebites], 1084, 3, 500, this, true, type) { Repeat = false, Light = 1 });
                     effect.Complete += (o, e) =>
                     {
@@ -633,7 +630,7 @@ namespace Client.MirObjects
                 {
                     Start = start,
                     End = start + frameCount - 1,
-                    Loops = (duration / (frameInterval * frameCount)) - 1 //删除1个计数，因为在检查之前我们已经完成了一个循环
+                    Loops = (duration / (frameInterval * frameCount)) - 1 //Remove 1 count as we've already done a loop before this is checked
                 };
             }
         }

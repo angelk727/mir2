@@ -1,5 +1,3 @@
-ï»¿using System;
-using System.IO;
 using System.Net;
 using System.Text;
 
@@ -15,12 +13,14 @@ namespace Server.Library.Utils
         {
         }
 
-        public void Listen()
+        public void Listen(object obj)
         {
+            CancellationToken token = (CancellationToken)obj;
+
             if (!HttpListener.IsSupported)
             {
                 throw new InvalidOperationException(
-                    "è¦ä½¿ç”¨HttpæœåŠ¡å™¨ï¼Œæ“ä½œç³»ç»Ÿå¿…é¡»æ˜¯Windows XP SP2æˆ–Server 2003æˆ–æ›´é«˜ç‰ˆæœ¬");
+                    "ÒªÊ¹ÓÃHttp·şÎñÆ÷£¬²Ù×÷ÏµÍ³±ØĞëÊÇWindows XP SP2»òServer 2003»ò¸ü¸ß°æ±¾");
             }
             string[] prefixes = { Host };
 
@@ -32,16 +32,15 @@ namespace Server.Library.Utils
                     _listener.Prefixes.Add(s);
                 }
                 _listener.Start();
-                MessageQueue.Instance.Enqueue("HttpæœåŠ¡å™¨ æˆåŠŸå¼€å¯");
+                MessageQueue.Instance.Enqueue("Http·şÎñÆ÷ ³É¹¦¿ªÆô");
             }
             catch (Exception err)
             {
-                MessageQueue.Instance.Enqueue("HttpæœåŠ¡å™¨ å¯åŠ¨å¤±è´¥! é”™è¯¯:" + err);
+                MessageQueue.Instance.Enqueue("Http·şÎñÆ÷ Æô¶¯Ê§°Ü! ´íÎó:" + err);
                 return;
             }
 
-
-            while (_isActive)
+            while (_isActive && !token.IsCancellationRequested)
             {
                 try
                 {

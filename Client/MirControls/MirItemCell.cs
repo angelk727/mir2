@@ -1,12 +1,9 @@
-﻿using System;
-using System.Drawing;
-using System.Windows.Forms;
-using Client.MirGraphics;
+﻿using Client.MirGraphics;
 using Client.MirNetwork;
 using Client.MirObjects;
 using Client.MirScenes;
-using Client.MirScenes.Dialogs;
 using Client.MirSounds;
+using Client.MirScenes.Dialogs;
 using C = ClientPackets;
 
 namespace Client.MirControls
@@ -200,7 +197,7 @@ namespace Client.MirControls
 
         public void SetEffect()
         {
-            //把特效的东西放在这里？？
+            //put effect stuff here??
         }
 
 
@@ -282,14 +279,14 @@ namespace Client.MirControls
                         }
                     }
                     
-                    //添加对ALT+点击快速销售的支持
-                    else if (CMain.Alt && GameScene.Scene.NPCDropDialog.Visible && GridType == MirGridType.Inventory) // alt 销售/维修
+                    //Add support for ALT + click to sell quickly
+                    else if (CMain.Alt && GameScene.Scene.NPCDropDialog.Visible && GridType == MirGridType.Inventory) // alt sell/repair
                     {
-                        MoveItem(); // 收集物品
-                        GameScene.Scene.NPCDropDialog.ItemCell.OnMouseClick(e); // 模拟点击下拉控件
-                        GameScene.Scene.NPCDropDialog.ConfirmButton.OnMouseClick(e); //模仿OK确认交易
+                        MoveItem(); // pickup item
+                        GameScene.Scene.NPCDropDialog.ItemCell.OnMouseClick(e); // emulate click to drop control
+                        GameScene.Scene.NPCDropDialog.ConfirmButton.OnMouseClick(e); //emulate OK to confirm trade
                     }
-                    //添加对ALT+点击快速销售的支持
+                    //Add support for ALT + click to sell quickly
 
                     else if ((GridType == MirGridType.HeroHPItem || GridType == MirGridType.HeroMPItem) && GameScene.SelectedCell == null && Item != null)
                         Network.Enqueue(new C.SetAutoPotItem { Grid = GridType, ItemIndex = 0 });
@@ -1727,8 +1724,8 @@ namespace Client.MirControls
 
                                     }
                                     break;
-                                //升级物品的成功率与随机值及失败后销毁等
-                                //所有现金物品韩国服务器未实现
+                                //SuccessRateUpItem or RandomValueUpItem or CancelDestroyedItem etc.
+                                //AllCashItem Korea Server Not Implementation.
                                 case 5:
                                 case 6:
                                     if (GameScene.SelectedCell.Item.Info.Type == ItemType.觉醒物品 &&
@@ -1807,7 +1804,7 @@ namespace Client.MirControls
                                         MirMessageBox messageBox = new MirMessageBox("想尝试组合这些物品吗？", MirMessageBoxButtons.YesNo);
                                         messageBox.YesButton.Click += (o, e) =>
                                         {
-                                            //组合
+                                            //Combine
                                             Network.Enqueue(new C.CombineItem { Grid = GameScene.SelectedCell.GridType, IDFrom = GameScene.SelectedCell.Item.UniqueID, IDTo = Item.UniqueID });
                                             Locked = true;
                                             GameScene.SelectedCell.Locked = true;
@@ -1820,7 +1817,7 @@ namespace Client.MirControls
 
                                     if (GameScene.SelectedCell.Item.Info == Item.Info && Item.Count < Item.Info.StackSize)
                                     {
-                                        //合并
+                                        //Merge
                                         Network.Enqueue(new C.MergeItem { GridFrom = GameScene.SelectedCell.GridType, GridTo = GridType, IDFrom = GameScene.SelectedCell.Item.UniqueID, IDTo = Item.UniqueID });
 
                                         Locked = true;
@@ -2295,7 +2292,7 @@ namespace Client.MirControls
             if (actor == GameScene.Hero && actor.Dead)
                 return false;
 
-            //如果可以删除;
+            //If Can remove;
 
             switch (actor.Gender)
             {

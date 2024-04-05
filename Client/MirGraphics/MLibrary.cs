@@ -1,14 +1,9 @@
-﻿using System;
-using System.Drawing;
-using System.IO;
-using System.IO.Compression;
-using System.Linq;
-using System.Text.RegularExpressions;
-using System.Threading;
-using Client.MirObjects;
-using SlimDX;
+﻿using SlimDX;
 using SlimDX.Direct3D9;
+using System.IO.Compression;
 using Frame = Client.MirObjects.Frame;
+using Client.MirObjects;
+using System.Text.RegularExpressions;
 
 namespace Client.MirGraphics
 {
@@ -22,7 +17,7 @@ namespace Client.MirGraphics
             Prguse = new MLibrary(Settings.DataPath + "Prguse"),
             Prguse2 = new MLibrary(Settings.DataPath + "Prguse2"),
             Prguse3 = new MLibrary(Settings.DataPath + "Prguse3"),
-            StateitemEffect = new MLibrary(Settings.DataPath + "StateitemEffect"), //自添加
+            StateitemEffect = new MLibrary(Settings.DataPath + "StateitemEffect"),
             BuffIcon = new MLibrary(Settings.DataPath + "BuffIcon"),
             Help = new MLibrary(Settings.DataPath + "Help"),
             MiniMap = new MLibrary(Settings.DataPath + "MMap"),
@@ -65,12 +60,12 @@ namespace Client.MirGraphics
                                           AArmours,
                                           AWeaponsL,
                                           AWeaponsR,
-                                          AWeaponEffectL,//自添加
+                                          AWeaponEffectL,
                                           AWeaponEffectR,
                                           AHair,
                                           AHumEffect,
                                           ARArmours,
-                                          ARWeaponsEffect, //自添加
+                                          ARWeaponsEffect,
                                           ARWeaponsEffectS,
                                           ARWeapons,
                                           ARWeaponsS,
@@ -98,21 +93,21 @@ namespace Client.MirGraphics
             InitLibrary(ref CWeaponEffect, Settings.CWeaponEffectPath, "00");
             InitLibrary(ref CHumEffect, Settings.CHumEffectPath, "00");
 
-            //刺客
+            //Assassin
             InitLibrary(ref AArmours, Settings.AArmourPath, "00");
             InitLibrary(ref AHair, Settings.AHairPath, "00");
             InitLibrary(ref AWeaponsL, Settings.AWeaponPath, "00", " L");
             InitLibrary(ref AWeaponsR, Settings.AWeaponPath, "00", " R");
-            InitLibrary(ref AWeaponEffectL, Settings.AWeaponEffectPath, "00", " L"); //自添加
+            InitLibrary(ref AWeaponEffectL, Settings.AWeaponEffectPath, "00", " L");
             InitLibrary(ref AWeaponEffectR, Settings.AWeaponEffectPath, "00", " R");
             InitLibrary(ref AHumEffect, Settings.AHumEffectPath, "00");
 
-            //弓箭
+            //Archer
             InitLibrary(ref ARArmours, Settings.ARArmourPath, "00");
             InitLibrary(ref ARHair, Settings.ARHairPath, "00");
             InitLibrary(ref ARWeapons, Settings.ARWeaponPath, "00");
             InitLibrary(ref ARWeaponsS, Settings.ARWeaponPath, "00", " S");
-            InitLibrary(ref ARWeaponsEffect, Settings.ARWeaponEffectPath, "00"); //自添加
+            InitLibrary(ref ARWeaponsEffect, Settings.ARWeaponEffectPath, "00");
             InitLibrary(ref ARWeaponsEffectS, Settings.ARWeaponEffectPath, "00", " S");
             InitLibrary(ref ARHumEffect, Settings.ARHumEffectPath, "00");
 
@@ -240,7 +235,7 @@ namespace Client.MirGraphics
             Title.Initialize();
             Progress++;
 
-            StateitemEffect.Initialize(); //自添加
+            StateitemEffect.Initialize();
             Progress++;
         }
 
@@ -387,13 +382,13 @@ namespace Client.MirGraphics
                 Progress++;
             }
 
-            for (int i = 0; i < AWeaponEffectL.Length; i++) //自添加
+            for (int i = 0; i < AWeaponEffectL.Length; i++)
             {
                 AWeaponsL[i].Initialize();
                 Progress++;
             }
 
-            for (int i = 0; i < AWeaponEffectR.Length; i++) //自添加
+            for (int i = 0; i < AWeaponEffectR.Length; i++)
             {
                 AWeaponsR[i].Initialize();
                 Progress++;
@@ -423,13 +418,13 @@ namespace Client.MirGraphics
                 Progress++;
             }
 
-            for (int i = 0; i < ARWeaponsEffect.Length; i++) //自添加
+            for (int i = 0; i < ARWeaponsEffect.Length; i++)
             {
                 ARWeaponsEffect[i].Initialize();
                 Progress++;
             }
 
-            for (int i = 0; i < ARWeaponsEffectS.Length; i++) //自添加
+            for (int i = 0; i < ARWeaponsEffectS.Length; i++)
             {
                 ARWeaponsEffectS[i].Initialize();
                 Progress++;
@@ -917,7 +912,7 @@ namespace Client.MirGraphics
             Shadow = reader.ReadByte();
             Length = reader.ReadInt32();
 
-            //检查是否有第二层并读
+            //check if there's a second layer and read it
             HasMask = ((Shadow >> 7) == 1) ? true : false;
             if (HasMask)
             {

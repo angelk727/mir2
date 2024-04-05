@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text.RegularExpressions;
+﻿using C = ClientPackets;
 using Server.MirDatabase;
 using Server.MirEnvir;
 using Server.MirNetwork;
-using C = ClientPackets;
 using S = ServerPackets;
+using System.Text.RegularExpressions;
+using Timer = Server.MirEnvir.Timer;
+using Server.MirObjects.Monsters;
+using System.Threading;
 
 namespace Server.MirObjects
 {
@@ -20,6 +20,7 @@ namespace Server.MirObjects
         public bool GMLogin, EnableGroupRecall, EnableGuildInvite, AllowMarriage, AllowLoverRecall, AllowMentor, HasMapShout, HasServerShout; //TODO - Remove        
 
         public long LastRecallTime, LastTeleportTime, LastProbeTime;
+        public long NextMailTime;
         public long MenteeEXP;        
 
         public bool WarZone = false;
@@ -140,8 +141,8 @@ namespace Server.MirObjects
         public bool CanCreateGuild = false;        
         
         public GuildObject PendingGuildInvite = null;
-        public bool GuildNoticeChanged = true; //客户端第一次请求通知列表时设置为false，公会中每次有人编辑通知时设置为true
-        public bool GuildMembersChanged = true;//同上，适用于成员
+        public bool GuildNoticeChanged = true; //set to false first time client requests notice list, set to true each time someone in guild edits notice
+        public bool GuildMembersChanged = true;//same as above but for members
         public bool GuildCanRequestItems = true;
         public bool RequestedGuildBuffInfo = false;
 
@@ -267,7 +268,7 @@ namespace Server.MirObjects
 
                 if (pet.Race == ObjectType.Creature)
                 {
-                    //不要保存生物，它们在登录时会错过很多AI信息
+                    //dont save Creatures they will miss alot of AI-Info when they get spawned on login
                     UnSummonIntelligentCreature(((IntelligentCreatureObject)pet).PetType, false);
 
                     Pets.RemoveAt(i);
@@ -409,7 +410,7 @@ namespace Server.MirObjects
         {
             switch (reason)
             {
-                //0-10是“向客户端发送断开连接”
+                //0-10 are 'senddisconnect to client'
                 case 0:
                     return string.Format("{0} 已退出游戏 原因: 服务器关闭", Name);
                 case 1:
@@ -422,6 +423,8 @@ namespace Server.MirObjects
                     return string.Format("{0} 已退出游戏 原因: 被管理员踢出", Name);
                 case 5:
                     return string.Format("{0} 已退出游戏 原因: 服务器人数已满", Name);
+                case 6:
+                    return string.Format("{0} 已注销 原因：账号已被封禁！", Name);
                 case 10:
                     return string.Format("{0} 已退出游戏 原因: 客户端版本错误", Name);
                 case 20:
@@ -433,7 +436,7 @@ namespace Server.MirObjects
                 case 23:
                     return string.Format("{0} 已退出游戏 原因: 返回人物选择界面", Name);
                 case 24:
-                    return string.Format("{0} 已注销。原因：开始观察", Name);
+                    return string.Format("{0} 已注销 原因：开始观察", Name);
                 default:
                     return string.Format("{0} 已退出游戏 原因: 未知", Name);
             }
@@ -591,7 +594,7 @@ namespace Server.MirObjects
                 Pets[i].Die();
             }
 
-            if (HasHero && HeroSpawned && !Hero.Dead) //增加了人物死亡后附加英雄死亡惩罚，将英雄下线也是一种办法
+            if (HasHero && HeroSpawned && !Hero.Dead)
             {
                 Hero.Die();
             }
@@ -1228,8 +1231,8 @@ namespace Server.MirObjects
                         break;
                 }
 
-                // [grimchamp] 将刷新留在此处，以防将来的代码在上面的开关中设置级别或统计信息
-                monster.RefreshAll();
+                // [grimchamp] leave refresh here incase future code sets levels or stats in above switch
+                monster.RefreshAll(); 
 
                 Pets.Add(monster);
 
@@ -1271,8 +1274,6 @@ namespace Server.MirObjects
             {
                 RemoveBuff(BuffType.英雄灵气);
             }
-            //if (HasHero && Info.HeroSpawned) //人物上线不再自动召唤英雄
-            //    SummonHero();
 
             if (InSafeZone && Info.LastLogoutDate > DateTime.MinValue)
             {
@@ -1447,7 +1448,7 @@ namespace Server.MirObjects
             ServerPacketIds.ObjectWalk,
             ServerPacketIds.ObjectRun,
             ServerPacketIds.ObjectAttack,
-            ServerPacketIds.ObjectRangeAttack, //新增卡顿问题???
+            ServerPacketIds.ObjectRangeAttack,
             ServerPacketIds.ObjectMagic,
             ServerPacketIds.ObjectHarvest
         };
@@ -1961,7 +1962,7 @@ namespace Server.MirObjects
             }
             else if (message.StartsWith(":)"))
             {
-                //关联消息
+                //Relationship Message
                 message = message.Remove(0, 2);
                 parts = message.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
@@ -2009,9 +2010,9 @@ namespace Server.MirObjects
                 String hintstring;
                 UserItem item;
 
-                List<int> conquestAIs = new List<int>()
+                List<int> conquestAIs = new()
                 {
-                    //243,//72, // siege gate//该怪物暂时未启用为攻城类怪物
+                    //243,//72, // siege gate
                     //244,//73, // gate west
                     960,//80, // archer
                     950,//81, // gate 
@@ -2361,7 +2362,7 @@ namespace Server.MirObjects
                             }
                         }
                         break;
-                    //case "RECALLMEMBER": //屏蔽传送代码
+                    //case "RECALLMEMBER":
                     //    if (GroupMembers == null || GroupMembers[0] != this)
                     //    {
                     //        ReceiveChat("你不是组长", ChatType.System);
@@ -2690,7 +2691,7 @@ namespace Server.MirObjects
                             ReceiveChat(("地图禁用传送戒指"), ChatType.System);
                             return;
                         }
-                        if (Dead)//自添加死亡无法传送
+                        if (Dead)
                         {
                             ReceiveChat("死亡状态无法使用传送戒指", ChatType.System);
                             return;
@@ -2908,6 +2909,12 @@ namespace Server.MirObjects
                         ReceiveChat("NPC脚本已重新加载", ChatType.Hint);
                         break;
 
+                    case "CLEARIPBLOCKS":
+                        if (!IsGM) return;
+
+                        Envir.IPBlocks.Clear();
+                        break;
+
                     case "GIVEGOLD":
                         if ((!IsGM && !Settings.TestServer) || parts.Length < 2) return;
 
@@ -2933,7 +2940,7 @@ namespace Server.MirObjects
                             count = uint.MaxValue - player.Account.Gold;
 
                         player.GainGold(count);
-                        //MessageQueue.Enqueue(string.Format("玩家 {0} 已获得 {1} 金币", player.Name, count));
+                        
                         string goldMsg = $"Player {player.Name} has been given {count} gold by GM: {Name}";
                         MessageQueue.Enqueue(goldMsg);
                         Helpers.ChatSystem.SystemMessage(chatMessage: goldMsg);
@@ -3531,7 +3538,7 @@ namespace Server.MirObjects
                             if (!HeroSpawned)
                             {
                                 SummonHero();
-                                switch (Class) //新添加召唤后人物的英雄灵气特效
+                                switch (Class)
                                 {
                                     case MirClass.战士:
                                         AddBuff(BuffType.英雄灵气, this, 0, new Stats { [Stat.HP] = 300, [Stat.物品掉落数率] = 5 });
@@ -4333,7 +4340,7 @@ namespace Server.MirObjects
                     if (MyGuild.Conquest.Info.Index != info.ConquestIndex) continue;
                 }
 
-                if (info.NeedMove) //与NPC命令ENTERMAP 一起使用
+                if (info.NeedMove) //use with ENTERMAP npc command
                 {
                     NPCData["NPCMoveMap"] = Envir.GetMap(info.MapIndex);
                     NPCData["NPCMoveCoord"] = info.Destination;
@@ -4478,7 +4485,7 @@ namespace Server.MirObjects
         {
             if (attacker == null || attacker.Node == null) return false;
             if (Dead || attacker.Master == this || GMGameMaster) return false;
-            if (attacker.Info.AI == 980 || attacker.Info.AI == 981 || attacker.Info.AI == 982) return PKPoints >= 200; //自添加AI扩容
+            if (attacker.Info.AI == 980 || attacker.Info.AI == 981 || attacker.Info.AI == 982) return PKPoints >= 200;
             if (attacker.Master == null) return true;
             if (InSafeZone || attacker.InSafeZone || attacker.Master.InSafeZone) return false;
 
@@ -4530,7 +4537,9 @@ namespace Server.MirObjects
                 case AttackMode.Guild:
                     return MyGuild != null && MyGuild == ally.MyGuild;
                 case AttackMode.EnemyGuild:
-                    return true;
+                    return MyGuild != null && !MyGuild.IsEnemy(ally.MyGuild);
+                case AttackMode.All:
+                    return false;
             }
             return true;
         }
@@ -4561,7 +4570,7 @@ namespace Server.MirObjects
         }
         public override Packet GetInfo()
         {
-            //不应该用这个，但为了安全起见，我把它放在里面
+            //should never use this but i leave it in for safety
             if (Observer) return null;
 
             string gName = "";
@@ -5608,15 +5617,15 @@ namespace Server.MirObjects
                                 AddBuff(BuffType.落物纷飞, this, Settings.Minute * time, new Stats { [Stat.物品掉落数率] = item.GetTotal(Stat.幸运) });
                             }
                             break;
-                        case 6: //自添加慢速恢复%
+                        case 6:
                             PotHealthAmount = (ushort)Math.Min(ushort.MaxValue, PotHealthAmount + (Stats[Stat.HP] / 100) * (item.Info.Stats[Stat.生命值数率]));
                             PotManaAmount = (ushort)Math.Min(ushort.MaxValue, PotManaAmount + (Stats[Stat.MP] / 100) * (item.Info.Stats[Stat.法力值数率]));
                             break;
-                        case 7: //自添加快速恢复%
+                        case 7:
                             ChangeHP((Stats[Stat.HP] / 100) * (item.Info.Stats[Stat.生命值数率]));
                             ChangeMP((Stats[Stat.MP] / 100) * (item.Info.Stats[Stat.法力值数率]));
                             break;
-                        case 8: //自添加技能修炼速度
+                        case 8:
                             {
                                 int time = item.Info.Durability;
                                 AddBuff(BuffType.潜心修炼, this, Settings.Minute * time, new Stats { [Stat.技能熟练度倍率] = 3 });
@@ -5628,7 +5637,7 @@ namespace Server.MirObjects
                     UserItem temp;
                     switch (item.Info.Shape)
                     {
-                        case 0: //地牢逃脱卷
+                        case 0: //DE
                             if (!TeleportEscape(20))
                             {
                                 Enqueue(p);
@@ -5639,7 +5648,7 @@ namespace Server.MirObjects
                                 ac.FlaggedToRemove = true;
                             }
                             break;
-                        case 1: //回城卷
+                        case 1: //TT
                             if (!Teleport(Envir.GetMap(BindMapIndex), BindLocation))
                             {
                                 Enqueue(p);
@@ -5650,7 +5659,7 @@ namespace Server.MirObjects
                                 ac.FlaggedToRemove = true;
                             }
                             break;
-                        case 2: //随机传送卷
+                        case 2: //RT
                             if (!TeleportRandom(200, item.Info.Durability))
                             {
                                 Enqueue(p);
@@ -5661,14 +5670,14 @@ namespace Server.MirObjects
                                 ac.FlaggedToRemove = true;
                             }
                             break;
-                        case 3: //祝福油
+                        case 3: //BenedictionOil
                             if (!TryLuckWeapon())
                             {
                                 Enqueue(p);
                                 return;
                             }
                             break;
-                        case 4: //修复油
+                        case 4: //RepairOil
                             temp = Info.Equipment[(int)EquipmentSlot.武器];
                             if (temp == null || temp.MaxDura == temp.CurrentDura)
                             {
@@ -5688,7 +5697,7 @@ namespace Server.MirObjects
                             ReceiveChat("武器的部分被修复", ChatType.Hint);
                             Enqueue(new S.ItemRepaired { UniqueID = temp.UniqueID, MaxDura = temp.MaxDura, CurrentDura = temp.CurrentDura });
                             break;
-                        case 5: //战神油
+                        case 5: //WarGodOil
                             temp = Info.Equipment[(int)EquipmentSlot.武器];
                             if (temp == null || temp.MaxDura == temp.CurrentDura)
                             {
@@ -5706,7 +5715,7 @@ namespace Server.MirObjects
                             ReceiveChat("武器已经完全修复", ChatType.Hint);
                             Enqueue(new S.ItemRepaired { UniqueID = temp.UniqueID, MaxDura = temp.MaxDura, CurrentDura = temp.CurrentDura });
                             break;
-                        case 6: //复活卷轴
+                        case 6: //ResurrectionScroll
                             if (CurrentMap.Info.NoReincarnation)
                             {
                                 ReceiveChat(string.Format("非死亡状态禁用"), ChatType.System);
@@ -5719,32 +5728,32 @@ namespace Server.MirObjects
                                 Revive(MaxHealth, true);
                             }
                             break;
-                        case 7: //信用币卷轴
+                        case 7: //CreditScroll
                             if (item.Info.Price > 0)
                             {
                                 GainCredit(item.Info.Price);
                                 ReceiveChat(String.Format("{0} {0} 信用资金已添加到帐户", item.Info.Price), ChatType.Hint);
                             }
                             break;
-                        case 8: //本地图喊话卷轴
+                        case 8: //MapShoutScroll
                             HasMapShout = true;
                             ReceiveChat("获得一次当前地图喊话", ChatType.Hint);
                             break;
-                        case 9://全地图喊话卷轴
+                        case 9://ServerShoutScroll
                             HasServerShout = true;
                             ReceiveChat("获得一次全服务器喊话", ChatType.Hint);
                             break;
-                        case 10://公会技能卷轴
+                        case 10://GuildSkillScroll
                             MyGuild.NewBuff(item.Info.Effect, false);
                             break;
-                        case 11://沙巴克回城卷
+                        case 11://HomeTeleport
                             if (MyGuild != null && MyGuild.Conquest != null && !MyGuild.Conquest.WarIsOn && MyGuild.Conquest.PalaceMap != null && !TeleportRandom(200, 0, MyGuild.Conquest.PalaceMap))
                             {
                                 Enqueue(p);
                                 return;
                             }
                             break;
-                        case 12://彩票                                                                                    
+                        case 12://LotteryTicket                                                                                    
                             if (Envir.Random.Next(item.Info.Effect * 32) == 1) // 1st prize : 1,000,000
                             {
                                 ReceiveChat("一等奖！获得 1,000,000 金币", ChatType.Hint);
@@ -5780,7 +5789,7 @@ namespace Server.MirObjects
                                 ReceiveChat("没有中奖", ChatType.Hint);
                             }
                             break;
-                        case 13://英雄自动封印
+                        case 13://Hero unlock autopot
                             if (!HeroSpawned || Hero.AutoPot)
                             {
                                 Enqueue(p);
@@ -5790,7 +5799,7 @@ namespace Server.MirObjects
                             Enqueue(new S.UnlockHeroAutoPot());
                             ReceiveChat("英雄封印已解锁", ChatType.Hint);
                             break;
-                        case 14: //增加英雄数量上限
+                        case 14: //Increase maximum hero count
                             if (Info.MaximumHeroCount >= Settings.MaximumHeroCount)
                             {
                                 ReceiveChat("英雄持有数已达上限", ChatType.Hint);
@@ -5848,12 +5857,12 @@ namespace Server.MirObjects
                     {
                         switch (item.Info.Shape)
                         {
-                            case 20://镜子(改名)
+                            case 20://Mirror
                                 {
                                     Enqueue(new S.IntelligentCreatureEnableRename());
                                 }
                                 break;
-                            case 21://蓝色生物石(开出黑色铁矿石)
+                            case 21://BlackStone
                                 {
                                     if (item.Count > 1) item.Count--;
                                     else Info.Inventory[index] = null;
@@ -5863,7 +5872,7 @@ namespace Server.MirObjects
                                     BlackstoneRewardItem();
                                 }
                                 return;
-                            case 22://坚果 用于减缓活力消耗
+                            case 22://Nuts
                                 {
                                     if (CreatureSummoned)
                                     {
@@ -5879,7 +5888,7 @@ namespace Server.MirObjects
                                     }
                                 }
                                 break;
-                            case 23://仙苔、淡水蛤蜊、鲭鱼、樱桃等用与增加灵物活力
+                            case 23://FairyMoss, FreshwaterClam, Mackerel, Cherry
                                 {
                                     if (CreatureSummoned)
                                     {
@@ -5898,7 +5907,7 @@ namespace Server.MirObjects
                                     }
                                 }
                                 break;
-                            case 24://神奇药丸 饱食度为0时用于再次激活
+                            case 24://WonderPill
                                 {
                                     if (CreatureSummoned)
                                     {
@@ -5917,7 +5926,7 @@ namespace Server.MirObjects
                                     }
                                 }
                                 break;
-                            case 25://奇异宝盒
+                            case 25://Strongbox
                                 {
                                     byte boxtype = item.Info.Effect;
                                     if (item.Count > 1) item.Count--;
@@ -5928,7 +5937,7 @@ namespace Server.MirObjects
                                     StrongboxRewardItem(boxtype);
                                 }
                                 break;
-                            case 26://奇异药水Wonderdrug
+                            case 26://Wonderdrug
                                 {
                                     if (HasBuff(BuffType.灵丹妙药, out _))
                                     {
@@ -5942,9 +5951,9 @@ namespace Server.MirObjects
                                     AddBuff(BuffType.灵丹妙药, this, time * Settings.Minute, new Stats(item.AddedStats));
                                 }
                                 break;
-                            case 27://饼干
+                            case 27://FortuneCookies
                                 break;
-                            case 28://增加灵物主人背包负重的特效
+                            case 28://Knapsack
                                 {
                                     var time = item.Info.Durability;
 
@@ -6485,7 +6494,7 @@ namespace Server.MirObjects
                         return;
                     }
                     break;
-                case 7: //装备打孔
+                case 7: //slots
                     if (tempTo.Info.Bind.HasFlag(BindMode.DontUpgrade) || tempTo.Info.Unique != SpecialItemMode.None)
                     {
                         ReceiveChat("无法对禁止升级类物品进行嵌孔操作", ChatType.Hint);
@@ -6510,7 +6519,7 @@ namespace Server.MirObjects
                         Enqueue(p);
                         return;
                     }
-                    if (tempTo.Info.RandomStats.SlotMaxStat == 0) //新添加
+                    if (tempTo.Info.RandomStats.SlotMaxStat == 0)
                     {
                         ReceiveChat("该物品不能嵌孔", ChatType.Hint);
                         Enqueue(p);
@@ -6525,7 +6534,7 @@ namespace Server.MirObjects
 
                     canSlotUpgrade = true;
                     break;
-                case 8: //装备锁定
+                case 8: //Seal
                     if (tempTo.Info.Bind.HasFlag(BindMode.DontUpgrade) || tempTo.Info.Unique != SpecialItemMode.None)
                     {
                         ReceiveChat("无法对禁止升级类物品进行锁定操作", ChatType.Hint);
@@ -6549,8 +6558,8 @@ namespace Server.MirObjects
 
                     canSeal = true;
                     break;
-                case 3: //宝玉
-                case 4: //神珠
+                case 3: //gems
+                case 4: //orbs
                     if (tempTo.Info.Bind.HasFlag(BindMode.DontUpgrade) || tempTo.Info.Unique != SpecialItemMode.None)
                     {
                         Enqueue(p);
@@ -6572,7 +6581,7 @@ namespace Server.MirObjects
 
                     int successchance = tempFrom.Info.Stats[Stat.反弹伤害];
 
-                    // 宝石只受应用的属性影响
+                    // Gem is only affected by the stat applied.
                     // Drop rate per gem won't work if gems add more than 1 stat, i.e. DC + 2 per gem.
                     if (Settings.GemStatIndependent)
                     {
@@ -6628,8 +6637,8 @@ namespace Server.MirObjects
                                 successchance *= (int)tempTo.AddedStats[Stat.毒物躲避];
                                 break;
 
-                            // 这些属性可能无法工作
-                            // 因为每个宝石添加的属性超过1个，即+40点生命值。
+                            // These attributes may not work as more than 1 stat is
+                            // added per gem, i.e + 40 HP.
 
                             case Stat.HP:
                                 successchance *= (int)tempTo.AddedStats[Stat.HP];
@@ -6642,8 +6651,8 @@ namespace Server.MirObjects
                             case Stat.生命恢复:
                                 successchance *= (int)tempTo.AddedStats[Stat.生命恢复];
                                 break;
-
-                            // 不知道这是否与 benes 有冲突
+                                
+                            // I don't know if this conflicts with benes.
                             case Stat.幸运:
                                 successchance *= (int)tempTo.AddedStats[Stat.幸运];
                                 break;
@@ -6675,7 +6684,7 @@ namespace Server.MirObjects
 
                         }
                     }
-                    // 宝石受物品的总附加属性影响.
+                    // Gem is affected by the total added stats on the item.
                     else
                     {
                         successchance *= (int)tempTo.GemCount;
@@ -6683,7 +6692,7 @@ namespace Server.MirObjects
 
                     successchance = successchance >= tempFrom.Info.Stats[Stat.暴击倍率] ? 0 : (tempFrom.Info.Stats[Stat.暴击倍率] - successchance) + Stats[Stat.宝石成功数率];
 
-                    //检查合并是否成功
+                    //check if combine will succeed
                     bool succeeded = Envir.Random.Next(100) < successchance;
                     canUpgrade = true;
 
@@ -6775,7 +6784,7 @@ namespace Server.MirObjects
                     {
                         if ((tempFrom.Info.Shape == 3) && (Envir.Random.Next(15) < 3))
                         {
-                            //物品已销毁
+                            //item destroyed
                             ReceiveChat("物品已销毁", ChatType.Hint);
                             Report.ItemChanged(array[indexTo], 1, 1, "组合物品 (物品销毁)");
 
@@ -6784,7 +6793,7 @@ namespace Server.MirObjects
                         }
                         else
                         {
-                            //升级没有效果
+                            //upgrade has no effect
                             ReceiveChat("赋能失败", ChatType.Hint);
                         }
 
@@ -6917,7 +6926,7 @@ namespace Server.MirObjects
             }
             return false;
         }
-        //授予多个属性类型的宝石与此方法不兼容
+        //Gems granting multiple stat types are not compatiable with this method.
         private Stat GetGemType(UserItem gem)
         {
             if (gem.GetTotal(Stat.MaxDC) > 0)
@@ -6971,7 +6980,7 @@ namespace Server.MirObjects
             else if (gem.GetTotal(Stat.生命恢复) > 0)
                 return Stat.生命恢复;
 
-            // 这些可能不完整。物品定义可能缺失？
+            // These may be incomplete. Item definitions may be missing?
 
             else if (gem.GetTotal(Stat.生命值数率) > 0)
                 return Stat.生命值数率;
@@ -6993,7 +7002,7 @@ namespace Server.MirObjects
 
             return Stat.Unknown;
         }
-        //授予多个属性类型的宝石与此方法不兼容        
+        //Gems granting multiple stat types are not compatible with this method.        
         public void DropItem(ulong id, ushort count, bool isHeroItem)
         {
             S.DropItem p = new S.DropItem { UniqueID = id, Count = count, HeroItem = isHeroItem, Success = false };
@@ -7425,7 +7434,7 @@ namespace Server.MirObjects
         }                
         public void Opendoor(byte Doorindex)
         {
-            //待办事项：添加对sw门的检查
+            //todo: add check for sw doors
             if (CurrentMap.OpenDoor(Doorindex))
             {
                 Enqueue(new S.Opendoor() { DoorIndex = Doorindex });
@@ -7537,7 +7546,7 @@ namespace Server.MirObjects
         }
         private void CallNPCNextPage()
         {
-            //立即处理任何新的npc呼叫
+            //process any new npc calls immediately
             for (int i = 0; i < ActionList.Count; i++)
             {
                 if (ActionList[i].Type != DelayedType.NPC || ActionList[i].Time != -1) continue;
@@ -7779,7 +7788,7 @@ namespace Server.MirObjects
                 CheckItem(item);
             }
 
-            Enqueue(new S.UserStorage { Storage = Account.Storage }); // 在发送之前不应改动
+            Enqueue(new S.UserStorage { Storage = Account.Storage }); // Should be no alter before being sent.
         }
 
         #endregion
@@ -7864,7 +7873,7 @@ namespace Server.MirObjects
                 MarketItemType type = panelType == MarketPanelType.Consign ? MarketItemType.Consign : MarketItemType.Auction;
                 uint cost = panelType == MarketPanelType.Consign ? Globals.ConsignmentCost : Globals.AuctionCost;
 
-                //待办事宜：检查最大寄售
+                //TODO Check Max Consignment.
 
                 AuctionInfo auction = new AuctionInfo(Info, temp, price, type);
 
@@ -7954,7 +7963,7 @@ namespace Server.MirObjects
 
             if (MarketPanelType == MarketPanelType.GameShop)
             {
-                //Search = Envir.GameShopList.Where(x => (MatchType == ItemType.杂物 || x.Info.Type == MatchType)
+                //Search = Envir.GameShopList.Where(x => (MatchType == ItemType.Nothing || x.Info.Type == MatchType)
                 //&& (x.Info.Shape >= MinShapes && x.Info.Shape <= MaxShapes)
                 //&& (string.IsNullOrWhiteSpace(MatchName) || x.Info.Name.Replace(" ", "").IndexOf(MatchName, StringComparison.OrdinalIgnoreCase) >= 0)).ToList();
             }
@@ -9085,7 +9094,7 @@ namespace Server.MirObjects
 
             if (!Info.AccountInfo.AdminAccount)
             {
-                //检查是否满足创建公会所需的物品
+                //check if we have the required items
                 for (int i = 0; i < Settings.Guild_CreationCostList.Count; i++)
                 {
                     GuildItemVolume Required = Settings.Guild_CreationCostList[i];
@@ -9130,7 +9139,7 @@ namespace Server.MirObjects
                     }
                 }
 
-                //拿走创建公会所需的物品
+                //take the required items
                 for (int i = 0; i < Settings.Guild_CreationCostList.Count; i++)
                 {
                     GuildItemVolume Required = Settings.Guild_CreationCostList[i];
@@ -9177,8 +9186,8 @@ namespace Server.MirObjects
                 }
                 RefreshStats();
             }
-
-            //创建公会
+            
+            //make the guild
             var guildInfo = new GuildInfo(this, guildName) { GuildIndex = ++Envir.NextGuildID };
             Envir.GuildList.Add(guildInfo);
 
@@ -9191,7 +9200,7 @@ namespace Server.MirObjects
             GuildNoticeChanged = true;
             GuildCanRequestItems = true;
 
-            //告知现在有一个公会
+            //tell us we now have a guild
             BroadcastInfo();
             MyGuild.SendGuildStatus(this);
 
@@ -9207,7 +9216,7 @@ namespace Server.MirObjects
             }
             switch (ChangeType)
             {
-                case 0: //添加成员
+                case 0: //add member
                     if (!MyGuildRank.Options.HasFlag(GuildRankOptions.CanRecruit))
                     {
                         ReceiveChat("你不能招募新会员", ChatType.System);
@@ -9247,7 +9256,7 @@ namespace Server.MirObjects
                     player.Enqueue(new S.GuildInvite { Name = MyGuild.Name });
                     player.PendingGuildInvite = MyGuild;
                     break;
-                case 1: //删除会员
+                case 1: //delete member
                     if (!MyGuildRank.Options.HasFlag(GuildRankOptions.CanKick))
                     {
                         ReceiveChat("不允许删除会员", ChatType.System);
@@ -9260,7 +9269,7 @@ namespace Server.MirObjects
                         return;
                     }
                     break;
-                case 2: //会员权限升级（如果目录>总排名，将自动在底部创建新排名！）
+                case 2: //promote member (and it'll auto create a new rank at bottom if the index > total ranks!)
                     if (!MyGuildRank.Options.HasFlag(GuildRankOptions.CanChangeRank))
                     {
                         ReceiveChat("无权限改变", ChatType.System);
@@ -9269,7 +9278,7 @@ namespace Server.MirObjects
                     if (Name == "") return;
                     MyGuild.ChangeRank(this, Name, RankIndex, RankName);
                     break;
-                case 3: //更改排名名称
+                case 3: //change rank name
                     if (!MyGuildRank.Options.HasFlag(GuildRankOptions.CanChangeRank))
                     {
                         ReceiveChat("无权限改变", ChatType.System);
@@ -9287,7 +9296,7 @@ namespace Server.MirObjects
                     if (!MyGuild.ChangeRankName(this, RankName, RankIndex))
                         return;
                     break;
-                case 4: //新排名
+                case 4: //new rank
                     if (!MyGuildRank.Options.HasFlag(GuildRankOptions.CanChangeRank))
                     {
                         ReceiveChat("无权限改变", ChatType.System);
@@ -9300,7 +9309,7 @@ namespace Server.MirObjects
                     }
                     MyGuild.NewRank(this);
                     break;
-                case 5: //更改排名设置
+                case 5: //change rank setting
                     if (!MyGuildRank.Options.HasFlag(GuildRankOptions.CanChangeRank))
                     {
                         ReceiveChat("无权限改变", ChatType.System);
@@ -9359,13 +9368,13 @@ namespace Server.MirObjects
             MyGuildRank = PendingGuildInvite.FindRank(Name);
             GuildMembersChanged = true;
             GuildNoticeChanged = true;
-            //告诉我们现在有一个公会
+            //tell us we now have a guild
             BroadcastInfo();
             MyGuild.SendGuildStatus(this);
             PendingGuildInvite = null;
             EnableGuildInvite = false;
             GuildCanRequestItems = true;
-            //刷新行会特效
+            //refresh guildbuffs
             RefreshStats();
             if (MyGuild.BuffList.Count > 0)
                 Enqueue(new S.GuildBuffList() { ActiveBuffs = MyGuild.BuffList});
@@ -9376,12 +9385,12 @@ namespace Server.MirObjects
             if (MyGuildRank == null) return;
             switch (Type)
             {
-                case 0://注意
+                case 0://notice
                     if (GuildNoticeChanged)
                         Enqueue(new S.GuildNoticeChange() { notice = MyGuild.Info.Notice });
                     GuildNoticeChanged = false;
                     break;
-                case 1://成员列表
+                case 1://memberlist
                     if (GuildMembersChanged)
                         Enqueue(new S.GuildMemberChange() { Status = 255, Ranks = MyGuild.Ranks });
                     break;
@@ -9393,7 +9402,7 @@ namespace Server.MirObjects
             if (!CanCreateGuild) return;
             if ((Name.Length < 3) || (Name.Length > 20))
             {
-                ReceiveChat("行会名称太长", ChatType.System);
+                ReceiveChat("行会名称不能少于3个字符", ChatType.System);
                 CanCreateGuild = false;
                 return;
             }
@@ -9433,7 +9442,7 @@ namespace Server.MirObjects
                 return;
             }
 
-            if (type == 0)//捐赠
+            if (type == 0)//donate
             {
                 if (Account.Gold < amount)
                 {
@@ -9543,7 +9552,7 @@ namespace Server.MirObjects
                     MyGuild.SendServerPacket(new S.GuildStorageItemChange() { Type = 0, User = Info.Index, Item = MyGuild.StoredItems[to], To = to, From = from });
                     MyGuild.NeedSave = true;
                     break;
-                case 1://取回
+                case 1://retrieve
                     if (!MyGuildRank.Options.HasFlag(GuildRankOptions.CanRetrieveItem))
                     {
 
@@ -9582,7 +9591,7 @@ namespace Server.MirObjects
                     RefreshBagWeight();
                     MyGuild.NeedSave = true;
                     break;
-                case 2: // 物品移动
+                case 2: // Move Item
                     GuildStorageItem q = null;
                     if (!MyGuildRank.Options.HasFlag(GuildRankOptions.CanStoreItem))
                     {
@@ -9625,7 +9634,7 @@ namespace Server.MirObjects
                     MyGuild.SendServerPacket(new S.GuildStorageItemChange() { Type = 2, User = Info.Index, Item = MyGuild.StoredItems[to], To = to, From = from });
                     MyGuild.NeedSave = true;
                     break;
-                case 3://请求列表
+                case 3://request list
                     if (!GuildCanRequestItems) return;
                     GuildCanRequestItems = false;
                     for (int i = 0; i < MyGuild.StoredItems.Length; i++)
@@ -9709,11 +9718,11 @@ namespace Server.MirObjects
             if (id < 0) return;
             switch (type)
             {
-                case 0://请求信息列表
+                case 0://request info list
                     if (RequestedGuildBuffInfo) return;
                     Enqueue(new S.GuildBuffList() { GuildBuffs = Settings.Guild_BuffList });
                     break;
-                case 1://购买行会特效
+                case 1://buy the buff
                     if (!MyGuildRank.Options.HasFlag(GuildRankOptions.CanActivateBuff))
                     {
                         ReceiveChat("公会权限不够", ChatType.System);
@@ -9733,7 +9742,7 @@ namespace Server.MirObjects
                     if ((MyGuild.Info.Level < BuffInfo.LevelRequirement) || (MyGuild.Info.SparePoints < BuffInfo.PointsRequirement)) return;//client checks this so it shouldnt be possible without a moded client :p
                     MyGuild.NewBuff(id);
                     break;
-                case 2://激活行会特效
+                case 2://activate the buff
                     if (!MyGuildRank.Options.HasFlag(GuildRankOptions.CanActivateBuff))
                     {
                         ReceiveChat("公会权限不够", ChatType.System);
@@ -10049,7 +10058,7 @@ namespace Server.MirObjects
             bool CanTrade = true;
             UserItem u;
 
-            //检查两个人是否都可以接受其它物品
+            //check if both people can accept the others items
             for (int p = 0; p < 2; p++)
             {
                 int o = p == 0 ? 1 : 0;
@@ -10079,7 +10088,7 @@ namespace Server.MirObjects
                 }
             }
 
-            //交换物品
+            //swap items
             if (CanTrade)
             {
                 for (int p = 0; p < 2; p++)
@@ -10149,12 +10158,12 @@ namespace Server.MirObjects
                         {
                             if (TradePair[p].Info.Inventory[i] != null) continue;
 
-                            //将物品放回仓库
+                            //Put item back in inventory
                             if (TradePair[p].CanGainItem(temp))
                             {
                                 TradePair[p].RetrieveTradeItem(t, i);
                             }
-                            else //如果无法再存储物品，请将其发送到邮箱
+                            else //Send item to mailbox if it can no longer be stored
                             {
                                 TradePair[p].GainItemMail(temp, 1);
                                 Report.ItemMailed(temp, temp.Count, 1);
@@ -10168,7 +10177,7 @@ namespace Server.MirObjects
                         }
                     }
 
-                    //归还存放的金币
+                    //Put back deposited gold
                     if (TradePair[p].TradeGoldAmount > 0)
                     {
                         Report.GoldChanged(TradePair[p].TradeGoldAmount, false);
@@ -10198,15 +10207,15 @@ namespace Server.MirObjects
             byte nibbleMin = 0, nibbleMax = 0;
             byte failedAddSuccessMin = 0, failedAddSuccessMax = 0;
             FishingProgressMax = Settings.FishingAttempts;//30;
-            switch (TransformType) //注："mir2-master\Client\MirScenes\GameScene.cs"12117行 中对6和9已经做出限制
+            switch (TransformType)
             {
-                case 6: //怪物外形631张图片
+                case 6:
                 case 9:
-                case 10: //钓鱼动作不匹配807张图片
+                case 10:
                 case 11:
                 case 12:
                 case 13:
-                case 33: //怪物外形415张图片
+                case 33:
                 case 34:
                 case 35:
                 case 36:
@@ -10525,7 +10534,7 @@ namespace Server.MirObjects
                 return;
             }
 
-            //检查之前承接任务是否已完成
+            //check previous chained quests have been completed
             QuestInfo tempInfo = info;
             while (tempInfo != null && tempInfo.RequiredQuest != 0)
             {
@@ -10913,11 +10922,31 @@ namespace Server.MirObjects
 
         public void SendMail(string name, string message)
         {
+            if (Envir.Time < NextMailTime)
+            {
+                //not even an error: users shouldnt be sending mails so fast only bots do.
+                return;
+            }
+
+            NextMailTime = Envir.Time + 10000;
+
+            if (message.Length > 500)
+            {
+                ReceiveChat(string.Format("很抱歉，已超出邮件容量限制"), ChatType.System);
+                return;
+            }
+
             CharacterInfo player = Envir.GetCharacterInfo(name);
 
             if (player == null)
             {
                 ReceiveChat(string.Format(GameLanguage.CouldNotFindPlayer, name), ChatType.System);
+                return;
+            }
+
+            if (player.Mail.Count > 50)
+            {
+                ReceiveChat("收件人邮箱已满", ChatType.System);
                 return;
             }
 
@@ -10933,7 +10962,7 @@ namespace Server.MirObjects
                 return;
             }
 
-            //从玩家发出
+            //sent from player
             MailInfo mail = new MailInfo(player.Index, true)
             {
                 Sender = Info.Name,
@@ -10946,11 +10975,31 @@ namespace Server.MirObjects
 
         public void SendMail(string name, string message, uint gold, ulong[] items, bool stamped)
         {
+            if (Envir.Time < NextMailTime)
+            {
+                //not even an error: users shouldnt be sending mails so fast only bots do.
+                return;
+            }
+
+            NextMailTime = Envir.Time + 10000;
+
+            if (message.Length > 500)
+            {
+                ReceiveChat(string.Format("很抱歉，已超出邮件容量限制"), ChatType.System);
+                return;
+            }
+
             CharacterInfo player = Envir.GetCharacterInfo(name);
 
             if (player == null)
             {
                 ReceiveChat(string.Format(GameLanguage.CouldNotFindPlayer, name), ChatType.System);
+                return;
+            }
+
+            if (player.Mail.Count > 50)
+            {
+                ReceiveChat("收件人邮箱已满", ChatType.System);
                 return;
             }
 
@@ -10966,7 +11015,7 @@ namespace Server.MirObjects
                 return;
             }
 
-            //验证用户是否有戳记
+            //Validate user has stamp
             if (stamped)
             {
                 for (int i = 0; i < Info.Inventory.Length; i++)
@@ -11029,7 +11078,7 @@ namespace Server.MirObjects
                 Enqueue(new S.LoseGold { Gold = totalGold });
             }
 
-            //创建邮件
+            //Create parcel
             MailInfo mail = new MailInfo(player.Index, true)
             {
                 MailID = ++Envir.NextMailID,
@@ -11214,7 +11263,7 @@ namespace Server.MirObjects
             {
                 if (Info.IntelligentCreatures[i].PetType != pType) continue;
 
-                MonsterInfo mInfo = Envir.GetMonsterInfo(970, (byte)pType); //自添加AI扩容 AI == 970 灵物的AI号
+                MonsterInfo mInfo = Envir.GetMonsterInfo(970, (byte)pType);
                 if (mInfo == null) return;
 
                 MonsterObject monster = MonsterObject.GetMonster(mInfo);
@@ -11252,7 +11301,7 @@ namespace Server.MirObjects
                 break;
             }
 
-            //更新客户端
+            //update client
             GetCreaturesInfo();
         }
 
@@ -11275,7 +11324,7 @@ namespace Server.MirObjects
                 break;
             }
 
-            //更新客户端
+            //update client
             if (doUpdate) GetCreaturesInfo();
         }
 
@@ -11283,7 +11332,7 @@ namespace Server.MirObjects
         {
             if (pType == IntelligentCreatureType.None) return;
 
-            //删除灵物
+            //remove creature
             for (int i = 0; i < Info.IntelligentCreatures.Count; i++)
             {
                 if (Info.IntelligentCreatures[i].PetType != pType) continue;
@@ -11294,11 +11343,11 @@ namespace Server.MirObjects
                 break;
             }
 
-            //重新安排
+            //re-arrange slots
             for (int i = 0; i < Info.IntelligentCreatures.Count; i++)
                 Info.IntelligentCreatures[i].SlotIndex = i;
 
-            //更新客户端
+            //update client
             if (doUpdate) GetCreaturesInfo();
         }
 
@@ -11336,7 +11385,7 @@ namespace Server.MirObjects
 
             if (Envir.Time > CreatureTimeLeftTicker)
             {
-                //到期时间
+                //ExpireTime
                 List<int> releasedPets = new List<int>();
                 CreatureTimeLeftTicker = Envir.Time + Settings.Second;
 
@@ -11375,7 +11424,7 @@ namespace Server.MirObjects
         {
             if (SummonedCreatureType == IntelligentCreatureType.None || !CreatureSummoned)
             {
-                //确保两者都处于未发布状态
+                //make sure both are in the unsummoned state
                 CreatureSummoned = false;
                 SummonedCreatureType = IntelligentCreatureType.None;
                 return;
@@ -11806,12 +11855,12 @@ namespace Server.MirObjects
                 {
                     if (Info.Inventory[i] != null) continue;
 
-                    //将物品返还至背包
+                    //Put item back in inventory
                     if (CanGainItem(temp))
                     {
                         RetrieveRefineItem(t, i);
                     }
-                    else //如果无法再存储物品，请通过邮件发送
+                    else //Send item via mail if it can no longer be stored
                     {
                         Enqueue(new S.DeleteItem { UniqueID = temp.UniqueID, Count = temp.Count });
 
@@ -11834,7 +11883,7 @@ namespace Server.MirObjects
         }
         public void RefineItem(ulong uniqueID)
         {
-            Enqueue(new S.RepairItem { UniqueID = uniqueID }); //检查此项
+            Enqueue(new S.RepairItem { UniqueID = uniqueID }); //CHECK THIS.
 
             if (Dead) return;
 
@@ -11893,7 +11942,7 @@ namespace Server.MirObjects
             Account.Gold -= cost;
             Enqueue(new S.LoseGold { Gold = cost });
 
-            //配方开头
+            //START OF FORMULA
 
             Info.CurrentRefine = Info.Inventory[index];
             Info.Inventory[index] = null;
@@ -12038,7 +12087,7 @@ namespace Server.MirObjects
 
             Info.CurrentRefine.RefineSuccessChance = successChance;
 
-            //配方结束
+            //END OF FORMULA
 
             if (Settings.RefineTime == 0)
             {
@@ -12988,7 +13037,7 @@ namespace Server.MirObjects
                     canAfford = true;
                     CreditCost = cost;
                 }
-                else
+                else if (Product.CanBuyGold)
                 {
                     //Needs to attempt to pay with gold and credits
                     var totalCost = ((Product.GoldPrice * Quantity) / cost) * (cost - Account.Credit);
@@ -13088,7 +13137,7 @@ namespace Server.MirObjects
             MailInfo mail = new MailInfo(Info.Index)
             {
                 MailID = ++Envir.NextMailID,
-                Sender = "游戏商城", //GameShop
+                Sender = "游戏商城",
                 Message = "感谢您从游戏商店购物，随函附上所购买的商品",
                 Items = mailItems,
             };

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Drawing;
-using System.Text.RegularExpressions;
-using System.Windows.Forms;
+﻿using System.Text.RegularExpressions;
 using Client.MirControls;
 using Client.MirGraphics;
 using Client.MirSounds;
@@ -57,7 +54,7 @@ namespace Client.MirScenes.Dialogs
                 "对敌人造成致命打击。 多变：弓箭手永远是战场上的未知数，就必须练就准确的判断力，熟练掌握其操作技巧" +
                 " 华丽：鲜艳的服装、优雅的射击动作和绚美的特效，非弓箭手莫属!";
 
-            #endregion
+        #endregion
 
         public NewCharacterDialog()
         {

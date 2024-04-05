@@ -28,638 +28,693 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.EnableDragonCheckBox = new System.Windows.Forms.CheckBox();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.label1 = new System.Windows.Forms.Label();
-            this.MapFileNameTextBox = new System.Windows.Forms.TextBox();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.DropAreaBottomYTextBox = new System.Windows.Forms.TextBox();
-            this.label15 = new System.Windows.Forms.Label();
-            this.DropAreaBottomXTextBox = new System.Windows.Forms.TextBox();
-            this.label16 = new System.Windows.Forms.Label();
-            this.DropAreaTopYTextBox = new System.Windows.Forms.TextBox();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.DropAreaTopXTextBox = new System.Windows.Forms.TextBox();
-            this.label14 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.XTextBox = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.BodyNameTextBox = new System.Windows.Forms.TextBox();
-            this.YTextBox = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.MonsterNameTextBox = new System.Windows.Forms.TextBox();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.label23 = new System.Windows.Forms.Label();
-            this.label17 = new System.Windows.Forms.Label();
-            this.Level6ExpTextBox = new System.Windows.Forms.TextBox();
-            this.Level12ExpTextBox = new System.Windows.Forms.TextBox();
-            this.Level7ExpTextBox = new System.Windows.Forms.TextBox();
-            this.Level5ExpTextBox = new System.Windows.Forms.TextBox();
-            this.Level11ExpTextBox = new System.Windows.Forms.TextBox();
-            this.Level1ExpTextBox = new System.Windows.Forms.TextBox();
-            this.Level8ExpTextBox = new System.Windows.Forms.TextBox();
-            this.Level2ExpTextBox = new System.Windows.Forms.TextBox();
-            this.Level4ExpTextBox = new System.Windows.Forms.TextBox();
-            this.Level10ExpTextBox = new System.Windows.Forms.TextBox();
-            this.Level9ExpTextBox = new System.Windows.Forms.TextBox();
-            this.Level3ExpTextBox = new System.Windows.Forms.TextBox();
-            this.label22 = new System.Windows.Forms.Label();
-            this.label21 = new System.Windows.Forms.Label();
-            this.label24 = new System.Windows.Forms.Label();
-            this.label28 = new System.Windows.Forms.Label();
-            this.label20 = new System.Windows.Forms.Label();
-            this.label25 = new System.Windows.Forms.Label();
-            this.label27 = new System.Windows.Forms.Label();
-            this.label18 = new System.Windows.Forms.Label();
-            this.label19 = new System.Windows.Forms.Label();
-            this.label26 = new System.Windows.Forms.Label();
-            this.tabControl1.SuspendLayout();
-            this.tabPage1.SuspendLayout();
-            this.panel2.SuspendLayout();
-            this.panel1.SuspendLayout();
-            this.tabPage2.SuspendLayout();
-            this.SuspendLayout();
+            EnableDragonCheckBox = new CheckBox();
+            tabControl1 = new TabControl();
+            tabPage1 = new TabPage();
+            label1 = new Label();
+            MapFileNameTextBox = new TextBox();
+            panel2 = new Panel();
+            DropAreaBottomYTextBox = new TextBox();
+            label15 = new Label();
+            DropAreaBottomXTextBox = new TextBox();
+            label16 = new Label();
+            DropAreaTopYTextBox = new TextBox();
+            label11 = new Label();
+            label12 = new Label();
+            label10 = new Label();
+            DropAreaTopXTextBox = new TextBox();
+            label14 = new Label();
+            label13 = new Label();
+            label2 = new Label();
+            panel1 = new Panel();
+            label9 = new Label();
+            label8 = new Label();
+            label7 = new Label();
+            label6 = new Label();
+            XTextBox = new TextBox();
+            label5 = new Label();
+            label3 = new Label();
+            BodyNameTextBox = new TextBox();
+            YTextBox = new TextBox();
+            label4 = new Label();
+            MonsterNameTextBox = new TextBox();
+            tabPage2 = new TabPage();
+            label23 = new Label();
+            label17 = new Label();
+            Level6ExpTextBox = new TextBox();
+            Level12ExpTextBox = new TextBox();
+            Level7ExpTextBox = new TextBox();
+            Level5ExpTextBox = new TextBox();
+            Level11ExpTextBox = new TextBox();
+            Level1ExpTextBox = new TextBox();
+            Level8ExpTextBox = new TextBox();
+            Level2ExpTextBox = new TextBox();
+            Level4ExpTextBox = new TextBox();
+            Level10ExpTextBox = new TextBox();
+            Level9ExpTextBox = new TextBox();
+            Level3ExpTextBox = new TextBox();
+            label22 = new Label();
+            label21 = new Label();
+            label24 = new Label();
+            label28 = new Label();
+            label20 = new Label();
+            label25 = new Label();
+            label27 = new Label();
+            label18 = new Label();
+            label19 = new Label();
+            label26 = new Label();
+            tabControl1.SuspendLayout();
+            tabPage1.SuspendLayout();
+            panel2.SuspendLayout();
+            panel1.SuspendLayout();
+            tabPage2.SuspendLayout();
+            SuspendLayout();
             // 
             // EnableDragonCheckBox
             // 
-            this.EnableDragonCheckBox.AutoSize = true;
-            this.EnableDragonCheckBox.Location = new System.Drawing.Point(14, 9);
-            this.EnableDragonCheckBox.Name = "EnableDragonCheckBox";
-            this.EnableDragonCheckBox.Size = new System.Drawing.Size(96, 16);
-            this.EnableDragonCheckBox.TabIndex = 23;
-            this.EnableDragonCheckBox.Text = "启用破天魔龙";
-            this.EnableDragonCheckBox.UseVisualStyleBackColor = true;
-            this.EnableDragonCheckBox.CheckStateChanged += new System.EventHandler(this.EnableDragonCheckBox_CheckStateChanged);
+            EnableDragonCheckBox.AutoSize = true;
+            EnableDragonCheckBox.Location = new Point(16, 13);
+            EnableDragonCheckBox.Margin = new Padding(4, 4, 4, 4);
+            EnableDragonCheckBox.Name = "EnableDragonCheckBox";
+            EnableDragonCheckBox.Size = new Size(99, 21);
+            EnableDragonCheckBox.TabIndex = 23;
+            EnableDragonCheckBox.Text = "启用破天魔龙";
+            EnableDragonCheckBox.UseVisualStyleBackColor = true;
+            EnableDragonCheckBox.CheckStateChanged += EnableDragonCheckBox_CheckStateChanged;
             // 
             // tabControl1
             // 
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Location = new System.Drawing.Point(12, 30);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(308, 195);
-            this.tabControl1.TabIndex = 24;
+            tabControl1.Controls.Add(tabPage1);
+            tabControl1.Controls.Add(tabPage2);
+            tabControl1.Location = new Point(14, 42);
+            tabControl1.Margin = new Padding(4, 4, 4, 4);
+            tabControl1.Name = "tabControl1";
+            tabControl1.SelectedIndex = 0;
+            tabControl1.Size = new Size(359, 276);
+            tabControl1.TabIndex = 24;
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.label1);
-            this.tabPage1.Controls.Add(this.MapFileNameTextBox);
-            this.tabPage1.Controls.Add(this.panel2);
-            this.tabPage1.Controls.Add(this.label2);
-            this.tabPage1.Controls.Add(this.panel1);
-            this.tabPage1.Controls.Add(this.XTextBox);
-            this.tabPage1.Controls.Add(this.label5);
-            this.tabPage1.Controls.Add(this.label3);
-            this.tabPage1.Controls.Add(this.BodyNameTextBox);
-            this.tabPage1.Controls.Add(this.YTextBox);
-            this.tabPage1.Controls.Add(this.label4);
-            this.tabPage1.Controls.Add(this.MonsterNameTextBox);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(300, 169);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "配置";
-            this.tabPage1.UseVisualStyleBackColor = true;
+            tabPage1.Controls.Add(label1);
+            tabPage1.Controls.Add(MapFileNameTextBox);
+            tabPage1.Controls.Add(panel2);
+            tabPage1.Controls.Add(label2);
+            tabPage1.Controls.Add(panel1);
+            tabPage1.Controls.Add(XTextBox);
+            tabPage1.Controls.Add(label5);
+            tabPage1.Controls.Add(label3);
+            tabPage1.Controls.Add(BodyNameTextBox);
+            tabPage1.Controls.Add(YTextBox);
+            tabPage1.Controls.Add(label4);
+            tabPage1.Controls.Add(MonsterNameTextBox);
+            tabPage1.Location = new Point(4, 26);
+            tabPage1.Margin = new Padding(4, 4, 4, 4);
+            tabPage1.Name = "tabPage1";
+            tabPage1.Padding = new Padding(4, 4, 4, 4);
+            tabPage1.Size = new Size(351, 246);
+            tabPage1.TabIndex = 0;
+            tabPage1.Text = "配置";
+            tabPage1.UseVisualStyleBackColor = true;
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(13, 19);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(53, 12);
-            this.label1.TabIndex = 8;
-            this.label1.Text = "地图名称";
+            label1.AutoSize = true;
+            label1.Location = new Point(19, 23);
+            label1.Margin = new Padding(4, 0, 4, 0);
+            label1.Name = "label1";
+            label1.Size = new Size(56, 17);
+            label1.TabIndex = 8;
+            label1.Text = "地图名称";
             // 
             // MapFileNameTextBox
             // 
-            this.MapFileNameTextBox.Location = new System.Drawing.Point(68, 14);
-            this.MapFileNameTextBox.Name = "MapFileNameTextBox";
-            this.MapFileNameTextBox.Size = new System.Drawing.Size(72, 21);
-            this.MapFileNameTextBox.TabIndex = 7;
-            this.MapFileNameTextBox.TextChanged += new System.EventHandler(this.MapFileNameTextBox_TextChanged);
+            MapFileNameTextBox.Location = new Point(79, 20);
+            MapFileNameTextBox.Margin = new Padding(4, 4, 4, 4);
+            MapFileNameTextBox.Name = "MapFileNameTextBox";
+            MapFileNameTextBox.Size = new Size(83, 23);
+            MapFileNameTextBox.TabIndex = 7;
+            MapFileNameTextBox.TextChanged += MapFileNameTextBox_TextChanged;
             // 
             // panel2
             // 
-            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel2.Controls.Add(this.DropAreaBottomYTextBox);
-            this.panel2.Controls.Add(this.label15);
-            this.panel2.Controls.Add(this.DropAreaBottomXTextBox);
-            this.panel2.Controls.Add(this.label16);
-            this.panel2.Controls.Add(this.DropAreaTopYTextBox);
-            this.panel2.Controls.Add(this.label11);
-            this.panel2.Controls.Add(this.label12);
-            this.panel2.Controls.Add(this.label10);
-            this.panel2.Controls.Add(this.DropAreaTopXTextBox);
-            this.panel2.Controls.Add(this.label14);
-            this.panel2.Controls.Add(this.label13);
-            this.panel2.Location = new System.Drawing.Point(149, 38);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(151, 65);
-            this.panel2.TabIndex = 22;
+            panel2.BorderStyle = BorderStyle.FixedSingle;
+            panel2.Controls.Add(DropAreaBottomYTextBox);
+            panel2.Controls.Add(label15);
+            panel2.Controls.Add(DropAreaBottomXTextBox);
+            panel2.Controls.Add(label16);
+            panel2.Controls.Add(DropAreaTopYTextBox);
+            panel2.Controls.Add(label11);
+            panel2.Controls.Add(label12);
+            panel2.Controls.Add(label10);
+            panel2.Controls.Add(DropAreaTopXTextBox);
+            panel2.Controls.Add(label14);
+            panel2.Controls.Add(label13);
+            panel2.Location = new Point(174, 54);
+            panel2.Margin = new Padding(4, 4, 4, 4);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(176, 91);
+            panel2.TabIndex = 22;
             // 
             // DropAreaBottomYTextBox
             // 
-            this.DropAreaBottomYTextBox.Location = new System.Drawing.Point(106, 41);
-            this.DropAreaBottomYTextBox.Name = "DropAreaBottomYTextBox";
-            this.DropAreaBottomYTextBox.Size = new System.Drawing.Size(31, 21);
-            this.DropAreaBottomYTextBox.TabIndex = 30;
-            this.DropAreaBottomYTextBox.TextChanged += new System.EventHandler(this.DropAreaBottomYTextBox_TextChanged);
+            DropAreaBottomYTextBox.Location = new Point(124, 58);
+            DropAreaBottomYTextBox.Margin = new Padding(4, 4, 4, 4);
+            DropAreaBottomYTextBox.Name = "DropAreaBottomYTextBox";
+            DropAreaBottomYTextBox.Size = new Size(35, 23);
+            DropAreaBottomYTextBox.TabIndex = 30;
+            DropAreaBottomYTextBox.TextChanged += DropAreaBottomYTextBox_TextChanged;
             // 
             // label15
             // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(93, 45);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(11, 12);
-            this.label15.TabIndex = 29;
-            this.label15.Text = "Y";
+            label15.AutoSize = true;
+            label15.Location = new Point(107, 61);
+            label15.Margin = new Padding(4, 0, 4, 0);
+            label15.Name = "label15";
+            label15.Size = new Size(15, 17);
+            label15.TabIndex = 29;
+            label15.Text = "Y";
             // 
             // DropAreaBottomXTextBox
             // 
-            this.DropAreaBottomXTextBox.Location = new System.Drawing.Point(51, 41);
-            this.DropAreaBottomXTextBox.Name = "DropAreaBottomXTextBox";
-            this.DropAreaBottomXTextBox.Size = new System.Drawing.Size(31, 21);
-            this.DropAreaBottomXTextBox.TabIndex = 28;
-            this.DropAreaBottomXTextBox.TextChanged += new System.EventHandler(this.DropAreaBottomXTextBox_TextChanged);
+            DropAreaBottomXTextBox.Location = new Point(59, 58);
+            DropAreaBottomXTextBox.Margin = new Padding(4, 4, 4, 4);
+            DropAreaBottomXTextBox.Name = "DropAreaBottomXTextBox";
+            DropAreaBottomXTextBox.Size = new Size(35, 23);
+            DropAreaBottomXTextBox.TabIndex = 28;
+            DropAreaBottomXTextBox.TextChanged += DropAreaBottomXTextBox_TextChanged;
             // 
             // label16
             // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(38, 45);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(11, 12);
-            this.label16.TabIndex = 27;
-            this.label16.Text = "X";
+            label16.AutoSize = true;
+            label16.Location = new Point(41, 60);
+            label16.Margin = new Padding(4, 0, 4, 0);
+            label16.Name = "label16";
+            label16.Size = new Size(16, 17);
+            label16.TabIndex = 27;
+            label16.Text = "X";
             // 
             // DropAreaTopYTextBox
             // 
-            this.DropAreaTopYTextBox.Location = new System.Drawing.Point(106, 18);
-            this.DropAreaTopYTextBox.Name = "DropAreaTopYTextBox";
-            this.DropAreaTopYTextBox.Size = new System.Drawing.Size(31, 21);
-            this.DropAreaTopYTextBox.TabIndex = 26;
-            this.DropAreaTopYTextBox.TextChanged += new System.EventHandler(this.DropAreaTopYTextBox_TextChanged);
+            DropAreaTopYTextBox.Location = new Point(124, 26);
+            DropAreaTopYTextBox.Margin = new Padding(4, 4, 4, 4);
+            DropAreaTopYTextBox.Name = "DropAreaTopYTextBox";
+            DropAreaTopYTextBox.Size = new Size(35, 23);
+            DropAreaTopYTextBox.TabIndex = 26;
+            DropAreaTopYTextBox.TextChanged += DropAreaTopYTextBox_TextChanged;
             // 
             // label11
             // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(3, 43);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(29, 12);
-            this.label11.TabIndex = 20;
-            this.label11.Text = "底部";
+            label11.AutoSize = true;
+            label11.Location = new Point(4, 60);
+            label11.Margin = new Padding(4, 0, 4, 0);
+            label11.Name = "label11";
+            label11.Size = new Size(32, 17);
+            label11.TabIndex = 20;
+            label11.Text = "底部";
             // 
             // label12
             // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(93, 22);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(11, 12);
-            this.label12.TabIndex = 25;
-            this.label12.Text = "Y";
+            label12.AutoSize = true;
+            label12.Location = new Point(106, 29);
+            label12.Margin = new Padding(4, 0, 4, 0);
+            label12.Name = "label12";
+            label12.Size = new Size(15, 17);
+            label12.TabIndex = 25;
+            label12.Text = "Y";
             // 
             // label10
             // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(4, 23);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(29, 12);
-            this.label10.TabIndex = 19;
-            this.label10.Text = "顶部";
+            label10.AutoSize = true;
+            label10.Location = new Point(5, 30);
+            label10.Margin = new Padding(4, 0, 4, 0);
+            label10.Name = "label10";
+            label10.Size = new Size(32, 17);
+            label10.TabIndex = 19;
+            label10.Text = "顶部";
             // 
             // DropAreaTopXTextBox
             // 
-            this.DropAreaTopXTextBox.Location = new System.Drawing.Point(51, 18);
-            this.DropAreaTopXTextBox.Name = "DropAreaTopXTextBox";
-            this.DropAreaTopXTextBox.Size = new System.Drawing.Size(31, 21);
-            this.DropAreaTopXTextBox.TabIndex = 24;
-            this.DropAreaTopXTextBox.TextChanged += new System.EventHandler(this.DropAreaTopXTextBox_TextChanged);
+            DropAreaTopXTextBox.Location = new Point(59, 26);
+            DropAreaTopXTextBox.Margin = new Padding(4, 4, 4, 4);
+            DropAreaTopXTextBox.Name = "DropAreaTopXTextBox";
+            DropAreaTopXTextBox.Size = new Size(35, 23);
+            DropAreaTopXTextBox.TabIndex = 24;
+            DropAreaTopXTextBox.TextChanged += DropAreaTopXTextBox_TextChanged;
             // 
             // label14
             // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(38, 23);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(11, 12);
-            this.label14.TabIndex = 23;
-            this.label14.Text = "X";
+            label14.AutoSize = true;
+            label14.Location = new Point(41, 29);
+            label14.Margin = new Padding(4, 0, 4, 0);
+            label14.Name = "label14";
+            label14.Size = new Size(16, 17);
+            label14.TabIndex = 23;
+            label14.Text = "X";
             // 
             // label13
             // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(2, 2);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(53, 12);
-            this.label13.TabIndex = 18;
-            this.label13.Text = "刷新区域";
+            label13.AutoSize = true;
+            label13.Location = new Point(2, 3);
+            label13.Margin = new Padding(4, 0, 4, 0);
+            label13.Name = "label13";
+            label13.Size = new Size(56, 17);
+            label13.TabIndex = 18;
+            label13.Text = "刷新区域";
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(156, 18);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(11, 12);
-            this.label2.TabIndex = 9;
-            this.label2.Text = "X";
+            label2.AutoSize = true;
+            label2.Location = new Point(179, 23);
+            label2.Margin = new Padding(4, 0, 4, 0);
+            label2.Name = "label2";
+            label2.Size = new Size(16, 17);
+            label2.TabIndex = 9;
+            label2.Text = "X";
             // 
             // panel1
             // 
-            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel1.Controls.Add(this.label9);
-            this.panel1.Controls.Add(this.label8);
-            this.panel1.Controls.Add(this.label7);
-            this.panel1.Controls.Add(this.label6);
-            this.panel1.Location = new System.Drawing.Point(73, 109);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(134, 57);
-            this.panel1.TabIndex = 17;
+            panel1.BorderStyle = BorderStyle.FixedSingle;
+            panel1.Controls.Add(label9);
+            panel1.Controls.Add(label8);
+            panel1.Controls.Add(label7);
+            panel1.Controls.Add(label6);
+            panel1.Location = new Point(85, 154);
+            panel1.Margin = new Padding(4, 4, 4, 4);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(156, 80);
+            panel1.TabIndex = 17;
             // 
             // label9
             // 
-            this.label9.AutoSize = true;
-            this.label9.Enabled = false;
-            this.label9.Location = new System.Drawing.Point(72, 30);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(29, 12);
-            this.label9.TabIndex = 21;
-            this.label9.Text = "#exp";
+            label9.AutoSize = true;
+            label9.Enabled = false;
+            label9.Location = new Point(84, 42);
+            label9.Margin = new Padding(4, 0, 4, 0);
+            label9.Name = "label9";
+            label9.Size = new Size(37, 17);
+            label9.TabIndex = 21;
+            label9.Text = "#exp";
             // 
             // label8
             // 
-            this.label8.AutoSize = true;
-            this.label8.Enabled = false;
-            this.label8.Location = new System.Drawing.Point(72, 9);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(41, 12);
-            this.label8.TabIndex = 20;
-            this.label8.Text = "#level";
+            label8.AutoSize = true;
+            label8.Enabled = false;
+            label8.Location = new Point(84, 13);
+            label8.Margin = new Padding(4, 0, 4, 0);
+            label8.Name = "label8";
+            label8.Size = new Size(42, 17);
+            label8.TabIndex = 20;
+            label8.Text = "#level";
             // 
             // label7
             // 
-            this.label7.AutoSize = true;
-            this.label7.Enabled = false;
-            this.label7.Location = new System.Drawing.Point(30, 30);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(29, 12);
-            this.label7.TabIndex = 19;
-            this.label7.Text = "经验";
+            label7.AutoSize = true;
+            label7.Enabled = false;
+            label7.Location = new Point(35, 42);
+            label7.Margin = new Padding(4, 0, 4, 0);
+            label7.Name = "label7";
+            label7.Size = new Size(32, 17);
+            label7.TabIndex = 19;
+            label7.Text = "经验";
             // 
             // label6
             // 
-            this.label6.AutoSize = true;
-            this.label6.Enabled = false;
-            this.label6.Location = new System.Drawing.Point(30, 9);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(29, 12);
-            this.label6.TabIndex = 18;
-            this.label6.Text = "等级";
+            label6.AutoSize = true;
+            label6.Enabled = false;
+            label6.Location = new Point(35, 13);
+            label6.Margin = new Padding(4, 0, 4, 0);
+            label6.Name = "label6";
+            label6.Size = new Size(32, 17);
+            label6.TabIndex = 18;
+            label6.Text = "等级";
             // 
             // XTextBox
             // 
-            this.XTextBox.Location = new System.Drawing.Point(169, 14);
-            this.XTextBox.Name = "XTextBox";
-            this.XTextBox.Size = new System.Drawing.Size(31, 21);
-            this.XTextBox.TabIndex = 10;
-            this.XTextBox.TextChanged += new System.EventHandler(this.XTextBox_TextChanged);
+            XTextBox.Location = new Point(197, 20);
+            XTextBox.Margin = new Padding(4, 4, 4, 4);
+            XTextBox.Name = "XTextBox";
+            XTextBox.Size = new Size(35, 23);
+            XTextBox.TabIndex = 10;
+            XTextBox.TextChanged += XTextBox_TextChanged;
             // 
             // label5
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(13, 68);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(53, 12);
-            this.label5.TabIndex = 16;
-            this.label5.Text = "尸体名称";
+            label5.AutoSize = true;
+            label5.Location = new Point(19, 94);
+            label5.Margin = new Padding(4, 0, 4, 0);
+            label5.Name = "label5";
+            label5.Size = new Size(56, 17);
+            label5.TabIndex = 16;
+            label5.Text = "尸体名称";
             // 
             // label3
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(209, 18);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(11, 12);
-            this.label3.TabIndex = 11;
-            this.label3.Text = "Y";
+            label3.AutoSize = true;
+            label3.Location = new Point(243, 23);
+            label3.Margin = new Padding(4, 0, 4, 0);
+            label3.Name = "label3";
+            label3.Size = new Size(15, 17);
+            label3.TabIndex = 11;
+            label3.Text = "Y";
             // 
             // BodyNameTextBox
             // 
-            this.BodyNameTextBox.Location = new System.Drawing.Point(68, 64);
-            this.BodyNameTextBox.Name = "BodyNameTextBox";
-            this.BodyNameTextBox.Size = new System.Drawing.Size(72, 21);
-            this.BodyNameTextBox.TabIndex = 15;
-            this.BodyNameTextBox.TextChanged += new System.EventHandler(this.BodyNameTextBox_TextChanged);
+            BodyNameTextBox.Location = new Point(79, 91);
+            BodyNameTextBox.Margin = new Padding(4, 4, 4, 4);
+            BodyNameTextBox.Name = "BodyNameTextBox";
+            BodyNameTextBox.Size = new Size(83, 23);
+            BodyNameTextBox.TabIndex = 15;
+            BodyNameTextBox.TextChanged += BodyNameTextBox_TextChanged;
             // 
             // YTextBox
             // 
-            this.YTextBox.Location = new System.Drawing.Point(222, 14);
-            this.YTextBox.Name = "YTextBox";
-            this.YTextBox.Size = new System.Drawing.Size(31, 21);
-            this.YTextBox.TabIndex = 12;
-            this.YTextBox.TextChanged += new System.EventHandler(this.YTextBox_TextChanged);
+            YTextBox.Location = new Point(259, 20);
+            YTextBox.Margin = new Padding(4, 4, 4, 4);
+            YTextBox.Name = "YTextBox";
+            YTextBox.Size = new Size(35, 23);
+            YTextBox.TabIndex = 12;
+            YTextBox.TextChanged += YTextBox_TextChanged;
             // 
             // label4
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(12, 44);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(53, 12);
-            this.label4.TabIndex = 14;
-            this.label4.Text = "怪物名称";
+            label4.AutoSize = true;
+            label4.Location = new Point(18, 59);
+            label4.Margin = new Padding(4, 0, 4, 0);
+            label4.Name = "label4";
+            label4.Size = new Size(56, 17);
+            label4.TabIndex = 14;
+            label4.Text = "怪物名称";
             // 
             // MonsterNameTextBox
             // 
-            this.MonsterNameTextBox.Location = new System.Drawing.Point(68, 39);
-            this.MonsterNameTextBox.Name = "MonsterNameTextBox";
-            this.MonsterNameTextBox.Size = new System.Drawing.Size(72, 21);
-            this.MonsterNameTextBox.TabIndex = 13;
-            this.MonsterNameTextBox.TextChanged += new System.EventHandler(this.MonsterNameTextBox_TextChanged);
+            MonsterNameTextBox.Location = new Point(79, 55);
+            MonsterNameTextBox.Margin = new Padding(4, 4, 4, 4);
+            MonsterNameTextBox.Name = "MonsterNameTextBox";
+            MonsterNameTextBox.Size = new Size(83, 23);
+            MonsterNameTextBox.TabIndex = 13;
+            MonsterNameTextBox.TextChanged += MonsterNameTextBox_TextChanged;
             // 
             // tabPage2
             // 
-            this.tabPage2.Controls.Add(this.label23);
-            this.tabPage2.Controls.Add(this.label17);
-            this.tabPage2.Controls.Add(this.Level6ExpTextBox);
-            this.tabPage2.Controls.Add(this.Level12ExpTextBox);
-            this.tabPage2.Controls.Add(this.Level7ExpTextBox);
-            this.tabPage2.Controls.Add(this.Level5ExpTextBox);
-            this.tabPage2.Controls.Add(this.Level11ExpTextBox);
-            this.tabPage2.Controls.Add(this.Level1ExpTextBox);
-            this.tabPage2.Controls.Add(this.Level8ExpTextBox);
-            this.tabPage2.Controls.Add(this.Level2ExpTextBox);
-            this.tabPage2.Controls.Add(this.Level4ExpTextBox);
-            this.tabPage2.Controls.Add(this.Level10ExpTextBox);
-            this.tabPage2.Controls.Add(this.Level9ExpTextBox);
-            this.tabPage2.Controls.Add(this.Level3ExpTextBox);
-            this.tabPage2.Controls.Add(this.label22);
-            this.tabPage2.Controls.Add(this.label21);
-            this.tabPage2.Controls.Add(this.label24);
-            this.tabPage2.Controls.Add(this.label28);
-            this.tabPage2.Controls.Add(this.label20);
-            this.tabPage2.Controls.Add(this.label25);
-            this.tabPage2.Controls.Add(this.label27);
-            this.tabPage2.Controls.Add(this.label18);
-            this.tabPage2.Controls.Add(this.label19);
-            this.tabPage2.Controls.Add(this.label26);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(300, 169);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "经验";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            tabPage2.Controls.Add(label23);
+            tabPage2.Controls.Add(label17);
+            tabPage2.Controls.Add(Level6ExpTextBox);
+            tabPage2.Controls.Add(Level12ExpTextBox);
+            tabPage2.Controls.Add(Level7ExpTextBox);
+            tabPage2.Controls.Add(Level5ExpTextBox);
+            tabPage2.Controls.Add(Level11ExpTextBox);
+            tabPage2.Controls.Add(Level1ExpTextBox);
+            tabPage2.Controls.Add(Level8ExpTextBox);
+            tabPage2.Controls.Add(Level2ExpTextBox);
+            tabPage2.Controls.Add(Level4ExpTextBox);
+            tabPage2.Controls.Add(Level10ExpTextBox);
+            tabPage2.Controls.Add(Level9ExpTextBox);
+            tabPage2.Controls.Add(Level3ExpTextBox);
+            tabPage2.Controls.Add(label22);
+            tabPage2.Controls.Add(label21);
+            tabPage2.Controls.Add(label24);
+            tabPage2.Controls.Add(label28);
+            tabPage2.Controls.Add(label20);
+            tabPage2.Controls.Add(label25);
+            tabPage2.Controls.Add(label27);
+            tabPage2.Controls.Add(label18);
+            tabPage2.Controls.Add(label19);
+            tabPage2.Controls.Add(label26);
+            tabPage2.Location = new Point(4, 26);
+            tabPage2.Margin = new Padding(4, 4, 4, 4);
+            tabPage2.Name = "tabPage2";
+            tabPage2.Padding = new Padding(4, 4, 4, 4);
+            tabPage2.Size = new Size(351, 246);
+            tabPage2.TabIndex = 1;
+            tabPage2.Text = "经验";
+            tabPage2.UseVisualStyleBackColor = true;
             // 
             // label23
             // 
-            this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(172, 139);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(29, 12);
-            this.label23.TabIndex = 32;
-            this.label23.Text = "12级";
+            label23.AutoSize = true;
+            label23.Location = new Point(201, 196);
+            label23.Margin = new Padding(4, 0, 4, 0);
+            label23.Name = "label23";
+            label23.Size = new Size(34, 17);
+            label23.TabIndex = 32;
+            label23.Text = "12级";
             // 
             // label17
             // 
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(67, 22);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(23, 12);
-            this.label17.TabIndex = 10;
-            this.label17.Text = "1级";
+            label17.AutoSize = true;
+            label17.Location = new Point(78, 30);
+            label17.Margin = new Padding(4, 0, 4, 0);
+            label17.Name = "label17";
+            label17.Size = new Size(27, 17);
+            label17.TabIndex = 10;
+            label17.Text = "1级";
             // 
             // Level6ExpTextBox
             // 
-            this.Level6ExpTextBox.Location = new System.Drawing.Point(92, 136);
-            this.Level6ExpTextBox.Name = "Level6ExpTextBox";
-            this.Level6ExpTextBox.Size = new System.Drawing.Size(47, 21);
-            this.Level6ExpTextBox.TabIndex = 19;
-            this.Level6ExpTextBox.Tag = "5";
-            this.Level6ExpTextBox.TextChanged += new System.EventHandler(this.Level1ExpTextBox_TextChanged);
+            Level6ExpTextBox.Location = new Point(107, 193);
+            Level6ExpTextBox.Margin = new Padding(4, 4, 4, 4);
+            Level6ExpTextBox.Name = "Level6ExpTextBox";
+            Level6ExpTextBox.Size = new Size(54, 23);
+            Level6ExpTextBox.TabIndex = 19;
+            Level6ExpTextBox.Tag = "5";
+            Level6ExpTextBox.TextChanged += Level1ExpTextBox_TextChanged;
             // 
             // Level12ExpTextBox
             // 
-            this.Level12ExpTextBox.Location = new System.Drawing.Point(203, 136);
-            this.Level12ExpTextBox.Name = "Level12ExpTextBox";
-            this.Level12ExpTextBox.Size = new System.Drawing.Size(47, 21);
-            this.Level12ExpTextBox.TabIndex = 31;
-            this.Level12ExpTextBox.Tag = "11";
-            this.Level12ExpTextBox.TextChanged += new System.EventHandler(this.Level1ExpTextBox_TextChanged);
+            Level12ExpTextBox.Location = new Point(237, 193);
+            Level12ExpTextBox.Margin = new Padding(4, 4, 4, 4);
+            Level12ExpTextBox.Name = "Level12ExpTextBox";
+            Level12ExpTextBox.Size = new Size(54, 23);
+            Level12ExpTextBox.TabIndex = 31;
+            Level12ExpTextBox.Tag = "11";
+            Level12ExpTextBox.TextChanged += Level1ExpTextBox_TextChanged;
             // 
             // Level7ExpTextBox
             // 
-            this.Level7ExpTextBox.Location = new System.Drawing.Point(203, 18);
-            this.Level7ExpTextBox.Name = "Level7ExpTextBox";
-            this.Level7ExpTextBox.Size = new System.Drawing.Size(47, 21);
-            this.Level7ExpTextBox.TabIndex = 21;
-            this.Level7ExpTextBox.Tag = "6";
-            this.Level7ExpTextBox.TextChanged += new System.EventHandler(this.Level1ExpTextBox_TextChanged);
+            Level7ExpTextBox.Location = new Point(237, 26);
+            Level7ExpTextBox.Margin = new Padding(4, 4, 4, 4);
+            Level7ExpTextBox.Name = "Level7ExpTextBox";
+            Level7ExpTextBox.Size = new Size(54, 23);
+            Level7ExpTextBox.TabIndex = 21;
+            Level7ExpTextBox.Tag = "6";
+            Level7ExpTextBox.TextChanged += Level1ExpTextBox_TextChanged;
             // 
             // Level5ExpTextBox
             // 
-            this.Level5ExpTextBox.Location = new System.Drawing.Point(92, 112);
-            this.Level5ExpTextBox.Name = "Level5ExpTextBox";
-            this.Level5ExpTextBox.Size = new System.Drawing.Size(47, 21);
-            this.Level5ExpTextBox.TabIndex = 17;
-            this.Level5ExpTextBox.Tag = "4";
-            this.Level5ExpTextBox.TextChanged += new System.EventHandler(this.Level1ExpTextBox_TextChanged);
+            Level5ExpTextBox.Location = new Point(107, 159);
+            Level5ExpTextBox.Margin = new Padding(4, 4, 4, 4);
+            Level5ExpTextBox.Name = "Level5ExpTextBox";
+            Level5ExpTextBox.Size = new Size(54, 23);
+            Level5ExpTextBox.TabIndex = 17;
+            Level5ExpTextBox.Tag = "4";
+            Level5ExpTextBox.TextChanged += Level1ExpTextBox_TextChanged;
             // 
             // Level11ExpTextBox
             // 
-            this.Level11ExpTextBox.Location = new System.Drawing.Point(203, 112);
-            this.Level11ExpTextBox.Name = "Level11ExpTextBox";
-            this.Level11ExpTextBox.Size = new System.Drawing.Size(47, 21);
-            this.Level11ExpTextBox.TabIndex = 29;
-            this.Level11ExpTextBox.Tag = "10";
-            this.Level11ExpTextBox.TextChanged += new System.EventHandler(this.Level1ExpTextBox_TextChanged);
+            Level11ExpTextBox.Location = new Point(237, 159);
+            Level11ExpTextBox.Margin = new Padding(4, 4, 4, 4);
+            Level11ExpTextBox.Name = "Level11ExpTextBox";
+            Level11ExpTextBox.Size = new Size(54, 23);
+            Level11ExpTextBox.TabIndex = 29;
+            Level11ExpTextBox.Tag = "10";
+            Level11ExpTextBox.TextChanged += Level1ExpTextBox_TextChanged;
             // 
             // Level1ExpTextBox
             // 
-            this.Level1ExpTextBox.Location = new System.Drawing.Point(92, 18);
-            this.Level1ExpTextBox.Name = "Level1ExpTextBox";
-            this.Level1ExpTextBox.Size = new System.Drawing.Size(47, 21);
-            this.Level1ExpTextBox.TabIndex = 9;
-            this.Level1ExpTextBox.Tag = "0";
-            this.Level1ExpTextBox.TextChanged += new System.EventHandler(this.Level1ExpTextBox_TextChanged);
+            Level1ExpTextBox.Location = new Point(107, 26);
+            Level1ExpTextBox.Margin = new Padding(4, 4, 4, 4);
+            Level1ExpTextBox.Name = "Level1ExpTextBox";
+            Level1ExpTextBox.Size = new Size(54, 23);
+            Level1ExpTextBox.TabIndex = 9;
+            Level1ExpTextBox.Tag = "0";
+            Level1ExpTextBox.TextChanged += Level1ExpTextBox_TextChanged;
             // 
             // Level8ExpTextBox
             // 
-            this.Level8ExpTextBox.Location = new System.Drawing.Point(203, 41);
-            this.Level8ExpTextBox.Name = "Level8ExpTextBox";
-            this.Level8ExpTextBox.Size = new System.Drawing.Size(47, 21);
-            this.Level8ExpTextBox.TabIndex = 23;
-            this.Level8ExpTextBox.Tag = "7";
-            this.Level8ExpTextBox.TextChanged += new System.EventHandler(this.Level1ExpTextBox_TextChanged);
+            Level8ExpTextBox.Location = new Point(237, 58);
+            Level8ExpTextBox.Margin = new Padding(4, 4, 4, 4);
+            Level8ExpTextBox.Name = "Level8ExpTextBox";
+            Level8ExpTextBox.Size = new Size(54, 23);
+            Level8ExpTextBox.TabIndex = 23;
+            Level8ExpTextBox.Tag = "7";
+            Level8ExpTextBox.TextChanged += Level1ExpTextBox_TextChanged;
             // 
             // Level2ExpTextBox
             // 
-            this.Level2ExpTextBox.Location = new System.Drawing.Point(92, 41);
-            this.Level2ExpTextBox.Name = "Level2ExpTextBox";
-            this.Level2ExpTextBox.Size = new System.Drawing.Size(47, 21);
-            this.Level2ExpTextBox.TabIndex = 11;
-            this.Level2ExpTextBox.Tag = "1";
-            this.Level2ExpTextBox.TextChanged += new System.EventHandler(this.Level1ExpTextBox_TextChanged);
+            Level2ExpTextBox.Location = new Point(107, 58);
+            Level2ExpTextBox.Margin = new Padding(4, 4, 4, 4);
+            Level2ExpTextBox.Name = "Level2ExpTextBox";
+            Level2ExpTextBox.Size = new Size(54, 23);
+            Level2ExpTextBox.TabIndex = 11;
+            Level2ExpTextBox.Tag = "1";
+            Level2ExpTextBox.TextChanged += Level1ExpTextBox_TextChanged;
             // 
             // Level4ExpTextBox
             // 
-            this.Level4ExpTextBox.Location = new System.Drawing.Point(92, 88);
-            this.Level4ExpTextBox.Name = "Level4ExpTextBox";
-            this.Level4ExpTextBox.Size = new System.Drawing.Size(47, 21);
-            this.Level4ExpTextBox.TabIndex = 15;
-            this.Level4ExpTextBox.Tag = "3";
-            this.Level4ExpTextBox.TextChanged += new System.EventHandler(this.Level1ExpTextBox_TextChanged);
+            Level4ExpTextBox.Location = new Point(107, 125);
+            Level4ExpTextBox.Margin = new Padding(4, 4, 4, 4);
+            Level4ExpTextBox.Name = "Level4ExpTextBox";
+            Level4ExpTextBox.Size = new Size(54, 23);
+            Level4ExpTextBox.TabIndex = 15;
+            Level4ExpTextBox.Tag = "3";
+            Level4ExpTextBox.TextChanged += Level1ExpTextBox_TextChanged;
             // 
             // Level10ExpTextBox
             // 
-            this.Level10ExpTextBox.Location = new System.Drawing.Point(203, 88);
-            this.Level10ExpTextBox.Name = "Level10ExpTextBox";
-            this.Level10ExpTextBox.Size = new System.Drawing.Size(47, 21);
-            this.Level10ExpTextBox.TabIndex = 27;
-            this.Level10ExpTextBox.Tag = "9";
-            this.Level10ExpTextBox.TextChanged += new System.EventHandler(this.Level1ExpTextBox_TextChanged);
+            Level10ExpTextBox.Location = new Point(237, 125);
+            Level10ExpTextBox.Margin = new Padding(4, 4, 4, 4);
+            Level10ExpTextBox.Name = "Level10ExpTextBox";
+            Level10ExpTextBox.Size = new Size(54, 23);
+            Level10ExpTextBox.TabIndex = 27;
+            Level10ExpTextBox.Tag = "9";
+            Level10ExpTextBox.TextChanged += Level1ExpTextBox_TextChanged;
             // 
             // Level9ExpTextBox
             // 
-            this.Level9ExpTextBox.Location = new System.Drawing.Point(203, 64);
-            this.Level9ExpTextBox.Name = "Level9ExpTextBox";
-            this.Level9ExpTextBox.Size = new System.Drawing.Size(47, 21);
-            this.Level9ExpTextBox.TabIndex = 25;
-            this.Level9ExpTextBox.Tag = "8";
-            this.Level9ExpTextBox.TextChanged += new System.EventHandler(this.Level1ExpTextBox_TextChanged);
+            Level9ExpTextBox.Location = new Point(237, 91);
+            Level9ExpTextBox.Margin = new Padding(4, 4, 4, 4);
+            Level9ExpTextBox.Name = "Level9ExpTextBox";
+            Level9ExpTextBox.Size = new Size(54, 23);
+            Level9ExpTextBox.TabIndex = 25;
+            Level9ExpTextBox.Tag = "8";
+            Level9ExpTextBox.TextChanged += Level1ExpTextBox_TextChanged;
             // 
             // Level3ExpTextBox
             // 
-            this.Level3ExpTextBox.Location = new System.Drawing.Point(92, 64);
-            this.Level3ExpTextBox.Name = "Level3ExpTextBox";
-            this.Level3ExpTextBox.Size = new System.Drawing.Size(47, 21);
-            this.Level3ExpTextBox.TabIndex = 13;
-            this.Level3ExpTextBox.Tag = "2";
-            this.Level3ExpTextBox.TextChanged += new System.EventHandler(this.Level1ExpTextBox_TextChanged);
+            Level3ExpTextBox.Location = new Point(107, 91);
+            Level3ExpTextBox.Margin = new Padding(4, 4, 4, 4);
+            Level3ExpTextBox.Name = "Level3ExpTextBox";
+            Level3ExpTextBox.Size = new Size(54, 23);
+            Level3ExpTextBox.TabIndex = 13;
+            Level3ExpTextBox.Tag = "2";
+            Level3ExpTextBox.TextChanged += Level1ExpTextBox_TextChanged;
             // 
             // label22
             // 
-            this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(67, 139);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(23, 12);
-            this.label22.TabIndex = 20;
-            this.label22.Text = "6级";
+            label22.AutoSize = true;
+            label22.Location = new Point(78, 196);
+            label22.Margin = new Padding(4, 0, 4, 0);
+            label22.Name = "label22";
+            label22.Size = new Size(27, 17);
+            label22.TabIndex = 20;
+            label22.Text = "6级";
             // 
             // label21
             // 
-            this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(67, 116);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(23, 12);
-            this.label21.TabIndex = 18;
-            this.label21.Text = "5级";
+            label21.AutoSize = true;
+            label21.Location = new Point(78, 163);
+            label21.Margin = new Padding(4, 0, 4, 0);
+            label21.Name = "label21";
+            label21.Size = new Size(27, 17);
+            label21.TabIndex = 18;
+            label21.Text = "5级";
             // 
             // label24
             // 
-            this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(172, 115);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(29, 12);
-            this.label24.TabIndex = 30;
-            this.label24.Text = "11级";
+            label24.AutoSize = true;
+            label24.Location = new Point(201, 163);
+            label24.Margin = new Padding(4, 0, 4, 0);
+            label24.Name = "label24";
+            label24.Size = new Size(34, 17);
+            label24.TabIndex = 30;
+            label24.Text = "11级";
             // 
             // label28
             // 
-            this.label28.AutoSize = true;
-            this.label28.Location = new System.Drawing.Point(178, 23);
-            this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(23, 12);
-            this.label28.TabIndex = 22;
-            this.label28.Text = "7级";
+            label28.AutoSize = true;
+            label28.Location = new Point(208, 30);
+            label28.Margin = new Padding(4, 0, 4, 0);
+            label28.Name = "label28";
+            label28.Size = new Size(27, 17);
+            label28.TabIndex = 22;
+            label28.Text = "7级";
             // 
             // label20
             // 
-            this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(67, 92);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(23, 12);
-            this.label20.TabIndex = 16;
-            this.label20.Text = "4级";
+            label20.AutoSize = true;
+            label20.Location = new Point(78, 129);
+            label20.Margin = new Padding(4, 0, 4, 0);
+            label20.Name = "label20";
+            label20.Size = new Size(27, 17);
+            label20.TabIndex = 16;
+            label20.Text = "4级";
             // 
             // label25
             // 
-            this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(172, 92);
-            this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(29, 12);
-            this.label25.TabIndex = 28;
-            this.label25.Text = "10级";
+            label25.AutoSize = true;
+            label25.Location = new Point(201, 129);
+            label25.Margin = new Padding(4, 0, 4, 0);
+            label25.Name = "label25";
+            label25.Size = new Size(34, 17);
+            label25.TabIndex = 28;
+            label25.Text = "10级";
             // 
             // label27
             // 
-            this.label27.AutoSize = true;
-            this.label27.Location = new System.Drawing.Point(178, 46);
-            this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(23, 12);
-            this.label27.TabIndex = 24;
-            this.label27.Text = "8级";
+            label27.AutoSize = true;
+            label27.Location = new Point(208, 61);
+            label27.Margin = new Padding(4, 0, 4, 0);
+            label27.Name = "label27";
+            label27.Size = new Size(27, 17);
+            label27.TabIndex = 24;
+            label27.Text = "8级";
             // 
             // label18
             // 
-            this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(67, 45);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(23, 12);
-            this.label18.TabIndex = 12;
-            this.label18.Text = "2级";
+            label18.AutoSize = true;
+            label18.Location = new Point(78, 62);
+            label18.Margin = new Padding(4, 0, 4, 0);
+            label18.Name = "label18";
+            label18.Size = new Size(27, 17);
+            label18.TabIndex = 12;
+            label18.Text = "2级";
             // 
             // label19
             // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(67, 68);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(23, 12);
-            this.label19.TabIndex = 14;
-            this.label19.Text = "3级";
+            label19.AutoSize = true;
+            label19.Location = new Point(78, 95);
+            label19.Margin = new Padding(4, 0, 4, 0);
+            label19.Name = "label19";
+            label19.Size = new Size(27, 17);
+            label19.TabIndex = 14;
+            label19.Text = "3级";
             // 
             // label26
             // 
-            this.label26.AutoSize = true;
-            this.label26.Location = new System.Drawing.Point(178, 68);
-            this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(23, 12);
-            this.label26.TabIndex = 26;
-            this.label26.Text = "9级";
+            label26.AutoSize = true;
+            label26.Location = new Point(208, 94);
+            label26.Margin = new Padding(4, 0, 4, 0);
+            label26.Name = "label26";
+            label26.Size = new Size(27, 17);
+            label26.TabIndex = 26;
+            label26.Text = "9级";
             // 
             // DragonInfoForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(329, 236);
-            this.Controls.Add(this.tabControl1);
-            this.Controls.Add(this.EnableDragonCheckBox);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
-            this.Name = "DragonInfoForm";
-            this.Text = "怪物龙信息列表";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.DragonInfoForm_FormClosed);
-            this.Load += new System.EventHandler(this.DragonInfoForm_Load);
-            this.tabControl1.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
-            this.tabPage1.PerformLayout();
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
-            this.tabPage2.ResumeLayout(false);
-            this.tabPage2.PerformLayout();
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleDimensions = new SizeF(7F, 17F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(384, 334);
+            Controls.Add(tabControl1);
+            Controls.Add(EnableDragonCheckBox);
+            FormBorderStyle = FormBorderStyle.FixedDialog;
+            Margin = new Padding(4, 4, 4, 4);
+            MaximizeBox = false;
+            MinimizeBox = false;
+            Name = "DragonInfoForm";
+            Text = "怪物龙信息列表";
+            FormClosed += DragonInfoForm_FormClosed;
+            Load += DragonInfoForm_Load;
+            tabControl1.ResumeLayout(false);
+            tabPage1.ResumeLayout(false);
+            tabPage1.PerformLayout();
+            panel2.ResumeLayout(false);
+            panel2.PerformLayout();
+            panel1.ResumeLayout(false);
+            panel1.PerformLayout();
+            tabPage2.ResumeLayout(false);
+            tabPage2.PerformLayout();
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion

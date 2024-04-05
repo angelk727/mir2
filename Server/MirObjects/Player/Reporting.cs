@@ -1,6 +1,5 @@
-﻿using System;
+﻿using log4net;
 using System.Runtime.CompilerServices;
-using log4net;
 using Server.MirDatabase;
 
 namespace Server.MirObjects

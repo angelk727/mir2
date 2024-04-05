@@ -1,6 +1,5 @@
-﻿using System.Drawing;
-using System.IO;
-using Server.MirEnvir;
+using System.Drawing;
+﻿using Server.MirEnvir;
 
 namespace Server.MirDatabase
 {

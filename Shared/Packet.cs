@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using C = ClientPackets;
+﻿using C = ClientPackets;
 using S = ServerPackets;
 
 public abstract class Packet
@@ -32,8 +29,8 @@ public abstract class Packet
                 p = IsServer ? GetClientPacket(id) : GetServerPacket(id);
                 if (p == null)
                 {
-                    //防止服务器在“循环”中卡住（仅在该连接上）
-                    //如果传入的数据损坏/无效>只需删除所有数据，而不是一遍又一遍地尝试处理它
+                    //prevents server from getting stuck in a 'loop' (only on this connection)
+                    //if the incomming data is corrupt/invalid > simply remove all data instead of trying to process it over and over again
                     extra = new byte[0];
                     return null;
                 }
@@ -42,8 +39,7 @@ public abstract class Packet
             }
             catch
             {
-                return null;
-                //return new C.Disconnect();
+                throw new InvalidDataException();
             }
         }
 
@@ -809,7 +805,7 @@ public abstract class Packet
                 return new S.UserDashAttack();
             case (short)ServerPacketIds.ObjectDashAttack:
                 return new S.ObjectDashAttack();
-            case (short)ServerPacketIds.UserAttackMove://战士技能 - SlashingBurst
+            case (short)ServerPacketIds.UserAttackMove://Warrior Skill - SlashingBurst
                 return new S.UserAttackMove();
             case (short)ServerPacketIds.CombineItem:
                 return new S.CombineItem();

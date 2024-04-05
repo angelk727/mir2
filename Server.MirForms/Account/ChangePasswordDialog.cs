@@ -1,6 +1,4 @@
-﻿using System.Windows.Forms;
-
-namespace Server
+﻿namespace Server
 {
     public partial class ChangePasswordDialog : Form
     {

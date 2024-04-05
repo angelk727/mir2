@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.IO;
-using System.Linq;
-using Server.MirDatabase;
+﻿using Server.MirDatabase;
 using Server.MirEnvir;
 using Server.MirObjects.Monsters;
 using S = ServerPackets;
@@ -433,7 +429,7 @@ namespace Server.MirObjects
             var flag = true;
             if (Race == ObjectType.Monster)
             {
-                // 检查怪物是否为练功师的AI - 允许在安全区内作为攻击目标
+                // Check if we are a training AI - we can be attacked in safezones
                 if (((MonsterObject)this).Info.AI == 984)
                     flag = false;
             }

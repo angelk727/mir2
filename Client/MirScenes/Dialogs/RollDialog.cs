@@ -1,6 +1,4 @@
-﻿using System;
-using System.Drawing;
-using Client.MirControls;
+﻿using Client.MirControls;
 using Client.MirGraphics;
 using Client.MirNetwork;
 using Client.MirSounds;

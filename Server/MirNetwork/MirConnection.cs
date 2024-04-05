@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
+﻿using System.Collections.Concurrent;
 using System.Net.Sockets;
-using System.Text.RegularExpressions;
 using Server.MirDatabase;
 using Server.MirEnvir;
 using Server.MirObjects;
 using C = ClientPackets;
 using S = ServerPackets;
+using System.Text.RegularExpressions;
+using Server.Utils;
 
 namespace Server.MirNetwork
 {
@@ -70,27 +69,16 @@ namespace Server.MirNetwork
         public bool HeroStorageSent;
         public Dictionary<long, DateTime> SentRankings = new Dictionary<long, DateTime>();
 
+        private DateTime _dataCounterReset;
+        private int _dataCounter;
+        private FixedSizedQueue<Packet> _lastPackets;
 
         public MirConnection(int sessionID, TcpClient client)
         {
             SessionID = sessionID;
             IPAddress = client.Client.RemoteEndPoint.ToString().Split(':')[0];
 
-            int connCount = 0;
-            for (int i = 0; i < Envir.Connections.Count; i++)
-            {
-                MirConnection conn = Envir.Connections[i];
-                if (conn.IPAddress == IPAddress && conn.Connected)
-                {
-                    connCount++;
-
-                    if (connCount >= Settings.MaxIP)
-                    {
-                        MessageQueue.EnqueueDebugging(IPAddress + "已达到设定可登录人数上限");
-                        conn.SendDisconnect(5);
-                    }
-                }
-            }
+            Envir.UpdateIPBlock(IPAddress, TimeSpan.FromSeconds(Settings.IPBlockSeconds));
 
             MessageQueue.Enqueue(IPAddress + "已连接服务器");
 
@@ -100,6 +88,7 @@ namespace Server.MirNetwork
             TimeConnected = Envir.Time;
             TimeOutTime = TimeConnected + Settings.TimeOut;
 
+            _lastPackets = new FixedSizedQueue<Packet>(10);
 
             _receiveList = new ConcurrentQueue<Packet>();
             _sendList = new ConcurrentQueue<Packet>();
@@ -157,16 +146,58 @@ namespace Server.MirNetwork
                 return;
             }
 
-            byte[] rawBytes = result.AsyncState as byte[];
+            if (_dataCounterReset < Envir.Now)
+            {
+                _dataCounterReset = Envir.Now.AddSeconds(5);
+                _dataCounter = 0;
+            }
+
+            _dataCounter++;
+
+            try
+            {
+                byte[] rawBytes = result.AsyncState as byte[];
 
                 byte[] temp = _rawData;
                 _rawData = new byte[dataRead + temp.Length];
                 Buffer.BlockCopy(temp, 0, _rawData, 0, temp.Length);
                 Buffer.BlockCopy(rawBytes, 0, _rawData, temp.Length, dataRead);
 
-            Packet p;
-            while ((p = Packet.ReceivePacket(_rawData, out _rawData)) != null)
-                _receiveList.Enqueue(p);
+                Packet p;
+
+                while ((p = Packet.ReceivePacket(_rawData, out _rawData)) != null)
+                    _receiveList.Enqueue(p);
+            }
+            catch
+            {
+                Envir.UpdateIPBlock(IPAddress, TimeSpan.FromHours(24));
+
+                MessageQueue.Enqueue($"{IPAddress} 已断开连接-无效数据包");
+
+                Disconnecting = true;
+                return;
+            }
+
+            if (_dataCounter > Settings.MaxPacket)
+            {
+                Envir.UpdateIPBlock(IPAddress, TimeSpan.FromHours(24));
+
+                List<string> packetList = new List<string>();
+
+                while (_lastPackets.Count > 0)
+                {
+                    _lastPackets.TryDequeue(out Packet pkt);
+
+                    Enum.TryParse<ClientPacketIds>((pkt?.Index ?? 0).ToString(), out ClientPacketIds cPacket);
+
+                    packetList.Add(cPacket.ToString());
+                }
+
+                MessageQueue.Enqueue($"{IPAddress} Disconnected, Large amount of Packets. LastPackets: {String.Join(",", packetList.Distinct())}.");
+
+                Disconnecting = true;
+                return;
+            }
 
             BeginReceive();
         }
@@ -218,6 +249,9 @@ namespace Server.MirNetwork
             {
                 Packet p;
                 if (!_receiveList.TryDequeue(out p)) continue;
+
+                _lastPackets.Enqueue(p);
+
                 TimeOutTime = Envir.Time + Settings.TimeOut;
                 ProcessPacket(p);
 
@@ -1823,7 +1857,7 @@ namespace Server.MirNetwork
             }
             else
             {
-                //更新灵物信息
+                //Update the creature info
                 for (int i = 0; i < Player.Info.IntelligentCreatures.Count; i++)
                 {
                     if (Player.Info.IntelligentCreatures[i].PetType == petUpdate.PetType)
@@ -2051,5 +2085,11 @@ namespace Server.MirNetwork
             Enqueue(new S.NewHeroInfo { Info = heroInfo.ClientInformation });
             SentHeroInfo.Add(item.UniqueID);
         }
+    }
+
+    public class MirConnectionLog {
+        public string IPAddress = "";
+        public List<long> AccountsMade = new List<long>();
+        public List<long> CharactersMade = new List<long>();
     }
 }

@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Drawing;
+﻿using System.Drawing;
 using Server.MirDatabase;
 using Server.MirEnvir;
 using S = ServerPackets;
@@ -9,7 +8,9 @@ namespace Server.MirObjects.Monsters
     public class ChieftainSword : MonsterObject
     {
         private long _BuffTime;
+
         public bool YangDragonFlameMode = false;
+
         protected virtual byte AttackRange => Info.ViewRange;
 
         protected internal ChieftainSword(MonsterInfo info)

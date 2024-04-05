@@ -1,9 +1,10 @@
-﻿using System;
-using System.Windows.Forms;
+﻿using CustomFormControl;
 using Server.Database;
 using Server.MirDatabase;
 using Server.MirEnvir;
 using Server.MirForms.Systems;
+using Server.MirObjects;
+using Server.Systems;
 
 namespace Server
 {
@@ -67,6 +68,8 @@ namespace Server
                 PlayersLabel.Text = $"在线角色: {Envir.Players.Count}";
                 MonsterLabel.Text = $"刷新怪物: {Envir.MonsterCount}";
                 ConnectionsLabel.Text = $"连线登录: {Envir.Connections.Count}";
+                BlockedIPsLabel.Text = $"屏蔽锁定 IPs: {Envir.IPBlocks.Count(x => x.Value > Envir.Now)}";
+                UpTimeLabel.Text = $"运行时间: {Envir.Stopwatch.ElapsedMilliseconds / 1000 / 60 / 60 / 24}日:{Envir.Stopwatch.ElapsedMilliseconds / 1000 / 60 / 60 % 24}小时:{Envir.Stopwatch.ElapsedMilliseconds / 1000 / 60 % 60}分钟:{Envir.Stopwatch.ElapsedMilliseconds / 1000 % 60}秒";
 
                 if (Settings.Multithreaded && (Envir.MobThreads != null))
                 {
@@ -108,7 +111,8 @@ namespace Server
                     ChatLogTextBox.AppendText(message);
                 }
 
-                ProcessPlayersOnlineTab();
+                ProcessPlayersOnlineTab(false);
+                ProcessGuildViewTab(false);
             }
             catch (Exception ex)
             {
@@ -128,9 +132,9 @@ namespace Server
             return ListItem;
         }
 
-        private void ProcessPlayersOnlineTab()
+        private void ProcessPlayersOnlineTab(bool forced = false)
         {
-            if (PlayersOnlineListView.Items.Count != Envir.Players.Count)
+            if (PlayersOnlineListView.Items.Count != Envir.Players.Count || forced == true)
             {
                 PlayersOnlineListView.Items.Clear();
 
@@ -402,7 +406,7 @@ namespace Server
         {
             if (!SMain.Envir.Running)
             {
-                MessageBox.Show("Server must be running to tune monsters", "Notice",
+                MessageBox.Show("服务器运行必须调整怪物", "注意",
                 MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
                 return;
             }
@@ -410,16 +414,6 @@ namespace Server
             MonsterTunerForm form = new MonsterTunerForm();
 
             form.ShowDialog();
-        }
-
-        private void reloadNPCsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Envir.ReloadNPCs();
-        }
-
-        private void reloadDropsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Envir.ReloadDrops();
         }
 
         private void gameshopToolStripMenuItem_Click(object sender, EventArgs e)
@@ -447,6 +441,120 @@ namespace Server
             MirForms.DropBuilder.DropGenForm GenForm = new MirForms.DropBuilder.DropGenForm();
 
             GenForm.ShowDialog();
+        }
+
+        private void clearBlockedIPsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Envir.IPBlocks.Clear();
+        }
+
+        private void nPCsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Envir.ReloadNPCs();
+        }
+
+        private void dropsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Envir.ReloadDrops();
+        }
+
+        private void lineMessageToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Envir.ReloadLineMessages();
+        }
+
+        #region Guild View Tab
+        public void ProcessGuildViewTab(bool forced = false)
+        {
+            if (GuildListView.Items.Count != Envir.GuildList.Count || forced == true)
+            {
+                GuildListView.Items.Clear();
+
+                foreach (GuildInfo guild in Envir.GuildList)
+                {
+                    ListViewItem tempItem = new ListViewItem(guild.GuildIndex.ToString()) { Tag = this };
+
+                    tempItem.SubItems.Add(guild.Name);
+
+                    if (guild.Ranks.Count > 0 && guild.Ranks[0].Members.Count > 0)
+                    {
+                        tempItem.SubItems.Add(guild.Ranks[0].Members[0].Name);
+                    }
+                    else
+                    {
+                        tempItem.SubItems.Add("DELETED");
+                        tempItem.ForeColor = Color.Red;
+                    }
+
+                    tempItem.SubItems.Add(guild.Membercount.ToString());
+                    tempItem.SubItems.Add(guild.Level.ToString());
+                    tempItem.SubItems.Add($"{guild.Gold}");
+
+                    GuildListView.Items.Add(tempItem);
+                }
+            }
+        }
+
+        private void GuildListView_DoubleClick(object sender, EventArgs e)
+        {
+            ListViewNF list = (ListViewNF)sender;
+
+            if (list.SelectedItems.Count <= 0) return;
+
+            ListViewItem item = list.SelectedItems[0];
+            int index = Int32.Parse(item.Text);
+
+            GuildObject Guild = Envir.GetGuild(index);
+
+            GuildItemForm form = new GuildItemForm
+            {
+                GuildName = Guild.Name,
+                main = this,
+            };
+
+            if (Guild == null) return;
+
+            foreach (var i in Guild.StoredItems)
+            {
+                if (i == null) continue;
+                ListViewItem tempItem = new ListViewItem(i.Item.UniqueID.ToString()) { Tag = this };
+
+                CharacterInfo character = Envir.GetCharacterInfo((int)i.UserId);
+                if (character != null)
+                    tempItem.SubItems.Add(character.Name);
+                else if (i.UserId == -1)
+                    tempItem.SubItems.Add("Server");
+                else
+                    tempItem.SubItems.Add("Unknown");
+
+                tempItem.SubItems.Add(i.Item.FriendlyName);
+                tempItem.SubItems.Add(i.Item.Count.ToString());
+                tempItem.SubItems.Add(i.Item.CurrentDura + "/" + i.Item.MaxDura);
+
+                form.GuildItemListView.Items.Add(tempItem);
+            }
+
+            foreach (var r in Guild.Ranks)
+                foreach (var m in r.Members)
+                {
+                    ListViewItem tempItem = new ListViewItem(m.Name) { Tag = this };
+                    tempItem.SubItems.Add(r.Name);
+                    form.MemberListView.Items.Add(tempItem);
+                }
+
+            form.ShowDialog();
+        }
+        #endregion
+
+        private void MainTabs_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ProcessPlayersOnlineTab(true);
+            ProcessGuildViewTab(true);
+        }
+
+        private void GuildListView_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

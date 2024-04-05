@@ -1,7 +1,4 @@
-﻿using System.Drawing;
-using System.Linq;
-using System.Windows.Forms;
-using Client.MirGraphics;
+﻿using Client.MirGraphics;
 using Client.MirNetwork;
 using Client.MirScenes;
 using SlimDX.Direct3D9;

@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Drawing;
-using System.Drawing.Drawing2D;
+﻿using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using Client.MirControls;
 using Client.MirScenes;
@@ -11,7 +9,6 @@ using Blend = SlimDX.Direct3D9.Blend;
 namespace Client.MirGraphics
 {
     class DXManager
-    //用于管理游戏中与 Direct3D 相关的各种资源，包括设备、纹理、表面、渲染参数和像素着色器等
     {
         public static List<MImage> TextureList = new List<MImage>();
         public static List<MirControl> ControlList = new List<MirControl>();
@@ -59,7 +56,6 @@ namespace Client.MirGraphics
         };
 
         public static void Create()
-        //游戏启动时初始化并创建了 Direct3D 设备，配置了渲染参数，并加载了游戏所需的纹理和像素着色器
         {
             Parameters = new PresentParameters
             {
@@ -99,7 +95,6 @@ namespace Client.MirGraphics
         }
 
         private static unsafe void LoadPixelsShaders()
-        //加载游戏中所需的像素着色器文件，并将它们编译为 Direct3D 的 PixelShader 对象，以备后续在渲染过程中使用
         {
             var shaderNormalPath = Settings.ShadersPath + "normal.ps";
             var shaderGrayScalePath = Settings.ShadersPath + "grayscale.ps";
@@ -123,7 +118,6 @@ namespace Client.MirGraphics
         }
 
         private static unsafe void LoadTextures()
-        //初始化游戏所需的 Sprite 对象、Line 对象以及一些纹理资源，其中包括雷达纹理和毒点背景纹理，并创建游戏中的光照效果
         {
             Sprite = new Sprite(Device);
             Line = new Line(Device) { Width = 1F };
@@ -156,7 +150,6 @@ namespace Client.MirGraphics
         }
 
         private unsafe static void CreateLights()
-        //清除现有的光照效果并创建新的光照贴图，以便在游戏中模拟光照效果
         {
 
             for (int i = Lights.Count - 1; i >= 0; i--)
@@ -224,7 +217,6 @@ namespace Client.MirGraphics
         }
 
         public static void SetSurface(Surface surface)
-        //将渲染目标切换到指定的表面，以便后续的绘制操作将在该表面上进行渲染
         {
             if (CurrentSurface == surface)
                 return;
@@ -234,7 +226,6 @@ namespace Client.MirGraphics
             Device.SetRenderTarget(0, surface);
         }
         public static void SetGrayscale(bool value)
-        //根据传入的布尔值来启用或禁用灰度像素着色器，并确保绘图设备的状态与指定的值保持一致
         {
             GrayScale = value;
 
@@ -253,21 +244,18 @@ namespace Client.MirGraphics
         }
 
         public static void DrawOpaque(Texture texture, Rectangle? sourceRect, Vector3? position, Color4 color, float opacity)
-        //在屏幕上绘制指定的纹理，并根据传入的不透明度值调整绘制时的透明度
         {
             color.Alpha = opacity;
             Draw(texture, sourceRect, position, color);
         }
 
         public static void Draw(Texture texture, Rectangle? sourceRect, Vector3? position, Color4 color)
-        //在屏幕上绘制指定的纹理，可以控制绘制的位置、大小和颜色
         {
             Sprite.Draw(texture, sourceRect, Vector3.Zero, position, color);
             CMain.DPSCounter++;
         }
 
         public static void AttemptReset()
-        //尝试检查设备状态并在必要时重新初始化设备，以确保设备的正常工作状态
         {
             try
             {
@@ -291,7 +279,6 @@ namespace Client.MirGraphics
         }
 
         public static void ResetDevice()
-        //作用是在窗口大小变化或全屏模式变化时，重置绘图设备，以确保正确配置绘图设备参数，并重新初始化设备
         {
             DXManager.CleanUp();
             DXManager.DeviceLost = true;
@@ -312,8 +299,6 @@ namespace Client.MirGraphics
         }
 
         public static void AttemptRecovery()
-        //在可能出现异常的情况下恢复绘图设备的正常状态，以确保后续的绘制操作能够继续进行
-        //如果其中任何一个步骤发生异常，它会捕获异常并不做任何处理，以避免程序中断
         {
             try
             {
@@ -341,7 +326,7 @@ namespace Client.MirGraphics
             {
             }
         }
-        public static void SetOpacity(float opacity) //根据传入的透明度值设置绘制对象的透明度
+        public static void SetOpacity(float opacity)
         {
             if (Opacity == opacity)
                 return;
@@ -365,8 +350,7 @@ namespace Client.MirGraphics
             Opacity = opacity;
             Sprite.Flush();
         }
-        public static void SetBlend(bool value, float rate = 1F, BlendMode mode = BlendMode.NORMAL) 
-            //根据传入的参数值设置不同的混合模式，并将其应用到绘制操作中。混合模式可以控制图像在绘制时的透明度和混合效果，以实现不同的视觉效果
+        public static void SetBlend(bool value, float rate = 1F, BlendMode mode = BlendMode.NORMAL)
         {
             if (value == Blending && BlendingRate == rate && BlendingMode == mode) return;
 
@@ -405,7 +389,7 @@ namespace Client.MirGraphics
             Device.SetRenderTarget(0, CurrentSurface);
         }
 
-        public static void SetNormal(float blend, Color tintcolor) //在图像上应用普通效果，并指定混合模式和色调，以实现特定的视觉效果
+        public static void SetNormal(float blend, Color tintcolor)
         {
             if (Device.PixelShader == NormalPixelShader)
                 return;
@@ -417,7 +401,7 @@ namespace Client.MirGraphics
             Sprite.Flush();
         }
 
-        public static void SetGrayscale(float blend, Color tintcolor) //在图像上应用灰度效果，并指定混合模式和色调，以实现特定的视觉效果
+        public static void SetGrayscale(float blend, Color tintcolor)
         {
             if (Device.PixelShader == GrayScalePixelShader)
                 return;
@@ -429,7 +413,7 @@ namespace Client.MirGraphics
             Sprite.Flush();
         }
 
-        public static void SetBlendMagic(float blend, Color tintcolor) //在魔法效果中应用指定的混合模式和色调，以实现特定的视觉效果
+        public static void SetBlendMagic(float blend, Color tintcolor)
         {
             if (Device.PixelShader == MagicPixelShader || MagicPixelShader == null)
                 return;
@@ -441,7 +425,7 @@ namespace Client.MirGraphics
             Sprite.Flush();
         }
 
-        public static void Clean() //在一定时间间隔内清理不再使用的纹理资源，以避免内存泄漏和资源浪费
+        public static void Clean()
         {
             for (int i = TextureList.Count - 1; i >= 0; i--)
             {
@@ -475,7 +459,7 @@ namespace Client.MirGraphics
         }
 
 
-        private static void CleanUp() //清理程序中使用的各种图形资源，以避免内存泄漏和资源浪费
+        private static void CleanUp()
         {
             if (Sprite != null)
             {
@@ -592,7 +576,7 @@ namespace Client.MirGraphics
             ControlList.Clear();
         }
 
-        public static void Dispose() //释放程序中使用的各种图形资源，以避免内存泄漏和资源浪费
+        public static void Dispose()
         {
             CleanUp();
 

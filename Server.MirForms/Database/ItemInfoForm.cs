@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Windows.Forms;
-using Server.MirEnvir;
+﻿using Server.MirEnvir;
 
 namespace Server
 {
@@ -30,11 +24,11 @@ namespace Server
         {
             InitializeComponent();
 
-            ITypeComboBox.Items.AddRange(Enum.GetValues(typeof(ItemType)).Cast<object>().ToArray());
+            ITypeComboBox.Items.AddRange(Enum.GetValues(typeof (ItemType)).Cast<object>().ToArray());
             IGradeComboBox.Items.AddRange(Enum.GetValues(typeof(ItemGrade)).Cast<object>().ToArray());
-            RTypeComboBox.Items.AddRange(Enum.GetValues(typeof(RequiredType)).Cast<object>().ToArray());
-            RClassComboBox.Items.AddRange(Enum.GetValues(typeof(RequiredClass)).Cast<object>().ToArray());
-            RGenderComboBox.Items.AddRange(Enum.GetValues(typeof(RequiredGender)).Cast<object>().ToArray());
+            RTypeComboBox.Items.AddRange(Enum.GetValues(typeof (RequiredType)).Cast<object>().ToArray());
+            RClassComboBox.Items.AddRange(Enum.GetValues(typeof (RequiredClass)).Cast<object>().ToArray());
+            RGenderComboBox.Items.AddRange(Enum.GetValues(typeof (RequiredGender)).Cast<object>().ToArray());
             ISetComboBox.Items.AddRange(Enum.GetValues(typeof(ItemSet)).Cast<object>().ToArray());
 
             ITypeFilterComboBox.Items.AddRange(Enum.GetValues(typeof(ItemType)).Cast<object>().ToArray());
@@ -126,7 +120,7 @@ namespace Server
                 RTypeComboBox.SelectedItem = null;
                 RAmountTextBox.Text = string.Empty;
                 RClassComboBox.SelectedItem = null;
-                RGenderComboBox.SelectedItem = null;
+                RGenderComboBox.SelectedItem = null;            
                 LightTextBox.Text = string.Empty;
                 LightIntensitytextBox.Text = string.Empty;
 
@@ -152,7 +146,7 @@ namespace Server
                 HWeightTextBox.Text = string.Empty;
                 BWeightText.Text = string.Empty;
                 EffectTextBox.Text = string.Empty;
-
+                
                 PoisonRecoverytextBox.Text = string.Empty;
                 SpellRecoverytextBox.Text = string.Empty;
                 MagicResisttextBox.Text = string.Empty;
@@ -292,7 +286,7 @@ namespace Server
             LevelBasedcheckbox.Checked = info.LevelBased;
             ClassBasedcheckbox.Checked = info.ClassBased;
 
-
+            
             Bind_dontstorecheckbox.Checked = info.Bind.HasFlag(BindMode.DontStore);
             Bind_dontupgradecheckbox.Checked = info.Bind.HasFlag(BindMode.DontUpgrade);
             Bind_dontrepaircheckbox.Checked = info.Bind.HasFlag(BindMode.DontRepair);
@@ -313,7 +307,7 @@ namespace Server
             NeedIdentifycheckbox.Checked = info.NeedIdentify;
             ShowGroupPickupcheckbox.Checked = info.ShowGroupPickup;
             globalDropNotify_CheckBox.Checked = info.GlobalDropNotify;
-
+            
 
             ParalysischeckBox.Checked = info.Unique.HasFlag(SpecialItemMode.Paralize);
             TeleportcheckBox.Checked = info.Unique.HasFlag(SpecialItemMode.Teleport);
@@ -450,7 +444,7 @@ namespace Server
                 if (CanAwaken.Checked != info.CanAwakening) CanAwaken.CheckState = CheckState.Indeterminate;
                 if (TooltipTextBox.Text != info.ToolTip) TooltipTextBox.Text = string.Empty;
                 if (BlinkcheckBox.Checked != info.Unique.HasFlag(SpecialItemMode.Blink)) BlinkcheckBox.CheckState = CheckState.Indeterminate;
-            }
+        }
             RefreshUniqueTab();
         }
 
@@ -532,7 +526,7 @@ namespace Server
             if (ActiveControl != sender) return;
 
             for (int i = 0; i < _selectedItemInfos.Count; i++)
-                _selectedItemInfos[i].RequiredType = (RequiredType)RTypeComboBox.SelectedItem;
+                _selectedItemInfos[i].RequiredType = (RequiredType) RTypeComboBox.SelectedItem;
         }
         private void RGenderComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -590,6 +584,7 @@ namespace Server
                 return;
             }
             ActiveControl.BackColor = SystemColors.Window;
+
 
             for (int i = 0; i < _selectedItemInfos.Count; i++)
                 _selectedItemInfos[i].Image = temp;
@@ -711,9 +706,9 @@ namespace Server
                 return;
             }
             ActiveControl.BackColor = SystemColors.Window;
-
+            
             for (int i = 0; i < _selectedItemInfos.Count; i++)
-                _selectedItemInfos[i].Light = (byte)(temp + (_selectedItemInfos[i].Light / 15) * 15);
+                _selectedItemInfos[i].Light = (byte)(temp + (_selectedItemInfos[i].Light / 15)*15);
         }
         private void MinACTextBox_TextChanged(object sender, EventArgs e)
         {
@@ -1991,6 +1986,11 @@ namespace Server
 
             for (int i = 0; i < _selectedItemInfos.Count; i++)
                 _selectedItemInfos[i].Slots = temp;
+        }
+
+        private void label33_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

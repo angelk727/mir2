@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Text.RegularExpressions;
-using Server.MirDatabase;
+﻿using Server.MirDatabase;
 using Server.MirEnvir;
+using System.Text.RegularExpressions;
 using S = ServerPackets;
 
 namespace Server.MirObjects
@@ -423,10 +419,10 @@ namespace Server.MirObjects
 
             NPCPage Page = new NPCPage(sectionName);
 
-            //Cleans arguments out of search page name清除搜索页面名称中的参数
+            //Cleans arguments out of search page name
             string tempSectionName = Page.ArgumentParse(sectionName);
 
-            //parse all individual pages in a script, defined by sectionName解析脚本中由节名称定义的所有单独页面
+            //parse all individual pages in a script, defined by sectionName
             for (int i = 0; i < lines.Count; i++)
             {
                 string line = lines[i];
@@ -439,7 +435,7 @@ namespace Server.MirObjects
 
                 nextPage = false;
 
-                //Found a page, now process that page and split it into segments找到一个页面，现在处理该页面并将其拆分为多个部分
+                //Found a page, now process that page and split it into segments
                 for (int j = i + 1; j < lines.Count; j++)
                 {
                     string nextLine = lines[j];
@@ -463,7 +459,7 @@ namespace Server.MirObjects
                     {
                         segmentLines.Add(lines[j]);
 
-                        //end of segment, so need to parse it and put into the segment list within the page段的末尾，所以需要对其进行解析，并将其放入页面内的段列表中
+                        //end of segment, so need to parse it and put into the segment list within the page
                         if (segmentLines.Count > 0)
                         {
                             NPCSegment segment = ParseSegment(Page, segmentLines);
@@ -577,7 +573,7 @@ namespace Server.MirObjects
                         match = match.NextMatch();
                     }
 
-                    //检查该行是否有goto命令
+                    //Check if line has a goto command
                     var parts = lines[i].Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
                     if (parts.Count() > 1)
@@ -863,7 +859,7 @@ namespace Server.MirObjects
 
             if (key.StartsWith("[@@") && !player.NPCData.TryGetValue("NPCInputStr", out object _npcInputStr))
             {
-                //发送数据包请求输入
+                //send off packet to request input
                 player.Enqueue(new S.NPCRequestInput { NPCID = player.NPCObjectID, PageName = key });
                 return;
             }
@@ -1215,7 +1211,7 @@ namespace Server.MirObjects
 
             if (isUsed)
             {
-                callingNPC.UsedGoods.Remove(goods); //如果使用或回购将破坏整个堆栈，而不是减少到剩余数量
+                callingNPC.UsedGoods.Remove(goods); //If used or buyback will destroy whole stack instead of reducing to remaining quantity
 
                 List<UserItem> newGoodsList = new List<UserItem>();
                 newGoodsList.AddRange(Goods);
@@ -1240,7 +1236,7 @@ namespace Server.MirObjects
         }
         public void Sell(PlayerObject player, UserItem item)
         {
-            /* 商品销售处理 */
+            /* Handle Item Sale */
         }
         public void Craft(PlayerObject player, ulong index, ushort count, int[] slots)
         {

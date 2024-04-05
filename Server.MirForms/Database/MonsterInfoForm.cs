@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Windows.Forms;
-using Server.MirDatabase;
+﻿using Server.MirDatabase;
 using Server.MirEnvir;
 
 namespace Server
@@ -215,9 +209,9 @@ namespace Server
         {
             if (ActiveControl != sender) return;
 
-            ushort temp; //自添加AI扩容
+            ushort temp;
 
-            if (!ushort.TryParse(ActiveControl.Text, out temp))//自添加AI扩容
+            if (!ushort.TryParse(ActiveControl.Text, out temp))
             {
                 ActiveControl.BackColor = Color.Red;
                 return;

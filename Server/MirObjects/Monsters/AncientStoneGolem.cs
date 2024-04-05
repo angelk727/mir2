@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Drawing;
+﻿using System.Drawing;
 using Server.MirDatabase;
 using Server.MirEnvir;
 using S = ServerPackets;
@@ -30,7 +29,8 @@ namespace Server.MirObjects.Monsters
             ShockTime = 0;
 
             Direction = Functions.DirectionFromPoint(CurrentLocation, Target.CurrentLocation);
-            bool ranged = CurrentLocation == Target.CurrentLocation || !Functions.InRange(CurrentLocation, Target.CurrentLocation, 1);
+            bool ranged = CurrentLocation == Target.CurrentLocation || !Functions.InRange(CurrentLocation, Target.CurrentLocation, 1);
+
 
             ActionTime = Envir.Time + 300;
             AttackTime = Envir.Time + AttackSpeed;
@@ -46,7 +46,8 @@ namespace Server.MirObjects.Monsters
                 FlyStone();
                 return;
             }
-
+
+
             if (!ranged)
 
                 if (Target == null) return;
@@ -55,8 +56,10 @@ namespace Server.MirObjects.Monsters
             {
                 Attack();
                 return;
-            }
-
+            }
+
+
+
             if (Envir.Random.Next(3) == 0)
             {
                 ActionTime = Envir.Time + 500;
@@ -66,7 +69,8 @@ namespace Server.MirObjects.Monsters
             else
             {
                 MoveTo(Target.CurrentLocation);
-            }
+            }
+
         }
 
         protected override void ProcessTarget()

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Windows.Forms;
-
-namespace AutoPatcherAdmin
+﻿namespace AutoPatcherAdmin
 {
     static class Program
     {

@@ -15,13 +15,16 @@ namespace LibraryEditor
     public partial class LMain : Form
     {
         private readonly Dictionary<int, int> _indexList = new Dictionary<int, int>();
-        private MLibraryV2 _library;
+        private MLibraryV2 _library, _referenceLibrary, _shadowLibrary;
         private MLibraryV2.MImage _selectedImage, _exportImage;
         private Image _originalImage;
+        public Bitmap _referenceImage;
 
         protected bool ImageTabActive = true;
         protected bool MaskTabActive = false;
         protected bool FrameTabActive = false;
+
+        public bool ApplyOffsets => checkBox1.Checked;
 
         protected string ViewMode = "Image";
 
@@ -63,7 +66,7 @@ namespace LibraryEditor
                 {
                     try
                     {
-                        ParallelOptions options = new ParallelOptions {MaxDegreeOfParallelism = 8};
+                        ParallelOptions options = new ParallelOptions { MaxDegreeOfParallelism = 8 };
                         Parallel.For(0, files.Length, options, i =>
                         {
                             if (Path.GetExtension(files[i]) == ".wtl")
@@ -93,7 +96,7 @@ namespace LibraryEditor
                     {
                         toolStripProgressBar.Value = 0;
                     }));
-                    
+
                     MessageBox.Show(
                         string.Format("已成功转换 {0} {1}",
                             (files.Length).ToString(),
@@ -132,12 +135,30 @@ namespace LibraryEditor
             ImageBox.Image = null;
             ZoomTrackBar.Value = 1;
 
-            WidthLabel.Text = "<没有图像>";
-            HeightLabel.Text = "<没有图像>";
-            OffSetXTextBox.Text = string.Empty;
-            OffSetYTextBox.Text = string.Empty;
-            OffSetXTextBox.BackColor = SystemColors.Window;
-            OffSetYTextBox.BackColor = SystemColors.Window;
+            WidthLabel.Text = "<空>";
+            HeightLabel.Text = "<空>";
+            numericUpDownX.Value = 0;
+            numericUpDownY.Value = 0;
+        }
+
+        public static Bitmap AddPaddingToBitmap(Bitmap originalBitmap, int padding)
+        {
+            int newWidth = originalBitmap.Width + 2 * padding;
+            int newHeight = originalBitmap.Height + 2 * padding;
+
+            Bitmap paddedBitmap = new Bitmap(newWidth, newHeight);
+
+            using (Graphics g = Graphics.FromImage(paddedBitmap))
+            {
+                g.Clear(Color.Transparent);
+
+                int x = (paddedBitmap.Width - originalBitmap.Width) / 2;
+                int y = (paddedBitmap.Height - originalBitmap.Height) / 2;
+
+                g.DrawImage(originalBitmap, x, y);
+            }
+
+            return paddedBitmap;
         }
 
         private void PreviewListView_SelectedIndexChanged(object sender, EventArgs e)
@@ -159,28 +180,99 @@ namespace LibraryEditor
             WidthLabel.Text = _selectedImage.Width.ToString();
             HeightLabel.Text = _selectedImage.Height.ToString();
 
-            OffSetXTextBox.Text = _selectedImage.X.ToString();
-            OffSetYTextBox.Text = _selectedImage.Y.ToString();
+            numericUpDownX.Value = _selectedImage.X;
+            numericUpDownY.Value = _selectedImage.Y;
 
-            if (ViewMode == "Image")
+            Bitmap referenceImage = null;
+            MLibraryV2.MImage referenceMImage = null;
+            if (_referenceLibrary != null)
             {
-                ImageBox.Image = _selectedImage.Image;
+                referenceMImage = _referenceLibrary.GetMImage(PreviewListView.SelectedIndices[0]);
+                if (referenceMImage != null)
+                {
+                    referenceImage = referenceMImage.Image;
+                }
+            }
+
+            Bitmap image = null;
+            if (ViewMode == "Image")
+                image = _selectedImage.Image;
+            else
+                image = _selectedImage.MaskImage;
+
+            if (image == null)
+            {
+                ImageBox.Image = null;
+                return;
+            }
+
+            Bitmap newImage = null;
+            if (!ApplyOffsets)
+            {
+                newImage = new Bitmap(Math.Max(_referenceImage?.Width ?? 0, Math.Max(image.Width, referenceImage?.Width ?? 0)), Math.Max(_referenceImage?.Height ?? 0, Math.Max(image.Height, referenceImage?.Height ?? 0)));
+                using (var g = Graphics.FromImage(newImage))
+                {
+                    if (_referenceImage != null)
+                        g.DrawImage(_referenceImage, Point.Empty);
+                    if (referenceImage != null)
+                        g.DrawImage(referenceImage, Point.Empty);
+                    g.DrawImage(image, Point.Empty);
+                }
             }
             else
             {
-                ImageBox.Image = _selectedImage.MaskImage;
+                var maxWidth = Math.Max(image.Width, referenceImage?.Width ?? 0);
+                var maxHeight = Math.Max(image.Height, referenceImage?.Height ?? 0);
+
+                int offsetX = 0;
+                int offsetY = 0;
+                if (referenceImage != null)
+                {
+                    offsetX = -_selectedImage.X + referenceMImage.X;
+                    offsetY = -_selectedImage.Y + referenceMImage.Y;
+                }
+                maxWidth += Math.Abs(offsetX);
+                maxHeight += Math.Abs(offsetY);
+
+                newImage = new Bitmap(maxWidth, maxHeight);
+                using (var g = Graphics.FromImage(newImage))
+                {
+                    if (referenceImage != null)
+                        g.DrawImage(referenceImage, new Point(offsetX > 0 ? offsetX : 0, offsetY > 0 ? offsetY : 0));
+                    g.DrawImage(image, new Point(offsetX < 0 ? Math.Abs(offsetX) : 0, offsetY < 0 ? Math.Abs(offsetY) : 0));
+                }
+
+                if (_referenceImage != null)
+                {
+                    var newMaxWidth = Math.Max(_referenceImage.Width, newImage.Width + Math.Abs(_selectedImage.X));
+                    var newMaxHeight = Math.Max(_referenceImage.Height, newImage.Height + Math.Abs(_selectedImage.Y));
+
+                    var anotherNewBitmap = new Bitmap(newMaxWidth, newMaxHeight);
+                    using (var g = Graphics.FromImage(anotherNewBitmap))
+                    {
+                        g.DrawImage(_referenceImage, new Point(_selectedImage.X < 0 ? Math.Abs(_selectedImage.X) : 0, _selectedImage.Y < 0 ? Math.Abs(_selectedImage.Y) : 0));
+                        g.DrawImage(image, new Point(_selectedImage.X > 0 ? _selectedImage.X : 0, _selectedImage.Y > 0 ? _selectedImage.Y : 0));
+                    }
+                    newImage = anotherNewBitmap;
+                }
             }
+
+            ImageBox.Image = newImage;
+            int globalOffsetX = _referenceImage != null ? 0 : referenceMImage?.X ?? _selectedImage.X;
+            int globalOffsetY = _referenceImage != null ? 0 : referenceMImage?.Y ?? _selectedImage.Y;
+
+            ImageBox.Location = ApplyOffsets ? new Point(100 + globalOffsetX, 100 + globalOffsetY) : Point.Empty;
 
             // Keep track of what image/s are selected.
             if (PreviewListView.SelectedIndices.Count > 1)
             {
                 toolStripStatusLabel.ForeColor = Color.Red;
-                toolStripStatusLabel.Text = "已选择多个图像";
+                toolStripStatusLabel.Text = "选择多个图像";
             }
             else
             {
                 toolStripStatusLabel.ForeColor = SystemColors.ControlText;
-                toolStripStatusLabel.Text = "所选图像 " + string.Format("{0} / {1}",
+                toolStripStatusLabel.Text = "选定的图像: " + string.Format("{0} / {1}",
                 PreviewListView.SelectedIndices[0].ToString(),
                 (PreviewListView.Items.Count - 1).ToString());
             }
@@ -246,7 +338,7 @@ namespace LibraryEditor
                         short.TryParse(placements[1], out y);
                 }
 
-                _library.AddImage(image, x, y);
+                _library.AddImage(image, x, y, checkboxRemoveBlackOnImport.Checked);
                 toolStripProgressBar.Value++;
                 //image.Dispose();
             }
@@ -271,6 +363,8 @@ namespace LibraryEditor
         {
             if (OpenLibraryDialog.ShowDialog() != DialogResult.OK) return;
 
+            _referenceLibrary = null;
+            _referenceImage = null;
             OpenLibrary(OpenLibraryDialog.FileName);
         }
 
@@ -294,6 +388,67 @@ namespace LibraryEditor
                 PreviewListView.Items[0].Selected = true;
 
             UpdateFrameGridView();
+        }
+
+        private void OpenReferenceLibrary(string filename)
+        {
+            if (_referenceLibrary != null) _referenceLibrary.Close();
+            _referenceLibrary = new MLibraryV2(filename);
+        }
+
+        private void OpenShadowLibraryAndImport(string filename)
+        {
+            if (_library == null) return;
+
+            if (_shadowLibrary != null) _shadowLibrary.Close();
+            _shadowLibrary = new MLibraryV2(filename);
+
+            ImageList.Images.Clear();
+            _indexList.Clear();
+
+            for (int i = 0; i < _library.Images.Count; i++)
+            {
+                var mImage = _library.GetMImage(i);
+                if (mImage == null || mImage.Image == null) continue;
+
+                var shadowImage = _shadowLibrary.GetMImage(i);
+                if (shadowImage == null || shadowImage.Image == null) continue;
+
+                var offSetX = -mImage.X + shadowImage.X;
+                var offSetY = -mImage.Y + shadowImage.Y;
+
+                var maxWidth = Math.Max(mImage.Width, shadowImage.Width + Math.Abs(offSetX));
+                var maxHeight = Math.Max(mImage.Height, shadowImage.Height + Math.Abs(offSetY));
+
+                var newBitmap = new Bitmap(maxWidth, maxHeight);
+                using (var g = Graphics.FromImage(newBitmap))
+                {
+                    g.DrawImage(mImage.Image, new Point(offSetX < 0 ? Math.Abs(offSetX) : 0, offSetY < 0 ? Math.Abs(offSetY) : 0));
+                    g.DrawImage(shadowImage.Image, new Point(offSetX > 0 ? offSetX : 0, offSetY > 0 ? offSetY : 0));
+                }
+
+                _library.ReplaceImage(i, newBitmap, mImage.X, mImage.Y, checkboxRemoveBlackOnImport.Checked);
+            }
+
+            PreviewListView.VirtualListSize = _library.Images.Count;
+
+            try
+            {
+                PreviewListView.RedrawItems(0, PreviewListView.Items.Count - 1, true);
+
+                if (ViewMode == "Image")
+                {
+                    ImageBox.Image = _library.Images[PreviewListView.SelectedIndices[0]].Image;
+                }
+                else
+                {
+                    ImageBox.Image = _library.Images[PreviewListView.SelectedIndices[0]].MaskImage;
+                }
+            }
+            catch (Exception)
+            {
+                return;
+            }
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
@@ -327,8 +482,8 @@ namespace LibraryEditor
             if (_library.FileName == null) return;
             if (PreviewListView.SelectedIndices.Count == 0) return;
 
-            if (MessageBox.Show("是否要删除所选图像",
-                "删除所选图像",
+            if (MessageBox.Show("确定要删除所选图像？",
+                "删除所选内容",
                 MessageBoxButtons.YesNoCancel) != DialogResult.Yes) return;
 
             List<int> removeList = new List<int>();
@@ -355,26 +510,31 @@ namespace LibraryEditor
 
             try
             {
-                ParallelOptions options = new ParallelOptions { MaxDegreeOfParallelism = 8 };
-                Parallel.For(0, OpenWeMadeDialog.FileNames.Length, options, i =>
+                Task.Factory.StartNew(() =>
+                {
+                    ParallelOptions options = new ParallelOptions { MaxDegreeOfParallelism = 8 };
+                    Parallel.For(0, OpenWeMadeDialog.FileNames.Length, options, i =>
                             {
-                                if (Path.GetExtension(OpenWeMadeDialog.FileNames[i]) == ".wtl")
+                                var fileName = OpenWeMadeDialog.FileNames[i];
+                                var ext = Path.GetExtension(fileName).ToUpper();
+                                if (ext == ".WTL")
                                 {
-                                    WTLLibrary WTLlib = new WTLLibrary(OpenWeMadeDialog.FileNames[i]);
+                                    WTLLibrary WTLlib = new WTLLibrary(fileName);
                                     WTLlib.ToMLibrary();
                                 }
-                                else if (Path.GetExtension(OpenWeMadeDialog.FileNames[i]) == ".Lib")
+                                else if (ext == ".LIB")
                                 {
-                                    MLibraryV1 v1Lib = new MLibraryV1(OpenWeMadeDialog.FileNames[i]);
+                                    MLibraryV1 v1Lib = new MLibraryV1(fileName);
                                     v1Lib.ToMLibrary();
                                 }
                                 else
                                 {
-                                    WeMadeLibrary WILlib = new WeMadeLibrary(OpenWeMadeDialog.FileNames[i]);
+                                    WeMadeLibrary WILlib = new WeMadeLibrary(fileName);
                                     WILlib.ToMLibrary();
                                 }
-                                toolStripProgressBar.Value++;
+                                Invoke(new Action(() => { toolStripProgressBar.Value++; }));
                             });
+                });
             }
             catch (Exception ex)
             {
@@ -405,7 +565,7 @@ namespace LibraryEditor
             for (int i = 0; i < copyList.Count; i++)
             {
                 MLibraryV2.MImage image = _library.GetMImage(copyList[i]);
-                tempLibrary.AddImage(image.Image, image.MaskImage, image.X, image.Y);
+                tempLibrary.AddImage(image.Image, image.MaskImage, image.X, image.Y, checkboxRemoveBlackOnImport.Checked);
             }
 
             tempLibrary.Save();
@@ -413,7 +573,7 @@ namespace LibraryEditor
 
         private void removeBlanksToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("是否删除空白图像",
+            if (MessageBox.Show("确定要删除空白图像？",
                 "删除空白图像",
                 MessageBoxButtons.YesNo) != DialogResult.Yes) return;
 
@@ -454,52 +614,6 @@ namespace LibraryEditor
 
             MLibraryV2.Load = true;
             MessageBox.Show(count.ToString());
-        }
-
-        private void OffSetXTextBox_TextChanged(object sender, EventArgs e)
-        {
-            TextBox control = sender as TextBox;
-
-            if (control == null || !control.Focused) return;
-
-            short temp;
-
-            if (!short.TryParse(control.Text, out temp))
-            {
-                control.BackColor = Color.Red;
-                return;
-            }
-
-            control.BackColor = SystemColors.Window;
-
-            for (int i = 0; i < PreviewListView.SelectedIndices.Count; i++)
-            {
-                MLibraryV2.MImage image = _library.GetMImage(PreviewListView.SelectedIndices[i]);
-                image.X = temp;
-            }
-        }
-
-        private void OffSetYTextBox_TextChanged(object sender, EventArgs e)
-        {
-            TextBox control = sender as TextBox;
-
-            if (control == null || !control.Focused) return;
-
-            short temp;
-
-            if (!short.TryParse(control.Text, out temp))
-            {
-                control.BackColor = Color.Red;
-                return;
-            }
-
-            control.BackColor = SystemColors.Window;
-
-            for (int i = 0; i < PreviewListView.SelectedIndices.Count; i++)
-            {
-                MLibraryV2.MImage image = _library.GetMImage(PreviewListView.SelectedIndices[i]);
-                image.Y = temp;
-            }
         }
 
         private void InsertImageButton_Click(object sender, EventArgs e)
@@ -563,7 +677,7 @@ namespace LibraryEditor
 
         private void safeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("是否删除空白图像",
+            if (MessageBox.Show("确定要删除空白图像？",
                 "删除空白图像", MessageBoxButtons.YesNo) != DialogResult.Yes) return;
 
             _library.RemoveBlanks(true);
@@ -636,9 +750,8 @@ namespace LibraryEditor
         // Export a single image.
         private void ExportButton_Click(object sender, EventArgs e)
         {
-            if (_library == null) return;
-            if (_library.FileName == null) return;
-            if (PreviewListView.SelectedIndices.Count == 0) return;
+            if (_library == null || _library.FileName == null || PreviewListView.SelectedIndices.Count == 0)
+                return;
 
             string _fileName = Path.GetFileName(OpenLibraryDialog.FileName);
             string _newName = _fileName.Remove(_fileName.IndexOf('.'));
@@ -654,16 +767,25 @@ namespace LibraryEditor
             toolStripProgressBar.Value = 0;
             toolStripProgressBar.Maximum = _col.Count;
 
+            DialogResult result = MessageBox.Show("是保存为BMP格式、否保存PNG格式？或取消操作", "选择保存格式", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+            if (result == DialogResult.Cancel)
+            {
+                toolStripProgressBar.Value = 0;
+                return;
+            }
+            string fileExtension = (result == DialogResult.Yes) ? ".bmp" : ".png";
+            ImageFormat imageFormat = (result == DialogResult.Yes) ? ImageFormat.Bmp : ImageFormat.Png;
+
             for (int i = _col[0]; i < (_col[0] + _col.Count); i++)
             {
                 _exportImage = _library.GetMImage(i);
                 if (_exportImage.Image == null)
                 {
-                    blank.Save(_folder + i.ToString() + ".bmp", ImageFormat.Bmp);
+                    blank.Save(_folder + i.ToString() + fileExtension, imageFormat);
                 }
                 else
                 {
-                    _exportImage.Image.Save(_folder + i.ToString() + ".bmp", ImageFormat.Bmp);
+                    _exportImage.Image.Save(_folder + i.ToString() + fileExtension, imageFormat);
                 }
 
                 toolStripProgressBar.Value++;
@@ -675,7 +797,7 @@ namespace LibraryEditor
             }
 
             toolStripProgressBar.Value = 0;
-            MessageBox.Show("保存到 " + _folder + "...", "图像保存", MessageBoxButtons.OK);
+            MessageBox.Show("图像保存到 " + _folder + "...", "已完成", MessageBoxButtons.OK);
         }
 
         // Don't let the splitter go out of sight on resizing.
@@ -729,7 +851,7 @@ namespace LibraryEditor
                     ImageBox.Image = _newBMP;
 
                     toolStripStatusLabel.ForeColor = SystemColors.ControlText;
-                    toolStripStatusLabel.Text = "所选图像 " + string.Format("{0} / {1}",
+                    toolStripStatusLabel.Text = "选定的图像: " + string.Format("{0} / {1}",
                         PreviewListView.SelectedIndices[0].ToString(),
                         (PreviewListView.Items.Count - 1).ToString());
                 }
@@ -761,7 +883,7 @@ namespace LibraryEditor
             if (_col.Count > 1)
             {
                 toolStripStatusLabel.ForeColor = Color.Red;
-                toolStripStatusLabel.Text = "已选择多个图像";
+                toolStripStatusLabel.Text = "选择了多个图像";
             }
         }
 
@@ -780,7 +902,7 @@ namespace LibraryEditor
 
             ImageList.Images.Clear();
             _indexList.Clear();
-            _library.ReplaceImage(PreviewListView.SelectedIndices[0], newBmp, 0, 0);
+            _library.ReplaceImage(PreviewListView.SelectedIndices[0], newBmp, 0, 0, checkboxRemoveBlackOnImport.Checked);
             PreviewListView.VirtualListSize = _library.Images.Count;
 
             try
@@ -966,7 +1088,9 @@ namespace LibraryEditor
 
         private void defaultPlayerFramesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            _library.Frames.Clear();
+
+            UpdateFrameGridView();
         }
 
         private void tabControl_SelectedIndexChanged(object sender, EventArgs e)
@@ -1003,7 +1127,7 @@ namespace LibraryEditor
 
             var files = Directory.GetFiles(path, "*.Lib");
 
-            if (MessageBox.Show($"确认填充到 {files.Count()} LIBs 和相匹配的框架",
+            if (MessageBox.Show($"确定要用 {files.Count()} Libs及其匹配的框架集",
                 "自动填充 Libs.",
                 MessageBoxButtons.YesNo) != DialogResult.Yes) return;
 
@@ -1035,7 +1159,7 @@ namespace LibraryEditor
                 if (!int.TryParse(e.FormattedValue.ToString(), out _))
                 {
                     e.Cancel = true;
-                    frameGridView.Rows[e.RowIndex].ErrorText = "值必须是整数";
+                    frameGridView.Rows[e.RowIndex].ErrorText = "该值必须是整数";
                 }
             }
         }
@@ -1097,7 +1221,7 @@ namespace LibraryEditor
 
                 if (_library.Frames.ContainsKey(action))
                 {
-                    MessageBox.Show(string.Format($"操作 '{action}' 存在多次，因此不会保存"));
+                    MessageBox.Show(string.Format($"操作的 '{action}' 存在多次，因此将不会保存"));
                     continue;
                 }
 
@@ -1226,7 +1350,7 @@ namespace LibraryEditor
         private FrameSet GetFrameSetByImage(Monster image)
         {
             //REMOVE THE BELOW EXCEPTION ONCE THE DESIRED CODE HAS BEEN ADDED          
-            throw new NotImplementedException("必须先更新方法“获取按图像设置的帧”，然后才能使用此函数");
+            throw new NotImplementedException("必须先更新 'GetFrameSetByImage' 后才能使用此函数");
 
             //UNCOMMENT THE CODE BELOW, IT SERVES AS AN EXAMPLE OF HOW TO MATCH IMAGES UP TO THE CORRECT FRAMES
             //List<FrameSet> FrameList = new List<FrameSet>();
@@ -1234,8 +1358,8 @@ namespace LibraryEditor
 
             ////ADD LIST OF FRAMES (CAN BE COPIED FROM THE CLIENTS FRAME.CS)
             //FrameList.Add(frame = new FrameSet());
-            //frame.Add(MirAction.站立动作, new Frame(0, 4, 0, 450));
-            //frame.Add(MirAction.人挖N展, new Frame(12, 10, 0, 200));
+            //frame.Add(MirAction.Standing, new Frame(0, 4, 0, 450));
+            //frame.Add(MirAction.Harvest, new Frame(12, 10, 0, 200));
 
             ////ADD SWITCH OF IMAGE TO CORRECT FRAME (CAN BE COPIED FROM THE MONSTEROBJECT.CS FRAME LIST)
             //FrameSet matchingFrame = new FrameSet();
@@ -1249,5 +1373,81 @@ namespace LibraryEditor
             //return matchingFrame;
         }
         #endregion
+
+        private void openReferenceFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (OpenLibraryDialog.ShowDialog() != DialogResult.OK) return;
+
+            OpenReferenceLibrary(OpenLibraryDialog.FileName);
+            PreviewListView.Invoke(new EventHandler(PreviewListView_SelectedIndexChanged), EventArgs.Empty);
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            PreviewListView.Invoke(new EventHandler(PreviewListView_SelectedIndexChanged), EventArgs.Empty);
+        }
+
+        private void importShadowsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (OpenLibraryDialog.ShowDialog() != DialogResult.OK) return;
+            OpenShadowLibraryAndImport(OpenLibraryDialog.FileName);
+        }
+
+        private void openReferenceImageToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (_library == null) return;
+            if (_library.FileName == null) return;
+
+            if (ImportImageDialog.ShowDialog() != DialogResult.OK) return;
+
+            string fileName = ImportImageDialog.FileNames[0];
+            _referenceImage = new Bitmap(fileName);
+        }
+
+        private void BulkButton_Click(object sender, EventArgs e)
+        {
+            // Create an instance of the InputDialog class
+            InputDialog dlg = new InputDialog();
+
+            // Show the dialog as a modal dialog
+            DialogResult result = dlg.ShowDialog();
+
+            // If the user clicked the Ok button, retrieve the values entered by the user
+            if (result == DialogResult.OK)
+            {
+                for (int i = 0; i < PreviewListView.SelectedIndices.Count; i++)
+                {
+                    MLibraryV2.MImage image = _library.GetMImage(PreviewListView.SelectedIndices[i]);
+                    if (image == null || image.Image == null) continue;
+                    image.X += (short)dlg.Value1;
+                    image.Y += (short)dlg.Value2;
+                }
+            }
+        }
+
+        private void numericUpDownX_ValueChanged(object sender, EventArgs e)
+        {
+            for (int i = 0; i < PreviewListView.SelectedIndices.Count; i++)
+            {
+                MLibraryV2.MImage image = _library.GetMImage(PreviewListView.SelectedIndices[i]);
+                image.X = (short)numericUpDownX.Value;
+            }
+            PreviewListView.Invoke(new EventHandler(PreviewListView_SelectedIndexChanged), EventArgs.Empty);
+        }
+
+        private void numericUpDownY_ValueChanged(object sender, EventArgs e)
+        {
+            for (int i = 0; i < PreviewListView.SelectedIndices.Count; i++)
+            {
+                MLibraryV2.MImage image = _library.GetMImage(PreviewListView.SelectedIndices[i]);
+                image.Y = (short)numericUpDownY.Value;
+            }
+            PreviewListView.Invoke(new EventHandler(PreviewListView_SelectedIndexChanged), EventArgs.Empty);
+        }
+
+        private void frameGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }

@@ -1,12 +1,8 @@
-﻿using System;
-using System.Drawing;
-using System.Linq;
-using System.Text.RegularExpressions;
-using System.Windows.Forms;
-using Client.MirControls;
+﻿using Client.MirControls;
 using Client.MirGraphics;
 using Client.MirNetwork;
 using Client.MirSounds;
+using System.Text.RegularExpressions;
 using C = ClientPackets;
 
 namespace Client.MirScenes.Dialogs
@@ -79,7 +75,7 @@ namespace Client.MirScenes.Dialogs
             };
             CreatureRenameButton.Click += ButtonClick;
 
-            SummonButton = new MirButton //召唤宠物
+            SummonButton = new MirButton
             {
                 Index = 576,
                 HoverIndex = 577,
@@ -91,7 +87,7 @@ namespace Client.MirScenes.Dialogs
             };
             SummonButton.Click += ButtonClick;
 
-            DismissButton = new MirButton//解除宠物
+            DismissButton = new MirButton//Dismiss the summoned pet
             {
                 HoverIndex = 581,
                 Index = 580,
@@ -103,7 +99,7 @@ namespace Client.MirScenes.Dialogs
             };
             DismissButton.Click += ButtonClick;
 
-            ReleaseButton = new MirButton//移除所选宠物
+            ReleaseButton = new MirButton//Removes the selected pet
             {
                 HoverIndex = 584,
                 Index = 583,
@@ -115,7 +111,7 @@ namespace Client.MirScenes.Dialogs
             };
             ReleaseButton.Click += ButtonClick;
 
-            OptionsMenuButton = new MirButton //选项
+            OptionsMenuButton = new MirButton//Options
             {
                 HoverIndex = 574,
                 Index = 573,
@@ -127,7 +123,7 @@ namespace Client.MirScenes.Dialogs
             };
             OptionsMenuButton.Click += ButtonClick;
 
-            AutomaticModeButton = new MirButton//图像翻译错误应为 "Auto" instaid of "Enable"
+            AutomaticModeButton = new MirButton//image is wrongly translated should be "Auto" instaid of "Enable"
             {
                 HoverIndex = 611,
                 Index = 610,
@@ -139,7 +135,7 @@ namespace Client.MirScenes.Dialogs
             };
             AutomaticModeButton.Click += ButtonClick;
 
-            SemiAutoModeButton = new MirButton//图像翻译错误应为 "SemiAuto" instaid of "Disable"
+            SemiAutoModeButton = new MirButton//image is wrongly translated should be "SemiAuto" instaid of "Disable"
             {
                 HoverIndex = 614,
                 Index = 613,
@@ -328,7 +324,7 @@ namespace Client.MirScenes.Dialogs
                 DrawFormat = TextFormatFlags.VerticalCenter | TextFormatFlags.HorizontalCenter,
                 Size = new Size(166, 21),
                 NotControl = true,
-                Visible = false //由于位置已确定，FAR变得不可见-不确定它将显示在何处
+                Visible = false //FAR made invisible as position was wierd - not sure where it's meant to be displayed
             };
 
             HoverLabel = new MirLabel
@@ -461,7 +457,7 @@ namespace Client.MirScenes.Dialogs
                     }
                     else
                     {
-                        Update();//刷新更改
+                        Update();//refresh changes
                         GameScene.User.IntelligentCreatures[selectedCreature].CustomName = inputBox.InputTextBox.Text;
                         Network.Enqueue(new C.UpdateIntelligentCreature { Creature = GameScene.User.IntelligentCreatures[selectedCreature] });
                         inputBox.Dispose();
@@ -506,7 +502,7 @@ namespace Client.MirScenes.Dialogs
                     }
                     else
                     {
-                        //在服务器获得更新后清除所有内容并获取新信息
+                        //clear all and get new info after server got update
                         for (int i = 0; i < CreatureButtons.Length; i++) CreatureButtons[i].Clear();
                         Hide();
                         Network.Enqueue(new C.UpdateIntelligentCreature { Creature = GameScene.User.IntelligentCreatures[selectedCreature], ReleaseMe = true });
@@ -518,10 +514,10 @@ namespace Client.MirScenes.Dialogs
             }
             if (sender == SemiAutoModeButton)
             {
-                //确保规则允许自动模式
+                //make sure rules allow Automatic Mode
                 if (!GameScene.User.IntelligentCreatures[selectedCreature].CreatureRules.AutoPickupEnabled) return;
 
-                //打开自动拾取模式
+                //turn on automatic pickupmode
                 SemiAutoModeButton.Visible = false;
                 AutomaticModeButton.Visible = true;
                 GameScene.User.IntelligentCreatures[selectedCreature].petMode = IntelligentCreaturePickupMode.Automatic;
@@ -529,10 +525,10 @@ namespace Client.MirScenes.Dialogs
             }
             if (sender == AutomaticModeButton)
             {
-                //确保规则允许半自动模式
+                //make sure rules allow SemiAutomatic Mode
                 if (!GameScene.User.IntelligentCreatures[selectedCreature].CreatureRules.SemiAutoPickupEnabled) return;
 
-                //打开半自动拾取模式
+                //turn on semiauto pickupmode
                 AutomaticModeButton.Visible = false;
                 SemiAutoModeButton.Visible = true;
                 GameScene.User.IntelligentCreatures[selectedCreature].petMode = IntelligentCreaturePickupMode.SemiAutomatic;
@@ -540,14 +536,14 @@ namespace Client.MirScenes.Dialogs
             }
             if (sender == OptionsMenuButton)
             {
-                //显示项目筛选器
+                //show ItemFilter
                 if (!GameScene.Scene.IntelligentCreatureOptionsDialog.Visible) GameScene.Scene.IntelligentCreatureOptionsDialog.Show(GameScene.User.IntelligentCreatures[selectedCreature].Filter);
                 if (!GameScene.Scene.IntelligentCreatureOptionsGradeDialog.Visible) GameScene.Scene.IntelligentCreatureOptionsGradeDialog.Show(GameScene.User.IntelligentCreatures[selectedCreature].Filter.PickupGrade);
             }
 
             if (needUpdate)
             {
-                Update();//刷新更改
+                Update();//refresh changes
                 Network.Enqueue(new C.UpdateIntelligentCreature { Creature = GameScene.User.IntelligentCreatures[selectedCreature], SummonMe = needSummon, UnSummonMe = needDismiss, ReleaseMe = needRelease });
             }
         }
@@ -585,7 +581,7 @@ namespace Client.MirScenes.Dialogs
                 CreatureButtons[i].Visible = true;
                 CreatureButtons[i].Update(GameScene.User.IntelligentCreatures[i], showing);
 
-                //检查当前召唤的生物（如果有）
+                //Check what creature is currently summoned if at all
                 if (showing && GameScene.User.CreatureSummoned && CreatureButtons[i].PetType == GameScene.User.SummonedCreatureType) SelectedButton = i;
             }
             showing = false;
@@ -640,7 +636,7 @@ namespace Client.MirScenes.Dialogs
                 SemiAutoModeButton.Enabled = true;
                 AutomaticModeButton.Enabled = true;
 
-                //检查当前召唤的宠物
+                //Check what creature is currently summoned
                 if (GameScene.User.CreatureSummoned)
                 {
                     if (GameScene.User.IntelligentCreatures[selectedCreature].PetType == GameScene.User.SummonedCreatureType)
@@ -690,7 +686,7 @@ namespace Client.MirScenes.Dialogs
             }
         }
 
-        public int BeforeAfterDraw()//不知道为什么…如果没有这个FullnessForeGround_AfterDraw将无法工作。。。
+        public int BeforeAfterDraw()//No idea why.. but without this FullnessForeGround_AfterDraw wont work...
         {
             if (FullnessFG.Library == null) return -1;
 

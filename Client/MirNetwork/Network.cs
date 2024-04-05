@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
+﻿using System.Collections.Concurrent;
 using System.Net.Sockets;
 using Client.MirControls;
 using C = ClientPackets;
@@ -12,8 +10,10 @@ namespace Client.MirNetwork
     {
         private static TcpClient _client;
         public static int ConnectAttempt = 0;
+        public static int MaxAttempts = 20;
+        public static bool ErrorShown;
         public static bool Connected;
-        public static long TimeOutTime, TimeConnected;
+        public static long TimeOutTime, TimeConnected, RetryTime = CMain.Time + 5000;
 
         private static ConcurrentQueue<Packet> _receiveList;
         private static ConcurrentQueue<Packet> _sendList;
@@ -26,20 +26,46 @@ namespace Client.MirNetwork
             if (_client != null)
                 Disconnect();
 
+            if (ConnectAttempt >= MaxAttempts)
+            {
+                if (ErrorShown)
+                {
+                    return;
+                }
+
+                ErrorShown = true;
+
+                MirMessageBox errorBox = new("连接到服务器时出错", MirMessageBoxButtons.Cancel);
+                errorBox.CancelButton.Click += (o, e) => Program.Form.Close();
+                errorBox.Label.Text = $"已达最大连接尝试次数： {MaxAttempts}" +
+                                      $"{Environment.NewLine}请稍后再试或检查您的连接设置";
+                errorBox.Show();
+                return;
+            }
+
             ConnectAttempt++;
 
-            _client = new TcpClient {NoDelay = true};
-            _client.BeginConnect(Settings.IPAddress, Settings.Port, Connection, null);
-
+            try
+            {
+                _client = new TcpClient { NoDelay = true };
+                _client?.BeginConnect(Settings.IPAddress, Settings.Port, Connection, null);
+            }
+            catch (ObjectDisposedException ex)
+            {
+                if (Settings.LogErrors) CMain.SaveError(ex.ToString());
+                Disconnect();
+            }
         }
 
         private static void Connection(IAsyncResult result)
         {
             try
             {
-                _client.EndConnect(result);
+                _client?.EndConnect(result);
 
-                if (!_client.Connected)
+                if ((_client != null &&
+                    !_client.Connected) ||
+                    _client == null)
                 {
                     Connect();
                     return;
@@ -56,6 +82,7 @@ namespace Client.MirNetwork
             }
             catch (SocketException)
             {
+                Thread.Sleep(100);
                 Connect();
             }
             catch (Exception ex)
@@ -147,7 +174,7 @@ namespace Client.MirNetwork
         {
             if (_client == null) return;
 
-            _client.Close();
+            _client?.Close();
 
             TimeConnected = 0;
             Connected = false;
@@ -176,6 +203,11 @@ namespace Client.MirNetwork
                     MirMessageBox.Show("与服务器的连接中断", true);
                     Disconnect();
                     return;
+                }
+                else if (CMain.Time >= RetryTime)
+                {
+                    RetryTime = CMain.Time + 5000;
+                    Connect();
                 }
                 return;
             }

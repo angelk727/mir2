@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-
-namespace Client.MirObjects
+﻿namespace Client.MirObjects
 {
     public class CellInfo
     {
@@ -307,6 +303,9 @@ namespace Client.MirObjects
                                 Unknown = Bytes[++offSet],
                             };
                         offSet++;
+
+                        if (MapCells[x, y].FrontIndex >= 255)
+                            MapCells[x, y].FrontIndex = -1;
 
                         if (MapCells[x, y].Light >= 100 && MapCells[x, y].Light <= 119)
                             MapCells[x, y].FishingCell = true;

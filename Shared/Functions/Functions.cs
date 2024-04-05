@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
-using System.Linq;
+﻿using System.Drawing;
 using System.Runtime.Serialization.Formatters.Binary;
 
 public static class Functions
@@ -102,7 +98,7 @@ public static class Functions
         {
             answer = accurate ? string.Format("{0}时 {1:D2}分 {2:D2}秒", (int)t.Hours, t.Minutes, t.Seconds) : string.Format("{0}时 {1:D2}分", (int)t.TotalHours, t.Minutes);
         }
-        else //超过1天
+        else // more than 1 day
         {
             answer = accurate ? string.Format("{0}天 {1:D2}时 {2:D2}分 {3:D2}秒", (int)t.Days, (int)t.Hours, t.Minutes, t.Seconds) : string.Format("{0}天 {1}时 {2:D2}分", (int)t.TotalDays, (int)t.Hours, t.Minutes);
         }
@@ -437,20 +433,25 @@ public static class Functions
     }
     public static byte[] SerializeToBytes<T>(T item)
     {
+#pragma warning disable SYSLIB0011
         var formatter = new BinaryFormatter();
         using (var stream = new MemoryStream())
         {
             formatter.Serialize(stream, item);
             stream.Seek(0, SeekOrigin.Begin);
+#pragma warning restore SYSLIB0011
             return stream.ToArray();
         }
     }
     public static object DeserializeFromBytes(byte[] bytes)
     {
+#pragma warning disable SYSLIB0011
         var formatter = new BinaryFormatter();
         using (var stream = new MemoryStream(bytes))
         {
-            return formatter.Deserialize(stream);
+            var deserialized = formatter.Deserialize(stream);
+#pragma warning restore SYSLIB0011
+            return deserialized;
         }
     }
 }

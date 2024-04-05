@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Server.MirEnvir;
 using Server.MirDatabase;
-using Server.MirEnvir;
 
 namespace Server.MirObjects
 {
@@ -371,7 +368,7 @@ namespace Server.MirObjects
 
         public bool DeleteMember(PlayerObject Kicker, string membername)
         {
-            //小心这会导致公会没有等级或成员（或没有领导者）
+            //careful this can lead to guild with no ranks or members(or no leader)
 
             GuildMember Member = null;
             GuildRank MemberRank = null;
@@ -401,13 +398,13 @@ namespace Server.MirObjects
 
             if (MemberRank.Index == 0)
             {
-                if (MemberRank.Members.Count < 2 && Info.Membercount < 2) //检查最后一个剩余成员 (和会长)
+                if (MemberRank.Members.Count < 2 && Info.Membercount < 2) //Checks if last remaining member (and leader)
                 {
                     goto LeaderOk;
                 }
                 else
                 {
-                    if (MemberRank.Members.Count > 1) //允许其他会长离开，而其他会长不在线
+                    if (MemberRank.Members.Count > 1) //Allows other leaders to leave without another leader online.
                         goto AllOk;
                 }
                 Kicker.ReceiveChat("解散行会的权限必须是最后一位行会会长", ChatType.System);
@@ -445,6 +442,34 @@ namespace Server.MirObjects
             Kicker.ReceiveChat("你已经解散了公会", ChatType.System);
 
             return true;
+        }
+
+        public void DeleteMember(string name)
+        {//carefull this can lead to guild with no ranks or members(or no leader)
+            
+            GuildMember Member = null;
+            GuildRank MemberRank = null;
+            for (int i = 0; i < Ranks.Count; i++)
+                for (int j = 0; j < Ranks[i].Members.Count; j++)
+                {
+
+                    Member = Ranks[i].Members[j];
+                    MemberRank = Ranks[i];
+
+                    if (Member.Name != name) continue;
+
+                    MemberDeleted(Member.Name, (PlayerObject)Member.Player, true);
+                    if (Member.Player != null)
+                    {
+                        PlayerObject LeavingMember = (PlayerObject)Member.Player;
+                        LeavingMember.RefreshStats();
+                    }
+                    MemberRank.Members.Remove(Member);
+                    NeedSave = true;
+                    Info.Membercount--;
+
+                    break;
+                }
         }
 
         public void MemberDeleted(string name, PlayerObject formerMember, bool kickSelf)

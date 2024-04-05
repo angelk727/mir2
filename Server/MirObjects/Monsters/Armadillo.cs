@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Drawing;
+﻿using System.Drawing;
 using Server.MirDatabase;
 using Server.MirEnvir;
 using S = ServerPackets;
@@ -117,7 +116,7 @@ namespace Server.MirObjects.Monsters
         {
             MirDirection jumpDir = Functions.ReverseDirection(Direction);
 
-            Point location;
+            Point location = new Point();
 
             for (int i = 0; i < 2; i++)
             {

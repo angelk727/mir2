@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Server.MirObjects
+﻿namespace Server.MirObjects
 {
     public class NPCActions
     {
@@ -107,6 +105,6 @@ namespace Server.MirObjects
         ReviveHero,
         SealHero,
 		ConquestRepairAll,
-		GiveGuildExp //自添加增加行会经验
+		GiveGuildExp
     }
 }

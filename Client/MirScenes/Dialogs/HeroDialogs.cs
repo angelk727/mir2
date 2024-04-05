@@ -1,7 +1,4 @@
-﻿using System;
-using System.Drawing;
-using System.Windows.Forms;
-using Client.MirControls;
+﻿using Client.MirControls;
 using Client.MirGraphics;
 using Client.MirNetwork;
 using Client.MirSounds;
@@ -321,7 +318,7 @@ namespace Client.MirScenes.Dialogs
 
         private void BeltPanel_BeforeDraw(object sender, EventArgs e)
         {
-            //如果透明返回
+            //if Transparent return
 
             if (Libraries.Prguse != null)
                 Libraries.Prguse.Draw(Index == 1921 ? 1934 : 1946, DisplayLocation, Color.White, false, 0.5F);
@@ -650,7 +647,7 @@ namespace Client.MirScenes.Dialogs
         {
             if (ExperienceBar.Library == null) return;
 
-            //将MaxExperience转换为double类型 1、将除法的结果强制保留两位小数 2、将除以100的结果保留两位小数
+            //cast MaxExperience to double to force division to 2 decimal place
             double percent = Experience / (double)MaxExperience;
             if (percent > 1) percent = 1;
             if (percent <= 0) return;
@@ -751,14 +748,14 @@ namespace Client.MirScenes.Dialogs
             return count;
         }
     }
-    public sealed class HeroAIDialog : MirImageControl//自添加英雄
+    public sealed class HeroAIDialog : MirImageControl
     {
         public MirButton HeroHelpButton, HeroGuardButton, HeroRetreatButton, HeroSummonButton;
         public HeroAIDialog()
         {
                 Index = 140;
                 Library = Libraries.Prguse2;
-                Movable = false;//true 为可移动窗口
+                Movable = false;
                 Sort = true;
                 Visible = true;
                 Location = new Point(GameScene.Scene.MainDialog.Location.X + 150, GameScene.Scene.MainDialog.Location.Y + 13);

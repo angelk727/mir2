@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-
-public class GuildRank
+﻿public class GuildRank
 {
     public List<GuildMember> Members = new List<GuildMember>();
     public string Name = "";
@@ -246,7 +242,7 @@ public class GuildBuff
     }
 }
 
-//过时但无法删除或旧数据库无法加载
+//outdated but cant delete it or old db's wont load
 public class GuildBuffOld
 {
     public GuildBuffOld() { }

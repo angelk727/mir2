@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-
-namespace Server.MirEnvir
+﻿namespace Server.MirEnvir
 {
     public class RespawnSave
     {

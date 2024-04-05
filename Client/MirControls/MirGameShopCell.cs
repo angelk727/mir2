@@ -1,7 +1,4 @@
-﻿using System;
-using System.Drawing;
-using System.Windows.Forms;
-using Client.MirGraphics;
+﻿using Client.MirGraphics;
 using Client.MirNetwork;
 using Client.MirScenes;
 using Client.MirSounds;
@@ -269,7 +266,7 @@ namespace Client.MirControls
             nameLabel.Text = Item.Info.FriendlyName;
             nameLabel.Text = nameLabel.Text.Length > 17 ? nameLabel.Text.Substring(0, 17) : nameLabel.Text;
             nameLabel.ForeColour = GameScene.Scene.GradeNameColor(Item.Info.Grade);
-            quantity.Text = Quantity.ToString(); //商城显示物品个数
+            quantity.Text = Quantity.ToString();
             if (Item.CanBuyGold)
                 goldLabel.Text = (Item.GoldPrice * Quantity).ToString("###,###,##0");
             if (Item.CanBuyCredit)

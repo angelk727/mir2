@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Windows.Forms;
-using Client.MirControls;
+﻿using Client.MirControls;
 using Client.MirGraphics;
 using Client.MirNetwork;
 using Client.MirObjects;
 using Client.MirSounds;
-using C = ClientPackets;
 using Font = System.Drawing.Font;
+using C = ClientPackets;
 
 namespace Client.MirScenes.Dialogs
 {
@@ -1360,7 +1355,7 @@ namespace Client.MirScenes.Dialogs
 
         void NoticePositionBar_OnMoving(object sender, MouseEventArgs e)
         {
-            //int x = 337;//为什么删除这句？？
+            //int x = 337;
             int y = NoticePositionBar.Location.Y;
             int TempIndex = 0;
             bool forward;

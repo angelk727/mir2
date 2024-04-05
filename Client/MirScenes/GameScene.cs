@@ -1,22 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Windows.Forms;
-using Client.MirControls;
+﻿using Client.MirControls;
 using Client.MirGraphics;
 using Client.MirNetwork;
 using Client.MirObjects;
-using Client.MirScenes.Dialogs;
 using Client.MirSounds;
-using Client.Utils;
 using SlimDX;
 using SlimDX.Direct3D9;
-using C = ClientPackets;
-using Effect = Client.MirObjects.Effect;
 using Font = System.Drawing.Font;
 using S = ServerPackets;
+using C = ClientPackets;
+using Effect = Client.MirObjects.Effect;
+using Client.MirScenes.Dialogs;
+using Client.Utils;
+using System.Text.RegularExpressions;
 
 namespace Client.MirScenes
 {
@@ -103,7 +98,7 @@ namespace Client.MirScenes
 
         public HeroMenuPanel HeroMenuPanel;
         public HeroBehaviourPanel HeroBehaviourPanel;
-        public HeroAIDialog HeroAIDialog; //自添加扩展英雄窗口
+        public HeroAIDialog HeroAIDialog;
         public SocketDialog SocketDialog;
 
         public List<SkillBarDialog> SkillBarDialogs = new List<SkillBarDialog>();
@@ -256,7 +251,7 @@ namespace Client.MirScenes
 
             HeroMenuPanel = new HeroMenuPanel(this) { Visible = false };
             HeroBehaviourPanel = new HeroBehaviourPanel { Parent = this, Visible = false };
-            HeroAIDialog = new HeroAIDialog { Parent = this, Visible = false }; //自添加扩展英雄窗口
+            HeroAIDialog = new HeroAIDialog { Parent = this, Visible = false };
             HeroManageDialog = new HeroManageDialog { Parent = this, Visible = false };
 
             BigMapDialog = new BigMapDialog { Parent = this, Visible = false };
@@ -879,7 +874,7 @@ namespace Client.MirScenes
                 return;
             }
 
-            if (CMain.Time < actor.BlizzardStopTime || CMain.Time < User.GreatFireBallRareStopTime || CMain.Time < actor.ReincarnationStopTime) return; //自添加时间
+            if (CMain.Time < actor.BlizzardStopTime || CMain.Time < User.GreatFireBallRareStopTime || CMain.Time < actor.ReincarnationStopTime) return;
 
             ClientMagic magic = null;
 
@@ -1017,12 +1012,12 @@ namespace Client.MirScenes
         {
             if (CMain.Time >= LogTime)
             {
-                //自添加如果上次战斗<10取消
+                //If Last Combat < 10 CANCEL
                 MirMessageBox messageBox = new MirMessageBox(GameLanguage.ExitTip, MirMessageBoxButtons.YesNo);
                 messageBox.YesButton.Click += (o, e) => Program.Form.Close();
                 messageBox.Show();
             }
-            else if (User.Dead) //自添加这段是为了防止有攻击对象而死亡后，焦点不能返回死亡人物而卡住时间
+            else if (User.Dead)
             {
                 MirMessageBox messageBox = new MirMessageBox(GameLanguage.ExitTip, MirMessageBoxButtons.YesNo);
                 messageBox.YesButton.Click += (o, e) => Program.Form.Close();
@@ -1037,7 +1032,7 @@ namespace Client.MirScenes
         {
             if (CMain.Time >= LogTime)
             {
-                //自添加如果上次战斗<10取消
+                //If Last Combat < 10 CANCEL
                 MirMessageBox messageBox = new MirMessageBox(GameLanguage.LogOutTip, MirMessageBoxButtons.YesNo);
                 messageBox.YesButton.Click += (o, e) =>
                 {
@@ -1046,7 +1041,7 @@ namespace Client.MirScenes
                 };
                 messageBox.Show();
             }
-            else if (User.Dead) //自添加这段是为了防止有攻击对象而死亡后，焦点不能返回死亡人物而卡住时间
+            else if (User.Dead)
             {
                 MirMessageBox messageBox = new MirMessageBox(GameLanguage.LogOutTip, MirMessageBoxButtons.YesNo);
                 messageBox.YesButton.Click += (o, e) =>
@@ -1177,7 +1172,7 @@ namespace Client.MirScenes
 
             if (ShowReviveMessage && CMain.Time > User.DeadTime && User.CurrentAction == MirAction.死后尸体)
             {
-                ShowReviveMessage = false; //true 开启则win系统会视为病毒，解释为不能在类（Form）里使用此功能
+                ShowReviveMessage = false;
                 MirMessageBox messageBox = new MirMessageBox(GameLanguage.DiedTip, MirMessageBoxButtons.YesNo, false);
 
                 messageBox.YesButton.Click += (o, e) =>
@@ -1831,7 +1826,7 @@ namespace Client.MirScenes
                 case (short)ServerPacketIds.ObjectDashAttack:
                     ObjectDashAttack((S.ObjectDashAttack)p);
                     break;
-                case (short)ServerPacketIds.UserAttackMove://战士技能 - 日闪
+                case (short)ServerPacketIds.UserAttackMove://Warrior Skill - SlashingBurst
                     UserAttackMove((S.UserAttackMove)p);
                     break;
                 case (short)ServerPacketIds.CombineItem:
@@ -3410,7 +3405,7 @@ namespace Client.MirScenes
 
                     switch (p.Type)
                     {
-                        case DamageType.Hit: //增加伤害等级颜色
+                        case DamageType.Hit: //add damage level colours
                             obj.Damages.Add(new Damage(p.Damage.ToString("#,##0"), 1000, obj.Race == ObjectType.Player ? Color.Red : Color.White, 50));
                             break;
                         case DamageType.Miss:
@@ -3419,7 +3414,7 @@ namespace Client.MirScenes
                         case DamageType.Critical:
                             obj.Damages.Add(new Damage("暴击", 1000, obj.Race == ObjectType.Player ? Color.DarkRed : Color.DarkRed, 50) { Offset = 15 });
                             break;
-                        case DamageType.HpRegen://自添加飘窗显示
+                        case DamageType.HpRegen:
                             obj.Damages.Add(new Damage(p.Damage.ToString("#,##0"), 1000, obj.Race == ObjectType.Player ? Color.OrangeRed : Color.OrangeRed, 50));
                             break;
                         case DamageType.Poisoning:
@@ -3770,10 +3765,10 @@ namespace Client.MirScenes
             Hero.Experience = p.Experience;
             Hero.MaxExperience = p.MaxExperience;
             Hero.RefreshStats();
-            OutputMessage(GameLanguage.HeroLevelUp); //新添加英雄等级提示
+            OutputMessage(GameLanguage.HeroLevelUp);
             Hero.Effects.Add(new Effect(Libraries.Magic2, 1200, 20, 2000, User));
             SoundManager.PlaySound(SoundList.LevelUp);
-            ChatDialog.ReceiveChat(GameLanguage.HeroLevelUp, ChatType.LevelUp); //新添加英雄等级提示
+            ChatDialog.ReceiveChat(GameLanguage.HeroLevelUp, ChatType.LevelUp);
             MainDialog.HeroInfoPanel.Update();
         }
         private void ObjectLeveled(S.ObjectLeveled p)
@@ -3838,7 +3833,7 @@ namespace Client.MirScenes
 
         private void NPCUpdate(S.NPCUpdate p)
         {
-            GameScene.NPCID = p.NPCID; //如果从客户端手动调用，则使用正确的NPC ID更新客户端
+            GameScene.NPCID = p.NPCID; //Updates the client with the correct NPC ID if it's manually called from the client
         }
 
         private void NPCImageUpdate(S.NPCImageUpdate p)
@@ -3858,7 +3853,7 @@ namespace Client.MirScenes
         }
         private void DefaultNPC(S.DefaultNPC p)
         {
-            GameScene.DefaultNPCID = p.ObjectID; //使用正确的默认NPC ID更新客户端
+            GameScene.DefaultNPCID = p.ObjectID; //Updates the client with the correct Default NPC ID
         }
 
 
@@ -3962,12 +3957,12 @@ namespace Client.MirScenes
                             effect = new Effect(Libraries.Magic2, 1300, 10, 500, ob.CurrentLocation);
                             break;
                         }
-                    case 2: //RedFoxman //231
+                    case 2: //RedFoxman
                         {
                             effect = new Effect(Libraries.Monsters[(ushort)Monster.RedFoxman], 243, 10, 500, ob.CurrentLocation);
                             break;
                         }
-                    case 4: //MutatedManWorm//137
+                    case 4: //MutatedManWorm
                         {
                             effect = new Effect(Libraries.Monsters[(ushort)Monster.MutatedManworm], 272, 6, 500, ob.CurrentLocation);
 
@@ -3975,26 +3970,26 @@ namespace Client.MirScenes
                             playDefaultSound = false;
                             break;
                         }
-                    case 5: //WitchDoctor //277
+                    case 5: //WitchDoctor
                         {
                             effect = new Effect(Libraries.Monsters[(ushort)Monster.WitchDoctor], 328, 20, 1000, ob.CurrentLocation);
                             SoundManager.PlaySound(((ushort)Monster.WitchDoctor) * 10 + 7);
                             playDefaultSound = false;
                             break;
                         }
-                    case 6: //TurtleKing //244
+                    case 6: //TurtleKing
                         {
                             effect = new Effect(Libraries.Monsters[(ushort)Monster.TurtleKing], 946, 10, 500, ob.CurrentLocation);
                             break;
                         }
-                    case 7: //Mandrill //381
+                    case 7: //Mandrill
                         {
                             effect = new Effect(Libraries.Monsters[(ushort)Monster.Mandrill], 320, 10, 1000, ob.CurrentLocation);
                             SoundManager.PlaySound(((ushort)Monster.Mandrill) * 10 + 6);
                             playDefaultSound = false;
                             break;
                         }
-                    case 8: //DarkCaptain //395
+                    case 8: //DarkCaptain
                         {
                             ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.DarkCaptain], 1248, 10, 1000, ob.CurrentLocation));
                             SoundManager.PlaySound(((ushort)Monster.DarkCaptain) * 10 + 8);
@@ -4008,21 +4003,21 @@ namespace Client.MirScenes
                             playDefaultSound = false;
                             break;
                         }
-                    case 10: //HornedCommander //409
+                    case 10: //HornedCommander
                         {
                             MapControl.Effects.Add(effect = new Effect(Libraries.Monsters[(ushort)Monster.HornedCommander], 976, 10, 1000, ob.CurrentLocation));
                             SoundManager.PlaySound(8455);
                             playDefaultSound = false;
                             break;
                         }
-                    case 11: //SnowWolfKing //431
+                    case 11: //SnowWolfKing
                         {
                             MapControl.Effects.Add(effect = new Effect(Libraries.Monsters[(ushort)Monster.SnowWolfKing], 609, 10, 1000, ob.CurrentLocation));
                             SoundManager.PlaySound(8455);
                             playDefaultSound = false;
                             break;
                         }
-                    case 12: //Behemoth //57
+                    case 12: //Behemoth
                         {
                             effect = new Effect(Libraries.Monsters[(ushort)Monster.Behemoth], 810, 10, 1000, ob.CurrentLocation);
                             SoundManager.PlaySound(((ushort)Monster.Behemoth) * 10 + 7);
@@ -4036,8 +4031,8 @@ namespace Client.MirScenes
                         }
                 }
 
-                //似乎从未正常工作过——意味着在动画完成后移除对象
-                //但是由于服务器机制总是会立即移除对象，并且永远不会播放远程传送动画。更改为MapEffect-不理想，因为没有延迟
+                //Doesn't seem to have ever worked properly - Meant to remove object after animation complete, however due to server mechanics will always
+                //instantly remove object and never play TeleportOut animation. Changing to a MapEffect - not ideal as theres no delay.
 
                 MapControl.Effects.Add(effect);
 
@@ -4071,7 +4066,7 @@ namespace Client.MirScenes
                             ob.Effects.Add(new Effect(Libraries.Magic2, 1310, 10, 500, ob));
                             break;
                         }
-                    case 2: //RedFoxman //231
+                    case 2: //RedFoxman
                         {
                             ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.RedFoxman], 253, 10, 500, ob));
                             break;
@@ -4083,26 +4078,26 @@ namespace Client.MirScenes
                             playDefaultSound = false;
                             break;
                         }
-                    case 5: //WitchDoctor //277
+                    case 5: //WitchDoctor
                         {
                             ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.WitchDoctor], 348, 20, 1000, ob));
                             SoundManager.PlaySound(((ushort)Monster.WitchDoctor) * 10 + 7);
                             playDefaultSound = false;
                             break;
                         }
-                    case 6: //TurtleKing //244
+                    case 6: //TurtleKing
                         {
                             ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.TurtleKing], 956, 10, 500, ob));
                             break;
                         }
-                    case 7: //Mandrill //381
+                    case 7: //Mandrill
                         {
                             ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mandrill], 330, 10, 1000, ob));
                             SoundManager.PlaySound(((ushort)Monster.Mandrill) * 10 + 6);
                             playDefaultSound = false;
                             break;
                         }
-                    case 8: //DarkCaptain //395
+                    case 8: //DarkCaptain
                         {
                             ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.DarkCaptain], 1248, 10, 1000, ob));
                             SoundManager.PlaySound(((ushort)Monster.DarkCaptain) * 10 + 9);
@@ -4116,21 +4111,21 @@ namespace Client.MirScenes
                             playDefaultSound = false;
                             break;
                         }
-                    case 10: //HornedCommander //409
+                    case 10: //HornedCommander
                         {
                             ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.HornedCommander], 976, 10, 1000, ob));
                             SoundManager.PlaySound(8455);
                             playDefaultSound = false;
                             break;
                         }
-                    case 11: //SnowWolfKing //431
+                    case 11: //SnowWolfKing
                         {
                             ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.SnowWolfKing], 619, 10, 1000, ob));
                             SoundManager.PlaySound(8455);
                             playDefaultSound = false;
                             break;
                         }
-                    case 12: //Behemoth //57
+                    case 12: //Behemoth
                         {
                             ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Behemoth], 820, 5, 500, ob));
                             SoundManager.PlaySound(((ushort)Monster.Behemoth) * 10 + 7);
@@ -4695,7 +4690,7 @@ namespace Client.MirScenes
                 switch (p.Effect)
                 {
                     // Sanjian
-                    case SpellEffect.FurbolgWarriorCritical: //469
+                    case SpellEffect.FurbolgWarriorCritical:
                         ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.FurbolgWarrior], 448, 6, 600, ob));
                         SoundManager.PlaySound(20000 + (ushort)Spell.FatalSword * 10);
                         break;
@@ -4708,7 +4703,7 @@ namespace Client.MirScenes
                         ob.Effects.Add(new Effect(Libraries.Magic3, 610, 10, 600, ob));
                         SoundManager.PlaySound(SoundList.Teleport);
                         break;
-                    case SpellEffect.StormEscapeRare: //自添加雷仙风秘籍
+                    case SpellEffect.StormEscapeRare:
                         ob.Effects.Add(new Effect(Libraries.Magic3, 610, 10, 600, ob));
                         SoundManager.PlaySound(SoundList.Teleport);
                         break;
@@ -4720,30 +4715,30 @@ namespace Client.MirScenes
                         SoundManager.PlaySound(20000 + (ushort)Spell.Healing * 10 + 1);
                         ob.Effects.Add(new Effect(Libraries.Magic, 370, 10, 800, ob));
                         break;
-                    case SpellEffect.HealingRare: //自添加治愈术秘籍
+                    case SpellEffect.HealingRare:
                         SoundManager.PlaySound(20000 + (ushort)Spell.HealingRare * 10 + 1);
                         ob.Effects.Add(new Effect(Libraries.Magic, 370, 10, 800, ob));
                         break;
-                    case SpellEffect.RedMoonEvil: //131
+                    case SpellEffect.RedMoonEvil:
                         ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.RedMoonEvil], 32, 6, 400, ob) { Blend = false });
                         break;
-                    case SpellEffect.BloodthirstySpike: //414
+                    case SpellEffect.BloodthirstySpike:
                         ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.ChieftainSword], 1188, 6, 300, ob, CMain.Time + 1200) { Blend = true, DrawBehind = true});
                         break;
-                    case SpellEffect.GroundBurstIce: //476
+                    case SpellEffect.GroundBurstIce:
                         ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.ShardGuardian], 544, 6, 300, ob, CMain.Time + 1200) { Blend = true, DrawBehind = true});
                         break;
-                    case SpellEffect.MirEmperor: //534
+                    case SpellEffect.MirEmperor:
                         ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.MirEmperor], 62, 4, 400, ob) { Blend = false });
                         SoundManager.PlaySound(5347);
                         break;
                     case SpellEffect.TwinDrakeBlade:
                         ob.Effects.Add(new Effect(Libraries.Magic2, 380, 6, 800, ob));
                         break;
-                    case SpellEffect.HealingcircleRare: //自添加阴阳五行阵-秘籍
+                    case SpellEffect.HealingcircleRare:
                         ob.Effects.Add(new Effect(Libraries.Magic3, 660, 10, 600, ob));
                         break;
-                    case SpellEffect.HealingcircleRare1: //自添加阴阳五行阵-秘籍
+                    case SpellEffect.HealingcircleRare1:
                         ob.Effects.Add(new Effect(Libraries.Magic3, 650, 10, 600, ob));
                         break;
                    case SpellEffect.MPEater:
@@ -4790,7 +4785,7 @@ namespace Client.MirScenes
                         player.ShieldEffect = null;
                         player.MagicShield = false;
                         break;
-                    case SpellEffect.GreatFoxSpirit: //237
+                    case SpellEffect.GreatFoxSpirit:
                         ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.GreatFoxSpirit], 375 + (CMain.Random.Next(3) * 20), 20, 1400, ob));
                         SoundManager.PlaySound(((ushort)Monster.GreatFoxSpirit * 10) + 5);
                         break;
@@ -4798,7 +4793,7 @@ namespace Client.MirScenes
                         ob.Effects.Add(new Effect(Libraries.Magic2, 1010, 10, 1500, ob));
                         ob.Effects.Add(new Effect(Libraries.Magic2, 1020, 8, 1200, ob));
                         break;
-                    case SpellEffect.EntrapmentRare: //自添加捕绳剑 未完成
+                    case SpellEffect.EntrapmentRare:
                         ob.Effects.Add(new Effect(Libraries.Magic2, 1010, 10, 1500, ob));
                         ob.Effects.Add(new Effect(Libraries.Magic2, 1020, 8, 1200, ob));
                         break;
@@ -4882,14 +4877,14 @@ namespace Client.MirScenes
                             ob.Effects.Add(new Effect(Libraries.Magic3, 830, 5, 500, ob, CMain.Time + p.DelayTime) { Blend = false });
                         }
                         break;
-                    case SpellEffect.TurtleKing: //244
+                    case SpellEffect.TurtleKing:
                         {
                             Effect ef = new Effect(Libraries.Monsters[(ushort)Monster.TurtleKing], CMain.Random.Next(2) == 0 ? 922 : 934, 12, 1200, ob);
                             ef.Played += (o, e) => SoundManager.PlaySound(20000 + (ushort)Spell.HellFire * 10 + 1);
                             ob.Effects.Add(ef);
                         }
                         break;
-                    case SpellEffect.Behemoth: //57
+                    case SpellEffect.Behemoth:
                         {
                             MapControl.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Behemoth], 845, 10, 1500, ob.CurrentLocation));
                             MapControl.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Behemoth], 835, 10, 1500, ob.CurrentLocation, 0, true) { Blend = false });
@@ -4902,10 +4897,10 @@ namespace Client.MirScenes
                             RepeatUntil = p.Time > 0 ? CMain.Time + p.Time : 0
                         });
                         break;
-                    case SpellEffect.IcePillar: //288
+                    case SpellEffect.IcePillar:
                         ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.IcePillar], 18, 8, 800, ob));
                         break;
-                    case SpellEffect.KingGuard: //309
+                    case SpellEffect.KingGuard:
                         if (p.EffectType == 0)
                         {
                             ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.KingGuard], 800, 10, 1000, ob) { Blend = false });
@@ -4915,7 +4910,7 @@ namespace Client.MirScenes
                             ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.KingGuard], 810, 10, 1000, ob) { Blend = false });
                         }
                         break;
-                    case SpellEffect.FlamingMutantWeb: //257
+                    case SpellEffect.FlamingMutantWeb:
                         ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.FlamingMutant], 330, 10, 1000, ob)
                         {
                             Repeat = p.Time > 0,
@@ -5085,7 +5080,7 @@ namespace Client.MirScenes
 
             switch (p.Spell)
             {
-                //战士
+                //Warrior
                 case Spell.Slaying:
                     actor.Slaying = p.CanUse;
                     break;
@@ -5612,7 +5607,7 @@ namespace Client.MirScenes
             }
         }
 
-        private void UserAttackMove(S.UserAttackMove p)//战士技能 - 日闪
+        private void UserAttackMove(S.UserAttackMove p)//Warrior Skill - SlashingBurst
         {
             MapControl.NextAction = 0;
             if (User.CurrentLocation == p.Location && User.Direction == p.Direction) return;
@@ -5896,12 +5891,38 @@ namespace Client.MirScenes
 
         private void GuildNameRequest(S.GuildNameRequest p)
         {
-            MirInputBox inputBox = new MirInputBox("请输入行会名称，长度必须为3~20个字符");
+            MirInputBox inputBox = new MirInputBox("输入的行会名称长度最少为3个字符、中文等最多为7个字符、英文及数字为14个字符");
+
             inputBox.InputTextBox.TextBox.KeyPress += (o, e) =>
             {
-                string Allowed = "abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-                if (!Allowed.Contains(e.KeyChar) && e.KeyChar != (char)Keys.Back)
+                if (char.IsControl(e.KeyChar))
+                {
+                    return;
+                }
+                char inputChar = e.KeyChar;
+
+                if (!char.IsLetterOrDigit(inputChar) && inputChar != '\u4E00' && inputChar != '\u9FA5')
+                {
+                    ChatDialog.ReceiveChat("字符不被认可", ChatType.System);
                     e.Handled = true;
+                    return;
+                }
+                string newText = inputBox.InputTextBox.Text + e.KeyChar;
+
+                int englishCount = Regex.Matches(newText, @"[A-Za-z0-9]").Count;
+
+                bool containsNonEnglish = !Regex.IsMatch(newText, @"^[A-Za-z0-9]*$");
+
+                if (newText.Length > 7 && containsNonEnglish)
+                {
+                    ChatDialog.ReceiveChat("不能超过7个字符", ChatType.System);
+                    e.Handled = true;
+                }
+                else if (englishCount > 14)
+                {
+                    ChatDialog.ReceiveChat("不能超过14个字符", ChatType.System);
+                    e.Handled = true;
+                }
             };
             inputBox.OKButton.Click += (o, e) =>
             {
@@ -5915,7 +5936,6 @@ namespace Client.MirScenes
             };
             inputBox.Show();
         }
-
         private void GuildRequestWar(S.GuildRequestWar p)
         {
             MirInputBox inputBox = new MirInputBox("加入想参战的行会");
@@ -6300,7 +6320,7 @@ namespace Client.MirScenes
             MainDialog.HeroInfoPanel.Visible = p.State > HeroSpawnState.Unsummoned;
             MainDialog.HeroMenuButton.Visible = p.State > HeroSpawnState.Unsummoned;
             HeroBehaviourPanel.Visible = p.State > HeroSpawnState.Unsummoned;            
-            HeroAIDialog.Visible = p.State > HeroSpawnState.Unsummoned; //自添加英雄扩展窗口       
+            HeroAIDialog.Visible = p.State > HeroSpawnState.Unsummoned;    
             HeroMenuPanel.Visible = HeroMenuPanel.Visible && MainDialog.HeroMenuButton.Visible;
 
             if (p.State < HeroSpawnState.Summoned)
@@ -8596,7 +8616,6 @@ namespace Client.MirScenes
                     Location = new Point(4, ItemLabel.DisplayRectangle.Bottom),
                     OutLine = true,
                     Parent = ItemLabel,
-                    //Text = string.Format("{0}觉醒({1})", HoverItem.Awake.Type.ToString(), HoverItem.Awake.GetAwakeLevel())
                     Text = string.Format("{0}的觉醒 ({1})", HoverItem.Awake.Type switch
                     {
                         AwakeType.物理攻击 => "勇猛",
@@ -8606,7 +8625,7 @@ namespace Client.MirScenes
                         AwakeType.魔法防御 => "制魔",
                         AwakeType.生命法力值 => "体质",
                         _ => throw new NotImplementedException(),
-                    }, HoverItem.Awake.GetAwakeLevel()) //自添加觉醒功能新的显示方式
+                    }, HoverItem.Awake.GetAwakeLevel())
                 };
 
                 ItemLabel.Size = new Size(Math.Max(ItemLabel.Size.Width, AWAKENAMELabel.DisplayRectangle.Right + 4),
@@ -9573,7 +9592,7 @@ namespace Client.MirScenes
 
             #region CANTAWAKEN
 
-            //if ((HoverItem.Info.CanAwakening != true) && (HoverItem.Info.Type != ItemType.宝玉神珠)) //源代码显示不可觉醒装备标注
+            //if ((HoverItem.Info.CanAwakening != true) && (HoverItem.Info.Type != ItemType.Gem))
             //{
             //    count++;
             //    MirLabel CANTAWAKENINGLabel = new MirLabel
@@ -9930,7 +9949,7 @@ namespace Client.MirScenes
                     Location = new Point(4, ItemLabel.DisplayRectangle.Bottom),
                     OutLine = true,
                     Parent = ItemLabel,
-                    Text = "物品来源：GM"
+                    Text = "制作:游戏管理员"
                 };
 
                 ItemLabel.Size = new Size(Math.Max(ItemLabel.Size.Width, GMLabel.DisplayRectangle.Right + 4),
@@ -9989,7 +10008,7 @@ namespace Client.MirScenes
             };
 
             //Name Info Label
-            MirControl[] outlines = new MirControl[12]; //默认：10 因添加了套装
+            MirControl[] outlines = new MirControl[12];
             outlines[0] = NameInfoLabel(item, inspect, hideDura);
             //Attribute Info1 Label - Attack Info
             outlines[1] = AttackInfoLabel(item, inspect, hideAdded);
@@ -10623,7 +10642,7 @@ namespace Client.MirScenes
             }
             catch (Exception)
             {
-                // 指标无效不执行任何操作
+                // Do nothing. index was not valid.
             }
 
             SetMusic = Music;
@@ -10646,9 +10665,9 @@ namespace Client.MirScenes
             for (int i = Effects.Count - 1; i >= 0; i--)
                 Effects[i].Process();
 
-            if (MapObject.TargetObject != null && MapObject.TargetObject is MonsterObject && MapObject.TargetObject.AI == 970) //自添加AI扩容
+            if (MapObject.TargetObject != null && MapObject.TargetObject is MonsterObject && MapObject.TargetObject.AI == 970)
                 MapObject.TargetObjectID = 0;
-            if (MapObject.MagicObject != null && MapObject.MagicObject is MonsterObject && MapObject.MagicObject.AI == 970) //自添加AI扩容
+            if (MapObject.MagicObject != null && MapObject.MagicObject is MonsterObject && MapObject.MagicObject.AI == 970)
                 MapObject.MagicObjectID = 0;
 
             CheckInput();
@@ -10915,7 +10934,7 @@ namespace Client.MirScenes
                         {
                             if (DoorInfo.DoorState != 0)
                             {
-                                index += (DoorInfo.ImageIndex + 1) * M2CellInfo[x, y].DoorOffset;//坏”代码如果你想使用动画，但这将取决于动画>必须为动画自定义设计
+                                index += (DoorInfo.ImageIndex + 1) * M2CellInfo[x, y].DoorOffset;//'bad' code if you want to use animation but it's gonna depend on the animation > has to be custom designed for the animtion
                             }
                         }
                     }
@@ -11023,7 +11042,7 @@ namespace Client.MirScenes
                                     byte animationTick = M2CellInfo[x, y].MiddleAnimationTick;
                                     index += (AnimationCount % (animation + (animation * animationTick))) / (1 + animationTick);
 
-                                    if (blend && (animation == 10 || animation == 8)) //钻石矿, 深渊混合物
+                                    if (blend && (animation == 10 || animation == 8)) //diamond mines, abyss blends
                                     {
                                         Libraries.MapLibs[M2CellInfo[x, y].MiddleIndex].DrawUpBlend(index, new Point(drawX, drawY));
                                     }
@@ -11079,7 +11098,7 @@ namespace Client.MirScenes
                         {
                             if (DoorInfo.DoorState != 0)
                             {
-                                index += (DoorInfo.ImageIndex + 1) * M2CellInfo[x, y].DoorOffset;//“坏”代码，如果你想使用动画，但它将取决于动画>必须为动画定制
+                                index += (DoorInfo.ImageIndex + 1) * M2CellInfo[x, y].DoorOffset;//'bad' code if you want to use animation but it's gonna depend on the animation > has to be custom designed for the animtion
                             }
                         }
                     }
@@ -11113,7 +11132,7 @@ namespace Client.MirScenes
             DXManager.SetOpacity(0.4F);
 
             //MapObject.User.DrawMount();
-            MapObject.User.DrawTransform(); //自添加外形特效
+            MapObject.User.DrawTransform();
 
             MapObject.User.DrawBody();
 
@@ -11266,7 +11285,7 @@ namespace Client.MirScenes
                     {
                         switch (light / 15)
                         {
-                            case 0://无光源
+                            case 0://no light source
                                 lightColour = Color.FromArgb(255, 60, 60, 60);
                                 break;
                             case 1:
@@ -11368,6 +11387,9 @@ namespace Client.MirScenes
                     if (x < 0) continue;
                     if (x >= Width) break;
                     int imageIndex = (M2CellInfo[x, y].FrontImage & 0x7FFF) - 1;
+                    if (imageIndex == -1) continue;
+                    int fileIndex = M2CellInfo[x, y].FrontIndex;
+                    if (fileIndex == -1) continue;
                     if (M2CellInfo[x, y].Light <= 0 || M2CellInfo[x, y].Light >= 10) continue;
                     if (M2CellInfo[x, y].Light == 0) continue;
 
@@ -11398,8 +11420,6 @@ namespace Client.MirScenes
                     {
                         lightIntensity = GetBlindLight(lightIntensity);
                     }
-
-                    int fileIndex = M2CellInfo[x, y].FrontIndex;
 
                     p = new Point(
                         (x + OffSetX - MapObject.User.Movement.X) * CellWidth + MapObject.User.OffSetMove.X,
@@ -11599,11 +11619,11 @@ namespace Client.MirScenes
             }
 
             if (MapObject.MouseObject != null && !MapObject.MouseObject.Dead && !(MapObject.MouseObject is ItemObject) &&
-                !(MapObject.MouseObject is NPCObject) && !(MapObject.MouseObject is MonsterObject && MapObject.MouseObject.AI == 970) //自添加AI扩容
+                !(MapObject.MouseObject is NPCObject) && !(MapObject.MouseObject is MonsterObject && MapObject.MouseObject.AI == 970)
                  && !(MapObject.MouseObject is MonsterObject && MapObject.MouseObject.AI == 56))
             {
                 MapObject.TargetObjectID = MapObject.MouseObject.ObjectID;
-                if (MapObject.MouseObject is MonsterObject && MapObject.MouseObject.AI != 980) //自添加AI扩容
+                if (MapObject.MouseObject is MonsterObject && MapObject.MouseObject.AI != 980)
                     MapObject.MagicObjectID = MapObject.TargetObject.ObjectID;
             }
             else
@@ -11614,7 +11634,7 @@ namespace Client.MirScenes
         {
             if (AwakeningAction == true) return;
 
-            if ((MouseControl == this) && (MapButtons != MouseButtons.None)) AutoHit = false;//鼠标的中断，即便采矿或挖掘正在进行中，也会暂停或结束！
+            if ((MouseControl == this) && (MapButtons != MouseButtons.None)) AutoHit = false;//mouse actions stop mining even when frozen!
             if (!CanRideAttack()) AutoHit = false;
             
             if (CMain.Time < InputDelay || User.Poison.HasFlag(PoisonType.Paralysis) || User.Poison.HasFlag(PoisonType.LRParalysis) || User.Poison.HasFlag(PoisonType.Frozen) || User.Fishing) return;
@@ -11625,7 +11645,7 @@ namespace Client.MirScenes
                 return;
             }
 
-            if (CMain.Time < User.BlizzardStopTime || CMain.Time < User.GreatFireBallRareStopTime || CMain.Time < User.ReincarnationStopTime) return; //新添加：GreatFireBallRareStopTime
+            if (CMain.Time < User.BlizzardStopTime || CMain.Time < User.GreatFireBallRareStopTime || CMain.Time < User.ReincarnationStopTime) return;
 
             if (MapObject.TargetObject != null && !MapObject.TargetObject.Dead)
             {
@@ -11634,7 +11654,7 @@ namespace Client.MirScenes
                 {
                     GameScene.LogTime = CMain.Time + Globals.LogDelay;
 
-                    if (User.Class == MirClass.弓箭 && User.HasClassWeapon && !User.RidingMount && !User.Fishing)//弓箭手测试-非攻击性目标（玩家/宠物）
+                    if (User.Class == MirClass.弓箭 && User.HasClassWeapon && !User.RidingMount && !User.Fishing)//ArcherTest - non aggressive targets (player / pets)
                     {
                         if (Functions.InRange(MapObject.TargetObject.CurrentLocation, User.CurrentLocation, Globals.MaxAttackRange))
                         {
@@ -11644,7 +11664,7 @@ namespace Client.MirScenes
                                 User.QueuedAction.Params.Add(MapObject.TargetObject != null ? MapObject.TargetObject.ObjectID : (uint)0);
                                 User.QueuedAction.Params.Add(MapObject.TargetObject.CurrentLocation);
 
-                                // MapObject.TargetObject = null; //近距离时停止持续攻击
+                                // MapObject.TargetObject = null; //stop constant attack when close up
                             }
                         }
                         else
@@ -11716,7 +11736,7 @@ namespace Client.MirScenes
                 {
                     case MouseButtons.Left:
                         if (MapObject.MouseObject is NPCObject || (MapObject.MouseObject is PlayerObject && MapObject.MouseObject != User)) break;
-                        if (MapObject.MouseObject is MonsterObject && MapObject.MouseObject.AI == 56) break; //自添加AI扩容
+                        if (MapObject.MouseObject is MonsterObject && MapObject.MouseObject.AI == 56) break;
  
                         if (CMain.Alt && !User.RidingMount)
                         {
@@ -11726,7 +11746,7 @@ namespace Client.MirScenes
 
                         if (CMain.Shift)
                         {
-                            if (CMain.Time > GameScene.AttackTime && CanRideAttack()) //弓箭手测试 - shift click
+                            if (CMain.Time > GameScene.AttackTime && CanRideAttack()) //ArcherTest - shift click
                             {
                                 MapObject target = null;
                                 if (MapObject.MouseObject is MonsterObject || MapObject.MouseObject is PlayerObject) target = MapObject.MouseObject;
@@ -11752,7 +11772,7 @@ namespace Client.MirScenes
                                     return;
                                 }
                                 
-                                //stops double slash from being used without empty hand or 刺客武器 (否则在第二次挥动时出现错误)
+                                //stops double slash from being used without empty hand or assassin weapon (otherwise bugs on second swing)
                                 if (GameScene.User.DoubleSlash && (!User.HasClassWeapon && User.Weapon > -1)) return;
                                 if (User.Poison.HasFlag(PoisonType.Dazed)) return;
 
@@ -11934,7 +11954,7 @@ namespace Client.MirScenes
 
         public void UseMagic(ClientMagic magic, UserObject actor)
         {
-            if (User.Dead) return; //自添加用户死亡后不能使用技能
+            if (User.Dead) return;
             if (CMain.Time < GameScene.SpellTime || actor.Poison.HasFlag(PoisonType.Stun))
             {
                 actor.ClearMagic();
@@ -11988,7 +12008,7 @@ namespace Client.MirScenes
             {
                 case Spell.FireBall:
                 case Spell.GreatFireBall:
-                case Spell.GreatFireBallRare:  //自添加大火球秘籍
+                case Spell.GreatFireBallRare:
                 case Spell.ElectricShock:
                 case Spell.Poisoning:
                 case Spell.ThunderBolt:
@@ -11999,7 +12019,7 @@ namespace Client.MirScenes
                 case Spell.Vampirism:
                 case Spell.Revelation:
                 case Spell.Entrapment:
-                case Spell.EntrapmentRare: //自添加捕绳剑秘籍 未完成
+                case Spell.EntrapmentRare:
                 case Spell.Hallucination:
                 case Spell.DarkBody:
                 case Spell.FireBounce:
@@ -12072,7 +12092,7 @@ namespace Client.MirScenes
                     break;
                 case Spell.Purification:
                 case Spell.Healing:
-                case Spell.HealingRare:  //自添加治愈术秘籍
+                case Spell.HealingRare:
                 case Spell.UltimateEnhancer:
                 case Spell.EnergyShield:
                 case Spell.PetEnhancer:
@@ -12090,7 +12110,7 @@ namespace Client.MirScenes
                 case Spell.TrapHexagon:
                 case Spell.HealingCircle:
                 case Spell.CatTongue:
-				case Spell.HealingcircleRare:   //自添加阴阳五行阵-秘籍
+				case Spell.HealingcircleRare:
                     if (actor.NextMagicObject != null)
                     {
                         if (!actor.NextMagicObject.Dead && actor.NextMagicObject.Race != ObjectType.Item && actor.NextMagicObject.Race != ObjectType.Merchant)
@@ -12112,7 +12132,7 @@ namespace Client.MirScenes
                             target = actor.NextMagicObject;
                     }
                     break;
-                case Spell.Reincarnation: //复活术
+                case Spell.Reincarnation:
                     if (actor == Hero && actor.NextMagicObject == null)
                         actor.NextMagicObject = User;
                     if (actor.NextMagicObject != null)
@@ -12297,9 +12317,9 @@ namespace Client.MirScenes
         {
             if (M2CellInfo[p.X, p.Y].DoorIndex == 0) return true;
             Door DoorInfo = GetDoor(M2CellInfo[p.X, p.Y].DoorIndex);
-            if (DoorInfo == null) return false;//如果门不存在，那么它甚至不会显示在屏幕上 (不可能是开着的)
+            if (DoorInfo == null) return false;//if the door doesnt exist then it isnt even being shown on screen (and cant be open lol)
             //if ((DoorInfo.DoorState == DoorState.Closed) || (DoorInfo.DoorState == DoorState.Closing))
-			if ((DoorInfo.DoorState == 0) || (DoorInfo.DoorState == DoorState.Closing))//自添加修改开门
+			if ((DoorInfo.DoorState == 0) || (DoorInfo.DoorState == DoorState.Closing))
             {
                 if (CMain.Time > _doorTime)
                 {
@@ -12497,7 +12517,7 @@ namespace Client.MirScenes
                         Doors[i].LastTick = CMain.Time;
                         Doors[i].ImageIndex++;
 
-                        if (Doors[i].ImageIndex == 1)//如果要设置门打开/关闭的动画，请更改1
+                        if (Doors[i].ImageIndex == 1)//change the 1 if you want to animate doors opening/closing
                         {
                             Doors[i].ImageIndex = 0;
                             Doors[i].DoorState = (DoorState)Enum.ToObject(typeof(DoorState), ((byte)++Doors[i].DoorState % 4));

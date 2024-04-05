@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Shared.Extensions
+﻿namespace Shared.Extensions
 {
     public static class HelperExtensions
     {

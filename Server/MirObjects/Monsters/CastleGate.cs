@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Drawing;
+﻿using System.Drawing;
 using Server.MirDatabase;
 using Server.MirEnvir;
 
@@ -66,7 +65,7 @@ namespace Server.MirObjects.Monsters
 
                 if (!b.Spawn(this.CurrentMap, new Point(this.CurrentLocation.X + block.X, this.CurrentLocation.Y + block.Y)))
                 {
-                    MessageQueue.EnqueueDebugging(string.Format("{3} 挡住怪物不能刷在 {0} {1}:{2}", CurrentMap.Info.FileName, block.X, block.Y, Info.Name));
+                    MessageQueue.EnqueueDebugging(string.Format("{3} 怪物受阻挡不能刷在 {0} {1}:{2}", CurrentMap.Info.FileName, block.X, block.Y, Info.Name));
                 }
             }
         }
@@ -74,7 +73,7 @@ namespace Server.MirObjects.Monsters
         {
             base.ProcessAI();
 
-            if (!Closed && CloseTime > 0 && CloseTime < Envir.Time)
+            if(!Closed && CloseTime > 0 && CloseTime < Envir.Time)
             {
                 CloseDoor();
                 CloseTime = 0;

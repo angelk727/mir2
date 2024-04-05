@@ -1,7 +1,4 @@
-﻿using System;
-using System.Drawing;
-using System.Windows.Forms;
-using Client.MirControls;
+﻿using Client.MirControls;
 using Client.MirGraphics;
 using Client.MirObjects;
 using Client.MirSounds;
@@ -16,7 +13,7 @@ namespace Client.MirScenes.Dialogs
         public MirLabel NameLabel, GuildLabel, LoverLabel;
         public MirLabel ACLabel, MACLabel, DCLabel, MCLabel, SCLabel, HealthLabel, ManaLabel;
         public MirLabel CritRLabel, CritDLabel, LuckLabel, AttkSpdLabel, AccLabel, AgilLabel;
-        public MirLabel ExpPLabel, BagWLabel, WearWLabel, HandWLabel, MagicRLabel, PoisonRecLabel, HealthRLabel, ManaRLabel, PoisonResLabel, HolyTLabel, FreezeLabel, PoisonAtkLabel, ReflectAtkLabel, HPDrainRatePercentLabel; //新添加反弹攻击属性表显示：ReflectAtkLabel
+        public MirLabel ExpPLabel, BagWLabel, WearWLabel, HandWLabel, MagicRLabel, PoisonRecLabel, HealthRLabel, ManaRLabel, PoisonResLabel, HolyTLabel, FreezeLabel, PoisonAtkLabel, ReflectAtkLabel, HPDrainRatePercentLabel;
         public MirLabel HeadingLabel, StatLabel;
         public MirButton NextButton, BackButton;
 
@@ -32,7 +29,7 @@ namespace Client.MirScenes.Dialogs
             Actor = actor;
             GridType = gridType;
 
-            Index = gridType == MirGridType.HeroEquipment ? 505 : 504; //默认： Index = 504;
+            Index = gridType == MirGridType.HeroEquipment ? 505 : 504;
             Library = Libraries.Title;
             Location = new Point(Settings.ScreenWidth - 264, 0);
             Movable = true;
@@ -60,7 +57,7 @@ namespace Client.MirScenes.Dialogs
                         {
                             int genderOffset = actor.Gender == MirGender.男性 ? 0 : 1;
 
-                            switch (actor.WingEffect)//衣服内观特效:mir2-master\Client\MirScenes\Dialogs\文件夹下1、CharacterDialog 2、MainDialogs两个
+                            switch (actor.WingEffect)
                             {
                                 case 1:
                                     if (actor.WingEffect == 1)
@@ -92,7 +89,7 @@ namespace Client.MirScenes.Dialogs
 
                     if (actor.WeaponEffect > 0)
                     {
-                        switch (actor.WeaponEffect)//武器内观特效:mir2-master\Client\MirScenes\Dialogs\文件夹下1、CharacterDialog 2、MainDialogs两个 
+                        switch (actor.WeaponEffect)
                         {
                             case 21:
                                 if (actor.WeaponEffect == 21)
@@ -372,7 +369,7 @@ namespace Client.MirScenes.Dialogs
                 HolyTLabel.Text = string.Format("+{0}", actor.Stats[Stat.神圣]);
                 FreezeLabel.Text = string.Format("+{0}", actor.Stats[Stat.冰冻伤害]);
                 PoisonAtkLabel.Text = string.Format("+{0}", actor.Stats[Stat.毒素伤害]);
-                ReflectAtkLabel.Text = string.Format("+{0}", actor.Stats[Stat.反弹伤害]); //新添加反弹攻击属性表显示
+                ReflectAtkLabel.Text = string.Format("+{0}", actor.Stats[Stat.反弹伤害]);
                 HPDrainRatePercentLabel.Text = string.Format("+ {0}%", actor.Stats[Stat.吸血数率]);
             };
 
@@ -790,7 +787,7 @@ namespace Client.MirScenes.Dialogs
                 Location = new Point(126, 218),
                 NotControl = true
             };
-            ReflectAtkLabel = new MirLabel //新添加反弹攻击属性表显示
+            ReflectAtkLabel = new MirLabel
             {
                 AutoSize = true,
                 Parent = StatePage,
@@ -916,7 +913,7 @@ namespace Client.MirScenes.Dialogs
         {
             int offSet = Actor.Gender == MirGender.男性 ? 0 : 1;
 
-            Index = GridType == MirGridType.HeroEquipment ? 505 : 504; //默认：Index = 504;// +offSet;
+            Index = GridType == MirGridType.HeroEquipment ? 505 : 504;
             CharacterPage.Index = 340 + offSet;
 
             switch (Actor.Class)

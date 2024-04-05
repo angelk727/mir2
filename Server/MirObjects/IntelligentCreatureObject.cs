@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using Server.MirDatabase;
+﻿using Server.MirDatabase;
 using Server.MirEnvir;
 using S = ServerPackets;
 
@@ -279,7 +277,7 @@ namespace Server.MirObjects
                     if (Envir.Random.Next(100) >= 60) ProcessAnimVariant();//random anims
             }
         }
-
+        
         protected override void ProcessTarget()
         {
             if (Target == null || !CanAttack) return;
@@ -296,14 +294,14 @@ namespace Server.MirObjects
                 return;
             }
         }
-
+        
         protected override void FindTarget()
         {
             if (Dead) return;
 
             if (Fullness < CreatureRules.MinimalFullness) return;
 
-            //自动拾取/查找
+            //do automatic pickup/find
             if (CreatureRules.AutoPickupEnabled && CurrentPickupMode == IntelligentCreaturePickupMode.Automatic)
             {
                 FindItemTarget();
@@ -405,7 +403,7 @@ namespace Server.MirObjects
                                 if (!((PlayerObject)Master).CanGainItem(item.Item)) continue;
                                 if (CheckItemAgainstFilter(item.Item.Info.Type))
                                 {
-                                    if (item.Item.Info.Grade >= ItemFilter.PickupGrade)
+                                    if(item.Item.Info.Grade >= ItemFilter.PickupGrade)
                                         TargetList.Add(ob);
                                     break;
                                 }
@@ -537,7 +535,7 @@ namespace Server.MirObjects
             ActionTime = Envir.Time + 300;
             AttackTime = Envir.Time + AttackSpeed;
 
-            DecreaseFullness(1);//灵物：给一些食物做动作
+            DecreaseFullness(1);//use some food for operation
             IncreasePearlProduction();
         }
 
@@ -552,7 +550,7 @@ namespace Server.MirObjects
             ActionTime = Envir.Time + 300;
             AttackTime = Envir.Time + AttackSpeed;
 
-            DecreaseFullness(1);//灵物：给一些食物做动作
+            DecreaseFullness(1);//use some food for operation
             IncreasePearlProduction();
             return true;
         }
@@ -629,13 +627,13 @@ namespace Server.MirObjects
 
         private bool CheckItemAgainstFilter(ItemType iType)
         {
-            //不要用这种方法检查金币
-            //instaid 只是做一个简单的检查 -->>      if (ItemFilter.PetPickupAll || ItemFilter.PetPickupGold)
+            //dont use this method to check for gold.
+            //instaid just do a simple check like -->>      if (ItemFilter.PetPickupAll || ItemFilter.PetPickupGold)
             if (ItemFilter.PetPickupAll) return true;
 
             switch (iType)
             {
-                case ItemType.杂物:// <---- 我不确定是否有任何物品会保存此物品类型，但最好先预防
+                case ItemType.杂物:// <---- im not sure if any item will ever hold this ItemType but better to prevent then cure
                     return false;
                 case ItemType.武器:
                     return ItemFilter.PetPickupWeapons;
@@ -848,6 +846,7 @@ namespace Server.MirObjects
                 Poison = CurrentPoison,
                 Hidden = Hidden,
                 Extra = Summoned,
+                Buffs = Buffs.Where(d => d.Info.Visible).Select(e => e.Type).ToList()
             };
         }
     }

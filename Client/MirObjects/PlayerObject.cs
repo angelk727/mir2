@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using Client.MirControls;
-using Client.MirGraphics;
+﻿using Client.MirGraphics;
 using Client.MirNetwork;
 using Client.MirScenes;
-using Client.MirScenes.Dialogs;
 using Client.MirSounds;
-using C = ClientPackets;
+using Client.MirControls;
 using S = ServerPackets;
+using C = ClientPackets;
+using Client.MirScenes.Dialogs;
+using System.Reflection;
 
 namespace Client.MirObjects
 {
@@ -30,7 +27,7 @@ namespace Client.MirObjects
         public byte Hair;
         public ushort Level;
 
-        public MLibrary WeaponLibrary1, WeaponEffectLibrary1, WeaponLibrary2, WeaponEffectLibrary2, HairLibrary, WingLibrary, MountLibrary; //自添加
+        public MLibrary WeaponLibrary1, WeaponEffectLibrary1, WeaponLibrary2, WeaponEffectLibrary2, HairLibrary, WingLibrary, MountLibrary;
         public int Armour, Weapon, WeaponEffect, ArmourOffSet, HairOffSet, WeaponOffSet, WingOffset, MountOffset;
 
         public int DieSound, FlinchSound, AttackSound;
@@ -81,7 +78,7 @@ namespace Client.MirObjects
         public byte WingEffect;
         private short StanceDelay = 2500;
 
-        //弓箭手咒语-元素系统
+        //ArcherSpells - Elemental system
         public bool ElementalBuff;
         public bool Concentrating;
         public InterruptionEffect ConcentratingEffect;
@@ -97,7 +94,7 @@ namespace Client.MirObjects
 
         public bool RidingMount, Sprint, FastRun, Fishing, FoundFish;
         public long StanceTime, MountTime, FishingTime;
-        public long BlizzardStopTime, ReincarnationStopTime, SlashingBurstTime, GreatFireBallRareStopTime; //自添加
+        public long BlizzardStopTime, ReincarnationStopTime, SlashingBurstTime, GreatFireBallRareStopTime;
 
         public short MountType = -1, TransformType = -1;
 
@@ -184,8 +181,7 @@ namespace Client.MirObjects
 
         public override bool ShouldDrawHealth()
         {
-            //return this == User && (GroupDialog.GroupList.Contains(Name) || GroupDialog.GroupList.Count == 0);
-            if (GroupDialog.GroupList.Contains(Name) || this == User) //修复了群组成员无法显示健康栏的问题
+            if (GroupDialog.GroupList.Contains(Name) || this == User)
             {
                 return true;
             }
@@ -255,13 +251,19 @@ namespace Client.MirObjects
 
         public virtual void SetLibraries()
         {
-            //代办事项：由于显示错误暂时将下面外形钓鱼屏蔽， 修正后开启
-            //mir2-master\Server\MirObjects\PlayerObject.cs 9952行
             //fishing broken
             //10
             //11
             //12
             //13
+
+            //almost all broken
+            //20 - black footballer - 791
+            //21 - red footballer - 791
+            //22 - blue footballer - 791
+            //23 - green footballer - 791
+            //24 - red2 footballer - 791
+
             bool altAnim = false;
 
             bool showMount = true;
@@ -688,7 +690,7 @@ namespace Client.MirObjects
             {
                 switch(WingEffect)
                 {
-                    case 4: //自添加黑龙战甲火焰特效
+                    case 4:
                         Effects.Add(new SpecialEffect(Libraries.CHumEffect[4], 0, 20, 3600, this, true, false, 0) { Repeat = true });
                         break;
                     case 100: //Oma King Robe effect
@@ -1609,7 +1611,7 @@ namespace Client.MirObjects
                             case Spell.TwinDrakeBlade:
                                 //FrameInterval = FrameInterval * 9 / 10; //70% Faster Animation
                                 //EffectFrameInterval = EffectFrameInterval * 9 / 10;
-                                //action = new QueuedAction { Action = MirAction.近距攻击4, Direction = Direction, Location = CurrentLocation, Params = new List<object>() };
+                                //action = new QueuedAction { Action = MirAction.Attack4, Direction = Direction, Location = CurrentLocation, Params = new List<object>() };
                                 //action.Params.Add(Spell);
                                 //ActionFeed.Insert(0, action);
                                 SoundManager.PlaySound(20000 + (ushort)Spell * 10);
@@ -2260,7 +2262,7 @@ namespace Client.MirObjects
 
                             #endregion
 
-                            #region Blizzard //自添加天上秘术
+                            #region Blizzard
 
                             case Spell.Blizzard:
                                 Effects.Add(new Effect(Libraries.Magic2, 1540, 8, Frame.Count * FrameInterval, this));
@@ -2286,7 +2288,7 @@ namespace Client.MirObjects
 
                             #endregion
 
-                            #region HealingcircleRare //自添加阴阳五行阵-秘籍
+                            #region HealingcircleRare
 
                             case Spell.HealingcircleRare:
                                 Effects.Add(new Effect(Libraries.Magic3, 610, 8, Frame.Count * FrameInterval, this));
@@ -2659,7 +2661,7 @@ namespace Client.MirObjects
                         else
                             NextMotion2 += EffectFrameInterval;
                     }
-                    break;
+                    break;     
 
                 case MirAction.近距攻击1:
                 case MirAction.近距攻击2:
@@ -3086,7 +3088,7 @@ namespace Client.MirObjects
 
                                     #endregion
 
-                                    #region GreatFireBallRare  //自添加大火球秘籍
+                                    #region GreatFireBallRare
 
                                     case Spell.GreatFireBallRare:
                                         SoundManager.PlaySound(20000 + 34 * 10 + 1);
@@ -3119,7 +3121,7 @@ namespace Client.MirObjects
 
                                     #endregion
 
-                                    #region HealingRare //自添加治愈术秘籍
+                                    #region HealingRare
 
                                     case Spell.HealingRare:
                                         SoundManager.PlaySound(20000 + 61 * 10 + 1);// M61-1
@@ -3529,7 +3531,7 @@ namespace Client.MirObjects
 
                                     #endregion
 
-                                    #region HealingcircleRare //自添加阴阳五行阵-秘籍
+                                    #region HealingcircleRare
 
                                     case Spell.HealingcircleRare:
                                         SoundManager.PlaySound(20000 + (ushort)Spell * 10);
@@ -3695,7 +3697,7 @@ namespace Client.MirObjects
                                 Cast = false;
                             }
                             //if (ActionFeed.Count == 0)
-                            //    ActionFeed.Add(new QueuedAction { Action = MirAction.站立姿势, Direction = Direction, Location = CurrentLocation });
+                            //    ActionFeed.Add(new QueuedAction { Action = MirAction.Stance, Direction = Direction, Location = CurrentLocation });
 
                             StanceTime = CMain.Time + StanceDelay;
                             FrameIndex = Frame.Count - 1;
@@ -5157,7 +5159,7 @@ namespace Client.MirObjects
             float oldOpacity = DXManager.Opacity;
             if (Hidden && !DXManager.Blending) DXManager.SetOpacity(0.5F);
 
-            DrawTransform(); //新添加外形特效
+            DrawTransform();
             {
             }
             DrawMount();
@@ -5472,15 +5474,15 @@ namespace Client.MirObjects
         {
             if (Weapon < 0) return;
 
-            if (WeaponLibrary1 != null)
-            {
-                WeaponLibrary1.Draw(DrawFrame + WeaponOffSet, DrawLocation, DrawColour, true); //原始图像
+			if (WeaponLibrary1 != null)
+			{
+				WeaponLibrary1.Draw(DrawFrame + WeaponOffSet, DrawLocation, DrawColour, true); //original
 
-                if (WeaponEffectLibrary1 != null)
-                    WeaponEffectLibrary1.DrawBlend(DrawFrame + WeaponOffSet, DrawLocation, DrawColour, true, 0.4F); //特效图像
-            }
-        }
-        public void DrawWeapon2() //角色武器2
+				if (WeaponEffectLibrary1 != null)
+					WeaponEffectLibrary1.DrawBlend(DrawFrame + WeaponOffSet, DrawLocation, DrawColour, true, 0.4F);
+			}
+		}
+		public void DrawWeapon2()
         {
             if (Weapon == -1) return;
 
@@ -5488,7 +5490,7 @@ namespace Client.MirObjects
             {
                 WeaponLibrary2.Draw(DrawFrame + WeaponOffSet, DrawLocation, DrawColour, true);
 
-                if (WeaponEffectLibrary2 != null) //自添加
+                if (WeaponEffectLibrary2 != null)
                     WeaponEffectLibrary2.DrawBlend(DrawFrame + WeaponOffSet, DrawLocation, DrawColour, true, 0.4F);
             }
 

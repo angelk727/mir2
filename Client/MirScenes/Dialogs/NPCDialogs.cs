@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Drawing;
-using System.Globalization;
-using System.Linq;
+﻿using System.Globalization;
 using System.Text.RegularExpressions;
-using System.Windows.Forms;
 using Client.MirControls;
 using Client.MirGraphics;
 using Client.MirNetwork;
 using Client.MirObjects;
 using Client.MirSounds;
-using C = ClientPackets;
 using Font = System.Drawing.Font;
+using C = ClientPackets;
+using System.Diagnostics;
 
 namespace Client.MirScenes.Dialogs
 {
@@ -1962,7 +1957,7 @@ namespace Client.MirScenes.Dialogs
 
             ushort max = 99;
 
-            //基于可用成分的最大数量/工具
+            //Max quantity based on available ingredients/tools
             for (int i = 0; i < Grid.Length; i++)
             {
                 if (Grid[i] == null || Grid[i].Item == null) continue;

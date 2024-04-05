@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Drawing;
+﻿using System.Drawing;
 using Server.MirDatabase;
 using Server.MirEnvir;
 using S = ServerPackets;
@@ -30,9 +29,7 @@ namespace Server.MirObjects.Monsters
                 return;
             }
 
-#pragma warning disable CS0168 // 声明了变量，但从未使用过
-            DelayedAction action;
-#pragma warning restore CS0168 // 声明了变量，但从未使用过
+            //DelayedAction action;
 
             ShockTime = 0;
             ActionTime = Envir.Time + 300;

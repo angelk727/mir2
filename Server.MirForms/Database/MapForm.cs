@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Windows.Forms;
-using Server.MirDatabase;
+﻿using Server.MirDatabase;
 using Server.MirEnvir;
 
 namespace Server.MirForms
@@ -79,8 +73,7 @@ namespace Server.MirForms
                     if (newMapInfo.NoReconnect)
                     {
                         int index = mapAttributes.FindIndex(x => x.StartsWith("NORECONNECT(".ToUpper()));
-                        //newMapInfo.NoReconnectMap = newMapInfo.NoReconnectMap == string.Empty ? "0" : mapAttributes[index].TrimStart("NORECONNECT(".ToCharArray()).TrimEnd(')');
-                        newMapInfo.NoReconnectMap = Convert.ToString(mapAttributes[index].TrimStart("NORECONNECT(".ToCharArray()).TrimEnd(')'));//修改下线地图不能导入 暂未发现问题
+                        newMapInfo.NoReconnectMap = mapAttributes[index].TrimStart("NORECONNECT(".ToCharArray()).TrimEnd(')');
                     }
 
                     if (mapAttributes.Any(x => x.StartsWith("MINIMAP(".ToUpper())))
@@ -108,7 +101,7 @@ namespace Server.MirForms
                         int index = mapAttributes.FindIndex(x => x.StartsWith("MUSIC(".ToUpper()));
                         newMapInfo.Music = Convert.ToUInt16(mapAttributes[index].TrimStart("MUSIC(".ToCharArray()).TrimEnd(')'));
                     }
-                    if (mapAttributes.Any(x => x.StartsWith("LIGHT(".ToUpper()))) //检查是否有LIGHT属性并获取其值
+                    if (mapAttributes.Any(x => x.StartsWith("LIGHT(".ToUpper()))) // Check if there is a LIGHT attribute and get its value
                     {
                         int index = mapAttributes.FindIndex(x => x.StartsWith("LIGHT(".ToUpper()));
                         switch (mapAttributes[index].TrimStart("LIGHT(".ToCharArray()).TrimEnd(')'))
@@ -441,7 +434,7 @@ namespace Server.MirForms
                             Count = Convert.ToInt16(Line[5]),
                             Delay = Convert.ToInt16(Line[6]),
                             Direction = (Line.Length >= 8) ? Convert.ToInt16(Line[7]) : 0,
-                            RoutePath = (Line.Length >= 9) ? Line[8] : string.Empty                    
+                            RoutePath = (Line.Length >= 9) ? Line[8] : string.Empty
                         };
 
                         monGenList.Add(MonGenItem);

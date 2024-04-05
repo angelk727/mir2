@@ -1,8 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
 using System.Diagnostics;
-using System.IO;
-using System.Windows.Forms;
-using Microsoft.Win32;
 
 namespace Client.Utils
 {

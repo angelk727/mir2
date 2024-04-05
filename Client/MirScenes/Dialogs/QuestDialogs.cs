@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text.RegularExpressions;
-using System.Windows.Forms;
+﻿using System.Text.RegularExpressions;
 using Client.MirControls;
 using Client.MirGraphics;
 using Client.MirNetwork;
@@ -1146,7 +1141,7 @@ namespace Client.MirScenes.Dialogs
 
             CurrentLines.Clear();
 
-            //在开始处添加任务标题
+            //add quest title at the beginning
             CurrentLines.Insert(0, Quest.QuestInfo.Name);
 
             if (Quest.Taken && !Quest.QuestInfo.SameFinishNPC && Quest.QuestInfo.CompletionDescription.Count > 0 && GameScene.Scene.QuestListDialog.CurrentNPCID == Quest.QuestInfo.FinishNPCIndex)
@@ -1527,7 +1522,7 @@ namespace Client.MirScenes.Dialogs
         {
             List<QuestItemReward> filteredRewards = new List<QuestItemReward>();
 
-            //只展示同性物品
+            //Only display same sex items
             foreach (var reward in rewardItems)
             {
                 ItemInfo item = reward.Item;

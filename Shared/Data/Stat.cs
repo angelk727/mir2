@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-
-public sealed class Stats : IEquatable<Stats>
+﻿public sealed class Stats : IEquatable<Stats>
 {
     public SortedDictionary<Stat, int> Values { get; set; } = new SortedDictionary<Stat, int>();
     public int Count => Values.Sum(pair => Math.Abs(pair.Value));
@@ -119,7 +114,7 @@ public enum Stat : byte
     毒物躲避 = 31,
     生命恢复 = 32,
     法力恢复 = 33,
-    中毒恢复 = 34, //TODO - 这应该是秒还是毫秒？？
+    中毒恢复 = 34, //TODO - Should this be in seconds or milliseconds??？
     暴击倍率 = 35,
     暴击伤害 = 36,
 

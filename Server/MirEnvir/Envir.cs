@@ -1,17 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Net.Sockets;
-using System.Text.RegularExpressions;
-using System.Threading;
+﻿using ClientPackets;
 using Server.Library.Utils;
 using Server.MirDatabase;
 using Server.MirNetwork;
 using Server.MirObjects;
 using Server.MirObjects.Monsters;
+using System.Collections.Concurrent;
+using System.Diagnostics;
+using System.Net;
+using System.Net.Sockets;
+using System.Numerics;
+using System.Text.RegularExpressions;
 using S = ServerPackets;
 
 namespace Server.MirEnvir
@@ -78,6 +76,10 @@ namespace Server.MirEnvir
 
         private static List<string> DisabledCharNames = new List<string>();
         private static List<string> LineMessages = new List<string>();
+
+        public static ConcurrentDictionary<string, DateTime> IPBlocks = new ConcurrentDictionary<string, DateTime>();
+
+        public static ConcurrentDictionary<string, MirConnectionLog> ConnectionLogs = new ConcurrentDictionary<string, MirConnectionLog>();
 
         public DateTime Now =>
             _startTime.AddMilliseconds(Time);
@@ -149,11 +151,11 @@ namespace Server.MirEnvir
         public Dictionary<int, NPCScript> Scripts = new Dictionary<int, NPCScript>();
         public Dictionary<string, Timer> Timers = new Dictionary<string, Timer>();
 
-        //多线程变量
+        //multithread vars
         readonly object _locker = new object();
         public MobThread[] MobThreads = new MobThread[Settings.ThreadLimit];
         private readonly Thread[] MobThreading = new Thread[Settings.ThreadLimit];
-        public int SpawnMultiplier = 1;//如果想要双倍繁殖，请将其设置为2（警告：这很容易使服务器滞后，远远超出您的想象）
+        public int SpawnMultiplier = 1;//set this to 2 if you want double spawns (warning this can easily lag your server far beyond what you imagine)
 
         public List<string> CustomCommands = new List<string>();
 
@@ -204,7 +206,7 @@ namespace Server.MirEnvir
             {
                 switch (MagicInfoList[i].Spell)
                 {
-                        //战士
+                    //warrior
                     case Spell.Thrusting:
                         MagicInfoList[i].MultiplierBase = 0.25f;
                         MagicInfoList[i].MultiplierBonus = 0.25f;
@@ -697,11 +699,11 @@ namespace Server.MirEnvir
             }
             catch (Exception ex)
             {
-                // 使用源文件信息获取异常的堆栈跟踪
+                // Get stack trace for the exception with source file information
                 var st = new StackTrace(ex, true);
-                // 获取顶部堆栈框架
+                // Get the top stack frame
                 var frame = st.GetFrame(0);
-                // 从堆栈帧中获取行号
+                // Get the line number from the stack frame
                 var line = frame.GetFileLineNumber();
 
                 MessageQueue.Enqueue($"[外循环错误 线程 {line}]" + ex);
@@ -730,7 +732,7 @@ namespace Server.MirEnvir
                     {
                         var next = Info._current.Next;
 
-                        //如果我们到达列表的末尾>返回顶部（因为我们运行的是线程，我们不希望系统在那里等待xxms什么都不做）
+                        //if we reach the end of our list > go back to the top (since we are running threaded, we dont want the system to sit there for xxms doing nothing)
                         if (Info._current == Info.ObjectsList.Last)
                         {
                             next = Info.ObjectsList.First;
@@ -740,7 +742,7 @@ namespace Server.MirEnvir
                         }
                         if (Time > Info._current.Value.OperateTime)
                         {
-                            if (Info._current.Value.Master == null) //因为我们运行的是多线程，所以不允许对宠物进行处理（除非你经常将宠物移动到它们的地图上）
+                            if (Info._current.Value.Master == null) //since we are running multithreaded, dont allow pets to be processed (unless you constantly move pets into their map appropriate thead)
                             {
                                 Info._current.Value.Process();
                                 Info._current.Value.SetOperateTime();
@@ -749,7 +751,7 @@ namespace Server.MirEnvir
                         Info._current = next;
                     }
 
-                    //如果是主线程>使其循环直到子线程完成，否则在“endtime”后停止
+                    //if it's the main thread > make it loop till the subthreads are done, else make it stop after 'endtime'
                     if (Info.Id == 0)
                     {
                         stopping = true;
@@ -1081,7 +1083,7 @@ namespace Server.MirEnvir
         {
             if (!Directory.Exists(Settings.GuildPath)) Directory.CreateDirectory(Settings.GuildPath);
 
-            if (GuildRefreshNeeded == true) //删除公会文件，如果公会被删除，则使用新目录重新保存
+            if (GuildRefreshNeeded == true) //deletes guild files and resaves with new indexing if a guild is deleted.
             {
                 foreach (var guildfile in Directory.GetFiles(Settings.GuildPath, "*.mgd"))
                 {
@@ -1089,7 +1091,7 @@ namespace Server.MirEnvir
                 }
 
                 GuildRefreshNeeded = false;
-                forced = true; //触发所有公会的全部重新保存
+                forced = true; //triggers a full resave of all guilds
             }
 
             for (var i = 0; i < GuildList.Count; i++)
@@ -1238,7 +1240,7 @@ namespace Server.MirEnvir
             {
                 if (File.Exists(AccountPath))
                 {
-                    if (!Directory.Exists(AccountsBackUpPath)) Directory.CreateDirectory(AccountsBackUpPath);//将“帐户”备份移动到“服务器/备份/帐户”
+                    if (!Directory.Exists(AccountsBackUpPath)) Directory.CreateDirectory(AccountsBackUpPath);
                     var fileName =
                         $"Accounts {Now.Year:0000}-{Now.Month:00}-{Now.Day:00} {Now.Hour:00}-{Now.Minute:00}-{Now.Second:00}.bak";
                     if (File.Exists(Path.Combine(AccountsBackUpPath, fileName))) File.Delete(Path.Combine(AccountsBackUpPath, fileName));
@@ -1458,12 +1460,17 @@ namespace Server.MirEnvir
                     AccountList.Clear();
                     CharacterList.Clear();
 
+                    int TrueAccount = 0;
                     for (var i = 0; i < count; i++)
                     {
-                        AccountList.Add(new AccountInfo(reader));
-                        CharacterList.AddRange(AccountList[i].Characters);
+                        AccountInfo NextAccount = new AccountInfo(reader);
+                        if (i > 0 &&  NextAccount.Characters.Count == 0)
+                            continue;
+                        AccountList.Add(NextAccount);
+                        CharacterList.AddRange(AccountList[TrueAccount].Characters);
                         if (LoadVersion > 98 && LoadVersion < 103)
-                            AccountList[i].Characters.ForEach(character => HeroList.AddRange(character.Heroes));
+                            AccountList[TrueAccount].Characters.ForEach(character => HeroList.AddRange(character.Heroes));
+                        TrueAccount++;
                     }
 
                     foreach (var auction in Auctions)
@@ -1743,6 +1750,11 @@ namespace Server.MirEnvir
             }).Start();
         }
 
+        public void UpdateIPBlock(string ipAddress, TimeSpan value)
+        {
+            IPBlocks[ipAddress] = Now.Add(value);
+        }
+
         private void StartEnvir()
         {
             Players.Clear();
@@ -1967,8 +1979,44 @@ namespace Server.MirEnvir
             try
             {
                 var tempTcpClient = _listener.EndAcceptTcpClient(result);
-                lock (Connections)
-                    Connections.Add(new MirConnection(++_sessionID, tempTcpClient));
+
+                bool connected = false;
+                var ipAddress = tempTcpClient.Client.RemoteEndPoint.ToString().Split(':')[0];
+
+                if (!IPBlocks.TryGetValue(ipAddress, out DateTime banDate) || banDate < Now)
+                {
+                    int count = 0;
+
+                    for (int i = 0; i < Connections.Count; i++)
+                    {
+                        var connection = Connections[i];
+
+                        if (!connection.Connected || connection.IPAddress != ipAddress)
+                            continue;
+
+                        count++;
+                    }
+
+                    if (count >= Settings.MaxIP)
+                    {
+                        UpdateIPBlock(ipAddress, TimeSpan.FromSeconds(Settings.IPBlockSeconds));
+
+                        MessageQueue.Enqueue(ipAddress + " Disconnected, Too many connections.");
+                    }
+                    else
+                    {
+                        var tempConnection = new MirConnection(++_sessionID, tempTcpClient);
+                        if (tempConnection.Connected)
+                        {
+                            connected = true;
+                            lock (Connections)
+                                Connections.Add(tempConnection);
+                        }
+                    }
+                }
+
+                if (!connected)
+                    tempTcpClient.Close();
             }
             catch (Exception ex)
             {
@@ -2000,7 +2048,7 @@ namespace Server.MirEnvir
             }
             finally
             {
-                while (StatusConnections.Count >= 5) //不要允许过多的状态端口连接，这只是一种滥用行为
+                while (StatusConnections.Count >= 5) //dont allow to many status port connections it's just an abuse thing
                     Thread.Sleep(1);
 
                 if (Running && _StatusPort.Server.IsBound)
@@ -2015,6 +2063,31 @@ namespace Server.MirEnvir
                 c.Enqueue(new ServerPackets.NewAccount { Result = 0 });
                 return;
             }
+
+            
+            if (ConnectionLogs.TryGetValue(c.IPAddress, out MirConnectionLog currentlog))
+            {
+                if (currentlog.AccountsMade.Count > 2)
+                {
+                    IPBlocks[c.IPAddress] = Now.AddHours(24);
+                    c.Enqueue(new ServerPackets.NewAccount { Result = 0 });
+                    return;
+                }
+                currentlog.AccountsMade.Add(Time);
+                for (int i = 0; i < currentlog.AccountsMade.Count; i++)
+                {
+                    if ((currentlog.AccountsMade[i] + 60 * 60 * 1000) < Time)
+                    {
+                        currentlog.AccountsMade.RemoveAt(i);
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                ConnectionLogs[c.IPAddress] = new MirConnectionLog() { IPAddress = c.IPAddress};
+            }
+
 
             if (!AccountIDReg.IsMatch(p.AccountID))
             {
@@ -2319,6 +2392,30 @@ namespace Server.MirEnvir
                 return;
             }
 
+            if (ConnectionLogs.TryGetValue(c.IPAddress, out MirConnectionLog currentlog))
+            {
+                if (currentlog.CharactersMade.Count > 4)
+                {
+                    IPBlocks[c.IPAddress] = Now.AddHours(24);
+                    c.Enqueue(new ServerPackets.NewCharacter { Result = 0 });
+                    return;
+                }
+                currentlog.CharactersMade.Add(Time);
+                for (int i = 0; i < currentlog.CharactersMade.Count; i++)
+                {
+                    if ((currentlog.CharactersMade[i] + 60 * 60 * 1000) < Time)
+                    {
+                        currentlog.CharactersMade.RemoveAt(i);
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                ConnectionLogs[c.IPAddress] = new MirConnectionLog() { IPAddress = c.IPAddress };
+            }
+
+
             if (!CharacterReg.IsMatch(p.Name))
             {
                 c.Enqueue(new ServerPackets.NewCharacter { Result = 1 });
@@ -2513,6 +2610,31 @@ namespace Server.MirEnvir
                         if (AccountList[i].Characters[j].Name.IndexOf(playerName, StringComparison.OrdinalIgnoreCase) >= 0)
                             list.Add(AccountList[i]);
                     }
+                }
+            }
+
+            return list;
+        }
+
+        public List<AccountInfo> MatchAccountsByIP(string ipAddress, bool matchLastIP = false, bool match = false)
+        {
+            if (string.IsNullOrEmpty(ipAddress)) return new List<AccountInfo>(AccountList);
+
+            var list = new List<AccountInfo>();
+
+            for (var i = 0; i < AccountList.Count; i++)
+            {
+                string ipToMatch = matchLastIP ? AccountList[i].LastIP : AccountList[i].CreationIP;
+
+                if (match)
+                {
+                    if (ipToMatch.Equals(ipAddress, StringComparison.OrdinalIgnoreCase))
+                        list.Add(AccountList[i]);
+                }
+                else
+                {
+                    if (ipToMatch.IndexOf(ipAddress, StringComparison.OrdinalIgnoreCase) >= 0)
+                        list.Add(AccountList[i]);
                 }
             }
 
@@ -3603,19 +3725,42 @@ namespace Server.MirEnvir
                 var path = Path.Combine(Settings.DropPath, Settings.FishingDropFilename + ".txt");
                 path = path.Replace("00", i.ToString("D2"));
 
-                DropInfo.Load(FishingDrops, $"钓鱼功能 {i}", path, (byte)i, i < 2); //默认 Fishing
+                DropInfo.Load(FishingDrops, $"钓鱼功能 {i}", path, (byte)i, i < 2);
             }
 
             AwakeningDrops.Clear();
-            DropInfo.Load(AwakeningDrops, "觉醒功能", Path.Combine(Settings.DropPath, Settings.AwakeningDropFilename + ".txt")); //默认 Awakening
+            DropInfo.Load(AwakeningDrops, "觉醒功能", Path.Combine(Settings.DropPath, Settings.AwakeningDropFilename + ".txt"));
 
             StrongboxDrops.Clear();
-            DropInfo.Load(StrongboxDrops, "宝箱功能", Path.Combine(Settings.DropPath, Settings.StrongboxDropFilename + ".txt"));  //默认 StrongBox
+            DropInfo.Load(StrongboxDrops, "宝箱功能", Path.Combine(Settings.DropPath, Settings.StrongboxDropFilename + ".txt"));
 
             BlackstoneDrops.Clear();
-            DropInfo.Load(BlackstoneDrops, "灵物石功能", Path.Combine(Settings.DropPath, Settings.BlackstoneDropFilename + ".txt")); //默认 Blackstone
+            DropInfo.Load(BlackstoneDrops, "灵物石功能", Path.Combine(Settings.DropPath, Settings.BlackstoneDropFilename + ".txt"));
 
             MessageQueue.Enqueue("怪物掉落加载完成");
+        }
+
+        public void ReloadLineMessages()
+        {
+            LineMessages.Clear();
+
+            var path = Path.Combine(Settings.EnvirPath, "LineMessage.txt");
+
+            if (!File.Exists(path))
+            {
+                File.WriteAllText(path, "");
+            }
+            else
+            {
+                var lines = File.ReadAllLines(path);
+
+                for (var i = 0; i < lines.Length; i++)
+                {
+                    if (lines[i].StartsWith(";") || string.IsNullOrWhiteSpace(lines[i])) continue;
+                    LineMessages.Add(lines[i]);
+                }
+                MessageQueue.Enqueue("LineMessages 已重新加载");
+            }
         }
 
         private WorldMapIcon ValidateWorldMap()

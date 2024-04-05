@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 using Server.MirEnvir;
 
 namespace Server.MirDatabase
@@ -28,8 +24,8 @@ namespace Server.MirDatabase
         public string Name = string.Empty;
 
         public Monster Image;
-        public byte Effect, ViewRange = 7, CoolEye; //自添加AI扩容 去除
-        public ushort AI, Level; //自添加AI扩容 增加
+        public byte Effect, ViewRange = 7, CoolEye;
+        public ushort AI, Level;
 
         public byte Light;
 
@@ -58,7 +54,7 @@ namespace Server.MirDatabase
             Name = reader.ReadString();
 
             Image = (Monster) reader.ReadUInt16();
-            AI = reader.ReadUInt16();////自添加AI扩容
+            AI = reader.ReadUInt16();
             Effect = reader.ReadByte();
 
             if (Envir.LoadVersion < 62)
@@ -81,7 +77,7 @@ namespace Server.MirDatabase
             if (Envir.LoadVersion <= 84)
             {
                 Stats = new Stats();
-                Stats[Stat.HP] = (int)reader.ReadUInt32(); //怪物形态阻止了大于ushort，所以这永远不应该溢出
+                Stats[Stat.HP] = (int)reader.ReadUInt32(); //Monster form prevented greater than ushort, so this should never overflow.
             }
 
             if (Envir.LoadVersion < 62)
@@ -150,7 +146,7 @@ namespace Server.MirDatabase
             writer.Write(Name);
 
             writer.Write((ushort) Image);
-            writer.Write((ushort) AI);//自添加AI扩容
+            writer.Write((ushort) AI);
             writer.Write(Effect);
             writer.Write(Level);
             writer.Write(ViewRange);
@@ -185,7 +181,7 @@ namespace Server.MirDatabase
             if (!ushort.TryParse(data[1], out image)) return;
             info.Image = (Monster) image;
 
-            if (!ushort.TryParse(data[2], out info.AI)) return;//自添加AI扩容
+            if (!ushort.TryParse(data[2], out info.AI)) return;
             if (!byte.TryParse(data[3], out info.Effect)) return;
             if (!ushort.TryParse(data[4], out info.Level)) return;
             if (!byte.TryParse(data[5], out info.ViewRange)) return;

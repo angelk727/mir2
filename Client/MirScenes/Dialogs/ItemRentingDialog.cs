@@ -1,9 +1,8 @@
-﻿using System.Drawing;
-using System.Windows.Forms;
-using Client.MirControls;
+﻿using Client.MirControls;
 using Client.MirGraphics;
 using Client.MirNetwork;
 using Client.MirSounds;
+
 using C = ClientPackets;
 
 namespace Client.MirScenes.Dialogs

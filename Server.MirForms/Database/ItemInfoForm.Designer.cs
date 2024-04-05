@@ -28,2293 +28,2471 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.DamageReductiontextBox = new System.Windows.Forms.TextBox();
-            this.label64 = new System.Windows.Forms.Label();
-            this.GoldRatetextBox = new System.Windows.Forms.TextBox();
-            this.label63 = new System.Windows.Forms.Label();
-            this.DropRatetextBox = new System.Windows.Forms.TextBox();
-            this.label62 = new System.Windows.Forms.Label();
-            this.ExpRatetextBox = new System.Windows.Forms.TextBox();
-            this.label61 = new System.Windows.Forms.Label();
-            this.MaxSCRatetextBox = new System.Windows.Forms.TextBox();
-            this.label60 = new System.Windows.Forms.Label();
-            this.MaxMCRatetextBox = new System.Windows.Forms.TextBox();
-            this.label59 = new System.Windows.Forms.Label();
-            this.MaxDCRatetextBox = new System.Windows.Forms.TextBox();
-            this.label58 = new System.Windows.Forms.Label();
-            this.ItemInfoPanel = new System.Windows.Forms.Panel();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.ItemsPreview = new System.Windows.Forms.PictureBox();
-            this.label57 = new System.Windows.Forms.Label();
-            this.SlotsTextBox = new System.Windows.Forms.TextBox();
-            this.globalDropNotify_CheckBox = new System.Windows.Forms.CheckBox();
-            this.CanAwaken = new System.Windows.Forms.CheckBox();
-            this.label56 = new System.Windows.Forms.Label();
-            this.TooltipTextBox = new System.Windows.Forms.TextBox();
-            this.FastRunCheckBox = new System.Windows.Forms.CheckBox();
-            this.label55 = new System.Windows.Forms.Label();
-            this.IGradeComboBox = new System.Windows.Forms.ComboBox();
-            this.RandomStatstextBox = new System.Windows.Forms.TextBox();
-            this.label54 = new System.Windows.Forms.Label();
-            this.LightIntensitytextBox = new System.Windows.Forms.TextBox();
-            this.label53 = new System.Windows.Forms.Label();
-            this.NeedIdentifycheckbox = new System.Windows.Forms.CheckBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.ItemIndexTextBox = new System.Windows.Forms.TextBox();
-            this.StartItemCheckBox = new System.Windows.Forms.CheckBox();
-            this.ClassBasedcheckbox = new System.Windows.Forms.CheckBox();
-            this.LevelBasedcheckbox = new System.Windows.Forms.CheckBox();
-            this.ShowGroupPickupcheckbox = new System.Windows.Forms.CheckBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.ItemNameTextBox = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.EffectTextBox = new System.Windows.Forms.TextBox();
-            this.ITypeComboBox = new System.Windows.Forms.ComboBox();
-            this.label34 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.PriceTextBox = new System.Windows.Forms.TextBox();
-            this.RTypeComboBox = new System.Windows.Forms.ComboBox();
-            this.label12 = new System.Windows.Forms.Label();
-            this.DuraTextBox = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.RClassComboBox = new System.Windows.Forms.ComboBox();
-            this.LightTextBox = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.RAmountTextBox = new System.Windows.Forms.TextBox();
-            this.WeightTextBox = new System.Windows.Forms.TextBox();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.ImageTextBox = new System.Windows.Forms.TextBox();
-            this.ShapeTextBox = new System.Windows.Forms.TextBox();
-            this.SSizeTextBox = new System.Windows.Forms.TextBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
-            this.label33 = new System.Windows.Forms.Label();
-            this.RGenderComboBox = new System.Windows.Forms.ComboBox();
-            this.ISetComboBox = new System.Windows.Forms.ComboBox();
-            this.label35 = new System.Windows.Forms.Label();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label50 = new System.Windows.Forms.Label();
-            this.label52 = new System.Windows.Forms.Label();
-            this.label49 = new System.Windows.Forms.Label();
-            this.ReflecttextBox = new System.Windows.Forms.TextBox();
-            this.HpDrainRatetextBox = new System.Windows.Forms.TextBox();
-            this.CriticalDamagetextBox = new System.Windows.Forms.TextBox();
-            this.CriticalRatetextBox = new System.Windows.Forms.TextBox();
-            this.label51 = new System.Windows.Forms.Label();
-            this.label46 = new System.Windows.Forms.Label();
-            this.Freezingtextbox = new System.Windows.Forms.TextBox();
-            this.label47 = new System.Windows.Forms.Label();
-            this.PoisonAttacktextbox = new System.Windows.Forms.TextBox();
-            this.label45 = new System.Windows.Forms.Label();
-            this.Holytextbox = new System.Windows.Forms.TextBox();
-            this.label37 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
-            this.MinACTextBox = new System.Windows.Forms.TextBox();
-            this.MPratetextbox = new System.Windows.Forms.TextBox();
-            this.label15 = new System.Windows.Forms.Label();
-            this.label48 = new System.Windows.Forms.Label();
-            this.MaxACTextBox = new System.Windows.Forms.TextBox();
-            this.label17 = new System.Windows.Forms.Label();
-            this.MinMACTextBox = new System.Windows.Forms.TextBox();
-            this.label16 = new System.Windows.Forms.Label();
-            this.MaxMACTextBox = new System.Windows.Forms.TextBox();
-            this.label21 = new System.Windows.Forms.Label();
-            this.MinDCTextBox = new System.Windows.Forms.TextBox();
-            this.label20 = new System.Windows.Forms.Label();
-            this.MaxDCTextBox = new System.Windows.Forms.TextBox();
-            this.label19 = new System.Windows.Forms.Label();
-            this.MinMCTextBox = new System.Windows.Forms.TextBox();
-            this.label18 = new System.Windows.Forms.Label();
-            this.MaxMCTextBox = new System.Windows.Forms.TextBox();
-            this.label23 = new System.Windows.Forms.Label();
-            this.MinSCTextBox = new System.Windows.Forms.TextBox();
-            this.label22 = new System.Windows.Forms.Label();
-            this.HPratetextbox = new System.Windows.Forms.TextBox();
-            this.MaxSCTextBox = new System.Windows.Forms.TextBox();
-            this.label44 = new System.Windows.Forms.Label();
-            this.label25 = new System.Windows.Forms.Label();
-            this.PoisonRecoverytextBox = new System.Windows.Forms.TextBox();
-            this.HPTextBox = new System.Windows.Forms.TextBox();
-            this.label43 = new System.Windows.Forms.Label();
-            this.label24 = new System.Windows.Forms.Label();
-            this.SpellRecoverytextBox = new System.Windows.Forms.TextBox();
-            this.MPTextBox = new System.Windows.Forms.TextBox();
-            this.label42 = new System.Windows.Forms.Label();
-            this.label27 = new System.Windows.Forms.Label();
-            this.PoisonResisttextBox = new System.Windows.Forms.TextBox();
-            this.AccuracyTextBox = new System.Windows.Forms.TextBox();
-            this.label41 = new System.Windows.Forms.Label();
-            this.label26 = new System.Windows.Forms.Label();
-            this.MagicResisttextBox = new System.Windows.Forms.TextBox();
-            this.AgilityTextBox = new System.Windows.Forms.TextBox();
-            this.label40 = new System.Windows.Forms.Label();
-            this.label29 = new System.Windows.Forms.Label();
-            this.HealthRecoveryTextbox = new System.Windows.Forms.TextBox();
-            this.ASpeedTextBox = new System.Windows.Forms.TextBox();
-            this.label39 = new System.Windows.Forms.Label();
-            this.label28 = new System.Windows.Forms.Label();
-            this.StrongTextbox = new System.Windows.Forms.TextBox();
-            this.LuckTextBox = new System.Windows.Forms.TextBox();
-            this.label38 = new System.Windows.Forms.Label();
-            this.label31 = new System.Windows.Forms.Label();
-            this.MacRateTextbox = new System.Windows.Forms.TextBox();
-            this.BWeightText = new System.Windows.Forms.TextBox();
-            this.label30 = new System.Windows.Forms.Label();
-            this.ACRateTextbox = new System.Windows.Forms.TextBox();
-            this.HWeightTextBox = new System.Windows.Forms.TextBox();
-            this.label36 = new System.Windows.Forms.Label();
-            this.label32 = new System.Windows.Forms.Label();
-            this.WWeightTextBox = new System.Windows.Forms.TextBox();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.noMailBox = new System.Windows.Forms.CheckBox();
-            this.unableToDisassemble_CheckBox = new System.Windows.Forms.CheckBox();
-            this.unableToRent_CheckBox = new System.Windows.Forms.CheckBox();
-            this.NoWeddingRingcheckbox = new System.Windows.Forms.CheckBox();
-            this.NoHerocheckbox = new System.Windows.Forms.CheckBox();
-            this.BreakOnDeathcheckbox = new System.Windows.Forms.CheckBox();
-            this.Bind_DontSpecialRepaircheckBox = new System.Windows.Forms.CheckBox();
-            this.Bind_dontdropcheckbox = new System.Windows.Forms.CheckBox();
-            this.BindOnEquipcheckbox = new System.Windows.Forms.CheckBox();
-            this.Bind_dontdeathdropcheckbox = new System.Windows.Forms.CheckBox();
-            this.Bind_dontstorecheckbox = new System.Windows.Forms.CheckBox();
-            this.Bind_destroyondropcheckbox = new System.Windows.Forms.CheckBox();
-            this.Bind_dontupgradecheckbox = new System.Windows.Forms.CheckBox();
-            this.Bind_dontsellcheckbox = new System.Windows.Forms.CheckBox();
-            this.Bind_dontrepaircheckbox = new System.Windows.Forms.CheckBox();
-            this.Bind_donttradecheckbox = new System.Windows.Forms.CheckBox();
-            this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.PickaxecheckBox = new System.Windows.Forms.CheckBox();
-            this.NoDuraLosscheckBox = new System.Windows.Forms.CheckBox();
-            this.SkillcheckBox = new System.Windows.Forms.CheckBox();
-            this.ProbecheckBox = new System.Windows.Forms.CheckBox();
-            this.HealingcheckBox = new System.Windows.Forms.CheckBox();
-            this.FlamecheckBox = new System.Windows.Forms.CheckBox();
-            this.MusclecheckBox = new System.Windows.Forms.CheckBox();
-            this.RevivalcheckBox = new System.Windows.Forms.CheckBox();
-            this.ProtectioncheckBox = new System.Windows.Forms.CheckBox();
-            this.ClearcheckBox = new System.Windows.Forms.CheckBox();
-            this.TeleportcheckBox = new System.Windows.Forms.CheckBox();
-            this.ParalysischeckBox = new System.Windows.Forms.CheckBox();
-            this.BlinkcheckBox = new System.Windows.Forms.CheckBox();
-            this.RemoveButton = new System.Windows.Forms.Button();
-            this.AddButton = new System.Windows.Forms.Button();
-            this.ItemInfoListBox = new System.Windows.Forms.ListBox();
-            this.PasteButton = new System.Windows.Forms.Button();
-            this.CopyMButton = new System.Windows.Forms.Button();
-            this.ITypeFilterComboBox = new System.Windows.Forms.ComboBox();
-            this.Gameshop_button = new System.Windows.Forms.Button();
-            this.ItemInfoPanel.SuspendLayout();
-            this.tabControl1.SuspendLayout();
-            this.tabPage1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ItemsPreview)).BeginInit();
-            this.tabPage2.SuspendLayout();
-            this.groupBox1.SuspendLayout();
-            this.tabPage3.SuspendLayout();
-            this.tabPage4.SuspendLayout();
-            this.SuspendLayout();
+            DamageReductiontextBox = new TextBox();
+            label64 = new Label();
+            GoldRatetextBox = new TextBox();
+            label63 = new Label();
+            DropRatetextBox = new TextBox();
+            label62 = new Label();
+            ExpRatetextBox = new TextBox();
+            label61 = new Label();
+            MaxSCRatetextBox = new TextBox();
+            label60 = new Label();
+            MaxMCRatetextBox = new TextBox();
+            label59 = new Label();
+            MaxDCRatetextBox = new TextBox();
+            label58 = new Label();
+            ItemInfoPanel = new Panel();
+            tabControl1 = new TabControl();
+            tabPage1 = new TabPage();
+            ItemsPreview = new PictureBox();
+            label57 = new Label();
+            SlotsTextBox = new TextBox();
+            globalDropNotify_CheckBox = new CheckBox();
+            CanAwaken = new CheckBox();
+            label56 = new Label();
+            TooltipTextBox = new TextBox();
+            FastRunCheckBox = new CheckBox();
+            label55 = new Label();
+            IGradeComboBox = new ComboBox();
+            RandomStatstextBox = new TextBox();
+            label54 = new Label();
+            LightIntensitytextBox = new TextBox();
+            label53 = new Label();
+            NeedIdentifycheckbox = new CheckBox();
+            label1 = new Label();
+            ItemIndexTextBox = new TextBox();
+            StartItemCheckBox = new CheckBox();
+            ClassBasedcheckbox = new CheckBox();
+            LevelBasedcheckbox = new CheckBox();
+            ShowGroupPickupcheckbox = new CheckBox();
+            label3 = new Label();
+            ItemNameTextBox = new TextBox();
+            label2 = new Label();
+            EffectTextBox = new TextBox();
+            ITypeComboBox = new ComboBox();
+            label34 = new Label();
+            label4 = new Label();
+            PriceTextBox = new TextBox();
+            RTypeComboBox = new ComboBox();
+            label12 = new Label();
+            DuraTextBox = new TextBox();
+            label5 = new Label();
+            label11 = new Label();
+            RClassComboBox = new ComboBox();
+            LightTextBox = new TextBox();
+            label6 = new Label();
+            label9 = new Label();
+            RAmountTextBox = new TextBox();
+            WeightTextBox = new TextBox();
+            label10 = new Label();
+            label8 = new Label();
+            ImageTextBox = new TextBox();
+            ShapeTextBox = new TextBox();
+            SSizeTextBox = new TextBox();
+            label7 = new Label();
+            label13 = new Label();
+            label33 = new Label();
+            RGenderComboBox = new ComboBox();
+            ISetComboBox = new ComboBox();
+            label35 = new Label();
+            tabPage2 = new TabPage();
+            groupBox1 = new GroupBox();
+            label50 = new Label();
+            label52 = new Label();
+            label49 = new Label();
+            ReflecttextBox = new TextBox();
+            HpDrainRatetextBox = new TextBox();
+            CriticalDamagetextBox = new TextBox();
+            CriticalRatetextBox = new TextBox();
+            label51 = new Label();
+            label46 = new Label();
+            Freezingtextbox = new TextBox();
+            label47 = new Label();
+            PoisonAttacktextbox = new TextBox();
+            label45 = new Label();
+            Holytextbox = new TextBox();
+            label37 = new Label();
+            label14 = new Label();
+            MinACTextBox = new TextBox();
+            MPratetextbox = new TextBox();
+            label15 = new Label();
+            label48 = new Label();
+            MaxACTextBox = new TextBox();
+            label17 = new Label();
+            MinMACTextBox = new TextBox();
+            label16 = new Label();
+            MaxMACTextBox = new TextBox();
+            label21 = new Label();
+            MinDCTextBox = new TextBox();
+            label20 = new Label();
+            MaxDCTextBox = new TextBox();
+            label19 = new Label();
+            MinMCTextBox = new TextBox();
+            label18 = new Label();
+            MaxMCTextBox = new TextBox();
+            label23 = new Label();
+            MinSCTextBox = new TextBox();
+            label22 = new Label();
+            HPratetextbox = new TextBox();
+            MaxSCTextBox = new TextBox();
+            label44 = new Label();
+            label25 = new Label();
+            PoisonRecoverytextBox = new TextBox();
+            HPTextBox = new TextBox();
+            label43 = new Label();
+            label24 = new Label();
+            SpellRecoverytextBox = new TextBox();
+            MPTextBox = new TextBox();
+            label42 = new Label();
+            label27 = new Label();
+            PoisonResisttextBox = new TextBox();
+            AccuracyTextBox = new TextBox();
+            label41 = new Label();
+            label26 = new Label();
+            MagicResisttextBox = new TextBox();
+            AgilityTextBox = new TextBox();
+            label40 = new Label();
+            label29 = new Label();
+            HealthRecoveryTextbox = new TextBox();
+            ASpeedTextBox = new TextBox();
+            label39 = new Label();
+            label28 = new Label();
+            StrongTextbox = new TextBox();
+            LuckTextBox = new TextBox();
+            label38 = new Label();
+            label31 = new Label();
+            MacRateTextbox = new TextBox();
+            BWeightText = new TextBox();
+            label30 = new Label();
+            ACRateTextbox = new TextBox();
+            HWeightTextBox = new TextBox();
+            label36 = new Label();
+            label32 = new Label();
+            WWeightTextBox = new TextBox();
+            tabPage3 = new TabPage();
+            noMailBox = new CheckBox();
+            unableToDisassemble_CheckBox = new CheckBox();
+            unableToRent_CheckBox = new CheckBox();
+            NoWeddingRingcheckbox = new CheckBox();
+            NoHerocheckbox = new CheckBox();
+            BreakOnDeathcheckbox = new CheckBox();
+            Bind_DontSpecialRepaircheckBox = new CheckBox();
+            Bind_dontdropcheckbox = new CheckBox();
+            BindOnEquipcheckbox = new CheckBox();
+            Bind_dontdeathdropcheckbox = new CheckBox();
+            Bind_dontstorecheckbox = new CheckBox();
+            Bind_destroyondropcheckbox = new CheckBox();
+            Bind_dontupgradecheckbox = new CheckBox();
+            Bind_dontsellcheckbox = new CheckBox();
+            Bind_dontrepaircheckbox = new CheckBox();
+            Bind_donttradecheckbox = new CheckBox();
+            tabPage4 = new TabPage();
+            PickaxecheckBox = new CheckBox();
+            NoDuraLosscheckBox = new CheckBox();
+            SkillcheckBox = new CheckBox();
+            ProbecheckBox = new CheckBox();
+            HealingcheckBox = new CheckBox();
+            FlamecheckBox = new CheckBox();
+            MusclecheckBox = new CheckBox();
+            RevivalcheckBox = new CheckBox();
+            ProtectioncheckBox = new CheckBox();
+            ClearcheckBox = new CheckBox();
+            TeleportcheckBox = new CheckBox();
+            ParalysischeckBox = new CheckBox();
+            BlinkcheckBox = new CheckBox();
+            RemoveButton = new Button();
+            AddButton = new Button();
+            ItemInfoListBox = new ListBox();
+            PasteButton = new Button();
+            CopyMButton = new Button();
+            ITypeFilterComboBox = new ComboBox();
+            Gameshop_button = new Button();
+            ItemInfoPanel.SuspendLayout();
+            tabControl1.SuspendLayout();
+            tabPage1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)ItemsPreview).BeginInit();
+            tabPage2.SuspendLayout();
+            groupBox1.SuspendLayout();
+            tabPage3.SuspendLayout();
+            tabPage4.SuspendLayout();
+            SuspendLayout();
             // 
             // DamageReductiontextBox
             // 
-            this.DamageReductiontextBox.Location = new System.Drawing.Point(544, 168);
-            this.DamageReductiontextBox.MaxLength = 3;
-            this.DamageReductiontextBox.Name = "DamageReductiontextBox";
-            this.DamageReductiontextBox.Size = new System.Drawing.Size(30, 21);
-            this.DamageReductiontextBox.TabIndex = 139;
-            this.DamageReductiontextBox.TextChanged += new System.EventHandler(this.DamageReductiontextBox_TextChanged);
+            DamageReductiontextBox.Location = new Point(622, 337);
+            DamageReductiontextBox.Margin = new Padding(4);
+            DamageReductiontextBox.MaxLength = 3;
+            DamageReductiontextBox.Name = "DamageReductiontextBox";
+            DamageReductiontextBox.Size = new Size(34, 23);
+            DamageReductiontextBox.TabIndex = 139;
+            DamageReductiontextBox.TextChanged += DamageReductiontextBox_TextChanged;
             // 
             // label64
             // 
-            this.label64.AutoSize = true;
-            this.label64.Location = new System.Drawing.Point(461, 173);
-            this.label64.Name = "label64";
-            this.label64.Size = new System.Drawing.Size(77, 12);
-            this.label64.TabIndex = 137;
-            this.label64.Text = "伤害降低数率";
+            label64.AutoSize = true;
+            label64.Location = new Point(461, 173);
+            label64.Margin = new Padding(4, 0, 4, 0);
+            label64.Name = "label64";
+            label64.Size = new Size(77, 12);
+            label64.TabIndex = 137;
+            label64.Text = "伤害降低数率";
             // 
             // GoldRatetextBox
             // 
-            this.GoldRatetextBox.Location = new System.Drawing.Point(411, 174);
-            this.GoldRatetextBox.MaxLength = 3;
-            this.GoldRatetextBox.Name = "GoldRatetextBox";
-            this.GoldRatetextBox.Size = new System.Drawing.Size(36, 21);
-            this.GoldRatetextBox.TabIndex = 136;
-            this.GoldRatetextBox.TextChanged += new System.EventHandler(this.GoldRatetextBox_TextChanged);
+            GoldRatetextBox.Location = new Point(479, 246);
+            GoldRatetextBox.Margin = new Padding(4);
+            GoldRatetextBox.MaxLength = 3;
+            GoldRatetextBox.Name = "GoldRatetextBox";
+            GoldRatetextBox.Size = new Size(41, 23);
+            GoldRatetextBox.TabIndex = 136;
+            GoldRatetextBox.TextChanged += GoldRatetextBox_TextChanged;
             // 
             // label63
             // 
-            this.label63.AutoSize = true;
-            this.label63.Location = new System.Drawing.Point(331, 180);
-            this.label63.Name = "label63";
-            this.label63.Size = new System.Drawing.Size(77, 12);
-            this.label63.TabIndex = 135;
-            this.label63.Text = "金币收益数率";
+            label63.AutoSize = true;
+            label63.Location = new Point(386, 255);
+            label63.Margin = new Padding(4, 0, 4, 0);
+            label63.Name = "label63";
+            label63.Size = new Size(80, 17);
+            label63.TabIndex = 135;
+            label63.Text = "金币收益数率";
             // 
             // DropRatetextBox
             // 
-            this.DropRatetextBox.Location = new System.Drawing.Point(411, 198);
-            this.DropRatetextBox.MaxLength = 3;
-            this.DropRatetextBox.Name = "DropRatetextBox";
-            this.DropRatetextBox.Size = new System.Drawing.Size(36, 21);
-            this.DropRatetextBox.TabIndex = 134;
-            this.DropRatetextBox.TextChanged += new System.EventHandler(this.DropRatetextBox_TextChanged);
+            DropRatetextBox.Location = new Point(479, 280);
+            DropRatetextBox.Margin = new Padding(4);
+            DropRatetextBox.MaxLength = 3;
+            DropRatetextBox.Name = "DropRatetextBox";
+            DropRatetextBox.Size = new Size(41, 23);
+            DropRatetextBox.TabIndex = 134;
+            DropRatetextBox.TextChanged += DropRatetextBox_TextChanged;
             // 
             // label62
             // 
-            this.label62.AutoSize = true;
-            this.label62.Location = new System.Drawing.Point(331, 203);
-            this.label62.Name = "label62";
-            this.label62.Size = new System.Drawing.Size(77, 12);
-            this.label62.TabIndex = 133;
-            this.label62.Text = "物品掉落数率";
+            label62.AutoSize = true;
+            label62.Location = new Point(386, 288);
+            label62.Margin = new Padding(4, 0, 4, 0);
+            label62.Name = "label62";
+            label62.Size = new Size(80, 17);
+            label62.TabIndex = 133;
+            label62.Text = "物品掉落数率";
             // 
             // ExpRatetextBox
             // 
-            this.ExpRatetextBox.Location = new System.Drawing.Point(411, 151);
-            this.ExpRatetextBox.MaxLength = 3;
-            this.ExpRatetextBox.Name = "ExpRatetextBox";
-            this.ExpRatetextBox.Size = new System.Drawing.Size(36, 21);
-            this.ExpRatetextBox.TabIndex = 132;
-            this.ExpRatetextBox.TextChanged += new System.EventHandler(this.ExpRatetextBox_TextChanged);
+            ExpRatetextBox.Location = new Point(479, 214);
+            ExpRatetextBox.Margin = new Padding(4);
+            ExpRatetextBox.MaxLength = 3;
+            ExpRatetextBox.Name = "ExpRatetextBox";
+            ExpRatetextBox.Size = new Size(41, 23);
+            ExpRatetextBox.TabIndex = 132;
+            ExpRatetextBox.TextChanged += ExpRatetextBox_TextChanged;
             // 
             // label61
             // 
-            this.label61.AutoSize = true;
-            this.label61.Location = new System.Drawing.Point(331, 156);
-            this.label61.Name = "label61";
-            this.label61.Size = new System.Drawing.Size(77, 12);
-            this.label61.TabIndex = 130;
-            this.label61.Text = "经验增长数率";
+            label61.AutoSize = true;
+            label61.Location = new Point(386, 221);
+            label61.Margin = new Padding(4, 0, 4, 0);
+            label61.Name = "label61";
+            label61.Size = new Size(80, 17);
+            label61.TabIndex = 130;
+            label61.Text = "经验增长数率";
             // 
             // MaxSCRatetextBox
             // 
-            this.MaxSCRatetextBox.Location = new System.Drawing.Point(556, 198);
-            this.MaxSCRatetextBox.MaxLength = 3;
-            this.MaxSCRatetextBox.Name = "MaxSCRatetextBox";
-            this.MaxSCRatetextBox.Size = new System.Drawing.Size(36, 21);
-            this.MaxSCRatetextBox.TabIndex = 131;
-            this.MaxSCRatetextBox.TextChanged += new System.EventHandler(this.MaxSCRatetextBox_TextChanged);
+            MaxSCRatetextBox.Location = new Point(649, 280);
+            MaxSCRatetextBox.Margin = new Padding(4);
+            MaxSCRatetextBox.MaxLength = 3;
+            MaxSCRatetextBox.Name = "MaxSCRatetextBox";
+            MaxSCRatetextBox.Size = new Size(41, 23);
+            MaxSCRatetextBox.TabIndex = 131;
+            MaxSCRatetextBox.TextChanged += MaxSCRatetextBox_TextChanged;
             // 
             // label60
             // 
-            this.label60.AutoSize = true;
-            this.label60.Location = new System.Drawing.Point(453, 203);
-            this.label60.Name = "label60";
-            this.label60.Size = new System.Drawing.Size(101, 12);
-            this.label60.TabIndex = 130;
-            this.label60.Text = "最大道术攻击数率";
+            label60.AutoSize = true;
+            label60.Location = new Point(528, 288);
+            label60.Margin = new Padding(4, 0, 4, 0);
+            label60.Name = "label60";
+            label60.Size = new Size(104, 17);
+            label60.TabIndex = 130;
+            label60.Text = "最大道术攻击数率";
             // 
             // MaxMCRatetextBox
             // 
-            this.MaxMCRatetextBox.Location = new System.Drawing.Point(556, 174);
-            this.MaxMCRatetextBox.MaxLength = 3;
-            this.MaxMCRatetextBox.Name = "MaxMCRatetextBox";
-            this.MaxMCRatetextBox.Size = new System.Drawing.Size(36, 21);
-            this.MaxMCRatetextBox.TabIndex = 127;
-            this.MaxMCRatetextBox.TextChanged += new System.EventHandler(this.MaxMCRatetextBox_TextChanged);
+            MaxMCRatetextBox.Location = new Point(649, 246);
+            MaxMCRatetextBox.Margin = new Padding(4);
+            MaxMCRatetextBox.MaxLength = 3;
+            MaxMCRatetextBox.Name = "MaxMCRatetextBox";
+            MaxMCRatetextBox.Size = new Size(41, 23);
+            MaxMCRatetextBox.TabIndex = 127;
+            MaxMCRatetextBox.TextChanged += MaxMCRatetextBox_TextChanged;
             // 
             // label59
             // 
-            this.label59.AutoSize = true;
-            this.label59.Location = new System.Drawing.Point(452, 179);
-            this.label59.Name = "label59";
-            this.label59.Size = new System.Drawing.Size(101, 12);
-            this.label59.TabIndex = 129;
-            this.label59.Text = "最大魔法攻击数率";
+            label59.AutoSize = true;
+            label59.Location = new Point(527, 254);
+            label59.Margin = new Padding(4, 0, 4, 0);
+            label59.Name = "label59";
+            label59.Size = new Size(104, 17);
+            label59.TabIndex = 129;
+            label59.Text = "最大魔法攻击数率";
             // 
             // MaxDCRatetextBox
             // 
-            this.MaxDCRatetextBox.Location = new System.Drawing.Point(556, 151);
-            this.MaxDCRatetextBox.MaxLength = 3;
-            this.MaxDCRatetextBox.Name = "MaxDCRatetextBox";
-            this.MaxDCRatetextBox.Size = new System.Drawing.Size(36, 21);
-            this.MaxDCRatetextBox.TabIndex = 127;
-            this.MaxDCRatetextBox.TextChanged += new System.EventHandler(this.MaxDCRatetextBox_TextChanged);
+            MaxDCRatetextBox.Location = new Point(649, 214);
+            MaxDCRatetextBox.Margin = new Padding(4);
+            MaxDCRatetextBox.MaxLength = 3;
+            MaxDCRatetextBox.Name = "MaxDCRatetextBox";
+            MaxDCRatetextBox.Size = new Size(41, 23);
+            MaxDCRatetextBox.TabIndex = 127;
+            MaxDCRatetextBox.TextChanged += MaxDCRatetextBox_TextChanged;
             // 
             // label58
             // 
-            this.label58.AutoSize = true;
-            this.label58.Location = new System.Drawing.Point(453, 156);
-            this.label58.Name = "label58";
-            this.label58.Size = new System.Drawing.Size(101, 12);
-            this.label58.TabIndex = 128;
-            this.label58.Text = "最大物理攻击数率";
+            label58.AutoSize = true;
+            label58.Location = new Point(528, 221);
+            label58.Margin = new Padding(4, 0, 4, 0);
+            label58.Name = "label58";
+            label58.Size = new Size(104, 17);
+            label58.TabIndex = 128;
+            label58.Text = "最大物理攻击数率";
             // 
             // ItemInfoPanel
             // 
-            this.ItemInfoPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.ItemInfoPanel.Controls.Add(this.tabControl1);
-            this.ItemInfoPanel.Enabled = false;
-            this.ItemInfoPanel.Location = new System.Drawing.Point(174, 38);
-            this.ItemInfoPanel.Name = "ItemInfoPanel";
-            this.ItemInfoPanel.Size = new System.Drawing.Size(626, 390);
-            this.ItemInfoPanel.TabIndex = 11;
+            ItemInfoPanel.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            ItemInfoPanel.Controls.Add(tabControl1);
+            ItemInfoPanel.Enabled = false;
+            ItemInfoPanel.Location = new Point(203, 54);
+            ItemInfoPanel.Margin = new Padding(4);
+            ItemInfoPanel.Name = "ItemInfoPanel";
+            ItemInfoPanel.Size = new Size(730, 552);
+            ItemInfoPanel.TabIndex = 11;
             // 
             // tabControl1
             // 
-            this.tabControl1.Controls.Add(this.tabPage1);
-            this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Controls.Add(this.tabPage3);
-            this.tabControl1.Controls.Add(this.tabPage4);
-            this.tabControl1.Location = new System.Drawing.Point(3, 3);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(609, 384);
-            this.tabControl1.TabIndex = 117;
+            tabControl1.Controls.Add(tabPage1);
+            tabControl1.Controls.Add(tabPage2);
+            tabControl1.Controls.Add(tabPage3);
+            tabControl1.Controls.Add(tabPage4);
+            tabControl1.Location = new Point(4, 4);
+            tabControl1.Margin = new Padding(4);
+            tabControl1.Name = "tabControl1";
+            tabControl1.SelectedIndex = 0;
+            tabControl1.Size = new Size(710, 544);
+            tabControl1.TabIndex = 117;
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.ItemsPreview);
-            this.tabPage1.Controls.Add(this.label57);
-            this.tabPage1.Controls.Add(this.SlotsTextBox);
-            this.tabPage1.Controls.Add(this.globalDropNotify_CheckBox);
-            this.tabPage1.Controls.Add(this.CanAwaken);
-            this.tabPage1.Controls.Add(this.label56);
-            this.tabPage1.Controls.Add(this.TooltipTextBox);
-            this.tabPage1.Controls.Add(this.FastRunCheckBox);
-            this.tabPage1.Controls.Add(this.label55);
-            this.tabPage1.Controls.Add(this.IGradeComboBox);
-            this.tabPage1.Controls.Add(this.RandomStatstextBox);
-            this.tabPage1.Controls.Add(this.label54);
-            this.tabPage1.Controls.Add(this.LightIntensitytextBox);
-            this.tabPage1.Controls.Add(this.label53);
-            this.tabPage1.Controls.Add(this.NeedIdentifycheckbox);
-            this.tabPage1.Controls.Add(this.label1);
-            this.tabPage1.Controls.Add(this.ItemIndexTextBox);
-            this.tabPage1.Controls.Add(this.StartItemCheckBox);
-            this.tabPage1.Controls.Add(this.ClassBasedcheckbox);
-            this.tabPage1.Controls.Add(this.LevelBasedcheckbox);
-            this.tabPage1.Controls.Add(this.ShowGroupPickupcheckbox);
-            this.tabPage1.Controls.Add(this.label3);
-            this.tabPage1.Controls.Add(this.ItemNameTextBox);
-            this.tabPage1.Controls.Add(this.label2);
-            this.tabPage1.Controls.Add(this.EffectTextBox);
-            this.tabPage1.Controls.Add(this.ITypeComboBox);
-            this.tabPage1.Controls.Add(this.label34);
-            this.tabPage1.Controls.Add(this.label4);
-            this.tabPage1.Controls.Add(this.PriceTextBox);
-            this.tabPage1.Controls.Add(this.RTypeComboBox);
-            this.tabPage1.Controls.Add(this.label12);
-            this.tabPage1.Controls.Add(this.DuraTextBox);
-            this.tabPage1.Controls.Add(this.label5);
-            this.tabPage1.Controls.Add(this.label11);
-            this.tabPage1.Controls.Add(this.RClassComboBox);
-            this.tabPage1.Controls.Add(this.LightTextBox);
-            this.tabPage1.Controls.Add(this.label6);
-            this.tabPage1.Controls.Add(this.label9);
-            this.tabPage1.Controls.Add(this.RAmountTextBox);
-            this.tabPage1.Controls.Add(this.WeightTextBox);
-            this.tabPage1.Controls.Add(this.label10);
-            this.tabPage1.Controls.Add(this.label8);
-            this.tabPage1.Controls.Add(this.ImageTextBox);
-            this.tabPage1.Controls.Add(this.ShapeTextBox);
-            this.tabPage1.Controls.Add(this.SSizeTextBox);
-            this.tabPage1.Controls.Add(this.label7);
-            this.tabPage1.Controls.Add(this.label13);
-            this.tabPage1.Controls.Add(this.label33);
-            this.tabPage1.Controls.Add(this.RGenderComboBox);
-            this.tabPage1.Controls.Add(this.ISetComboBox);
-            this.tabPage1.Controls.Add(this.label35);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(601, 358);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "常规";
-            this.tabPage1.UseVisualStyleBackColor = true;
+            tabPage1.Controls.Add(ItemsPreview);
+            tabPage1.Controls.Add(label57);
+            tabPage1.Controls.Add(SlotsTextBox);
+            tabPage1.Controls.Add(globalDropNotify_CheckBox);
+            tabPage1.Controls.Add(CanAwaken);
+            tabPage1.Controls.Add(label56);
+            tabPage1.Controls.Add(TooltipTextBox);
+            tabPage1.Controls.Add(FastRunCheckBox);
+            tabPage1.Controls.Add(label55);
+            tabPage1.Controls.Add(IGradeComboBox);
+            tabPage1.Controls.Add(RandomStatstextBox);
+            tabPage1.Controls.Add(label54);
+            tabPage1.Controls.Add(LightIntensitytextBox);
+            tabPage1.Controls.Add(label53);
+            tabPage1.Controls.Add(NeedIdentifycheckbox);
+            tabPage1.Controls.Add(label1);
+            tabPage1.Controls.Add(ItemIndexTextBox);
+            tabPage1.Controls.Add(StartItemCheckBox);
+            tabPage1.Controls.Add(ClassBasedcheckbox);
+            tabPage1.Controls.Add(LevelBasedcheckbox);
+            tabPage1.Controls.Add(ShowGroupPickupcheckbox);
+            tabPage1.Controls.Add(label3);
+            tabPage1.Controls.Add(ItemNameTextBox);
+            tabPage1.Controls.Add(label2);
+            tabPage1.Controls.Add(EffectTextBox);
+            tabPage1.Controls.Add(ITypeComboBox);
+            tabPage1.Controls.Add(label34);
+            tabPage1.Controls.Add(label4);
+            tabPage1.Controls.Add(PriceTextBox);
+            tabPage1.Controls.Add(RTypeComboBox);
+            tabPage1.Controls.Add(label12);
+            tabPage1.Controls.Add(DuraTextBox);
+            tabPage1.Controls.Add(label5);
+            tabPage1.Controls.Add(label11);
+            tabPage1.Controls.Add(RClassComboBox);
+            tabPage1.Controls.Add(LightTextBox);
+            tabPage1.Controls.Add(label6);
+            tabPage1.Controls.Add(label9);
+            tabPage1.Controls.Add(RAmountTextBox);
+            tabPage1.Controls.Add(WeightTextBox);
+            tabPage1.Controls.Add(label10);
+            tabPage1.Controls.Add(label8);
+            tabPage1.Controls.Add(ImageTextBox);
+            tabPage1.Controls.Add(ShapeTextBox);
+            tabPage1.Controls.Add(SSizeTextBox);
+            tabPage1.Controls.Add(label7);
+            tabPage1.Controls.Add(label13);
+            tabPage1.Controls.Add(label33);
+            tabPage1.Controls.Add(RGenderComboBox);
+            tabPage1.Controls.Add(ISetComboBox);
+            tabPage1.Controls.Add(label35);
+            tabPage1.Location = new Point(4, 26);
+            tabPage1.Margin = new Padding(4);
+            tabPage1.Name = "tabPage1";
+            tabPage1.Padding = new Padding(4);
+            tabPage1.Size = new Size(702, 514);
+            tabPage1.TabIndex = 0;
+            tabPage1.Text = "常规";
+            tabPage1.UseVisualStyleBackColor = true;
             // 
             // ItemsPreview
             // 
-            this.ItemsPreview.Location = new System.Drawing.Point(254, 72);
-            this.ItemsPreview.Name = "ItemsPreview";
-            this.ItemsPreview.Size = new System.Drawing.Size(46, 44);
-            this.ItemsPreview.TabIndex = 64;
-            this.ItemsPreview.TabStop = false;
+            ItemsPreview.Location = new Point(297, 82);
+            ItemsPreview.Name = "ItemsPreview";
+            ItemsPreview.Size = new Size(40, 36);
+            ItemsPreview.TabIndex = 64;
+            ItemsPreview.TabStop = false;
             // 
             // label57
             // 
-            this.label57.AutoSize = true;
-            this.label57.Location = new System.Drawing.Point(310, 149);
-            this.label57.Name = "label57";
-            this.label57.Size = new System.Drawing.Size(53, 12);
-            this.label57.TabIndex = 126;
-            this.label57.Text = "镶嵌孔数";
+            label57.AutoSize = true;
+            label57.Location = new Point(364, 197);
+            label57.Margin = new Padding(4, 0, 4, 0);
+            label57.Name = "label57";
+            label57.Size = new Size(59, 17);
+            label57.TabIndex = 126;
+            label57.Text = "镶嵌孔数:";
             // 
             // SlotsTextBox
             // 
-            this.SlotsTextBox.Location = new System.Drawing.Point(366, 145);
-            this.SlotsTextBox.Name = "SlotsTextBox";
-            this.SlotsTextBox.Size = new System.Drawing.Size(38, 21);
-            this.SlotsTextBox.TabIndex = 125;
-            this.SlotsTextBox.TextChanged += new System.EventHandler(this.SlotsTextBox_TextChanged);
+            SlotsTextBox.Location = new Point(426, 193);
+            SlotsTextBox.Margin = new Padding(4);
+            SlotsTextBox.Name = "SlotsTextBox";
+            SlotsTextBox.Size = new Size(46, 23);
+            SlotsTextBox.TabIndex = 125;
+            SlotsTextBox.TextChanged += SlotsTextBox_TextChanged;
             // 
             // globalDropNotify_CheckBox
             // 
-            this.globalDropNotify_CheckBox.AutoSize = true;
-            this.globalDropNotify_CheckBox.Location = new System.Drawing.Point(463, 318);
-            this.globalDropNotify_CheckBox.Name = "globalDropNotify_CheckBox";
-            this.globalDropNotify_CheckBox.Size = new System.Drawing.Size(120, 16);
-            this.globalDropNotify_CheckBox.TabIndex = 124;
-            this.globalDropNotify_CheckBox.Text = "掉落通告(服务器)";
-            this.globalDropNotify_CheckBox.UseVisualStyleBackColor = true;
-            this.globalDropNotify_CheckBox.CheckedChanged += new System.EventHandler(this.globalDropNotify_CheckBox_CheckedChanged);
+            globalDropNotify_CheckBox.AutoSize = true;
+            globalDropNotify_CheckBox.Location = new Point(546, 473);
+            globalDropNotify_CheckBox.Margin = new Padding(4);
+            globalDropNotify_CheckBox.Name = "globalDropNotify_CheckBox";
+            globalDropNotify_CheckBox.Size = new Size(119, 21);
+            globalDropNotify_CheckBox.TabIndex = 124;
+            globalDropNotify_CheckBox.Text = "掉落通告(服务器)";
+            globalDropNotify_CheckBox.UseVisualStyleBackColor = true;
+            globalDropNotify_CheckBox.CheckedChanged += globalDropNotify_CheckBox_CheckedChanged;
             // 
             // CanAwaken
             // 
-            this.CanAwaken.AutoSize = true;
-            this.CanAwaken.Location = new System.Drawing.Point(463, 275);
-            this.CanAwaken.Name = "CanAwaken";
-            this.CanAwaken.Size = new System.Drawing.Size(72, 16);
-            this.CanAwaken.TabIndex = 114;
-            this.CanAwaken.Text = "可以觉醒";
-            this.CanAwaken.UseVisualStyleBackColor = true;
-            this.CanAwaken.CheckedChanged += new System.EventHandler(this.CanAwakening_CheckedChanged);
+            CanAwaken.AutoSize = true;
+            CanAwaken.Location = new Point(546, 443);
+            CanAwaken.Margin = new Padding(4);
+            CanAwaken.Name = "CanAwaken";
+            CanAwaken.Size = new Size(75, 21);
+            CanAwaken.TabIndex = 114;
+            CanAwaken.Text = "可以觉醒";
+            CanAwaken.UseVisualStyleBackColor = true;
+            CanAwaken.CheckedChanged += CanAwakening_CheckedChanged;
             // 
             // label56
             // 
-            this.label56.AutoSize = true;
-            this.label56.Location = new System.Drawing.Point(23, 230);
-            this.label56.Name = "label56";
-            this.label56.Size = new System.Drawing.Size(53, 12);
-            this.label56.TabIndex = 123;
-            this.label56.Text = "物品说明";
+            label56.AutoSize = true;
+            label56.Location = new Point(25, 308);
+            label56.Margin = new Padding(4, 0, 4, 0);
+            label56.Name = "label56";
+            label56.Size = new Size(59, 17);
+            label56.TabIndex = 123;
+            label56.Text = "物品说明:";
             // 
             // TooltipTextBox
             // 
-            this.TooltipTextBox.Location = new System.Drawing.Point(79, 226);
-            this.TooltipTextBox.Multiline = true;
-            this.TooltipTextBox.Name = "TooltipTextBox";
-            this.TooltipTextBox.Size = new System.Drawing.Size(194, 79);
-            this.TooltipTextBox.TabIndex = 122;
-            this.TooltipTextBox.TextChanged += new System.EventHandler(this.TooltipTextBox_TextChanged);
+            TooltipTextBox.Location = new Point(85, 305);
+            TooltipTextBox.Margin = new Padding(4);
+            TooltipTextBox.Multiline = true;
+            TooltipTextBox.Name = "TooltipTextBox";
+            TooltipTextBox.Size = new Size(241, 192);
+            TooltipTextBox.TabIndex = 122;
+            TooltipTextBox.TextChanged += TooltipTextBox_TextChanged;
             // 
             // FastRunCheckBox
             // 
-            this.FastRunCheckBox.AutoSize = true;
-            this.FastRunCheckBox.Location = new System.Drawing.Point(463, 297);
-            this.FastRunCheckBox.Name = "FastRunCheckBox";
-            this.FastRunCheckBox.Size = new System.Drawing.Size(120, 16);
-            this.FastRunCheckBox.TabIndex = 121;
-            this.FastRunCheckBox.Text = "外形物品(免助跑)";
-            this.FastRunCheckBox.UseVisualStyleBackColor = true;
-            this.FastRunCheckBox.CheckedChanged += new System.EventHandler(this.FastRunCheckBox_CheckedChanged);
+            FastRunCheckBox.AutoSize = true;
+            FastRunCheckBox.Location = new Point(546, 412);
+            FastRunCheckBox.Margin = new Padding(4);
+            FastRunCheckBox.Name = "FastRunCheckBox";
+            FastRunCheckBox.Size = new Size(119, 21);
+            FastRunCheckBox.TabIndex = 121;
+            FastRunCheckBox.Text = "外形物品(免助跑)";
+            FastRunCheckBox.UseVisualStyleBackColor = true;
+            FastRunCheckBox.CheckedChanged += FastRunCheckBox_CheckedChanged;
             // 
             // label55
             // 
-            this.label55.AutoSize = true;
-            this.label55.Location = new System.Drawing.Point(23, 105);
-            this.label55.Name = "label55";
-            this.label55.Size = new System.Drawing.Size(53, 12);
-            this.label55.TabIndex = 120;
-            this.label55.Text = "物品品质";
+            label55.AutoSize = true;
+            label55.Location = new Point(23, 127);
+            label55.Margin = new Padding(4, 0, 4, 0);
+            label55.Name = "label55";
+            label55.Size = new Size(59, 17);
+            label55.TabIndex = 120;
+            label55.Text = "物品品质:";
             // 
             // IGradeComboBox
             // 
-            this.IGradeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.IGradeComboBox.FormattingEnabled = true;
-            this.IGradeComboBox.Location = new System.Drawing.Point(79, 101);
-            this.IGradeComboBox.Name = "IGradeComboBox";
-            this.IGradeComboBox.Size = new System.Drawing.Size(92, 20);
-            this.IGradeComboBox.TabIndex = 119;
-            this.IGradeComboBox.SelectedIndexChanged += new System.EventHandler(this.IGradeComboBox_SelectedIndexChanged);
+            IGradeComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            IGradeComboBox.FormattingEnabled = true;
+            IGradeComboBox.Location = new Point(85, 123);
+            IGradeComboBox.Margin = new Padding(4);
+            IGradeComboBox.Name = "IGradeComboBox";
+            IGradeComboBox.Size = new Size(107, 25);
+            IGradeComboBox.TabIndex = 119;
+            IGradeComboBox.SelectedIndexChanged += IGradeComboBox_SelectedIndexChanged;
             // 
             // RandomStatstextBox
             // 
-            this.RandomStatstextBox.Location = new System.Drawing.Point(413, 28);
-            this.RandomStatstextBox.MaxLength = 3;
-            this.RandomStatstextBox.Name = "RandomStatstextBox";
-            this.RandomStatstextBox.Size = new System.Drawing.Size(30, 21);
-            this.RandomStatstextBox.TabIndex = 115;
-            this.RandomStatstextBox.TextChanged += new System.EventHandler(this.RandomStatstextBox_TextChanged);
+            RandomStatstextBox.Location = new Point(426, 24);
+            RandomStatstextBox.Margin = new Padding(4);
+            RandomStatstextBox.MaxLength = 3;
+            RandomStatstextBox.Name = "RandomStatstextBox";
+            RandomStatstextBox.Size = new Size(46, 23);
+            RandomStatstextBox.TabIndex = 115;
+            RandomStatstextBox.TextChanged += RandomStatstextBox_TextChanged;
             // 
             // label54
             // 
-            this.label54.AutoSize = true;
-            this.label54.Location = new System.Drawing.Point(309, 33);
-            this.label54.Name = "label54";
-            this.label54.Size = new System.Drawing.Size(101, 12);
-            this.label54.TabIndex = 114;
-            this.label54.Text = "物品随机属性预设";
+            label54.AutoSize = true;
+            label54.Location = new Point(316, 27);
+            label54.Margin = new Padding(4, 0, 4, 0);
+            label54.Name = "label54";
+            label54.Size = new Size(107, 17);
+            label54.TabIndex = 114;
+            label54.Text = "物品随机属性预设:";
             // 
             // LightIntensitytextBox
             // 
-            this.LightIntensitytextBox.Location = new System.Drawing.Point(366, 237);
-            this.LightIntensitytextBox.MaxLength = 3;
-            this.LightIntensitytextBox.Name = "LightIntensitytextBox";
-            this.LightIntensitytextBox.Size = new System.Drawing.Size(38, 21);
-            this.LightIntensitytextBox.TabIndex = 112;
-            this.LightIntensitytextBox.TextChanged += new System.EventHandler(this.LightIntensitytextBox_TextChanged);
+            LightIntensitytextBox.Location = new Point(426, 323);
+            LightIntensitytextBox.Margin = new Padding(4);
+            LightIntensitytextBox.MaxLength = 3;
+            LightIntensitytextBox.Name = "LightIntensitytextBox";
+            LightIntensitytextBox.Size = new Size(46, 23);
+            LightIntensitytextBox.TabIndex = 112;
+            LightIntensitytextBox.TextChanged += LightIntensitytextBox_TextChanged;
             // 
             // label53
             // 
-            this.label53.AutoSize = true;
-            this.label53.Location = new System.Drawing.Point(310, 242);
-            this.label53.Name = "label53";
-            this.label53.Size = new System.Drawing.Size(53, 12);
-            this.label53.TabIndex = 113;
-            this.label53.Text = "发光强度";
+            label53.AutoSize = true;
+            label53.Location = new Point(364, 326);
+            label53.Margin = new Padding(4, 0, 4, 0);
+            label53.Name = "label53";
+            label53.Size = new Size(59, 17);
+            label53.TabIndex = 113;
+            label53.Text = "发光强度:";
             // 
             // NeedIdentifycheckbox
             // 
-            this.NeedIdentifycheckbox.AutoSize = true;
-            this.NeedIdentifycheckbox.Location = new System.Drawing.Point(463, 231);
-            this.NeedIdentifycheckbox.Name = "NeedIdentifycheckbox";
-            this.NeedIdentifycheckbox.Size = new System.Drawing.Size(72, 16);
-            this.NeedIdentifycheckbox.TabIndex = 110;
-            this.NeedIdentifycheckbox.Text = "神秘属性";
-            this.NeedIdentifycheckbox.UseVisualStyleBackColor = true;
-            this.NeedIdentifycheckbox.CheckedChanged += new System.EventHandler(this.NeedIdentifycheckbox_CheckedChanged);
+            NeedIdentifycheckbox.AutoSize = true;
+            NeedIdentifycheckbox.Location = new Point(546, 350);
+            NeedIdentifycheckbox.Margin = new Padding(4);
+            NeedIdentifycheckbox.Name = "NeedIdentifycheckbox";
+            NeedIdentifycheckbox.Size = new Size(75, 21);
+            NeedIdentifycheckbox.TabIndex = 110;
+            NeedIdentifycheckbox.Text = "神秘属性";
+            NeedIdentifycheckbox.UseVisualStyleBackColor = true;
+            NeedIdentifycheckbox.CheckedChanged += NeedIdentifycheckbox_CheckedChanged;
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(23, 28);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(53, 12);
-            this.label1.TabIndex = 4;
-            this.label1.Text = "物品编号";
+            label1.AutoSize = true;
+            label1.Location = new Point(23, 17);
+            label1.Margin = new Padding(4, 0, 4, 0);
+            label1.Name = "label1";
+            label1.Size = new Size(59, 17);
+            label1.TabIndex = 4;
+            label1.Text = "物品编号:";
             // 
             // ItemIndexTextBox
             // 
-            this.ItemIndexTextBox.Location = new System.Drawing.Point(79, 23);
-            this.ItemIndexTextBox.Name = "ItemIndexTextBox";
-            this.ItemIndexTextBox.ReadOnly = true;
-            this.ItemIndexTextBox.Size = new System.Drawing.Size(47, 21);
-            this.ItemIndexTextBox.TabIndex = 0;
+            ItemIndexTextBox.Location = new Point(85, 14);
+            ItemIndexTextBox.Margin = new Padding(4);
+            ItemIndexTextBox.Name = "ItemIndexTextBox";
+            ItemIndexTextBox.ReadOnly = true;
+            ItemIndexTextBox.Size = new Size(54, 23);
+            ItemIndexTextBox.TabIndex = 0;
             // 
             // StartItemCheckBox
             // 
-            this.StartItemCheckBox.AutoSize = true;
-            this.StartItemCheckBox.Location = new System.Drawing.Point(463, 167);
-            this.StartItemCheckBox.Name = "StartItemCheckBox";
-            this.StartItemCheckBox.Size = new System.Drawing.Size(96, 16);
-            this.StartItemCheckBox.TabIndex = 63;
-            this.StartItemCheckBox.Text = "新手所属物品";
-            this.StartItemCheckBox.UseVisualStyleBackColor = true;
-            this.StartItemCheckBox.CheckedChanged += new System.EventHandler(this.StartItemCheckBox_CheckedChanged);
+            StartItemCheckBox.AutoSize = true;
+            StartItemCheckBox.Location = new Point(546, 229);
+            StartItemCheckBox.Margin = new Padding(4);
+            StartItemCheckBox.Name = "StartItemCheckBox";
+            StartItemCheckBox.Size = new Size(99, 21);
+            StartItemCheckBox.TabIndex = 63;
+            StartItemCheckBox.Text = "新手所属物品";
+            StartItemCheckBox.UseVisualStyleBackColor = true;
+            StartItemCheckBox.CheckedChanged += StartItemCheckBox_CheckedChanged;
             // 
             // ClassBasedcheckbox
             // 
-            this.ClassBasedcheckbox.AutoSize = true;
-            this.ClassBasedcheckbox.Location = new System.Drawing.Point(463, 189);
-            this.ClassBasedcheckbox.Name = "ClassBasedcheckbox";
-            this.ClassBasedcheckbox.Size = new System.Drawing.Size(96, 16);
-            this.ClassBasedcheckbox.TabIndex = 100;
-            this.ClassBasedcheckbox.Text = "新手职业要求";
-            this.ClassBasedcheckbox.UseVisualStyleBackColor = true;
-            this.ClassBasedcheckbox.CheckedChanged += new System.EventHandler(this.ClassBasedcheckbox_CheckedChanged);
+            ClassBasedcheckbox.AutoSize = true;
+            ClassBasedcheckbox.Location = new Point(546, 260);
+            ClassBasedcheckbox.Margin = new Padding(4);
+            ClassBasedcheckbox.Name = "ClassBasedcheckbox";
+            ClassBasedcheckbox.Size = new Size(99, 21);
+            ClassBasedcheckbox.TabIndex = 100;
+            ClassBasedcheckbox.Text = "新手职业要求";
+            ClassBasedcheckbox.UseVisualStyleBackColor = true;
+            ClassBasedcheckbox.CheckedChanged += ClassBasedcheckbox_CheckedChanged;
             // 
             // LevelBasedcheckbox
             // 
-            this.LevelBasedcheckbox.AutoSize = true;
-            this.LevelBasedcheckbox.Location = new System.Drawing.Point(463, 211);
-            this.LevelBasedcheckbox.Name = "LevelBasedcheckbox";
-            this.LevelBasedcheckbox.Size = new System.Drawing.Size(96, 16);
-            this.LevelBasedcheckbox.TabIndex = 101;
-            this.LevelBasedcheckbox.Text = "新手等级要求";
-            this.LevelBasedcheckbox.UseVisualStyleBackColor = true;
-            this.LevelBasedcheckbox.CheckedChanged += new System.EventHandler(this.LevelBasedcheckbox_CheckedChanged);
+            LevelBasedcheckbox.AutoSize = true;
+            LevelBasedcheckbox.Location = new Point(546, 291);
+            LevelBasedcheckbox.Margin = new Padding(4);
+            LevelBasedcheckbox.Name = "LevelBasedcheckbox";
+            LevelBasedcheckbox.Size = new Size(99, 21);
+            LevelBasedcheckbox.TabIndex = 101;
+            LevelBasedcheckbox.Text = "新手等级要求";
+            LevelBasedcheckbox.UseVisualStyleBackColor = true;
+            LevelBasedcheckbox.CheckedChanged += LevelBasedcheckbox_CheckedChanged;
             // 
             // ShowGroupPickupcheckbox
             // 
-            this.ShowGroupPickupcheckbox.AutoSize = true;
-            this.ShowGroupPickupcheckbox.Location = new System.Drawing.Point(463, 253);
-            this.ShowGroupPickupcheckbox.Name = "ShowGroupPickupcheckbox";
-            this.ShowGroupPickupcheckbox.Size = new System.Drawing.Size(72, 16);
-            this.ShowGroupPickupcheckbox.TabIndex = 111;
-            this.ShowGroupPickupcheckbox.Text = "组队拾取";
-            this.ShowGroupPickupcheckbox.UseVisualStyleBackColor = true;
-            this.ShowGroupPickupcheckbox.CheckedChanged += new System.EventHandler(this.ShowGroupPickupcheckbox_CheckedChanged);
+            ShowGroupPickupcheckbox.AutoSize = true;
+            ShowGroupPickupcheckbox.Location = new Point(546, 381);
+            ShowGroupPickupcheckbox.Margin = new Padding(4);
+            ShowGroupPickupcheckbox.Name = "ShowGroupPickupcheckbox";
+            ShowGroupPickupcheckbox.Size = new Size(75, 21);
+            ShowGroupPickupcheckbox.TabIndex = 111;
+            ShowGroupPickupcheckbox.Text = "组队拾取";
+            ShowGroupPickupcheckbox.UseVisualStyleBackColor = true;
+            ShowGroupPickupcheckbox.CheckedChanged += ShowGroupPickupcheckbox_CheckedChanged;
             // 
             // label3
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(23, 54);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(53, 12);
-            this.label3.TabIndex = 8;
-            this.label3.Text = "物品名称";
+            label3.AutoSize = true;
+            label3.Location = new Point(23, 53);
+            label3.Margin = new Padding(4, 0, 4, 0);
+            label3.Name = "label3";
+            label3.Size = new Size(59, 17);
+            label3.TabIndex = 8;
+            label3.Text = "物品名称:";
             // 
             // ItemNameTextBox
             // 
-            this.ItemNameTextBox.Location = new System.Drawing.Point(79, 49);
-            this.ItemNameTextBox.Name = "ItemNameTextBox";
-            this.ItemNameTextBox.Size = new System.Drawing.Size(115, 21);
-            this.ItemNameTextBox.TabIndex = 1;
-            this.ItemNameTextBox.TextChanged += new System.EventHandler(this.ItemNameTextBox_TextChanged);
+            ItemNameTextBox.Location = new Point(85, 51);
+            ItemNameTextBox.Margin = new Padding(4);
+            ItemNameTextBox.Name = "ItemNameTextBox";
+            ItemNameTextBox.Size = new Size(134, 23);
+            ItemNameTextBox.TabIndex = 1;
+            ItemNameTextBox.TextChanged += ItemNameTextBox_TextChanged;
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(23, 80);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(53, 12);
-            this.label2.TabIndex = 10;
-            this.label2.Text = "物品类型";
+            label2.AutoSize = true;
+            label2.Location = new Point(23, 92);
+            label2.Margin = new Padding(4, 0, 4, 0);
+            label2.Name = "label2";
+            label2.Size = new Size(59, 17);
+            label2.TabIndex = 10;
+            label2.Text = "物品类型:";
             // 
             // EffectTextBox
             // 
-            this.EffectTextBox.Location = new System.Drawing.Point(365, 122);
-            this.EffectTextBox.Name = "EffectTextBox";
-            this.EffectTextBox.Size = new System.Drawing.Size(39, 21);
-            this.EffectTextBox.TabIndex = 73;
-            this.EffectTextBox.TextChanged += new System.EventHandler(this.EffectTextBox_TextChanged);
+            EffectTextBox.Location = new Point(426, 158);
+            EffectTextBox.Margin = new Padding(4);
+            EffectTextBox.Name = "EffectTextBox";
+            EffectTextBox.Size = new Size(46, 23);
+            EffectTextBox.TabIndex = 73;
+            EffectTextBox.TextChanged += EffectTextBox_TextChanged;
             // 
             // ITypeComboBox
             // 
-            this.ITypeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.ITypeComboBox.FormattingEnabled = true;
-            this.ITypeComboBox.Location = new System.Drawing.Point(79, 76);
-            this.ITypeComboBox.Name = "ITypeComboBox";
-            this.ITypeComboBox.Size = new System.Drawing.Size(92, 20);
-            this.ITypeComboBox.TabIndex = 5;
-            this.ITypeComboBox.SelectedIndexChanged += new System.EventHandler(this.ITypeComboBox_SelectedIndexChanged);
+            ITypeComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            ITypeComboBox.FormattingEnabled = true;
+            ITypeComboBox.Location = new Point(85, 88);
+            ITypeComboBox.Margin = new Padding(4);
+            ITypeComboBox.Name = "ITypeComboBox";
+            ITypeComboBox.Size = new Size(107, 25);
+            ITypeComboBox.TabIndex = 5;
+            ITypeComboBox.SelectedIndexChanged += ITypeComboBox_SelectedIndexChanged;
             // 
             // label34
             // 
-            this.label34.AutoSize = true;
-            this.label34.Location = new System.Drawing.Point(310, 127);
-            this.label34.Name = "label34";
-            this.label34.Size = new System.Drawing.Size(53, 12);
-            this.label34.TabIndex = 72;
-            this.label34.Text = "特殊效果";
+            label34.AutoSize = true;
+            label34.Location = new Point(364, 161);
+            label34.Margin = new Padding(4, 0, 4, 0);
+            label34.Name = "label34";
+            label34.Size = new Size(59, 17);
+            label34.TabIndex = 72;
+            label34.Text = "特殊效果:";
             // 
             // label4
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(23, 129);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(53, 12);
-            this.label4.TabIndex = 12;
-            this.label4.Text = "所需类型";
+            label4.AutoSize = true;
+            label4.Location = new Point(23, 161);
+            label4.Margin = new Padding(4, 0, 4, 0);
+            label4.Name = "label4";
+            label4.Size = new Size(59, 17);
+            label4.TabIndex = 12;
+            label4.Text = "所需类型:";
             // 
             // PriceTextBox
             // 
-            this.PriceTextBox.Location = new System.Drawing.Point(366, 283);
-            this.PriceTextBox.MaxLength = 10;
-            this.PriceTextBox.Name = "PriceTextBox";
-            this.PriceTextBox.Size = new System.Drawing.Size(69, 21);
-            this.PriceTextBox.TabIndex = 8;
-            this.PriceTextBox.TextChanged += new System.EventHandler(this.PriceTextBox_TextChanged);
+            PriceTextBox.Location = new Point(426, 389);
+            PriceTextBox.Margin = new Padding(4);
+            PriceTextBox.MaxLength = 10;
+            PriceTextBox.Name = "PriceTextBox";
+            PriceTextBox.Size = new Size(80, 23);
+            PriceTextBox.TabIndex = 8;
+            PriceTextBox.TextChanged += PriceTextBox_TextChanged;
             // 
             // RTypeComboBox
             // 
-            this.RTypeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.RTypeComboBox.FormattingEnabled = true;
-            this.RTypeComboBox.Location = new System.Drawing.Point(79, 125);
-            this.RTypeComboBox.Name = "RTypeComboBox";
-            this.RTypeComboBox.Size = new System.Drawing.Size(92, 20);
-            this.RTypeComboBox.TabIndex = 9;
-            this.RTypeComboBox.SelectedIndexChanged += new System.EventHandler(this.RTypeComboBox_SelectedIndexChanged);
+            RTypeComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            RTypeComboBox.FormattingEnabled = true;
+            RTypeComboBox.Location = new Point(85, 157);
+            RTypeComboBox.Margin = new Padding(4);
+            RTypeComboBox.Name = "RTypeComboBox";
+            RTypeComboBox.Size = new Size(107, 25);
+            RTypeComboBox.TabIndex = 9;
+            RTypeComboBox.SelectedIndexChanged += RTypeComboBox_SelectedIndexChanged;
             // 
             // label12
             // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(310, 289);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(53, 12);
-            this.label12.TabIndex = 28;
-            this.label12.Text = "商店价格";
+            label12.AutoSize = true;
+            label12.Location = new Point(364, 392);
+            label12.Margin = new Padding(4, 0, 4, 0);
+            label12.Name = "label12";
+            label12.Size = new Size(59, 17);
+            label12.TabIndex = 28;
+            label12.Text = "商店价格:";
             // 
             // DuraTextBox
             // 
-            this.DuraTextBox.Location = new System.Drawing.Point(366, 260);
-            this.DuraTextBox.MaxLength = 5;
-            this.DuraTextBox.Name = "DuraTextBox";
-            this.DuraTextBox.Size = new System.Drawing.Size(39, 21);
-            this.DuraTextBox.TabIndex = 4;
-            this.DuraTextBox.TextChanged += new System.EventHandler(this.DuraTextBox_TextChanged);
+            DuraTextBox.Location = new Point(426, 356);
+            DuraTextBox.Margin = new Padding(4);
+            DuraTextBox.MaxLength = 5;
+            DuraTextBox.Name = "DuraTextBox";
+            DuraTextBox.Size = new Size(46, 23);
+            DuraTextBox.TabIndex = 4;
+            DuraTextBox.TextChanged += DuraTextBox_TextChanged;
             // 
             // label5
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(23, 179);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(53, 12);
-            this.label5.TabIndex = 14;
-            this.label5.Text = "职业类型";
+            label5.AutoSize = true;
+            label5.Location = new Point(23, 232);
+            label5.Margin = new Padding(4, 0, 4, 0);
+            label5.Name = "label5";
+            label5.Size = new Size(59, 17);
+            label5.TabIndex = 14;
+            label5.Text = "职业类型:";
             // 
             // label11
             // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(310, 265);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(53, 12);
-            this.label11.TabIndex = 24;
-            this.label11.Text = "物品持久";
+            label11.AutoSize = true;
+            label11.Location = new Point(364, 360);
+            label11.Margin = new Padding(4, 0, 4, 0);
+            label11.Name = "label11";
+            label11.Size = new Size(59, 17);
+            label11.TabIndex = 24;
+            label11.Text = "物品持久:";
             // 
             // RClassComboBox
             // 
-            this.RClassComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.RClassComboBox.FormattingEnabled = true;
-            this.RClassComboBox.Location = new System.Drawing.Point(79, 175);
-            this.RClassComboBox.Name = "RClassComboBox";
-            this.RClassComboBox.Size = new System.Drawing.Size(92, 20);
-            this.RClassComboBox.TabIndex = 11;
-            this.RClassComboBox.SelectedIndexChanged += new System.EventHandler(this.RClassComboBox_SelectedIndexChanged);
+            RClassComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            RClassComboBox.FormattingEnabled = true;
+            RClassComboBox.Location = new Point(85, 228);
+            RClassComboBox.Margin = new Padding(4);
+            RClassComboBox.Name = "RClassComboBox";
+            RClassComboBox.Size = new Size(107, 25);
+            RClassComboBox.TabIndex = 11;
+            RClassComboBox.SelectedIndexChanged += RClassComboBox_SelectedIndexChanged;
             // 
             // LightTextBox
             // 
-            this.LightTextBox.Location = new System.Drawing.Point(366, 214);
-            this.LightTextBox.MaxLength = 3;
-            this.LightTextBox.Name = "LightTextBox";
-            this.LightTextBox.Size = new System.Drawing.Size(39, 21);
-            this.LightTextBox.TabIndex = 12;
-            this.LightTextBox.TextChanged += new System.EventHandler(this.LightTextBox_TextChanged);
+            LightTextBox.Location = new Point(426, 288);
+            LightTextBox.Margin = new Padding(4);
+            LightTextBox.MaxLength = 3;
+            LightTextBox.Name = "LightTextBox";
+            LightTextBox.Size = new Size(46, 23);
+            LightTextBox.TabIndex = 12;
+            LightTextBox.TextChanged += LightTextBox_TextChanged;
             // 
             // label6
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(309, 57);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(53, 12);
-            this.label6.TabIndex = 16;
-            this.label6.Text = "要求等级";
+            label6.AutoSize = true;
+            label6.Location = new Point(363, 59);
+            label6.Margin = new Padding(4, 0, 4, 0);
+            label6.Name = "label6";
+            label6.Size = new Size(59, 17);
+            label6.TabIndex = 16;
+            label6.Text = "要求等级:";
             // 
             // label9
             // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(310, 218);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(53, 12);
-            this.label9.TabIndex = 22;
-            this.label9.Text = "发光范围";
+            label9.AutoSize = true;
+            label9.Location = new Point(363, 291);
+            label9.Margin = new Padding(4, 0, 4, 0);
+            label9.Name = "label9";
+            label9.Size = new Size(59, 17);
+            label9.TabIndex = 22;
+            label9.Text = "发光范围:";
             // 
             // RAmountTextBox
             // 
-            this.RAmountTextBox.Location = new System.Drawing.Point(365, 53);
-            this.RAmountTextBox.MaxLength = 3;
-            this.RAmountTextBox.Name = "RAmountTextBox";
-            this.RAmountTextBox.Size = new System.Drawing.Size(40, 21);
-            this.RAmountTextBox.TabIndex = 10;
-            this.RAmountTextBox.TextChanged += new System.EventHandler(this.RAmountTextBox_TextChanged);
+            RAmountTextBox.Location = new Point(426, 56);
+            RAmountTextBox.Margin = new Padding(4);
+            RAmountTextBox.MaxLength = 3;
+            RAmountTextBox.Name = "RAmountTextBox";
+            RAmountTextBox.Size = new Size(46, 23);
+            RAmountTextBox.TabIndex = 10;
+            RAmountTextBox.TextChanged += RAmountTextBox_TextChanged;
             // 
             // WeightTextBox
             // 
-            this.WeightTextBox.Location = new System.Drawing.Point(366, 191);
-            this.WeightTextBox.MaxLength = 3;
-            this.WeightTextBox.Name = "WeightTextBox";
-            this.WeightTextBox.Size = new System.Drawing.Size(39, 21);
-            this.WeightTextBox.TabIndex = 2;
-            this.WeightTextBox.TextChanged += new System.EventHandler(this.WeightTextBox_TextChanged);
+            WeightTextBox.Location = new Point(426, 256);
+            WeightTextBox.Margin = new Padding(4);
+            WeightTextBox.MaxLength = 3;
+            WeightTextBox.Name = "WeightTextBox";
+            WeightTextBox.Size = new Size(46, 23);
+            WeightTextBox.TabIndex = 2;
+            WeightTextBox.TextChanged += WeightTextBox_TextChanged;
             // 
             // label10
             // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(309, 81);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(53, 12);
-            this.label10.TabIndex = 26;
-            this.label10.Text = "内观图像";
+            label10.AutoSize = true;
+            label10.Location = new Point(340, 91);
+            label10.Margin = new Padding(4, 0, 4, 0);
+            label10.Name = "label10";
+            label10.Size = new Size(83, 17);
+            label10.TabIndex = 26;
+            label10.Text = "<---内观图像:";
             // 
             // label8
             // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(309, 196);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(53, 12);
-            this.label8.TabIndex = 20;
-            this.label8.Text = "物品重量";
+            label8.AutoSize = true;
+            label8.Location = new Point(363, 259);
+            label8.Margin = new Padding(4, 0, 4, 0);
+            label8.Name = "label8";
+            label8.Size = new Size(59, 17);
+            label8.TabIndex = 20;
+            label8.Text = "物品重量:";
             // 
             // ImageTextBox
             // 
-            this.ImageTextBox.Location = new System.Drawing.Point(365, 76);
-            this.ImageTextBox.MaxLength = 5;
-            this.ImageTextBox.Name = "ImageTextBox";
-            this.ImageTextBox.Size = new System.Drawing.Size(40, 21);
-            this.ImageTextBox.TabIndex = 3;
-            this.ImageTextBox.TextChanged += new System.EventHandler(this.ImageTextBox_TextChanged);
+            ImageTextBox.Location = new Point(426, 88);
+            ImageTextBox.Margin = new Padding(4);
+            ImageTextBox.MaxLength = 5;
+            ImageTextBox.Name = "ImageTextBox";
+            ImageTextBox.Size = new Size(46, 23);
+            ImageTextBox.TabIndex = 3;
+            ImageTextBox.TextChanged += ImageTextBox_TextChanged;
             // 
             // ShapeTextBox
             // 
-            this.ShapeTextBox.Location = new System.Drawing.Point(366, 99);
-            this.ShapeTextBox.MaxLength = 3;
-            this.ShapeTextBox.Name = "ShapeTextBox";
-            this.ShapeTextBox.Size = new System.Drawing.Size(38, 21);
-            this.ShapeTextBox.TabIndex = 6;
-            this.ShapeTextBox.TextChanged += new System.EventHandler(this.ShapeTextBox_TextChanged);
+            ShapeTextBox.Location = new Point(426, 123);
+            ShapeTextBox.Margin = new Padding(4);
+            ShapeTextBox.MaxLength = 3;
+            ShapeTextBox.Name = "ShapeTextBox";
+            ShapeTextBox.Size = new Size(46, 23);
+            ShapeTextBox.TabIndex = 6;
+            ShapeTextBox.TextChanged += ShapeTextBox_TextChanged;
             // 
             // SSizeTextBox
             // 
-            this.SSizeTextBox.Location = new System.Drawing.Point(366, 168);
-            this.SSizeTextBox.MaxLength = 10;
-            this.SSizeTextBox.Name = "SSizeTextBox";
-            this.SSizeTextBox.Size = new System.Drawing.Size(39, 21);
-            this.SSizeTextBox.TabIndex = 7;
-            this.SSizeTextBox.TextChanged += new System.EventHandler(this.SSizeTextBox_TextChanged);
+            SSizeTextBox.Location = new Point(426, 225);
+            SSizeTextBox.Margin = new Padding(4);
+            SSizeTextBox.MaxLength = 10;
+            SSizeTextBox.Name = "SSizeTextBox";
+            SSizeTextBox.Size = new Size(46, 23);
+            SSizeTextBox.TabIndex = 7;
+            SSizeTextBox.TextChanged += SSizeTextBox_TextChanged;
             // 
             // label7
             // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(310, 104);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(53, 12);
-            this.label7.TabIndex = 18;
-            this.label7.Text = "外观图像";
+            label7.AutoSize = true;
+            label7.Location = new Point(364, 126);
+            label7.Margin = new Padding(4, 0, 4, 0);
+            label7.Name = "label7";
+            label7.Size = new Size(59, 17);
+            label7.TabIndex = 18;
+            label7.Text = "外观图像:";
             // 
             // label13
             // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(309, 173);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(53, 12);
-            this.label13.TabIndex = 30;
-            this.label13.Text = "可叠加数";
+            label13.AutoSize = true;
+            label13.Location = new Point(364, 228);
+            label13.Margin = new Padding(4, 0, 4, 0);
+            label13.Name = "label13";
+            label13.Size = new Size(59, 17);
+            label13.TabIndex = 30;
+            label13.Text = "可叠加数:";
             // 
             // label33
             // 
-            this.label33.AutoSize = true;
-            this.label33.Location = new System.Drawing.Point(23, 154);
-            this.label33.Name = "label33";
-            this.label33.Size = new System.Drawing.Size(53, 12);
-            this.label33.TabIndex = 71;
-            this.label33.Text = "性别类型";
+            label33.AutoSize = true;
+            label33.Location = new Point(23, 196);
+            label33.Margin = new Padding(4, 0, 4, 0);
+            label33.Name = "label33";
+            label33.Size = new Size(59, 17);
+            label33.TabIndex = 71;
+            label33.Text = "性别类型:";
+            label33.Click += label33_Click;
             // 
             // RGenderComboBox
             // 
-            this.RGenderComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.RGenderComboBox.FormattingEnabled = true;
-            this.RGenderComboBox.Location = new System.Drawing.Point(79, 150);
-            this.RGenderComboBox.Name = "RGenderComboBox";
-            this.RGenderComboBox.Size = new System.Drawing.Size(92, 20);
-            this.RGenderComboBox.TabIndex = 70;
-            this.RGenderComboBox.SelectedIndexChanged += new System.EventHandler(this.RGenderComboBox_SelectedIndexChanged);
+            RGenderComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            RGenderComboBox.FormattingEnabled = true;
+            RGenderComboBox.Location = new Point(85, 192);
+            RGenderComboBox.Margin = new Padding(4);
+            RGenderComboBox.Name = "RGenderComboBox";
+            RGenderComboBox.Size = new Size(107, 25);
+            RGenderComboBox.TabIndex = 70;
+            RGenderComboBox.SelectedIndexChanged += RGenderComboBox_SelectedIndexChanged;
             // 
             // ISetComboBox
             // 
-            this.ISetComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.ISetComboBox.FormattingEnabled = true;
-            this.ISetComboBox.Location = new System.Drawing.Point(79, 200);
-            this.ISetComboBox.Name = "ISetComboBox";
-            this.ISetComboBox.Size = new System.Drawing.Size(92, 20);
-            this.ISetComboBox.TabIndex = 74;
-            this.ISetComboBox.SelectedIndexChanged += new System.EventHandler(this.ISetComboBox_SelectedIndexChanged);
+            ISetComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            ISetComboBox.FormattingEnabled = true;
+            ISetComboBox.Location = new Point(85, 264);
+            ISetComboBox.Margin = new Padding(4);
+            ISetComboBox.Name = "ISetComboBox";
+            ISetComboBox.Size = new Size(107, 25);
+            ISetComboBox.TabIndex = 74;
+            ISetComboBox.SelectedIndexChanged += ISetComboBox_SelectedIndexChanged;
             // 
             // label35
             // 
-            this.label35.AutoSize = true;
-            this.label35.Location = new System.Drawing.Point(23, 204);
-            this.label35.Name = "label35";
-            this.label35.Size = new System.Drawing.Size(53, 12);
-            this.label35.TabIndex = 75;
-            this.label35.Text = "套装设置";
+            label35.AutoSize = true;
+            label35.Location = new Point(24, 268);
+            label35.Margin = new Padding(4, 0, 4, 0);
+            label35.Name = "label35";
+            label35.Size = new Size(59, 17);
+            label35.TabIndex = 75;
+            label35.Text = "套装设置:";
             // 
             // tabPage2
             // 
-            this.tabPage2.Controls.Add(this.DropRatetextBox);
-            this.tabPage2.Controls.Add(this.label63);
-            this.tabPage2.Controls.Add(this.GoldRatetextBox);
-            this.tabPage2.Controls.Add(this.label62);
-            this.tabPage2.Controls.Add(this.ExpRatetextBox);
-            this.tabPage2.Controls.Add(this.label61);
-            this.tabPage2.Controls.Add(this.MaxSCRatetextBox);
-            this.tabPage2.Controls.Add(this.label60);
-            this.tabPage2.Controls.Add(this.MaxMCRatetextBox);
-            this.tabPage2.Controls.Add(this.label59);
-            this.tabPage2.Controls.Add(this.MaxDCRatetextBox);
-            this.tabPage2.Controls.Add(this.label58);
-            this.tabPage2.Controls.Add(this.groupBox1);
-            this.tabPage2.Controls.Add(this.label37);
-            this.tabPage2.Controls.Add(this.label14);
-            this.tabPage2.Controls.Add(this.MinACTextBox);
-            this.tabPage2.Controls.Add(this.MPratetextbox);
-            this.tabPage2.Controls.Add(this.label15);
-            this.tabPage2.Controls.Add(this.label48);
-            this.tabPage2.Controls.Add(this.MaxACTextBox);
-            this.tabPage2.Controls.Add(this.label17);
-            this.tabPage2.Controls.Add(this.MinMACTextBox);
-            this.tabPage2.Controls.Add(this.label16);
-            this.tabPage2.Controls.Add(this.MaxMACTextBox);
-            this.tabPage2.Controls.Add(this.label21);
-            this.tabPage2.Controls.Add(this.MinDCTextBox);
-            this.tabPage2.Controls.Add(this.label20);
-            this.tabPage2.Controls.Add(this.MaxDCTextBox);
-            this.tabPage2.Controls.Add(this.label19);
-            this.tabPage2.Controls.Add(this.MinMCTextBox);
-            this.tabPage2.Controls.Add(this.label18);
-            this.tabPage2.Controls.Add(this.MaxMCTextBox);
-            this.tabPage2.Controls.Add(this.label23);
-            this.tabPage2.Controls.Add(this.MinSCTextBox);
-            this.tabPage2.Controls.Add(this.label22);
-            this.tabPage2.Controls.Add(this.HPratetextbox);
-            this.tabPage2.Controls.Add(this.MaxSCTextBox);
-            this.tabPage2.Controls.Add(this.label44);
-            this.tabPage2.Controls.Add(this.label25);
-            this.tabPage2.Controls.Add(this.PoisonRecoverytextBox);
-            this.tabPage2.Controls.Add(this.HPTextBox);
-            this.tabPage2.Controls.Add(this.label43);
-            this.tabPage2.Controls.Add(this.label24);
-            this.tabPage2.Controls.Add(this.SpellRecoverytextBox);
-            this.tabPage2.Controls.Add(this.MPTextBox);
-            this.tabPage2.Controls.Add(this.label42);
-            this.tabPage2.Controls.Add(this.label27);
-            this.tabPage2.Controls.Add(this.PoisonResisttextBox);
-            this.tabPage2.Controls.Add(this.AccuracyTextBox);
-            this.tabPage2.Controls.Add(this.label41);
-            this.tabPage2.Controls.Add(this.label26);
-            this.tabPage2.Controls.Add(this.MagicResisttextBox);
-            this.tabPage2.Controls.Add(this.AgilityTextBox);
-            this.tabPage2.Controls.Add(this.label40);
-            this.tabPage2.Controls.Add(this.label29);
-            this.tabPage2.Controls.Add(this.HealthRecoveryTextbox);
-            this.tabPage2.Controls.Add(this.ASpeedTextBox);
-            this.tabPage2.Controls.Add(this.label39);
-            this.tabPage2.Controls.Add(this.label28);
-            this.tabPage2.Controls.Add(this.StrongTextbox);
-            this.tabPage2.Controls.Add(this.LuckTextBox);
-            this.tabPage2.Controls.Add(this.label38);
-            this.tabPage2.Controls.Add(this.label31);
-            this.tabPage2.Controls.Add(this.MacRateTextbox);
-            this.tabPage2.Controls.Add(this.BWeightText);
-            this.tabPage2.Controls.Add(this.label30);
-            this.tabPage2.Controls.Add(this.ACRateTextbox);
-            this.tabPage2.Controls.Add(this.HWeightTextBox);
-            this.tabPage2.Controls.Add(this.label36);
-            this.tabPage2.Controls.Add(this.label32);
-            this.tabPage2.Controls.Add(this.WWeightTextBox);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(601, 358);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "基本属性";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            tabPage2.Controls.Add(DropRatetextBox);
+            tabPage2.Controls.Add(label63);
+            tabPage2.Controls.Add(GoldRatetextBox);
+            tabPage2.Controls.Add(label62);
+            tabPage2.Controls.Add(ExpRatetextBox);
+            tabPage2.Controls.Add(label61);
+            tabPage2.Controls.Add(MaxSCRatetextBox);
+            tabPage2.Controls.Add(label60);
+            tabPage2.Controls.Add(MaxMCRatetextBox);
+            tabPage2.Controls.Add(label59);
+            tabPage2.Controls.Add(MaxDCRatetextBox);
+            tabPage2.Controls.Add(label58);
+            tabPage2.Controls.Add(groupBox1);
+            tabPage2.Controls.Add(label37);
+            tabPage2.Controls.Add(label14);
+            tabPage2.Controls.Add(MinACTextBox);
+            tabPage2.Controls.Add(MPratetextbox);
+            tabPage2.Controls.Add(label15);
+            tabPage2.Controls.Add(label48);
+            tabPage2.Controls.Add(MaxACTextBox);
+            tabPage2.Controls.Add(label17);
+            tabPage2.Controls.Add(MinMACTextBox);
+            tabPage2.Controls.Add(label16);
+            tabPage2.Controls.Add(MaxMACTextBox);
+            tabPage2.Controls.Add(label21);
+            tabPage2.Controls.Add(MinDCTextBox);
+            tabPage2.Controls.Add(label20);
+            tabPage2.Controls.Add(MaxDCTextBox);
+            tabPage2.Controls.Add(label19);
+            tabPage2.Controls.Add(MinMCTextBox);
+            tabPage2.Controls.Add(label18);
+            tabPage2.Controls.Add(MaxMCTextBox);
+            tabPage2.Controls.Add(label23);
+            tabPage2.Controls.Add(MinSCTextBox);
+            tabPage2.Controls.Add(label22);
+            tabPage2.Controls.Add(HPratetextbox);
+            tabPage2.Controls.Add(MaxSCTextBox);
+            tabPage2.Controls.Add(label44);
+            tabPage2.Controls.Add(label25);
+            tabPage2.Controls.Add(PoisonRecoverytextBox);
+            tabPage2.Controls.Add(HPTextBox);
+            tabPage2.Controls.Add(label43);
+            tabPage2.Controls.Add(label24);
+            tabPage2.Controls.Add(SpellRecoverytextBox);
+            tabPage2.Controls.Add(MPTextBox);
+            tabPage2.Controls.Add(label42);
+            tabPage2.Controls.Add(label27);
+            tabPage2.Controls.Add(PoisonResisttextBox);
+            tabPage2.Controls.Add(AccuracyTextBox);
+            tabPage2.Controls.Add(label41);
+            tabPage2.Controls.Add(label26);
+            tabPage2.Controls.Add(MagicResisttextBox);
+            tabPage2.Controls.Add(AgilityTextBox);
+            tabPage2.Controls.Add(label40);
+            tabPage2.Controls.Add(label29);
+            tabPage2.Controls.Add(HealthRecoveryTextbox);
+            tabPage2.Controls.Add(ASpeedTextBox);
+            tabPage2.Controls.Add(label39);
+            tabPage2.Controls.Add(label28);
+            tabPage2.Controls.Add(StrongTextbox);
+            tabPage2.Controls.Add(LuckTextBox);
+            tabPage2.Controls.Add(label38);
+            tabPage2.Controls.Add(label31);
+            tabPage2.Controls.Add(MacRateTextbox);
+            tabPage2.Controls.Add(BWeightText);
+            tabPage2.Controls.Add(label30);
+            tabPage2.Controls.Add(ACRateTextbox);
+            tabPage2.Controls.Add(HWeightTextBox);
+            tabPage2.Controls.Add(label36);
+            tabPage2.Controls.Add(label32);
+            tabPage2.Controls.Add(WWeightTextBox);
+            tabPage2.Location = new Point(4, 26);
+            tabPage2.Margin = new Padding(4);
+            tabPage2.Name = "tabPage2";
+            tabPage2.Padding = new Padding(4);
+            tabPage2.Size = new Size(702, 514);
+            tabPage2.TabIndex = 1;
+            tabPage2.Text = "基本属性";
+            tabPage2.UseVisualStyleBackColor = true;
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.label50);
-            this.groupBox1.Controls.Add(this.label52);
-            this.groupBox1.Controls.Add(this.label49);
-            this.groupBox1.Controls.Add(this.ReflecttextBox);
-            this.groupBox1.Controls.Add(this.HpDrainRatetextBox);
-            this.groupBox1.Controls.Add(this.CriticalDamagetextBox);
-            this.groupBox1.Controls.Add(this.CriticalRatetextBox);
-            this.groupBox1.Controls.Add(this.label51);
-            this.groupBox1.Controls.Add(this.label46);
-            this.groupBox1.Controls.Add(this.Freezingtextbox);
-            this.groupBox1.Controls.Add(this.label47);
-            this.groupBox1.Controls.Add(this.PoisonAttacktextbox);
-            this.groupBox1.Controls.Add(this.label45);
-            this.groupBox1.Controls.Add(this.Holytextbox);
-            this.groupBox1.Location = new System.Drawing.Point(379, 236);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(220, 120);
-            this.groupBox1.TabIndex = 123;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "特殊属性";
+            groupBox1.Controls.Add(label50);
+            groupBox1.Controls.Add(label52);
+            groupBox1.Controls.Add(label49);
+            groupBox1.Controls.Add(ReflecttextBox);
+            groupBox1.Controls.Add(HpDrainRatetextBox);
+            groupBox1.Controls.Add(CriticalDamagetextBox);
+            groupBox1.Controls.Add(CriticalRatetextBox);
+            groupBox1.Controls.Add(label51);
+            groupBox1.Controls.Add(label46);
+            groupBox1.Controls.Add(Freezingtextbox);
+            groupBox1.Controls.Add(label47);
+            groupBox1.Controls.Add(PoisonAttacktextbox);
+            groupBox1.Controls.Add(label45);
+            groupBox1.Controls.Add(Holytextbox);
+            groupBox1.Location = new Point(442, 334);
+            groupBox1.Margin = new Padding(4);
+            groupBox1.Name = "groupBox1";
+            groupBox1.Padding = new Padding(4);
+            groupBox1.Size = new Size(257, 170);
+            groupBox1.TabIndex = 123;
+            groupBox1.TabStop = false;
+            groupBox1.Text = "特殊属性";
             // 
             // label50
             // 
-            this.label50.AutoSize = true;
-            this.label50.Location = new System.Drawing.Point(20, 25);
-            this.label50.Name = "label50";
-            this.label50.Size = new System.Drawing.Size(53, 12);
-            this.label50.TabIndex = 119;
-            this.label50.Text = "暴击倍率";
+            label50.AutoSize = true;
+            label50.Location = new Point(23, 35);
+            label50.Margin = new Padding(4, 0, 4, 0);
+            label50.Name = "label50";
+            label50.Size = new Size(56, 17);
+            label50.TabIndex = 119;
+            label50.Text = "暴击倍率";
             // 
             // label52
             // 
-            this.label52.AutoSize = true;
-            this.label52.Location = new System.Drawing.Point(116, 26);
-            this.label52.Name = "label52";
-            this.label52.Size = new System.Drawing.Size(53, 12);
-            this.label52.TabIndex = 122;
-            this.label52.Text = "反弹伤害";
+            label52.AutoSize = true;
+            label52.Location = new Point(135, 37);
+            label52.Margin = new Padding(4, 0, 4, 0);
+            label52.Name = "label52";
+            label52.Size = new Size(56, 17);
+            label52.TabIndex = 122;
+            label52.Text = "反弹伤害";
             // 
             // label49
             // 
-            this.label49.AutoSize = true;
-            this.label49.Location = new System.Drawing.Point(116, 48);
-            this.label49.Name = "label49";
-            this.label49.Size = new System.Drawing.Size(53, 12);
-            this.label49.TabIndex = 115;
-            this.label49.Text = "吸血数率";
+            label49.AutoSize = true;
+            label49.Location = new Point(135, 68);
+            label49.Margin = new Padding(4, 0, 4, 0);
+            label49.Name = "label49";
+            label49.Size = new Size(56, 17);
+            label49.TabIndex = 115;
+            label49.Text = "吸血数率";
             // 
             // ReflecttextBox
             // 
-            this.ReflecttextBox.Location = new System.Drawing.Point(171, 19);
-            this.ReflecttextBox.MaxLength = 3;
-            this.ReflecttextBox.Name = "ReflecttextBox";
-            this.ReflecttextBox.Size = new System.Drawing.Size(36, 21);
-            this.ReflecttextBox.TabIndex = 121;
-            this.ReflecttextBox.TextChanged += new System.EventHandler(this.ReflecttextBox_TextChanged);
+            ReflecttextBox.Location = new Point(200, 27);
+            ReflecttextBox.Margin = new Padding(4);
+            ReflecttextBox.MaxLength = 3;
+            ReflecttextBox.Name = "ReflecttextBox";
+            ReflecttextBox.Size = new Size(41, 23);
+            ReflecttextBox.TabIndex = 121;
+            ReflecttextBox.TextChanged += ReflecttextBox_TextChanged;
             // 
             // HpDrainRatetextBox
             // 
-            this.HpDrainRatetextBox.Location = new System.Drawing.Point(171, 43);
-            this.HpDrainRatetextBox.MaxLength = 3;
-            this.HpDrainRatetextBox.Name = "HpDrainRatetextBox";
-            this.HpDrainRatetextBox.Size = new System.Drawing.Size(36, 21);
-            this.HpDrainRatetextBox.TabIndex = 116;
-            this.HpDrainRatetextBox.TextChanged += new System.EventHandler(this.HpDrainRatetextBox_TextChanged);
+            HpDrainRatetextBox.Location = new Point(200, 61);
+            HpDrainRatetextBox.Margin = new Padding(4);
+            HpDrainRatetextBox.MaxLength = 3;
+            HpDrainRatetextBox.Name = "HpDrainRatetextBox";
+            HpDrainRatetextBox.Size = new Size(41, 23);
+            HpDrainRatetextBox.TabIndex = 116;
+            HpDrainRatetextBox.TextChanged += HpDrainRatetextBox_TextChanged;
             // 
             // CriticalDamagetextBox
             // 
-            this.CriticalDamagetextBox.Location = new System.Drawing.Point(76, 43);
-            this.CriticalDamagetextBox.MaxLength = 3;
-            this.CriticalDamagetextBox.Name = "CriticalDamagetextBox";
-            this.CriticalDamagetextBox.Size = new System.Drawing.Size(35, 21);
-            this.CriticalDamagetextBox.TabIndex = 118;
-            this.CriticalDamagetextBox.TextChanged += new System.EventHandler(this.CriticalDamagetextBox_TextChanged);
+            CriticalDamagetextBox.Location = new Point(89, 61);
+            CriticalDamagetextBox.Margin = new Padding(4);
+            CriticalDamagetextBox.MaxLength = 3;
+            CriticalDamagetextBox.Name = "CriticalDamagetextBox";
+            CriticalDamagetextBox.Size = new Size(40, 23);
+            CriticalDamagetextBox.TabIndex = 118;
+            CriticalDamagetextBox.TextChanged += CriticalDamagetextBox_TextChanged;
             // 
             // CriticalRatetextBox
             // 
-            this.CriticalRatetextBox.Location = new System.Drawing.Point(75, 19);
-            this.CriticalRatetextBox.MaxLength = 3;
-            this.CriticalRatetextBox.Name = "CriticalRatetextBox";
-            this.CriticalRatetextBox.Size = new System.Drawing.Size(36, 21);
-            this.CriticalRatetextBox.TabIndex = 117;
-            this.CriticalRatetextBox.TextChanged += new System.EventHandler(this.CriticalRatetextBox_TextChanged);
+            CriticalRatetextBox.Location = new Point(88, 27);
+            CriticalRatetextBox.Margin = new Padding(4);
+            CriticalRatetextBox.MaxLength = 3;
+            CriticalRatetextBox.Name = "CriticalRatetextBox";
+            CriticalRatetextBox.Size = new Size(41, 23);
+            CriticalRatetextBox.TabIndex = 117;
+            CriticalRatetextBox.TextChanged += CriticalRatetextBox_TextChanged;
             // 
             // label51
             // 
-            this.label51.AutoSize = true;
-            this.label51.Location = new System.Drawing.Point(20, 48);
-            this.label51.Name = "label51";
-            this.label51.Size = new System.Drawing.Size(53, 12);
-            this.label51.TabIndex = 120;
-            this.label51.Text = "暴击伤害";
+            label51.AutoSize = true;
+            label51.Location = new Point(23, 68);
+            label51.Margin = new Padding(4, 0, 4, 0);
+            label51.Name = "label51";
+            label51.Size = new Size(56, 17);
+            label51.TabIndex = 120;
+            label51.Text = "暴击伤害";
             // 
             // label46
             // 
-            this.label46.AutoSize = true;
-            this.label46.Location = new System.Drawing.Point(20, 96);
-            this.label46.Name = "label46";
-            this.label46.Size = new System.Drawing.Size(53, 12);
-            this.label46.TabIndex = 96;
-            this.label46.Text = "冰冻伤害";
+            label46.AutoSize = true;
+            label46.Location = new Point(23, 136);
+            label46.Margin = new Padding(4, 0, 4, 0);
+            label46.Name = "label46";
+            label46.Size = new Size(56, 17);
+            label46.TabIndex = 96;
+            label46.Text = "冰冻伤害";
             // 
             // Freezingtextbox
             // 
-            this.Freezingtextbox.Location = new System.Drawing.Point(75, 91);
-            this.Freezingtextbox.MaxLength = 3;
-            this.Freezingtextbox.Name = "Freezingtextbox";
-            this.Freezingtextbox.Size = new System.Drawing.Size(36, 21);
-            this.Freezingtextbox.TabIndex = 97;
-            this.Freezingtextbox.TextChanged += new System.EventHandler(this.Freezingtextbox_TextChanged);
+            Freezingtextbox.Location = new Point(88, 129);
+            Freezingtextbox.Margin = new Padding(4);
+            Freezingtextbox.MaxLength = 3;
+            Freezingtextbox.Name = "Freezingtextbox";
+            Freezingtextbox.Size = new Size(41, 23);
+            Freezingtextbox.TabIndex = 97;
+            Freezingtextbox.TextChanged += Freezingtextbox_TextChanged;
             // 
             // label47
             // 
-            this.label47.AutoSize = true;
-            this.label47.Location = new System.Drawing.Point(20, 72);
-            this.label47.Name = "label47";
-            this.label47.Size = new System.Drawing.Size(53, 12);
-            this.label47.TabIndex = 98;
-            this.label47.Text = "毒素伤害";
+            label47.AutoSize = true;
+            label47.Location = new Point(23, 102);
+            label47.Margin = new Padding(4, 0, 4, 0);
+            label47.Name = "label47";
+            label47.Size = new Size(56, 17);
+            label47.TabIndex = 98;
+            label47.Text = "毒素伤害";
             // 
             // PoisonAttacktextbox
             // 
-            this.PoisonAttacktextbox.Location = new System.Drawing.Point(76, 67);
-            this.PoisonAttacktextbox.MaxLength = 3;
-            this.PoisonAttacktextbox.Name = "PoisonAttacktextbox";
-            this.PoisonAttacktextbox.Size = new System.Drawing.Size(35, 21);
-            this.PoisonAttacktextbox.TabIndex = 99;
-            this.PoisonAttacktextbox.TextChanged += new System.EventHandler(this.PoisonAttacktextbox_TextChanged);
+            PoisonAttacktextbox.Location = new Point(89, 95);
+            PoisonAttacktextbox.Margin = new Padding(4);
+            PoisonAttacktextbox.MaxLength = 3;
+            PoisonAttacktextbox.Name = "PoisonAttacktextbox";
+            PoisonAttacktextbox.Size = new Size(40, 23);
+            PoisonAttacktextbox.TabIndex = 99;
+            PoisonAttacktextbox.TextChanged += PoisonAttacktextbox_TextChanged;
             // 
             // label45
             // 
-            this.label45.AutoSize = true;
-            this.label45.Location = new System.Drawing.Point(115, 72);
-            this.label45.Name = "label45";
-            this.label45.Size = new System.Drawing.Size(53, 12);
-            this.label45.TabIndex = 94;
-            this.label45.Text = "神圣伤害";
+            label45.AutoSize = true;
+            label45.Location = new Point(134, 102);
+            label45.Margin = new Padding(4, 0, 4, 0);
+            label45.Name = "label45";
+            label45.Size = new Size(56, 17);
+            label45.TabIndex = 94;
+            label45.Text = "神圣伤害";
             // 
             // Holytextbox
             // 
-            this.Holytextbox.Location = new System.Drawing.Point(171, 67);
-            this.Holytextbox.MaxLength = 3;
-            this.Holytextbox.Name = "Holytextbox";
-            this.Holytextbox.Size = new System.Drawing.Size(36, 21);
-            this.Holytextbox.TabIndex = 95;
-            this.Holytextbox.TextChanged += new System.EventHandler(this.Holytextbox_TextChanged);
+            Holytextbox.Location = new Point(200, 95);
+            Holytextbox.Margin = new Padding(4);
+            Holytextbox.MaxLength = 3;
+            Holytextbox.Name = "Holytextbox";
+            Holytextbox.Size = new Size(41, 23);
+            Holytextbox.TabIndex = 95;
+            Holytextbox.TextChanged += Holytextbox_TextChanged;
             // 
             // label37
             // 
-            this.label37.AutoSize = true;
-            this.label37.Location = new System.Drawing.Point(452, 133);
-            this.label37.Name = "label37";
-            this.label37.Size = new System.Drawing.Size(101, 12);
-            this.label37.TabIndex = 78;
-            this.label37.Text = "最大魔法防御数率";
+            label37.AutoSize = true;
+            label37.Location = new Point(527, 188);
+            label37.Margin = new Padding(4, 0, 4, 0);
+            label37.Name = "label37";
+            label37.Size = new Size(104, 17);
+            label37.TabIndex = 78;
+            label37.Text = "最大魔法防御数率";
             // 
             // label14
             // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(10, 14);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(53, 12);
-            this.label14.TabIndex = 32;
-            this.label14.Text = "最小物防";
+            label14.AutoSize = true;
+            label14.Location = new Point(12, 20);
+            label14.Margin = new Padding(4, 0, 4, 0);
+            label14.Name = "label14";
+            label14.Size = new Size(56, 17);
+            label14.TabIndex = 32;
+            label14.Text = "最小物防";
             // 
             // MinACTextBox
             // 
-            this.MinACTextBox.Location = new System.Drawing.Point(66, 9);
-            this.MinACTextBox.MaxLength = 3;
-            this.MinACTextBox.Name = "MinACTextBox";
-            this.MinACTextBox.Size = new System.Drawing.Size(36, 21);
-            this.MinACTextBox.TabIndex = 13;
-            this.MinACTextBox.TextChanged += new System.EventHandler(this.MinACTextBox_TextChanged);
+            MinACTextBox.Location = new Point(77, 13);
+            MinACTextBox.Margin = new Padding(4);
+            MinACTextBox.MaxLength = 3;
+            MinACTextBox.Name = "MinACTextBox";
+            MinACTextBox.Size = new Size(41, 23);
+            MinACTextBox.TabIndex = 13;
+            MinACTextBox.TextChanged += MinACTextBox_TextChanged;
             // 
             // MPratetextbox
             // 
-            this.MPratetextbox.Location = new System.Drawing.Point(167, 209);
-            this.MPratetextbox.MaxLength = 3;
-            this.MPratetextbox.Name = "MPratetextbox";
-            this.MPratetextbox.Size = new System.Drawing.Size(35, 21);
-            this.MPratetextbox.TabIndex = 114;
-            this.MPratetextbox.TextChanged += new System.EventHandler(this.MPratetextBox_TextChanged);
+            MPratetextbox.Location = new Point(195, 296);
+            MPratetextbox.Margin = new Padding(4);
+            MPratetextbox.MaxLength = 3;
+            MPratetextbox.Name = "MPratetextbox";
+            MPratetextbox.Size = new Size(40, 23);
+            MPratetextbox.TabIndex = 114;
+            MPratetextbox.TextChanged += MPratetextBox_TextChanged;
             // 
             // label15
             // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(10, 36);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(53, 12);
-            this.label15.TabIndex = 34;
-            this.label15.Text = "最大物防";
+            label15.AutoSize = true;
+            label15.Location = new Point(12, 51);
+            label15.Margin = new Padding(4, 0, 4, 0);
+            label15.Name = "label15";
+            label15.Size = new Size(56, 17);
+            label15.TabIndex = 34;
+            label15.Text = "最大物防";
             // 
             // label48
             // 
-            this.label48.AutoSize = true;
-            this.label48.Location = new System.Drawing.Point(109, 215);
-            this.label48.Name = "label48";
-            this.label48.Size = new System.Drawing.Size(59, 12);
-            this.label48.TabIndex = 113;
-            this.label48.Text = "法力值(%)";
+            label48.AutoSize = true;
+            label48.Location = new Point(127, 305);
+            label48.Margin = new Padding(4, 0, 4, 0);
+            label48.Name = "label48";
+            label48.Size = new Size(63, 17);
+            label48.TabIndex = 113;
+            label48.Text = "法力值(%)";
             // 
             // MaxACTextBox
             // 
-            this.MaxACTextBox.Location = new System.Drawing.Point(66, 32);
-            this.MaxACTextBox.MaxLength = 3;
-            this.MaxACTextBox.Name = "MaxACTextBox";
-            this.MaxACTextBox.Size = new System.Drawing.Size(36, 21);
-            this.MaxACTextBox.TabIndex = 14;
-            this.MaxACTextBox.TextChanged += new System.EventHandler(this.MaxACTextBox_TextChanged);
+            MaxACTextBox.Location = new Point(77, 45);
+            MaxACTextBox.Margin = new Padding(4);
+            MaxACTextBox.MaxLength = 3;
+            MaxACTextBox.Name = "MaxACTextBox";
+            MaxACTextBox.Size = new Size(41, 23);
+            MaxACTextBox.TabIndex = 14;
+            MaxACTextBox.TextChanged += MaxACTextBox_TextChanged;
             // 
             // label17
             // 
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(108, 15);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(53, 12);
-            this.label17.TabIndex = 14;
-            this.label17.Text = "最小魔防";
+            label17.AutoSize = true;
+            label17.Location = new Point(126, 21);
+            label17.Margin = new Padding(4, 0, 4, 0);
+            label17.Name = "label17";
+            label17.Size = new Size(56, 17);
+            label17.TabIndex = 14;
+            label17.Text = "最小魔防";
             // 
             // MinMACTextBox
             // 
-            this.MinMACTextBox.Location = new System.Drawing.Point(164, 10);
-            this.MinMACTextBox.MaxLength = 3;
-            this.MinMACTextBox.Name = "MinMACTextBox";
-            this.MinMACTextBox.Size = new System.Drawing.Size(36, 21);
-            this.MinMACTextBox.TabIndex = 15;
-            this.MinMACTextBox.TextChanged += new System.EventHandler(this.MinMACTextBox_TextChanged);
+            MinMACTextBox.Location = new Point(191, 14);
+            MinMACTextBox.Margin = new Padding(4);
+            MinMACTextBox.MaxLength = 3;
+            MinMACTextBox.Name = "MinMACTextBox";
+            MinMACTextBox.Size = new Size(41, 23);
+            MinMACTextBox.TabIndex = 15;
+            MinMACTextBox.TextChanged += MinMACTextBox_TextChanged;
             // 
             // label16
             // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(108, 37);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(53, 12);
-            this.label16.TabIndex = 38;
-            this.label16.Text = "最大魔防";
+            label16.AutoSize = true;
+            label16.Location = new Point(126, 52);
+            label16.Margin = new Padding(4, 0, 4, 0);
+            label16.Name = "label16";
+            label16.Size = new Size(56, 17);
+            label16.TabIndex = 38;
+            label16.Text = "最大魔防";
             // 
             // MaxMACTextBox
             // 
-            this.MaxMACTextBox.Location = new System.Drawing.Point(164, 32);
-            this.MaxMACTextBox.MaxLength = 3;
-            this.MaxMACTextBox.Name = "MaxMACTextBox";
-            this.MaxMACTextBox.Size = new System.Drawing.Size(36, 21);
-            this.MaxMACTextBox.TabIndex = 16;
-            this.MaxMACTextBox.TextChanged += new System.EventHandler(this.MaxMACTextBox_TextChanged);
+            MaxMACTextBox.Location = new Point(191, 45);
+            MaxMACTextBox.Margin = new Padding(4);
+            MaxMACTextBox.MaxLength = 3;
+            MaxMACTextBox.Name = "MaxMACTextBox";
+            MaxMACTextBox.Size = new Size(41, 23);
+            MaxMACTextBox.TabIndex = 16;
+            MaxMACTextBox.TextChanged += MaxMACTextBox_TextChanged;
             // 
             // label21
             // 
-            this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(204, 14);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(53, 12);
-            this.label21.TabIndex = 40;
-            this.label21.Text = "最小物攻";
+            label21.AutoSize = true;
+            label21.Location = new Point(238, 20);
+            label21.Margin = new Padding(4, 0, 4, 0);
+            label21.Name = "label21";
+            label21.Size = new Size(56, 17);
+            label21.TabIndex = 40;
+            label21.Text = "最小物攻";
             // 
             // MinDCTextBox
             // 
-            this.MinDCTextBox.Location = new System.Drawing.Point(260, 9);
-            this.MinDCTextBox.MaxLength = 3;
-            this.MinDCTextBox.Name = "MinDCTextBox";
-            this.MinDCTextBox.Size = new System.Drawing.Size(36, 21);
-            this.MinDCTextBox.TabIndex = 17;
-            this.MinDCTextBox.TextChanged += new System.EventHandler(this.MinDCTextBox_TextChanged);
+            MinDCTextBox.Location = new Point(303, 13);
+            MinDCTextBox.Margin = new Padding(4);
+            MinDCTextBox.MaxLength = 3;
+            MinDCTextBox.Name = "MinDCTextBox";
+            MinDCTextBox.Size = new Size(41, 23);
+            MinDCTextBox.TabIndex = 17;
+            MinDCTextBox.TextChanged += MinDCTextBox_TextChanged;
             // 
             // label20
             // 
-            this.label20.AutoSize = true;
-            this.label20.Location = new System.Drawing.Point(204, 36);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(53, 12);
-            this.label20.TabIndex = 42;
-            this.label20.Text = "最大物攻";
+            label20.AutoSize = true;
+            label20.Location = new Point(238, 51);
+            label20.Margin = new Padding(4, 0, 4, 0);
+            label20.Name = "label20";
+            label20.Size = new Size(56, 17);
+            label20.TabIndex = 42;
+            label20.Text = "最大物攻";
             // 
             // MaxDCTextBox
             // 
-            this.MaxDCTextBox.Location = new System.Drawing.Point(260, 32);
-            this.MaxDCTextBox.MaxLength = 3;
-            this.MaxDCTextBox.Name = "MaxDCTextBox";
-            this.MaxDCTextBox.Size = new System.Drawing.Size(36, 21);
-            this.MaxDCTextBox.TabIndex = 18;
-            this.MaxDCTextBox.TextChanged += new System.EventHandler(this.MaxDCTextBox_TextChanged);
+            MaxDCTextBox.Location = new Point(303, 45);
+            MaxDCTextBox.Margin = new Padding(4);
+            MaxDCTextBox.MaxLength = 3;
+            MaxDCTextBox.Name = "MaxDCTextBox";
+            MaxDCTextBox.Size = new Size(41, 23);
+            MaxDCTextBox.TabIndex = 18;
+            MaxDCTextBox.TextChanged += MaxDCTextBox_TextChanged;
             // 
             // label19
             // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(300, 14);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(53, 12);
-            this.label19.TabIndex = 44;
-            this.label19.Text = "最小魔攻";
+            label19.AutoSize = true;
+            label19.Location = new Point(350, 20);
+            label19.Margin = new Padding(4, 0, 4, 0);
+            label19.Name = "label19";
+            label19.Size = new Size(56, 17);
+            label19.TabIndex = 44;
+            label19.Text = "最小魔攻";
             // 
             // MinMCTextBox
             // 
-            this.MinMCTextBox.Location = new System.Drawing.Point(356, 10);
-            this.MinMCTextBox.MaxLength = 3;
-            this.MinMCTextBox.Name = "MinMCTextBox";
-            this.MinMCTextBox.Size = new System.Drawing.Size(36, 21);
-            this.MinMCTextBox.TabIndex = 19;
-            this.MinMCTextBox.TextChanged += new System.EventHandler(this.MinMCTextBox_TextChanged);
+            MinMCTextBox.Location = new Point(415, 14);
+            MinMCTextBox.Margin = new Padding(4);
+            MinMCTextBox.MaxLength = 3;
+            MinMCTextBox.Name = "MinMCTextBox";
+            MinMCTextBox.Size = new Size(41, 23);
+            MinMCTextBox.TabIndex = 19;
+            MinMCTextBox.TextChanged += MinMCTextBox_TextChanged;
             // 
             // label18
             // 
-            this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(300, 38);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(53, 12);
-            this.label18.TabIndex = 46;
-            this.label18.Text = "最大魔攻";
+            label18.AutoSize = true;
+            label18.Location = new Point(350, 54);
+            label18.Margin = new Padding(4, 0, 4, 0);
+            label18.Name = "label18";
+            label18.Size = new Size(56, 17);
+            label18.TabIndex = 46;
+            label18.Text = "最大魔攻";
             // 
             // MaxMCTextBox
             // 
-            this.MaxMCTextBox.Location = new System.Drawing.Point(356, 33);
-            this.MaxMCTextBox.MaxLength = 3;
-            this.MaxMCTextBox.Name = "MaxMCTextBox";
-            this.MaxMCTextBox.Size = new System.Drawing.Size(36, 21);
-            this.MaxMCTextBox.TabIndex = 20;
-            this.MaxMCTextBox.TextChanged += new System.EventHandler(this.MaxMCTextBox_TextChanged);
+            MaxMCTextBox.Location = new Point(415, 47);
+            MaxMCTextBox.Margin = new Padding(4);
+            MaxMCTextBox.MaxLength = 3;
+            MaxMCTextBox.Name = "MaxMCTextBox";
+            MaxMCTextBox.Size = new Size(41, 23);
+            MaxMCTextBox.TabIndex = 20;
+            MaxMCTextBox.TextChanged += MaxMCTextBox_TextChanged;
             // 
             // label23
             // 
-            this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(396, 14);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(53, 12);
-            this.label23.TabIndex = 48;
-            this.label23.Text = "最小道攻";
+            label23.AutoSize = true;
+            label23.Location = new Point(462, 20);
+            label23.Margin = new Padding(4, 0, 4, 0);
+            label23.Name = "label23";
+            label23.Size = new Size(56, 17);
+            label23.TabIndex = 48;
+            label23.Text = "最小道攻";
             // 
             // MinSCTextBox
             // 
-            this.MinSCTextBox.Location = new System.Drawing.Point(452, 9);
-            this.MinSCTextBox.MaxLength = 3;
-            this.MinSCTextBox.Name = "MinSCTextBox";
-            this.MinSCTextBox.Size = new System.Drawing.Size(36, 21);
-            this.MinSCTextBox.TabIndex = 21;
-            this.MinSCTextBox.TextChanged += new System.EventHandler(this.MinSCTextBox_TextChanged);
+            MinSCTextBox.Location = new Point(527, 13);
+            MinSCTextBox.Margin = new Padding(4);
+            MinSCTextBox.MaxLength = 3;
+            MinSCTextBox.Name = "MinSCTextBox";
+            MinSCTextBox.Size = new Size(41, 23);
+            MinSCTextBox.TabIndex = 21;
+            MinSCTextBox.TextChanged += MinSCTextBox_TextChanged;
             // 
             // label22
             // 
-            this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(396, 37);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(53, 12);
-            this.label22.TabIndex = 50;
-            this.label22.Text = "最大道攻";
+            label22.AutoSize = true;
+            label22.Location = new Point(462, 52);
+            label22.Margin = new Padding(4, 0, 4, 0);
+            label22.Name = "label22";
+            label22.Size = new Size(56, 17);
+            label22.TabIndex = 50;
+            label22.Text = "最大道攻";
             // 
             // HPratetextbox
             // 
-            this.HPratetextbox.Location = new System.Drawing.Point(69, 210);
-            this.HPratetextbox.MaxLength = 3;
-            this.HPratetextbox.Name = "HPratetextbox";
-            this.HPratetextbox.Size = new System.Drawing.Size(36, 21);
-            this.HPratetextbox.TabIndex = 93;
-            this.HPratetextbox.TextChanged += new System.EventHandler(this.HporMpRatetextbox_TextChanged);
+            HPratetextbox.Location = new Point(80, 298);
+            HPratetextbox.Margin = new Padding(4);
+            HPratetextbox.MaxLength = 3;
+            HPratetextbox.Name = "HPratetextbox";
+            HPratetextbox.Size = new Size(41, 23);
+            HPratetextbox.TabIndex = 93;
+            HPratetextbox.TextChanged += HporMpRatetextbox_TextChanged;
             // 
             // MaxSCTextBox
             // 
-            this.MaxSCTextBox.Location = new System.Drawing.Point(452, 32);
-            this.MaxSCTextBox.MaxLength = 3;
-            this.MaxSCTextBox.Name = "MaxSCTextBox";
-            this.MaxSCTextBox.Size = new System.Drawing.Size(36, 21);
-            this.MaxSCTextBox.TabIndex = 22;
-            this.MaxSCTextBox.TextChanged += new System.EventHandler(this.MaxSCTextBox_TextChanged);
+            MaxSCTextBox.Location = new Point(527, 45);
+            MaxSCTextBox.Margin = new Padding(4);
+            MaxSCTextBox.MaxLength = 3;
+            MaxSCTextBox.Name = "MaxSCTextBox";
+            MaxSCTextBox.Size = new Size(41, 23);
+            MaxSCTextBox.TabIndex = 22;
+            MaxSCTextBox.TextChanged += MaxSCTextBox_TextChanged;
             // 
             // label44
             // 
-            this.label44.AutoSize = true;
-            this.label44.Location = new System.Drawing.Point(11, 215);
-            this.label44.Name = "label44";
-            this.label44.Size = new System.Drawing.Size(59, 12);
-            this.label44.TabIndex = 92;
-            this.label44.Text = "生命值(%)";
+            label44.AutoSize = true;
+            label44.Location = new Point(13, 305);
+            label44.Margin = new Padding(4, 0, 4, 0);
+            label44.Name = "label44";
+            label44.Size = new Size(63, 17);
+            label44.TabIndex = 92;
+            label44.Text = "生命值(%)";
             // 
             // label25
             // 
-            this.label25.AutoSize = true;
-            this.label25.Location = new System.Drawing.Point(25, 191);
-            this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(41, 12);
-            this.label25.TabIndex = 52;
-            this.label25.Text = "生命值";
+            label25.AutoSize = true;
+            label25.Location = new Point(29, 271);
+            label25.Margin = new Padding(4, 0, 4, 0);
+            label25.Name = "label25";
+            label25.Size = new Size(44, 17);
+            label25.TabIndex = 52;
+            label25.Text = "生命值";
             // 
             // PoisonRecoverytextBox
             // 
-            this.PoisonRecoverytextBox.Location = new System.Drawing.Point(167, 281);
-            this.PoisonRecoverytextBox.MaxLength = 3;
-            this.PoisonRecoverytextBox.Name = "PoisonRecoverytextBox";
-            this.PoisonRecoverytextBox.Size = new System.Drawing.Size(36, 21);
-            this.PoisonRecoverytextBox.TabIndex = 91;
-            this.PoisonRecoverytextBox.TextChanged += new System.EventHandler(this.PoisonRecoverytextBox_TextChanged);
+            PoisonRecoverytextBox.Location = new Point(195, 398);
+            PoisonRecoverytextBox.Margin = new Padding(4);
+            PoisonRecoverytextBox.MaxLength = 3;
+            PoisonRecoverytextBox.Name = "PoisonRecoverytextBox";
+            PoisonRecoverytextBox.Size = new Size(41, 23);
+            PoisonRecoverytextBox.TabIndex = 91;
+            PoisonRecoverytextBox.TextChanged += PoisonRecoverytextBox_TextChanged;
             // 
             // HPTextBox
             // 
-            this.HPTextBox.Location = new System.Drawing.Point(69, 186);
-            this.HPTextBox.MaxLength = 3;
-            this.HPTextBox.Name = "HPTextBox";
-            this.HPTextBox.Size = new System.Drawing.Size(36, 21);
-            this.HPTextBox.TabIndex = 23;
-            this.HPTextBox.TextChanged += new System.EventHandler(this.HPTextBox_TextChanged);
+            HPTextBox.Location = new Point(80, 264);
+            HPTextBox.Margin = new Padding(4);
+            HPTextBox.MaxLength = 3;
+            HPTextBox.Name = "HPTextBox";
+            HPTextBox.Size = new Size(41, 23);
+            HPTextBox.TabIndex = 23;
+            HPTextBox.TextChanged += HPTextBox_TextChanged;
             // 
             // label43
             // 
-            this.label43.AutoSize = true;
-            this.label43.Location = new System.Drawing.Point(111, 285);
-            this.label43.Name = "label43";
-            this.label43.Size = new System.Drawing.Size(53, 12);
-            this.label43.TabIndex = 90;
-            this.label43.Text = "中毒恢复";
+            label43.AutoSize = true;
+            label43.Location = new Point(130, 404);
+            label43.Margin = new Padding(4, 0, 4, 0);
+            label43.Name = "label43";
+            label43.Size = new Size(56, 17);
+            label43.TabIndex = 90;
+            label43.Text = "中毒恢复";
             // 
             // label24
             // 
-            this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(123, 191);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(41, 12);
-            this.label24.TabIndex = 54;
-            this.label24.Text = "法力值";
+            label24.AutoSize = true;
+            label24.Location = new Point(144, 271);
+            label24.Margin = new Padding(4, 0, 4, 0);
+            label24.Name = "label24";
+            label24.Size = new Size(44, 17);
+            label24.TabIndex = 54;
+            label24.Text = "法力值";
             // 
             // SpellRecoverytextBox
             // 
-            this.SpellRecoverytextBox.Location = new System.Drawing.Point(167, 233);
-            this.SpellRecoverytextBox.MaxLength = 3;
-            this.SpellRecoverytextBox.Name = "SpellRecoverytextBox";
-            this.SpellRecoverytextBox.Size = new System.Drawing.Size(36, 21);
-            this.SpellRecoverytextBox.TabIndex = 89;
-            this.SpellRecoverytextBox.TextChanged += new System.EventHandler(this.SpellRecoverytextBox_TextChanged);
+            SpellRecoverytextBox.Location = new Point(195, 330);
+            SpellRecoverytextBox.Margin = new Padding(4);
+            SpellRecoverytextBox.MaxLength = 3;
+            SpellRecoverytextBox.Name = "SpellRecoverytextBox";
+            SpellRecoverytextBox.Size = new Size(41, 23);
+            SpellRecoverytextBox.TabIndex = 89;
+            SpellRecoverytextBox.TextChanged += SpellRecoverytextBox_TextChanged;
             // 
             // MPTextBox
             // 
-            this.MPTextBox.Location = new System.Drawing.Point(167, 186);
-            this.MPTextBox.MaxLength = 3;
-            this.MPTextBox.Name = "MPTextBox";
-            this.MPTextBox.Size = new System.Drawing.Size(35, 21);
-            this.MPTextBox.TabIndex = 24;
-            this.MPTextBox.TextChanged += new System.EventHandler(this.MPTextBox_TextChanged);
+            MPTextBox.Location = new Point(195, 264);
+            MPTextBox.Margin = new Padding(4);
+            MPTextBox.MaxLength = 3;
+            MPTextBox.Name = "MPTextBox";
+            MPTextBox.Size = new Size(40, 23);
+            MPTextBox.TabIndex = 24;
+            MPTextBox.TextChanged += MPTextBox_TextChanged;
             // 
             // label42
             // 
-            this.label42.AutoSize = true;
-            this.label42.Location = new System.Drawing.Point(111, 238);
-            this.label42.Name = "label42";
-            this.label42.Size = new System.Drawing.Size(53, 12);
-            this.label42.TabIndex = 88;
-            this.label42.Text = "法力恢复";
+            label42.AutoSize = true;
+            label42.Location = new Point(130, 337);
+            label42.Margin = new Padding(4, 0, 4, 0);
+            label42.Name = "label42";
+            label42.Size = new Size(56, 17);
+            label42.TabIndex = 88;
+            label42.Text = "法力恢复";
             // 
             // label27
             // 
-            this.label27.AutoSize = true;
-            this.label27.Location = new System.Drawing.Point(132, 334);
-            this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(29, 12);
-            this.label27.TabIndex = 56;
-            this.label27.Text = "准确";
+            label27.AutoSize = true;
+            label27.Location = new Point(154, 473);
+            label27.Margin = new Padding(4, 0, 4, 0);
+            label27.Name = "label27";
+            label27.Size = new Size(32, 17);
+            label27.TabIndex = 56;
+            label27.Text = "准确";
             // 
             // PoisonResisttextBox
             // 
-            this.PoisonResisttextBox.Location = new System.Drawing.Point(167, 257);
-            this.PoisonResisttextBox.MaxLength = 3;
-            this.PoisonResisttextBox.Name = "PoisonResisttextBox";
-            this.PoisonResisttextBox.Size = new System.Drawing.Size(36, 21);
-            this.PoisonResisttextBox.TabIndex = 87;
-            this.PoisonResisttextBox.TextChanged += new System.EventHandler(this.PoisonResisttextBox_TextChanged);
+            PoisonResisttextBox.Location = new Point(195, 364);
+            PoisonResisttextBox.Margin = new Padding(4);
+            PoisonResisttextBox.MaxLength = 3;
+            PoisonResisttextBox.Name = "PoisonResisttextBox";
+            PoisonResisttextBox.Size = new Size(41, 23);
+            PoisonResisttextBox.TabIndex = 87;
+            PoisonResisttextBox.TextChanged += PoisonResisttextBox_TextChanged;
             // 
             // AccuracyTextBox
             // 
-            this.AccuracyTextBox.Location = new System.Drawing.Point(166, 329);
-            this.AccuracyTextBox.MaxLength = 3;
-            this.AccuracyTextBox.Name = "AccuracyTextBox";
-            this.AccuracyTextBox.Size = new System.Drawing.Size(37, 21);
-            this.AccuracyTextBox.TabIndex = 25;
-            this.AccuracyTextBox.TextChanged += new System.EventHandler(this.AccuracyTextBox_TextChanged);
+            AccuracyTextBox.Location = new Point(194, 466);
+            AccuracyTextBox.Margin = new Padding(4);
+            AccuracyTextBox.MaxLength = 3;
+            AccuracyTextBox.Name = "AccuracyTextBox";
+            AccuracyTextBox.Size = new Size(42, 23);
+            AccuracyTextBox.TabIndex = 25;
+            AccuracyTextBox.TextChanged += AccuracyTextBox_TextChanged;
             // 
             // label41
             // 
-            this.label41.AutoSize = true;
-            this.label41.Location = new System.Drawing.Point(111, 261);
-            this.label41.Name = "label41";
-            this.label41.Size = new System.Drawing.Size(53, 12);
-            this.label41.TabIndex = 86;
-            this.label41.Text = "毒物躲避";
+            label41.AutoSize = true;
+            label41.Location = new Point(130, 370);
+            label41.Margin = new Padding(4, 0, 4, 0);
+            label41.Name = "label41";
+            label41.Size = new Size(56, 17);
+            label41.TabIndex = 86;
+            label41.Text = "毒物躲避";
             // 
             // label26
             // 
-            this.label26.AutoSize = true;
-            this.label26.Location = new System.Drawing.Point(34, 334);
-            this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(29, 12);
-            this.label26.TabIndex = 58;
-            this.label26.Text = "敏捷";
+            label26.AutoSize = true;
+            label26.Location = new Point(40, 473);
+            label26.Margin = new Padding(4, 0, 4, 0);
+            label26.Name = "label26";
+            label26.Size = new Size(32, 17);
+            label26.TabIndex = 58;
+            label26.Text = "敏捷";
             // 
             // MagicResisttextBox
             // 
-            this.MagicResisttextBox.Location = new System.Drawing.Point(69, 258);
-            this.MagicResisttextBox.MaxLength = 3;
-            this.MagicResisttextBox.Name = "MagicResisttextBox";
-            this.MagicResisttextBox.Size = new System.Drawing.Size(36, 21);
-            this.MagicResisttextBox.TabIndex = 85;
-            this.MagicResisttextBox.TextChanged += new System.EventHandler(this.MagicResisttextBox_TextChanged);
+            MagicResisttextBox.Location = new Point(80, 366);
+            MagicResisttextBox.Margin = new Padding(4);
+            MagicResisttextBox.MaxLength = 3;
+            MagicResisttextBox.Name = "MagicResisttextBox";
+            MagicResisttextBox.Size = new Size(41, 23);
+            MagicResisttextBox.TabIndex = 85;
+            MagicResisttextBox.TextChanged += MagicResisttextBox_TextChanged;
             // 
             // AgilityTextBox
             // 
-            this.AgilityTextBox.Location = new System.Drawing.Point(67, 330);
-            this.AgilityTextBox.MaxLength = 3;
-            this.AgilityTextBox.Name = "AgilityTextBox";
-            this.AgilityTextBox.Size = new System.Drawing.Size(36, 21);
-            this.AgilityTextBox.TabIndex = 26;
-            this.AgilityTextBox.TextChanged += new System.EventHandler(this.AgilityTextBox_TextChanged);
+            AgilityTextBox.Location = new Point(78, 468);
+            AgilityTextBox.Margin = new Padding(4);
+            AgilityTextBox.MaxLength = 3;
+            AgilityTextBox.Name = "AgilityTextBox";
+            AgilityTextBox.Size = new Size(41, 23);
+            AgilityTextBox.TabIndex = 26;
+            AgilityTextBox.TextChanged += AgilityTextBox_TextChanged;
             // 
             // label40
             // 
-            this.label40.AutoSize = true;
-            this.label40.Location = new System.Drawing.Point(13, 262);
-            this.label40.Name = "label40";
-            this.label40.Size = new System.Drawing.Size(53, 12);
-            this.label40.TabIndex = 84;
-            this.label40.Text = "魔法躲避";
+            label40.AutoSize = true;
+            label40.Location = new Point(15, 371);
+            label40.Margin = new Padding(4, 0, 4, 0);
+            label40.Name = "label40";
+            label40.Size = new Size(56, 17);
+            label40.TabIndex = 84;
+            label40.Text = "魔法躲避";
             // 
             // label29
             // 
-            this.label29.AutoSize = true;
-            this.label29.Location = new System.Drawing.Point(11, 287);
-            this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(53, 12);
-            this.label29.TabIndex = 60;
-            this.label29.Text = "攻击速度";
+            label29.AutoSize = true;
+            label29.Location = new Point(13, 407);
+            label29.Margin = new Padding(4, 0, 4, 0);
+            label29.Name = "label29";
+            label29.Size = new Size(56, 17);
+            label29.TabIndex = 60;
+            label29.Text = "攻击速度";
             // 
             // HealthRecoveryTextbox
             // 
-            this.HealthRecoveryTextbox.Location = new System.Drawing.Point(69, 234);
-            this.HealthRecoveryTextbox.MaxLength = 3;
-            this.HealthRecoveryTextbox.Name = "HealthRecoveryTextbox";
-            this.HealthRecoveryTextbox.Size = new System.Drawing.Size(36, 21);
-            this.HealthRecoveryTextbox.TabIndex = 83;
-            this.HealthRecoveryTextbox.TextChanged += new System.EventHandler(this.HealthRecoveryTextbox_TextChanged);
+            HealthRecoveryTextbox.Location = new Point(80, 332);
+            HealthRecoveryTextbox.Margin = new Padding(4);
+            HealthRecoveryTextbox.MaxLength = 3;
+            HealthRecoveryTextbox.Name = "HealthRecoveryTextbox";
+            HealthRecoveryTextbox.Size = new Size(41, 23);
+            HealthRecoveryTextbox.TabIndex = 83;
+            HealthRecoveryTextbox.TextChanged += HealthRecoveryTextbox_TextChanged;
             // 
             // ASpeedTextBox
             // 
-            this.ASpeedTextBox.Location = new System.Drawing.Point(67, 282);
-            this.ASpeedTextBox.MaxLength = 4;
-            this.ASpeedTextBox.Name = "ASpeedTextBox";
-            this.ASpeedTextBox.Size = new System.Drawing.Size(36, 21);
-            this.ASpeedTextBox.TabIndex = 27;
-            this.ASpeedTextBox.TextChanged += new System.EventHandler(this.ASpeedTextBox_TextChanged);
+            ASpeedTextBox.Location = new Point(78, 400);
+            ASpeedTextBox.Margin = new Padding(4);
+            ASpeedTextBox.MaxLength = 4;
+            ASpeedTextBox.Name = "ASpeedTextBox";
+            ASpeedTextBox.Size = new Size(41, 23);
+            ASpeedTextBox.TabIndex = 27;
+            ASpeedTextBox.TextChanged += ASpeedTextBox_TextChanged;
             // 
             // label39
             // 
-            this.label39.AutoSize = true;
-            this.label39.Location = new System.Drawing.Point(13, 238);
-            this.label39.Name = "label39";
-            this.label39.Size = new System.Drawing.Size(53, 12);
-            this.label39.TabIndex = 82;
-            this.label39.Text = "生命恢复";
+            label39.AutoSize = true;
+            label39.Location = new Point(15, 337);
+            label39.Margin = new Padding(4, 0, 4, 0);
+            label39.Name = "label39";
+            label39.Size = new Size(56, 17);
+            label39.TabIndex = 82;
+            label39.Text = "生命恢复";
             // 
             // label28
             // 
-            this.label28.AutoSize = true;
-            this.label28.Location = new System.Drawing.Point(35, 311);
-            this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(29, 12);
-            this.label28.TabIndex = 62;
-            this.label28.Text = "幸运";
+            label28.AutoSize = true;
+            label28.Location = new Point(41, 441);
+            label28.Margin = new Padding(4, 0, 4, 0);
+            label28.Name = "label28";
+            label28.Size = new Size(32, 17);
+            label28.TabIndex = 62;
+            label28.Text = "幸运";
             // 
             // StrongTextbox
             // 
-            this.StrongTextbox.Location = new System.Drawing.Point(165, 305);
-            this.StrongTextbox.MaxLength = 3;
-            this.StrongTextbox.Name = "StrongTextbox";
-            this.StrongTextbox.Size = new System.Drawing.Size(38, 21);
-            this.StrongTextbox.TabIndex = 81;
-            this.StrongTextbox.TextChanged += new System.EventHandler(this.StrongTextbox_TextChanged);
+            StrongTextbox.Location = new Point(192, 432);
+            StrongTextbox.Margin = new Padding(4);
+            StrongTextbox.MaxLength = 3;
+            StrongTextbox.Name = "StrongTextbox";
+            StrongTextbox.Size = new Size(44, 23);
+            StrongTextbox.TabIndex = 81;
+            StrongTextbox.TextChanged += StrongTextbox_TextChanged;
             // 
             // LuckTextBox
             // 
-            this.LuckTextBox.Location = new System.Drawing.Point(67, 306);
-            this.LuckTextBox.MaxLength = 4;
-            this.LuckTextBox.Name = "LuckTextBox";
-            this.LuckTextBox.Size = new System.Drawing.Size(36, 21);
-            this.LuckTextBox.TabIndex = 28;
-            this.LuckTextBox.TextChanged += new System.EventHandler(this.LuckTextBox_TextChanged);
+            LuckTextBox.Location = new Point(78, 434);
+            LuckTextBox.Margin = new Padding(4);
+            LuckTextBox.MaxLength = 4;
+            LuckTextBox.Name = "LuckTextBox";
+            LuckTextBox.Size = new Size(41, 23);
+            LuckTextBox.TabIndex = 28;
+            LuckTextBox.TextChanged += LuckTextBox_TextChanged;
             // 
             // label38
             // 
-            this.label38.AutoSize = true;
-            this.label38.Location = new System.Drawing.Point(134, 310);
-            this.label38.Name = "label38";
-            this.label38.Size = new System.Drawing.Size(29, 12);
-            this.label38.TabIndex = 80;
-            this.label38.Text = "强度";
+            label38.AutoSize = true;
+            label38.Location = new Point(156, 439);
+            label38.Margin = new Padding(4, 0, 4, 0);
+            label38.Name = "label38";
+            label38.Size = new Size(32, 17);
+            label38.TabIndex = 80;
+            label38.Text = "强度";
             // 
             // label31
             // 
-            this.label31.AutoSize = true;
-            this.label31.Location = new System.Drawing.Point(495, 60);
-            this.label31.Name = "label31";
-            this.label31.Size = new System.Drawing.Size(53, 12);
-            this.label31.TabIndex = 66;
-            this.label31.Text = "背包负重";
+            label31.AutoSize = true;
+            label31.Location = new Point(578, 85);
+            label31.Margin = new Padding(4, 0, 4, 0);
+            label31.Name = "label31";
+            label31.Size = new Size(56, 17);
+            label31.TabIndex = 66;
+            label31.Text = "背包负重";
             // 
             // MacRateTextbox
             // 
-            this.MacRateTextbox.Location = new System.Drawing.Point(556, 128);
-            this.MacRateTextbox.MaxLength = 3;
-            this.MacRateTextbox.Name = "MacRateTextbox";
-            this.MacRateTextbox.Size = new System.Drawing.Size(36, 21);
-            this.MacRateTextbox.TabIndex = 79;
-            this.MacRateTextbox.TextChanged += new System.EventHandler(this.MacRateTextbox_TextChanged);
+            MacRateTextbox.Location = new Point(649, 181);
+            MacRateTextbox.Margin = new Padding(4);
+            MacRateTextbox.MaxLength = 3;
+            MacRateTextbox.Name = "MacRateTextbox";
+            MacRateTextbox.Size = new Size(41, 23);
+            MacRateTextbox.TabIndex = 79;
+            MacRateTextbox.TextChanged += MacRateTextbox_TextChanged;
             // 
             // BWeightText
             // 
-            this.BWeightText.Location = new System.Drawing.Point(551, 55);
-            this.BWeightText.MaxLength = 4;
-            this.BWeightText.Name = "BWeightText";
-            this.BWeightText.Size = new System.Drawing.Size(36, 21);
-            this.BWeightText.TabIndex = 64;
-            this.BWeightText.TextChanged += new System.EventHandler(this.BWeightText_TextChanged);
+            BWeightText.Location = new Point(643, 78);
+            BWeightText.Margin = new Padding(4);
+            BWeightText.MaxLength = 4;
+            BWeightText.Name = "BWeightText";
+            BWeightText.Size = new Size(41, 23);
+            BWeightText.TabIndex = 64;
+            BWeightText.TextChanged += BWeightText_TextChanged;
             // 
             // label30
             // 
-            this.label30.AutoSize = true;
-            this.label30.Location = new System.Drawing.Point(495, 15);
-            this.label30.Name = "label30";
-            this.label30.Size = new System.Drawing.Size(53, 12);
-            this.label30.TabIndex = 67;
-            this.label30.Text = "腕力负重";
+            label30.AutoSize = true;
+            label30.Location = new Point(578, 21);
+            label30.Margin = new Padding(4, 0, 4, 0);
+            label30.Name = "label30";
+            label30.Size = new Size(56, 17);
+            label30.TabIndex = 67;
+            label30.Text = "腕力负重";
             // 
             // ACRateTextbox
             // 
-            this.ACRateTextbox.Location = new System.Drawing.Point(556, 105);
-            this.ACRateTextbox.MaxLength = 3;
-            this.ACRateTextbox.Name = "ACRateTextbox";
-            this.ACRateTextbox.Size = new System.Drawing.Size(36, 21);
-            this.ACRateTextbox.TabIndex = 77;
-            this.ACRateTextbox.TextChanged += new System.EventHandler(this.ACRateTextbox_TextChanged);
+            ACRateTextbox.Location = new Point(649, 149);
+            ACRateTextbox.Margin = new Padding(4);
+            ACRateTextbox.MaxLength = 3;
+            ACRateTextbox.Name = "ACRateTextbox";
+            ACRateTextbox.Size = new Size(41, 23);
+            ACRateTextbox.TabIndex = 77;
+            ACRateTextbox.TextChanged += ACRateTextbox_TextChanged;
             // 
             // HWeightTextBox
             // 
-            this.HWeightTextBox.Location = new System.Drawing.Point(551, 9);
-            this.HWeightTextBox.MaxLength = 4;
-            this.HWeightTextBox.Name = "HWeightTextBox";
-            this.HWeightTextBox.Size = new System.Drawing.Size(36, 21);
-            this.HWeightTextBox.TabIndex = 65;
-            this.HWeightTextBox.TextChanged += new System.EventHandler(this.HWeightTextBox_TextChanged);
+            HWeightTextBox.Location = new Point(643, 13);
+            HWeightTextBox.Margin = new Padding(4);
+            HWeightTextBox.MaxLength = 4;
+            HWeightTextBox.Name = "HWeightTextBox";
+            HWeightTextBox.Size = new Size(41, 23);
+            HWeightTextBox.TabIndex = 65;
+            HWeightTextBox.TextChanged += HWeightTextBox_TextChanged;
             // 
             // label36
             // 
-            this.label36.AutoSize = true;
-            this.label36.Location = new System.Drawing.Point(452, 110);
-            this.label36.Name = "label36";
-            this.label36.Size = new System.Drawing.Size(101, 12);
-            this.label36.TabIndex = 76;
-            this.label36.Text = "最大物理防御数率";
+            label36.AutoSize = true;
+            label36.Location = new Point(527, 156);
+            label36.Margin = new Padding(4, 0, 4, 0);
+            label36.Name = "label36";
+            label36.Size = new Size(104, 17);
+            label36.TabIndex = 76;
+            label36.Text = "最大物理防御数率";
             // 
             // label32
             // 
-            this.label32.AutoSize = true;
-            this.label32.Location = new System.Drawing.Point(495, 37);
-            this.label32.Name = "label32";
-            this.label32.Size = new System.Drawing.Size(53, 12);
-            this.label32.TabIndex = 69;
-            this.label32.Text = "装备负重";
+            label32.AutoSize = true;
+            label32.Location = new Point(578, 52);
+            label32.Margin = new Padding(4, 0, 4, 0);
+            label32.Name = "label32";
+            label32.Size = new Size(56, 17);
+            label32.TabIndex = 69;
+            label32.Text = "装备负重";
             // 
             // WWeightTextBox
             // 
-            this.WWeightTextBox.Location = new System.Drawing.Point(551, 32);
-            this.WWeightTextBox.MaxLength = 4;
-            this.WWeightTextBox.Name = "WWeightTextBox";
-            this.WWeightTextBox.Size = new System.Drawing.Size(36, 21);
-            this.WWeightTextBox.TabIndex = 68;
-            this.WWeightTextBox.TextChanged += new System.EventHandler(this.WWeightTextBox_TextChanged);
+            WWeightTextBox.Location = new Point(643, 45);
+            WWeightTextBox.Margin = new Padding(4);
+            WWeightTextBox.MaxLength = 4;
+            WWeightTextBox.Name = "WWeightTextBox";
+            WWeightTextBox.Size = new Size(41, 23);
+            WWeightTextBox.TabIndex = 68;
+            WWeightTextBox.TextChanged += WWeightTextBox_TextChanged;
             // 
             // tabPage3
             // 
-            this.tabPage3.Controls.Add(this.noMailBox);
-            this.tabPage3.Controls.Add(this.unableToDisassemble_CheckBox);
-            this.tabPage3.Controls.Add(this.unableToRent_CheckBox);
-            this.tabPage3.Controls.Add(this.NoWeddingRingcheckbox);
-            this.tabPage3.Controls.Add(this.NoHerocheckbox);
-            this.tabPage3.Controls.Add(this.BreakOnDeathcheckbox);
-            this.tabPage3.Controls.Add(this.Bind_DontSpecialRepaircheckBox);
-            this.tabPage3.Controls.Add(this.Bind_dontdropcheckbox);
-            this.tabPage3.Controls.Add(this.BindOnEquipcheckbox);
-            this.tabPage3.Controls.Add(this.Bind_dontdeathdropcheckbox);
-            this.tabPage3.Controls.Add(this.Bind_dontstorecheckbox);
-            this.tabPage3.Controls.Add(this.Bind_destroyondropcheckbox);
-            this.tabPage3.Controls.Add(this.Bind_dontupgradecheckbox);
-            this.tabPage3.Controls.Add(this.Bind_dontsellcheckbox);
-            this.tabPage3.Controls.Add(this.Bind_dontrepaircheckbox);
-            this.tabPage3.Controls.Add(this.Bind_donttradecheckbox);
-            this.tabPage3.Location = new System.Drawing.Point(4, 22);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(601, 358);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "绑定";
-            this.tabPage3.UseVisualStyleBackColor = true;
+            tabPage3.Controls.Add(noMailBox);
+            tabPage3.Controls.Add(unableToDisassemble_CheckBox);
+            tabPage3.Controls.Add(unableToRent_CheckBox);
+            tabPage3.Controls.Add(NoWeddingRingcheckbox);
+            tabPage3.Controls.Add(NoHerocheckbox);
+            tabPage3.Controls.Add(BreakOnDeathcheckbox);
+            tabPage3.Controls.Add(Bind_DontSpecialRepaircheckBox);
+            tabPage3.Controls.Add(Bind_dontdropcheckbox);
+            tabPage3.Controls.Add(BindOnEquipcheckbox);
+            tabPage3.Controls.Add(Bind_dontdeathdropcheckbox);
+            tabPage3.Controls.Add(Bind_dontstorecheckbox);
+            tabPage3.Controls.Add(Bind_destroyondropcheckbox);
+            tabPage3.Controls.Add(Bind_dontupgradecheckbox);
+            tabPage3.Controls.Add(Bind_dontsellcheckbox);
+            tabPage3.Controls.Add(Bind_dontrepaircheckbox);
+            tabPage3.Controls.Add(Bind_donttradecheckbox);
+            tabPage3.Location = new Point(4, 26);
+            tabPage3.Margin = new Padding(4);
+            tabPage3.Name = "tabPage3";
+            tabPage3.Size = new Size(702, 514);
+            tabPage3.TabIndex = 2;
+            tabPage3.Text = "绑定";
+            tabPage3.UseVisualStyleBackColor = true;
             // 
             // noMailBox
             // 
-            this.noMailBox.AutoSize = true;
-            this.noMailBox.Location = new System.Drawing.Point(21, 308);
-            this.noMailBox.Name = "noMailBox";
-            this.noMailBox.Size = new System.Drawing.Size(72, 16);
-            this.noMailBox.TabIndex = 119;
-            this.noMailBox.Text = "邮寄禁止";
-            this.noMailBox.UseVisualStyleBackColor = true;
-            this.noMailBox.CheckedChanged += new System.EventHandler(this.noMailBox_CheckedChanged);
+            noMailBox.AutoSize = true;
+            noMailBox.Location = new Point(24, 436);
+            noMailBox.Margin = new Padding(4);
+            noMailBox.Name = "noMailBox";
+            noMailBox.Size = new Size(75, 21);
+            noMailBox.TabIndex = 119;
+            noMailBox.Text = "邮寄禁止";
+            noMailBox.UseVisualStyleBackColor = true;
+            noMailBox.CheckedChanged += noMailBox_CheckedChanged;
             // 
             // unableToDisassemble_CheckBox
             // 
-            this.unableToDisassemble_CheckBox.AutoSize = true;
-            this.unableToDisassemble_CheckBox.Location = new System.Drawing.Point(21, 286);
-            this.unableToDisassemble_CheckBox.Name = "unableToDisassemble_CheckBox";
-            this.unableToDisassemble_CheckBox.Size = new System.Drawing.Size(72, 16);
-            this.unableToDisassemble_CheckBox.TabIndex = 117;
-            this.unableToDisassemble_CheckBox.Text = "卸下禁止";
-            this.unableToDisassemble_CheckBox.UseVisualStyleBackColor = true;
-            this.unableToDisassemble_CheckBox.CheckedChanged += new System.EventHandler(this.unableToDisassemble_CheckBox_CheckedChanged);
+            unableToDisassemble_CheckBox.AutoSize = true;
+            unableToDisassemble_CheckBox.Location = new Point(24, 405);
+            unableToDisassemble_CheckBox.Margin = new Padding(4);
+            unableToDisassemble_CheckBox.Name = "unableToDisassemble_CheckBox";
+            unableToDisassemble_CheckBox.Size = new Size(75, 21);
+            unableToDisassemble_CheckBox.TabIndex = 117;
+            unableToDisassemble_CheckBox.Text = "卸下禁止";
+            unableToDisassemble_CheckBox.UseVisualStyleBackColor = true;
+            unableToDisassemble_CheckBox.CheckedChanged += unableToDisassemble_CheckBox_CheckedChanged;
             // 
             // unableToRent_CheckBox
             // 
-            this.unableToRent_CheckBox.AutoSize = true;
-            this.unableToRent_CheckBox.Location = new System.Drawing.Point(21, 265);
-            this.unableToRent_CheckBox.Name = "unableToRent_CheckBox";
-            this.unableToRent_CheckBox.Size = new System.Drawing.Size(72, 16);
-            this.unableToRent_CheckBox.TabIndex = 116;
-            this.unableToRent_CheckBox.Text = "租赁禁止";
-            this.unableToRent_CheckBox.UseVisualStyleBackColor = true;
-            this.unableToRent_CheckBox.CheckedChanged += new System.EventHandler(this.unableToRent_CheckBox_CheckedChanged);
+            unableToRent_CheckBox.AutoSize = true;
+            unableToRent_CheckBox.Location = new Point(24, 375);
+            unableToRent_CheckBox.Margin = new Padding(4);
+            unableToRent_CheckBox.Name = "unableToRent_CheckBox";
+            unableToRent_CheckBox.Size = new Size(75, 21);
+            unableToRent_CheckBox.TabIndex = 116;
+            unableToRent_CheckBox.Text = "租赁禁止";
+            unableToRent_CheckBox.UseVisualStyleBackColor = true;
+            unableToRent_CheckBox.CheckedChanged += unableToRent_CheckBox_CheckedChanged;
             // 
             // NoWeddingRingcheckbox
             // 
-            this.NoWeddingRingcheckbox.AutoSize = true;
-            this.NoWeddingRingcheckbox.Location = new System.Drawing.Point(21, 243);
-            this.NoWeddingRingcheckbox.Name = "NoWeddingRingcheckbox";
-            this.NoWeddingRingcheckbox.Size = new System.Drawing.Size(72, 16);
-            this.NoWeddingRingcheckbox.TabIndex = 115;
-            this.NoWeddingRingcheckbox.Text = "婚戒禁止";
-            this.NoWeddingRingcheckbox.UseVisualStyleBackColor = true;
-            this.NoWeddingRingcheckbox.CheckedChanged += new System.EventHandler(this.NoWeddingRingcheckbox_CheckedChanged);
+            NoWeddingRingcheckbox.AutoSize = true;
+            NoWeddingRingcheckbox.Location = new Point(24, 344);
+            NoWeddingRingcheckbox.Margin = new Padding(4);
+            NoWeddingRingcheckbox.Name = "NoWeddingRingcheckbox";
+            NoWeddingRingcheckbox.Size = new Size(75, 21);
+            NoWeddingRingcheckbox.TabIndex = 115;
+            NoWeddingRingcheckbox.Text = "婚戒禁止";
+            NoWeddingRingcheckbox.UseVisualStyleBackColor = true;
+            NoWeddingRingcheckbox.CheckedChanged += NoWeddingRingcheckbox_CheckedChanged;
             // 
             // NoHerocheckbox
             // 
-            this.NoHerocheckbox.AutoSize = true;
-            this.NoHerocheckbox.Location = new System.Drawing.Point(21, 330);
-            this.NoHerocheckbox.Name = "NoHerocheckbox";
-            this.NoHerocheckbox.Size = new System.Drawing.Size(72, 16);
-            this.NoHerocheckbox.TabIndex = 115;
-            this.NoHerocheckbox.Text = "英雄禁止";
-            this.NoHerocheckbox.UseVisualStyleBackColor = true;
-            this.NoHerocheckbox.CheckedChanged += new System.EventHandler(this.NoHerocheckbox_CheckedChanged);
+            NoHerocheckbox.AutoSize = true;
+            NoHerocheckbox.Location = new Point(24, 468);
+            NoHerocheckbox.Margin = new Padding(4);
+            NoHerocheckbox.Name = "NoHerocheckbox";
+            NoHerocheckbox.Size = new Size(75, 21);
+            NoHerocheckbox.TabIndex = 115;
+            NoHerocheckbox.Text = "英雄禁止";
+            NoHerocheckbox.UseVisualStyleBackColor = true;
+            NoHerocheckbox.CheckedChanged += NoHerocheckbox_CheckedChanged;
             // 
             // BreakOnDeathcheckbox
             // 
-            this.BreakOnDeathcheckbox.AutoSize = true;
-            this.BreakOnDeathcheckbox.Location = new System.Drawing.Point(21, 222);
-            this.BreakOnDeathcheckbox.Name = "BreakOnDeathcheckbox";
-            this.BreakOnDeathcheckbox.Size = new System.Drawing.Size(72, 16);
-            this.BreakOnDeathcheckbox.TabIndex = 114;
-            this.BreakOnDeathcheckbox.Text = "死亡消失";
-            this.BreakOnDeathcheckbox.UseVisualStyleBackColor = true;
-            this.BreakOnDeathcheckbox.CheckedChanged += new System.EventHandler(this.BreakOnDeathcheckbox_CheckedChanged);
+            BreakOnDeathcheckbox.AutoSize = true;
+            BreakOnDeathcheckbox.Location = new Point(24, 314);
+            BreakOnDeathcheckbox.Margin = new Padding(4);
+            BreakOnDeathcheckbox.Name = "BreakOnDeathcheckbox";
+            BreakOnDeathcheckbox.Size = new Size(75, 21);
+            BreakOnDeathcheckbox.TabIndex = 114;
+            BreakOnDeathcheckbox.Text = "死亡消失";
+            BreakOnDeathcheckbox.UseVisualStyleBackColor = true;
+            BreakOnDeathcheckbox.CheckedChanged += BreakOnDeathcheckbox_CheckedChanged;
             // 
             // Bind_DontSpecialRepaircheckBox
             // 
-            this.Bind_DontSpecialRepaircheckBox.AutoSize = true;
-            this.Bind_DontSpecialRepaircheckBox.Location = new System.Drawing.Point(21, 138);
-            this.Bind_DontSpecialRepaircheckBox.Name = "Bind_DontSpecialRepaircheckBox";
-            this.Bind_DontSpecialRepaircheckBox.Size = new System.Drawing.Size(72, 16);
-            this.Bind_DontSpecialRepaircheckBox.TabIndex = 113;
-            this.Bind_DontSpecialRepaircheckBox.Text = "特修禁止";
-            this.Bind_DontSpecialRepaircheckBox.UseVisualStyleBackColor = true;
-            this.Bind_DontSpecialRepaircheckBox.CheckedChanged += new System.EventHandler(this.Bind_DontSpecialRepaircheckBox_CheckedChanged);
+            Bind_DontSpecialRepaircheckBox.AutoSize = true;
+            Bind_DontSpecialRepaircheckBox.Location = new Point(24, 196);
+            Bind_DontSpecialRepaircheckBox.Margin = new Padding(4);
+            Bind_DontSpecialRepaircheckBox.Name = "Bind_DontSpecialRepaircheckBox";
+            Bind_DontSpecialRepaircheckBox.Size = new Size(75, 21);
+            Bind_DontSpecialRepaircheckBox.TabIndex = 113;
+            Bind_DontSpecialRepaircheckBox.Text = "特修禁止";
+            Bind_DontSpecialRepaircheckBox.UseVisualStyleBackColor = true;
+            Bind_DontSpecialRepaircheckBox.CheckedChanged += Bind_DontSpecialRepaircheckBox_CheckedChanged;
             // 
             // Bind_dontdropcheckbox
             // 
-            this.Bind_dontdropcheckbox.AutoSize = true;
-            this.Bind_dontdropcheckbox.Location = new System.Drawing.Point(21, 11);
-            this.Bind_dontdropcheckbox.Name = "Bind_dontdropcheckbox";
-            this.Bind_dontdropcheckbox.Size = new System.Drawing.Size(72, 16);
-            this.Bind_dontdropcheckbox.TabIndex = 102;
-            this.Bind_dontdropcheckbox.Text = "永不掉落";
-            this.Bind_dontdropcheckbox.UseVisualStyleBackColor = true;
-            this.Bind_dontdropcheckbox.CheckedChanged += new System.EventHandler(this.Bind_dontdropcheckbox_CheckedChanged);
+            Bind_dontdropcheckbox.AutoSize = true;
+            Bind_dontdropcheckbox.Location = new Point(24, 16);
+            Bind_dontdropcheckbox.Margin = new Padding(4);
+            Bind_dontdropcheckbox.Name = "Bind_dontdropcheckbox";
+            Bind_dontdropcheckbox.Size = new Size(75, 21);
+            Bind_dontdropcheckbox.TabIndex = 102;
+            Bind_dontdropcheckbox.Text = "永不掉落";
+            Bind_dontdropcheckbox.UseVisualStyleBackColor = true;
+            Bind_dontdropcheckbox.CheckedChanged += Bind_dontdropcheckbox_CheckedChanged;
             // 
             // BindOnEquipcheckbox
             // 
-            this.BindOnEquipcheckbox.AutoSize = true;
-            this.BindOnEquipcheckbox.Location = new System.Drawing.Point(21, 201);
-            this.BindOnEquipcheckbox.Name = "BindOnEquipcheckbox";
-            this.BindOnEquipcheckbox.Size = new System.Drawing.Size(72, 16);
-            this.BindOnEquipcheckbox.TabIndex = 112;
-            this.BindOnEquipcheckbox.Text = "装备绑定";
-            this.BindOnEquipcheckbox.UseVisualStyleBackColor = true;
-            this.BindOnEquipcheckbox.CheckedChanged += new System.EventHandler(this.BindOnEquipcheckbox_CheckedChanged);
+            BindOnEquipcheckbox.AutoSize = true;
+            BindOnEquipcheckbox.Location = new Point(24, 285);
+            BindOnEquipcheckbox.Margin = new Padding(4);
+            BindOnEquipcheckbox.Name = "BindOnEquipcheckbox";
+            BindOnEquipcheckbox.Size = new Size(75, 21);
+            BindOnEquipcheckbox.TabIndex = 112;
+            BindOnEquipcheckbox.Text = "装备绑定";
+            BindOnEquipcheckbox.UseVisualStyleBackColor = true;
+            BindOnEquipcheckbox.CheckedChanged += BindOnEquipcheckbox_CheckedChanged;
             // 
             // Bind_dontdeathdropcheckbox
             // 
-            this.Bind_dontdeathdropcheckbox.AutoSize = true;
-            this.Bind_dontdeathdropcheckbox.Location = new System.Drawing.Point(21, 31);
-            this.Bind_dontdeathdropcheckbox.Name = "Bind_dontdeathdropcheckbox";
-            this.Bind_dontdeathdropcheckbox.Size = new System.Drawing.Size(72, 16);
-            this.Bind_dontdeathdropcheckbox.TabIndex = 103;
-            this.Bind_dontdeathdropcheckbox.Text = "死亡不掉";
-            this.Bind_dontdeathdropcheckbox.UseVisualStyleBackColor = true;
-            this.Bind_dontdeathdropcheckbox.CheckedChanged += new System.EventHandler(this.Bind_dontdeathdropcheckbox_CheckedChanged);
+            Bind_dontdeathdropcheckbox.AutoSize = true;
+            Bind_dontdeathdropcheckbox.Location = new Point(24, 44);
+            Bind_dontdeathdropcheckbox.Margin = new Padding(4);
+            Bind_dontdeathdropcheckbox.Name = "Bind_dontdeathdropcheckbox";
+            Bind_dontdeathdropcheckbox.Size = new Size(75, 21);
+            Bind_dontdeathdropcheckbox.TabIndex = 103;
+            Bind_dontdeathdropcheckbox.Text = "死亡不掉";
+            Bind_dontdeathdropcheckbox.UseVisualStyleBackColor = true;
+            Bind_dontdeathdropcheckbox.CheckedChanged += Bind_dontdeathdropcheckbox_CheckedChanged;
             // 
             // Bind_dontstorecheckbox
             // 
-            this.Bind_dontstorecheckbox.AutoSize = true;
-            this.Bind_dontstorecheckbox.Location = new System.Drawing.Point(21, 159);
-            this.Bind_dontstorecheckbox.Name = "Bind_dontstorecheckbox";
-            this.Bind_dontstorecheckbox.Size = new System.Drawing.Size(72, 16);
-            this.Bind_dontstorecheckbox.TabIndex = 109;
-            this.Bind_dontstorecheckbox.Text = "仓库禁止";
-            this.Bind_dontstorecheckbox.UseVisualStyleBackColor = true;
-            this.Bind_dontstorecheckbox.CheckedChanged += new System.EventHandler(this.Bind_dontstorecheckbox_CheckedChanged);
+            Bind_dontstorecheckbox.AutoSize = true;
+            Bind_dontstorecheckbox.Location = new Point(24, 225);
+            Bind_dontstorecheckbox.Margin = new Padding(4);
+            Bind_dontstorecheckbox.Name = "Bind_dontstorecheckbox";
+            Bind_dontstorecheckbox.Size = new Size(75, 21);
+            Bind_dontstorecheckbox.TabIndex = 109;
+            Bind_dontstorecheckbox.Text = "仓库禁止";
+            Bind_dontstorecheckbox.UseVisualStyleBackColor = true;
+            Bind_dontstorecheckbox.CheckedChanged += Bind_dontstorecheckbox_CheckedChanged;
             // 
             // Bind_destroyondropcheckbox
             // 
-            this.Bind_destroyondropcheckbox.AutoSize = true;
-            this.Bind_destroyondropcheckbox.Location = new System.Drawing.Point(21, 52);
-            this.Bind_destroyondropcheckbox.Name = "Bind_destroyondropcheckbox";
-            this.Bind_destroyondropcheckbox.Size = new System.Drawing.Size(72, 16);
-            this.Bind_destroyondropcheckbox.TabIndex = 104;
-            this.Bind_destroyondropcheckbox.Text = "掉落消失";
-            this.Bind_destroyondropcheckbox.UseVisualStyleBackColor = true;
-            this.Bind_destroyondropcheckbox.CheckedChanged += new System.EventHandler(this.Bind_destroyondropcheckbox_CheckedChanged);
+            Bind_destroyondropcheckbox.AutoSize = true;
+            Bind_destroyondropcheckbox.Location = new Point(24, 74);
+            Bind_destroyondropcheckbox.Margin = new Padding(4);
+            Bind_destroyondropcheckbox.Name = "Bind_destroyondropcheckbox";
+            Bind_destroyondropcheckbox.Size = new Size(75, 21);
+            Bind_destroyondropcheckbox.TabIndex = 104;
+            Bind_destroyondropcheckbox.Text = "掉落消失";
+            Bind_destroyondropcheckbox.UseVisualStyleBackColor = true;
+            Bind_destroyondropcheckbox.CheckedChanged += Bind_destroyondropcheckbox_CheckedChanged;
             // 
             // Bind_dontupgradecheckbox
             // 
-            this.Bind_dontupgradecheckbox.AutoSize = true;
-            this.Bind_dontupgradecheckbox.Location = new System.Drawing.Point(21, 180);
-            this.Bind_dontupgradecheckbox.Name = "Bind_dontupgradecheckbox";
-            this.Bind_dontupgradecheckbox.Size = new System.Drawing.Size(72, 16);
-            this.Bind_dontupgradecheckbox.TabIndex = 108;
-            this.Bind_dontupgradecheckbox.Text = "升级禁止";
-            this.Bind_dontupgradecheckbox.UseVisualStyleBackColor = true;
-            this.Bind_dontupgradecheckbox.CheckedChanged += new System.EventHandler(this.Bind_dontupgradecheckbox_CheckedChanged);
+            Bind_dontupgradecheckbox.AutoSize = true;
+            Bind_dontupgradecheckbox.Location = new Point(24, 255);
+            Bind_dontupgradecheckbox.Margin = new Padding(4);
+            Bind_dontupgradecheckbox.Name = "Bind_dontupgradecheckbox";
+            Bind_dontupgradecheckbox.Size = new Size(75, 21);
+            Bind_dontupgradecheckbox.TabIndex = 108;
+            Bind_dontupgradecheckbox.Text = "升级禁止";
+            Bind_dontupgradecheckbox.UseVisualStyleBackColor = true;
+            Bind_dontupgradecheckbox.CheckedChanged += Bind_dontupgradecheckbox_CheckedChanged;
             // 
             // Bind_dontsellcheckbox
             // 
-            this.Bind_dontsellcheckbox.AutoSize = true;
-            this.Bind_dontsellcheckbox.Location = new System.Drawing.Point(21, 73);
-            this.Bind_dontsellcheckbox.Name = "Bind_dontsellcheckbox";
-            this.Bind_dontsellcheckbox.Size = new System.Drawing.Size(72, 16);
-            this.Bind_dontsellcheckbox.TabIndex = 105;
-            this.Bind_dontsellcheckbox.Text = "商店禁止";
-            this.Bind_dontsellcheckbox.UseVisualStyleBackColor = true;
-            this.Bind_dontsellcheckbox.CheckedChanged += new System.EventHandler(this.Bind_dontsellcheckbox_CheckedChanged);
+            Bind_dontsellcheckbox.AutoSize = true;
+            Bind_dontsellcheckbox.Location = new Point(24, 103);
+            Bind_dontsellcheckbox.Margin = new Padding(4);
+            Bind_dontsellcheckbox.Name = "Bind_dontsellcheckbox";
+            Bind_dontsellcheckbox.Size = new Size(75, 21);
+            Bind_dontsellcheckbox.TabIndex = 105;
+            Bind_dontsellcheckbox.Text = "商店禁止";
+            Bind_dontsellcheckbox.UseVisualStyleBackColor = true;
+            Bind_dontsellcheckbox.CheckedChanged += Bind_dontsellcheckbox_CheckedChanged;
             // 
             // Bind_dontrepaircheckbox
             // 
-            this.Bind_dontrepaircheckbox.AutoSize = true;
-            this.Bind_dontrepaircheckbox.Location = new System.Drawing.Point(21, 116);
-            this.Bind_dontrepaircheckbox.Name = "Bind_dontrepaircheckbox";
-            this.Bind_dontrepaircheckbox.Size = new System.Drawing.Size(72, 16);
-            this.Bind_dontrepaircheckbox.TabIndex = 107;
-            this.Bind_dontrepaircheckbox.Text = "修理禁止";
-            this.Bind_dontrepaircheckbox.UseVisualStyleBackColor = true;
-            this.Bind_dontrepaircheckbox.CheckedChanged += new System.EventHandler(this.Bind_dontrepaircheckbox_CheckedChanged);
+            Bind_dontrepaircheckbox.AutoSize = true;
+            Bind_dontrepaircheckbox.Location = new Point(24, 164);
+            Bind_dontrepaircheckbox.Margin = new Padding(4);
+            Bind_dontrepaircheckbox.Name = "Bind_dontrepaircheckbox";
+            Bind_dontrepaircheckbox.Size = new Size(75, 21);
+            Bind_dontrepaircheckbox.TabIndex = 107;
+            Bind_dontrepaircheckbox.Text = "修理禁止";
+            Bind_dontrepaircheckbox.UseVisualStyleBackColor = true;
+            Bind_dontrepaircheckbox.CheckedChanged += Bind_dontrepaircheckbox_CheckedChanged;
             // 
             // Bind_donttradecheckbox
             // 
-            this.Bind_donttradecheckbox.AutoSize = true;
-            this.Bind_donttradecheckbox.Location = new System.Drawing.Point(21, 94);
-            this.Bind_donttradecheckbox.Name = "Bind_donttradecheckbox";
-            this.Bind_donttradecheckbox.Size = new System.Drawing.Size(72, 16);
-            this.Bind_donttradecheckbox.TabIndex = 106;
-            this.Bind_donttradecheckbox.Text = "交易禁止";
-            this.Bind_donttradecheckbox.UseVisualStyleBackColor = true;
-            this.Bind_donttradecheckbox.CheckedChanged += new System.EventHandler(this.Bind_donttradecheckbox_CheckedChanged);
+            Bind_donttradecheckbox.AutoSize = true;
+            Bind_donttradecheckbox.Location = new Point(24, 133);
+            Bind_donttradecheckbox.Margin = new Padding(4);
+            Bind_donttradecheckbox.Name = "Bind_donttradecheckbox";
+            Bind_donttradecheckbox.Size = new Size(75, 21);
+            Bind_donttradecheckbox.TabIndex = 106;
+            Bind_donttradecheckbox.Text = "交易禁止";
+            Bind_donttradecheckbox.UseVisualStyleBackColor = true;
+            Bind_donttradecheckbox.CheckedChanged += Bind_donttradecheckbox_CheckedChanged;
             // 
             // tabPage4
             // 
-            this.tabPage4.Controls.Add(this.PickaxecheckBox);
-            this.tabPage4.Controls.Add(this.NoDuraLosscheckBox);
-            this.tabPage4.Controls.Add(this.SkillcheckBox);
-            this.tabPage4.Controls.Add(this.ProbecheckBox);
-            this.tabPage4.Controls.Add(this.HealingcheckBox);
-            this.tabPage4.Controls.Add(this.FlamecheckBox);
-            this.tabPage4.Controls.Add(this.MusclecheckBox);
-            this.tabPage4.Controls.Add(this.RevivalcheckBox);
-            this.tabPage4.Controls.Add(this.ProtectioncheckBox);
-            this.tabPage4.Controls.Add(this.ClearcheckBox);
-            this.tabPage4.Controls.Add(this.TeleportcheckBox);
-            this.tabPage4.Controls.Add(this.ParalysischeckBox);
-            this.tabPage4.Controls.Add(this.BlinkcheckBox);
-            this.tabPage4.Location = new System.Drawing.Point(4, 22);
-            this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Size = new System.Drawing.Size(601, 358);
-            this.tabPage4.TabIndex = 3;
-            this.tabPage4.Text = "特殊状态";
-            this.tabPage4.UseVisualStyleBackColor = true;
+            tabPage4.Controls.Add(PickaxecheckBox);
+            tabPage4.Controls.Add(NoDuraLosscheckBox);
+            tabPage4.Controls.Add(SkillcheckBox);
+            tabPage4.Controls.Add(ProbecheckBox);
+            tabPage4.Controls.Add(HealingcheckBox);
+            tabPage4.Controls.Add(FlamecheckBox);
+            tabPage4.Controls.Add(MusclecheckBox);
+            tabPage4.Controls.Add(RevivalcheckBox);
+            tabPage4.Controls.Add(ProtectioncheckBox);
+            tabPage4.Controls.Add(ClearcheckBox);
+            tabPage4.Controls.Add(TeleportcheckBox);
+            tabPage4.Controls.Add(ParalysischeckBox);
+            tabPage4.Controls.Add(BlinkcheckBox);
+            tabPage4.Location = new Point(4, 26);
+            tabPage4.Margin = new Padding(4);
+            tabPage4.Name = "tabPage4";
+            tabPage4.Size = new Size(702, 514);
+            tabPage4.TabIndex = 3;
+            tabPage4.Text = "特殊状态";
+            tabPage4.UseVisualStyleBackColor = true;
             // 
             // PickaxecheckBox
             // 
-            this.PickaxecheckBox.AutoSize = true;
-            this.PickaxecheckBox.Location = new System.Drawing.Point(22, 245);
-            this.PickaxecheckBox.Name = "PickaxecheckBox";
-            this.PickaxecheckBox.Size = new System.Drawing.Size(60, 16);
-            this.PickaxecheckBox.TabIndex = 11;
-            this.PickaxecheckBox.Text = "鹤嘴锄";
-            this.PickaxecheckBox.UseVisualStyleBackColor = true;
-            this.PickaxecheckBox.CheckedChanged += new System.EventHandler(this.PickaxecheckBox_CheckedChanged);
+            PickaxecheckBox.AutoSize = true;
+            PickaxecheckBox.Location = new Point(26, 347);
+            PickaxecheckBox.Margin = new Padding(4);
+            PickaxecheckBox.Name = "PickaxecheckBox";
+            PickaxecheckBox.Size = new Size(63, 21);
+            PickaxecheckBox.TabIndex = 11;
+            PickaxecheckBox.Text = "鹤嘴锄";
+            PickaxecheckBox.UseVisualStyleBackColor = true;
+            PickaxecheckBox.CheckedChanged += PickaxecheckBox_CheckedChanged;
             // 
             // NoDuraLosscheckBox
             // 
-            this.NoDuraLosscheckBox.AutoSize = true;
-            this.NoDuraLosscheckBox.Location = new System.Drawing.Point(22, 224);
-            this.NoDuraLosscheckBox.Name = "NoDuraLosscheckBox";
-            this.NoDuraLosscheckBox.Size = new System.Drawing.Size(72, 16);
-            this.NoDuraLosscheckBox.TabIndex = 10;
-            this.NoDuraLosscheckBox.Text = "永不掉落";
-            this.NoDuraLosscheckBox.UseVisualStyleBackColor = true;
-            this.NoDuraLosscheckBox.CheckedChanged += new System.EventHandler(this.NoDuraLosscheckBox_CheckedChanged);
+            NoDuraLosscheckBox.AutoSize = true;
+            NoDuraLosscheckBox.Location = new Point(26, 317);
+            NoDuraLosscheckBox.Margin = new Padding(4);
+            NoDuraLosscheckBox.Name = "NoDuraLosscheckBox";
+            NoDuraLosscheckBox.Size = new Size(75, 21);
+            NoDuraLosscheckBox.TabIndex = 10;
+            NoDuraLosscheckBox.Text = "永不掉落";
+            NoDuraLosscheckBox.UseVisualStyleBackColor = true;
+            NoDuraLosscheckBox.CheckedChanged += NoDuraLosscheckBox_CheckedChanged;
             // 
             // SkillcheckBox
             // 
-            this.SkillcheckBox.AutoSize = true;
-            this.SkillcheckBox.Location = new System.Drawing.Point(22, 203);
-            this.SkillcheckBox.Name = "SkillcheckBox";
-            this.SkillcheckBox.Size = new System.Drawing.Size(72, 16);
-            this.SkillcheckBox.TabIndex = 9;
-            this.SkillcheckBox.Text = "技巧项链";
-            this.SkillcheckBox.UseVisualStyleBackColor = true;
-            this.SkillcheckBox.CheckedChanged += new System.EventHandler(this.SkillcheckBox_CheckedChanged);
+            SkillcheckBox.AutoSize = true;
+            SkillcheckBox.Location = new Point(26, 288);
+            SkillcheckBox.Margin = new Padding(4);
+            SkillcheckBox.Name = "SkillcheckBox";
+            SkillcheckBox.Size = new Size(75, 21);
+            SkillcheckBox.TabIndex = 9;
+            SkillcheckBox.Text = "技巧项链";
+            SkillcheckBox.UseVisualStyleBackColor = true;
+            SkillcheckBox.CheckedChanged += SkillcheckBox_CheckedChanged;
             // 
             // ProbecheckBox
             // 
-            this.ProbecheckBox.AutoSize = true;
-            this.ProbecheckBox.Location = new System.Drawing.Point(22, 183);
-            this.ProbecheckBox.Name = "ProbecheckBox";
-            this.ProbecheckBox.Size = new System.Drawing.Size(72, 16);
-            this.ProbecheckBox.TabIndex = 8;
-            this.ProbecheckBox.Text = "探测项链";
-            this.ProbecheckBox.UseVisualStyleBackColor = true;
-            this.ProbecheckBox.CheckedChanged += new System.EventHandler(this.ProbecheckBox_CheckedChanged);
+            ProbecheckBox.AutoSize = true;
+            ProbecheckBox.Location = new Point(26, 259);
+            ProbecheckBox.Margin = new Padding(4);
+            ProbecheckBox.Name = "ProbecheckBox";
+            ProbecheckBox.Size = new Size(75, 21);
+            ProbecheckBox.TabIndex = 8;
+            ProbecheckBox.Text = "探测项链";
+            ProbecheckBox.UseVisualStyleBackColor = true;
+            ProbecheckBox.CheckedChanged += ProbecheckBox_CheckedChanged;
             // 
             // HealingcheckBox
             // 
-            this.HealingcheckBox.AutoSize = true;
-            this.HealingcheckBox.Location = new System.Drawing.Point(22, 161);
-            this.HealingcheckBox.Name = "HealingcheckBox";
-            this.HealingcheckBox.Size = new System.Drawing.Size(72, 16);
-            this.HealingcheckBox.TabIndex = 7;
-            this.HealingcheckBox.Text = "治愈戒指";
-            this.HealingcheckBox.UseVisualStyleBackColor = true;
-            this.HealingcheckBox.CheckedChanged += new System.EventHandler(this.HealingcheckBox_CheckedChanged);
+            HealingcheckBox.AutoSize = true;
+            HealingcheckBox.Location = new Point(26, 228);
+            HealingcheckBox.Margin = new Padding(4);
+            HealingcheckBox.Name = "HealingcheckBox";
+            HealingcheckBox.Size = new Size(75, 21);
+            HealingcheckBox.TabIndex = 7;
+            HealingcheckBox.Text = "治愈戒指";
+            HealingcheckBox.UseVisualStyleBackColor = true;
+            HealingcheckBox.CheckedChanged += HealingcheckBox_CheckedChanged;
             // 
             // FlamecheckBox
             // 
-            this.FlamecheckBox.AutoSize = true;
-            this.FlamecheckBox.Location = new System.Drawing.Point(22, 139);
-            this.FlamecheckBox.Name = "FlamecheckBox";
-            this.FlamecheckBox.Size = new System.Drawing.Size(72, 16);
-            this.FlamecheckBox.TabIndex = 6;
-            this.FlamecheckBox.Text = "火焰戒指";
-            this.FlamecheckBox.UseVisualStyleBackColor = true;
-            this.FlamecheckBox.CheckedChanged += new System.EventHandler(this.FlamecheckBox_CheckedChanged);
+            FlamecheckBox.AutoSize = true;
+            FlamecheckBox.Location = new Point(26, 197);
+            FlamecheckBox.Margin = new Padding(4);
+            FlamecheckBox.Name = "FlamecheckBox";
+            FlamecheckBox.Size = new Size(75, 21);
+            FlamecheckBox.TabIndex = 6;
+            FlamecheckBox.Text = "火焰戒指";
+            FlamecheckBox.UseVisualStyleBackColor = true;
+            FlamecheckBox.CheckedChanged += FlamecheckBox_CheckedChanged;
             // 
             // MusclecheckBox
             // 
-            this.MusclecheckBox.AutoSize = true;
-            this.MusclecheckBox.Location = new System.Drawing.Point(22, 119);
-            this.MusclecheckBox.Name = "MusclecheckBox";
-            this.MusclecheckBox.Size = new System.Drawing.Size(84, 16);
-            this.MusclecheckBox.TabIndex = 5;
-            this.MusclecheckBox.Text = "超负载戒指";
-            this.MusclecheckBox.UseVisualStyleBackColor = true;
-            this.MusclecheckBox.CheckedChanged += new System.EventHandler(this.MusclecheckBox_CheckedChanged);
+            MusclecheckBox.AutoSize = true;
+            MusclecheckBox.Location = new Point(26, 169);
+            MusclecheckBox.Margin = new Padding(4);
+            MusclecheckBox.Name = "MusclecheckBox";
+            MusclecheckBox.Size = new Size(87, 21);
+            MusclecheckBox.TabIndex = 5;
+            MusclecheckBox.Text = "超负载戒指";
+            MusclecheckBox.UseVisualStyleBackColor = true;
+            MusclecheckBox.CheckedChanged += MusclecheckBox_CheckedChanged;
             // 
             // RevivalcheckBox
             // 
-            this.RevivalcheckBox.AutoSize = true;
-            this.RevivalcheckBox.Location = new System.Drawing.Point(22, 98);
-            this.RevivalcheckBox.Name = "RevivalcheckBox";
-            this.RevivalcheckBox.Size = new System.Drawing.Size(72, 16);
-            this.RevivalcheckBox.TabIndex = 4;
-            this.RevivalcheckBox.Text = "复活戒指";
-            this.RevivalcheckBox.UseVisualStyleBackColor = true;
-            this.RevivalcheckBox.CheckedChanged += new System.EventHandler(this.RevivalcheckBox_CheckedChanged);
+            RevivalcheckBox.AutoSize = true;
+            RevivalcheckBox.Location = new Point(26, 139);
+            RevivalcheckBox.Margin = new Padding(4);
+            RevivalcheckBox.Name = "RevivalcheckBox";
+            RevivalcheckBox.Size = new Size(75, 21);
+            RevivalcheckBox.TabIndex = 4;
+            RevivalcheckBox.Text = "复活戒指";
+            RevivalcheckBox.UseVisualStyleBackColor = true;
+            RevivalcheckBox.CheckedChanged += RevivalcheckBox_CheckedChanged;
             // 
             // ProtectioncheckBox
             // 
-            this.ProtectioncheckBox.AutoSize = true;
-            this.ProtectioncheckBox.Location = new System.Drawing.Point(22, 77);
-            this.ProtectioncheckBox.Name = "ProtectioncheckBox";
-            this.ProtectioncheckBox.Size = new System.Drawing.Size(72, 16);
-            this.ProtectioncheckBox.TabIndex = 3;
-            this.ProtectioncheckBox.Text = "护身戒指";
-            this.ProtectioncheckBox.UseVisualStyleBackColor = true;
-            this.ProtectioncheckBox.CheckedChanged += new System.EventHandler(this.ProtectioncheckBox_CheckedChanged);
+            ProtectioncheckBox.AutoSize = true;
+            ProtectioncheckBox.Location = new Point(26, 109);
+            ProtectioncheckBox.Margin = new Padding(4);
+            ProtectioncheckBox.Name = "ProtectioncheckBox";
+            ProtectioncheckBox.Size = new Size(75, 21);
+            ProtectioncheckBox.TabIndex = 3;
+            ProtectioncheckBox.Text = "护身戒指";
+            ProtectioncheckBox.UseVisualStyleBackColor = true;
+            ProtectioncheckBox.CheckedChanged += ProtectioncheckBox_CheckedChanged;
             // 
             // ClearcheckBox
             // 
-            this.ClearcheckBox.AutoSize = true;
-            this.ClearcheckBox.Location = new System.Drawing.Point(22, 55);
-            this.ClearcheckBox.Name = "ClearcheckBox";
-            this.ClearcheckBox.Size = new System.Drawing.Size(72, 16);
-            this.ClearcheckBox.TabIndex = 2;
-            this.ClearcheckBox.Text = "隐身戒指";
-            this.ClearcheckBox.UseVisualStyleBackColor = true;
-            this.ClearcheckBox.CheckedChanged += new System.EventHandler(this.ClearcheckBox_CheckedChanged);
+            ClearcheckBox.AutoSize = true;
+            ClearcheckBox.Location = new Point(26, 78);
+            ClearcheckBox.Margin = new Padding(4);
+            ClearcheckBox.Name = "ClearcheckBox";
+            ClearcheckBox.Size = new Size(75, 21);
+            ClearcheckBox.TabIndex = 2;
+            ClearcheckBox.Text = "隐身戒指";
+            ClearcheckBox.UseVisualStyleBackColor = true;
+            ClearcheckBox.CheckedChanged += ClearcheckBox_CheckedChanged;
             // 
             // TeleportcheckBox
             // 
-            this.TeleportcheckBox.AutoSize = true;
-            this.TeleportcheckBox.Location = new System.Drawing.Point(22, 34);
-            this.TeleportcheckBox.Name = "TeleportcheckBox";
-            this.TeleportcheckBox.Size = new System.Drawing.Size(72, 16);
-            this.TeleportcheckBox.TabIndex = 1;
-            this.TeleportcheckBox.Text = "传送戒指";
-            this.TeleportcheckBox.UseVisualStyleBackColor = true;
-            this.TeleportcheckBox.CheckedChanged += new System.EventHandler(this.TeleportcheckBox_CheckedChanged);
+            TeleportcheckBox.AutoSize = true;
+            TeleportcheckBox.Location = new Point(26, 48);
+            TeleportcheckBox.Margin = new Padding(4);
+            TeleportcheckBox.Name = "TeleportcheckBox";
+            TeleportcheckBox.Size = new Size(75, 21);
+            TeleportcheckBox.TabIndex = 1;
+            TeleportcheckBox.Text = "传送戒指";
+            TeleportcheckBox.UseVisualStyleBackColor = true;
+            TeleportcheckBox.CheckedChanged += TeleportcheckBox_CheckedChanged;
             // 
             // ParalysischeckBox
             // 
-            this.ParalysischeckBox.AutoSize = true;
-            this.ParalysischeckBox.Location = new System.Drawing.Point(22, 13);
-            this.ParalysischeckBox.Name = "ParalysischeckBox";
-            this.ParalysischeckBox.Size = new System.Drawing.Size(72, 16);
-            this.ParalysischeckBox.TabIndex = 0;
-            this.ParalysischeckBox.Text = "麻痹戒指";
-            this.ParalysischeckBox.UseVisualStyleBackColor = true;
-            this.ParalysischeckBox.CheckedChanged += new System.EventHandler(this.ParalysischeckBox_CheckedChanged);
+            ParalysischeckBox.AutoSize = true;
+            ParalysischeckBox.Location = new Point(26, 18);
+            ParalysischeckBox.Margin = new Padding(4);
+            ParalysischeckBox.Name = "ParalysischeckBox";
+            ParalysischeckBox.Size = new Size(75, 21);
+            ParalysischeckBox.TabIndex = 0;
+            ParalysischeckBox.Text = "麻痹戒指";
+            ParalysischeckBox.UseVisualStyleBackColor = true;
+            ParalysischeckBox.CheckedChanged += ParalysischeckBox_CheckedChanged;
             // 
             // BlinkcheckBox
             // 
-            this.BlinkcheckBox.AutoSize = true;
-            this.BlinkcheckBox.Location = new System.Drawing.Point(22, 266);
-            this.BlinkcheckBox.Name = "BlinkcheckBox";
-            this.BlinkcheckBox.Size = new System.Drawing.Size(72, 16);
-            this.BlinkcheckBox.TabIndex = 6;
-            this.BlinkcheckBox.Text = "瞬移技能";
-            this.BlinkcheckBox.UseVisualStyleBackColor = true;
-            this.BlinkcheckBox.CheckedChanged += new System.EventHandler(this.BlinkcheckBox_CheckedChanged);
+            BlinkcheckBox.AutoSize = true;
+            BlinkcheckBox.Location = new Point(26, 377);
+            BlinkcheckBox.Margin = new Padding(4);
+            BlinkcheckBox.Name = "BlinkcheckBox";
+            BlinkcheckBox.Size = new Size(75, 21);
+            BlinkcheckBox.TabIndex = 6;
+            BlinkcheckBox.Text = "瞬移技能";
+            BlinkcheckBox.UseVisualStyleBackColor = true;
+            BlinkcheckBox.CheckedChanged += BlinkcheckBox_CheckedChanged;
             // 
             // RemoveButton
             // 
-            this.RemoveButton.Location = new System.Drawing.Point(235, 11);
-            this.RemoveButton.Name = "RemoveButton";
-            this.RemoveButton.Size = new System.Drawing.Size(65, 21);
-            this.RemoveButton.TabIndex = 9;
-            this.RemoveButton.Text = "删除";
-            this.RemoveButton.UseVisualStyleBackColor = true;
-            this.RemoveButton.Click += new System.EventHandler(this.RemoveButton_Click);
+            RemoveButton.Location = new Point(274, 16);
+            RemoveButton.Margin = new Padding(4);
+            RemoveButton.Name = "RemoveButton";
+            RemoveButton.Size = new Size(76, 30);
+            RemoveButton.TabIndex = 9;
+            RemoveButton.Text = "删除";
+            RemoveButton.UseVisualStyleBackColor = true;
+            RemoveButton.Click += RemoveButton_Click;
             // 
             // AddButton
             // 
-            this.AddButton.Location = new System.Drawing.Point(174, 11);
-            this.AddButton.Name = "AddButton";
-            this.AddButton.Size = new System.Drawing.Size(55, 21);
-            this.AddButton.TabIndex = 8;
-            this.AddButton.Text = "添加";
-            this.AddButton.UseVisualStyleBackColor = true;
-            this.AddButton.Click += new System.EventHandler(this.AddButton_Click);
+            AddButton.Location = new Point(203, 16);
+            AddButton.Margin = new Padding(4);
+            AddButton.Name = "AddButton";
+            AddButton.Size = new Size(64, 30);
+            AddButton.TabIndex = 8;
+            AddButton.Text = "添加";
+            AddButton.UseVisualStyleBackColor = true;
+            AddButton.Click += AddButton_Click;
             // 
             // ItemInfoListBox
             // 
-            this.ItemInfoListBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.ItemInfoListBox.FormattingEnabled = true;
-            this.ItemInfoListBox.ItemHeight = 12;
-            this.ItemInfoListBox.Location = new System.Drawing.Point(12, 37);
-            this.ItemInfoListBox.Name = "ItemInfoListBox";
-            this.ItemInfoListBox.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.ItemInfoListBox.Size = new System.Drawing.Size(156, 388);
-            this.ItemInfoListBox.TabIndex = 10;
-            this.ItemInfoListBox.SelectedIndexChanged += new System.EventHandler(this.ItemInfoListBox_SelectedIndexChanged);
+            ItemInfoListBox.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
+            ItemInfoListBox.FormattingEnabled = true;
+            ItemInfoListBox.ItemHeight = 17;
+            ItemInfoListBox.Location = new Point(14, 52);
+            ItemInfoListBox.Margin = new Padding(4);
+            ItemInfoListBox.Name = "ItemInfoListBox";
+            ItemInfoListBox.SelectionMode = SelectionMode.MultiExtended;
+            ItemInfoListBox.Size = new Size(181, 548);
+            ItemInfoListBox.TabIndex = 10;
+            ItemInfoListBox.SelectedIndexChanged += ItemInfoListBox_SelectedIndexChanged;
             // 
             // PasteButton
             // 
-            this.PasteButton.Enabled = false;
-            this.PasteButton.Location = new System.Drawing.Point(363, 11);
-            this.PasteButton.Name = "PasteButton";
-            this.PasteButton.Size = new System.Drawing.Size(53, 21);
-            this.PasteButton.TabIndex = 24;
-            this.PasteButton.Text = "粘贴";
-            this.PasteButton.UseVisualStyleBackColor = true;
-            this.PasteButton.Visible = false;
-            this.PasteButton.Click += new System.EventHandler(this.PasteButton_Click);
+            PasteButton.Enabled = false;
+            PasteButton.Location = new Point(424, 16);
+            PasteButton.Margin = new Padding(4);
+            PasteButton.Name = "PasteButton";
+            PasteButton.Size = new Size(62, 30);
+            PasteButton.TabIndex = 24;
+            PasteButton.Text = "粘贴";
+            PasteButton.UseVisualStyleBackColor = true;
+            PasteButton.Visible = false;
+            PasteButton.Click += PasteButton_Click;
             // 
             // CopyMButton
             // 
-            this.CopyMButton.Enabled = false;
-            this.CopyMButton.Location = new System.Drawing.Point(306, 11);
-            this.CopyMButton.Name = "CopyMButton";
-            this.CopyMButton.Size = new System.Drawing.Size(51, 21);
-            this.CopyMButton.TabIndex = 23;
-            this.CopyMButton.Text = "复制";
-            this.CopyMButton.UseVisualStyleBackColor = true;
-            this.CopyMButton.Visible = false;
-            this.CopyMButton.Click += new System.EventHandler(this.CopyMButton_Click);
+            CopyMButton.Enabled = false;
+            CopyMButton.Location = new Point(357, 16);
+            CopyMButton.Margin = new Padding(4);
+            CopyMButton.Name = "CopyMButton";
+            CopyMButton.Size = new Size(59, 30);
+            CopyMButton.TabIndex = 23;
+            CopyMButton.Text = "复制";
+            CopyMButton.UseVisualStyleBackColor = true;
+            CopyMButton.Visible = false;
+            CopyMButton.Click += CopyMButton_Click;
             // 
             // ITypeFilterComboBox
             // 
-            this.ITypeFilterComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.ITypeFilterComboBox.FormattingEnabled = true;
-            this.ITypeFilterComboBox.Location = new System.Drawing.Point(14, 13);
-            this.ITypeFilterComboBox.Name = "ITypeFilterComboBox";
-            this.ITypeFilterComboBox.Size = new System.Drawing.Size(121, 20);
-            this.ITypeFilterComboBox.TabIndex = 25;
-            this.ITypeFilterComboBox.SelectedIndexChanged += new System.EventHandler(this.ITypeFilterComboBox_SelectedIndexChanged);
+            ITypeFilterComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            ITypeFilterComboBox.FormattingEnabled = true;
+            ITypeFilterComboBox.Location = new Point(16, 18);
+            ITypeFilterComboBox.Margin = new Padding(4);
+            ITypeFilterComboBox.Name = "ITypeFilterComboBox";
+            ITypeFilterComboBox.Size = new Size(140, 25);
+            ITypeFilterComboBox.TabIndex = 25;
+            ITypeFilterComboBox.SelectedIndexChanged += ITypeFilterComboBox_SelectedIndexChanged;
             // 
             // Gameshop_button
             // 
-            this.Gameshop_button.Location = new System.Drawing.Point(422, 11);
-            this.Gameshop_button.Name = "Gameshop_button";
-            this.Gameshop_button.Size = new System.Drawing.Size(83, 21);
-            this.Gameshop_button.TabIndex = 29;
-            this.Gameshop_button.Text = "添加到商城";
-            this.Gameshop_button.UseVisualStyleBackColor = true;
-            this.Gameshop_button.Click += new System.EventHandler(this.Gameshop_button_Click);
+            Gameshop_button.Location = new Point(492, 16);
+            Gameshop_button.Margin = new Padding(4);
+            Gameshop_button.Name = "Gameshop_button";
+            Gameshop_button.Size = new Size(97, 30);
+            Gameshop_button.TabIndex = 29;
+            Gameshop_button.Text = "添加到商城";
+            Gameshop_button.UseVisualStyleBackColor = true;
+            Gameshop_button.Click += Gameshop_button_Click;
             // 
             // ItemInfoForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(812, 442);
-            this.Controls.Add(this.Gameshop_button);
-            this.Controls.Add(this.ITypeFilterComboBox);
-            this.Controls.Add(this.PasteButton);
-            this.Controls.Add(this.CopyMButton);
-            this.Controls.Add(this.ItemInfoPanel);
-            this.Controls.Add(this.RemoveButton);
-            this.Controls.Add(this.AddButton);
-            this.Controls.Add(this.ItemInfoListBox);
-            this.Name = "ItemInfoForm";
-            this.Text = "物品信息列表";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ItemInfoForm_FormClosed);
-            this.Load += new System.EventHandler(this.ItemInfoForm_Load);
-            this.ItemInfoPanel.ResumeLayout(false);
-            this.tabControl1.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
-            this.tabPage1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ItemsPreview)).EndInit();
-            this.tabPage2.ResumeLayout(false);
-            this.tabPage2.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
-            this.tabPage3.ResumeLayout(false);
-            this.tabPage3.PerformLayout();
-            this.tabPage4.ResumeLayout(false);
-            this.tabPage4.PerformLayout();
-            this.ResumeLayout(false);
-
+            AutoScaleDimensions = new SizeF(7F, 17F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(947, 626);
+            Controls.Add(Gameshop_button);
+            Controls.Add(ITypeFilterComboBox);
+            Controls.Add(PasteButton);
+            Controls.Add(CopyMButton);
+            Controls.Add(ItemInfoPanel);
+            Controls.Add(RemoveButton);
+            Controls.Add(AddButton);
+            Controls.Add(ItemInfoListBox);
+            Margin = new Padding(4);
+            Name = "ItemInfoForm";
+            Text = "物品信息列表";
+            FormClosed += ItemInfoForm_FormClosed;
+            Load += ItemInfoForm_Load;
+            ItemInfoPanel.ResumeLayout(false);
+            tabControl1.ResumeLayout(false);
+            tabPage1.ResumeLayout(false);
+            tabPage1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)ItemsPreview).EndInit();
+            tabPage2.ResumeLayout(false);
+            tabPage2.PerformLayout();
+            groupBox1.ResumeLayout(false);
+            groupBox1.PerformLayout();
+            tabPage3.ResumeLayout(false);
+            tabPage3.PerformLayout();
+            tabPage4.ResumeLayout(false);
+            tabPage4.PerformLayout();
+            ResumeLayout(false);
         }
 
         #endregion
 
-        private System.Windows.Forms.Panel ItemInfoPanel;
-        private System.Windows.Forms.TextBox WWeightTextBox;
-        private System.Windows.Forms.Label label32;
-        private System.Windows.Forms.TextBox HWeightTextBox;
-        private System.Windows.Forms.Label label30;
-        private System.Windows.Forms.TextBox BWeightText;
-        private System.Windows.Forms.Label label31;
-        private System.Windows.Forms.CheckBox StartItemCheckBox;
-        private System.Windows.Forms.TextBox LuckTextBox;
-        private System.Windows.Forms.Label label28;
-        private System.Windows.Forms.TextBox ASpeedTextBox;
-        private System.Windows.Forms.Label label29;
-        private System.Windows.Forms.TextBox AgilityTextBox;
-        private System.Windows.Forms.Label label26;
-        private System.Windows.Forms.TextBox AccuracyTextBox;
-        private System.Windows.Forms.Label label27;
-        private System.Windows.Forms.TextBox MPTextBox;
-        private System.Windows.Forms.Label label24;
-        private System.Windows.Forms.TextBox HPTextBox;
-        private System.Windows.Forms.Label label25;
-        private System.Windows.Forms.TextBox MaxSCTextBox;
-        private System.Windows.Forms.Label label22;
-        private System.Windows.Forms.TextBox MinSCTextBox;
-        private System.Windows.Forms.Label label23;
-        private System.Windows.Forms.TextBox MaxMCTextBox;
-        private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.TextBox MinMCTextBox;
-        private System.Windows.Forms.Label label19;
-        private System.Windows.Forms.TextBox MaxDCTextBox;
-        private System.Windows.Forms.Label label20;
-        private System.Windows.Forms.TextBox MinDCTextBox;
-        private System.Windows.Forms.Label label21;
-        private System.Windows.Forms.TextBox MaxMACTextBox;
-        private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.TextBox MinMACTextBox;
-        private System.Windows.Forms.Label label17;
-        private System.Windows.Forms.TextBox MaxACTextBox;
-        private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.TextBox MinACTextBox;
-        private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.TextBox PriceTextBox;
-        private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.TextBox SSizeTextBox;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.TextBox ImageTextBox;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.TextBox DuraTextBox;
-        private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.TextBox LightTextBox;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.TextBox WeightTextBox;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.TextBox ShapeTextBox;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.TextBox RAmountTextBox;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.ComboBox RClassComboBox;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.ComboBox RTypeComboBox;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.ComboBox ITypeComboBox;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox ItemNameTextBox;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox ItemIndexTextBox;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button RemoveButton;
-        private System.Windows.Forms.Button AddButton;
-        private System.Windows.Forms.ListBox ItemInfoListBox;
-        private System.Windows.Forms.ComboBox RGenderComboBox;
-        private System.Windows.Forms.Label label33;
-        private System.Windows.Forms.Button PasteButton;
-        private System.Windows.Forms.Button CopyMButton;
-        private System.Windows.Forms.TextBox EffectTextBox;
-        private System.Windows.Forms.Label label34;
-        private System.Windows.Forms.ComboBox ITypeFilterComboBox;
-        private System.Windows.Forms.Label label35;
-        private System.Windows.Forms.ComboBox ISetComboBox;
-        private System.Windows.Forms.TextBox PoisonRecoverytextBox;
-        private System.Windows.Forms.Label label43;
-        private System.Windows.Forms.TextBox SpellRecoverytextBox;
-        private System.Windows.Forms.Label label42;
-        private System.Windows.Forms.TextBox PoisonResisttextBox;
-        private System.Windows.Forms.Label label41;
-        private System.Windows.Forms.TextBox MagicResisttextBox;
-        private System.Windows.Forms.Label label40;
-        private System.Windows.Forms.TextBox HealthRecoveryTextbox;
-        private System.Windows.Forms.Label label39;
-        private System.Windows.Forms.TextBox StrongTextbox;
-        private System.Windows.Forms.Label label38;
-        private System.Windows.Forms.TextBox MacRateTextbox;
-        private System.Windows.Forms.Label label37;
-        private System.Windows.Forms.TextBox ACRateTextbox;
-        private System.Windows.Forms.Label label36;
-        private System.Windows.Forms.CheckBox Bind_dontstorecheckbox;
-        private System.Windows.Forms.CheckBox Bind_dontupgradecheckbox;
-        private System.Windows.Forms.CheckBox Bind_dontrepaircheckbox;
-        private System.Windows.Forms.CheckBox Bind_donttradecheckbox;
-        private System.Windows.Forms.CheckBox Bind_dontsellcheckbox;
-        private System.Windows.Forms.CheckBox Bind_destroyondropcheckbox;
-        private System.Windows.Forms.CheckBox Bind_dontdeathdropcheckbox;
-        private System.Windows.Forms.CheckBox Bind_dontdropcheckbox;
-        private System.Windows.Forms.CheckBox LevelBasedcheckbox;
-        private System.Windows.Forms.CheckBox ClassBasedcheckbox;
-        private System.Windows.Forms.TextBox PoisonAttacktextbox;
-        private System.Windows.Forms.Label label47;
-        private System.Windows.Forms.TextBox Freezingtextbox;
-        private System.Windows.Forms.Label label46;
-        private System.Windows.Forms.TextBox Holytextbox;
-        private System.Windows.Forms.Label label45;
-        private System.Windows.Forms.TextBox HPratetextbox;
-        private System.Windows.Forms.Label label44;
-        private System.Windows.Forms.CheckBox BindOnEquipcheckbox;
-        private System.Windows.Forms.CheckBox ShowGroupPickupcheckbox;
-        private System.Windows.Forms.CheckBox NeedIdentifycheckbox;
-        private System.Windows.Forms.TextBox MPratetextbox;
-        private System.Windows.Forms.Label label48;
-        private System.Windows.Forms.TextBox HpDrainRatetextBox;
-        private System.Windows.Forms.Label label49;
-        private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.TabPage tabPage3;
-        private System.Windows.Forms.TabPage tabPage4;
-        private System.Windows.Forms.CheckBox NoDuraLosscheckBox;
-        private System.Windows.Forms.CheckBox SkillcheckBox;
-        private System.Windows.Forms.CheckBox ProbecheckBox;
-        private System.Windows.Forms.CheckBox HealingcheckBox;
-        private System.Windows.Forms.CheckBox FlamecheckBox;
-        private System.Windows.Forms.CheckBox MusclecheckBox;
-        private System.Windows.Forms.CheckBox RevivalcheckBox;
-        private System.Windows.Forms.CheckBox ProtectioncheckBox;
-        private System.Windows.Forms.CheckBox ClearcheckBox;
-        private System.Windows.Forms.CheckBox TeleportcheckBox;
-        private System.Windows.Forms.CheckBox ParalysischeckBox;
-        private System.Windows.Forms.Label label50;
-        private System.Windows.Forms.TextBox CriticalRatetextBox;
-        private System.Windows.Forms.Label label51;
-        private System.Windows.Forms.TextBox CriticalDamagetextBox;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Label label52;
-        private System.Windows.Forms.TextBox ReflecttextBox;
-        private System.Windows.Forms.CheckBox Bind_DontSpecialRepaircheckBox;
-        private System.Windows.Forms.TextBox LightIntensitytextBox;
-        private System.Windows.Forms.Label label53;
-        private System.Windows.Forms.TextBox RandomStatstextBox;
-        private System.Windows.Forms.Label label54;
-        private System.Windows.Forms.CheckBox PickaxecheckBox;
-        private System.Windows.Forms.Label label55;
-        private System.Windows.Forms.ComboBox IGradeComboBox;
-        private System.Windows.Forms.CheckBox FastRunCheckBox;
-        private System.Windows.Forms.Label label56;
-        private System.Windows.Forms.TextBox TooltipTextBox;
-        private System.Windows.Forms.CheckBox CanAwaken;
-        private System.Windows.Forms.CheckBox BreakOnDeathcheckbox;
-        private System.Windows.Forms.Button Gameshop_button;
-        private System.Windows.Forms.CheckBox NoWeddingRingcheckbox;
-        private System.Windows.Forms.CheckBox NoHerocheckbox;
-        private System.Windows.Forms.CheckBox unableToRent_CheckBox;
-        private System.Windows.Forms.CheckBox unableToDisassemble_CheckBox;
-        private System.Windows.Forms.CheckBox globalDropNotify_CheckBox;
-        private System.Windows.Forms.CheckBox BlinkcheckBox;
-        private System.Windows.Forms.CheckBox noMailBox;
-        private System.Windows.Forms.TextBox SlotsTextBox;
-        private System.Windows.Forms.Label label57;
-        private System.Windows.Forms.Label label58;
-        private System.Windows.Forms.Label label59;
-        private System.Windows.Forms.Label label60;
-        private System.Windows.Forms.Label label61;
-        private System.Windows.Forms.Label label62;
-        private System.Windows.Forms.Label label63;
-        private System.Windows.Forms.Label label64;
-        private System.Windows.Forms.TextBox MaxDCRatetextBox;
-        private System.Windows.Forms.TextBox MaxMCRatetextBox;
-        private System.Windows.Forms.TextBox MaxSCRatetextBox;
-        private System.Windows.Forms.TextBox ExpRatetextBox;
-        private System.Windows.Forms.TextBox GoldRatetextBox;
-        private System.Windows.Forms.TextBox DropRatetextBox;
-        private System.Windows.Forms.TextBox DamageReductiontextBox;
-        private System.Windows.Forms.PictureBox ItemsPreview;
+        private Panel ItemInfoPanel;
+        private TextBox WWeightTextBox;
+        private Label label32;
+        private TextBox HWeightTextBox;
+        private Label label30;
+        private TextBox BWeightText;
+        private Label label31;
+        private CheckBox StartItemCheckBox;
+        private TextBox LuckTextBox;
+        private Label label28;
+        private TextBox ASpeedTextBox;
+        private Label label29;
+        private TextBox AgilityTextBox;
+        private Label label26;
+        private TextBox AccuracyTextBox;
+        private Label label27;
+        private TextBox MPTextBox;
+        private Label label24;
+        private TextBox HPTextBox;
+        private Label label25;
+        private TextBox MaxSCTextBox;
+        private Label label22;
+        private TextBox MinSCTextBox;
+        private Label label23;
+        private TextBox MaxMCTextBox;
+        private Label label18;
+        private TextBox MinMCTextBox;
+        private Label label19;
+        private TextBox MaxDCTextBox;
+        private Label label20;
+        private TextBox MinDCTextBox;
+        private Label label21;
+        private TextBox MaxMACTextBox;
+        private Label label16;
+        private TextBox MinMACTextBox;
+        private Label label17;
+        private TextBox MaxACTextBox;
+        private Label label15;
+        private TextBox MinACTextBox;
+        private Label label14;
+        private TextBox PriceTextBox;
+        private Label label13;
+        private TextBox SSizeTextBox;
+        private Label label12;
+        private TextBox ImageTextBox;
+        private Label label10;
+        private TextBox DuraTextBox;
+        private Label label11;
+        private TextBox LightTextBox;
+        private Label label9;
+        private TextBox WeightTextBox;
+        private Label label8;
+        private TextBox ShapeTextBox;
+        private Label label7;
+        private TextBox RAmountTextBox;
+        private Label label6;
+        private ComboBox RClassComboBox;
+        private Label label5;
+        private ComboBox RTypeComboBox;
+        private Label label4;
+        private ComboBox ITypeComboBox;
+        private Label label2;
+        private TextBox ItemNameTextBox;
+        private Label label3;
+        private TextBox ItemIndexTextBox;
+        private Label label1;
+        private Button RemoveButton;
+        private Button AddButton;
+        private ListBox ItemInfoListBox;
+        private ComboBox RGenderComboBox;
+        private Label label33;
+        private Button PasteButton;
+        private Button CopyMButton;
+        private TextBox EffectTextBox;
+        private Label label34;
+        private ComboBox ITypeFilterComboBox;
+        private Label label35;
+        private ComboBox ISetComboBox;
+        private TextBox PoisonRecoverytextBox;
+        private Label label43;
+        private TextBox SpellRecoverytextBox;
+        private Label label42;
+        private TextBox PoisonResisttextBox;
+        private Label label41;
+        private TextBox MagicResisttextBox;
+        private Label label40;
+        private TextBox HealthRecoveryTextbox;
+        private Label label39;
+        private TextBox StrongTextbox;
+        private Label label38;
+        private TextBox MacRateTextbox;
+        private Label label37;
+        private TextBox ACRateTextbox;
+        private Label label36;
+        private CheckBox Bind_dontstorecheckbox;
+        private CheckBox Bind_dontupgradecheckbox;
+        private CheckBox Bind_dontrepaircheckbox;
+        private CheckBox Bind_donttradecheckbox;
+        private CheckBox Bind_dontsellcheckbox;
+        private CheckBox Bind_destroyondropcheckbox;
+        private CheckBox Bind_dontdeathdropcheckbox;
+        private CheckBox Bind_dontdropcheckbox;
+        private CheckBox LevelBasedcheckbox;
+        private CheckBox ClassBasedcheckbox;
+        private TextBox PoisonAttacktextbox;
+        private Label label47;
+        private TextBox Freezingtextbox;
+        private Label label46;
+        private TextBox Holytextbox;
+        private Label label45;
+        private TextBox HPratetextbox;
+        private Label label44;
+        private CheckBox BindOnEquipcheckbox;
+        private CheckBox ShowGroupPickupcheckbox;
+        private CheckBox NeedIdentifycheckbox;
+        private TextBox MPratetextbox;
+        private Label label48;
+        private TextBox HpDrainRatetextBox;
+        private Label label49;
+        private TabControl tabControl1;
+        private TabPage tabPage1;
+        private TabPage tabPage2;
+        private TabPage tabPage3;
+        private TabPage tabPage4;
+        private CheckBox NoDuraLosscheckBox;
+        private CheckBox SkillcheckBox;
+        private CheckBox ProbecheckBox;
+        private CheckBox HealingcheckBox;
+        private CheckBox FlamecheckBox;
+        private CheckBox MusclecheckBox;
+        private CheckBox RevivalcheckBox;
+        private CheckBox ProtectioncheckBox;
+        private CheckBox ClearcheckBox;
+        private CheckBox TeleportcheckBox;
+        private CheckBox ParalysischeckBox;
+        private Label label50;
+        private TextBox CriticalRatetextBox;
+        private Label label51;
+        private TextBox CriticalDamagetextBox;
+        private GroupBox groupBox1;
+        private Label label52;
+        private TextBox ReflecttextBox;
+        private CheckBox Bind_DontSpecialRepaircheckBox;
+        private TextBox LightIntensitytextBox;
+        private Label label53;
+        private TextBox RandomStatstextBox;
+        private Label label54;
+        private CheckBox PickaxecheckBox;
+        private Label label55;
+        private ComboBox IGradeComboBox;
+        private CheckBox FastRunCheckBox;
+        private Label label56;
+        private TextBox TooltipTextBox;
+        private CheckBox CanAwaken;
+        private CheckBox BreakOnDeathcheckbox;
+        private Button Gameshop_button;
+        private CheckBox NoWeddingRingcheckbox;
+        private CheckBox NoHerocheckbox;
+        private CheckBox unableToRent_CheckBox;
+        private CheckBox unableToDisassemble_CheckBox;
+        private CheckBox globalDropNotify_CheckBox;
+        private CheckBox BlinkcheckBox;
+        private CheckBox noMailBox;
+        private TextBox SlotsTextBox;
+        private Label label57;
+        private Label label58;
+        private Label label59;
+        private Label label60;
+        private Label label61;
+        private Label label62;
+        private Label label63;
+        private Label label64;
+        private TextBox MaxDCRatetextBox;
+        private TextBox MaxMCRatetextBox;
+        private TextBox MaxSCRatetextBox;
+        private TextBox ExpRatetextBox;
+        private TextBox GoldRatetextBox;
+        private TextBox DropRatetextBox;
+        private TextBox DamageReductiontextBox;
+        private PictureBox ItemsPreview;
     }
 }

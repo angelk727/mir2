@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using Server.MirDatabase;
+﻿using Server.MirDatabase;
 using Server.MirObjects;
 using Server.MirObjects.Monsters;
 
@@ -136,9 +134,9 @@ namespace Server.MirEnvir
         }
         public void LevelUp()
         {
-            Drop(Info.Level);//建议将最大掉落设为空或'trash'，这样可以阻止玩家利用它
+            Drop(Info.Level);//i would suggest having the max level drop be empty or 'trash' > that way you stop ppl from exploiting it
             if (Info.Level < Globals.MaxDragonLevel) Info.Level = (byte)(Math.Max(1, (Info.Level + 1)));
-            //如果它达到最大级别>使其保持该级别6*deleveldelay，然后重置为0，而不是让ppl每小时降低一次
+            //if it reaches max level > make it stay that level for 6*deleveldelay and then reset to 0, rather then letting ppl farm it by making it drop every hour
             if (Info.Level == Globals.MaxDragonLevel)
                 DeLevelTime = Envir.Time + (6 * DeLevelDelay);
         }

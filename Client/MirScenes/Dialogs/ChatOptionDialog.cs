@@ -1,6 +1,4 @@
-﻿using System;
-using System.Drawing;
-using Client.MirControls;
+﻿using Client.MirControls;
 using Client.MirGraphics;
 using Client.MirSounds;
 
@@ -16,7 +14,7 @@ namespace Client.MirScenes.Dialogs
 
         public bool AllFiltersOff = true;
 
-        public ChatOptionDialog() //聊天设置窗口
+        public ChatOptionDialog()
         {
             Index = 466;
             Library = Libraries.Title;
@@ -254,7 +252,7 @@ namespace Client.MirScenes.Dialogs
                 ChatTabButton.PressedIndex = 465;
                 Index = 466;
 
-                //显示筛选器选项卡上的所有按钮
+                //Show all buttons on filter tab
                 AllButton.Visible = true;
                 GeneralButton.Visible = true;
                 WhisperButton.Visible = true;
@@ -265,7 +263,7 @@ namespace Client.MirScenes.Dialogs
                 GroupButton.Visible = true;
                 GuildButton.Visible = true;
 
-                //隐藏所有透明度按钮
+                //hide all transparency buttons
                 TransparencyOffButton.Visible = false;
                 TransparencyOnButton.Visible = false;
             }
@@ -277,7 +275,7 @@ namespace Client.MirScenes.Dialogs
                 ChatTabButton.PressedIndex = 464;
                 Index = 467;
 
-                //隐藏筛选器选项卡上的所有按钮
+                //Hide all buttons on filter tab
                 AllButton.Visible = false;
                 GeneralButton.Visible = false;
                 WhisperButton.Visible = false;
@@ -288,7 +286,7 @@ namespace Client.MirScenes.Dialogs
                 GroupButton.Visible = false;
                 GuildButton.Visible = false;
 
-                //显示所有透明度按钮
+                //show all transparency buttons
                 TransparencyOffButton.Visible = true;
                 TransparencyOnButton.Visible = true;
             }
@@ -314,7 +312,7 @@ namespace Client.MirScenes.Dialogs
         {
             if(AllFiltersOff)
             {
-                //打开所有筛选器
+                //turn all filters on
                 Settings.FilterNormalChat = true;
                 Settings.FilterWhisperChat = true;
                 Settings.FilterShoutChat = true;
@@ -328,7 +326,7 @@ namespace Client.MirScenes.Dialogs
             }
             else
             {
-                //关闭所有过滤器
+                //turn all filters off
                 Settings.FilterNormalChat = false;
                 Settings.FilterWhisperChat = false;
                 Settings.FilterShoutChat = false;

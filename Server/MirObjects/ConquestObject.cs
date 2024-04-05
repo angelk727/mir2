@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
+﻿using Server.MirEnvir;
 using Server.MirDatabase;
-using Server.MirEnvir;
 
 namespace Server.MirObjects
 {
@@ -89,7 +86,7 @@ namespace Server.MirObjects
 
         public void Bind()
         {
-            //将信息绑定到保存的弓箭对象或创建新对象
+            //Bind Info to Saved Archer objects or create new objects
             for (var j = 0; j < Info.ConquestGuards.Count; j++)
             {
                 var tempArcher = GuildInfo.ArcherList.FirstOrDefault(x => x.Index == Info.ConquestGuards[j].Index);
@@ -105,7 +102,7 @@ namespace Server.MirObjects
                 }
             }
 
-            //删除已移除的弓箭手的DB
+            //Remove archers that have been removed from DB
             for (var j = 0; j < GuildInfo.ArcherList.Count; j++)
             {
                 if (GuildInfo.ArcherList[j].Info == null)
@@ -114,7 +111,7 @@ namespace Server.MirObjects
                 }
             }
 
-            //将信息绑定到保存的门对象或创建新对象
+            //Bind Info to Saved Gate objects or create new objects
             for (var j = 0; j < Info.ConquestGates.Count; j++)
             {
                 var tempGate = GuildInfo.GateList.FirstOrDefault(x => x.Index == Info.ConquestGates[j].Index);
@@ -130,13 +127,13 @@ namespace Server.MirObjects
                 }
             }
 
-            //将信息绑定到保存的标志对象或创建新对象
+            //Bind Info to Saved Flag objects or create new objects
             for (var j = 0; j < Info.ConquestFlags.Count; j++)
             {
                 GuildInfo.FlagList.Add(new ConquestGuildFlagInfo { Info = Info.ConquestFlags[j], Index = Info.ConquestFlags[j].Index, Conquest = this });
             }
 
-            //移除已从中移除的大门DB
+            //Remove Gates that have been removed from DB
             for (var j = 0; j < GuildInfo.GateList.Count; j++)
             {
                 if (GuildInfo.GateList[j].Info == null)
@@ -145,7 +142,7 @@ namespace Server.MirObjects
                 }
             }
 
-            //将信息绑定到保存的墙对象或创建新对象
+            //Bind Info to Saved Wall objects or create new objects
             for (var j = 0; j < Info.ConquestWalls.Count; j++)
             {
                 var tempWall = GuildInfo.WallList.FirstOrDefault(x => x.Index == Info.ConquestWalls[j].Index);
@@ -161,7 +158,7 @@ namespace Server.MirObjects
                 }
             }
 
-            //删除已从中删除的墙DB
+            //Remove Walls that have been removed from DB
             for (var j = 0; j < GuildInfo.WallList.Count; j++)
             {
                 if (GuildInfo.WallList[j].Info == null)
@@ -171,7 +168,7 @@ namespace Server.MirObjects
             }
 
 
-            //将信息绑定到保存的围攻对象或创建新对象
+            //Bind Info to Saved Siege objects or create new objects
             for (var j = 0; j < Info.ConquestSieges.Count; j++)
             {
                 var tempSiege = GuildInfo.SiegeList.FirstOrDefault(x => x.Index == Info.ConquestSieges[j].Index);
@@ -187,7 +184,7 @@ namespace Server.MirObjects
                 }
             }
 
-            //移除已移除的围城DB
+            //Remove Siege that have been removed from DB
             for (var j = 0; j < GuildInfo.SiegeList.Count; j++)
             {
                 if (GuildInfo.SiegeList[j].Info == null)
@@ -196,7 +193,7 @@ namespace Server.MirObjects
                 }
             }
 
-            //将信息绑定到保存的标志对象或创建新对象
+            //Bind Info to Saved Flag objects or create new objects
             for (var j = 0; j < Info.ControlPoints.Count; j++)
             {
                 ConquestGuildFlagInfo cp;
@@ -424,7 +421,7 @@ namespace Server.MirObjects
             }
 
 
-            //将NPC设置为不可见
+            //Set NPCs to invisible
             Map npcMap;
             NPCObject npcTemp;
 

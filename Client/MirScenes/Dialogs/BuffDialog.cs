@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Windows.Forms;
-using Client.MirControls;
+﻿using Client.MirControls;
 using Client.MirGraphics;
 using Client.MirSounds;
 
@@ -353,7 +349,7 @@ namespace Client.MirScenes.Dialogs
                 case BuffType.Blindness:
                     text += "失明效果\n";
                     break;
-                case BuffType.英雄灵气: //新添加
+                case BuffType.英雄灵气:
                     text += "英雄在线加成\n";
                     break;
             }
@@ -535,10 +531,10 @@ namespace Client.MirScenes.Dialogs
                     return 186;
                 case BuffType.时间之殇:
                     return 261;
-                case BuffType.潜心修炼: //自添加
+                case BuffType.潜心修炼:
                 case BuffType.技巧项链:
                     return 200;
-                case BuffType.英雄灵气: //新添加
+                case BuffType.英雄灵气:
                     return 259;
 
                 //Stats

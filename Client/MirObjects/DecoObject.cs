@@ -1,5 +1,4 @@
-﻿using System.Drawing;
-using Client.MirGraphics;
+﻿using Client.MirGraphics;
 using Client.MirScenes;
 using S = ServerPackets;
 

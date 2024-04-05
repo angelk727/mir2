@@ -1,6 +1,4 @@
-﻿using System;
-
-public enum MouseCursor : byte
+﻿public enum MouseCursor : byte
 {
     None,
     Default,
@@ -64,8 +62,8 @@ public enum DamageType : byte
     Hit = 0,
     Miss = 1,
     Critical = 2,
-    HpRegen = 3, //新添加
-    Poisoning = 4 //新添加
+    HpRegen = 3,
+    Poisoning = 4
 }
 
 [Flags]
@@ -722,18 +720,18 @@ public enum Monster : ushort
     GiGateSouth = 954,
     GiGateEast = 955,
     GiGateWest = 956,
-    SSabukWall1 = 957, //沙巴克左城墙
-    SSabukWall2 = 958, //沙巴克中城墙
-    SSabukWall3 = 959, //沙巴克右城墙
-    NammandGate1 = 960, //南蛮城外城门
-    NammandGate2 = 961, //南蛮城内城门
-    SabukWallSection = 962, //沙巴克城墙
-    NammandWallSection = 963, //南蛮城墙
-    FrozenDoor = 964, //寒冰之门 同怪物：287 Blank3 可删除
-    GonRyunDoor = 965, //燃烧的昆仑大门
-    UnderPassDoor1 = 966, //地下通道门
-    UnderPassDoor2 = 967, //地下通道门
-    InDunFences = 968, //毒妖村栅栏
+    SSabukWall1 = 957,
+    SSabukWall2 = 958,
+    SSabukWall3 = 959,
+    NammandGate1 = 960,
+    NammandGate2 = 961,
+    SabukWallSection = 962,
+    NammandWallSection = 963,
+    FrozenDoor = 964,
+    GonRyunDoor = 965,
+    UnderPassDoor1 = 966,
+    UnderPassDoor2 = 967,
+    InDunFences = 968,
 
     //Flags 1000 ~ 1100
 
@@ -1155,7 +1153,7 @@ public enum Spell : byte
 {
     None = 0,
 
-    //战士
+    //Warrior
     Fencing = 1,
     Slaying = 2,
     Thrusting = 3,
@@ -1173,10 +1171,10 @@ public enum Spell : byte
     SlashingBurst = 15,
     Fury = 16,
     ImmortalSkin = 17,
-    EntrapmentRare = 18, //新添加
-    ImmortalSkinRare = 19, //新添加
+    EntrapmentRare = 18,
+    ImmortalSkinRare = 19,
 
-    //法师
+    //Wizard
     FireBall = 31,
     Repulsion = 32,
     ElectricShock = 33,
@@ -1202,11 +1200,11 @@ public enum Spell : byte
     IceThrust = 53,
     FastMove = 54,
     StormEscape = 55,
-    HeavenlySecrets = 56, //新添加
+    HeavenlySecrets = 56,
     GreatFireBallRare = 57,
     StormEscapeRare = 58,
 
-    //道士
+    //Taoist
     Healing = 61,
     SpiritSword = 62,
     Poisoning = 63,
@@ -1233,9 +1231,9 @@ public enum Spell : byte
     PetEnhancer = 85,
     HealingCircle = 86,
     HealingRare = 87,
-    HealingcircleRare = 88, //自添加阴阳五行阵-秘籍
+    HealingcircleRare = 88,
 
-    //刺客
+    //Assassin
     FatalSword = 91,
     DoubleSlash = 92,
     Haste = 93,
@@ -1254,7 +1252,7 @@ public enum Spell : byte
     MoonMist = 106,
     CatTongue = 107,
 
-    //弓箭
+    //Archer
     Focus = 121,
     StraightShot = 122,
     DoubleShot = 123,
@@ -1358,10 +1356,10 @@ public enum SpellEffect : byte
     FurbolgWarriorCritical,
     Tester,
 	MoonMist,
-    HealingcircleRare, //自添加阴阳五行阵-秘籍
-    HealingcircleRare1, //自添加阴阳五行阵-秘籍
-    BloodthirstySpike, //414
-    GroundBurstIce, //476
+    HealingcircleRare,
+    HealingcircleRare1,
+    BloodthirstySpike,
+    GroundBurstIce,
     MirEmperor
 }
 
@@ -1409,13 +1407,13 @@ public enum BuffType : byte
     HornedWarriorShield,
     HornedCommanderShield,
     Blindness,
-    ChieftainSwordBuff, //414
-    寒冰护甲, //476
-    ReaperPriestBuff, //487
-    至尊威严, //502
-    伤口加深, //505
-    死亡印记, //516
-    RiklebitesShield, //518
+    ChieftainSwordBuff,
+    寒冰护甲,
+    ReaperPriestBuff,
+    至尊威严,
+    伤口加深,
+    死亡印记,
+    RiklebitesShield,
     麻痹状态,
 
     //Special
@@ -1435,7 +1433,7 @@ public enum BuffType : byte
     技巧项链,
     隐身戒指,
     潜心修炼,
-    英雄灵气, //新添加未完成
+    英雄灵气,
 
     //Stats
     火龍祝福 = 200,
@@ -1976,7 +1974,7 @@ public enum HeroBehaviour : byte
     反击 = 1,
     跟随 = 2,
     自定 = 3,
-    原地 = 4, //新添加
+    原地 = 4,
     跑回 = 5,
     瞬回 = 6
 }

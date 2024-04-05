@@ -28,89 +28,93 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.button1 = new System.Windows.Forms.Button();
-            this.cbPrefix = new System.Windows.Forms.ComboBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.cbFront = new System.Windows.Forms.CheckBox();
-            this.cbManualPrefix = new System.Windows.Forms.CheckBox();
-            this.SuspendLayout();
+            button1 = new Button();
+            cbPrefix = new ComboBox();
+            label1 = new Label();
+            cbFront = new CheckBox();
+            cbManualPrefix = new CheckBox();
+            SuspendLayout();
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(136, 39);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Start";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            button1.Location = new Point(159, 51);
+            button1.Margin = new Padding(4, 4, 4, 4);
+            button1.Name = "button1";
+            button1.Size = new Size(88, 30);
+            button1.TabIndex = 0;
+            button1.Text = "开始";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
             // 
             // cbPrefix
             // 
-            this.cbPrefix.Enabled = false;
-            this.cbPrefix.FormattingEnabled = true;
-            this.cbPrefix.Items.AddRange(new object[] {
-            "00",
-            "000",
-            "0000"});
-            this.cbPrefix.Location = new System.Drawing.Point(54, 12);
-            this.cbPrefix.Name = "cbPrefix";
-            this.cbPrefix.Size = new System.Drawing.Size(54, 21);
-            this.cbPrefix.TabIndex = 1;
+            cbPrefix.Enabled = false;
+            cbPrefix.FormattingEnabled = true;
+            cbPrefix.Items.AddRange(new object[] { "00", "000", "0000" });
+            cbPrefix.Location = new Point(63, 16);
+            cbPrefix.Margin = new Padding(4, 4, 4, 4);
+            cbPrefix.Name = "cbPrefix";
+            cbPrefix.Size = new Size(62, 25);
+            cbPrefix.TabIndex = 1;
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 15);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(36, 13);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "Prefix:";
+            label1.AutoSize = true;
+            label1.Location = new Point(14, 20);
+            label1.Margin = new Padding(4, 0, 4, 0);
+            label1.Name = "label1";
+            label1.Size = new Size(35, 17);
+            label1.TabIndex = 2;
+            label1.Text = "前缀:";
             // 
             // cbFront
             // 
-            this.cbFront.AutoSize = true;
-            this.cbFront.Location = new System.Drawing.Point(15, 43);
-            this.cbFront.Name = "cbFront";
-            this.cbFront.Size = new System.Drawing.Size(84, 17);
-            this.cbFront.TabIndex = 3;
-            this.cbFront.Text = "FrontImages";
-            this.cbFront.UseVisualStyleBackColor = true;
+            cbFront.AutoSize = true;
+            cbFront.Location = new Point(18, 56);
+            cbFront.Margin = new Padding(4, 4, 4, 4);
+            cbFront.Name = "cbFront";
+            cbFront.Size = new Size(75, 21);
+            cbFront.TabIndex = 3;
+            cbFront.Text = "正面图像";
+            cbFront.UseVisualStyleBackColor = true;
             // 
             // cbManualPrefix
             // 
-            this.cbManualPrefix.AutoSize = true;
-            this.cbManualPrefix.Location = new System.Drawing.Point(124, 14);
-            this.cbManualPrefix.Name = "cbManualPrefix";
-            this.cbManualPrefix.Size = new System.Drawing.Size(87, 17);
-            this.cbManualPrefix.TabIndex = 4;
-            this.cbManualPrefix.Text = "ManualPrefix";
-            this.cbManualPrefix.UseVisualStyleBackColor = true;
-            this.cbManualPrefix.CheckedChanged += new System.EventHandler(this.cbManualPrefix_CheckedChanged);
+            cbManualPrefix.AutoSize = true;
+            cbManualPrefix.Location = new Point(145, 18);
+            cbManualPrefix.Margin = new Padding(4, 4, 4, 4);
+            cbManualPrefix.Name = "cbManualPrefix";
+            cbManualPrefix.Size = new Size(99, 21);
+            cbManualPrefix.TabIndex = 4;
+            cbManualPrefix.Text = "手动设置前缀";
+            cbManualPrefix.UseVisualStyleBackColor = true;
+            cbManualPrefix.CheckedChanged += cbManualPrefix_CheckedChanged;
             // 
             // LoadSettings
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(223, 71);
-            this.Controls.Add(this.cbManualPrefix);
-            this.Controls.Add(this.cbFront);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.cbPrefix);
-            this.Controls.Add(this.button1);
-            this.Name = "LoadSettings";
-            this.Text = "LoadSettings";
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleDimensions = new SizeF(7F, 17F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(260, 93);
+            Controls.Add(cbManualPrefix);
+            Controls.Add(cbFront);
+            Controls.Add(label1);
+            Controls.Add(cbPrefix);
+            Controls.Add(button1);
+            Margin = new Padding(4, 4, 4, 4);
+            Name = "LoadSettings";
+            Text = "加载设置";
+            EventHandler LoadSettings_Load = null;
+            Load += LoadSettings_Load;
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
 
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.ComboBox cbPrefix;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.CheckBox cbFront;
-        private System.Windows.Forms.CheckBox cbManualPrefix;
+        private Button button1;
+        private ComboBox cbPrefix;
+        private Label label1;
+        private CheckBox cbFront;
+        private CheckBox cbManualPrefix;
     }
 }

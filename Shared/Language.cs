@@ -1,6 +1,4 @@
-﻿using System.IO;
-
-public class GameLanguage
+﻿public class GameLanguage
 {
     //Client
     public static string PetMode_Both = "[自由攻击]",
@@ -29,7 +27,7 @@ public class GameLanguage
                          Menu = "菜单",
                          GameShop = "商城 ({0})",
                          BigMap = "大地图 ({0})",
-                         MiniMap = "小地图 ({0})", //自添加
+                         MiniMap = "小地图 ({0})",
                          DuraPanel = "装备持久度",
                          Mail = "邮件",
                          Exit = "退出 ({0})",
@@ -72,7 +70,7 @@ public class GameLanguage
                          HeroInventory = "英雄背包 ({0})",
                          HeroCharacter = "英雄装备 ({0})",
                          HeroSkills = "英雄技能 ({0})",
-                         HeroSummon = "英雄(召唤/收起)", //新添加
+                         HeroSummon = "英雄(召唤/收起)",
                          HeroExperienceGained = "英雄获得经验 {0}",
 
                          ItemDescription = "物品说明",
@@ -266,7 +264,7 @@ public class GameLanguage
     public static string LowLevel = "等级不足",
                          LowGold = "金币不足",
                          LevelUp = "升级！！！",
-                         HeroLevelUp = "英雄等级提升！",  //新添加英雄等级提升提示
+                         HeroLevelUp = "英雄等级提升！",
                          LowDC = "物理攻击不足",
                          LowMC = "魔法攻击不足",
                          LowSC = "道术攻击不足",
@@ -359,12 +357,12 @@ public class GameLanguage
         GameLanguage.YouGained2 = reader.ReadString("Language", "YouGained2", GameLanguage.YouGained2);
         GameLanguage.ExperienceGained = reader.ReadString("Language", "ExperienceGained", GameLanguage.ExperienceGained);        
         GameLanguage.LevelUp = reader.ReadString("Language", "LevelUp", GameLanguage.LevelUp);
-        GameLanguage.HeroLevelUp = reader.ReadString("Language", "HeroLevelUp", GameLanguage.HeroLevelUp);  //新添加英雄等级提升提示
+        GameLanguage.HeroLevelUp = reader.ReadString("Language", "HeroLevelUp", GameLanguage.HeroLevelUp);
 
         GameLanguage.HeroInventory = reader.ReadString("Language", "HeroInventory", GameLanguage.HeroInventory);
         GameLanguage.HeroCharacter = reader.ReadString("Language", "HeroCharacter", GameLanguage.HeroCharacter);
         GameLanguage.HeroSkills = reader.ReadString("Language", "HeroSkills", GameLanguage.HeroSkills);
-        GameLanguage.HeroSummon = reader.ReadString("Language", "HeroSummon", GameLanguage.HeroSummon); //新添加
+        GameLanguage.HeroSummon = reader.ReadString("Language", "HeroSummon", GameLanguage.HeroSummon);
         GameLanguage.HeroExperienceGained = reader.ReadString("Language", "HeroExperienceGained", GameLanguage.HeroExperienceGained);
 
         GameLanguage.ItemDescription = reader.ReadString("Language", "ItemDescription", GameLanguage.ItemDescription);
@@ -609,12 +607,12 @@ public class GameLanguage
         reader.Write("Language", "YouGained2", GameLanguage.YouGained2);
         reader.Write("Language", "ExperienceGained", GameLanguage.ExperienceGained);        
         reader.Write("Language", "LevelUp", GameLanguage.LevelUp);
-        reader.Write("Language", "HeroLevelUp", GameLanguage.HeroLevelUp); //新添加英雄等级提升提示
+        reader.Write("Language", "HeroLevelUp", GameLanguage.HeroLevelUp);
 
         reader.Write("Language", "HeroInventory", GameLanguage.Inventory);
         reader.Write("Language", "HeroCharacter", GameLanguage.Character);
         reader.Write("Language", "HeroSkills", GameLanguage.Skills);
-        reader.Write("Language", "HeroSummon", GameLanguage.HeroSummon); //新添加
+        reader.Write("Language", "HeroSummon", GameLanguage.HeroSummon);
         reader.Write("Language", "HeroExperienceGained", GameLanguage.HeroExperienceGained);
 
         reader.Write("Language", "ItemDescription", GameLanguage.ItemDescription);
@@ -793,7 +791,7 @@ public class GameLanguage
         GameLanguage.LowSC = reader.ReadString("Language", "LowSC", GameLanguage.LowSC);
 
         GameLanguage.LevelUp = reader.ReadString("Language", "LevelUp", GameLanguage.LevelUp);
-        GameLanguage.HeroLevelUp = reader.ReadString("Language", "HeroLevelUp", GameLanguage.HeroLevelUp);  //新添加英雄等级提升提示
+        GameLanguage.HeroLevelUp = reader.ReadString("Language", "HeroLevelUp", GameLanguage.HeroLevelUp);
 
         GameLanguage.WeaponLuck = reader.ReadString("Language", "WeaponLuck", GameLanguage.WeaponLuck);
         GameLanguage.WeaponCurse = reader.ReadString("Language", "WeaponCurse", GameLanguage.WeaponCurse);
@@ -833,7 +831,7 @@ public class GameLanguage
         reader.Write("Language", "LowSC", GameLanguage.LowSC);
 
         reader.Write("Language", "LevelUp", GameLanguage.LevelUp);
-        reader.Write("Language", "HeroLevelUp", GameLanguage.HeroLevelUp);  //新添加英雄等级提升提示
+        reader.Write("Language", "HeroLevelUp", GameLanguage.HeroLevelUp);
 
         reader.Write("Language", "WeaponLuck", GameLanguage.WeaponLuck);
         reader.Write("Language", "WeaponCurse", GameLanguage.WeaponCurse);

@@ -28,414 +28,439 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.GameShopListBox = new System.Windows.Forms.ListBox();
-            this.label14 = new System.Windows.Forms.Label();
-            this.GoldPrice_textbox = new System.Windows.Forms.TextBox();
-            this.label21 = new System.Windows.Forms.Label();
-            this.GPPrice_textbox = new System.Windows.Forms.TextBox();
-            this.label29 = new System.Windows.Forms.Label();
-            this.ItemDetails_gb = new System.Windows.Forms.GroupBox();
-            this.GoldOnlyBox = new System.Windows.Forms.CheckBox();
-            this.CreditOnlyBox = new System.Windows.Forms.CheckBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.Count_textbox = new System.Windows.Forms.TextBox();
-            this.LeftinStock_label = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.TotalSold_label = new System.Windows.Forms.Label();
-            this.TopItem_checkbox = new System.Windows.Forms.CheckBox();
-            this.DealofDay_checkbox = new System.Windows.Forms.CheckBox();
-            this.Individual_checkbox = new System.Windows.Forms.CheckBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.Stock_textbox = new System.Windows.Forms.TextBox();
-            this.Category_textbox = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.Class_combo = new System.Windows.Forms.ComboBox();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.ServerLog_button = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
-            this.CredxGold_textbox = new System.Windows.Forms.TextBox();
-            this.Remove_button = new System.Windows.Forms.Button();
-            this.ClassFilter_lb = new System.Windows.Forms.ComboBox();
-            this.SectionFilter_lb = new System.Windows.Forms.ComboBox();
-            this.CategoryFilter_lb = new System.Windows.Forms.ComboBox();
-            this.ResetFilter_button = new System.Windows.Forms.Button();
-            this.ItemDetails_gb.SuspendLayout();
-            this.groupBox3.SuspendLayout();
-            this.SuspendLayout();
+            GameShopListBox = new ListBox();
+            label14 = new Label();
+            GoldPrice_textbox = new TextBox();
+            label21 = new Label();
+            GPPrice_textbox = new TextBox();
+            label29 = new Label();
+            ItemDetails_gb = new GroupBox();
+            GoldOnlyBox = new CheckBox();
+            CreditOnlyBox = new CheckBox();
+            label6 = new Label();
+            Count_textbox = new TextBox();
+            LeftinStock_label = new Label();
+            label3 = new Label();
+            label5 = new Label();
+            TotalSold_label = new Label();
+            TopItem_checkbox = new CheckBox();
+            DealofDay_checkbox = new CheckBox();
+            Individual_checkbox = new CheckBox();
+            label1 = new Label();
+            Stock_textbox = new TextBox();
+            Category_textbox = new TextBox();
+            label4 = new Label();
+            Class_combo = new ComboBox();
+            groupBox3 = new GroupBox();
+            ServerLog_button = new Button();
+            label2 = new Label();
+            CredxGold_textbox = new TextBox();
+            Remove_button = new Button();
+            ClassFilter_lb = new ComboBox();
+            SectionFilter_lb = new ComboBox();
+            CategoryFilter_lb = new ComboBox();
+            ResetFilter_button = new Button();
+            ItemDetails_gb.SuspendLayout();
+            groupBox3.SuspendLayout();
+            SuspendLayout();
             // 
             // GameShopListBox
             // 
-            this.GameShopListBox.FormattingEnabled = true;
-            this.GameShopListBox.Location = new System.Drawing.Point(12, 71);
-            this.GameShopListBox.Name = "GameShopListBox";
-            this.GameShopListBox.ScrollAlwaysVisible = true;
-            this.GameShopListBox.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.GameShopListBox.Size = new System.Drawing.Size(201, 304);
-            this.GameShopListBox.TabIndex = 11;
-            this.GameShopListBox.SelectedIndexChanged += new System.EventHandler(this.GameShopListBox_SelectedIndexChanged);
+            GameShopListBox.FormattingEnabled = true;
+            GameShopListBox.ItemHeight = 17;
+            GameShopListBox.Location = new Point(14, 101);
+            GameShopListBox.Margin = new Padding(4, 4, 4, 4);
+            GameShopListBox.Name = "GameShopListBox";
+            GameShopListBox.ScrollAlwaysVisible = true;
+            GameShopListBox.SelectionMode = SelectionMode.MultiExtended;
+            GameShopListBox.Size = new Size(234, 429);
+            GameShopListBox.TabIndex = 11;
+            GameShopListBox.SelectedIndexChanged += GameShopListBox_SelectedIndexChanged;
             // 
             // label14
             // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(30, 98);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(53, 12);
-            this.label14.TabIndex = 90;
-            this.label14.Text = "金币价格";
+            label14.AutoSize = true;
+            label14.Location = new Point(27, 137);
+            label14.Margin = new Padding(4, 0, 4, 0);
+            label14.Name = "label14";
+            label14.Size = new Size(63, 17);
+            label14.TabIndex = 90;
+            label14.Text = "金币 价格:";
             // 
             // GoldPrice_textbox
             // 
-            this.GoldPrice_textbox.Location = new System.Drawing.Point(86, 94);
-            this.GoldPrice_textbox.MaxLength = 0;
-            this.GoldPrice_textbox.Name = "GoldPrice_textbox";
-            this.GoldPrice_textbox.Size = new System.Drawing.Size(113, 21);
-            this.GoldPrice_textbox.TabIndex = 86;
-            this.GoldPrice_textbox.TextChanged += new System.EventHandler(this.GoldPrice_textbox_TextChanged);
+            GoldPrice_textbox.Location = new Point(100, 133);
+            GoldPrice_textbox.Margin = new Padding(4, 4, 4, 4);
+            GoldPrice_textbox.MaxLength = 0;
+            GoldPrice_textbox.Name = "GoldPrice_textbox";
+            GoldPrice_textbox.Size = new Size(131, 23);
+            GoldPrice_textbox.TabIndex = 86;
+            GoldPrice_textbox.TextChanged += GoldPrice_textbox_TextChanged;
             // 
             // label21
             // 
-            this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(18, 72);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(65, 12);
-            this.label21.TabIndex = 91;
-            this.label21.Text = "信用币价格";
+            label21.AutoSize = true;
+            label21.Location = new Point(21, 101);
+            label21.Margin = new Padding(4, 0, 4, 0);
+            label21.Name = "label21";
+            label21.Size = new Size(71, 17);
+            label21.TabIndex = 91;
+            label21.Text = "信用币价格:";
             // 
             // GPPrice_textbox
             // 
-            this.GPPrice_textbox.Location = new System.Drawing.Point(86, 68);
-            this.GPPrice_textbox.MaxLength = 0;
-            this.GPPrice_textbox.Name = "GPPrice_textbox";
-            this.GPPrice_textbox.Size = new System.Drawing.Size(113, 21);
-            this.GPPrice_textbox.TabIndex = 87;
-            this.GPPrice_textbox.TextChanged += new System.EventHandler(this.GPPrice_textbox_TextChanged);
+            GPPrice_textbox.Location = new Point(100, 97);
+            GPPrice_textbox.Margin = new Padding(4, 4, 4, 4);
+            GPPrice_textbox.MaxLength = 0;
+            GPPrice_textbox.Name = "GPPrice_textbox";
+            GPPrice_textbox.Size = new Size(131, 23);
+            GPPrice_textbox.TabIndex = 87;
+            GPPrice_textbox.TextChanged += GPPrice_textbox_TextChanged;
             // 
             // label29
             // 
-            this.label29.AutoSize = true;
-            this.label29.Location = new System.Drawing.Point(30, 148);
-            this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(53, 12);
-            this.label29.TabIndex = 93;
-            this.label29.Text = "职业选项";
+            label29.AutoSize = true;
+            label29.Location = new Point(30, 208);
+            label29.Margin = new Padding(4, 0, 4, 0);
+            label29.Name = "label29";
+            label29.Size = new Size(59, 17);
+            label29.TabIndex = 93;
+            label29.Text = "职业选项:";
             // 
             // ItemDetails_gb
             // 
-            this.ItemDetails_gb.BackColor = System.Drawing.Color.White;
-            this.ItemDetails_gb.Controls.Add(this.GoldOnlyBox);
-            this.ItemDetails_gb.Controls.Add(this.CreditOnlyBox);
-            this.ItemDetails_gb.Controls.Add(this.label6);
-            this.ItemDetails_gb.Controls.Add(this.Count_textbox);
-            this.ItemDetails_gb.Controls.Add(this.LeftinStock_label);
-            this.ItemDetails_gb.Controls.Add(this.label3);
-            this.ItemDetails_gb.Controls.Add(this.label5);
-            this.ItemDetails_gb.Controls.Add(this.TotalSold_label);
-            this.ItemDetails_gb.Controls.Add(this.TopItem_checkbox);
-            this.ItemDetails_gb.Controls.Add(this.DealofDay_checkbox);
-            this.ItemDetails_gb.Controls.Add(this.Individual_checkbox);
-            this.ItemDetails_gb.Controls.Add(this.label1);
-            this.ItemDetails_gb.Controls.Add(this.Stock_textbox);
-            this.ItemDetails_gb.Controls.Add(this.GoldPrice_textbox);
-            this.ItemDetails_gb.Controls.Add(this.label14);
-            this.ItemDetails_gb.Controls.Add(this.label21);
-            this.ItemDetails_gb.Controls.Add(this.Category_textbox);
-            this.ItemDetails_gb.Controls.Add(this.GPPrice_textbox);
-            this.ItemDetails_gb.Controls.Add(this.label4);
-            this.ItemDetails_gb.Controls.Add(this.label29);
-            this.ItemDetails_gb.Controls.Add(this.Class_combo);
-            this.ItemDetails_gb.Location = new System.Drawing.Point(219, 73);
-            this.ItemDetails_gb.Name = "ItemDetails_gb";
-            this.ItemDetails_gb.Size = new System.Drawing.Size(267, 302);
-            this.ItemDetails_gb.TabIndex = 98;
-            this.ItemDetails_gb.TabStop = false;
-            this.ItemDetails_gb.Text = "物品详细信息";
-            //// 
-            //// GoldOnlyBox
-            //// 
-            this.GoldOnlyBox.AutoSize = true;
-            this.GoldOnlyBox.Location = new System.Drawing.Point(205, 104);
-            this.GoldOnlyBox.Name = "GoldOnlyBox";
-            this.GoldOnlyBox.Size = new System.Drawing.Size(48, 17);
-            this.GoldOnlyBox.TabIndex = 119;
-            this.GoldOnlyBox.Text = "Gold";
-            this.GoldOnlyBox.UseVisualStyleBackColor = true;
-            this.GoldOnlyBox.CheckedChanged += new System.EventHandler(this.GoldOnlyBox_CheckedChanged);
+            ItemDetails_gb.BackColor = Color.White;
+            ItemDetails_gb.Controls.Add(GoldOnlyBox);
+            ItemDetails_gb.Controls.Add(CreditOnlyBox);
+            ItemDetails_gb.Controls.Add(label6);
+            ItemDetails_gb.Controls.Add(Count_textbox);
+            ItemDetails_gb.Controls.Add(LeftinStock_label);
+            ItemDetails_gb.Controls.Add(label3);
+            ItemDetails_gb.Controls.Add(label5);
+            ItemDetails_gb.Controls.Add(TotalSold_label);
+            ItemDetails_gb.Controls.Add(TopItem_checkbox);
+            ItemDetails_gb.Controls.Add(DealofDay_checkbox);
+            ItemDetails_gb.Controls.Add(Individual_checkbox);
+            ItemDetails_gb.Controls.Add(label1);
+            ItemDetails_gb.Controls.Add(Stock_textbox);
+            ItemDetails_gb.Controls.Add(GoldPrice_textbox);
+            ItemDetails_gb.Controls.Add(label14);
+            ItemDetails_gb.Controls.Add(label21);
+            ItemDetails_gb.Controls.Add(Category_textbox);
+            ItemDetails_gb.Controls.Add(GPPrice_textbox);
+            ItemDetails_gb.Controls.Add(label4);
+            ItemDetails_gb.Controls.Add(label29);
+            ItemDetails_gb.Controls.Add(Class_combo);
+            ItemDetails_gb.Location = new Point(255, 103);
+            ItemDetails_gb.Margin = new Padding(4, 4, 4, 4);
+            ItemDetails_gb.Name = "ItemDetails_gb";
+            ItemDetails_gb.Padding = new Padding(4, 4, 4, 4);
+            ItemDetails_gb.Size = new Size(312, 428);
+            ItemDetails_gb.TabIndex = 98;
+            ItemDetails_gb.TabStop = false;
+            ItemDetails_gb.Text = "物品详细信息";
+            // 
+            // GoldOnlyBox
+            // 
+            GoldOnlyBox.AutoSize = true;
+            GoldOnlyBox.Location = new Point(239, 133);
+            GoldOnlyBox.Margin = new Padding(4, 4, 4, 4);
+            GoldOnlyBox.Name = "GoldOnlyBox";
+            GoldOnlyBox.Size = new Size(51, 21);
+            GoldOnlyBox.TabIndex = 119;
+            GoldOnlyBox.Text = "金币";
+            GoldOnlyBox.UseVisualStyleBackColor = true;
+            GoldOnlyBox.CheckedChanged += GoldOnlyBox_CheckedChanged;
             // 
             // CreditOnlyBox
             // 
-            this.CreditOnlyBox.AutoSize = true;
-            this.CreditOnlyBox.Location = new System.Drawing.Point(205, 76);
-            this.CreditOnlyBox.Name = "CreditOnlyBox";
-            this.CreditOnlyBox.Size = new System.Drawing.Size(58, 17);
-            this.CreditOnlyBox.TabIndex = 118;
-            this.CreditOnlyBox.Text = "Credits";
-            this.CreditOnlyBox.UseVisualStyleBackColor = true;
-            this.CreditOnlyBox.CheckedChanged += new System.EventHandler(this.CreditOnly_CheckedChanged);
+            CreditOnlyBox.AutoSize = true;
+            CreditOnlyBox.Location = new Point(239, 98);
+            CreditOnlyBox.Margin = new Padding(4, 4, 4, 4);
+            CreditOnlyBox.Name = "CreditOnlyBox";
+            CreditOnlyBox.Size = new Size(63, 21);
+            CreditOnlyBox.TabIndex = 118;
+            CreditOnlyBox.Text = "信用币";
+            CreditOnlyBox.UseVisualStyleBackColor = true;
+            CreditOnlyBox.CheckedChanged += CreditOnly_CheckedChanged;
             // 
             // label6
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(54, 122);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(29, 12);
-            this.label6.TabIndex = 117;
-            this.label6.Text = "数量";
+            label6.AutoSize = true;
+            label6.Location = new Point(51, 171);
+            label6.Margin = new Padding(4, 0, 4, 0);
+            label6.Name = "label6";
+            label6.Size = new Size(35, 17);
+            label6.TabIndex = 117;
+            label6.Text = "数量:";
             // 
             // Count_textbox
             // 
-            this.Count_textbox.Location = new System.Drawing.Point(86, 118);
-            this.Count_textbox.MaxLength = 0;
-            this.Count_textbox.Name = "Count_textbox";
-            this.Count_textbox.Size = new System.Drawing.Size(113, 21);
-            this.Count_textbox.TabIndex = 116;
-            this.Count_textbox.TextChanged += new System.EventHandler(this.Count_textbox_TextChanged);
+            Count_textbox.Location = new Point(100, 167);
+            Count_textbox.Margin = new Padding(4, 4, 4, 4);
+            Count_textbox.MaxLength = 0;
+            Count_textbox.Name = "Count_textbox";
+            Count_textbox.Size = new Size(131, 23);
+            Count_textbox.TabIndex = 116;
+            Count_textbox.TextChanged += Count_textbox_TextChanged;
             // 
             // LeftinStock_label
             // 
-            this.LeftinStock_label.AutoSize = true;
-            this.LeftinStock_label.Location = new System.Drawing.Point(83, 43);
-            this.LeftinStock_label.Name = "LeftinStock_label";
-            this.LeftinStock_label.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.LeftinStock_label.Size = new System.Drawing.Size(23, 12);
-            this.LeftinStock_label.TabIndex = 115;
-            this.LeftinStock_label.Text = "100";
+            LeftinStock_label.AutoSize = true;
+            LeftinStock_label.Location = new Point(97, 61);
+            LeftinStock_label.Margin = new Padding(4, 0, 4, 0);
+            LeftinStock_label.Name = "LeftinStock_label";
+            LeftinStock_label.RightToLeft = RightToLeft.No;
+            LeftinStock_label.Size = new Size(29, 17);
+            LeftinStock_label.TabIndex = 115;
+            LeftinStock_label.Text = "100";
             // 
             // label3
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(29, 44);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(53, 12);
-            this.label3.TabIndex = 114;
-            this.label3.Text = "库存余量";
+            label3.AutoSize = true;
+            label3.Location = new Point(27, 61);
+            label3.Margin = new Padding(4, 0, 4, 0);
+            label3.Name = "label3";
+            label3.Size = new Size(59, 17);
+            label3.TabIndex = 114;
+            label3.Text = "库存剩余:";
             // 
             // label5
             // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(28, 20);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(53, 12);
-            this.label5.TabIndex = 113;
-            this.label5.Text = "销售总额";
+            label5.AutoSize = true;
+            label5.Location = new Point(28, 27);
+            label5.Margin = new Padding(4, 0, 4, 0);
+            label5.Name = "label5";
+            label5.Size = new Size(59, 17);
+            label5.TabIndex = 113;
+            label5.Text = "销售总额:";
             // 
             // TotalSold_label
             // 
-            this.TotalSold_label.AutoSize = true;
-            this.TotalSold_label.Location = new System.Drawing.Point(82, 19);
-            this.TotalSold_label.Name = "TotalSold_label";
-            this.TotalSold_label.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.TotalSold_label.Size = new System.Drawing.Size(23, 12);
-            this.TotalSold_label.TabIndex = 112;
-            this.TotalSold_label.Text = "100";
+            TotalSold_label.AutoSize = true;
+            TotalSold_label.Location = new Point(96, 27);
+            TotalSold_label.Margin = new Padding(4, 0, 4, 0);
+            TotalSold_label.Name = "TotalSold_label";
+            TotalSold_label.RightToLeft = RightToLeft.No;
+            TotalSold_label.Size = new Size(29, 17);
+            TotalSold_label.TabIndex = 112;
+            TotalSold_label.Text = "100";
             // 
             // TopItem_checkbox
             // 
-            this.TopItem_checkbox.AutoSize = true;
-            this.TopItem_checkbox.Location = new System.Drawing.Point(28, 237);
-            this.TopItem_checkbox.Name = "TopItem_checkbox";
-            this.TopItem_checkbox.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.TopItem_checkbox.Size = new System.Drawing.Size(72, 16);
-            this.TopItem_checkbox.TabIndex = 106;
-            this.TopItem_checkbox.Text = "热销物品";
-            this.TopItem_checkbox.UseVisualStyleBackColor = true;
-            this.TopItem_checkbox.CheckedChanged += new System.EventHandler(this.TopItem_checkbox_CheckedChanged);
+            TopItem_checkbox.AutoSize = true;
+            TopItem_checkbox.Location = new Point(31, 335);
+            TopItem_checkbox.Margin = new Padding(4, 4, 4, 4);
+            TopItem_checkbox.Name = "TopItem_checkbox";
+            TopItem_checkbox.RightToLeft = RightToLeft.Yes;
+            TopItem_checkbox.Size = new Size(78, 21);
+            TopItem_checkbox.TabIndex = 106;
+            TopItem_checkbox.Text = ":热销物品";
+            TopItem_checkbox.UseVisualStyleBackColor = true;
+            TopItem_checkbox.CheckedChanged += TopItem_checkbox_CheckedChanged;
             // 
             // DealofDay_checkbox
             // 
-            this.DealofDay_checkbox.AutoSize = true;
-            this.DealofDay_checkbox.Location = new System.Drawing.Point(28, 219);
-            this.DealofDay_checkbox.Name = "DealofDay_checkbox";
-            this.DealofDay_checkbox.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.DealofDay_checkbox.Size = new System.Drawing.Size(72, 16);
-            this.DealofDay_checkbox.TabIndex = 105;
-            this.DealofDay_checkbox.Text = "推荐物品";
-            this.DealofDay_checkbox.UseVisualStyleBackColor = true;
-            this.DealofDay_checkbox.CheckedChanged += new System.EventHandler(this.DealofDay_checkbox_CheckedChanged);
+            DealofDay_checkbox.AutoSize = true;
+            DealofDay_checkbox.Location = new Point(31, 309);
+            DealofDay_checkbox.Margin = new Padding(4, 4, 4, 4);
+            DealofDay_checkbox.Name = "DealofDay_checkbox";
+            DealofDay_checkbox.RightToLeft = RightToLeft.Yes;
+            DealofDay_checkbox.Size = new Size(78, 21);
+            DealofDay_checkbox.TabIndex = 105;
+            DealofDay_checkbox.Text = ":推荐物品";
+            DealofDay_checkbox.UseVisualStyleBackColor = true;
+            DealofDay_checkbox.CheckedChanged += DealofDay_checkbox_CheckedChanged;
             // 
             // Individual_checkbox
             // 
-            this.Individual_checkbox.AutoSize = true;
-            this.Individual_checkbox.Location = new System.Drawing.Point(161, 197);
-            this.Individual_checkbox.Name = "Individual_checkbox";
-            this.Individual_checkbox.Size = new System.Drawing.Size(72, 16);
-            this.Individual_checkbox.TabIndex = 110;
-            this.Individual_checkbox.Text = "限制物品";
-            this.Individual_checkbox.UseVisualStyleBackColor = true;
-            this.Individual_checkbox.CheckedChanged += new System.EventHandler(this.Individual_checkbox_CheckedChanged);
+            Individual_checkbox.AutoSize = true;
+            Individual_checkbox.Location = new Point(190, 277);
+            Individual_checkbox.Margin = new Padding(4, 4, 4, 4);
+            Individual_checkbox.Name = "Individual_checkbox";
+            Individual_checkbox.Size = new Size(75, 21);
+            Individual_checkbox.TabIndex = 110;
+            Individual_checkbox.Text = "物品限制";
+            Individual_checkbox.UseVisualStyleBackColor = true;
+            Individual_checkbox.CheckedChanged += Individual_checkbox_CheckedChanged;
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(54, 198);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(29, 12);
-            this.label1.TabIndex = 111;
-            this.label1.Text = "库存";
+            label1.AutoSize = true;
+            label1.Location = new Point(56, 279);
+            label1.Margin = new Padding(4, 0, 4, 0);
+            label1.Name = "label1";
+            label1.Size = new Size(35, 17);
+            label1.TabIndex = 111;
+            label1.Text = "库存:";
             // 
             // Stock_textbox
             // 
-            this.Stock_textbox.Location = new System.Drawing.Point(86, 194);
-            this.Stock_textbox.MaxLength = 0;
-            this.Stock_textbox.Name = "Stock_textbox";
-            this.Stock_textbox.Size = new System.Drawing.Size(72, 21);
-            this.Stock_textbox.TabIndex = 109;
-            this.Stock_textbox.TextChanged += new System.EventHandler(this.Stock_textbox_TextChanged);
+            Stock_textbox.Location = new Point(100, 275);
+            Stock_textbox.Margin = new Padding(4, 4, 4, 4);
+            Stock_textbox.MaxLength = 0;
+            Stock_textbox.Name = "Stock_textbox";
+            Stock_textbox.Size = new Size(83, 23);
+            Stock_textbox.TabIndex = 109;
+            Stock_textbox.TextChanged += Stock_textbox_TextChanged;
             // 
             // Category_textbox
             // 
-            this.Category_textbox.Location = new System.Drawing.Point(86, 169);
-            this.Category_textbox.MaxLength = 0;
-            this.Category_textbox.Name = "Category_textbox";
-            this.Category_textbox.Size = new System.Drawing.Size(173, 21);
-            this.Category_textbox.TabIndex = 108;
-            this.Category_textbox.TextChanged += new System.EventHandler(this.Category_textbox_TextChanged);
+            Category_textbox.Location = new Point(100, 239);
+            Category_textbox.Margin = new Padding(4, 4, 4, 4);
+            Category_textbox.MaxLength = 0;
+            Category_textbox.Name = "Category_textbox";
+            Category_textbox.Size = new Size(201, 23);
+            Category_textbox.TabIndex = 108;
+            Category_textbox.TextChanged += Category_textbox_TextChanged;
             // 
             // label4
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(54, 174);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(29, 12);
-            this.label4.TabIndex = 106;
-            this.label4.Text = "类别";
+            label4.AutoSize = true;
+            label4.Location = new Point(33, 243);
+            label4.Margin = new Padding(4, 0, 4, 0);
+            label4.Name = "label4";
+            label4.Size = new Size(59, 17);
+            label4.TabIndex = 106;
+            label4.Text = "物品类别:";
             // 
             // Class_combo
             // 
-            this.Class_combo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.Class_combo.FormattingEnabled = true;
-            this.Class_combo.Items.AddRange(new object[] {
-            "All",
-            "战士",
-            "刺客",
-            "道士",
-            "法师",
-            "弓箭"});
-            this.Class_combo.Location = new System.Drawing.Point(86, 144);
-            this.Class_combo.Name = "Class_combo";
-            this.Class_combo.Size = new System.Drawing.Size(173, 20);
-            this.Class_combo.TabIndex = 105;
-            this.Class_combo.SelectedIndexChanged += new System.EventHandler(this.Class_combo_SelectedIndexChanged);
+            Class_combo.DropDownStyle = ComboBoxStyle.DropDownList;
+            Class_combo.FormattingEnabled = true;
+            Class_combo.Items.AddRange(new object[] { "All", "Warrior", "Assassin", "Taoist", "Wizard", "Archer" });
+            Class_combo.Location = new Point(100, 204);
+            Class_combo.Margin = new Padding(4, 4, 4, 4);
+            Class_combo.Name = "Class_combo";
+            Class_combo.Size = new Size(201, 25);
+            Class_combo.TabIndex = 105;
+            Class_combo.SelectedIndexChanged += Class_combo_SelectedIndexChanged;
             // 
             // groupBox3
             // 
-            this.groupBox3.BackColor = System.Drawing.Color.White;
-            this.groupBox3.Controls.Add(this.label2);
-            this.groupBox3.Controls.Add(this.CredxGold_textbox);
-            this.groupBox3.Location = new System.Drawing.Point(219, 5);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(267, 63);
-            this.groupBox3.TabIndex = 105;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "商城设置";
+            groupBox3.BackColor = Color.White;
+            groupBox3.Controls.Add(label2);
+            groupBox3.Controls.Add(CredxGold_textbox);
+            groupBox3.Location = new Point(255, 7);
+            groupBox3.Margin = new Padding(4, 4, 4, 4);
+            groupBox3.Name = "groupBox3";
+            groupBox3.Padding = new Padding(4, 4, 4, 4);
+            groupBox3.Size = new Size(312, 89);
+            groupBox3.TabIndex = 105;
+            groupBox3.TabStop = false;
+            groupBox3.Text = "商城设置";
             // 
             // ServerLog_button
             // 
-            this.ServerLog_button.Location = new System.Drawing.Point(220, 376);
-            this.ServerLog_button.Name = "ServerLog_button";
-            this.ServerLog_button.Size = new System.Drawing.Size(266, 21);
-            this.ServerLog_button.TabIndex = 112;
-            this.ServerLog_button.Text = "重置购买日志(库存重置)";
-            this.ServerLog_button.UseVisualStyleBackColor = true;
-            this.ServerLog_button.Click += new System.EventHandler(this.ServerLog_button_Click);
+            ServerLog_button.Location = new Point(257, 532);
+            ServerLog_button.Margin = new Padding(4, 4, 4, 4);
+            ServerLog_button.Name = "ServerLog_button";
+            ServerLog_button.Size = new Size(310, 30);
+            ServerLog_button.TabIndex = 112;
+            ServerLog_button.Text = "重置购买日志 (库存重置)";
+            ServerLog_button.UseVisualStyleBackColor = true;
+            ServerLog_button.Click += ServerLog_button_Click;
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 25);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(113, 12);
-            this.label2.TabIndex = 92;
-            this.label2.Text = "信用币/金币 比例：";
+            label2.AutoSize = true;
+            label2.Location = new Point(14, 34);
+            label2.Margin = new Padding(4, 0, 4, 0);
+            label2.Name = "label2";
+            label2.Size = new Size(113, 17);
+            label2.TabIndex = 92;
+            label2.Text = "信用币 x 金币 比例:";
             // 
             // CredxGold_textbox
             // 
-            this.CredxGold_textbox.Location = new System.Drawing.Point(121, 20);
-            this.CredxGold_textbox.MaxLength = 0;
-            this.CredxGold_textbox.Name = "CredxGold_textbox";
-            this.CredxGold_textbox.Size = new System.Drawing.Size(65, 21);
-            this.CredxGold_textbox.TabIndex = 88;
-            this.CredxGold_textbox.TextChanged += new System.EventHandler(this.CredxGold_textbox_TextChanged);
+            CredxGold_textbox.Location = new Point(128, 29);
+            CredxGold_textbox.Margin = new Padding(4, 4, 4, 4);
+            CredxGold_textbox.MaxLength = 0;
+            CredxGold_textbox.Name = "CredxGold_textbox";
+            CredxGold_textbox.Size = new Size(75, 23);
+            CredxGold_textbox.TabIndex = 88;
+            CredxGold_textbox.TextChanged += CredxGold_textbox_TextChanged;
             // 
             // Remove_button
             // 
-            this.Remove_button.Location = new System.Drawing.Point(112, 376);
-            this.Remove_button.Name = "Remove_button";
-            this.Remove_button.Size = new System.Drawing.Size(102, 21);
-            this.Remove_button.TabIndex = 106;
-            this.Remove_button.Text = "选择删除";
-            this.Remove_button.UseVisualStyleBackColor = true;
-            this.Remove_button.Click += new System.EventHandler(this.Remove_button_Click);
+            Remove_button.Location = new Point(131, 532);
+            Remove_button.Margin = new Padding(4, 4, 4, 4);
+            Remove_button.Name = "Remove_button";
+            Remove_button.Size = new Size(119, 30);
+            Remove_button.TabIndex = 106;
+            Remove_button.Text = "选择删除";
+            Remove_button.UseVisualStyleBackColor = true;
+            Remove_button.Click += Remove_button_Click;
             // 
             // ClassFilter_lb
             // 
-            this.ClassFilter_lb.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.ClassFilter_lb.FormattingEnabled = true;
-            this.ClassFilter_lb.Location = new System.Drawing.Point(12, 5);
-            this.ClassFilter_lb.Name = "ClassFilter_lb";
-            this.ClassFilter_lb.Size = new System.Drawing.Size(146, 20);
-            this.ClassFilter_lb.TabIndex = 107;
-            this.ClassFilter_lb.SelectedIndexChanged += new System.EventHandler(this.ClassFilter_lb_SelectedIndexChanged);
+            ClassFilter_lb.DropDownStyle = ComboBoxStyle.DropDownList;
+            ClassFilter_lb.FormattingEnabled = true;
+            ClassFilter_lb.Location = new Point(14, 7);
+            ClassFilter_lb.Margin = new Padding(4, 4, 4, 4);
+            ClassFilter_lb.Name = "ClassFilter_lb";
+            ClassFilter_lb.Size = new Size(170, 25);
+            ClassFilter_lb.TabIndex = 107;
+            ClassFilter_lb.SelectedIndexChanged += ClassFilter_lb_SelectedIndexChanged;
             // 
             // SectionFilter_lb
             // 
-            this.SectionFilter_lb.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.SectionFilter_lb.FormattingEnabled = true;
-            this.SectionFilter_lb.Items.AddRange(new object[] {
-            "All Items",
-            "Top Items",
-            "Sale Items",
-            "New Items"});
-            this.SectionFilter_lb.Location = new System.Drawing.Point(12, 26);
-            this.SectionFilter_lb.Name = "SectionFilter_lb";
-            this.SectionFilter_lb.Size = new System.Drawing.Size(146, 20);
-            this.SectionFilter_lb.TabIndex = 108;
-            this.SectionFilter_lb.SelectedIndexChanged += new System.EventHandler(this.SectionFilter_lb_SelectedIndexChanged);
+            SectionFilter_lb.DropDownStyle = ComboBoxStyle.DropDownList;
+            SectionFilter_lb.FormattingEnabled = true;
+            SectionFilter_lb.Items.AddRange(new object[] { "All Items", "Top Items", "Sale Items", "New Items" });
+            SectionFilter_lb.Location = new Point(14, 37);
+            SectionFilter_lb.Margin = new Padding(4, 4, 4, 4);
+            SectionFilter_lb.Name = "SectionFilter_lb";
+            SectionFilter_lb.Size = new Size(170, 25);
+            SectionFilter_lb.TabIndex = 108;
+            SectionFilter_lb.SelectedIndexChanged += SectionFilter_lb_SelectedIndexChanged;
             // 
             // CategoryFilter_lb
             // 
-            this.CategoryFilter_lb.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.CategoryFilter_lb.FormattingEnabled = true;
-            this.CategoryFilter_lb.Location = new System.Drawing.Point(12, 47);
-            this.CategoryFilter_lb.Name = "CategoryFilter_lb";
-            this.CategoryFilter_lb.Size = new System.Drawing.Size(146, 20);
-            this.CategoryFilter_lb.TabIndex = 109;
-            this.CategoryFilter_lb.SelectedIndexChanged += new System.EventHandler(this.CategoryFilter_lb_SelectedIndexChanged);
+            CategoryFilter_lb.DropDownStyle = ComboBoxStyle.DropDownList;
+            CategoryFilter_lb.FormattingEnabled = true;
+            CategoryFilter_lb.Location = new Point(14, 67);
+            CategoryFilter_lb.Margin = new Padding(4, 4, 4, 4);
+            CategoryFilter_lb.Name = "CategoryFilter_lb";
+            CategoryFilter_lb.Size = new Size(170, 25);
+            CategoryFilter_lb.TabIndex = 109;
+            CategoryFilter_lb.SelectedIndexChanged += CategoryFilter_lb_SelectedIndexChanged;
             // 
             // ResetFilter_button
             // 
-            this.ResetFilter_button.Location = new System.Drawing.Point(164, 4);
-            this.ResetFilter_button.Name = "ResetFilter_button";
-            this.ResetFilter_button.Size = new System.Drawing.Size(49, 64);
-            this.ResetFilter_button.TabIndex = 110;
-            this.ResetFilter_button.Text = "重置";
-            this.ResetFilter_button.UseVisualStyleBackColor = true;
-            this.ResetFilter_button.Click += new System.EventHandler(this.ResetFilter_button_Click);
+            ResetFilter_button.Location = new Point(191, 5);
+            ResetFilter_button.Margin = new Padding(4, 4, 4, 4);
+            ResetFilter_button.Name = "ResetFilter_button";
+            ResetFilter_button.Size = new Size(57, 90);
+            ResetFilter_button.TabIndex = 110;
+            ResetFilter_button.Text = "重置";
+            ResetFilter_button.UseVisualStyleBackColor = true;
+            ResetFilter_button.Click += ResetFilter_button_Click;
             // 
             // GameShop
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(498, 402);
-            this.Controls.Add(this.ServerLog_button);
-            this.Controls.Add(this.ResetFilter_button);
-            this.Controls.Add(this.CategoryFilter_lb);
-            this.Controls.Add(this.SectionFilter_lb);
-            this.Controls.Add(this.ClassFilter_lb);
-            this.Controls.Add(this.Remove_button);
-            this.Controls.Add(this.groupBox3);
-            this.Controls.Add(this.ItemDetails_gb);
-            this.Controls.Add(this.GameShopListBox);
-            this.Name = "GameShop";
-            this.Text = "游戏商城";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.GameShop_FormClosed);
-            this.Load += new System.EventHandler(this.GameShop_Load);
-            this.ItemDetails_gb.ResumeLayout(false);
-            this.ItemDetails_gb.PerformLayout();
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
-            this.ResumeLayout(false);
-
+            AutoScaleDimensions = new SizeF(7F, 17F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(581, 570);
+            Controls.Add(ServerLog_button);
+            Controls.Add(ResetFilter_button);
+            Controls.Add(CategoryFilter_lb);
+            Controls.Add(SectionFilter_lb);
+            Controls.Add(ClassFilter_lb);
+            Controls.Add(Remove_button);
+            Controls.Add(groupBox3);
+            Controls.Add(ItemDetails_gb);
+            Controls.Add(GameShopListBox);
+            Margin = new Padding(4, 4, 4, 4);
+            Name = "GameShop";
+            Text = "游戏商城";
+            FormClosed += GameShop_FormClosed;
+            Load += GameShop_Load;
+            ItemDetails_gb.ResumeLayout(false);
+            ItemDetails_gb.PerformLayout();
+            groupBox3.ResumeLayout(false);
+            groupBox3.PerformLayout();
+            ResumeLayout(false);
         }
 
         #endregion

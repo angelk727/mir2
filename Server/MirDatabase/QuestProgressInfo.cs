@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+﻿using Server.MirObjects;
 using Server.MirEnvir;
-using Server.MirObjects;
 
 namespace Server.MirDatabase
 {
@@ -196,7 +192,7 @@ namespace Server.MirDatabase
                     }
                 }
 
-                //添加任何可能已添加的新任务
+                //Add any new tasks which may have been added
                 foreach (var kill in Info.KillTasks)
                 {
                     if (KillTaskCount.Any(x => x.MonsterID == kill.Monster.Index)) continue;

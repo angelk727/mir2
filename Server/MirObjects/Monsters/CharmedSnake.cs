@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Server.MirDatabase;
+﻿using Server.MirDatabase;
 using Server.MirEnvir;
 using S = ServerPackets;
 
@@ -60,7 +58,7 @@ namespace Server.MirObjects.Monsters
             if (Dead) return;
 
             ProcessSearch();
-            //todo ProcessRoaming(); 不需要主跟随，只需要目标漫游
+            //todo ProcessRoaming(); needs no master follow just target roaming
             ProcessTarget();
         }
 
@@ -69,7 +67,7 @@ namespace Server.MirObjects.Monsters
             if (Envir.Time < SearchTime) return;
             SearchTime = Envir.Time + SearchDelay;
 
-            //堆叠或主控前方-移动
+            //Stacking or Infront of master - Move
             bool stacking = false;
 
             Cell cell = CurrentMap.GetCell(CurrentLocation);

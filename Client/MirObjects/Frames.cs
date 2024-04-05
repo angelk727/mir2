@@ -1,13 +1,10 @@
-﻿using System.Collections.Generic;
-using System.IO;
-
-namespace Client.MirObjects
+﻿namespace Client.MirObjects
 {
     public class FrameSet : Dictionary<MirAction, Frame>
     {
         public static FrameSet Player;
         public static FrameSet DefaultNPC, DefaultMonster;
-        public static List<FrameSet> DragonStatue, GreatFoxSpirit, HellBomb, CaveStatue, Gates; //自添加门类
+        public static List<FrameSet> DragonStatue, GreatFoxSpirit, HellBomb, CaveStatue, Gates;
 
         static FrameSet()
         {
@@ -34,7 +31,7 @@ namespace Client.MirObjects
                 { MirAction.复活动作, new Frame(144, 10, 0, 200) { Reverse = true } }
             };
 
-            #region DragonStatue //902
+            #region DragonStatue
             //DragonStatue 1
             DragonStatue = new List<FrameSet> { (frame = new FrameSet()) };
             frame.Add(MirAction.站立动作, new Frame(301, 1, -1, 500));
@@ -161,8 +158,8 @@ namespace Client.MirObjects
             frame.Add(MirAction.死后尸体, new Frame(27, 1, -1, 100) { Blend = false });
             #endregion
 
-            #region Gates //门类
-            //SabukGate //沙巴克城大门
+            #region Gates
+            //SabukGate
             Gates = new List<FrameSet> { (frame = new FrameSet()) };
             frame.Add(MirAction.站立动作, new Frame(0, 1, 7, 500) { Blend = false });
             frame.Add(MirAction.被击动作, new Frame(1, 3, 5, 200) { Blend = false });

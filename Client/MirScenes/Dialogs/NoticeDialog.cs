@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Drawing;
-using System.Globalization;
-using System.Linq;
-using System.Text.RegularExpressions;
-using System.Windows.Forms;
-using Client.MirControls;
+﻿using Client.MirControls;
 using Client.MirGraphics;
 using Client.MirSounds;
+using System.Text.RegularExpressions;
+using System.Globalization;
+using System.Diagnostics;
 
 namespace Client.MirScenes.Dialogs
 {

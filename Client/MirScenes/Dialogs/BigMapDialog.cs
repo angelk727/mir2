@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Windows.Forms;
-using Client.MirControls;
+﻿using Client.MirControls;
 using Client.MirGraphics;
 using Client.MirNetwork;
 using Client.MirObjects;
 using Client.MirSounds;
 using SlimDX;
-using C = ClientPackets;
 using Font = System.Drawing.Font;
+using C = ClientPackets;
 
 namespace Client.MirScenes.Dialogs
 {
@@ -99,7 +94,7 @@ namespace Client.MirScenes.Dialogs
         {
             Index = 820;
             Library = Libraries.Title;
-            Movable = true;//大地图窗口可移动
+            Movable = true;
             Sort = true;
             Location = Center;
             NotControl = false;
@@ -704,7 +699,7 @@ namespace Client.MirScenes.Dialogs
                     else
                         if (ob is PlayerObject)
                         colour = Color.FromArgb(255, 255, 255);
-                    else if (ob is NPCObject || ob.AI == 980) //自添加AI扩容
+                    else if (ob is NPCObject || ob.AI == 980)
                         colour = Color.FromArgb(0, 255, 50);
                     else
                         colour = Color.FromArgb(255, 0, 0);
@@ -812,7 +807,7 @@ namespace Client.MirScenes.Dialogs
                     if (splitName[s] == string.Empty) continue;
                     if (s == splitName.Count() - 1)
                         name += splitName[s];
-                    else name += $"『{splitName[s]}』"; //英文格式：else name += $"({splitName[s]})";
+                    else name += $"『{splitName[s]}』";
                 }
             }
 

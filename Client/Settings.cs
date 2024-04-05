@@ -1,7 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Windows.Forms;
-using Client.MirSounds;
+﻿using Client.MirSounds;
 
 namespace Client
 {
@@ -9,7 +6,7 @@ namespace Client
     {
         public const long CleanDelay = 600000;
 
-        public static int ScreenWidth = 800, ScreenHeight = 600; //默认: ScreenWidth = 1024, ScreenHeight = 768
+        public static int ScreenWidth = 800, ScreenHeight = 600; //ScreenWidth = 1024, ScreenHeight = 768
         private static InIReader Reader = new InIReader(@".\Mir2Config.ini");
         private static InIReader QuestTrackingReader = new InIReader(Path.Combine(UserDataPath, @".\QuestTracking.ini"));
 
@@ -46,11 +43,11 @@ namespace Client
 							CHairPath = @".\Data\CHair\",
                             AArmourPath = @".\Data\AArmour\",
                             AWeaponPath = @".\Data\AWeapon\",
-                            AWeaponEffectPath = @".\Data\AWeaponEffect\", //新添加刺客武器特效
+                            AWeaponEffectPath = @".\Data\AWeaponEffect\",
                             AHairPath = @".\Data\AHair\",
                             ARArmourPath = @".\Data\ARArmour\",
                             ARWeaponPath = @".\Data\ARWeapon\",
-                            ARWeaponEffectPath = @".\Data\ARWeaponEffect\", //新添加刺客武器特效
+                            ARWeaponEffectPath = @".\Data\ARWeaponEffect\",
                             ARHairPath = @".\Data\ARHair\",
                             CHumEffectPath = @".\Data\CHumEffect\",
                             AHumEffectPath = @".\Data\AHumEffect\",
@@ -72,8 +69,8 @@ namespace Client
         public static int RemainingErrorLogs = 100;
 
         //Graphics
-        public static bool FullScreen = false, Borderless = true, TopMost = true, MouseClip = false; // FullScreen = true 默认全屏
-        public static string FontName = "Arial"; //"MS Sans Serif" 宋体 = "Tahoma"
+        public static bool FullScreen = false, Borderless = true, TopMost = true, MouseClip = false;
+        public static string FontName = "Arial"; //"MS Sans Serif"
         public static float FontSize = 8F;
         public static bool UseMouseCursors = true;
 
@@ -98,14 +95,20 @@ namespace Client
             get { return _volume; }
             set
             {
-                if (_volume == value) return;
+                switch (value)
+                {
+                    case > 100:
+                        _volume = (byte)100;
+                        break;
+                    case <= 0:
+                        _volume = (byte)0;
+                        break;
+                    default:
+                        _volume = value;
+                        break;
+                }
 
-                _volume = (byte) (value > 100 ? 100 : value);
-
-                if (_volume == 0)
-                    SoundManager.Vol = -10000;
-                else 
-                    SoundManager.Vol = (int)(-3000 + (3000 * (_volume / 100M)));
+                SoundManager.Vol = Convert.ToInt32(_volume);
             }
         }
 
@@ -115,14 +118,20 @@ namespace Client
             get { return _musicVolume; }
             set
             {
-                if (_musicVolume == value) return;
+                switch(value)
+                {
+                    case > 100:
+                        _musicVolume = (byte)100;
+                        break;
+                    case <= 0:
+                        _musicVolume = (byte)0;
+                        break;
+                    default:
+                        _musicVolume = value;
+                        break;
+                }
 
-                _musicVolume = (byte)(value > 100 ? 100 : value);
-
-                if (_musicVolume == 0)
-                    SoundManager.MusicVol = -10000;
-                else
-                    SoundManager.MusicVol = (int)(-3000 + (3000 * (_musicVolume / 100M)));
+                SoundManager.MusicVol = Convert.ToInt32(_musicVolume);
             }
         }
 
@@ -179,13 +188,13 @@ namespace Client
 
         //AutoPatcher
         public static bool P_Patcher = true;
-        public static string P_Host = @"http://127.0.0.1/mir2/cmir/patch/"; //默认 = "http://mirfiles.com/mir2/cmir/patch/"
+        public static string P_Host = @"http://mirfiles.com/mir2/cmir/patch/";
         public static string P_PatchFileName = @"PList.gz";
         public static bool P_NeedLogin = false;
         public static string P_Login = string.Empty;
         public static string P_Password = string.Empty;
         public static string P_ServerName = string.Empty;
-        public static string P_BrowserAddress = "https://127.0.0.1/mir2-patchsite/"; //默认 = "https://www.lomcn.org/mir2-patchsite/";
+        public static string P_BrowserAddress = "https://www.lomcn.org/mir2-patchsite/";
         public static string P_Client = Application.StartupPath + "\\";
         public static bool P_AutoStart = false;
         public static int P_Concurrency = 1;
@@ -296,9 +305,9 @@ namespace Client
             if (P_BrowserAddress.StartsWith("www.", StringComparison.OrdinalIgnoreCase)) P_BrowserAddress = P_BrowserAddress.Insert(0, "http://");
 
             //Temp check to update everyones address
-            if (P_Host.ToLower() == "http://127.0.0.1/mir2/cmir/patch/") //默认："http://mirfiles.co.uk/mir2/cmir/patch/"
+            if (P_Host.ToLower() == "http://mirfiles.co.uk/mir2/cmir/patch/")
             {
-                P_Host = "http://127.0.0.1/mir2/cmir/patch/"; //默认："http://mirfiles.com/mir2/cmir/patch/"
+                P_Host = "http://mirfiles.com/mir2/cmir/patch/";
             }
 
             if (P_Concurrency < 1) P_Concurrency = 1;

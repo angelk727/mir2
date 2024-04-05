@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using Server.MirDatabase;
+﻿using Server.MirDatabase;
 using Server.MirEnvir;
 using Server.MirObjects.Monsters;
+using System.Diagnostics.Eventing.Reader;
 using S = ServerPackets;
 
 namespace Server.MirObjects
@@ -325,10 +323,10 @@ namespace Server.MirObjects
                     return new ChieftainSword(info);
                 case 417:
                     return new ChieftainArcher(info);
-                case 419://弓箭技能：地柱钉-怪物：蜘蛛柱
+                case 419:
                     return new StoneTrap(info);
                 case 420:
-                    return new VampireSpider(info); //TODO - Clean up
+                    return new VampireSpider(info);
                 case 421:
                     return new SpittingToad(info);
                 case 422:
@@ -350,9 +348,9 @@ namespace Server.MirObjects
                 case 434:
                     return new Manticore(info);
                 case 435:
-                    return new DragonWarrior(info); //TODO
+                    return new DragonWarrior(info);
                 case 436:
-                    return new DragonArcher(info); //TODO
+                    return new DragonArcher(info);
                 case 437:
                     return new Tornado(info);
                 case 438:
@@ -370,7 +368,7 @@ namespace Server.MirObjects
                 case 447:
                     return new DarkWraith(info);
                 case 449:
-                    return new CrystalBeast(info); //启用
+                    return new CrystalBeast(info);
                 //case 450: RedOrb
                 //case 455: FatalLotus
                 case 456:
@@ -427,7 +425,7 @@ namespace Server.MirObjects
                     return new FeralTundraFurbolg(info);
                 case 522:
                     return new FeralFlameFurbolg(info);
-                case 525: //新添加 525-529 四种怪物制作中...
+                case 525:
                     return new ArcaneTotem(info); //Effect 0/1/2/3/4
                 case 532:
                     return new BloodLord(info);
@@ -458,9 +456,9 @@ namespace Server.MirObjects
                 case 960:
                     return new ConquestArcher(info);
                 case 961:
-                    return new Siege(info); //TODO
+                    return new Siege(info);
                 case 970:
-                    return new IntelligentCreatureObject(info); //灵物
+                    return new IntelligentCreatureObject(info);
                 case 971:
                     return new Tree(info);
                 case 972:
@@ -580,7 +578,7 @@ namespace Server.MirObjects
         {
             get
             {
-                switch (Info.AI) //自添加AI扩容
+                switch (Info.AI)
                 {
                     case 970:
                         return 0;
@@ -855,7 +853,7 @@ namespace Server.MirObjects
             BroadcastHealthChange();
         }
 
-        //使用这个可以让怪物不受/减少毒药伤害
+        //use this so you can have mobs take no/reduced poison damage
         public virtual void PoisonDamage(int amount, MapObject Attacker)
         {
             ChangeHP(amount);
@@ -1325,7 +1323,7 @@ namespace Server.MirObjects
             if (healthRegen > 0)
             {
                 ChangeHP(healthRegen);
-                BroadcastDamageIndicator(DamageType.HpRegen, healthRegen); //自添加飘窗显示
+                BroadcastDamageIndicator(DamageType.HpRegen, healthRegen);
             }
             if (HP == Stats[Stat.HP]) HealAmount = 0;
         }
@@ -1746,7 +1744,9 @@ namespace Server.MirObjects
                                     if (ob.Race == ObjectType.Monster && 
                                         ob is StoneTrap)
                                     {
-                                        if (Target == null || (Target != null && !(Target is StoneTrap)))
+                                        if (Target is null || 
+                                            (Target is not null &&
+                                            Target is not StoneTrap))
                                         {
                                             Target = ob;
                                         }
@@ -1974,10 +1974,10 @@ namespace Server.MirObjects
             if (!BindingShotCenter) return;
 
             ShockTime = 0;
-            Broadcast(GetInfo());//更新范围内的客户端（删除效果）
+            Broadcast(GetInfo());//update clients in range (remove effect)
             BindingShotCenter = false;
 
-            //当前位置为中心，遍历一个3x3的范围，处理范围内的怪物对象
+            //the centertarget is escaped so make all shocked mobs awake (3x3 from center)
             Point place = CurrentLocation;
             for (int y = place.Y - 1; y <= place.Y + 1; y++)
             {
@@ -1998,7 +1998,7 @@ namespace Server.MirObjects
                         if (targetob == null || targetob.Node == null || targetob.Race != ObjectType.Monster) continue;
                         if (((MonsterObject)targetob).ShockTime == 0) continue;
 
-                        //每个中心目标都有自己的效果，在不再受到效果时需要将其清除
+                        //each centerTarget has its own effect which needs to be cleared when no longer shocked
                         if (((MonsterObject)targetob).BindingShotCenter) ((MonsterObject)targetob).ReleaseBindingShot();
                         else ((MonsterObject)targetob).ShockTime = 0;
 
@@ -2265,12 +2265,12 @@ namespace Server.MirObjects
             if (Dead || attacker == this) return false;
             if (attacker.Race == ObjectType.Creature) return false;
 
-            if (attacker.Info.AI == 980 || attacker.Info.AI == 982) // 卫士//自添加AI扩容
+            if (attacker.Info.AI == 980 || attacker.Info.AI == 982)
             {
                 if (Info.AI != 160 && Info.AI != 161 && Info.AI != 971 && (Master == null || Master.PKPoints >= 200)) //Not Dear/Hen/Tree/Pets or Red Master 
                     return true;
             }
-            else if (attacker.Info.AI == 981) // 白日门卫士 - 攻击宠物
+            else if (attacker.Info.AI == 981)
             {
                 if (Info.AI != 160 && Info.AI != 161 && Info.AI != 971 && (Master == null || Master.AMode != AttackMode.Peace)) //Not Dear/Hen/Tree or Peaceful Master
                     return true;
@@ -2316,7 +2316,7 @@ namespace Server.MirObjects
 
                 return Master.LastHitter == attacker.Master;
             }
-            else if (attacker.Master != null) //灵物攻击怪物
+            else if (attacker.Master != null) //Pet Attacking Wild Monster
             {
                 if (Envir.Time < ShockTime) //Shocked
                     return false;
@@ -2513,7 +2513,7 @@ namespace Server.MirObjects
                 OperateTime = 0;
             }
 
-            if (attacker.Info.AI == 980 || attacker.Info.AI == 981 || attacker.Info.AI == 982) //自添加AI扩容
+            if (attacker.Info.AI == 980 || attacker.Info.AI == 981 || attacker.Info.AI == 982)
                 EXPOwner = null;
 
             else if (attacker.Master != null)
@@ -2602,10 +2602,10 @@ namespace Server.MirObjects
             for (int i = 0; i < PoisonList.Count; i++)
             {
                 if (PoisonList[i].PType != p.PType) continue;
-                if ((PoisonList[i].PType == PoisonType.Green) && (PoisonList[i].Value > p.Value)) return;//不能施放弱毒来抵消强毒
-                if ((PoisonList[i].PType != PoisonType.Green) && ((PoisonList[i].Duration - PoisonList[i].Time) > p.Duration)) return;//不能施放1秒毒药让1分钟毒药消失！
+                if ((PoisonList[i].PType == PoisonType.Green) && (PoisonList[i].Value > p.Value)) return;//cant cast weak poison to cancel out strong poison
+                if ((PoisonList[i].PType != PoisonType.Green) && ((PoisonList[i].Duration - PoisonList[i].Time) > p.Duration)) return;//cant cast 1 second poison to make a 1minute poison go away!
                 if (p.PType == PoisonType.DelayedExplosion) return;
-                if ((PoisonList[i].PType == PoisonType.Frozen) || (PoisonList[i].PType == PoisonType.Slow) || (PoisonList[i].PType == PoisonType.Paralysis)|| (PoisonList[i].PType == PoisonType.LRParalysis)) return;//防止怪物永久冻结/减速
+                if ((PoisonList[i].PType == PoisonType.Frozen) || (PoisonList[i].PType == PoisonType.Slow) || (PoisonList[i].PType == PoisonType.Paralysis)|| (PoisonList[i].PType == PoisonType.LRParalysis)) return;//prevents mobs from being perma frozen/slowed
                 PoisonList[i] = p;
                 return;
             }
@@ -3318,7 +3318,7 @@ namespace Server.MirObjects
         }
 
 
-        //怪物的AI攻击 \\\
+        // MONSTER AI ATTACKS \\\
         protected virtual void PoisonTarget(MapObject target, int chanceToPoison, long poisonDuration, PoisonType poison, long poisonTickSpeed = 1000, bool noResist = false, bool ignoreDefence = true)
         {
             int value = GetAttackPower(Stats[Stat.MinSC], Stats[Stat.MaxSC]);
@@ -3587,7 +3587,7 @@ namespace Server.MirObjects
             Broadcast(new S.ObjectBackStep { ObjectID = ObjectID, Direction = Direction, Location = location, Distance = distance });
         }
 
-       protected virtual void FullmoonAttack(int damage, int delay = 500, DefenceType defenceType = DefenceType.ACAgility, int pushDistance = -1, int distance = 1) //新添加修改推动的方向问题
+        protected virtual void FullmoonAttack(int damage, int delay = 500, DefenceType defenceType = DefenceType.ACAgility, int pushDistance = -1, int distance = 1)
         {
             MirDirection dir = Direction;
             List<MapObject> targets = new List<MapObject>();
@@ -3646,8 +3646,8 @@ namespace Server.MirObjects
 
         protected virtual void SinglePushAttack(int damage, DefenceType type = DefenceType.AC, int delay = 500, int pushDistance = 3)
         {
-            //排斥-（利用延迟动作，使玩家在推球结束时被击中）
-            //需要将伤害统计（DC/MC/SC）添加到mob上，以便其推送
+            //Repulsion - (utilises DelayedAction so player is hit at end of push)
+            //need to put Damage Stats (DC/MC/SC) on mob for it to push
             int levelGap = 5;
             int mobLevel = this.Level;
             int targetLevel = Target.Level;

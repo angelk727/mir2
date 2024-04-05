@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using Client.MirScenes;
+﻿using Client.MirScenes;
 using Client.MirScenes.Dialogs;
 using S = ServerPackets;
 
@@ -245,7 +241,6 @@ namespace Client.MirObjects
                 if (realItem.Type == ItemType.坐骑)
                 {
                     MountType = realItem.Shape;
-                    //RealItem.Effect; //在这里写坐骑特效代码？
                 }
 
                 if (temp.Info.IsFishingRod) continue;

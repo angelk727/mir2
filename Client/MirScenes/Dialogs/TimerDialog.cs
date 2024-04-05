@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
+﻿using S = ServerPackets;
 using Client.MirControls;
 using Client.MirGraphics;
-using S = ServerPackets;
 
 namespace Client.MirScenes.Dialogs
 {

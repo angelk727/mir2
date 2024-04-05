@@ -1,5 +1,4 @@
-﻿using System.Drawing;
-using Client.MirControls;
+﻿using Client.MirControls;
 using Client.MirGraphics;
 using Client.MirSounds;
 
