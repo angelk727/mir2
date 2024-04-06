@@ -575,9 +575,9 @@ namespace Client.MirScenes.Dialogs
 
             _cancelButton = new MirButton
             {
-                Index = 613,
-                HoverIndex = 614,
-                PressedIndex = 615,
+                Index = 203,
+                HoverIndex = 204,
+                PressedIndex = 205,
                 Library = Libraries.Title,
                 Parent = this,
                 Location = new Point(200, 436),
