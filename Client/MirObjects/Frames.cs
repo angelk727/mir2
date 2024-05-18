@@ -16,7 +16,7 @@
             DefaultNPC = new FrameSet
             {
                 { MirAction.站立动作, new Frame(0, 4, 0, 500) },
-                { MirAction.人挖N展, new Frame(12, 10, 0, 200) }
+                { MirAction.挖矿展示, new Frame(12, 10, 0, 200) }
             };
 
             //Default Monster
@@ -181,7 +181,7 @@
             Player.Add(MirAction.近距攻击3, new Frame(232, 8, 0, 100, 264, 8, 0, 100));
             Player.Add(MirAction.近距攻击4, new Frame(416, 6, 0, 100, 448, 6, 0, 100));
             Player.Add(MirAction.施法动作, new Frame(296, 6, 0, 100, 328, 6, 0, 100));
-            Player.Add(MirAction.人挖N展, new Frame(344, 2, 0, 300, 376, 2, 0, 300));
+            Player.Add(MirAction.挖矿展示, new Frame(344, 2, 0, 300, 376, 2, 0, 300));
             Player.Add(MirAction.被击动作, new Frame(360, 3, 0, 100, 392, 3, 0, 100));
             Player.Add(MirAction.死亡动作, new Frame(384, 4, 0, 100, 416, 4, 0, 100));
             Player.Add(MirAction.死后尸体, new Frame(387, 1, 3, 1000, 419, 1, 3, 1000));

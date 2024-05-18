@@ -440,7 +440,7 @@ namespace Server.MirObjects
                 case 552:
                     return new 古老遗骸(info);
                 case 564:
-                    return new 尊者之魂(info);
+                    return new Mon564N(info);
                 case 900:
                     return new EvilMir(info);
                 case 901:

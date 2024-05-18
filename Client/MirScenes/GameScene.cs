@@ -3788,7 +3788,7 @@ namespace Client.MirScenes
             {
                 MapObject ob = MapControl.Objects[i];
                 if (ob.ObjectID != p.ObjectID) continue;
-                ob.ActionFeed.Add(new QueuedAction { Action = MirAction.人挖N展, Direction = ob.Direction, Location = ob.CurrentLocation });
+                ob.ActionFeed.Add(new QueuedAction { Action = MirAction.挖矿展示, Direction = ob.Direction, Location = ob.CurrentLocation });
                 return;
             }
         }
@@ -11740,7 +11740,7 @@ namespace Client.MirScenes
  
                         if (CMain.Alt && !User.RidingMount)
                         {
-                            User.QueuedAction = new QueuedAction { Action = MirAction.人挖N展, Direction = direction, Location = User.CurrentLocation };
+                            User.QueuedAction = new QueuedAction { Action = MirAction.挖矿展示, Direction = direction, Location = User.CurrentLocation };
                             return;
                         }
 

@@ -5,7 +5,7 @@ using S = ServerPackets;
 
 namespace Server.MirObjects.Monsters
 {
-    public class 尊者之魂 : MonsterObject
+    public class Mon564N : MonsterObject
     {
         public byte AttackRange = 7;
         private long _SeniorTornadoTime;
@@ -13,7 +13,7 @@ namespace Server.MirObjects.Monsters
         private long ResurrectionTime;
         public bool ResurrectionMark = false;
 
-        protected internal 尊者之魂(MonsterInfo info)
+        protected internal Mon564N(MonsterInfo info)
             : base(info)
         {
         }

@@ -634,7 +634,7 @@ namespace Client.MirObjects
 
             #region Common
             //Harvest
-            if (CurrentAction == MirAction.人挖N展 && TransformType < 0)
+            if (CurrentAction == MirAction.挖矿展示 && TransformType < 0)
             {
                 WeaponLibrary1 = 1 < Libraries.CWeapons.Length ? Libraries.CWeapons[1] : null;
             }
@@ -1243,8 +1243,8 @@ namespace Client.MirObjects
                                 }
                                 break;
                             case Spell.ExplosiveTrap:
-                                Frames.TryGetValue(MirAction.人挖N展, out Frame);
-                                CurrentAction = MirAction.人挖N展;
+                                Frames.TryGetValue(MirAction.挖矿展示, out Frame);
+                                CurrentAction = MirAction.挖矿展示;
                                 ArcherLayTrap = true;
                                 if (this == User)
                                 {
@@ -1525,7 +1525,7 @@ namespace Client.MirObjects
                                 }
                             }
                             break;                         
-                        case MirAction.人挖N展:
+                        case MirAction.挖矿展示:
                             if (ArcherLayTrap)
                             {
                                 ArcherLayTrap = false;
@@ -2561,7 +2561,7 @@ namespace Client.MirObjects
                 case MirAction.站立动作:
                 case MirAction.坐骑站立:
                 case MirAction.冲击失败:
-                case MirAction.人挖N展:
+                case MirAction.挖矿展示:
                 case MirAction.站立姿势:
                 case MirAction.站立姿势2:
                     if (CMain.Time >= NextMotion)
@@ -5372,7 +5372,7 @@ namespace Client.MirObjects
                                 //case MirAction.施法动作: //同45问题一致暂屏蔽此特效
                                 //    Libraries.TransformWeaponEffect[18].DrawBlend(296 + ((int)Direction * 6) + FrameIndex, DrawLocation, Color.White, true, 0.7F);
                                 //    break;
-                                case MirAction.人挖N展:
+                                case MirAction.挖矿展示:
                                     Libraries.TransformWeaponEffect[18].DrawBlend(344 + ((int)Direction * 2) + FrameIndex, DrawLocation, Color.White, true, 0.7F);
                                     break;
                                 case MirAction.被击动作:
@@ -5445,7 +5445,7 @@ namespace Client.MirObjects
                                 //case MirAction.施法动作: //因为与近距攻击3冲突暂关闭此特效，待解决后开启
                                     //Libraries.TransformWeaponEffect[45].DrawBlend(296 + ((int)Direction * 6) + FrameIndex, DrawLocation, Color.White, true, 0.7F);
                                     //break;
-                                case MirAction.人挖N展:
+                                case MirAction.挖矿展示:
                                     Libraries.TransformWeaponEffect[45].DrawBlend(344 + ((int)Direction * 2) + FrameIndex, DrawLocation, Color.White, true, 0.7F);
                                     break;
                                 case MirAction.被击动作:

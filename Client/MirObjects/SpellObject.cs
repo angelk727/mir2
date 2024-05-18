@@ -413,7 +413,7 @@ namespace Client.MirObjects
                     MapControl.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.修士剑客], 460, 8, 800, CurrentLocation, CMain.Time + 1000) { Blend = true});
                     break;
                 case Spell.尊者旋风:
-                    BodyLibrary = Libraries.Monsters[(ushort)Monster.尊者之魂];
+                    BodyLibrary = Libraries.Monsters[(ushort)Monster.Mon564N];
                     DrawColour = Color.FromArgb(180, 255, 200, 180);
                     LightColour = Color.White;
                     Light = 3;

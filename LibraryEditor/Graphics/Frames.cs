@@ -22,7 +22,7 @@ namespace LibraryEditor
         public static FrameSet DefaultNPCFrameSet = new FrameSet
         {
             { MirAction.站立动作, new Frame(0, 4, 0, 450) },
-            { MirAction.人挖N展, new Frame(12, 10, 0, 200) }
+            { MirAction.挖矿展示, new Frame(12, 10, 0, 200) }
         };
     }
 

@@ -173,7 +173,7 @@ namespace Client.MirObjects
             switch (CurrentAction)
             {
                 case MirAction.站立动作:
-                case MirAction.人挖N展:
+                case MirAction.挖矿展示:
                     if (CMain.Time >= NextMotion)
                     {
                         GameScene.Scene.MapControl.TextureValid = false;
@@ -231,7 +231,7 @@ namespace Client.MirObjects
             if (ActionFeed.Count == 0)
             {
                 if (CMain.Random.Next(2) == 0 && Frames.Count > 1)
-                    CurrentAction = MirAction.人挖N展;  
+                    CurrentAction = MirAction.挖矿展示;  
                 else
                     CurrentAction = MirAction.站立动作;
 
