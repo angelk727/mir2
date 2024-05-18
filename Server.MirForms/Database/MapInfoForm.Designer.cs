@@ -324,7 +324,7 @@ namespace Server
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(45, 129);
+            label4.Location = new Point(46, 129);
             label4.Margin = new Padding(4, 0, 4, 0);
             label4.Name = "label4";
             label4.Size = new Size(47, 17);
@@ -337,7 +337,7 @@ namespace Server
             MapIndexTextBox.Margin = new Padding(4, 3, 4, 3);
             MapIndexTextBox.Name = "MapIndexTextBox";
             MapIndexTextBox.ReadOnly = true;
-            MapIndexTextBox.Size = new Size(54, 23);
+            MapIndexTextBox.Size = new Size(42, 23);
             MapIndexTextBox.TabIndex = 0;
             // 
             // MiniMapTextBox
@@ -365,7 +365,7 @@ namespace Server
             MapNameTextBox.Location = new Point(96, 92);
             MapNameTextBox.Margin = new Padding(4, 3, 4, 3);
             MapNameTextBox.Name = "MapNameTextBox";
-            MapNameTextBox.Size = new Size(107, 23);
+            MapNameTextBox.Size = new Size(139, 23);
             MapNameTextBox.TabIndex = 2;
             MapNameTextBox.TextChanged += MapNameTextBox_TextChanged;
             // 
@@ -374,7 +374,7 @@ namespace Server
             FileNameTextBox.Location = new Point(96, 58);
             FileNameTextBox.Margin = new Padding(4, 3, 4, 3);
             FileNameTextBox.Name = "FileNameTextBox";
-            FileNameTextBox.Size = new Size(54, 23);
+            FileNameTextBox.Size = new Size(139, 23);
             FileNameTextBox.TabIndex = 1;
             FileNameTextBox.TextChanged += FileNameTextBox_TextChanged;
             // 

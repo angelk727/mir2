@@ -696,6 +696,17 @@ public enum Monster : ushort
     尊者之魔 = 563,
     尊者之魂 = 564,
     缄封的罐子 = 565,
+    Mon570N = 570,  //Mon58.wil
+    Mon571N = 571,
+    Mon572N = 572,
+    Mon573N = 573,
+    Mon574N = 574,
+    Mon575N = 575,
+    Mon577N = 577,
+    Mon578N = 578,
+    Mon579N = 579,
+    Mon580N = 580,  //Mon59.wil
+    Mon583N = 583,
 
     //Special
     EvilMir = 900,
