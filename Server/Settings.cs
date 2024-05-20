@@ -120,7 +120,7 @@ namespace Server
                           RestedMaxBonus = 24,
                           NewbieGuildMaxSize = 1000;
 
-        public static string NewbieGuild = "NewbieGuild",
+        public static string NewbieGuild = "新人公会",
                              SkeletonName = "变异骷髅",
                              ShinsuName = "神兽",
                              BugBatName = "小蝙蝠",

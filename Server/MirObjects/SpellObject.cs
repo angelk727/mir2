@@ -540,7 +540,7 @@ namespace Server.MirObjects
                         ob.Struck(Value, DefenceType.AC);
                     }
                     break;
-                case Spell.尊者旋风:
+                case Spell.Mon564NWhirlwind:
                     {
                         if (ob.Race != ObjectType.Player && ob.Race != ObjectType.Monster && ob.Race != ObjectType.Hero) return;
                         if (ob.Dead) return;
@@ -675,7 +675,7 @@ namespace Server.MirObjects
                 case Spell.ButcherFlyAxe:
                 case Spell.RiklebitesBlast:
                 case Spell.SwordFormation:
-                case Spell.尊者旋风:
+                case Spell.Mon564NWhirlwind:
                     if (!Show)
                         return null;
 

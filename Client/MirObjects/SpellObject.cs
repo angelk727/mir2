@@ -412,7 +412,7 @@ namespace Client.MirObjects
                     DrawBehind = true;
                     MapControl.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.修士剑客], 460, 8, 800, CurrentLocation, CMain.Time + 1000) { Blend = true});
                     break;
-                case Spell.尊者旋风:
+                case Spell.Mon564NWhirlwind:
                     BodyLibrary = Libraries.Monsters[(ushort)Monster.Mon564N];
                     DrawColour = Color.FromArgb(180, 255, 200, 180);
                     LightColour = Color.White;
@@ -461,7 +461,7 @@ namespace Client.MirObjects
                             FrameIndex = 0;
                         }
                         break;
-                    case Spell.尊者旋风:
+                    case Spell.Mon564NWhirlwind:
                         if (FrameIndex == 0 && CMain.Random.Next(3) == 0) SoundManager.PlaySound(8306);
                         break;
                 }

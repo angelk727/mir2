@@ -357,6 +357,12 @@ namespace Client.MirObjects
                     Effects.Add(new BuffEffect(Libraries.Monsters[(ushort)Monster.Riklebites], 1094, 8, 800, this, true, type) { Repeat = true, DrawBehind = true });
                     };
                     break;
+                case BuffType.绝对封锁:
+                    Effects.Add(new BuffEffect(Libraries.Monsters[(ushort)Monster.Mon562N], 648, 10, 600, this, true, type) { Repeat = true, Light = 1 });
+                    break;
+                case BuffType.Mon564NSealing:
+                    Effects.Add(new BuffEffect(Libraries.Monsters[(ushort)Monster.Mon564N], 1016, 10, 600, this, true, type) { Repeat = true, Light = 1 });
+                    break;
             }
         }
         public void RemoveBuffEffect(BuffType type)

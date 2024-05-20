@@ -4923,6 +4923,18 @@ namespace Client.MirScenes
                     case SpellEffect.MoonMist:
                         ob.Effects.Add(new Effect(Libraries.Magic3, 705, 10, 800, ob));
                         break;
+                    case SpellEffect.Mon562NLightning:
+                        ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon562N], 666, 5, 300, ob) { Blend = true });
+                        ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon562N], 671, 5, 1000, ob) { Blend = true });
+                        break;
+                    case SpellEffect.Mon563NPoisonCloud:
+                        ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon563N], 733, 4, 300, ob) { Blend = true, DrawBehind = true  });
+                        ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon563N], 737, 14, 1000, ob) { Blend = true });
+                        break;
+                    case SpellEffect.Mon564NFlame:
+                        ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon564N], 756, 16, 800, ob) { Blend = true });
+                        ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon564N], 773, 16, 800, ob) { Blend = true, DrawBehind = true });
+                        break;
                 }
 
                 return;

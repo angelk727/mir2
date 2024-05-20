@@ -1220,7 +1220,6 @@ namespace Server.MirObjects
                         return false;
                     }
                     break;
-
                 case ItemType.技能书:
                     if (Info.Magics.Any(t => t.Spell == (Spell)item.Info.Shape))
                     {

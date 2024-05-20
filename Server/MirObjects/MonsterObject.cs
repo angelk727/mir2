@@ -439,6 +439,10 @@ namespace Server.MirObjects
                     return new 修士剑客(info);
                 case 552:
                     return new 古老遗骸(info);
+                case 562:
+                    return new Mon562N(info);
+                case 563:
+                    return new Mon563N(info);
                 case 564:
                     return new Mon564N(info);
                 case 900:

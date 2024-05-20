@@ -1324,7 +1324,7 @@ public enum Spell : byte
     RiklebitesBlast = 227, //518
     RiklebitesRollCall = 228, //518
     SwordFormation = 229, //550
-    尊者旋风 = 230 //564
+    Mon564NWhirlwind = 230 //564
 }
 
 public enum SpellEffect : byte
@@ -1371,7 +1371,10 @@ public enum SpellEffect : byte
     HealingcircleRare1,
     BloodthirstySpike,
     GroundBurstIce,
-    MirEmperor
+    MirEmperor,
+    Mon562NLightning,
+    Mon563NPoisonCloud,
+    Mon564NFlame
 }
 
 
@@ -1426,6 +1429,8 @@ public enum BuffType : byte
     死亡印记,
     RiklebitesShield,
     麻痹状态,
+    绝对封锁,
+    Mon564NSealing,
 
     //Special
     游戏管理 = 100,

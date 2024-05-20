@@ -9088,7 +9088,7 @@ namespace Server.MirObjects
 
             if(!Info.AccountInfo.AdminAccount && String.Equals(guildName, Settings.NewbieGuild, StringComparison.OrdinalIgnoreCase))
             {
-                ReceiveChat($"不能使用：NewbieGuild 这个名字", ChatType.System);
+                ReceiveChat($"不能使用：新人公会 这个名字", ChatType.System);
                 return false;
             }
 

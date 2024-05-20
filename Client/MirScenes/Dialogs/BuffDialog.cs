@@ -503,6 +503,10 @@ namespace Client.MirScenes.Dialogs
                     return 231;
                 case BuffType.麻痹状态:
                     return 234;
+                case BuffType.绝对封锁:
+                    return 265;
+                case BuffType.Mon564NSealing:
+                    return 266;
 
                 //Special
                 case BuffType.游戏管理:

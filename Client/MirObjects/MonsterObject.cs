@@ -856,8 +856,11 @@ namespace Client.MirObjects
                             case Monster.度量宫武士: //554
                                 Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.度量宫武士], 356 + (int)Direction * 8, 8, 8 * Frame.Interval, this) { DrawBehind = true, Blend = true });
                                 break;
+                            case Monster.Mon562N:
+                                Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon562N], 658, 8, 8 * 200, this) { Blend = true });
+                                break;
                             case Monster.Mon563N:
-                                Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon563N], 665, 10, 10 * 200, this) { Blend = true });
+                                Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon563N], 664, 13, 13 * 200, this) { Blend = true });
                                 break;
                         }
 
@@ -1058,6 +1061,9 @@ namespace Client.MirObjects
                             case Monster.SpectralWraith: //530
                                 Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.SpectralWraith], 611, 6, 6 * Frame.Interval, this) { Blend = true});
                                 Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.SpectralWraith], 601, 10, 10 * 100, this) { Blend = true, DrawBehind = true });
+                                break;
+                            case Monster.Mon563N:
+                                Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon563N], 751 + (int)Direction * 6, 6, Frame.Count * Frame.Interval, this));
                                 break;
                         }
                         break;
@@ -3573,7 +3579,7 @@ namespace Client.MirObjects
                                                     };
                                                 }
                                                 break;
-                                            case Monster.Mon562N: //562
+                                            case Monster.Mon562N:
                                                 ob = MapControl.GetObject(TargetID);
                                                 if (ob != null)
                                                 {
@@ -3581,14 +3587,14 @@ namespace Client.MirObjects
                                                 }
                                                 break;
                                             case Monster.Mon563N:
-                                                missile = CreateProjectile(677, Libraries.Monsters[(ushort)Monster.Mon563N], true, 7, 50, 0, direction16: true);
+                                                missile = CreateProjectile(677, Libraries.Monsters[(ushort)Monster.Mon563N], true, 7, 50, 0, direction16: false);
 
                                                 if (missile.Target != null)
                                                 {
                                                     missile.Complete += (o, e) =>
                                                     {
                                                         if (missile.Target.CurrentAction == MirAction.死后尸体) return;
-                                                        missile.Target.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon563N], 733, 4, 300, missile.Target) { Blend = true });
+                                                        missile.Target.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon563N], 733, 4, 300, missile.Target) { Blend = true, DrawBehind = true });
                                                     };
                                                 }
                                                 break;
@@ -4381,7 +4387,7 @@ namespace Client.MirObjects
                                         case Monster.度量宫术士: //555
                                             Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.度量宫术士], 328, 6, 6 * Frame.Interval, this) { Blend = true, DrawBehind = true });
                                             break;
-                                        case Monster.Mon562N: //562
+                                        case Monster.Mon562N:
                                             Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon562N], 676 + (int)Direction * 9, 9, 8 * Frame.Interval, this, CMain.Time + 300));
                                             Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon562N], 748, 30, 30 * Frame.Interval, this, CMain.Time + 600));
                                             break;

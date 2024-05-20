@@ -570,7 +570,7 @@ namespace Server
             NoDrugCheckbox.Name = "NoDrugCheckbox";
             NoDrugCheckbox.Size = new Size(75, 21);
             NoDrugCheckbox.TabIndex = 33;
-            NoDrugCheckbox.Text = "禁用毒素";
+            NoDrugCheckbox.Text = "禁用药水";
             NoDrugCheckbox.UseVisualStyleBackColor = true;
             NoDrugCheckbox.CheckedChanged += NoDrugCheckbox_CheckedChanged;
             // 
