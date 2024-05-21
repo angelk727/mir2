@@ -114,8 +114,8 @@ namespace Launcher
 
             var download = new Download();
             download.Info = DownloadList.Dequeue();
-
             DownloadFile(download);
+            
         }
 
         private void CleanUp()
@@ -161,6 +161,12 @@ namespace Launcher
                 using MemoryStream stream = new MemoryStream(data);
                 using BinaryReader reader = new BinaryReader(stream);
 
+                if (reader.ReadByte() == 60)
+                {
+                    //assume we got a html page back with an error code so it's not a patchlist
+                    return;
+                }
+                reader.BaseStream.Seek(0,SeekOrigin.Begin);
                 int count = reader.ReadInt32();
 
                 for (int i = 0; i < count; i++)
@@ -186,29 +192,12 @@ namespace Launcher
 
             if (info == null || old.Length != info.Length || old.Creation != info.Creation)
             {
-                if (info != null && (Path.GetExtension(old.FileName).ToLower() == ".dll" || Path.GetExtension(old.FileName).ToLower() == ".exe"))
-                {
-                    string oldFilename = Path.Combine(Path.GetDirectoryName(old.FileName), ("Old__" + Path.GetFileName(old.FileName)));
-
-                    try
-                    {
-                        File.Move(Settings.P_Client + old.FileName, oldFilename);
-                    }
-                    catch (UnauthorizedAccessException ex)
-                    {
-                        SaveError(ex.ToString());
-                    }
-                    finally
-                    {
-                        //Might cause an infinite loop if it can never gain access
-                        Restart = true;
-                    }
-                }
-
                 DownloadList.Enqueue(old);
                 _totalBytes += old.Length;
             }
         }
+
+        private int errorcount = 0;
 
         public void DownloadFile(Download dl)
         {
@@ -273,6 +262,46 @@ namespace Launcher
                     if (!Directory.Exists(dirName))
                         Directory.CreateDirectory(dirName);
 
+                    //first remove the original file if needed
+                    string[] specialfiles = { ".dll", ".exe", ".pdb" };
+                    if (File.Exists(fileNameOut) && ( specialfiles.Contains( Path.GetExtension(fileNameOut).ToLower() )))
+                    {
+                        string oldFilename = Path.Combine(Path.GetDirectoryName(fileNameOut), ("Old__" + Path.GetFileName(fileNameOut)));
+
+                        try
+                        {
+                            //if there's another previous backup: delete it first
+                            if (File.Exists(oldFilename))
+                            {
+                                File.Delete(oldFilename);   
+                            }
+                            File.Move(fileNameOut, oldFilename);
+                        }
+                        catch (UnauthorizedAccessException ex)
+                        {
+                            SaveError(ex.ToString());
+                            errorcount++;
+                            if (errorcount == 5)
+                                MessageBox.Show("出现了太多问题，将不再显示以后的错误");
+                            if (errorcount < 5)
+                                MessageBox.Show("保存此文件时发生问题: " + fileNameOut);
+                        }
+                        catch (Exception ex)
+                        {
+                            SaveError(ex.ToString());
+                            errorcount++;
+                            if (errorcount == 5)
+                                MessageBox.Show("出现了太多问题，将不再显示以后的错误");
+                            if (errorcount < 5)
+                                MessageBox.Show("保存此文件时发生问题: " + fileNameOut);
+                        }
+                        finally
+                        {
+                            //Might cause an infinite loop if it can never gain access
+                            Restart = true;
+                        }
+                    }
+
                     File.WriteAllBytes(fileNameOut, data);
                     File.SetLastWriteTime(fileNameOut, info.Creation);
                 }
@@ -280,8 +309,17 @@ namespace Launcher
             catch (HttpRequestException e)
             {
                 File.AppendAllText(@".\Error.txt",
-                                       $"[{DateTime.Now}] {info.FileName} could not be downloaded. ({e.Message}) {Environment.NewLine}");
+                                       $"[{DateTime.Now}] {info.FileName} 无法下载 ({e.Message}) {Environment.NewLine}");
                 ErrorFound = true;
+            }
+            catch (Exception ex)
+            {
+                SaveError(ex.ToString());
+                errorcount++;
+                if (errorcount == 5)
+                    MessageBox.Show("出现了太多问题，将不再显示以后的错误");
+                if (errorcount < 5)
+                    MessageBox.Show("保存此文件时发生问题: " + dl.Info.FileName);
             }
             finally
             {
