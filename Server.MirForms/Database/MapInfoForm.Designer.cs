@@ -36,6 +36,8 @@ namespace Server
             components = new Container();
             MapTabs = new TabControl();
             tabPage1 = new TabPage();
+            label48 = new Label();
+            lstParticles = new ListBox();
             MinimapPreview = new PictureBox();
             label11 = new Label();
             MusicTextBox = new TextBox();
@@ -190,11 +192,13 @@ namespace Server
             MapTabs.Margin = new Padding(4, 3, 4, 3);
             MapTabs.Name = "MapTabs";
             MapTabs.SelectedIndex = 0;
-            MapTabs.Size = new Size(630, 357);
+            MapTabs.Size = new Size(630, 563);
             MapTabs.TabIndex = 8;
             // 
             // tabPage1
             // 
+            tabPage1.Controls.Add(label48);
+            tabPage1.Controls.Add(lstParticles);
             tabPage1.Controls.Add(MinimapPreview);
             tabPage1.Controls.Add(label11);
             tabPage1.Controls.Add(MusicTextBox);
@@ -216,10 +220,30 @@ namespace Server
             tabPage1.Margin = new Padding(4, 3, 4, 3);
             tabPage1.Name = "tabPage1";
             tabPage1.Padding = new Padding(4, 3, 4, 3);
-            tabPage1.Size = new Size(622, 327);
+            tabPage1.Size = new Size(622, 533);
             tabPage1.TabIndex = 0;
             tabPage1.Text = "信息";
             tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // label48
+            // 
+            label48.AutoSize = true;
+            label48.Location = new Point(35, 269);
+            label48.Name = "label48";
+            label48.Size = new Size(104, 17);
+            label48.TabIndex = 20;
+            label48.Text = "天气系统 (可多选)";
+            // 
+            // lstParticles
+            // 
+            lstParticles.FormattingEnabled = true;
+            lstParticles.ItemHeight = 17;
+            lstParticles.Location = new Point(38, 289);
+            lstParticles.Name = "lstParticles";
+            lstParticles.SelectionMode = SelectionMode.MultiSimple;
+            lstParticles.Size = new Size(165, 242);
+            lstParticles.TabIndex = 0;
+            lstParticles.SelectedIndexChanged += lstParticles_SelectedIndexChanged;
             // 
             // MinimapPreview
             // 
@@ -1583,7 +1607,7 @@ namespace Server
             MapInfoListBox.Margin = new Padding(4, 3, 4, 3);
             MapInfoListBox.Name = "MapInfoListBox";
             MapInfoListBox.SelectionMode = SelectionMode.MultiExtended;
-            MapInfoListBox.Size = new Size(220, 344);
+            MapInfoListBox.Size = new Size(220, 548);
             MapInfoListBox.TabIndex = 7;
             MapInfoListBox.SelectedIndexChanged += MapInfoListBox_SelectedIndexChanged;
             // 
@@ -1668,7 +1692,7 @@ namespace Server
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(886, 440);
+            ClientSize = new Size(886, 646);
             Controls.Add(VisualizerButton);
             Controls.Add(ExportMongenButton);
             Controls.Add(ImportMongenButton);
@@ -1836,5 +1860,7 @@ namespace Server
         private TextBox BigMapIconTextBox;
         private CheckBox ShowBigMapCheckBox;
         private PictureBox MinimapPreview;
+        private ListBox lstParticles;
+        private Label label48;
     }
 }

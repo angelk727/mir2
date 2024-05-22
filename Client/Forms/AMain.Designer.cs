@@ -206,7 +206,7 @@ namespace Launcher
             this.CurrentFile_label.BackColor = System.Drawing.Color.Transparent;
             this.CurrentFile_label.Font = new System.Drawing.Font("Calibri", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.CurrentFile_label.ForeColor = System.Drawing.Color.Gray;
-            this.CurrentFile_label.Location = new System.Drawing.Point(135, 525);
+            this.CurrentFile_label.Location = new System.Drawing.Point(175, 525);
             this.CurrentFile_label.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.CurrentFile_label.Name = "CurrentFile_label";
             this.CurrentFile_label.Size = new System.Drawing.Size(264, 21);

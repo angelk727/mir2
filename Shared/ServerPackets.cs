@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 
 namespace ServerPackets
 {
@@ -414,6 +415,7 @@ namespace ServerPackets
         public LightSetting Lights;
         public bool Lightning, Fire;
         public byte MapDarkLight;
+        public WeatherSetting WeatherParticles = WeatherSetting.None;
 
         protected override void ReadPacket(BinaryReader reader)
         {
@@ -428,6 +430,7 @@ namespace ServerPackets
             if ((bools & 0x02) == 0x02) Fire = true;
             MapDarkLight = reader.ReadByte();
             Music = reader.ReadUInt16();
+            WeatherParticles = (WeatherSetting)reader.ReadUInt16();
         }
 
         protected override void WritePacket(BinaryWriter writer)
@@ -444,6 +447,7 @@ namespace ServerPackets
             writer.Write(bools);
             writer.Write(MapDarkLight);
             writer.Write(Music);
+            writer.Write((UInt16)WeatherParticles);
         }
     }
 
@@ -2906,6 +2910,7 @@ namespace ServerPackets
         public Point Location;
         public MirDirection Direction;
         public byte MapDarkLight;
+        public WeatherSetting Weather = WeatherSetting.None;
 
 
         protected override void ReadPacket(BinaryReader reader)
@@ -2920,6 +2925,7 @@ namespace ServerPackets
             Direction = (MirDirection)reader.ReadByte();
             MapDarkLight = reader.ReadByte();
             Music = reader.ReadUInt16();
+            Weather = (WeatherSetting)reader.ReadUInt16();
         }
         protected override void WritePacket(BinaryWriter writer)
         {
@@ -2934,6 +2940,7 @@ namespace ServerPackets
             writer.Write((byte)Direction);
             writer.Write(MapDarkLight);
             writer.Write(Music);
+			writer.Write((ushort)Weather);
         }
     }
     public sealed class ObjectTeleportOut : Packet
