@@ -352,6 +352,9 @@ namespace Client.MirScenes.Dialogs
                 case BuffType.英雄灵气:
                     text += "英雄在线加成\n";
                     break;
+                case BuffType.暗影侵袭:
+                    text += "来自陵寝秘空的侵袭\n";
+                    break;
             }
 
             if (!overridestats)
@@ -507,6 +510,8 @@ namespace Client.MirScenes.Dialogs
                     return 265;
                 case BuffType.Mon564NSealing:
                     return 266;
+                case BuffType.防御诅咒:
+                    return 422;
 
                 //Special
                 case BuffType.游戏管理:
@@ -540,6 +545,8 @@ namespace Client.MirScenes.Dialogs
                     return 200;
                 case BuffType.英雄灵气:
                     return 259;
+                case BuffType.暗影侵袭:
+                    return 841;
 
                 //Stats
                 case BuffType.火龍祝福:

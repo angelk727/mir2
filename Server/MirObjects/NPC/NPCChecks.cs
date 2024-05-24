@@ -58,6 +58,7 @@
         ConquestAvailable,
         ConquestOwner,
         CheckGuildNameList,
-        CheckTimer
+        CheckTimer,
+        CheckBuff
     }
 }

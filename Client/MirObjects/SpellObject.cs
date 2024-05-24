@@ -424,6 +424,19 @@ namespace Client.MirObjects
                     Repeat = true;
                     SoundManager.PlaySound(8306);
                     break;
+                case Spell.Mon573NBigCobweb:
+                    BodyLibrary = Libraries.Monsters[(ushort)Monster.Mon573N];
+                    DrawColour = Color.FromArgb(180, 255, 200, 180);
+                    LightColour = Color.White;
+                    Light = 3;
+                    DrawFrame = 535;
+                    FrameInterval = 100;
+                    FrameCount = 5;
+                    Blend = true;
+                    Repeat = true;
+                    SoundManager.PlaySound(8306);
+                    MapControl.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon573N], 539, 4, 1000, CurrentLocation) { Blend = true });
+                    break;
             }
 
             NextMotion = CMain.Time + FrameInterval;
@@ -462,6 +475,9 @@ namespace Client.MirObjects
                         }
                         break;
                     case Spell.Mon564NWhirlwind:
+                        if (FrameIndex == 0 && CMain.Random.Next(3) == 0) SoundManager.PlaySound(8306);
+                        break;
+                    case Spell.Mon573NBigCobweb:
                         if (FrameIndex == 0 && CMain.Random.Next(3) == 0) SoundManager.PlaySound(8306);
                         break;
                 }

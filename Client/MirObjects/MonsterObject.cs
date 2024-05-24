@@ -862,6 +862,9 @@ namespace Client.MirObjects
                             case Monster.Mon563N:
                                 Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon563N], 664, 13, 13 * 200, this) { Blend = true });
                                 break;
+                            case Monster.Mon573N:
+                                Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon573N], 555, 7, 7 * 200, this) { Blend = true });
+                                break;
                         }
 
                         if ((ushort)BaseImage >= 10000)
@@ -1812,6 +1815,10 @@ namespace Client.MirObjects
                                             case Monster.修士剑客: //550
                                                 Effect Effect550 = new Effect(Libraries.Monsters[(ushort)Monster.修士剑客], 442, 8, 300, front, CMain.Time + 300);
                                                 MapControl.Effects.Add(Effect550);
+                                                break;
+                                            case Monster.Mon573N:
+                                                Effect bleedEffect = new Effect(Libraries.Monsters[(ushort)Monster.Mon573N], 522, 9, 300, front, CMain.Time + 600);
+                                                MapControl.Effects.Add(bleedEffect);
                                                 break;
                                         }
                                     }
@@ -4400,6 +4407,9 @@ namespace Client.MirObjects
                                             break;
                                         case Monster.Mon565T:
                                             Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon565T], 88, 10, 10 * Frame.Interval, this) { Blend = true, DrawBehind = true });
+                                            break;
+                                        case Monster.Mon573N:
+                                            Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon573N], 504, 18, 18 * Frame.Interval, this, CMain.Time + 300) { Blend = true });
                                             break;
                                     }
                                     break;

@@ -363,6 +363,9 @@ namespace Client.MirObjects
                 case BuffType.Mon564NSealing:
                     Effects.Add(new BuffEffect(Libraries.Monsters[(ushort)Monster.Mon564N], 1016, 10, 600, this, true, type) { Repeat = true, Light = 1 });
                     break;
+                case BuffType.防御诅咒:
+                    Effects.Add(new BuffEffect(Libraries.Monsters[(ushort)Monster.Mon573N], 562, 6, 600, this, true, type) { Repeat = true, Light = 1 });
+                    break;
             }
         }
         public void RemoveBuffEffect(BuffType type)

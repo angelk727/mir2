@@ -6,6 +6,7 @@ using System.Numerics;
 using System.Text.RegularExpressions;
 using S = ServerPackets;
 using Timer = Server.MirEnvir.Timer;
+using System;
 
 namespace Server.MirObjects
 {
@@ -381,6 +382,11 @@ namespace Server.MirObjects
                     if (parts.Length < 4) return;
 
                     CheckList.Add(new NPCChecks(CheckType.CheckTimer, parts[1], parts[2], parts[3]));
+                    break;
+                case "CHECKBUFF":
+                    if (parts.Length < 2) return;
+
+                    CheckList.Add(new NPCChecks(CheckType.CheckBuff, parts[1]));
                     break;
             }
 
@@ -2664,6 +2670,18 @@ namespace Server.MirObjects
                             }
                         }
                         break;
+                    case CheckType.CheckBuff:
+                        {
+                            if (!Enum.TryParse(param[0], true, out BuffType buffType))
+                            {
+                                failed = true;
+                                break;
+                            }
+
+                            failed = !player.HasBuff(buffType);
+                        }
+                        break;
+
 
                 }
 

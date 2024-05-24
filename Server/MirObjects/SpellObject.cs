@@ -510,6 +510,7 @@ namespace Server.MirObjects
                     break;
                 case Spell.RiklebitesRollCall:
                     {
+                        if (ob.Race != ObjectType.Player && ob.Race != ObjectType.Monster && ob.Race != ObjectType.Hero) return;
                         if (ob.Dead) return;
                         if (ob == Caster) return;
                         if (!ob.IsAttackTarget(Caster)) return;
@@ -541,6 +542,17 @@ namespace Server.MirObjects
                     }
                     break;
                 case Spell.Mon564NWhirlwind:
+                    {
+                        if (ob.Race != ObjectType.Player && ob.Race != ObjectType.Monster && ob.Race != ObjectType.Hero) return;
+                        if (ob.Dead) return;
+                        if (ob == Caster) return;
+                        if (!ob.IsAttackTarget(Caster)) return;
+                        if (Value == 0) return;
+
+                        ob.Struck(Value, DefenceType.MAC);
+                    }
+                    break;
+                case Spell.Mon573NBigCobweb:
                     {
                         if (ob.Race != ObjectType.Player && ob.Race != ObjectType.Monster && ob.Race != ObjectType.Hero) return;
                         if (ob.Dead) return;
@@ -676,6 +688,7 @@ namespace Server.MirObjects
                 case Spell.RiklebitesBlast:
                 case Spell.SwordFormation:
                 case Spell.Mon564NWhirlwind:
+                case Spell.Mon573NBigCobweb:
                     if (!Show)
                         return null;
 
