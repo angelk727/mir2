@@ -208,6 +208,8 @@
             CopyMButton = new Button();
             ITypeFilterComboBox = new ComboBox();
             Gameshop_button = new Button();
+            txtSearchItem = new TextBox();
+            label65 = new Label();
             ItemInfoPanel.SuspendLayout();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
@@ -2197,7 +2199,7 @@
             // 
             // RemoveButton
             // 
-            RemoveButton.Location = new Point(274, 16);
+            RemoveButton.Location = new Point(473, 13);
             RemoveButton.Margin = new Padding(4);
             RemoveButton.Name = "RemoveButton";
             RemoveButton.Size = new Size(76, 30);
@@ -2208,7 +2210,7 @@
             // 
             // AddButton
             // 
-            AddButton.Location = new Point(203, 16);
+            AddButton.Location = new Point(401, 13);
             AddButton.Margin = new Padding(4);
             AddButton.Name = "AddButton";
             AddButton.Size = new Size(64, 30);
@@ -2233,7 +2235,7 @@
             // PasteButton
             // 
             PasteButton.Enabled = false;
-            PasteButton.Location = new Point(424, 16);
+            PasteButton.Location = new Point(624, 13);
             PasteButton.Margin = new Padding(4);
             PasteButton.Name = "PasteButton";
             PasteButton.Size = new Size(62, 30);
@@ -2246,7 +2248,7 @@
             // CopyMButton
             // 
             CopyMButton.Enabled = false;
-            CopyMButton.Location = new Point(357, 16);
+            CopyMButton.Location = new Point(557, 13);
             CopyMButton.Margin = new Padding(4);
             CopyMButton.Name = "CopyMButton";
             CopyMButton.Size = new Size(59, 30);
@@ -2269,7 +2271,7 @@
             // 
             // Gameshop_button
             // 
-            Gameshop_button.Location = new Point(492, 16);
+            Gameshop_button.Location = new Point(694, 13);
             Gameshop_button.Margin = new Padding(4);
             Gameshop_button.Name = "Gameshop_button";
             Gameshop_button.Size = new Size(97, 30);
@@ -2278,11 +2280,30 @@
             Gameshop_button.UseVisualStyleBackColor = true;
             Gameshop_button.Click += Gameshop_button_Click;
             // 
+            // txtSearchItem
+            // 
+            txtSearchItem.Location = new Point(267, 17);
+            txtSearchItem.Name = "txtSearchItem";
+            txtSearchItem.Size = new Size(118, 23);
+            txtSearchItem.TabIndex = 30;
+            txtSearchItem.TextChanged += txtSearchItem_TextChanged;
+            // 
+            // label65
+            // 
+            label65.AutoSize = true;
+            label65.Location = new Point(208, 20);
+            label65.Name = "label65";
+            label65.Size = new Size(56, 17);
+            label65.TabIndex = 31;
+            label65.Text = "搜索物品";
+            // 
             // ItemInfoForm
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(947, 626);
+            Controls.Add(label65);
+            Controls.Add(txtSearchItem);
             Controls.Add(Gameshop_button);
             Controls.Add(ITypeFilterComboBox);
             Controls.Add(PasteButton);
@@ -2310,6 +2331,7 @@
             tabPage4.ResumeLayout(false);
             tabPage4.PerformLayout();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -2494,5 +2516,7 @@
         private TextBox DropRatetextBox;
         private TextBox DamageReductiontextBox;
         private PictureBox ItemsPreview;
+        private TextBox txtSearchItem;
+        private Label label65;
     }
 }

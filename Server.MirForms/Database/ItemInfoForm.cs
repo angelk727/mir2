@@ -1627,6 +1627,45 @@ namespace Server
             for (int i = 0; i < _selectedItemInfos.Count; i++)
                 _selectedItemInfos[i].Stats[Stat.暴击倍率] = temp;
         }
+        private void txtSearchItem_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                SearchForItem();
+            }
+        }
+
+        private void btnClearItemSearch_Click(object sender, EventArgs e)
+        {
+            ResetItemList();
+        }
+
+        private void ResetItemList()
+        {
+            txtSearchItem.Text = "";
+            ItemInfoListBox.Items.Clear();
+            if (Envir.ItemInfoList != null)
+            {
+                foreach (ItemInfo item in Envir.ItemInfoList)
+                {
+                    ItemInfoListBox.Items.Add(item);
+                }
+            }
+        }
+
+        private void SearchForItem()
+        {
+            List<ItemInfo> results = Envir.ItemInfoList.FindAll(x => x.Name.ToLower().Contains(txtSearchItem.Text.ToLower()));
+
+            if (results.Count > 0)
+            {
+                ItemInfoListBox.Items.Clear();
+                foreach (ItemInfo item in results)
+                {
+                    ItemInfoListBox.Items.Add(item);
+                }
+            }
+        }
 
         private void CriticalDamagetextBox_TextChanged(object sender, EventArgs e)
         {
@@ -1991,6 +2030,18 @@ namespace Server
         private void label33_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void txtSearchItem_TextChanged(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(txtSearchItem.Text))
+            {
+                SearchForItem();
+            }
+            else
+            {
+                ResetItemList();
+            }
         }
     }
 }
