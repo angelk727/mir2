@@ -352,6 +352,12 @@ namespace Client.MirScenes.Dialogs
                 case BuffType.英雄灵气:
                     text += "英雄在线加成\n";
                     break;
+                case BuffType.古代宗师祝福:
+                    text += "来自宗师的祝福\n";
+                    break;
+                case BuffType.黄金宗师祝福:
+                    text += "宗师的黄金祝福\n";
+                    break;
                 case BuffType.暗影侵袭:
                     text += "来自陵寝秘空的侵袭\n";
                     break;
@@ -547,6 +553,16 @@ namespace Client.MirScenes.Dialogs
                     return 259;
                 case BuffType.暗影侵袭:
                     return 841;
+                case BuffType.古代宗师祝福:
+                    return 842;
+                case BuffType.黄金宗师祝福:
+                    return 843;
+                case BuffType.摩鲁的赤色药剂:
+                    return 844;
+                case BuffType.摩鲁的青色药剂:
+                    return 845;
+                case BuffType.摩鲁的黄色药剂:
+                    return 846;
 
                 //Stats
                 case BuffType.火龍祝福:

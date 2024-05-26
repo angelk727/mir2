@@ -3524,6 +3524,20 @@ namespace Server.MirObjects
 
                     case ActionType.GiveBuff:
                         {
+                            var path = Path.Combine(Settings.EnvirPath, "SetBuffs.txt");
+
+                            if (!File.Exists(path))
+                            {
+                                File.Create(path).Dispose();
+                            }
+
+                            var lines = File.ReadAllLines(path);
+
+                            if (!Enum.IsDefined(typeof(BuffType), param[0]))
+                            {
+                                return;
+                            }
+
                             if (!Enum.IsDefined(typeof(BuffType), param[0])) return;
 
                             int.TryParse(param[1], out int duration);
@@ -3531,7 +3545,36 @@ namespace Server.MirObjects
                             bool.TryParse(param[3], out bool visible);
                             bool.TryParse(param[4], out bool stackable);
 
-                            player.AddBuff((BuffType)(byte)Enum.Parse(typeof(BuffType), param[0], true), player, Settings.Second * duration, new Stats(), visible);
+                            var matchedLine = lines.FirstOrDefault(l => l.StartsWith(param[0] + ";"));
+                            if (matchedLine != null)
+                            {
+                                var statsPart = matchedLine.Substring(matchedLine.IndexOf(';') + 1).Trim(';');
+                                var potionStats = statsPart.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
+
+                                var buffStats = new Stats();
+
+                                foreach (var stat in potionStats)
+                                {
+                                    var statParts = stat.Split('=');
+                                    if (statParts.Length != 2)
+                                        continue;
+
+                                    var statName = statParts[0].Trim();
+                                    var statValueString = statParts[1].Trim();
+
+                                    if (string.IsNullOrWhiteSpace(statValueString))
+                                        continue;
+
+                                    if (int.TryParse(statValueString, out var statValue))
+                                    {
+                                        if (Enum.TryParse<Stat>(statName, out var enumValue))
+                                        {
+                                            buffStats[enumValue] = statValue;
+                                        }
+                                    }
+                                }
+                                player.AddBuff((BuffType)(byte)Enum.Parse(typeof(BuffType), param[0], true), player, Settings.Second * duration, buffStats, visible);
+                            }
                         }
                         break;
 
