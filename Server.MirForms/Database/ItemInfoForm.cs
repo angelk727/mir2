@@ -1627,7 +1627,7 @@ namespace Server
             for (int i = 0; i < _selectedItemInfos.Count; i++)
                 _selectedItemInfos[i].Stats[Stat.暴击倍率] = temp;
         }
-        private void txtSearchItem_KeyUp(object sender, KeyEventArgs e)
+        private void TxtSearchItem_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
@@ -1642,7 +1642,7 @@ namespace Server
 
         private void ResetItemList()
         {
-            txtSearchItem.Text = "";
+            TxtSearchItem.Text = "";
             ItemInfoListBox.Items.Clear();
             if (Envir.ItemInfoList != null)
             {
@@ -1655,7 +1655,7 @@ namespace Server
 
         private void SearchForItem()
         {
-            List<ItemInfo> results = Envir.ItemInfoList.FindAll(x => x.Name.ToLower().Contains(txtSearchItem.Text.ToLower()));
+            List<ItemInfo> results = Envir.ItemInfoList.FindAll(x => x.Name.ToLower().Contains(TxtSearchItem.Text.ToLower()));
 
             if (results.Count > 0)
             {
@@ -2032,9 +2032,9 @@ namespace Server
 
         }
 
-        private void txtSearchItem_TextChanged(object sender, EventArgs e)
+        private void TxtSearchItem_TextChanged(object sender, EventArgs e)
         {
-            if (!string.IsNullOrWhiteSpace(txtSearchItem.Text))
+            if (!string.IsNullOrWhiteSpace(TxtSearchItem.Text))
             {
                 SearchForItem();
             }

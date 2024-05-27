@@ -96,6 +96,8 @@
             DropBuilderButton = new Button();
             DropPathTextBox = new TextBox();
             label13 = new Label();
+            TxtSearchMonster = new TextBox();
+            label24 = new Label();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             MonsterInfoPanel.SuspendLayout();
@@ -856,11 +858,30 @@
             label13.TabIndex = 92;
             label13.Text = "爆率文件路径";
             // 
+            // TxtSearchMonster
+            // 
+            TxtSearchMonster.Location = new Point(324, 34);
+            TxtSearchMonster.Name = "TxtSearchMonster";
+            TxtSearchMonster.Size = new Size(133, 23);
+            TxtSearchMonster.TabIndex = 27;
+            TxtSearchMonster.TextChanged += TxtSearchMonster_TextChanged;
+            // 
+            // label24
+            // 
+            label24.AutoSize = true;
+            label24.Location = new Point(351, 16);
+            label24.Name = "label24";
+            label24.Size = new Size(80, 17);
+            label24.TabIndex = 28;
+            label24.Text = "搜索指定怪物";
+            // 
             // MonsterInfoForm
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(958, 502);
+            Controls.Add(label24);
+            Controls.Add(TxtSearchMonster);
             Controls.Add(DropBuilderButton);
             Controls.Add(PasteMButton);
             Controls.Add(CopyMButton);
@@ -951,5 +972,7 @@
         private Label label13;
         private TextBox DropPathTextBox;
         private PictureBox MonstersPreview;
+        private TextBox TxtSearchMonster;
+        private Label label24;
     }
 }

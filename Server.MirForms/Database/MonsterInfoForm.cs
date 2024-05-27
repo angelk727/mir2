@@ -735,5 +735,32 @@ namespace Server
             for (int i = 0; i < _selectedMonsterInfos.Count; i++)
                 _selectedMonsterInfos[i].DropPath = text;
         }
+        private void TxtSearchMonster_TextChanged(object sender, EventArgs e)
+        {
+            string searchText = TxtSearchMonster.Text.Trim();
+
+            if (string.IsNullOrWhiteSpace(searchText))
+            {
+                ResetMonsterList();
+                return;
+            }
+
+            MonsterInfo foundMonster = Envir.MonsterInfoList.FirstOrDefault(info => info.Name.Equals(searchText, StringComparison.OrdinalIgnoreCase));
+
+            if (foundMonster != null)
+            {
+                MonsterInfoListBox.SelectedItem = foundMonster;
+            }
+        }
+
+        private void ResetMonsterList()
+        {
+            MonsterInfoListBox.Items.Clear();
+            foreach (var monsterInfo in Envir.MonsterInfoList)
+            {
+                MonsterInfoListBox.Items.Add(monsterInfo);
+            }
+            TxtSearchMonster.Text = string.Empty;
+        }
     }
 }

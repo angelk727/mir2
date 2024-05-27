@@ -208,7 +208,7 @@
             CopyMButton = new Button();
             ITypeFilterComboBox = new ComboBox();
             Gameshop_button = new Button();
-            txtSearchItem = new TextBox();
+            TxtSearchItem = new TextBox();
             label65 = new Label();
             ItemInfoPanel.SuspendLayout();
             tabControl1.SuspendLayout();
@@ -2280,13 +2280,13 @@
             Gameshop_button.UseVisualStyleBackColor = true;
             Gameshop_button.Click += Gameshop_button_Click;
             // 
-            // txtSearchItem
+            // TxtSearchItem
             // 
-            txtSearchItem.Location = new Point(267, 17);
-            txtSearchItem.Name = "txtSearchItem";
-            txtSearchItem.Size = new Size(118, 23);
-            txtSearchItem.TabIndex = 30;
-            txtSearchItem.TextChanged += txtSearchItem_TextChanged;
+            TxtSearchItem.Location = new Point(267, 17);
+            TxtSearchItem.Name = "TxtSearchItem";
+            TxtSearchItem.Size = new Size(118, 23);
+            TxtSearchItem.TabIndex = 30;
+            TxtSearchItem.TextChanged += TxtSearchItem_TextChanged;
             // 
             // label65
             // 
@@ -2303,7 +2303,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(947, 626);
             Controls.Add(label65);
-            Controls.Add(txtSearchItem);
+            Controls.Add(TxtSearchItem);
             Controls.Add(Gameshop_button);
             Controls.Add(ITypeFilterComboBox);
             Controls.Add(PasteButton);
@@ -2516,7 +2516,7 @@
         private TextBox DropRatetextBox;
         private TextBox DamageReductiontextBox;
         private PictureBox ItemsPreview;
-        private TextBox txtSearchItem;
+        private TextBox TxtSearchItem;
         private Label label65;
     }
 }
