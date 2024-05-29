@@ -1339,7 +1339,8 @@ public enum Spell : byte
     RiklebitesRollCall = 228, //518
     SwordFormation = 229, //550
     Mon564NWhirlwind = 230,
-    Mon573NBigCobweb = 231
+    Mon571NFireBomb = 231,
+    Mon573NBigCobweb = 232
 }
 
 public enum SpellEffect : byte
@@ -1447,6 +1448,7 @@ public enum BuffType : byte
     麻痹状态,
     绝对封锁,
     Mon564NSealing,
+    烈火焚烧,
     防御诅咒,
 
     //Special

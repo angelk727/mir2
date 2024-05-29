@@ -361,6 +361,9 @@ namespace Client.MirScenes.Dialogs
                 case BuffType.暗影侵袭:
                     text += "来自陵寝秘空的侵袭\n";
                     break;
+                case BuffType.烈火焚烧:
+                    text += "每秒损失生命值\n";
+                    break;
             }
 
             if (!overridestats)
@@ -518,6 +521,8 @@ namespace Client.MirScenes.Dialogs
                     return 266;
                 case BuffType.防御诅咒:
                     return 422;
+                case BuffType.烈火焚烧:
+                    return 848;
 
                 //Special
                 case BuffType.游戏管理:
