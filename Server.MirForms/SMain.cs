@@ -556,5 +556,11 @@ namespace Server
         {
 
         }
+        private void heroesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SystemInfoForm form = new SystemInfoForm(8);
+
+            form.ShowDialog();
+        }
     }
 }

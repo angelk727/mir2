@@ -118,6 +118,30 @@
             lbSpawnTickList = new ListBox();
             btnSpawnTickRemove = new Button();
             btnSpawnTickAdd = new Button();
+            tabPage9 = new TabPage();
+            groupBox6 = new GroupBox();
+            HeroSealItem_ComboBox = new ComboBox();
+            groupBox5 = new GroupBox();
+            label40 = new Label();
+            label39 = new Label();
+            label38 = new Label();
+            label37 = new Label();
+            label36 = new Label();
+            groupBox4 = new GroupBox();
+            label41 = new Label();
+            label35 = new Label();
+            label34 = new Label();
+            label33 = new Label();
+            MaxPlayerHeroCount_textBox = new TextBox();
+            MaxHeroSealCount_textBox = new TextBox();
+            MinPlayerLevelHero_textBox = new TextBox();
+            groupBox3 = new GroupBox();
+            AllowArcherHero_checkBox = new CheckBox();
+            AllowAssassinHero_checkBox = new CheckBox();
+            AllowTaoistHero_checkBox = new CheckBox();
+            AllowWizardHero_checkBox = new CheckBox();
+            AllowWarriorHero_checkBox = new CheckBox();
+            AllowNewHero_checkBox = new CheckBox();
             toolTip1 = new ToolTip(components);
             tabPage1.SuspendLayout();
             groupBox1.SuspendLayout();
@@ -132,6 +156,11 @@
             tabPage8.SuspendLayout();
             panel1.SuspendLayout();
             pnlSpawnTickConfig.SuspendLayout();
+            tabPage9.SuspendLayout();
+            groupBox6.SuspendLayout();
+            groupBox5.SuspendLayout();
+            groupBox4.SuspendLayout();
+            groupBox3.SuspendLayout();
             SuspendLayout();
             // 
             // tabPage1
@@ -295,6 +324,7 @@
             tabControl1.Controls.Add(tabPage6);
             tabControl1.Controls.Add(tabPage7);
             tabControl1.Controls.Add(tabPage8);
+            tabControl1.Controls.Add(tabPage9);
             tabControl1.Location = new Point(14, 16);
             tabControl1.Margin = new Padding(4, 4, 4, 4);
             tabControl1.Name = "tabControl1";
@@ -1109,6 +1139,281 @@
             btnSpawnTickAdd.UseVisualStyleBackColor = true;
             btnSpawnTickAdd.Click += btnSpawnTickAdd_Click;
             // 
+            // tabPage9
+            // 
+            tabPage9.Controls.Add(groupBox6);
+            tabPage9.Controls.Add(groupBox5);
+            tabPage9.Controls.Add(groupBox4);
+            tabPage9.Controls.Add(groupBox3);
+            tabPage9.Controls.Add(AllowNewHero_checkBox);
+            tabPage9.Location = new Point(4, 26);
+            tabPage9.Name = "tabPage9";
+            tabPage9.Padding = new Padding(3);
+            tabPage9.Size = new Size(467, 303);
+            tabPage9.TabIndex = 8;
+            tabPage9.Text = "英雄系统";
+            tabPage9.UseVisualStyleBackColor = true;
+            // 
+            // groupBox6
+            // 
+            groupBox6.Controls.Add(HeroSealItem_ComboBox);
+            groupBox6.Location = new Point(10, 172);
+            groupBox6.Name = "groupBox6";
+            groupBox6.Size = new Size(172, 81);
+            groupBox6.TabIndex = 3;
+            groupBox6.TabStop = false;
+            groupBox6.Text = "封印英雄物品";
+            toolTip1.SetToolTip(groupBox6, "从物品数据库中选择英雄封印物品，必须是正确的物品类型才能在英雄被封印时被使用");
+            // 
+            // HeroSealItem_ComboBox
+            // 
+            HeroSealItem_ComboBox.FormattingEnabled = true;
+            HeroSealItem_ComboBox.Location = new Point(12, 34);
+            HeroSealItem_ComboBox.Name = "HeroSealItem_ComboBox";
+            HeroSealItem_ComboBox.Size = new Size(147, 25);
+            HeroSealItem_ComboBox.TabIndex = 0;
+            toolTip1.SetToolTip(HeroSealItem_ComboBox, "从物品数据库中选择英雄封印物品，必须是正确的物品类型才能在英雄被封印时被使用");
+            HeroSealItem_ComboBox.SelectedIndexChanged += HeroSealItem_ComboBox_SelectedIndexChanged;
+            // 
+            // groupBox5
+            // 
+            groupBox5.Controls.Add(label40);
+            groupBox5.Controls.Add(label39);
+            groupBox5.Controls.Add(label38);
+            groupBox5.Controls.Add(label37);
+            groupBox5.Controls.Add(label36);
+            groupBox5.Location = new Point(193, 153);
+            groupBox5.Name = "groupBox5";
+            groupBox5.Size = new Size(307, 100);
+            groupBox5.TabIndex = 2;
+            groupBox5.TabStop = false;
+            groupBox5.Text = "NPC命令";
+            toolTip1.SetToolTip(groupBox5, "这些NPC命令是从位于 \"Envir\\NPCs\" Folder ");
+            // 
+            // label40
+            // 
+            label40.AutoSize = true;
+            label40.Location = new Point(3, 79);
+            label40.Name = "label40";
+            label40.Size = new Size(167, 17);
+            label40.TabIndex = 4;
+            label40.Text = "@SEALHERO - 封印当前英雄";
+            // 
+            // label39
+            // 
+            label39.AutoSize = true;
+            label39.Location = new Point(3, 64);
+            label39.Name = "label39";
+            label39.Size = new Size(229, 17);
+            label39.TabIndex = 3;
+            label39.Text = "@MANAGEHERO - 打开英雄管理对话框";
+            // 
+            // label38
+            // 
+            label38.AutoSize = true;
+            label38.Location = new Point(3, 49);
+            label38.Name = "label38";
+            label38.Size = new Size(217, 17);
+            label38.TabIndex = 2;
+            label38.Text = "@REVIVEHERO - 复活当前选定的英雄";
+            // 
+            // label37
+            // 
+            label37.AutoSize = true;
+            label37.Location = new Point(3, 34);
+            label37.Name = "label37";
+            label37.Size = new Size(218, 17);
+            label37.TabIndex = 1;
+            label37.Text = "@DELETEHERO - 删除当前选定的英雄";
+            // 
+            // label36
+            // 
+            label36.AutoSize = true;
+            label36.Location = new Point(3, 19);
+            label36.Name = "label36";
+            label36.Size = new Size(225, 17);
+            label36.TabIndex = 0;
+            label36.Text = "@ADDHERO - 为玩家添加一个新的英雄";
+            // 
+            // groupBox4
+            // 
+            groupBox4.Controls.Add(label41);
+            groupBox4.Controls.Add(label35);
+            groupBox4.Controls.Add(label34);
+            groupBox4.Controls.Add(label33);
+            groupBox4.Controls.Add(MaxPlayerHeroCount_textBox);
+            groupBox4.Controls.Add(MaxHeroSealCount_textBox);
+            groupBox4.Controls.Add(MinPlayerLevelHero_textBox);
+            groupBox4.Location = new Point(193, 31);
+            groupBox4.Name = "groupBox4";
+            groupBox4.Size = new Size(307, 116);
+            groupBox4.TabIndex = 1;
+            groupBox4.TabStop = false;
+            groupBox4.Text = "设置";
+            toolTip1.SetToolTip(groupBox4, "用于配置英雄功能的通用设置");
+            // 
+            // label41
+            // 
+            label41.AutoSize = true;
+            label41.Location = new Point(225, 85);
+            label41.Name = "label41";
+            label41.Size = new Size(43, 17);
+            label41.TabIndex = 6;
+            label41.Text = "(0 - 9)";
+            // 
+            // label35
+            // 
+            label35.AutoSize = true;
+            label35.Location = new Point(33, 84);
+            label35.Name = "label35";
+            label35.Size = new Size(116, 17);
+            label35.TabIndex = 5;
+            label35.Text = "持有英雄的最大数量";
+            toolTip1.SetToolTip(label35, "这是玩家可以拥有的英雄数量上限(支持1个活动的和8个存贮的英雄)");
+            // 
+            // label34
+            // 
+            label34.AutoSize = true;
+            label34.Location = new Point(33, 57);
+            label34.Name = "label34";
+            label34.Size = new Size(116, 17);
+            label34.TabIndex = 4;
+            label34.Text = "封印英雄的最大次数";
+            toolTip1.SetToolTip(label34, "这是单个英雄被封印到英雄物品中的最大次数");
+            // 
+            // label33
+            // 
+            label33.AutoSize = true;
+            label33.Location = new Point(33, 26);
+            label33.Name = "label33";
+            label33.Size = new Size(116, 17);
+            label33.TabIndex = 3;
+            label33.Text = "召唤英雄的最低等级";
+            toolTip1.SetToolTip(label33, "这是玩家拥有英雄必须达到的最低级别");
+            // 
+            // MaxPlayerHeroCount_textBox
+            // 
+            MaxPlayerHeroCount_textBox.Location = new Point(191, 82);
+            MaxPlayerHeroCount_textBox.Name = "MaxPlayerHeroCount_textBox";
+            MaxPlayerHeroCount_textBox.Size = new Size(29, 23);
+            MaxPlayerHeroCount_textBox.TabIndex = 2;
+            MaxPlayerHeroCount_textBox.TextAlign = HorizontalAlignment.Right;
+            toolTip1.SetToolTip(MaxPlayerHeroCount_textBox, "这是玩家可以拥有的英雄数量上限(支持1个活动的和8个存贮的英雄)");
+            MaxPlayerHeroCount_textBox.TextChanged += MaxPlayerHeroCount_textBox_TextChanged;
+            // 
+            // MaxHeroSealCount_textBox
+            // 
+            MaxHeroSealCount_textBox.Location = new Point(242, 52);
+            MaxHeroSealCount_textBox.Name = "MaxHeroSealCount_textBox";
+            MaxHeroSealCount_textBox.Size = new Size(29, 23);
+            MaxHeroSealCount_textBox.TabIndex = 1;
+            MaxHeroSealCount_textBox.TextAlign = HorizontalAlignment.Right;
+            toolTip1.SetToolTip(MaxHeroSealCount_textBox, "这是单个英雄被封印到英雄物品中的最大次数");
+            MaxHeroSealCount_textBox.TextChanged += MaxHeroSealCount_textBox_TextChanged;
+            // 
+            // MinPlayerLevelHero_textBox
+            // 
+            MinPlayerLevelHero_textBox.Location = new Point(211, 23);
+            MinPlayerLevelHero_textBox.Name = "MinPlayerLevelHero_textBox";
+            MinPlayerLevelHero_textBox.Size = new Size(60, 23);
+            MinPlayerLevelHero_textBox.TabIndex = 0;
+            MinPlayerLevelHero_textBox.TextAlign = HorizontalAlignment.Right;
+            toolTip1.SetToolTip(MinPlayerLevelHero_textBox, "这是玩家拥有英雄必须达到的最低等级");
+            MinPlayerLevelHero_textBox.TextChanged += MinPlayerLevelHero_textBox_TextChanged;
+            // 
+            // groupBox3
+            // 
+            groupBox3.Controls.Add(AllowArcherHero_checkBox);
+            groupBox3.Controls.Add(AllowAssassinHero_checkBox);
+            groupBox3.Controls.Add(AllowTaoistHero_checkBox);
+            groupBox3.Controls.Add(AllowWizardHero_checkBox);
+            groupBox3.Controls.Add(AllowWarriorHero_checkBox);
+            groupBox3.Location = new Point(10, 31);
+            groupBox3.Name = "groupBox3";
+            groupBox3.Size = new Size(172, 138);
+            groupBox3.TabIndex = 0;
+            groupBox3.TabStop = false;
+            groupBox3.Text = "创建英雄";
+            toolTip1.SetToolTip(groupBox3, "选择可以创建的职业");
+            // 
+            // AllowArcherHero_checkBox
+            // 
+            AllowArcherHero_checkBox.AutoSize = true;
+            AllowArcherHero_checkBox.CheckAlign = ContentAlignment.MiddleRight;
+            AllowArcherHero_checkBox.Location = new Point(22, 111);
+            AllowArcherHero_checkBox.Name = "AllowArcherHero_checkBox";
+            AllowArcherHero_checkBox.Size = new Size(99, 21);
+            AllowArcherHero_checkBox.TabIndex = 5;
+            AllowArcherHero_checkBox.Text = "允许弓箭英雄";
+            toolTip1.SetToolTip(AllowArcherHero_checkBox, "启用/禁用 创建射手英雄");
+            AllowArcherHero_checkBox.UseVisualStyleBackColor = true;
+            AllowArcherHero_checkBox.CheckedChanged += AllowArcherHero_checkBox_CheckedChanged;
+            // 
+            // AllowAssassinHero_checkBox
+            // 
+            AllowAssassinHero_checkBox.AutoSize = true;
+            AllowAssassinHero_checkBox.CheckAlign = ContentAlignment.MiddleRight;
+            AllowAssassinHero_checkBox.Location = new Point(22, 88);
+            AllowAssassinHero_checkBox.Name = "AllowAssassinHero_checkBox";
+            AllowAssassinHero_checkBox.Size = new Size(99, 21);
+            AllowAssassinHero_checkBox.TabIndex = 4;
+            AllowAssassinHero_checkBox.Text = "允许刺客英雄";
+            toolTip1.SetToolTip(AllowAssassinHero_checkBox, "启用/禁用 创建刺客英雄");
+            AllowAssassinHero_checkBox.UseVisualStyleBackColor = true;
+            AllowAssassinHero_checkBox.CheckedChanged += AllowAssassinHero_checkBox_CheckedChanged;
+            // 
+            // AllowTaoistHero_checkBox
+            // 
+            AllowTaoistHero_checkBox.AutoSize = true;
+            AllowTaoistHero_checkBox.CheckAlign = ContentAlignment.MiddleRight;
+            AllowTaoistHero_checkBox.Location = new Point(22, 65);
+            AllowTaoistHero_checkBox.Name = "AllowTaoistHero_checkBox";
+            AllowTaoistHero_checkBox.Size = new Size(99, 21);
+            AllowTaoistHero_checkBox.TabIndex = 3;
+            AllowTaoistHero_checkBox.Text = "允许道士英雄";
+            toolTip1.SetToolTip(AllowTaoistHero_checkBox, "启用/禁用 创建道士英雄");
+            AllowTaoistHero_checkBox.UseVisualStyleBackColor = true;
+            AllowTaoistHero_checkBox.CheckedChanged += AllowTaoistHero_checkBox_CheckedChanged;
+            // 
+            // AllowWizardHero_checkBox
+            // 
+            AllowWizardHero_checkBox.AutoSize = true;
+            AllowWizardHero_checkBox.CheckAlign = ContentAlignment.MiddleRight;
+            AllowWizardHero_checkBox.Location = new Point(22, 42);
+            AllowWizardHero_checkBox.Name = "AllowWizardHero_checkBox";
+            AllowWizardHero_checkBox.Size = new Size(99, 21);
+            AllowWizardHero_checkBox.TabIndex = 2;
+            AllowWizardHero_checkBox.Text = "允许法师英雄";
+            toolTip1.SetToolTip(AllowWizardHero_checkBox, "启用/禁用 创建法师英雄");
+            AllowWizardHero_checkBox.UseVisualStyleBackColor = true;
+            AllowWizardHero_checkBox.CheckedChanged += AllowWizardHero_checkBox_CheckedChanged;
+            // 
+            // AllowWarriorHero_checkBox
+            // 
+            AllowWarriorHero_checkBox.AutoSize = true;
+            AllowWarriorHero_checkBox.CheckAlign = ContentAlignment.MiddleRight;
+            AllowWarriorHero_checkBox.Location = new Point(22, 19);
+            AllowWarriorHero_checkBox.Name = "AllowWarriorHero_checkBox";
+            AllowWarriorHero_checkBox.Size = new Size(99, 21);
+            AllowWarriorHero_checkBox.TabIndex = 1;
+            AllowWarriorHero_checkBox.Text = "允许战士英雄";
+            toolTip1.SetToolTip(AllowWarriorHero_checkBox, "启用/禁用 创建战士英雄");
+            AllowWarriorHero_checkBox.UseVisualStyleBackColor = true;
+            AllowWarriorHero_checkBox.CheckedChanged += AllowWarriorHero_checkBox_CheckedChanged;
+            // 
+            // AllowNewHero_checkBox
+            // 
+            AllowNewHero_checkBox.AutoSize = true;
+            AllowNewHero_checkBox.CheckAlign = ContentAlignment.MiddleRight;
+            AllowNewHero_checkBox.Location = new Point(57, 9);
+            AllowNewHero_checkBox.Name = "AllowNewHero_checkBox";
+            AllowNewHero_checkBox.Size = new Size(111, 21);
+            AllowNewHero_checkBox.TabIndex = 0;
+            AllowNewHero_checkBox.Text = "允许创造新英雄";
+            toolTip1.SetToolTip(AllowNewHero_checkBox, "启用/禁用 玩家创建新的英雄");
+            AllowNewHero_checkBox.UseVisualStyleBackColor = true;
+            AllowNewHero_checkBox.CheckedChanged += AllowNewHero_checkBox_CheckedChanged;
+            // 
             // SystemInfoForm
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
@@ -1147,6 +1452,15 @@
             panel1.PerformLayout();
             pnlSpawnTickConfig.ResumeLayout(false);
             pnlSpawnTickConfig.PerformLayout();
+            tabPage9.ResumeLayout(false);
+            tabPage9.PerformLayout();
+            groupBox6.ResumeLayout(false);
+            groupBox5.ResumeLayout(false);
+            groupBox5.PerformLayout();
+            groupBox4.ResumeLayout(false);
+            groupBox4.PerformLayout();
+            groupBox3.ResumeLayout(false);
+            groupBox3.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -1242,5 +1556,29 @@
         private System.Windows.Forms.Label label31;
         private System.Windows.Forms.Label label30;
         private System.Windows.Forms.Label lbltickmins;
+        private TabPage tabPage9;
+        private GroupBox groupBox5;
+        private GroupBox groupBox4;
+        private GroupBox groupBox3;
+        private CheckBox AllowArcherHero_checkBox;
+        private CheckBox AllowAssassinHero_checkBox;
+        private CheckBox AllowTaoistHero_checkBox;
+        private CheckBox AllowWizardHero_checkBox;
+        private CheckBox AllowWarriorHero_checkBox;
+        private CheckBox AllowNewHero_checkBox;
+        private GroupBox groupBox6;
+        private ComboBox HeroSealItem_ComboBox;
+        private TextBox MaxPlayerHeroCount_textBox;
+        private TextBox MaxHeroSealCount_textBox;
+        private TextBox MinPlayerLevelHero_textBox;
+        private Label label40;
+        private Label label39;
+        private Label label38;
+        private Label label37;
+        private Label label36;
+        private Label label41;
+        private Label label35;
+        private Label label34;
+        private Label label33;
     }
 }

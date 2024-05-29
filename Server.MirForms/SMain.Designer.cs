@@ -110,6 +110,7 @@ namespace Server
             dropBuilderToolStripMenuItem = new ToolStripMenuItem();
             UpTimeLabel = new ToolStripTextBox();
             InterfaceTimer = new Timer(components);
+            heroesToolStripMenuItem = new ToolStripMenuItem();
             MainTabs.SuspendLayout();
             tabPage1.SuspendLayout();
             tabPage2.SuspendLayout();
@@ -515,8 +516,10 @@ namespace Server
             // itemInfoToolStripMenuItem
             // 
             itemInfoToolStripMenuItem.Name = "itemInfoToolStripMenuItem";
+            itemInfoToolStripMenuItem.ShowShortcutKeys = true;
             itemInfoToolStripMenuItem.Size = new Size(181, 22);
             itemInfoToolStripMenuItem.Text = "物品信息";
+            itemInfoToolStripMenuItem.Visible = true;
             itemInfoToolStripMenuItem.Click += itemInfoToolStripMenuItem_Click;
             // 
             // monsterInfoToolStripMenuItem
@@ -524,6 +527,7 @@ namespace Server
             monsterInfoToolStripMenuItem.Name = "monsterInfoToolStripMenuItem";
             monsterInfoToolStripMenuItem.Size = new Size(181, 22);
             monsterInfoToolStripMenuItem.Text = "怪物信息";
+            monsterInfoToolStripMenuItem.Visible = true;
             monsterInfoToolStripMenuItem.Click += monsterInfoToolStripMenuItem_Click;
             // 
             // itemNEWToolStripMenuItem
@@ -591,7 +595,7 @@ namespace Server
             // 
             // systemToolStripMenuItem
             // 
-            systemToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { dragonSystemToolStripMenuItem, miningToolStripMenuItem, guildsToolStripMenuItem, fishingToolStripMenuItem, mailToolStripMenuItem, goodsToolStripMenuItem, refiningToolStripMenuItem, relationshipToolStripMenuItem, mentorToolStripMenuItem, gemToolStripMenuItem, conquestToolStripMenuItem, respawnsToolStripMenuItem });
+            systemToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { dragonSystemToolStripMenuItem, miningToolStripMenuItem, guildsToolStripMenuItem, fishingToolStripMenuItem, mailToolStripMenuItem, goodsToolStripMenuItem, refiningToolStripMenuItem, relationshipToolStripMenuItem, mentorToolStripMenuItem, gemToolStripMenuItem, conquestToolStripMenuItem, respawnsToolStripMenuItem, heroesToolStripMenuItem });
             systemToolStripMenuItem.Name = "systemToolStripMenuItem";
             systemToolStripMenuItem.Size = new Size(160, 22);
             systemToolStripMenuItem.Text = "游戏系统";
@@ -708,6 +712,13 @@ namespace Server
             InterfaceTimer.Enabled = true;
             InterfaceTimer.Tick += InterfaceTimer_Tick;
             // 
+            // heroesToolStripMenuItem
+            // 
+            heroesToolStripMenuItem.Name = "heroesToolStripMenuItem";
+            heroesToolStripMenuItem.Size = new Size(180, 22);
+            heroesToolStripMenuItem.Text = "英雄系统";
+            heroesToolStripMenuItem.Click += heroesToolStripMenuItem_Click;
+            // 
             // SMain
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
@@ -820,6 +831,7 @@ namespace Server
         private ColumnHeader columnHeader5;
         private ColumnHeader columnHeader6;
         private ToolStripTextBox UpTimeLabel;
+        private ToolStripMenuItem heroesToolStripMenuItem;
     }
 }
 
