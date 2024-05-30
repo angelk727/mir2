@@ -2510,7 +2510,7 @@ namespace Server.MirEnvir
                 return false;
             }
 
-            if (p.Class == MirClass.刺客 && !Settings.AllowCreateAssassin || p.Class == MirClass.弓箭 && !Settings.AllowCreateArcher)
+            if (p.Class == MirClass.战士 && !Settings.Hero_CanCreateClass[0] || p.Class == MirClass.法师 && !Settings.Hero_CanCreateClass[1] || p.Class == MirClass.道士 && !Settings.Hero_CanCreateClass[2] || p.Class == MirClass.刺客 && !Settings.Hero_CanCreateClass[3] || p.Class == MirClass.弓箭 && !Settings.Hero_CanCreateClass[4])
             {
                 c.Enqueue(new S.NewHero { Result = 3 });
                 return false;

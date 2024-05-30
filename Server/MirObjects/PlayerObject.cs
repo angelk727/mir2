@@ -588,6 +588,9 @@ namespace Server.MirObjects
 
             UnSummonIntelligentCreature(SummonedCreatureType);
 
+            if (HeroSpawned)
+                DespawnHero();
+
             for (int i = Pets.Count - 1; i >= 0; i--)
             {
                 if (Pets[i].Dead) continue;
@@ -3467,6 +3470,12 @@ namespace Server.MirObjects
                         if (MyGuild == enemyGuild)
                         {
                             ReceiveChat("不能向自己的行会开战", ChatType.System);
+                            return;
+                        }
+
+                        if (enemyGuild.Name == Settings.NewbieGuild)
+                        {
+                            ReceiveChat("不能向新手玩家公会宣战", ChatType.System);
                             return;
                         }
 
@@ -8928,15 +8937,20 @@ namespace Server.MirObjects
                 member.Enqueue(new S.ObjectHealth { ObjectID = ObjectID, Percent = PercentHealth, Expire = time });
                 Enqueue(new S.ObjectHealth { ObjectID = member.ObjectID, Percent = member.PercentHealth, Expire = time });
 
-                // Buggy - Sends HeroHP when joining party - packets cause null exception if player joining party doesnt have hero or it is not summoned, and doesnt send packet at all with null check
-                //member.Enqueue(new S.ObjectHealth { ObjectID = Hero.ObjectID, Percent = Hero.PercentHealth, Expire = time }); // Send Party Leader's HeroHP to Group Members
-                //Enqueue(new S.ObjectHealth { ObjectID = member.Hero.ObjectID, Percent = member.Hero.PercentHealth, Expire = time }); // Send Party Members HeroHP to Leader
+                if (Hero != null)
+                {
+                    member.Enqueue(new S.ObjectHealth { ObjectID = Hero.ObjectID, Percent = Hero.PercentHealth, Expire = time }); // Send Party Leader's HeroHP to Group Members
+                }
+                if (member.Hero != null)
+                {
+                    Enqueue(new S.ObjectHealth { ObjectID = member.Hero.ObjectID, Percent = member.Hero.PercentHealth, Expire = time }); // Send Party Members HeroHP to Leader
+                }
 
                 for (int j = 0; j < member.Pets.Count; j++)
                 {
                     MonsterObject pet = member.Pets[j];
 
-                    Enqueue(new S.ObjectHealth { ObjectID = pet.ObjectID, Percent = pet.PercentHealth, Expire = time });
+                    Enqueue(new S.ObjectHealth { ObjectID = pet.ObjectID, Percent = pet.PercentHealth, Expire = time }); 
                 }
             }
 
@@ -9672,6 +9686,12 @@ namespace Server.MirObjects
             if (MyGuild == enemyGuild)
             {
                 ReceiveChat("不能与自己的行会开战", ChatType.System);
+                return;
+            }
+
+            if (enemyGuild.Name == Settings.NewbieGuild)
+            {
+                ReceiveChat("不能向新手玩家公会开战", ChatType.System);
                 return;
             }
 
@@ -13793,7 +13813,9 @@ namespace Server.MirObjects
             if (Hero != null)
             {
                 if (Hero.Node != null)
+                {
                     Hero.Revive(Hero.Stats[Stat.HP], true);
+                }
                 else
                 {
                     CurrentHero.HP = Hero.Stats[Stat.HP];

@@ -1056,6 +1056,13 @@ namespace Server.MirObjects
                         return false;
                     }
                     break;
+                case MirClass.弓箭:
+                    if (!item.Info.RequiredClass.HasFlag(RequiredClass.弓箭))
+                    {
+                        ReceiveChat("弓箭禁用物品", ChatType.System);
+                        return false;
+                    }
+                    break;
                 case MirClass.刺客:
                     if (!item.Info.RequiredClass.HasFlag(RequiredClass.刺客))
                     {

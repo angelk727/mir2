@@ -1,6 +1,7 @@
-﻿using System.Drawing;
-using Server.MirDatabase;
+﻿using Server.MirDatabase;
 using Server.MirEnvir;
+using System.Buffers;
+using System.Drawing;
 
 namespace Server.MirObjects
 {
@@ -8,26 +9,33 @@ namespace Server.MirObjects
     {
         public ArcherHero(CharacterInfo info, PlayerObject owner) : base(info, owner) { }
 
-        private bool HasRangedSpell => Info.Magics.Select(x => x.Spell).Intersect(Globals.RangedSpells).Any();
-
-        public bool HasWeapon => Info.Equipment[(int)EquipmentSlot.武器] != null && Info.Equipment[(int)EquipmentSlot.武器].CurrentDura > 0;
-
-        public bool HasClassWeapon
+        private static Point GetAdjacentPoint(Point currentLocation, Point targetLocation, Point playerLocation)
         {
-            get
+            int deltaX = targetLocation.X - currentLocation.X;
+            int deltaY = targetLocation.Y - currentLocation.Y;
+
+            int adjacentX = currentLocation.X - Math.Sign(deltaX);
+            int adjacentY = currentLocation.Y - Math.Sign(deltaY);
+
+            Point awayFromTarget = new Point(adjacentX, adjacentY);
+
+            // Check if the calculated point is the same as the player's current location
+            if (awayFromTarget == playerLocation)
             {
-                var classweapon = Info.Equipment[(int)EquipmentSlot.武器];
-                return classweapon != null && classweapon.Info.RequiredClass == RequiredClass.弓箭 && classweapon.CurrentDura > 0;
+                // Calculate a new point that is away from the target but not the player's current location
+                if (deltaX != 0)
+                {
+                    adjacentX = currentLocation.X + Math.Sign(deltaX);
+                    awayFromTarget = new Point(adjacentX, adjacentY);
+                }
+                else if (deltaY != 0)
+                {
+                    adjacentY = currentLocation.Y + Math.Sign(deltaY);
+                    awayFromTarget = new Point(adjacentX, adjacentY);
+                }
             }
-        }
 
-        private static Point GetRandomPointAround(int distance, Point center)
-        {
-            int randomDistance = new Random().Next(1, distance);
-            double randomAngle = new Random().NextDouble() * 2 * Math.PI;
-            int targetX = (int)(center.X + (1 + randomDistance) * Math.Cos(randomAngle));
-            int targetY = (int)(center.Y + (1 + randomDistance) * Math.Sin(randomAngle));
-            return new Point(targetX, targetY);
+            return awayFromTarget;
         }
 
         protected override bool InAttackRange()
@@ -42,62 +50,77 @@ namespace Server.MirObjects
 
         protected override void ProcessFriend()
         {
-            if (!HasBuff(BuffType.气流术))
+            if (!CanCast) return;
+
+            if (Target != null)
             {
-                UserMagic magic = GetMagic(Spell.Concentration);
-                if (CanUseMagic(magic))
+                if (!HasBuff(BuffType.气流术))
                 {
-                    BeginMagic(magic.Spell, Direction, ObjectID, CurrentLocation);
-                    return;
+                    UserMagic magic = GetMagic(Spell.Concentration);
+                    if (CanUseMagic(magic))
+                    {
+                        BeginMagic(magic.Spell, Direction, ObjectID, CurrentLocation);
+                        return;
+                    }
                 }
             }
         }
 
         protected override void ProcessAttack()
         {
-            if (Target == null || Target.Dead) return;
+            if (!CanCast || Target == null || Target.Dead) return;
+            if (!HasRangedSpell) return;
             TargetDistance = Functions.MaxDistance(CurrentLocation, Target.CurrentLocation);
             Direction = Functions.DirectionFromPoint(CurrentLocation, Target.CurrentLocation);
+            UserMagic magic;
 
-            switch (Envir.Random.Next(4))
+            if (InAttackRange())
             {
-                case 0:
-                    UserMagic magic = GetMagic(Spell.PoisonShot);//毒魔闪
+                magic = GetMagic(Spell.PoisonShot);
+                if (CanUseMagic(magic))
+                {
+                    if (!Target.PoisonList.Any(p => p.PType == PoisonType.Green))
+                    {
+                        if (!HasBuff(BuffType.毒魔闪))
+                        {
+                            BeginMagic(magic.Spell, Direction, Target.ObjectID, Target.CurrentLocation);
+                            return;
+                        }
+                    }
+                }
+
+                if (GetElementalOrbCount() < 1 || GetElementalOrbCount() > 3)
+                {
+                    magic = GetMagic(Spell.ElementalShot);
                     if (CanUseMagic(magic))
                     {
                         BeginMagic(magic.Spell, Direction, Target.ObjectID, Target.CurrentLocation);
                         return;
                     }
-                    break;
-                case 1:
-                    magic = GetMagic(Spell.CrippleShot);//邪暴闪
-                    if (CanUseMagic(magic))
-                    {
-                        BeginMagic(magic.Spell, Direction, Target.ObjectID, Target.CurrentLocation);
-                        return;
-                    }
-                    break;
-                case 2:
-                    magic = GetMagic(Spell.StraightShot);//天日闪
-                    if (CanUseMagic(magic))
-                    {
-                        BeginMagic(magic.Spell, Direction, Target.ObjectID, Target.CurrentLocation);
-                        return;
-                    }
-                    break;
-                case 3:
-                    magic = GetMagic(Spell.ElementalShot);//万金闪
-                    if (CanUseMagic(magic))
-                    {
-                        BeginMagic(magic.Spell, Direction, Target.ObjectID, Target.CurrentLocation);
-                        return;
-                    }
-                    break;
+                }
+
+                magic = GetMagic(Spell.StraightShot);
+                if (CanUseMagic(magic))
+                {
+                    BeginMagic(magic.Spell, Direction, Target.ObjectID, Target.CurrentLocation);
+                    return;
+                }
+
+                magic = GetMagic(Spell.None);
+                {
+                    return;
+                }
+            }
+
+            magic = GetMagic(Spell.None);
+            {
+                return;
             }
         }
 
         protected override void ProcessTarget()
         {
+            int distanceToPlayer = Functions.MaxDistance(CurrentLocation, Owner.CurrentLocation);
 
             if (HasClassWeapon && CanCast && NextMagicSpell != Spell.None)
             {
@@ -106,6 +129,31 @@ namespace Server.MirObjects
             }
 
             if (Target == null || !CanAttack) return;
+
+            
+            if (TargetDistance < 3 && Owner.Info.HeroBehaviour == HeroBehaviour.攻击 && distanceToPlayer < 6)
+            {
+                Point awayFromTarget = GetAdjacentPoint(CurrentLocation, Target.CurrentLocation, Owner.CurrentLocation);
+                MoveTo(awayFromTarget);
+                return;
+            }
+            if ((Owner.Info.HeroBehaviour == HeroBehaviour.反击 && distanceToPlayer > 1) || (Owner.Info.HeroBehaviour == HeroBehaviour.攻击 && distanceToPlayer > 5))
+            {
+                MoveTo(Owner.Back);
+                return;
+            }
+
+            if ((Target != null && HasClassWeapon && NextMagicSpell == Spell.None) || (Target != null && HasClassWeapon && !HasRangedSpell) || (Target != null && HasClassWeapon && !CanCast))
+            {
+                Direction = Functions.DirectionFromPoint(CurrentLocation, Target.CurrentLocation);
+                RangeAttack(Direction, Target.CurrentLocation, Target.ObjectID);
+
+                if (Target.Dead)
+                {
+                    FindTarget();
+                }
+                return;
+            }
 
             if ((!HasWeapon || (HasWeapon && !HasClassWeapon)))
             {
@@ -125,28 +173,16 @@ namespace Server.MirObjects
                     return;
                 }
             }
-
-            if (HasClassWeapon && TargetDistance < 2)
+        }
+        private bool HasRangedSpell => Info.Magics.Select(x => x.Spell).Intersect(Globals.RangedSpells).Any();
+        public bool HasWeapon => Info.Equipment[(int)EquipmentSlot.武器] != null && Info.Equipment[(int)EquipmentSlot.武器].CurrentDura > 0;
+        public bool HasClassWeapon
+        {
+            get
             {
-                Point randomPoint = GetRandomPointAround(6, CurrentLocation);
-                MoveTo(randomPoint);
+                var classweapon = Info.Equipment[(int)EquipmentSlot.武器];
+                return classweapon != null && classweapon.Info.RequiredClass == RequiredClass.弓箭 && classweapon.CurrentDura > 0;
             }
-
-            if (Target != null && HasClassWeapon && !HasRangedSpell)
-            {
-                Direction = Functions.DirectionFromPoint(CurrentLocation, Target.CurrentLocation);
-                RangeAttack(Direction, Target.CurrentLocation, Target.ObjectID);
-
-                if (Target.Dead)
-                {
-                    FindTarget();
-                }
-                return;
-            }
-
-            AttackTime = Envir.Time + AttackSpeed;
-            ActionTime = Envir.Time + 1200;
-            RegenTime = Envir.Time + RegenDelay;
         }
     }
 }

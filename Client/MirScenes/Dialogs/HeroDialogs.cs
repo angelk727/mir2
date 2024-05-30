@@ -648,17 +648,17 @@ namespace Client.MirScenes.Dialogs
             if (ExperienceBar.Library == null) return;
 
             //cast MaxExperience to double to force division to 2 decimal place
-            double percent = Experience / (double)MaxExperience;
-            if (percent > 1) percent = 1;
-            if (percent <= 0) return;
+            double percent = Experience / (double)MaxExperience * 100;
+
+            int sectionWidth = (int)(ExperienceBar.Size.Width * (percent / 100));
 
             Rectangle section = new Rectangle
             {
-                Size = new Size((int)(ExperienceBar.Size.Width * percent), ExperienceBar.Size.Height)
+                Size = new Size(sectionWidth, ExperienceBar.Size.Height)
             };
 
             ExperienceBar.Library.Draw(ExperienceBar.Index, section, ExperienceBar.DisplayLocation, Color.White, false);
-            ExLabel.Text = string.Format("{0:F2}%", percent * 100);
+            ExLabel.Text = string.Format("{0:F2}%", percent);
         }
 
         private void HealthBar_BeforeDraw(object sender, EventArgs e)

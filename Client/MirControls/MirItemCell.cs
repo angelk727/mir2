@@ -1893,7 +1893,7 @@ namespace Client.MirControls
                                     }
                                 }
 
-                                if (GameScene.SelectedCell.Item.Weight + MapObject.User.CurrentBagWeight > MapObject.User.Stats[Stat.背包负重])
+                                if (GameScene.SelectedCell.Item.Weight + MapObject.Hero.CurrentBagWeight > MapObject.Hero.Stats[Stat.背包负重])
                                 {
                                     GameScene.Scene.ChatDialog.ReceiveChat("无法完成操作-背包超重", ChatType.System);
                                     GameScene.SelectedCell = null;

@@ -916,8 +916,12 @@ namespace Server.MirObjects
             {
                 EXPOwner.WinExp(Experience, Level);
 
-                PlayerObject playerObj = (PlayerObject)EXPOwner;
-                playerObj.CheckGroupQuestKill(Info);
+                if (EXPOwner.Race != ObjectType.Hero)
+                {
+                    PlayerObject playerObj = (PlayerObject)EXPOwner;
+                    playerObj.CheckGroupQuestKill(Info);
+                }
+
             }
 
             if (Respawn != null)
