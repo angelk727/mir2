@@ -352,6 +352,10 @@ namespace Client.MirScenes.Dialogs
                 case BuffType.英雄灵气:
                     text += "英雄在线加成\n";
                     break;
+                case BuffType.绝对封锁:
+                    overridestats = true;
+                    text += string.Format("封锁期间禁用药水\n生命值降低 25%\n法力值降低 25%\n");
+                    break;
                 case BuffType.古代宗师祝福:
                     text += "来自宗师的祝福\n";
                     break;
@@ -362,7 +366,8 @@ namespace Client.MirScenes.Dialogs
                     text += "来自陵寝秘空的侵袭\n";
                     break;
                 case BuffType.烈火焚烧:
-                    text += "每秒损失生命值\n";
+                    overridestats = true;
+                    text += string.Format("每秒持续 {0}生命值\n", buff.Stats[Stat.HP]);
                     break;
             }
 

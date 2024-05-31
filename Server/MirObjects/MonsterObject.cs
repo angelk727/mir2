@@ -1542,6 +1542,12 @@ namespace Server.MirObjects
                             break;
                         }
                         break;
+                    case BuffType.绝对封锁:
+                        if (!HasAnyBuffs(BuffType.绝对封锁))
+                        {
+                            BufffNoDrug = false;
+                        }
+                        break;
                 }
 
                 ProcessBuffEnd(buff);

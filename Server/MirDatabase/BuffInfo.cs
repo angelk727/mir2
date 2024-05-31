@@ -80,7 +80,7 @@ namespace Server.MirDatabase
                 new BuffInfo { Type = BuffType.Prison, Properties = BuffProperty.None, StackType = BuffStackType.None }, //???
                 new BuffInfo { Type = BuffType.General, Properties = BuffProperty.None, StackType = BuffStackType.None }, //???
                 new BuffInfo { Type = BuffType.英雄灵气, Properties = BuffProperty.None, StackType = BuffStackType.Infinite },
-                new BuffInfo { Type = BuffType.暗影侵袭, Properties = BuffProperty.RemoveOnExit | BuffProperty.Debuff, StackType = BuffStackType.Infinite },
+                new BuffInfo { Type = BuffType.暗影侵袭, Properties = BuffProperty.RemoveOnExit, StackType = BuffStackType.Infinite },
 
                 //Stats
                 new BuffInfo { Type = BuffType.经验丰富, Properties = BuffProperty.PauseInSafeZone, StackType = BuffStackType.StackDuration },

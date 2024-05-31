@@ -101,21 +101,19 @@ namespace Server.MirObjects.Monsters
                         {
                             Broadcast(new S.ObjectRangeAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation, TargetID = Target.ObjectID });
 
-                            if (Dead) return;
+                            if (Dead || Target.HasBuff(BuffType.绝对封锁)) return;
 
                             if (Envir.Time >= _BuffTime)
                             {
-                                var maxDC = Stats[Stat.MaxDC];
-                                var maxMC = Stats[Stat.MaxMC];
-                                var maxSC = Stats[Stat.MaxSC];
+                                var hpRate = (Stats[Stat.生命值数率] - 25);
+                                var mpRate = (Stats[Stat.法力值数率] - 25);
+
                                 var stats = new Stats
                                 {
-                                    [Stat.MaxDC] = maxDC * -1,
-                                    [Stat.MaxMC] = maxMC * -1,
-                                    [Stat.MaxSC] = maxSC * -1
+                                    [Stat.生命值数率] = hpRate,
+                                    [Stat.法力值数率] = mpRate,
                                 };
                                 Target.AddBuff(BuffType.绝对封锁, this, Settings.Second * 300, stats);
-                                PoisonTarget(Target, 0, 10, PoisonType.Frozen, 1000);
                             }
                             _BuffTime = Envir.Time + 30000;
                         }

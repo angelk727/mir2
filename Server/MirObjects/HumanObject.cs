@@ -475,6 +475,12 @@ namespace Server.MirObjects
                             break;
                         }
                         break;
+                    case BuffType.绝对封锁:
+                        if (!HasAnyBuffs(BuffType.绝对封锁))
+                        {
+                            BufffNoDrug = false;
+                        }
+                        break;
                     case BuffType.气流术:
                         UpdateConcentration(false, false);
                         break;
@@ -1224,6 +1230,11 @@ namespace Server.MirObjects
                     if (CurrentMap.Info.NoDrug)
                     {
                         ReceiveChat("药水禁用", ChatType.System);
+                        return false;
+                    }
+                    if (BufffNoDrug)
+                    {
+                        ReceiveChat("不能使用药水", ChatType.System);
                         return false;
                     }
                     break;

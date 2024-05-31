@@ -77,6 +77,8 @@ namespace Server.MirObjects
         public bool CoolEye;
         private bool _hidden;
 
+        public bool BufffNoDrug { get; set; }
+
         public bool Hidden
         {
             get
@@ -660,6 +662,9 @@ namespace Server.MirObjects
                     Hidden = true;
                     HideFromTargets();
                     break;
+                case BuffType.绝对封锁:
+                    BufffNoDrug = true;
+                    break;
             }
 
             return buff;
@@ -683,6 +688,12 @@ namespace Server.MirObjects
                         if (!HasAnyBuffs(b, BuffType.隐身戒指, BuffType.隐身术, BuffType.月影术, BuffType.烈火身))
                         {
                             Hidden = false;
+                        }
+                        break;
+                    case BuffType.绝对封锁:
+                        if (!HasAnyBuffs(BuffType.绝对封锁))
+                        {
+                            BufffNoDrug = false;
                         }
                         break;
                 }
