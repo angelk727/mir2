@@ -142,7 +142,7 @@ namespace Server.MirObjects
                 MoveTo(awayFromTarget);
                 return;
             }
-            if (CanMove && ((Owner.Info.HeroBehaviour == HeroBehaviour.反击 && distanceToPlayer > 1) || (Owner.Info.HeroBehaviour == HeroBehaviour.攻击 && distanceToPlayer > 5)))
+            if (CanMove && ((Owner.Info.HeroBehaviour == HeroBehaviour.反击 && distanceToPlayer > 2) || (Owner.Info.HeroBehaviour == HeroBehaviour.攻击 && distanceToPlayer > 5)))
             {
                 MoveTo(Owner.Back);
                 return;

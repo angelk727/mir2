@@ -6,6 +6,7 @@ using Microsoft.Web.WebView2.Core;
 using System.Net.Http.Headers;
 using System.Net.Http.Handlers;
 using Client.Utils;
+using System.Security.Cryptography;
 
 namespace Launcher
 {
