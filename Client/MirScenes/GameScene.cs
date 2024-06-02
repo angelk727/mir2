@@ -4964,6 +4964,10 @@ namespace Client.MirScenes
                         ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon564N], 756, 16, 800, ob) { Blend = true });
                         ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon564N], 773, 16, 800, ob) { Blend = true, DrawBehind = true });
                         break;
+                    case SpellEffect.Mon572NLightning:
+                        ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon572N], 406, 8, 300, ob) { Blend = true });
+                        ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon572N], 414, 10, 1000, ob) { Blend = true });
+                        break;
                     case SpellEffect.Mon573NCobweb:
                         ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon573N], 547, 4, 300, ob) { Blend = true });
                         ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon573N], 551, 4, 1000, ob) { Blend = true });

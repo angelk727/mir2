@@ -316,7 +316,7 @@ public class UserItem
 
     public int Weight
     {
-        get { return Info.Type == ItemType.护身符 ? Info.Weight : Info.Weight * Count; }
+        get { return (Info.Type == ItemType.护身符 || Info.Type == ItemType.鱼饵) ? Info.Weight : Info.Weight * Count; }
     }
 
     public string FriendlyName

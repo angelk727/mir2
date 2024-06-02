@@ -1340,7 +1340,9 @@ public enum Spell : byte
     SwordFormation = 229, //550
     Mon564NWhirlwind = 230,
     Mon571NFireBomb = 231,
-    Mon573NBigCobweb = 232
+    Mon572NFlame = 232,
+    Mon572NDarkVortex = 233,
+    Mon573NBigCobweb = 234
 }
 
 public enum SpellEffect : byte
@@ -1391,6 +1393,7 @@ public enum SpellEffect : byte
     Mon562NLightning,
     Mon563NPoisonCloud,
     Mon564NFlame,
+    Mon572NLightning,
     Mon573NCobweb
 }
 
@@ -1437,7 +1440,7 @@ public enum BuffType : byte
     御体之力,
     HornedWarriorShield,
     HornedCommanderShield,
-    Blindness,
+    失明状态,
     ChieftainSwordBuff,
     寒冰护甲,
     ReaperPriestBuff,

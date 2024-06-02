@@ -7589,7 +7589,7 @@ namespace Server.MirObjects
                     break;
                 case PoisonType.Blindness:
                     {
-                        AddBuff(BuffType.Blindness, Caster, (int)(p.Duration * p.TickSpeed), new Stats { [Stat.准确] = p.Value * -1 });
+                        AddBuff(BuffType.失明状态, Caster, (int)(p.Duration * p.TickSpeed), new Stats { [Stat.准确] = p.Value * -1 });
                         ReceiveChat(GameLanguage.BeenPoisoned, ChatType.System2);
                     }
                     break;

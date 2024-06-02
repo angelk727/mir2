@@ -563,6 +563,28 @@ namespace Server.MirObjects
                         ob.Struck(Value, DefenceType.MAC);
                     }
                     break;
+                case Spell.Mon572NDarkVortex:
+                    {
+                        if (ob.Race != ObjectType.Player && ob.Race != ObjectType.Monster && ob.Race != ObjectType.Hero) return;
+                        if (ob.Dead) return;
+                        if (ob == Caster) return;
+                        if (!ob.IsAttackTarget(Caster)) return;
+                        if (Value == 0) return;
+
+                        ob.Struck(Value, DefenceType.MAC);
+                    }
+                    break;
+                case Spell.Mon572NFlame:
+                    {
+                        if (ob.Race != ObjectType.Player && ob.Race != ObjectType.Monster && ob.Race != ObjectType.Hero) return;
+                        if (ob.Dead) return;
+                        if (ob == Caster) return;
+                        if (!ob.IsAttackTarget(Caster)) return;
+                        if (Value == 0) return;
+
+                        ob.Struck(Value, DefenceType.MAC);
+                    }
+                    break;
                 case Spell.Mon573NBigCobweb:
                     {
                         if (ob.Race != ObjectType.Player && ob.Race != ObjectType.Monster && ob.Race != ObjectType.Hero) return;
@@ -700,6 +722,8 @@ namespace Server.MirObjects
                 case Spell.SwordFormation:
                 case Spell.Mon564NWhirlwind:
                 case Spell.Mon571NFireBomb:
+                case Spell.Mon572NFlame:
+                case Spell.Mon572NDarkVortex:
                 case Spell.Mon573NBigCobweb:
                     if (!Show)
                         return null;

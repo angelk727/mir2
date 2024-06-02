@@ -346,8 +346,9 @@ namespace Client.MirScenes.Dialogs
                 case BuffType.公会特效:
                     text += GameScene.Scene.GuildDialog.ActiveStats;
                     break;
-                case BuffType.Blindness:
-                    text += "失明效果\n";
+                case BuffType.失明状态:
+                    overridestats = true;
+                    text += string.Format("进入黑暗状态\n准确度有所降低\n");
                     break;
                 case BuffType.英雄灵气:
                     text += "英雄在线加成\n";
@@ -510,7 +511,7 @@ namespace Client.MirScenes.Dialogs
                     return 217;
                 case BuffType.御体之力:
                     return 219;
-                case BuffType.Blindness:
+                case BuffType.失明状态:
                     return 226;
                 case BuffType.死亡印记:
                     return 205;

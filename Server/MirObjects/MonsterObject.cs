@@ -447,6 +447,8 @@ namespace Server.MirObjects
                     return new Mon564N(info);
                 case 571:
                     return new Mon571N(info);
+                case 572:
+                    return new Mon572N(info);
                 case 573:
                     return new Mon573N(info);
                 case 577:
@@ -2646,7 +2648,7 @@ namespace Server.MirObjects
                     [Stat.准确] = p.Value * -1
                 };
 
-                AddBuff(BuffType.Blindness, Caster, (int)(p.Duration * p.TickSpeed), stats);
+                AddBuff(BuffType.失明状态, Caster, (int)(p.Duration * p.TickSpeed), stats);
             }
 
             PoisonList.Add(p);

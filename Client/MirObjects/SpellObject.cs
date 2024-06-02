@@ -437,6 +437,33 @@ namespace Client.MirObjects
                     SoundManager.PlaySound(8306);
                     MapControl.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon571N], 584, 6, 600, CurrentLocation) { Blend = true });
                     break;
+                case Spell.Mon572NFlame:
+                    BodyLibrary = Libraries.Monsters[(ushort)Monster.Mon572N];
+                    DrawColour = Color.FromArgb(180, 200, 200, 180);
+                    LightColour = Color.White;
+                    Light = 3;
+                    DrawFrame = 475;
+                    FrameInterval = 100;
+                    FrameCount = 13;
+                    Blend = true;
+                    Repeat = true;
+                    SoundManager.PlaySound(8306);
+                    MapControl.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon572N], 488, 4, 600, CurrentLocation) { Blend = true });
+                    break;
+                case Spell.Mon572NDarkVortex:
+                    BodyLibrary = Libraries.Monsters[(ushort)Monster.Mon572N];
+                    DrawColour = Color.FromArgb(180, 200, 200, 180);
+                    LightColour = Color.White;
+                    Light = 3;
+                    DrawFrame = 492;
+                    FrameInterval = 100;
+                    FrameCount = 24;
+                    Blend = false;
+                    Repeat = true;
+                    DrawBehind = true;
+                    SoundManager.PlaySound(8306);
+                    MapControl.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon572N], 516, 7, 600, CurrentLocation) { Blend = false });
+                    break;
                 case Spell.Mon573NBigCobweb:
                     BodyLibrary = Libraries.Monsters[(ushort)Monster.Mon573N];
                     DrawColour = Color.FromArgb(180, 255, 200, 180);
@@ -491,6 +518,12 @@ namespace Client.MirObjects
                         if (FrameIndex == 0 && CMain.Random.Next(3) == 0) SoundManager.PlaySound(8306);
                         break;
                     case Spell.Mon571NFireBomb:
+                        if (FrameIndex == 0 && CMain.Random.Next(3) == 0) SoundManager.PlaySound(8306);
+                        break;
+                    case Spell.Mon572NFlame:
+                        if (FrameIndex == 0 && CMain.Random.Next(3) == 0) SoundManager.PlaySound(8306);
+                        break;
+                    case Spell.Mon572NDarkVortex:
                         if (FrameIndex == 0 && CMain.Random.Next(3) == 0) SoundManager.PlaySound(8306);
                         break;
                     case Spell.Mon573NBigCobweb:

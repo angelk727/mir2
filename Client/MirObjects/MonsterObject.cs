@@ -4,6 +4,7 @@ using Client.MirScenes;
 using Client.MirSounds;
 using S = ServerPackets;
 using Client.MirControls;
+using ServerPackets;
 
 namespace Client.MirObjects
 {
@@ -323,6 +324,9 @@ namespace Client.MirObjects
                     case Monster.CaveStatue: //380
                         Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.CaveStatue], 10, 8, 2400, this) { Blend = true, Repeat = true });
                         break;
+                    case Monster.Mon572N:
+                        Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon572N], 376, 30, 3000, this) { Blend = true, Repeat = true, DrawBehind = true});
+                        break;
                 }
             }
 
@@ -617,7 +621,7 @@ namespace Client.MirObjects
                                 break;
                         }
                         break;
-                    case MirAction.死后尸体: //死后无尸体
+                    case MirAction.死后尸体:
                         switch (BaseImage)
                         {
                             case Monster.Shinsu:
@@ -643,6 +647,7 @@ namespace Client.MirObjects
                             case Monster.Swain: //508
                             case Monster.SpectralWraith: //530
                             case Monster.BabyMagmaDragon: //531
+                            case Monster.Mon572N:
                                 Remove();
                                 return false;
                             default:
@@ -1071,6 +1076,9 @@ namespace Client.MirObjects
                             case Monster.Mon563N:
                                 Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon563N], 751 + (int)Direction * 6, 6, Frame.Count * Frame.Interval, this));
                                 break;
+                            case Monster.Mon572N:
+                                Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon572N], 424, 1, 600, this) { Blend = true });
+                                break;
                         }
                         break;
                     case MirAction.远程攻击2:
@@ -1131,6 +1139,10 @@ namespace Client.MirObjects
                                 break;
                             case Monster.Swain1: //509
                                 Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Swain1], 622, 5, 5 * Frame.Interval, this) { Blend = true, DrawBehind = true });
+                                break;
+                            case Monster.Mon572N:
+                                Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon572N], 436, 23, 1000, this) { Blend = true, DrawBehind = true });
+                                Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon572N], 458, 17, 1000, this) { Blend = true });
                                 break;
                         }
                         break;
@@ -2741,6 +2753,18 @@ namespace Client.MirObjects
                                                     };
                                                 }
                                                 break;
+                                            case Monster.Mon572N:
+                                                 missile = CreateProjectile(425, Libraries.Monsters[(ushort)Monster.Mon572N], false, 11, 20, -11);
+
+                                                 if (missile.Target != null)
+                                                {
+                                                    missile.Complete += (o, e) =>
+                                                    {
+                                                        if (missile.Target.CurrentAction == MirAction.死后尸体) return;
+                                                        missile.Target.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon572N], 516, 7, 300, missile.Target) { Blend = false, DrawBehind = true });
+                                                    };
+                                                }
+                                                 break;
                                             case Monster.Mon577N:
                                                 missile = CreateProjectile(408, Libraries.Monsters[(ushort)Monster.Mon577N], true, 1, 30, 0, direction16: true);
 
