@@ -176,6 +176,7 @@ namespace Server
                              ShardMaidenMob2 = "地宫修道者",
                              ShardMaidenMob3 = "冰封学者",
                              ShardMaidenMob4 = "冰封贤者",
+                             Mon570NMirrorImageMob = "江白1",
                              HeroName = "Hero";
 
         public static string HealRing = "Healing",
@@ -431,6 +432,7 @@ namespace Server
             ShardMaidenMob2 = Reader.ReadString("Game", "ShardMaidenMob2", ShardMaidenMob2);
             ShardMaidenMob3 = Reader.ReadString("Game", "ShardMaidenMob3", ShardMaidenMob3);
             ShardMaidenMob4 = Reader.ReadString("Game", "ShardMaidenMob4", ShardMaidenMob4);
+            Mon570NMirrorImageMob = Reader.ReadString("Game", "Mon570NMirrorImageMob", Mon570NMirrorImageMob);
             WhiteSnake = Reader.ReadString("Game", "WhiteSnake", WhiteSnake);
             AngelName = Reader.ReadString("Game", "AngelName", AngelName);
             BombSpiderName = Reader.ReadString("Game", "BombSpiderName", BombSpiderName);
@@ -764,6 +766,8 @@ namespace Server
             Reader.Write("Game", "ShardMaidenMob2", ShardMaidenMob2);
             Reader.Write("Game", "ShardMaidenMob3", ShardMaidenMob3);
             Reader.Write("Game", "ShardMaidenMob4", ShardMaidenMob4);
+
+            Reader.Write("Game", "Mon570NMirrorImageMob", Mon570NMirrorImageMob);
 
             Reader.Write("IntelligentCreatures", "CreatureBlackStoneName", CreatureBlackStoneName);
 

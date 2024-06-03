@@ -1339,10 +1339,12 @@ public enum Spell : byte
     RiklebitesRollCall = 228, //518
     SwordFormation = 229, //550
     Mon564NWhirlwind = 230,
-    Mon571NFireBomb = 231,
-    Mon572NFlame = 232,
-    Mon572NDarkVortex = 233,
-    Mon573NBigCobweb = 234
+    Mon570NRupture = 231,
+    Mon570NLightningCloud = 232,
+    Mon571NFireBomb = 233,
+    Mon572NFlame = 234,
+    Mon572NDarkVortex = 235,
+    Mon573NBigCobweb = 236
 }
 
 public enum SpellEffect : byte

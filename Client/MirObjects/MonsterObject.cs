@@ -1140,6 +1140,9 @@ namespace Client.MirObjects
                             case Monster.Swain1: //509
                                 Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Swain1], 622, 5, 5 * Frame.Interval, this) { Blend = true, DrawBehind = true });
                                 break;
+                            case Monster.Mon570N:
+                                Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon570N], 560, 6, 6 * Frame.Interval, this));
+                                break;
                             case Monster.Mon572N:
                                 Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon572N], 436, 23, 1000, this) { Blend = true, DrawBehind = true });
                                 Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon572N], 458, 17, 1000, this) { Blend = true });
@@ -4166,6 +4169,13 @@ namespace Client.MirObjects
                                                 if (ob != null)
                                                 {
                                                     ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon564N], 1026, 10, 600, ob) { Blend = true, DrawBehind = true });
+                                                }
+                                                break;
+                                            case Monster.Mon570N:
+                                                ob = MapControl.GetObject(TargetID);
+                                                if (ob != null)
+                                                {
+                                                    ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon570N], 566, 7, 600, ob) { Blend = true, DrawBehind = true });
                                                 }
                                                 break;
                                         }

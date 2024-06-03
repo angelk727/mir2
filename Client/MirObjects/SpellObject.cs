@@ -424,6 +424,33 @@ namespace Client.MirObjects
                     Repeat = true;
                     SoundManager.PlaySound(8306);
                     break;
+                case Spell.Mon570NRupture:
+                    BodyLibrary = Libraries.Monsters[(ushort)Monster.Mon570N];
+                    DrawColour = Color.FromArgb(180, 255, 200, 180);
+                    LightColour = Color.White;
+                    Light = 3;
+                    DrawFrame = 573 + (int)Direction * 10;
+                    FrameInterval = 100;
+                    FrameCount = 10;
+                    Blend = true;
+                    Repeat = false;
+                    DrawBehind = true;
+                    SoundManager.PlaySound(8306);
+                    break;
+                case Spell.Mon570NLightningCloud:
+                    BodyLibrary = Libraries.Monsters[(ushort)Monster.Mon570N];
+                    DrawColour = Color.FromArgb(180, 200, 200, 180);
+                    LightColour = Color.White;
+                    Light = 1;
+                    DrawFrame = 544;
+                    FrameInterval = 100;
+                    FrameCount = 16;
+                    Blend = true;
+                    Repeat = false;
+                    DrawBehind = true;
+                    SoundManager.PlaySound(8306);
+                    MapControl.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon570N], 566, 8, 300, CurrentLocation, CMain.Time + 1000) { Blend = true });
+                    break;
                 case Spell.Mon571NFireBomb:
                     BodyLibrary = Libraries.Monsters[(ushort)Monster.Mon571N];
                     DrawColour = Color.FromArgb(180, 200, 200, 180);
@@ -515,6 +542,12 @@ namespace Client.MirObjects
                         }
                         break;
                     case Spell.Mon564NWhirlwind:
+                        if (FrameIndex == 0 && CMain.Random.Next(3) == 0) SoundManager.PlaySound(8306);
+                        break;
+                    case Spell.Mon570NRupture:
+                        if (FrameIndex == 0 && CMain.Random.Next(3) == 0) SoundManager.PlaySound(8306);
+                        break;
+                    case Spell.Mon570NLightningCloud:
                         if (FrameIndex == 0 && CMain.Random.Next(3) == 0) SoundManager.PlaySound(8306);
                         break;
                     case Spell.Mon571NFireBomb:
