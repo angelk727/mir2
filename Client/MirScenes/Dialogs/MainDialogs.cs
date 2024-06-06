@@ -3658,25 +3658,25 @@ namespace Client.MirScenes.Dialogs
                     SkillButton.Hint = string.Format("护身气幕：\n主动技能\n凝聚内力在一定时间内提升防御力\n提升的防御力和持续时间取决于技能等级", Magic.Level, Magic.Level == 0 ? Magic.Level1 : Magic.Level == 1 ? Magic.Level2 : Magic.Level == 2 ? Magic.Level3 : 0, Magic.BaseCost);
                     break;
                 case Spell.HalfMoon:
-                    SkillButton.Hint = string.Format("半月弯刀：\n主动技能(需开启)\n快速挥舞武器引发震动的波浪\n对半圈的目标造成伤害", Magic.Level, Magic.Level == 0 ? Magic.Level1 : Magic.Level == 1 ? Magic.Level2 : Magic.Level == 2 ? Magic.Level3 : 0);
+                    SkillButton.Hint = string.Format("半月弯刀：\n主动技能(需开启)\n快速挥舞武器引发震动的波浪\n对半圈的目标造成伤害", Magic.Level, Magic.Level == 0 ? Magic.Level1 : Magic.Level == 1 ? Magic.Level2 : Magic.Level == 2 ? Magic.Level3 : 0, Magic.BaseCost);
                     break;
                 case Spell.FlamingSword:
-                    SkillButton.Hint = string.Format("烈火剑法：\n主动技能\n召唤火焰精魂附着到武器上增加伤害", Magic.Level, Magic.Level == 0 ? Magic.Level1 : Magic.Level == 1 ? Magic.Level2 : Magic.Level == 2 ? Magic.Level3 : 0);
+                    SkillButton.Hint = string.Format("烈火剑法：\n主动技能\n召唤火焰精魂附着到武器上增加伤害", Magic.Level, Magic.Level == 0 ? Magic.Level1 : Magic.Level == 1 ? Magic.Level2 : Magic.Level == 2 ? Magic.Level3 : 0, Magic.BaseCost);
                     break;
                 case Spell.ShoulderDash:
-                    SkillButton.Hint = string.Format("野蛮冲撞：\n主动技能\n用肩膀把敌人撞开\n如果撞到障碍物将会对自身造成伤害\n只能撞开等级低于自己的目标", Magic.Level, Magic.Level == 0 ? Magic.Level1 : Magic.Level == 1 ? Magic.Level2 : Magic.Level == 2 ? Magic.Level3 : 0);
+                    SkillButton.Hint = string.Format("野蛮冲撞：\n主动技能\n用肩膀把敌人撞开\n如果撞到障碍物将会对自身造成伤害\n只能撞开等级低于自己的目标", Magic.Level, Magic.Level == 0 ? Magic.Level1 : Magic.Level == 1 ? Magic.Level2 : Magic.Level == 2 ? Magic.Level3 : 0, Magic.BaseCost);
                     break;
                 case Spell.CrossHalfMoon:
-                    SkillButton.Hint = string.Format("狂风斩：\n主动技能(需开启)\n发两道强力的半月对周围的所有目标造成伤害", Magic.Level, Magic.Level == 0 ? Magic.Level1 : Magic.Level == 1 ? Magic.Level2 : Magic.Level == 2 ? Magic.Level3 : 0);
+                    SkillButton.Hint = string.Format("狂风斩：\n主动技能(需开启)\n发两道强力的半月对周围的所有目标造成伤害", Magic.Level, Magic.Level == 0 ? Magic.Level1 : Magic.Level == 1 ? Magic.Level2 : Magic.Level == 2 ? Magic.Level3 : 0, Magic.BaseCost);
                     break;
                 case Spell.TwinDrakeBlade:
-                    SkillButton.Hint = string.Format("双龙斩：\n主动技能\n造成多重伤害的技艺\n一定几率麻痹目标\n攻击被麻痹的目标造成1.5倍伤害\n充能和使用分别消耗魔法值", Magic.Level, Magic.Level == 0 ? Magic.Level1 : Magic.Level == 1 ? Magic.Level2 : Magic.Level == 2 ? Magic.Level3 : 0);
+                    SkillButton.Hint = string.Format("双龙斩：\n主动技能\n造成多重伤害的技艺\n一定几率麻痹目标\n攻击被麻痹的目标造成1.5倍伤害\n充能和使用分别消耗魔法值", Magic.Level, Magic.Level == 0 ? Magic.Level1 : Magic.Level == 1 ? Magic.Level2 : Magic.Level == 2 ? Magic.Level3 : 0, Magic.BaseCost);
                     break;
                 case Spell.Entrapment:
-                    SkillButton.Hint = string.Format("捕绳剑： \n主动技能\n麻痹目标并把它们拖向施法者\n可拖动等级不高于自身等级 + 8级的目标", Magic.Level, Magic.Level == 0 ? Magic.Level1 : Magic.Level == 1 ? Magic.Level2 : Magic.Level == 2 ? Magic.Level3 : 0);
+                    SkillButton.Hint = string.Format("捕绳剑： \n主动技能\n麻痹目标并把它们拖向施法者\n可拖动等级不高于自身等级 + 8级的目标", Magic.Level, Magic.Level == 0 ? Magic.Level1 : Magic.Level == 1 ? Magic.Level2 : Magic.Level == 2 ? Magic.Level3 : 0, Magic.BaseCost);
                     break;
                 case Spell.LionRoar:
-                    SkillButton.Hint = string.Format("狮子吼：\n主动技能\n麻痹周围目标持续时间随等级增长\n可麻痹等级不高于自身等级 + 3级的目标", Magic.Level, Magic.Level == 0 ? Magic.Level1 : Magic.Level == 1 ? Magic.Level2 : Magic.Level == 2 ? Magic.Level3 : 0);
+                    SkillButton.Hint = string.Format("狮子吼：\n主动技能\n麻痹周围目标持续时间随等级增长\n可麻痹等级不高于自身等级 + 3级的目标", Magic.Level, Magic.Level == 0 ? Magic.Level1 : Magic.Level == 1 ? Magic.Level2 : Magic.Level == 2 ? Magic.Level3 : 0, Magic.BaseCost);
                     break;
                 case Spell.CounterAttack:
                     SkillButton.Hint = string.Format("天务：\n主动技能\n提升自身防御力和魔法防御力\n有一定几率防御伤害并反弹伤害", Magic.Level, Magic.Level == 0 ? Magic.Level1 : Magic.Level == 1 ? Magic.Level2 : Magic.Level == 2 ? Magic.Level3 : 0, Magic.BaseCost);
@@ -3691,7 +3691,7 @@ namespace Client.MirScenes.Dialogs
                     SkillButton.Hint = string.Format("日闪：\n主动技能\n突刺攻击前方目标自身向前瞬移两格", Magic.Level, Magic.Level == 0 ? Magic.Level1 : Magic.Level == 1 ? Magic.Level2 : Magic.Level == 2 ? Magic.Level3 : 0, Magic.BaseCost);
                     break;
                 case Spell.BladeAvalanche:
-                    SkillButton.Hint = string.Format("空破闪：\n主动技能\n数道刺杀同时发出\n对锥形区域的目标造成伤害", Magic.Level, Magic.Level == 0 ? Magic.Level1 : Magic.Level == 1 ? Magic.Level2 : Magic.Level == 2 ? Magic.Level3 : 0);
+                    SkillButton.Hint = string.Format("空破闪：\n主动技能\n数道刺杀同时发出\n对锥形区域的目标造成伤害", Magic.Level, Magic.Level == 0 ? Magic.Level1 : Magic.Level == 1 ? Magic.Level2 : Magic.Level == 2 ? Magic.Level3 : 0, Magic.BaseCost);
                     break;
                 case Spell.EntrapmentRare:
                     SkillButton.Hint = string.Format("捕绳剑-秘籍：\n主动技能\n麻痹目标并把它们拖向施法者\n可拖动等级不高于自身等级 + 8级的目标", Magic.Level, Magic.Level == 0 ? Magic.Level1 : Magic.Level == 1 ? Magic.Level2 : Magic.Level == 2 ? Magic.Level3 : 0);

@@ -10,6 +10,7 @@ namespace Server.MirObjects.Monsters
         protected virtual byte AttackRange => Info.ViewRange;
 
         public bool HenshinMode = false;
+        public long skeletonBombTime;
 
         protected internal Swain(MonsterInfo info)
             : base(info)
@@ -119,7 +120,10 @@ namespace Server.MirObjects.Monsters
                 }
                 else
                 {
-                    SkeletonBomb();
+                    if (Envir.Time >= skeletonBombTime)
+                    {
+                        SkeletonBomb();
+                    }                       
                 }
             }
             else
@@ -141,12 +145,12 @@ namespace Server.MirObjects.Monsters
                 ActionList.Add(action);
             }
         }
+
         private void SkeletonBomb()
         {
             const int defaultXY = 2;
 
             int explodeRange = HenshinMode ? 3 : defaultXY;
-
             int bombX = HenshinMode ? 3 : defaultXY;
             int bombY = HenshinMode ? 3 : defaultXY;
 
@@ -154,61 +158,80 @@ namespace Server.MirObjects.Monsters
 
             Broadcast(new S.ObjectRangeAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation, TargetID = Target.ObjectID, Type = 1 });
 
-            var targets = FindAllTargets(explodeRange, Target.CurrentLocation);
-            if (Dead || targets.Count == 0) return;
+            int minX = Math.Max(0, CurrentLocation.X - 5);
+            int maxX = Math.Min(CurrentMap.Width - 1, CurrentLocation.X + 5);
+            int minY = Math.Max(0, CurrentLocation.Y - 5);
+            int maxY = Math.Min(CurrentMap.Height - 1, CurrentLocation.Y + 5);
 
-            Target = targets[Envir.Random.Next(targets.Count)];
-            var location = Target.CurrentLocation;
+            List<Point> validLocations = new List<Point>();
+            Random rand = new Random();
 
-            for (int y = location.Y - explodeRange; y <= location.Y + explodeRange; y++)
+            while (validLocations.Count < 4)
             {
-                if (y < 0) continue;
-                if (y >= CurrentMap.Height) break;
+                int x = rand.Next(minX, maxX + 1);
+                int y = rand.Next(minY, maxY + 1);
+                Point newLocation = new Point(x, y);
 
-                for (int x = location.X - explodeRange; x <= location.X + explodeRange; x++)
+                if (CurrentMap.GetCell(x, y).Valid && (x != CurrentLocation.X || y != CurrentLocation.Y) &&
+                    !validLocations.Any(loc => Math.Abs(loc.X - x) < 3 && Math.Abs(loc.Y - y) < 3))
                 {
-                    if (x < 0) continue;
-                    if (x >= CurrentMap.Width) break;
-
-                    if ((x == bombX && y == bombY) || (x == CurrentLocation.X && y == CurrentLocation.Y)) continue;
-
-                    var cell = CurrentMap.GetCell(x, y);
-                    if (!cell.Valid) continue;
-
-                    int damage = 0;
-                    var start = 0;
-                    var time = 0;
-                    if (HenshinMode)
-                    {
-                        damage = GetAttackPower(Stats[Stat.MinMC], Stats[Stat.MaxMC]);
-                        start = 1300;
-                        time = 2300;
-                    }
-                    else
-                    {
-                        damage = (int)(GetAttackPower(Stats[Stat.MinMC], Stats[Stat.MaxMC]) * (HenshinMode ? 2 : 1.5));
-                        start = 1800;
-                        time = 2800;
-                    }
-
-                    SpellObject ob = new SpellObject
-                    {
-                        Spell = HenshinMode ? Spell.FlameExplosion : Spell.SkeletonBomb,
-                        Value = damage,
-                        ExpireTime = Envir.Time + time + start,
-                        TickSpeed = 1300,
-                        Direction = Direction,
-                        CurrentLocation = new Point(x, y),
-                        CastLocation = location,
-                        Show = (location.X == x && location.Y == y),
-                        CurrentMap = CurrentMap,
-                        Owner = this,
-                        Caster = this
-                    };
-
-                    DelayedAction action = new DelayedAction(DelayedType.Spawn, Envir.Time + start, ob);
-                    CurrentMap.ActionList.Add(action);
+                    validLocations.Add(newLocation);
                 }
+            }
+
+            foreach (var location in validLocations)
+            {
+                for (int y = location.Y - explodeRange; y <= location.Y + explodeRange; y++)
+                {
+                    if (y < 0) continue;
+                    if (y >= CurrentMap.Height) break;
+
+                    for (int x = location.X - explodeRange; x <= location.X + explodeRange; x++)
+                    {
+                        if (x < 0) continue;
+                        if (x >= CurrentMap.Width) break;
+
+                        if ((x == bombX && y == bombY) || (x == CurrentLocation.X && y == CurrentLocation.Y)) continue;
+
+                        var cell = CurrentMap.GetCell(x, y);
+                        if (!cell.Valid) continue;
+
+                        int damage = 0;
+                        var start = 0;
+                        var time = 0;
+                        if (HenshinMode)
+                        {
+                            damage = GetAttackPower(Stats[Stat.MinMC], Stats[Stat.MaxMC]);
+                            start = 1300;
+                            time = 2300;
+                        }
+                        else
+                        {
+                            damage = (int)(GetAttackPower(Stats[Stat.MinMC], Stats[Stat.MaxMC]) * (HenshinMode ? 2 : 1.5));
+                            start = 1800;
+                            time = 2800;
+                        }
+
+                        SpellObject ob = new SpellObject
+                        {
+                            Spell = HenshinMode ? Spell.FlameExplosion : Spell.SkeletonBomb,
+                            Value = damage,
+                            ExpireTime = Envir.Time + time + start,
+                            TickSpeed = 1300,
+                            Direction = Direction,
+                            CurrentLocation = new Point(x, y),
+                            CastLocation = location,
+                            Show = (location.X == x && location.Y == y),
+                            CurrentMap = CurrentMap,
+                            Owner = this,
+                            Caster = this
+                        };
+
+                        DelayedAction action = new DelayedAction(DelayedType.Spawn, Envir.Time + start, ob);
+                        CurrentMap.ActionList.Add(action);
+                    }
+                }
+                skeletonBombTime = Envir.Time + 5000;
             }
         }
     }

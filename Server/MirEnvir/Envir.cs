@@ -476,6 +476,7 @@ namespace Server.MirEnvir
                 if (GetMonsterInfo(Settings.ShardMaidenMob3, true) == null) return "缺少必要怪物无法启动服务器 " + Settings.ShardMaidenMob3;
                 if (GetMonsterInfo(Settings.ShardMaidenMob4, true) == null) return "缺少必要怪物无法启动服务器 " + Settings.ShardMaidenMob4;
                 if (GetMonsterInfo(Settings.Mon570NMirrorImageMob, true) == null) return "缺少必要怪物无法启动服务器 " + Settings.Mon570NMirrorImageMob;
+                if (GetMonsterInfo(Settings.Mon573NMob, true) == null) return "缺少必要怪物无法启动服务器 " + Settings.Mon573NMob;
 
                 if (GetItemInfo(Settings.RefineOreName) == null) return "缺少精炼所需矿石无法启动服务器" + Settings.RefineOreName;
             }

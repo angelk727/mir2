@@ -714,13 +714,15 @@ public enum Monster : ushort
     Mon571N = 571,
     Mon572N = 572,
     Mon573N = 573,
-    Mon574N = 574,
-    Mon575N = 575,
+    Mon574T = 574,
+    Mon575S = 575,
+    Mon576T = 576,
     Mon577N = 577,
     Mon578N = 578,
     Mon579N = 579,
     Mon580N = 580,  //Mon59.wil
     Mon583N = 583,
+    //N=Normal S = Stoned T=Tree
 
     //Special
     EvilMir = 900,

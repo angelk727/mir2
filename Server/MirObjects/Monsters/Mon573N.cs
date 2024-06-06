@@ -9,6 +9,7 @@ namespace Server.MirObjects.Monsters
     {
         public long _BigCobwebTime;
         public long _Mon573NBuffTime;
+
         protected internal Mon573N(MonsterInfo info)
             : base(info)
         {
@@ -64,7 +65,7 @@ namespace Server.MirObjects.Monsters
 
             }
             else
-                switch (Envir.Random.Next(5))
+                switch (Envir.Random.Next(7))
                 {
                     case 0:
                         {
@@ -81,7 +82,7 @@ namespace Server.MirObjects.Monsters
                     case 1:
                         if (Envir.Time >= _BigCobwebTime)
                         {
-                            Broadcast(new S.ObjectRangeAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation, TargetID = Target.ObjectID});
+                            Broadcast(new S.ObjectRangeAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation, TargetID = Target.ObjectID });
 
                             int damage = GetAttackPower(Stats[Stat.MinMC], Stats[Stat.MaxMC] * 2);
                             if (damage == 0) return;
@@ -122,8 +123,8 @@ namespace Server.MirObjects.Monsters
 
                             if (Envir.Time >= _Mon573NBuffTime)
                             {
-                                var maxAC = Stats[Stat.MaxAC];
-                                var maxMAC = Stats[Stat.MaxMAC];
+                                var maxAC = 35;
+                                var maxMAC = 35;
 
                                 var stats = new Stats
                                 {
@@ -139,11 +140,19 @@ namespace Server.MirObjects.Monsters
                         {
                             Broadcast(new S.ObjectRangeAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation, TargetID = Target.ObjectID, Type = 1 });
 
-                            int damage = GetAttackPower(Stats[Stat.MinMC], Stats[Stat.MaxMC] * 2);
+                            int damage = GetAttackPower(Stats[Stat.MinMC], Stats[Stat.MaxMC]);
                             if (damage == 0) return;
 
+                            WakeAll(11);
                             DelayedAction action = new(DelayedType.RangeDamage, Envir.Time + 500, Target, damage, DefenceType.MACAgility, false);
                             ActionList.Add(action);
+                        }
+                        break;
+                    case 6:
+                        if (HealthPercent <= 80)
+                        {
+                            Broadcast(new S.ObjectRangeAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation, TargetID = Target.ObjectID, Type = 1 });
+                            SpawnSlaves();
                         }
                         break;
                 }
@@ -193,6 +202,83 @@ namespace Server.MirObjects.Monsters
                     CurrentMap.ActionList.Add(action);
                 }
             }
+        }
+
+        private void SpawnSlaves()
+        {
+            int maxSpawnCount = 3;
+            int currentSpawnCount = SlaveList.Count;
+            int spawnCount = Math.Min(maxSpawnCount - currentSpawnCount, maxSpawnCount);
+
+            if (spawnCount <= 0) return;
+
+            Random rand = new Random();
+            List<Point> validLocations = new List<Point>();
+
+            int minX = Math.Max(0, CurrentLocation.X - 5);
+            int maxX = Math.Min(CurrentMap.Width - 1, CurrentLocation.X + 5);
+            int minY = Math.Max(0, CurrentLocation.Y - 5);
+            int maxY = Math.Min(CurrentMap.Height - 1, CurrentLocation.Y + 5);
+
+            while (validLocations.Count < spawnCount)
+            {
+                int x = rand.Next(minX, maxX + 1);
+                int y = rand.Next(minY, maxY + 1);
+                Point newLocation = new Point(x, y);
+
+                if (CurrentMap.GetCell(x, y).Valid && (x != CurrentLocation.X || y != CurrentLocation.Y) &&
+                    !validLocations.Any(loc => loc.X == x && loc.Y == y))
+                {
+                    validLocations.Add(newLocation);
+                }
+            }
+
+            foreach (var location in validLocations)
+            {
+                MonsterObject mob = GetMonster(Envir.GetMonsterInfo(Settings.Mon573NMob));
+                if (mob == null) continue;
+
+                mob.Spawn(CurrentMap, location);
+                mob.ActionTime = Envir.Time + 2000;
+                SlaveList.Add(mob);
+            }
+        }
+
+        public void WakeAll(int dist)
+        {
+            for (int y = CurrentLocation.Y - dist; y <= CurrentLocation.Y + dist; y++)
+            {
+                if (y < 0) continue;
+                if (y >= CurrentMap.Height) break;
+
+                for (int x = CurrentLocation.X - dist; x <= CurrentLocation.X + dist; x++)
+                {
+                    if (x < 0) continue;
+                    if (x >= CurrentMap.Width) break;
+
+                    Cell cell = CurrentMap.GetCell(x, y);
+
+                    if (!cell.Valid || cell.Objects == null) continue;
+
+                    for (int i = 0; i < cell.Objects.Count; i++)
+                    {
+                        Mon575S target = cell.Objects[i] as Mon575S;
+                        if (target == null || !target.Stoned) continue;
+                        target.Wake();
+                        target.Target = Target;
+                    }
+                }
+            }
+
+        }
+        public override void Die()
+        {
+            foreach (var slave in SlaveList)
+            {
+                slave.Die();
+            }
+
+            base.Die();
         }
     }
 }

@@ -3,8 +3,6 @@ using Client.MirGraphics;
 using Client.MirScenes;
 using Client.MirSounds;
 using S = ServerPackets;
-using Client.MirControls;
-using ServerPackets;
 
 namespace Client.MirObjects
 {
@@ -17,7 +15,7 @@ namespace Client.MirObjects
 
         public override bool Blocking
         {
-            get { return AI == 970 || (AI == 950 && Direction == (MirDirection)6) ? false : !Dead; } //自添加AI扩容
+            get { return AI == 970 || (AI == 950 && Direction == (MirDirection)6) ? false : !Dead; }
         }
 
         public Point ManualLocationOffset
@@ -252,6 +250,7 @@ namespace Client.MirObjects
                 case Monster.FeralFlameFurbolg: //522,
                 case Monster.秦庙石狮: //544
                 case Monster.古老遗骸: //552
+                case Monster.Mon575S:
                     Stoned = info.Extra;
                     break;
             }
@@ -325,7 +324,10 @@ namespace Client.MirObjects
                         Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.CaveStatue], 10, 8, 2400, this) { Blend = true, Repeat = true });
                         break;
                     case Monster.Mon572N:
-                        Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon572N], 376, 30, 3000, this) { Blend = true, Repeat = true, DrawBehind = true});
+                        Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon572N], 376, 30, 3000, this) { Blend = true, Repeat = true, DrawBehind = true });
+                        break;
+                    case Monster.Mon575S:
+                        Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon575S], 420 + (int)Direction * 8, 8, 2000, this) { Blend = true, Repeat = true });
                         break;
                 }
             }
@@ -648,6 +650,7 @@ namespace Client.MirObjects
                             case Monster.SpectralWraith: //530
                             case Monster.BabyMagmaDragon: //531
                             case Monster.Mon572N:
+                            case Monster.Mon575S:
                                 Remove();
                                 return false;
                             default:
@@ -869,6 +872,9 @@ namespace Client.MirObjects
                                 break;
                             case Monster.Mon573N:
                                 Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon573N], 555, 7, 7 * 200, this) { Blend = true });
+                                break;
+                            case Monster.Mon575S:
+                                Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon575S], 403, 7, 7 * 200, this) { Blend = true });
                                 break;
                         }
 
@@ -1525,6 +1531,7 @@ namespace Client.MirObjects
                                 case Monster.FeralFlameFurbolg: //522,
                                 case Monster.秦庙石狮: //544
                                 case Monster.古老遗骸: //552
+                                case Monster.Mon575S:
                                     Stoned = false;
                                     break;
                                 case Monster.Shinsu:
@@ -1615,6 +1622,7 @@ namespace Client.MirObjects
                                 case Monster.PurpleFaeFlower: //466
                                 case Monster.秦庙石狮: //544
                                 case Monster.古老遗骸: //552
+                                case Monster.Mon575S:
                                     Stoned = true; //-----石化
                                     return;
                             }
@@ -1845,6 +1853,10 @@ namespace Client.MirObjects
                                             case Monster.Mon573N:
                                                 Effect Mon573NEffect = new Effect(Libraries.Monsters[(ushort)Monster.Mon573N], 522, 9, 300, front, CMain.Time + 600);
                                                 MapControl.Effects.Add(Mon573NEffect);
+                                                break;
+                                            case Monster.Mon575S:
+                                                Effect Mon575SEffect1 = new Effect(Libraries.Monsters[(ushort)Monster.Mon575S], 394, 9, 300, front, CMain.Time + 300);
+                                                MapControl.Effects.Add(Mon575SEffect1);
                                                 break;
                                         }
                                     }
@@ -2077,6 +2089,10 @@ namespace Client.MirObjects
                                             case Monster.HammerDwarf: //500 
                                                 Point HD500 = Functions.PointMove(CurrentLocation, Direction, 0); //设置0为正前方、1为前方2位、以此类推 (注：front 为默认 1前方两位 可不用此格式)
                                                 MapControl.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.HammerDwarf], 520 + (int)Direction * 6, 6, 200, HD500, CMain.Time + 300));
+                                                break;
+                                            case Monster.Mon575S:
+                                                Effect Mon575SEffect2 = new Effect(Libraries.Monsters[(ushort)Monster.Mon575S], 410, 10, 600, front, CMain.Time + 600);
+                                                MapControl.Effects.Add(Mon575SEffect2);
                                                 break;
                                         }
                                     }
@@ -2765,6 +2781,18 @@ namespace Client.MirObjects
                                                     {
                                                         if (missile.Target.CurrentAction == MirAction.死后尸体) return;
                                                         missile.Target.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon572N], 516, 7, 300, missile.Target) { Blend = false, DrawBehind = true });
+                                                    };
+                                                }
+                                                 break;
+                                            case Monster.Mon575S:
+                                                 missile = CreateProjectile(350, Libraries.Monsters[(ushort)Monster.Mon575S], true, 5, 50, 0, direction16: false);
+
+                                                if (missile.Target != null)
+                                                {
+                                                    missile.Complete += (o, e) =>
+                                                    {
+                                                        if (missile.Target.CurrentAction == MirAction.死后尸体) return;
+                                                        missile.Target.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon575S], 390, 4, 300, missile.Target) { Blend = false, DrawBehind = true });
                                                     };
                                                 }
                                                  break;
@@ -4471,6 +4499,9 @@ namespace Client.MirObjects
                                             break;
                                         case Monster.Mon573N:
                                             Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon573N], 504, 18, 18 * Frame.Interval, this, CMain.Time + 300) { Blend = true });
+                                            break;
+                                        case Monster.Mon575S:
+                                            Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon575S], 332, 18, 18 * Frame.Interval, this, CMain.Time + 100) { Blend = true });
                                             break;
                                     }
                                     break;
