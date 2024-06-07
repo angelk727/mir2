@@ -14,8 +14,8 @@
 3. 提交拉取请求并将其与您 fork 的源代码进行对比 ( https://github.com/Suprcode/mir2/compare )
 
 ## Guidance
-客户端临时更新单独放在客户端更新文件夹内方便下载，定期合并。详细使用请参阅更新说明
-服务端只提供基本功能，请自行完善。
+客户端临时更新单独放在客户端更新文件夹内方便下载，定期合并。详细使用请参阅更新说明 服务端只提供基本功能，请自行完善。
+
 配套的服务器端与客户端下载地址：(https://github.com/angelk727/ClientDataMonster)
 
 ## Community
