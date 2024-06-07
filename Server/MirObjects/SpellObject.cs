@@ -68,7 +68,7 @@ namespace Server.MirObjects
                     ((HumanObject)Caster).ReincarnationExpireTime = Envir.Time + 6000;
                 }
 
-                if ((Spell == Spell.Blizzard || Spell == Spell.MeteorStrike) &&  Caster != null)
+                if ((Spell == Spell.Blizzard || Spell == Spell.MeteorStrike) && Caster != null)
                 {
                     ((HumanObject)Caster).ActiveBlizzard = false;
                 }
@@ -141,16 +141,15 @@ namespace Server.MirObjects
                         ob.Attacked(((HumanObject)Caster), Value, DefenceType.MAC, false);
                     }
                     break;
-                case Spell.Healing: //SafeZone
+                case Spell.Healing: // SafeZone
                     {
-                        if (ob.Master == null) return;
+                        if (!(ob.Race == ObjectType.Player || ob.Race == ObjectType.Hero ||
+                              (ob.Race == ObjectType.Monster && ob.Master != null && ob.Master.Race == ObjectType.Player))) return;
+
                         if (ob.Dead || ob.HealAmount != 0 || ob.PercentHealth == 100) return;
 
-                        if (ob.Race == ObjectType.Player || ob.Race == ObjectType.Hero || (ob.Race == ObjectType.Monster && ob.Master.Race == ObjectType.Player))
-                        {
-                            ob.HealAmount += 25;
-                            Broadcast(new S.ObjectEffect { ObjectID = ob.ObjectID, Effect = SpellEffect.Healing });
-                        }
+                        ob.HealAmount += 25;
+                        Broadcast(new S.ObjectEffect { ObjectID = ob.ObjectID, Effect = SpellEffect.Healing });
                     }
                     break;
                 case Spell.PoisonCloud:
@@ -238,7 +237,7 @@ namespace Server.MirObjects
                         {
                             if (player.Account.AdminAccount && player.Observer) return;
                             player.Struck(Value, DefenceType.MAC);
-                        }                 
+                        }
                     }
                     break;
                 case Spell.MapQuake1:
@@ -832,7 +831,7 @@ namespace Server.MirObjects
             if (Spell == Spell.Portal && Caster != null)
             {
                 var portal = Envir.Spells.SingleOrDefault(ob => ob.Node != null && ob != this
-                    && ob.Spell == Spell.Portal    
+                    && ob.Spell == Spell.Portal
                     && ob.Caster == Caster);
 
                 if (portal != null)
