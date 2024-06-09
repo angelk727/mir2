@@ -722,7 +722,7 @@ public enum Monster : ushort
     Mon579N = 579,
     Mon580N = 580,  //Mon59.wil
     Mon583N = 583,
-    //N=Normal S = Stoned T=Tree
+    //N=Normal S=Stoned T=Tree
 
     //Special
     EvilMir = 900,

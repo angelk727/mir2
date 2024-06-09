@@ -358,7 +358,7 @@ namespace Server
         {
             string ipAddress = CurrentIPLabel.Text;
 
-            string url = $"https://whatismyipaddress.com/ip/{ipAddress}";
+            string url = $"https://127.0.0.1/ip/{ipAddress}";//默认 whatismyipaddress.com
 
             try
             {
@@ -371,7 +371,7 @@ namespace Server
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error opening URL: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"打开统一资源定位符时出错: {ex.Message}", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

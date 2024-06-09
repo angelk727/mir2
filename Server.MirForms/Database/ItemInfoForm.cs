@@ -54,7 +54,7 @@ namespace Server
                 ProbecheckBox.Text = "鞋子";
                 SkillcheckBox.Text = "守护石";
                 NoDuraLosscheckBox.Text = "照明";
-                PickaxecheckBox.Text = "未使用";
+                PickaxecheckBox.Text = "鹤嘴锄";
                 label50.Text = "成功概率";
                 label52.Text = "摧毁概率";
                 label51.Text = "最大状态";

@@ -546,7 +546,7 @@ namespace Server
         {
             string ipAddress = CreationIPTextBox.Text;
 
-            string url = $"https://whatismyipaddress.com/ip/{ipAddress}";
+            string url = $"https://127.0.0.1/ip/{ipAddress}";//默认 whatismyipaddress.com
 
             try
             {
@@ -566,7 +566,7 @@ namespace Server
         {
             string ipAddress = LastIPTextBox.Text;
 
-            string url = $"https://whatismyipaddress.com/ip/{ipAddress}";
+            string url = $"https://127.0.0.1/ip/{ipAddress}";//默认 whatismyipaddress.com
 
             try
             {

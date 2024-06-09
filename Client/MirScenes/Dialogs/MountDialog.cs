@@ -75,7 +75,7 @@ namespace Client.MirScenes.Dialogs
                 Parent = this,
                 Sound = SoundList.ButtonA,
             };
-            HelpButton.Click += (o, e) => GameScene.Scene.HelpDialog.DisplayPage("Mounts");
+            HelpButton.Click += (o, e) => GameScene.Scene.HelpDialog.DisplayPage("坐骑");
 
             MountImage = new MirAnimatedControl
             {

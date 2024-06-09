@@ -937,10 +937,10 @@ namespace Server.Database
                         return;
                     }
 
-                    String promptText = $"Enter new value for column [{colName}]:";
+                    String promptText = $"在框中输入新的值 [{colName}]:";
                     if (itemInfoGridView.Rows[mouseOverRow].Cells[mouseOverCol] is DataGridViewCheckBoxCell)
                     {
-                        promptText += $"{Environment.NewLine}[[Enter 1 for tick or 0 for untick]]";
+                        promptText += $"{Environment.NewLine}[[输入1表示勾选，输入0表示取消勾选]]";
                     }
 
                     var updateValue = Interaction.InputBox(promptText,
@@ -1050,7 +1050,7 @@ namespace Server.Database
             if (inError.Count > 0)
             {
                 String msg = string.Join(Environment.NewLine, inError);
-                if (MessageBox.Show($"The following items are invalid: {msg}", "Discard Invalid Items?", MessageBoxButtons.OKCancel) != DialogResult.OK)
+                if (MessageBox.Show($"下列物品是无效的: {msg}", "是否删除无效物品", MessageBoxButtons.OKCancel) != DialogResult.OK)
                 {
                     e.Cancel = true;
                     return;

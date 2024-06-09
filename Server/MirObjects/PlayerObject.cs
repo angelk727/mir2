@@ -202,7 +202,7 @@ namespace Server.MirObjects
         {
             if (info.Player != null)
             {
-                throw new InvalidOperationException("Player.Info not Null.");
+                throw new InvalidOperationException("Player.Info 不能为空");
             }
 
             info.Player = this;
