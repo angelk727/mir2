@@ -350,6 +350,15 @@ namespace Client.MirScenes.Dialogs
                     overridestats = true;
                     text += string.Format("进入黑暗状态\n准确度有所降低\n");
                     break;
+                case BuffType.安息之气:
+                    text += "安息之气的加成\n";
+                    break;
+                case BuffType.远古气息:
+                    text += "远古气息的加成\n";
+                    break;
+                case BuffType.华丽雨光:
+                    text += "来自雨光的加成\n";
+                    break;
                 case BuffType.英雄灵气:
                     text += "英雄在线加成\n";
                     break;
@@ -535,14 +544,9 @@ namespace Client.MirScenes.Dialogs
                     return 173;
                 case BuffType.General:
                     return 182;
-                case BuffType.经验丰富:
-                    return 260;
-                case BuffType.落物纷飞:
-                    return 162;
                 case BuffType.金币辉煌:
                     return 168;
                 case BuffType.包容万金:
-                case BuffType.包罗万象:
                     return 235;
                 case BuffType.变形效果:
                     return 241;
@@ -557,9 +561,18 @@ namespace Client.MirScenes.Dialogs
                     return 186;
                 case BuffType.时间之殇:
                     return 261;
-                case BuffType.潜心修炼:
                 case BuffType.技巧项链:
                     return 200;
+                case BuffType.安息之气:
+                    return 186;
+                case BuffType.远古气息:
+                    return 808;
+                case BuffType.华丽雨光:
+                    return 330;
+                case BuffType.奇异药水:
+                    return 810;
+                case BuffType.内尔族的灵药:
+                    return 652;
                 case BuffType.英雄灵气:
                     return 259;
                 case BuffType.暗影侵袭:
@@ -576,30 +589,21 @@ namespace Client.MirScenes.Dialogs
                     return 846;
 
                 //Stats
-                case BuffType.火龍祝福:
-                    return 249;
-                case BuffType.蓝魔之眼:
-                    return 165;
-                case BuffType.冰龍祝福:
-                    return 250;
-                case BuffType.眼疾手快:
-                    return 170;
-                case BuffType.生命永驻:
-                    return 161;
-                case BuffType.法力常在:
-                    return 169;
-                case BuffType.防御之力:
-                    return 166;
-                case BuffType.抗魔屏障:
-                    return 158;
-                case BuffType.灵丹妙药:
-                    return 252;
-                case BuffType.龍之祝福:
-                    return 167;
-                case BuffType.精确命中:
-                    return 160;
-                case BuffType.敏捷加身:
-                    return 244;
+                case BuffType.攻击力提升:
+                case BuffType.魔法力提升:
+                case BuffType.道术力提升:
+                case BuffType.攻击速度提升:
+                case BuffType.生命值提升:
+                case BuffType.法力值提升:
+                case BuffType.防御提升:
+                case BuffType.魔法防御提升:
+                case BuffType.背包负重提升:
+                case BuffType.准确命中提升:
+                case BuffType.敏捷躲避提升:
+                case BuffType.获取经验提升:
+                case BuffType.物品掉落提升:
+                case BuffType.技能经验提升:
+                    return 161;               
                 default:
                     return 0;
             }

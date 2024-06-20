@@ -2994,7 +2994,6 @@ namespace ServerPackets
     {
         public override short Index { get { return (short)ServerPacketIds.NPCGoods; } }
 
-        public byte Progress; // 1: Start, 2: Middle, 3: End
         public List<UserItem> List = new List<UserItem>();
         public float Rate;
         public PanelType Type;
@@ -3002,9 +3001,8 @@ namespace ServerPackets
 
         protected override void ReadPacket(BinaryReader reader)
         {
-            Progress = reader.ReadByte();
-
             int count = reader.ReadInt32();
+
             for (int i = 0; i < count; i++)
                 List.Add(new UserItem(reader));
 
@@ -3015,9 +3013,8 @@ namespace ServerPackets
         }
         protected override void WritePacket(BinaryWriter writer)
         {
-            writer.Write(Progress);
-
             writer.Write(List.Count);
+
             for (int i = 0; i < List.Count; i++)
                 List[i].Save(writer);
 

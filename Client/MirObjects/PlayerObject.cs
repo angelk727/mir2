@@ -5335,64 +5335,67 @@ namespace Client.MirObjects
                 HairLibrary.Draw(DrawFrame + HairOffSet, DrawLocation, DrawColour, true);
         }
 
-        public void DrawTransform() //自添加外形特效
+        public void DrawTransform()
         {
             switch (TransformType)
             {
+                case 4:
+                    {
+                        if (TransformType == 4)
+                            switch (CurrentAction)
+                            {
+                                case MirAction.近距攻击1:
+                                    Libraries.Magic3.DrawBlend(5440 + ((int)Direction * 10) + FrameIndex, DrawLocation, Color.White, true, 0.3F);
+                                    break;
+                            }
+                    }
+                    break;
                 case 18:
                     {
                         if (TransformType == 18)
                             switch (CurrentAction)
                             {
                                 case MirAction.站立动作:
-                                    Libraries.TransformWeaponEffect[18].DrawBlend(0 + ((int)Direction * 4) + FrameIndex, DrawLocation, Color.White, true, 0.7F);
+                                    Libraries.TransformWeaponEffect[18].DrawBlend(0 + ((int)Direction * 4) + FrameIndex, DrawLocation, Color.White, true, 0.3F);
                                     break;
                                 case MirAction.行走动作:
-                                    Libraries.TransformWeaponEffect[18].DrawBlend(32 + ((int)Direction * 6) + FrameIndex, DrawLocation, Color.White, true, 0.7F);
+                                    Libraries.TransformWeaponEffect[18].DrawBlend(32 + ((int)Direction * 6) + FrameIndex, DrawLocation, Color.White, true, 0.3F);
                                     break;
                                 case MirAction.跑步动作:
-                                    Libraries.TransformWeaponEffect[18].DrawBlend(80 + ((int)Direction * 6) + FrameIndex, DrawLocation, Color.White, true, 0.7F);
+                                    Libraries.TransformWeaponEffect[18].DrawBlend(80 + ((int)Direction * 6) + FrameIndex, DrawLocation, Color.White, true, 0.3F);
                                     break;
                                 case MirAction.站立姿势:
-                                    Libraries.TransformWeaponEffect[18].DrawBlend(128 + ((int)Direction * 1) + FrameIndex, DrawLocation, Color.White, true, 0.7F);
+                                    Libraries.TransformWeaponEffect[18].DrawBlend(128 + ((int)Direction * 1) + FrameIndex, DrawLocation, Color.White, true, 0.3F);
                                     break;
                                 case MirAction.近距攻击1:
                                 case MirAction.近距攻击2:
                                 case MirAction.近距攻击4:
                                 case MirAction.远程攻击1:
                                 case MirAction.远程攻击2:
-                                    Libraries.TransformWeaponEffect[18].DrawBlend(136 + ((int)Direction * 6) + FrameIndex, DrawLocation, Color.White, true, 0.7F);
+                                    Libraries.TransformWeaponEffect[18].DrawBlend(136 + ((int)Direction * 6) + FrameIndex, DrawLocation, Color.White, true, 0.3F);
                                     break;
                                 case MirAction.挖矿动作:
-                                    Libraries.TransformWeaponEffect[18].DrawBlend(184 + ((int)Direction * 6) + FrameIndex, DrawLocation, Color.White, true, 0.7F);
+                                    Libraries.TransformWeaponEffect[18].DrawBlend(184 + ((int)Direction * 6) + FrameIndex, DrawLocation, Color.White, true, 0.3F);
                                     break;
                                 case MirAction.近距攻击3:
-                                    Libraries.TransformWeaponEffect[18].DrawBlend(232 + ((int)Direction * 8) + FrameIndex, DrawLocation, Color.White, true, 0.7F);
+                                    Libraries.TransformWeaponEffect[18].DrawBlend(232 + ((int)Direction * 8) + FrameIndex, DrawLocation, Color.White, true, 0.3F);
                                     break;
                                 //case MirAction.施法动作: //同45问题一致暂屏蔽此特效
                                 //    Libraries.TransformWeaponEffect[18].DrawBlend(296 + ((int)Direction * 6) + FrameIndex, DrawLocation, Color.White, true, 0.7F);
                                 //    break;
                                 case MirAction.挖矿展示:
-                                    Libraries.TransformWeaponEffect[18].DrawBlend(344 + ((int)Direction * 2) + FrameIndex, DrawLocation, Color.White, true, 0.7F);
+                                    Libraries.TransformWeaponEffect[18].DrawBlend(344 + ((int)Direction * 2) + FrameIndex, DrawLocation, Color.White, true, 0.3F);
                                     break;
                                 case MirAction.被击动作:
-                                    Libraries.TransformWeaponEffect[18].DrawBlend(360 + ((int)Direction * 3) + FrameIndex, DrawLocation, Color.White, true, 0.7F);
+                                    Libraries.TransformWeaponEffect[18].DrawBlend(360 + ((int)Direction * 3) + FrameIndex, DrawLocation, Color.White, true, 0.3F);
                                     break;
                                 case MirAction.死亡动作:
-                                    Libraries.TransformWeaponEffect[18].DrawBlend(384 + ((int)Direction * 4) + FrameIndex, DrawLocation, Color.White, true, 0.7F);
+                                    Libraries.TransformWeaponEffect[18].DrawBlend(384 + ((int)Direction * 4) + FrameIndex, DrawLocation, Color.White, true, 0.3F);
                                     break;
                                 case MirAction.死后尸体:
-                                    Libraries.TransformWeaponEffect[18].DrawBlend(387 + ((int)Direction * 4) + FrameIndex, DrawLocation, Color.White, true, 0.7F);
+                                    Libraries.TransformWeaponEffect[18].DrawBlend(387 + ((int)Direction * 4) + FrameIndex, DrawLocation, Color.White, true, 0.3F);
                                     break;
                             }
-                    }
-                    break;
-                case 27:
-                    {
-                        if (TransformType == 27)
-                        {
-                            Libraries.Magic3.DrawBlend(3470 + FrameIndex, DrawLocation, Color.White, true, 0.6F);
-                        }
                     }
                     break;
                 case 28:
@@ -5401,18 +5404,42 @@ namespace Client.MirObjects
                             switch (CurrentAction)
                             {
                                 case MirAction.近距攻击1:
-                                    Libraries.Magic3.DrawBlend(4880 + ((int)Direction * 10) + FrameIndex, DrawLocation, Color.White, true, 0.7F);
+                                    Libraries.Magic3.DrawBlend(4880 + ((int)Direction * 10) + FrameIndex, DrawLocation, Color.FromArgb(120, 255, 255, 120), true, 0.3F);
                                     break;
                             }
-
                     }
                     break;
-                case 30:
+                case 31:
                     {
-                        if (TransformType == 30)
-                        {
-                            Libraries.Magic3.DrawBlend((5310 + FrameIndex) + 4, DrawLocation, Color.White, true, 0.6F);
-                        }
+                        if (TransformType == 31)
+                            switch (CurrentAction)
+                            {
+                                case MirAction.近距攻击1:
+                                    Libraries.Magic3.DrawBlend(7580 + ((int)Direction * 10) + FrameIndex, DrawLocation, Color.FromArgb(255, 64, 255, 255), true, 0.3F);
+                                    break;
+                            }
+                    }
+                    break;
+                case 32:
+                    {
+                        if (TransformType == 32)
+                            switch (CurrentAction)
+                            {
+                                case MirAction.近距攻击1:
+                                    Libraries.Magic3.DrawBlend(5530 + ((int)Direction * 10) + FrameIndex, DrawLocation, Color.FromArgb(255, 64, 255, 255), true, 0.3F);
+                                    break;
+                            }
+                    }
+                    break;
+                case 43:
+                    {
+                        if (TransformType == 43)
+                            switch (CurrentAction)
+                            {
+                                case MirAction.近距攻击1:
+                                    Libraries.Magic3.DrawBlend(7430 + ((int)Direction * 10) + FrameIndex, DrawLocation, Color.White, true, 0.3F);
+                                    break;
+                            }
                     }
                     break;
                 case 45:

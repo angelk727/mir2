@@ -5122,7 +5122,7 @@ namespace Server.MirObjects
                 if (array[from] == null)
                 {
                     Report.ItemError(grid, grid, from, to);
-                    ReceiveChat("物品变换错误 - 请报告您尝试变换的物品和时间", ChatType.System);
+                    ReceiveChat("移动物品时发生错误 - 请报告移动的物品和时间", ChatType.System);
                     Enqueue(p);
                     return;
                 }
@@ -5134,8 +5134,11 @@ namespace Server.MirObjects
 
                 array[from] = i;
 
-                Report.ItemMoved(array[from], grid, grid, to, from);
-                
+                if (i != null)
+                {
+                    Report.ItemMoved(array[from], grid, grid, to, from);
+                }
+
                 p.Success = true;
                 Enqueue(p);
                 return;
@@ -5584,49 +5587,49 @@ namespace Server.MirObjects
                                 int time = item.Info.Durability;
 
                                 if (item.GetTotal(Stat.MaxDC) > 0)
-                                    AddBuff(BuffType.火龍祝福, this, time * Settings.Minute, new Stats { [Stat.MaxDC] = item.GetTotal(Stat.MaxDC) });
+                                    AddBuff(BuffType.攻击力提升, this, time * Settings.Minute, new Stats { [Stat.MaxDC] = item.GetTotal(Stat.MaxDC) });
 
                                 if (item.GetTotal(Stat.MaxMC) > 0)
-                                    AddBuff(BuffType.蓝魔之眼, this, time * Settings.Minute, new Stats { [Stat.MaxMC] = item.GetTotal(Stat.MaxMC) });
+                                    AddBuff(BuffType.魔法力提升, this, time * Settings.Minute, new Stats { [Stat.MaxMC] = item.GetTotal(Stat.MaxMC) });
 
                                 if (item.GetTotal(Stat.MaxSC) > 0)
-                                    AddBuff(BuffType.冰龍祝福, this, time * Settings.Minute, new Stats { [Stat.MaxSC] = item.GetTotal(Stat.MaxSC) });
+                                    AddBuff(BuffType.道术力提升, this, time * Settings.Minute, new Stats { [Stat.MaxSC] = item.GetTotal(Stat.MaxSC) });
 
                                 if (item.GetTotal(Stat.攻击速度) > 0)
-                                    AddBuff(BuffType.眼疾手快, this, time * Settings.Minute, new Stats { [Stat.攻击速度] = item.GetTotal(Stat.攻击速度) });
+                                    AddBuff(BuffType.攻击速度提升, this, time * Settings.Minute, new Stats { [Stat.攻击速度] = item.GetTotal(Stat.攻击速度) });
 
                                 if (item.GetTotal(Stat.HP) > 0)
-                                    AddBuff(BuffType.生命永驻, this, time * Settings.Minute, new Stats { [Stat.HP] = item.GetTotal(Stat.HP) });
+                                    AddBuff(BuffType.生命值提升, this, time * Settings.Minute, new Stats { [Stat.HP] = item.GetTotal(Stat.HP) });
 
                                 if (item.GetTotal(Stat.MP) > 0)
-                                    AddBuff(BuffType.法力常在, this, time * Settings.Minute, new Stats { [Stat.MP] = item.GetTotal(Stat.MP) });
+                                    AddBuff(BuffType.法力值提升, this, time * Settings.Minute, new Stats { [Stat.MP] = item.GetTotal(Stat.MP) });
 
                                 if (item.GetTotal(Stat.MaxAC) > 0)
-                                    AddBuff(BuffType.防御之力, this, time * Settings.Minute, new Stats { [Stat.MaxAC] = item.GetTotal(Stat.MaxAC) });
+                                    AddBuff(BuffType.防御提升, this, time * Settings.Minute, new Stats { [Stat.MaxAC] = item.GetTotal(Stat.MaxAC) });
 
                                 if (item.GetTotal(Stat.MaxMAC) > 0)
-                                    AddBuff(BuffType.抗魔屏障, this, time * Settings.Minute, new Stats { [Stat.MaxMAC] = item.GetTotal(Stat.MaxMAC) });
+                                    AddBuff(BuffType.魔法防御提升, this, time * Settings.Minute, new Stats { [Stat.MaxMAC] = item.GetTotal(Stat.MaxMAC) });
 
                                 if (item.GetTotal(Stat.背包负重) > 0)
-                                    AddBuff(BuffType.包罗万象, this, time * Settings.Minute, new Stats { [Stat.背包负重] = item.GetTotal(Stat.背包负重) });
+                                    AddBuff(BuffType.背包负重提升, this, time * Settings.Minute, new Stats { [Stat.背包负重] = item.GetTotal(Stat.背包负重) });
 
                                 if (item.GetTotal(Stat.准确) > 0)
-                                    AddBuff(BuffType.精确命中, this, time * Settings.Minute, new Stats { [Stat.准确] = item.GetTotal(Stat.准确) });
+                                    AddBuff(BuffType.准确命中提升, this, time * Settings.Minute, new Stats { [Stat.准确] = item.GetTotal(Stat.准确) });
 
                                 if (item.GetTotal(Stat.敏捷) > 0)
-                                    AddBuff(BuffType.敏捷加身, this, time * Settings.Minute, new Stats { [Stat.敏捷] = item.GetTotal(Stat.敏捷) });
+                                    AddBuff(BuffType.敏捷躲避提升, this, time * Settings.Minute, new Stats { [Stat.敏捷] = item.GetTotal(Stat.敏捷) });
                             }
                             break;
                         case 4: //Exp
                             {
                                 int time = item.Info.Durability;
-                                AddBuff(BuffType.经验丰富, this, Settings.Minute * time, new Stats { [Stat.经验增长数率] = item.GetTotal(Stat.幸运) });
+                                AddBuff(BuffType.获取经验提升, this, Settings.Minute * time, new Stats { [Stat.经验增长数率] = item.GetTotal(Stat.幸运) });
                             }
                             break;
                         case 5: //Drop
                             {
                                 int time = item.Info.Durability;
-                                AddBuff(BuffType.落物纷飞, this, Settings.Minute * time, new Stats { [Stat.物品掉落数率] = item.GetTotal(Stat.幸运) });
+                                AddBuff(BuffType.物品掉落提升, this, Settings.Minute * time, new Stats { [Stat.物品掉落数率] = item.GetTotal(Stat.幸运) });
                             }
                             break;
                         case 6:
@@ -5640,7 +5643,7 @@ namespace Server.MirObjects
                         case 8:
                             {
                                 int time = item.Info.Durability;
-                                AddBuff(BuffType.潜心修炼, this, Settings.Minute * time, new Stats { [Stat.技能熟练度倍率] = 3 });
+                                AddBuff(BuffType.技能经验提升, this, Settings.Minute * time, new Stats { [Stat.技能熟练度倍率] = 3 });
                             }
                             break;
                     }
@@ -5809,7 +5812,7 @@ namespace Server.MirObjects
                             }
                             Hero.AutoPot = true;
                             Enqueue(new S.UnlockHeroAutoPot());
-                            ReceiveChat("英雄封印已解锁", ChatType.Hint);
+                            ReceiveChat("英雄背包功能已解锁", ChatType.Hint);
                             break;
                         case 14: //Increase maximum hero count
                             if (Info.MaximumHeroCount >= Settings.MaximumHeroCount)
@@ -5951,7 +5954,7 @@ namespace Server.MirObjects
                                 break;
                             case 26://Wonderdrug
                                 {
-                                    if (HasBuff(BuffType.灵丹妙药, out _))
+                                    if (HasBuff(BuffType.奇异药水, out _))
                                     {
                                         ReceiveChat("特效已激活", ChatType.System);
                                         Enqueue(p);
@@ -5960,7 +5963,7 @@ namespace Server.MirObjects
 
                                     var time = item.Info.Durability;
 
-                                    AddBuff(BuffType.灵丹妙药, this, time * Settings.Minute, new Stats(item.AddedStats));
+                                    AddBuff(BuffType.奇异药水, this, time * Settings.Minute, new Stats(item.AddedStats));
                                 }
                                 break;
                             case 27://FortuneCookies
@@ -13910,29 +13913,6 @@ namespace Server.MirObjects
             }
 
             Enqueue(p);
-        }
-
-        public void SendNPCGoods(S.NPCGoods goods)
-        {
-            var chunks = Functions.SplitList(10, goods.List); // Split into chunks of 10..
-            if (chunks.Count == 1)
-            {
-                goods.Progress = 3;
-                Enqueue(goods);
-                return;
-            }
-
-            //  Loop through the chunks
-            for (var i = 0; i < chunks.Count; i++)
-            {
-                byte prog;
-
-                if (i == 0) prog = 1; // First List
-                else if (i == chunks.Count - 1) prog = 3; // Final List
-                else prog = 2; // Middle
-
-                Enqueue(new S.NPCGoods { Progress = prog, List = chunks[i], Rate = goods.Rate, Type = goods.Type, HideAddedStats = goods.HideAddedStats });
-            }
         }
     }
 }

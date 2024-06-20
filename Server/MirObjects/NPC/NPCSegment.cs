@@ -7,6 +7,7 @@ using System.Text.RegularExpressions;
 using S = ServerPackets;
 using Timer = Server.MirEnvir.Timer;
 using System;
+using System.Net;
 
 namespace Server.MirObjects
 {
@@ -387,6 +388,11 @@ namespace Server.MirObjects
                     if (parts.Length < 2) return;
 
                     CheckList.Add(new NPCChecks(CheckType.CheckBuff, parts[1]));
+                    break;
+                case "CHECKTRANSFORM":
+                    if (parts.Length < 2) return;
+
+                    CheckList.Add(new NPCChecks(CheckType.CheckTransform, parts[1]));
                     break;
             }
 
@@ -2681,7 +2687,16 @@ namespace Server.MirObjects
                             failed = !player.HasBuff(buffType);
                         }
                         break;
-
+                    case CheckType.CheckTransform:
+                        {
+                            if (!short.TryParse(param[0], out short transformType))
+                            {
+                                failed = true;
+                                break;
+                            }
+                            failed = player.TransformType != transformType;
+                        }
+                        break;
 
                 }
 

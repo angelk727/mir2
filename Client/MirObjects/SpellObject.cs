@@ -245,6 +245,7 @@ namespace Client.MirObjects
                     Blend = true;
                     break;
                 case Spell.HealingCircle:
+                    DrawColour = Color.FromArgb(128, 255, 255, 100); 
                     BodyLibrary = Libraries.Magic3;
                     DrawFrame = 630;
                     FrameInterval = 80;

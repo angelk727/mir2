@@ -252,13 +252,13 @@
                          NoTownTeleport = "回城禁用",
                          CanNotRandom = "随机禁用",
                          CanNotDungeon = "地牢禁用",
-                         CannotResurrection = "复活禁用",
+                         CannotResurrection = "当前状态下复活禁用",
                          CanNotDrop = "丢弃禁止",
                          NewMail = "新邮件到达",
                          CouldNotFindPlayer = "未发现玩家{0}",
                          BeenPoisoned = "你中毒了",
-                         AllowingMentorRequests = "允许了拜师请求",
-                         BlockingMentorRequests = "拒绝了拜师请求";
+                         AllowingMentorRequests = "拜师请求被认可",
+                         BlockingMentorRequests = "拜师请求被拒绝";
 
     //common
     public static string LowLevel = "等级不足",

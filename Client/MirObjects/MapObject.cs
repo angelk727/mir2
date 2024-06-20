@@ -277,6 +277,9 @@ namespace Client.MirObjects
 				case BuffType.游戏管理:
 					Effects.Add(new BuffEffect(Libraries.CHumEffect[5], 0, 1, 1200, this, true, type) { Repeat = true });
 					break;
+                case BuffType.华丽雨光:
+                    Effects.Add(new BuffEffect(Libraries.Magic3, 3470, 8, 1400, this, true, type) { Repeat = true });
+                    break;
                 case BuffType.GeneralMeowMeowShield:
                     Effects.Add(new BuffEffect(Libraries.Monsters[(ushort)Monster.GeneralMeowMeow], 569, 7, 700, this, true, type) { Repeat = true, Light = 1 });
                     SoundManager.PlaySound(8322);

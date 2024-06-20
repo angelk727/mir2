@@ -59,6 +59,7 @@
         ConquestOwner,
         CheckGuildNameList,
         CheckTimer,
-        CheckBuff
+        CheckBuff,
+        CheckTransform
     }
 }

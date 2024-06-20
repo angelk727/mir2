@@ -360,49 +360,49 @@ namespace Server.MirObjects
                                 int time = item.Info.Durability;
 
                                 if (item.GetTotal(Stat.MaxDC) > 0)
-                                    AddBuff(BuffType.火龍祝福, this, time * Settings.Minute, new Stats { [Stat.MaxDC] = item.GetTotal(Stat.MaxDC) });
+                                    AddBuff(BuffType.攻击力提升, this, time * Settings.Minute, new Stats { [Stat.MaxDC] = item.GetTotal(Stat.MaxDC) });
 
                                 if (item.GetTotal(Stat.MaxMC) > 0)
-                                    AddBuff(BuffType.蓝魔之眼, this, time * Settings.Minute, new Stats { [Stat.MaxMC] = item.GetTotal(Stat.MaxMC) });
+                                    AddBuff(BuffType.魔法力提升, this, time * Settings.Minute, new Stats { [Stat.MaxMC] = item.GetTotal(Stat.MaxMC) });
 
                                 if (item.GetTotal(Stat.MaxSC) > 0)
-                                    AddBuff(BuffType.冰龍祝福, this, time * Settings.Minute, new Stats { [Stat.MaxSC] = item.GetTotal(Stat.MaxSC) });
+                                    AddBuff(BuffType.道术力提升, this, time * Settings.Minute, new Stats { [Stat.MaxSC] = item.GetTotal(Stat.MaxSC) });
 
                                 if (item.GetTotal(Stat.攻击速度) > 0)
-                                    AddBuff(BuffType.眼疾手快, this, time * Settings.Minute, new Stats { [Stat.攻击速度] = item.GetTotal(Stat.攻击速度) });
+                                    AddBuff(BuffType.攻击速度提升, this, time * Settings.Minute, new Stats { [Stat.攻击速度] = item.GetTotal(Stat.攻击速度) });
 
                                 if (item.GetTotal(Stat.HP) > 0)
-                                    AddBuff(BuffType.生命永驻, this, time * Settings.Minute, new Stats { [Stat.HP] = item.GetTotal(Stat.HP) });
+                                    AddBuff(BuffType.生命值提升, this, time * Settings.Minute, new Stats { [Stat.HP] = item.GetTotal(Stat.HP) });
 
                                 if (item.GetTotal(Stat.MP) > 0)
-                                    AddBuff(BuffType.法力常在, this, time * Settings.Minute, new Stats { [Stat.MP] = item.GetTotal(Stat.MP) });
+                                    AddBuff(BuffType.法力值提升, this, time * Settings.Minute, new Stats { [Stat.MP] = item.GetTotal(Stat.MP) });
 
                                 if (item.GetTotal(Stat.MaxAC) > 0)
-                                    AddBuff(BuffType.防御之力, this, time * Settings.Minute, new Stats { [Stat.MaxAC] = item.GetTotal(Stat.MaxAC) });
+                                    AddBuff(BuffType.防御提升, this, time * Settings.Minute, new Stats { [Stat.MaxAC] = item.GetTotal(Stat.MaxAC) });
 
                                 if (item.GetTotal(Stat.MaxMAC) > 0)
-                                    AddBuff(BuffType.抗魔屏障, this, time * Settings.Minute, new Stats { [Stat.MaxMAC] = item.GetTotal(Stat.MaxMAC) });
+                                    AddBuff(BuffType.魔法防御提升, this, time * Settings.Minute, new Stats { [Stat.MaxMAC] = item.GetTotal(Stat.MaxMAC) });
 
                                 if (item.GetTotal(Stat.背包负重) > 0)
-                                    AddBuff(BuffType.包罗万象, this, time * Settings.Minute, new Stats { [Stat.背包负重] = item.GetTotal(Stat.背包负重) });
+                                    AddBuff(BuffType.背包负重提升, this, time * Settings.Minute, new Stats { [Stat.背包负重] = item.GetTotal(Stat.背包负重) });
 
                                 if (item.GetTotal(Stat.准确) > 0)
-                                    AddBuff(BuffType.精确命中, this, time * Settings.Minute, new Stats { [Stat.准确] = item.GetTotal(Stat.准确) });
+                                    AddBuff(BuffType.准确命中提升, this, time * Settings.Minute, new Stats { [Stat.准确] = item.GetTotal(Stat.准确) });
 
                                 if (item.GetTotal(Stat.敏捷) > 0)
-                                    AddBuff(BuffType.敏捷加身, this, time * Settings.Minute, new Stats { [Stat.敏捷] = item.GetTotal(Stat.敏捷) });
+                                    AddBuff(BuffType.敏捷躲避提升, this, time * Settings.Minute, new Stats { [Stat.敏捷] = item.GetTotal(Stat.敏捷) });
                             }
                             break;
                         case 4: //Exp
                             {
                                 int time = item.Info.Durability;
-                                AddBuff(BuffType.经验丰富, this, Settings.Minute * time, new Stats { [Stat.经验增长数率] = item.GetTotal(Stat.幸运) });
+                                AddBuff(BuffType.获取经验提升, this, Settings.Minute * time, new Stats { [Stat.经验增长数率] = item.GetTotal(Stat.幸运) });
                             }
                             break;
                         case 5: //Drop
                             {
                                 int time = item.Info.Durability;
-                                AddBuff(BuffType.落物纷飞, this, Settings.Minute * time, new Stats { [Stat.物品掉落数率] = item.GetTotal(Stat.幸运) });
+                                AddBuff(BuffType.物品掉落提升, this, Settings.Minute * time, new Stats { [Stat.物品掉落数率] = item.GetTotal(Stat.幸运) });
                             }
                             break;
                         case 6:
@@ -416,7 +416,7 @@ namespace Server.MirObjects
                         case 8:
                             {
                                 int time = item.Info.Durability;
-                                AddBuff(BuffType.潜心修炼, this, Settings.Minute * time, new Stats { [Stat.技能熟练度倍率] = 2 });
+                                AddBuff(BuffType.技能经验提升, this, Settings.Minute * time, new Stats { [Stat.技能熟练度倍率] = 2 });
                             }
                             break;
                     }
@@ -469,19 +469,6 @@ namespace Server.MirObjects
 
                             ReceiveChat("武器得到完全修复", ChatType.Hint);
                             Owner.Enqueue(new S.ItemRepaired { UniqueID = temp.UniqueID, MaxDura = temp.MaxDura, CurrentDura = temp.CurrentDura });
-                            break;
-                        case 6: //ResurrectionScroll
-                            if (CurrentMap.Info.NoReincarnation)
-                            {
-                                ReceiveChat(string.Format("当前地图禁用"), ChatType.System);
-                                Owner.Enqueue(p);
-                                return;
-                            }
-                            if (Dead)
-                            {
-                                MP = Stats[Stat.MP];
-                                Revive(MaxHealth, true);
-                            }
                             break;
                     }
                     break;
