@@ -2946,7 +2946,7 @@ namespace Server.MirObjects
 
                         player.GainGold(count);
                         
-                        string goldMsg = $"Player {player.Name} has been given {count} gold by GM: {Name}";
+                        string goldMsg = $"游戏管理员:{Name} 给予玩家:{player.Name} {count}金币";
                         MessageQueue.Enqueue(goldMsg);
                         Helpers.ChatSystem.SystemMessage(chatMessage: goldMsg);
 
@@ -2978,8 +2978,8 @@ namespace Server.MirObjects
 
                         player.IntelligentCreatureGainPearls((int)count);
 
-                        string pearlMsg = count == 1 ? $"Player {player.Name} has been given 1 pearl by GM: {Name}"
-                                                     : $"Player {player.Name} has been given {count} pearls by GM: {Name}";
+                        string pearlMsg = count == 1 ? $"游戏管理员:{Name} 给予玩家:{player.Name}一颗珍珠"
+                                                     : $"游戏管理员:{Name} 给予玩家:{player.Name} {count}颗珍珠";
 
                         MessageQueue.Enqueue(pearlMsg);
                         Helpers.ChatSystem.SystemMessage(chatMessage: pearlMsg);
@@ -3011,7 +3011,7 @@ namespace Server.MirObjects
 
                         player.GainCredit(count);
 
-                        string creditMsg = $"Player {player.Name} has been given {count} credit by GM: {Name}";
+                        string creditMsg = $"游戏管理员:{Name} 给予玩家:{player.Name} {count} 信用币";
 
                         MessageQueue.Enqueue(string.Format("玩家 {0} 已获得 {1} 信用币", player.Name, count));
                         Helpers.ChatSystem.SystemMessage(chatMessage: creditMsg);
@@ -3039,7 +3039,7 @@ namespace Server.MirObjects
 
                             if (player == null)
                             {
-                                ReceiveChat(string.Format("未找到玩家 {0} ", parts[1]), ChatType.System);
+                                ReceiveChat(string.Format("未找到玩家 {0}", parts[1]), ChatType.System);
                                 return;
                             }
                         }
@@ -3050,23 +3050,23 @@ namespace Server.MirObjects
                         {
                             player.Info.Magics.FirstOrDefault(e => e.Spell == skill).Level = spellLevel;
 
-                            string skillChangeMsg = $"{player} Spell {skill.ToString()} changed to level {spellLevel} by GM: {Name}";
+                            string skillChangeMsg = $"游戏管理员:{Name} 将玩家:{player.Name} 的技能 {skill.ToString()} 技能等级调整为 {spellLevel} 级";
 
-                            player.ReceiveChat(string.Format(" {0} 技能等级变更为 {1}", skill.ToString(), spellLevel), ChatType.Hint);
+                            player.ReceiveChat(string.Format(" {0} 技能等级调整为 {1}", skill.ToString(), spellLevel), ChatType.Hint);
                             Helpers.ChatSystem.SystemMessage(chatMessage: skillChangeMsg);
 
                             return;
                         }
                         else
                         {
-                            player.ReceiveChat(string.Format("{0} 技能等级已经是 {1}", skill.ToString(), spellLevel), ChatType.Hint);
+                            player.ReceiveChat(string.Format("{0} 的技能等级: {1}", skill.ToString(), spellLevel), ChatType.Hint);
 
                             if (player != this)
                             {
                                 ReceiveChat(string.Format("{0} 技能等级由 {1} 提升到 {2}", player.Name, skill.ToString(), spellLevel), ChatType.Hint);
                             }
 
-                            string skillLearnedMg = $"{player} Spell {skill.ToString()} learnt and set to level {spellLevel} by GM: {Name}";
+                            string skillLearnedMg = $"游戏管理员:{Name} 给玩家:{player.Name} 增加技能 {skill.ToString()} 并将技能等级调整为 {spellLevel} 级";
                             Helpers.ChatSystem.SystemMessage(chatMessage: skillLearnedMg);
 
                             player.Info.Magics.Add(magic);
@@ -3107,7 +3107,8 @@ namespace Server.MirObjects
                             ReceiveChat("公会战期间不能离开行会", ChatType.System);
                             return;
                         }
-
+                        if (MyGuild.Name == Settings.NewbieGuild && Settings.NewbieGuildBuffEnabled == true) RemoveBuff(BuffType.新人特效);
+                        if (HasBuff(BuffType.公会特效)) RemoveBuff(BuffType.公会特效);
                         MyGuild.DeleteMember(this, Name);
                         break;
 
@@ -3292,10 +3293,10 @@ namespace Server.MirObjects
 
                         data.Class = mirClass;
 
-                        ReceiveChat(string.Format("角色 {0} 已更改为 {1}", data.Name, data.Class), ChatType.System);
-                        MessageQueue.Enqueue(string.Format("玩家 {0} 已更改为 {1} by {2}", data.Name, data.Class, Name));
+                        ReceiveChat(string.Format("角色 {0} 职业已更改为 {1}", data.Name, data.Class), ChatType.System);
+                        MessageQueue.Enqueue(string.Format("游戏管理员:{2} 将玩家 {0} 职业更改为 {1}", data.Name, data.Class, Name));
 
-                        Helpers.ChatSystem.SystemMessage(chatMessage: $"{data.Player.Name} class changed to {data.Class.ToString()} by GM: {Name}");
+                        Helpers.ChatSystem.SystemMessage(chatMessage: $"游戏管理员:{Name} 将玩家:{data.Player.Name} 职业变更为 {data.Class.ToString()}");
 
                         if (data.Player != null)
                         data.Player.Connection.LogOut();

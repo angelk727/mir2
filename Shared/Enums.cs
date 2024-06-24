@@ -1474,6 +1474,7 @@ public enum BuffType : byte
     精力充沛,
     技巧项链,
     隐身戒指,
+    新人特效,
     技能经验提升,
     英雄灵气,
     暗影侵袭,
@@ -2031,7 +2032,7 @@ public enum HeroBehaviour : byte
     瞬回 = 6
 }
 
-public enum SpellToggleState: sbyte
+public enum SpellToggleState : sbyte
 {
     None = -1,
     False = 0,

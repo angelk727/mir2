@@ -346,6 +346,9 @@ namespace Client.MirScenes.Dialogs
                 case BuffType.公会特效:
                     text += GameScene.Scene.GuildDialog.ActiveStats;
                     break;
+				case BuffType.新人特效:
+                    text += "新人公会特效加成\n";
+                    break;
                 case BuffType.失明状态:
                     overridestats = true;
                     text += string.Format("进入黑暗状态\n准确度有所降低\n");
@@ -563,6 +566,8 @@ namespace Client.MirScenes.Dialogs
                     return 261;
                 case BuffType.技巧项链:
                     return 200;
+				case BuffType.新人特效:
+                    return 182;
                 case BuffType.安息之气:
                     return 186;
                 case BuffType.远古气息:

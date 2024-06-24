@@ -58,6 +58,9 @@
             label83 = new Label();
             GuildLevelListcomboBox = new ComboBox();
             tabPage3 = new TabPage();
+            NewbieGuildExptextBox = new TextBox();
+            label29 = new Label();
+            NewbieGuildBuffEnabledcheckBox = new CheckBox();
             BuffPanel = new Panel();
             bufftxtIcon = new TextBox();
             label28 = new Label();
@@ -442,6 +445,9 @@
             // 
             // tabPage3
             // 
+            tabPage3.Controls.Add(NewbieGuildExptextBox);
+            tabPage3.Controls.Add(label29);
+            tabPage3.Controls.Add(NewbieGuildBuffEnabledcheckBox);
             tabPage3.Controls.Add(BuffPanel);
             tabPage3.Controls.Add(BuffList);
             tabPage3.Controls.Add(BuffDelete);
@@ -454,6 +460,34 @@
             tabPage3.TabIndex = 2;
             tabPage3.Text = "公会特效";
             tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // NewbieGuildExptextBox
+            // 
+            NewbieGuildExptextBox.Location = new Point(747, 9);
+            NewbieGuildExptextBox.Name = "NewbieGuildExptextBox";
+            NewbieGuildExptextBox.Size = new Size(48, 23);
+            NewbieGuildExptextBox.TabIndex = 5;
+            NewbieGuildExptextBox.TextChanged += NewbieGuildExptextBox_TextChanged;
+            // 
+            // label29
+            // 
+            label29.AutoSize = true;
+            label29.Location = new Point(793, 13);
+            label29.Name = "label29";
+            label29.Size = new Size(19, 17);
+            label29.TabIndex = 6;
+            label29.Text = "%";
+            // 
+            // NewbieGuildBuffEnabledcheckBox
+            // 
+            NewbieGuildBuffEnabledcheckBox.AutoSize = true;
+            NewbieGuildBuffEnabledcheckBox.Location = new Point(597, 11);
+            NewbieGuildBuffEnabledcheckBox.Name = "NewbieGuildBuffEnabledcheckBox";
+            NewbieGuildBuffEnabledcheckBox.Size = new Size(147, 21);
+            NewbieGuildBuffEnabledcheckBox.TabIndex = 4;
+            NewbieGuildBuffEnabledcheckBox.Text = "启用新人公会经验特效";
+            NewbieGuildBuffEnabledcheckBox.UseVisualStyleBackColor = true;
+            NewbieGuildBuffEnabledcheckBox.CheckedChanged += NewbieGuildBuffEnabledcheckBox_CheckedChanged;
             // 
             // BuffPanel
             // 
@@ -1135,6 +1169,7 @@
             groupBox9.ResumeLayout(false);
             groupBox9.PerformLayout();
             tabPage3.ResumeLayout(false);
+            tabPage3.PerformLayout();
             BuffPanel.ResumeLayout(false);
             BuffPanel.PerformLayout();
             groupBox2.ResumeLayout(false);
@@ -1240,6 +1275,8 @@
         private System.Windows.Forms.TextBox BufftxtAc;
         private System.Windows.Forms.TextBox bufftxtIcon;
         private System.Windows.Forms.Label label28;
-
+        private TextBox NewbieGuildExptextBox;
+        private CheckBox NewbieGuildBuffEnabledcheckBox;
+        private Label label29;
     }
 }

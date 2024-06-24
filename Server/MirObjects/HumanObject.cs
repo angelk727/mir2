@@ -542,6 +542,11 @@ namespace Server.MirObjects
                 }
             }
 
+            if (MyGuild != null && MyGuild.Name == Settings.NewbieGuild && Settings.NewbieGuildBuffEnabled == true)
+            {
+                AddBuff(BuffType.新人特效, this, 0, new Stats { [Stat.经验增长数率] = Settings.NewbieGuildExpBuff });
+            }
+
             if (refresh)
             {
                 RefreshStats();
