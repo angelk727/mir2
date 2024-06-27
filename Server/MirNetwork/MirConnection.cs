@@ -193,7 +193,7 @@ namespace Server.MirNetwork
                     packetList.Add(cPacket.ToString());
                 }
 
-                MessageQueue.Enqueue($"{IPAddress} Disconnected, Large amount of Packets. LastPackets: {String.Join(",", packetList.Distinct())}.");
+                MessageQueue.Enqueue($"{IPAddress} 发现大量数据包，已断开连接 最后数据包为: {String.Join(",", packetList.Distinct())}.");
 
                 Disconnecting = true;
                 return;
@@ -723,7 +723,7 @@ namespace Server.MirNetwork
                     ConfirmItemRental();
                     break;
                 default:
-                    MessageQueue.Enqueue(string.Format("接受的数据包无效 路径 : {0}", p.Index));
+                    MessageQueue.Enqueue(string.Format("接收到的数据包无效 ID: {0}", p.Index));
                     break;
             }
         }

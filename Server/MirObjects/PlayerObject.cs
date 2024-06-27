@@ -10394,6 +10394,7 @@ namespace Server.MirObjects
                         FishingChanceCounter = 0;
 
                         UserItem dropItem = null;
+                        UserItem reel = rod.Slots[(int)FishingSlot.Reel];
 
                         foreach (DropInfo drop in Envir.FishingDrops.Where(x => x.Type == fishingCell.FishingAttribute))
                         {
@@ -10416,6 +10417,7 @@ namespace Server.MirObjects
                         else if (FreeSpace(Info.Inventory) < 1)
                         {
                             ReceiveChat(GameLanguage.NoBagSpace, ChatType.System);
+                            cancel = true;
                         }
                         else
                         {
@@ -10434,7 +10436,10 @@ namespace Server.MirObjects
 
                         DamagedFishingItem(FishingSlot.Reel, 1);
 
-                        cancel = true;
+                        if (!FishingAutocast || (FishingAutocast && reel.CurrentDura == 0))
+                        {
+                            cancel = true;
+                        }
                     }
                     else
                     {
@@ -13867,6 +13872,22 @@ namespace Server.MirObjects
             CurrentHero.SealCount++;
             Info.Heroes[CurrentHeroIndex] = null;
             CurrentHero = null;
+        }
+
+        public void DeleteHero()
+        {
+            if (CurrentHero == null) return;
+
+            if (Hero != null)
+            {
+                DespawnHero();
+                Info.HeroSpawned = false;
+                Enqueue(new S.UpdateHeroSpawnState { State = HeroSpawnState.None });
+            }
+
+            Info.Heroes[CurrentHeroIndex] = null;
+            CurrentHero = null;
+            ReceiveChat(string.Format("英雄已从游戏中删除"), ChatType.Hint);
         }
 
         private bool AddHero(HeroInfo hero)

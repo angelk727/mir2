@@ -22,7 +22,7 @@ namespace Client.MirScenes.Dialogs
             set { SetExpandedParameter(value); }
         }
 
-    protected const long FadeDelay = 55;
+        protected const long FadeDelay = 55;
         protected const float FadeRate = 0.2f;
 
         public BuffDialog()
@@ -173,7 +173,7 @@ namespace Client.MirScenes.Dialogs
             }
 
             if (IsMouseOver(CMain.MPoint))
-            { 
+            {
                 if (_buffCount == 0 || (!_fadedIn && CMain.Time <= _nextFadeTime))
                     return;
 
@@ -205,7 +205,7 @@ namespace Client.MirScenes.Dialogs
                     _fadedOut = true;
                     _fadedIn = false;
                 }
-                    
+
                 _nextFadeTime = CMain.Time + FadeDelay;
             }
         }
@@ -256,7 +256,7 @@ namespace Client.MirScenes.Dialogs
                 var oldWidth = Size.Width;
 
                 Index = 20;
-            
+
                 var newX = Location.X - Size.Width + oldWidth;
                 var newY = heightOffset;
                 Location = new Point(newX, newY);
@@ -346,7 +346,7 @@ namespace Client.MirScenes.Dialogs
                 case BuffType.公会特效:
                     text += GameScene.Scene.GuildDialog.ActiveStats;
                     break;
-				case BuffType.新人特效:
+                case BuffType.新人特效:
                     text += "新人公会特效加成\n";
                     break;
                 case BuffType.失明状态:
@@ -566,7 +566,7 @@ namespace Client.MirScenes.Dialogs
                     return 261;
                 case BuffType.技巧项链:
                     return 200;
-				case BuffType.新人特效:
+                case BuffType.新人特效:
                     return 182;
                 case BuffType.安息之气:
                     return 186;
@@ -608,7 +608,7 @@ namespace Client.MirScenes.Dialogs
                 case BuffType.获取经验提升:
                 case BuffType.物品掉落提升:
                 case BuffType.技能经验提升:
-                    return 161;               
+                    return 161;
                 default:
                     return 0;
             }

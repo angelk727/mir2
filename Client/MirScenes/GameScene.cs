@@ -43,6 +43,9 @@ namespace Client.MirScenes
         public static long MoveTime, AttackTime, NextRunTime, LogTime, LastRunTime;
         public static bool CanMove, CanRun;
 
+        private DateTime lastChangeTime = DateTime.MinValue;
+        private readonly TimeSpan changeCooldown = TimeSpan.FromSeconds(1);
+
         private bool hasHero;
         public bool HasHero
         {
@@ -715,9 +718,21 @@ namespace Client.MirScenes
                         Network.Enqueue(new C.ChangePMode { Mode = PetMode.FocusMasterTarget });
                         return;
                     case KeybindOptions.CreatureAutoPickup://semiauto!
+                        if (DateTime.Now - lastChangeTime < changeCooldown)
+                        {
+                            return;
+                        }
+                        lastChangeTime = DateTime.Now;
+
                         Network.Enqueue(new C.IntelligentCreaturePickup { MouseMode = false, Location = MapControl.MapLocation });
                         break;
                     case KeybindOptions.CreaturePickup:
+                        if (DateTime.Now - lastChangeTime < changeCooldown)
+                        {
+                            return;
+                        }
+                        lastChangeTime = DateTime.Now;
+
                         Network.Enqueue(new C.IntelligentCreaturePickup { MouseMode = true, Location = MapControl.MapLocation });
                         break;
                     case KeybindOptions.ChangeAttackmode:
@@ -814,6 +829,12 @@ namespace Client.MirScenes
 
         public void ChangePetMode()
         {
+            if (DateTime.Now - lastChangeTime < changeCooldown)
+            {
+                return;
+            }
+            lastChangeTime = DateTime.Now;
+
             switch (PMode)
             {
                 case PetMode.Both:
@@ -836,6 +857,12 @@ namespace Client.MirScenes
 
         public void ChangeAttackMode()
         {
+            if (DateTime.Now - lastChangeTime < changeCooldown)
+            {
+                return;
+            }
+            lastChangeTime = DateTime.Now;
+
             switch (AMode)
             {
                 case AttackMode.Peace:
