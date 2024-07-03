@@ -2132,6 +2132,7 @@ namespace Client.MirScenes
             MainDialog.PModeLabel.Visible = User.Class == MirClass.法师 || User.Class == MirClass.道士;
             HasHero = p.HasHero;
             HeroBehaviourPanel.UpdateBehaviour(p.HeroBehaviour);
+            HeroAIDialog.UpdateBehaviour(p.HeroBehaviour);
             Gold = p.Gold;
             Credit = p.Credit;
 
@@ -6297,6 +6298,7 @@ namespace Client.MirScenes
         {
             if (Hero == null) return;
             HeroBehaviourPanel.UpdateBehaviour(p.Behaviour);
+            HeroAIDialog.UpdateBehaviour(p.Behaviour);
         }
 
         private void NewHero(S.NewHero p)

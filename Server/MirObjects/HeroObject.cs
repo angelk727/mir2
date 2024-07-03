@@ -32,7 +32,7 @@ namespace Server.MirObjects
         {
             get
             {
-                return base.CanMove && !ActiveBlizzard && !ActiveReincarnation && (Owner.PMode == PetMode.MoveOnly || Owner.PMode == PetMode.Both || Owner.PMode == PetMode.FocusMasterTarget);
+                return base.CanMove && !ActiveBlizzard && !ActiveReincarnation && (Owner.Info.HeroBehaviour == HeroBehaviour.跟随 || Owner.Info.HeroBehaviour == HeroBehaviour.跑回 || Owner.Info.HeroBehaviour == HeroBehaviour.攻击 || Owner.Info.HeroBehaviour == HeroBehaviour.自定 || Owner.Info.HeroBehaviour == HeroBehaviour.反击);
             }
         }
 
@@ -40,28 +40,28 @@ namespace Server.MirObjects
         {
             get
             {
-                return base.CanWalk && !ActiveBlizzard && !ActiveReincarnation && (Owner.PMode == PetMode.MoveOnly || Owner.PMode == PetMode.Both || Owner.PMode == PetMode.FocusMasterTarget);
+                return base.CanWalk && !ActiveBlizzard && !ActiveReincarnation && (Owner.Info.HeroBehaviour == HeroBehaviour.跟随 || Owner.Info.HeroBehaviour == HeroBehaviour.跑回 || Owner.Info.HeroBehaviour == HeroBehaviour.攻击 || Owner.Info.HeroBehaviour == HeroBehaviour.自定 || Owner.Info.HeroBehaviour == HeroBehaviour.反击);
             }
         }
         public override bool CanRun
         {
             get
             {
-                return base.CanRun && !ActiveBlizzard && !ActiveReincarnation && (Owner.PMode == PetMode.MoveOnly || Owner.PMode == PetMode.Both || Owner.PMode == PetMode.FocusMasterTarget);
+                return base.CanRun && !ActiveBlizzard && !ActiveReincarnation && (Owner.Info.HeroBehaviour == HeroBehaviour.跟随 || Owner.Info.HeroBehaviour == HeroBehaviour.跑回 || Owner.Info.HeroBehaviour == HeroBehaviour.攻击 || Owner.Info.HeroBehaviour == HeroBehaviour.自定 || Owner.Info.HeroBehaviour == HeroBehaviour.反击);
             }
         }
         public override bool CanAttack
         {
             get
             {
-                return base.CanAttack && !ActiveBlizzard && !ActiveReincarnation && (Owner.PMode == PetMode.AttackOnly || Owner.PMode == PetMode.Both || Owner.PMode == PetMode.FocusMasterTarget);
+                return base.CanAttack && !ActiveBlizzard && !ActiveReincarnation && (Owner.Info.HeroBehaviour == HeroBehaviour.守护 || Owner.Info.HeroBehaviour == HeroBehaviour.攻击 || Owner.Info.HeroBehaviour == HeroBehaviour.自定 || Owner.Info.HeroBehaviour == HeroBehaviour.反击);
             }
         }
         protected override bool CanCast
         {
             get
             {
-                return base.CanCast && !ActiveBlizzard && !ActiveReincarnation && (Owner.PMode == PetMode.AttackOnly || Owner.PMode == PetMode.Both || Owner.PMode == PetMode.FocusMasterTarget);
+                return base.CanCast && !ActiveBlizzard && !ActiveReincarnation && (Owner.Info.HeroBehaviour == HeroBehaviour.守护 || Owner.Info.HeroBehaviour == HeroBehaviour.攻击 || Owner.Info.HeroBehaviour == HeroBehaviour.自定 || Owner.Info.HeroBehaviour == HeroBehaviour.反击);
             }
         }
 
@@ -755,26 +755,22 @@ namespace Server.MirObjects
             if ((!Functions.InRange(CurrentLocation, Owner.CurrentLocation, Globals.DataRange) || CurrentMap != Owner.CurrentMap) && CanMove)
                 OwnerRecall();
 
-            if (Dead) return;            
+            if (Dead) return;
 
-            if (Owner.PMode == PetMode.MoveOnly || Owner.PMode == PetMode.None)
+            if (Owner.Info.HeroBehaviour == HeroBehaviour.跟随 || Owner.Info.HeroBehaviour == HeroBehaviour.跑回)
+            {
                 Target = null;
-
-            if (Owner.Info.HeroBehaviour == HeroBehaviour.原地)
-            {
-                MoveTo(Owner.CurrentLocation);
-            };
-
-            if (Owner.Info.HeroBehaviour == HeroBehaviour.跑回)
-            {
-                if (Target != null) return;
 
                 if (Owner != null)
                 {
                     MoveTo(Owner.Back);
-                    Owner.Info.HeroBehaviour = HeroBehaviour.反击;
+
+                    if (Owner.Info.HeroBehaviour == HeroBehaviour.跑回)
+                    {
+                        Owner.Info.HeroBehaviour = HeroBehaviour.反击;
+                    }
                 }
-            };
+            }
 
             if (Owner.Info.HeroBehaviour == HeroBehaviour.瞬回)
             {

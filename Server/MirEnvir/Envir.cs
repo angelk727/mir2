@@ -2003,7 +2003,7 @@ namespace Server.MirEnvir
                     {
                         UpdateIPBlock(ipAddress, TimeSpan.FromSeconds(Settings.IPBlockSeconds));
 
-                        MessageQueue.Enqueue(ipAddress + " Disconnected, Too many connections.");
+                        MessageQueue.Enqueue(ipAddress + " 已断开连接，连接次数过于频繁");
                     }
                     else
                     {

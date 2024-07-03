@@ -2027,7 +2027,7 @@ public enum HeroBehaviour : byte
     反击 = 1,
     跟随 = 2,
     自定 = 3,
-    原地 = 4,
+    守护 = 4,
     跑回 = 5,
     瞬回 = 6
 }
