@@ -105,7 +105,7 @@ namespace Server.MirDatabase
                 new BuffInfo { Type = BuffType.安息之气, Properties = BuffProperty.RemoveOnDeath, StackType = BuffStackType.None },
                 new BuffInfo { Type = BuffType.远古气息, Properties = BuffProperty.RemoveOnDeath, StackType = BuffStackType.None },
                 new BuffInfo { Type = BuffType.华丽雨光, Properties = BuffProperty.RemoveOnDeath, StackType = BuffStackType.None, Visible = true },
-                new BuffInfo { Type = BuffType.龙之特效, Properties = BuffProperty.RemoveOnDeath, StackType = BuffStackType.StackStat, Visible = true },
+                new BuffInfo { Type = BuffType.龙之特效, Properties = BuffProperty.RemoveOnDeath, StackType = BuffStackType.AttrStackStat, Visible = true },
                 new BuffInfo { Type = BuffType.内尔族的灵药, Properties = BuffProperty.RemoveOnDeath, StackType = BuffStackType.None },
                 new BuffInfo { Type = BuffType.摩鲁的赤色药剂, Properties = BuffProperty.RemoveOnDeath, StackType = BuffStackType.None },
                 new BuffInfo { Type = BuffType.摩鲁的青色药剂, Properties = BuffProperty.RemoveOnDeath, StackType = BuffStackType.None },

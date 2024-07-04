@@ -1524,7 +1524,9 @@ public enum BuffStackType : byte
     StackStatAndDuration,
     Infinite,
     ResetStat,
-    ResetStatAndDuration
+    ResetStatAndDuration,
+    AttrStackStat,
+    AttrStackStatAndDuration
 }
 
 public enum DefenceType : byte

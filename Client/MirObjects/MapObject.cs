@@ -281,7 +281,7 @@ namespace Client.MirObjects
                     Effects.Add(new BuffEffect(Libraries.Magic3, 3470, 8, 1400, this, true, type) { Repeat = true });
                     break;
                 case BuffType.龙之特效:
-                    Effects.Add(new BuffEffect(Libraries.Magic3, 7040, 32, 3000, this, true, type) { Blend = true, Repeat = true, Delay = 9000 });
+                    Effects.Add(new BuffEffect(Libraries.Magic3, 7040, 32, 1600, this, true, type) { Blend = true, Repeat = true, Delay = 30000 });
                     break;
                 case BuffType.GeneralMeowMeowShield:
                     Effects.Add(new BuffEffect(Libraries.Monsters[(ushort)Monster.GeneralMeowMeow], 569, 7, 700, this, true, type) { Repeat = true, Light = 1 });

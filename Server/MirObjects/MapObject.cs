@@ -604,6 +604,19 @@ namespace Server.MirObjects
                                 }
                             }
                             break;
+                        case BuffStackType.AttrStackStat:
+                            if (stats != null)
+                            {
+                                foreach (var stat in stats.Values)
+                                {
+                                    if (buff.Stats.Values.ContainsKey(stat.Key))
+                                    {
+                                        continue;
+                                    }
+                                    buff.Stats[stat.Key] = stat.Value;
+                                }
+                            }
+                            break;
                         case BuffStackType.StackStatAndDuration:
                             {
                                 if (stats != null)
@@ -613,6 +626,20 @@ namespace Server.MirObjects
 
                                 buff.ExpireTime += duration;
                             }
+                            break;
+                        case BuffStackType.AttrStackStatAndDuration:
+                            if (stats != null)
+                            {
+                                foreach (var stat in stats.Values)
+                                {
+                                    if (buff.Stats.Values.ContainsKey(stat.Key))
+                                    {
+                                        continue;
+                                    }
+                                    buff.Stats[stat.Key] = stat.Value;
+                                }
+                            }
+                            buff.ExpireTime += duration;
                             break;
                         case BuffStackType.ResetStat:
                         {
