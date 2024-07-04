@@ -8,7 +8,6 @@
         public NPCActions(ActionType action, params string[] p)
         {
             Type = action;
-
             Params.AddRange(p);
         }
     }

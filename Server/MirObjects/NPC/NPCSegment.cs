@@ -2,12 +2,10 @@ using System.Drawing;
 ﻿using Server.MirDatabase;
 using Server.MirEnvir;
 using System.Globalization;
-using System.Numerics;
 using System.Text.RegularExpressions;
 using S = ServerPackets;
 using Timer = Server.MirEnvir.Timer;
 using System;
-using System.Net;
 
 namespace Server.MirObjects
 {
@@ -869,6 +867,7 @@ namespace Server.MirObjects
                         acts.Add(new NPCActions(ActionType.Mov, parts[1], valueToStore));
 
                     break;
+
                 case "CALC":
                     if (parts.Length < 4) return;
 
@@ -885,18 +884,24 @@ namespace Server.MirObjects
                         acts.Add(new NPCActions(ActionType.Calc, "%" + parts[1], parts[2], valueToStore, parts[1].Insert(1, "-")));
 
                     break;
+
                 case "GIVEBUFF":
                     if (parts.Length < 4) return;
 
-                    string visible = "";
-                    string infinite = "";
-                    string stackable = "";
+                    string visible = parts.Length > 3 ? parts[3] : "";
+                    string infinite = parts.Length > 4 ? parts[4] : "";
+                    string stackable = parts.Length > 5 ? parts[5] : "";
 
-                    if (parts.Length > 3) visible = parts[3];
-                    if (parts.Length > 4) infinite = parts[4];
-                    if (parts.Length > 5) stackable = parts[5];
+                    var additionalParams = new List<string>();
+                    for (int i = 6; i < parts.Length; i++)
+                    {
+                        additionalParams.Add(parts[i]);
+                    }
 
-                    acts.Add(new NPCActions(ActionType.GiveBuff, parts[1], parts[2], visible, infinite, stackable));
+                    var allParams = new List<string> { parts[1], parts[2], visible, infinite, stackable };
+                    allParams.AddRange(additionalParams);
+
+                    acts.Add(new NPCActions(ActionType.GiveBuff, allParams.ToArray()));
                     break;
 
                 case "REMOVEBUFF":
@@ -3557,41 +3562,79 @@ namespace Server.MirObjects
                                 return;
                             }
 
-                            if (!Enum.IsDefined(typeof(BuffType), param[0])) return;
-
                             int.TryParse(param[1], out int duration);
                             bool.TryParse(param[2], out bool infinite);
                             bool.TryParse(param[3], out bool visible);
                             bool.TryParse(param[4], out bool stackable);
 
                             var matchedLine = lines.FirstOrDefault(l => l.StartsWith(param[0] + ";"));
+                            var buffStats = new Stats();
+                            var initialStats = new Dictionary<Stat, int>();
+                            bool canAddBuff = true;
+
                             if (matchedLine != null)
                             {
                                 var statsPart = matchedLine.Substring(matchedLine.IndexOf(';') + 1).Trim(';');
                                 var potionStats = statsPart.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
 
-                                var buffStats = new Stats();
-
                                 foreach (var stat in potionStats)
                                 {
                                     var statParts = stat.Split('=');
-                                    if (statParts.Length != 2)
-                                        continue;
+                                    if (statParts.Length != 2) continue;
 
                                     var statName = statParts[0].Trim();
                                     var statValueString = statParts[1].Trim();
 
-                                    if (string.IsNullOrWhiteSpace(statValueString))
-                                        continue;
+                                    if (string.IsNullOrWhiteSpace(statValueString)) continue;
 
                                     if (int.TryParse(statValueString, out var statValue))
                                     {
-                                        if (Enum.TryParse<Stat>(statName, out var enumValue))
+                                        if (Enum.TryParse(statName, out Stat enumValue))
                                         {
                                             buffStats[enumValue] = statValue;
+                                            initialStats[enumValue] = statValue;
                                         }
                                     }
                                 }
+                            }
+
+                            if (param.Count > 5)
+                            {
+                                for (int j = 5; j < param.Count; j++)
+                                {
+                                    var extraStatParts = param[j].Split('=');
+                                    if (extraStatParts.Length != 2) continue;
+
+                                    var extraStatName = extraStatParts[0].Trim();
+                                    var extraStatValueString = extraStatParts[1].Trim();
+
+                                    if (string.IsNullOrWhiteSpace(extraStatValueString)) continue;
+
+                                    if (!int.TryParse(extraStatValueString, out var extraStatValue)) continue;
+
+                                    if (!Enum.TryParse(extraStatName, out Stat extraEnumValue) || !Enum.IsDefined(typeof(Stat), extraEnumValue))
+                                    {
+                                        continue;
+                                    }
+
+                                    if (initialStats.TryGetValue(extraEnumValue, out var initialValue) && initialValue != 0)
+                                    {
+                                        canAddBuff = false;
+                                        break;
+                                    }
+
+                                    if (!initialStats.ContainsKey(extraEnumValue))
+                                    {
+                                        canAddBuff = false;
+                                        break;
+                                    }
+
+                                    buffStats[extraEnumValue] = extraStatValue;
+                                }
+                            }
+
+                            if (canAddBuff)
+                            {
                                 player.AddBuff((BuffType)(byte)Enum.Parse(typeof(BuffType), param[0], true), player, Settings.Second * duration, buffStats, visible);
                             }
                         }
@@ -3884,7 +3927,7 @@ namespace Server.MirObjects
                                 player.MyGuild.SendServerPacket(new S.GuildStorageGoldChange() { Type = 2, Amount = (uint)conquestSiege.GetRepairCost() });
 
                                 conquestSiege.Repair();
-                            } 
+                            }
                         }
                         break;
                     case ActionType.TakeConquestGold:
@@ -3948,7 +3991,7 @@ namespace Server.MirObjects
 
                                 pl.BroadcastInfo();
                             }
-                                
+
                         }
                         break;
                     case ActionType.ScheduleConquest:
@@ -4173,7 +4216,7 @@ namespace Server.MirObjects
                         break;
                     case ActionType.ConquestRepairAll:
                         {
-                            if(!player.IsGM)
+                            if (!player.IsGM)
                             {
                                 player.ReceiveChat($"非游戏管理员，该命令对你不可用", ChatType.System);
                                 MessageQueue.Enqueue($"非管理员玩家: {player.Name} 发起了 @CONQUESTREPAIRALL 命令");
@@ -4255,7 +4298,7 @@ namespace Server.MirObjects
                             player.MyGuild.GainExp(tempUint);
                         }
                         break;
-                
+
                 }
             }
         }
@@ -4502,8 +4545,6 @@ namespace Server.MirObjects
         {
             Act(ElseActList);
         }
-
-
 
         public static bool Compare<T>(string op, T left, T right) where T : IComparable<T>
         {
