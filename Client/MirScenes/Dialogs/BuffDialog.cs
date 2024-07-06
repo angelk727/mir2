@@ -363,7 +363,7 @@ namespace Client.MirScenes.Dialogs
                     text += "来自雨光的加成\n";
                     break;
                 case BuffType.龙之特效:
-                    text += "龙之特效增益加成\n";
+                    text += "特效增益加成\n";
                     break;
                 case BuffType.英雄灵气:
                     text += "英雄在线加成\n";

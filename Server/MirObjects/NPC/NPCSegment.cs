@@ -5,7 +5,6 @@ using System.Globalization;
 using System.Text.RegularExpressions;
 using S = ServerPackets;
 using Timer = Server.MirEnvir.Timer;
-using System;
 
 namespace Server.MirObjects
 {
@@ -1706,7 +1705,7 @@ namespace Server.MirObjects
                         }
                         catch (ArgumentException)
                         {
-                            MessageQueue.Enqueue(string.Format("操作不正确: {0}, 页: {1}", param[1], Key));
+                            MessageQueue.Enqueue(string.Format("NPC命令CHECKCALC中错误使用 {0} 操作符, 页码: {1} ", param[1], Key));
                             return true;
                         }
                         break;
@@ -1764,7 +1763,7 @@ namespace Server.MirObjects
                             }
                             catch (ArgumentException)
                             {
-                                MessageQueue.Enqueue(string.Format("操作不正确: {0}, 页: {1}", param[0], Key));
+                                MessageQueue.Enqueue(string.Format("以怪物为对象的NPC命令LEVEL中错误使用 {0} 操作符, 页码: {1}", param[0], Key));
                                 return true;
                             }
                         }
@@ -1909,7 +1908,7 @@ namespace Server.MirObjects
                         }
                         catch (ArgumentException)
                         {
-                            MessageQueue.Enqueue(string.Format("操作不正确: {0}, 页: {1}", param[1], Key));
+                            MessageQueue.Enqueue(string.Format("以怪物为对象的NPC命令CHECKCALC中错误使用 {0} 操作符,页码: {1} ", param[1], Key));
                             return true;
                         }
                         break;
@@ -1966,7 +1965,7 @@ namespace Server.MirObjects
                             }
                             catch (ArgumentException)
                             {
-                                MessageQueue.Enqueue(string.Format("操作不正确: {0}, 页: {1}", param[0], Key));
+                                MessageQueue.Enqueue(string.Format("以玩家为对象的NPC命令LEVEL中错误使用 {0} 操作符, 页码: {1}", param[0], Key));
                                 return true;
                             }
                         }
@@ -1985,7 +1984,7 @@ namespace Server.MirObjects
                         }
                         catch (ArgumentException)
                         {
-                            MessageQueue.Enqueue(string.Format("操作不正确: {0}, 页: {1}", param[0], Key));
+                            MessageQueue.Enqueue(string.Format("以玩家为对象的NPC命令CHECKGOLD中错误使用 {0} 操作符, 页码: {1}", param[0], Key));
                             return true;
                         }
                         break;
@@ -2002,7 +2001,7 @@ namespace Server.MirObjects
                         }
                         catch (ArgumentException)
                         {
-                            MessageQueue.Enqueue(string.Format("操作不正确: {0}, 页: {1}", param[0], Key));
+                            MessageQueue.Enqueue(string.Format("以玩家为对象的NPC命令CHECKGUILDGOLD中错误使用 {0} 操作符, 页码: {1}", param[0], Key));
                             return true;
                         }
                         break;
@@ -2019,7 +2018,7 @@ namespace Server.MirObjects
                         }
                         catch (ArgumentException)
                         {
-                            MessageQueue.Enqueue(string.Format("操作不正确: {0}, 页: {1}", param[0], Key));
+                            MessageQueue.Enqueue(string.Format("以玩家为对象的NPC命令CHECKCREDIT中错误使用 {0} 操作符, 页码: {1}", param[0], Key));
                             return true;
                         }
                         break;
@@ -2153,7 +2152,7 @@ namespace Server.MirObjects
                         }
                         catch (ArgumentException)
                         {
-                            MessageQueue.Enqueue(string.Format("操作不正确: {0}, 页: {1}", param[0], Key));
+                            MessageQueue.Enqueue(string.Format("以玩家为对象的NPC命令CHECKPOINT中错误使用 {0} 操作符, 页码: {1}", param[0], Key));
                             return true;
                         }
                         break;
@@ -2225,7 +2224,9 @@ namespace Server.MirObjects
                             break;
                         }
 
-                        failed = !Compare(param[0], map.MonsterCount, tempInt);
+                        int actualMonsterCount = map.MonsterCount - player.Pets.Count();
+
+                        failed = !Compare(param[0], actualMonsterCount, tempInt);
 
                         break;
 
@@ -2347,7 +2348,7 @@ namespace Server.MirObjects
                         }
                         catch (ArgumentException)
                         {
-                            MessageQueue.Enqueue(string.Format("操作不正确: {0}, 页: {1}", param[1], Key));
+                            MessageQueue.Enqueue(string.Format("以玩家为对象的NPC命令CHECKCALC中错误使用 {0} 操作符, 页码: {1} ", param[1], Key));
                             return true;
                         }
                         break;
@@ -2438,7 +2439,7 @@ namespace Server.MirObjects
                         }
                         catch (ArgumentException)
                         {
-                            MessageQueue.Enqueue(string.Format("操作不正确: {0}, 页: {1}", param[0], Key));
+                            MessageQueue.Enqueue(string.Format("以玩家为对象的NPC命令CHECKCONQUEST中错误使用 {0} 操作符, 页码: {1}", param[0], Key));
                             return true;
                         }
                         break;
@@ -2471,7 +2472,7 @@ namespace Server.MirObjects
                         }
                         catch (ArgumentException)
                         {
-                            MessageQueue.Enqueue(string.Format("操作不正确: {0}, 页: {1}", param[0], Key));
+                            MessageQueue.Enqueue(string.Format("以玩家为对象的NPC命令AFFORDGUARD中错误使用 {0} 操作符, 页码: {1}", param[0], Key));
                             return true;
                         }
                         break;
@@ -2504,7 +2505,7 @@ namespace Server.MirObjects
                         }
                         catch (ArgumentException)
                         {
-                            MessageQueue.Enqueue(string.Format("操作不正确: {0}, 页: {1}", param[0], Key));
+                            MessageQueue.Enqueue(string.Format("以玩家为对象的NPC命令AFFORDGATE中错误使用 {0} 操作符, 页码: {1}", param[0], Key));
                             return true;
                         }
                         break;
@@ -2537,7 +2538,7 @@ namespace Server.MirObjects
                         }
                         catch (ArgumentException)
                         {
-                            MessageQueue.Enqueue(string.Format("操作不正确: {0}, 页: {1}", param[0], Key));
+                            MessageQueue.Enqueue(string.Format("以玩家为对象的NPC命令AFFORDWALL中错误使用 {0} 操作符, 页码: {1}", param[0], Key));
                             return true;
                         }
                         break;
@@ -2570,7 +2571,7 @@ namespace Server.MirObjects
                         }
                         catch (ArgumentException)
                         {
-                            MessageQueue.Enqueue(string.Format("操作不正确: {0}, 页: {1}", param[0], Key));
+                            MessageQueue.Enqueue(string.Format("以玩家为对象的NPC命令AFFORDSIEGE中错误使用 {0} 操作符, 页码: {1}", param[0], Key));
                             return true;
                         }
                         break;
@@ -2614,7 +2615,7 @@ namespace Server.MirObjects
                         }
                         catch (ArgumentException)
                         {
-                            MessageQueue.Enqueue(string.Format("操作不正确: {0}, 页: {1}", param[0], Key));
+                            MessageQueue.Enqueue(string.Format("以玩家为对象的NPC命令CONQUESTAVAILABLE中错误使用 {0} 操作符, 页码: {1}", param[0], Key));
                             return true;
                         }
                         break;
@@ -2641,7 +2642,7 @@ namespace Server.MirObjects
                         }
                         catch (ArgumentException)
                         {
-                            MessageQueue.Enqueue(string.Format("操作不正确: {0}, 页: {1}", param[0], Key));
+                            MessageQueue.Enqueue(string.Format("以玩家为对象的NPC命令CONQUESTOWNER错误使用 {0} 操作符, 页码: {1}", param[0], Key));
                             return true;
                         }
                         break;
@@ -2680,7 +2681,7 @@ namespace Server.MirObjects
                             }
                             catch (ArgumentException)
                             {
-                                MessageQueue.Enqueue(string.Format("操作不正确: {0}, 页: {1}", param[0], Key));
+                                MessageQueue.Enqueue(string.Format("以玩家为对象的NPC命令CHECKTIMER中错误使用 {0} 操作符, 页码: {1}", param[0], Key));
                                 return true;
                             }
                         }
@@ -2963,7 +2964,7 @@ namespace Server.MirObjects
 
                             if (info == null)
                             {
-                                MessageQueue.Enqueue(string.Format("无法获取物品信息: {0}, 页: {1}", param[0], Key));
+                                MessageQueue.Enqueue(string.Format("无法获取物品信息: {0}, 页码: {1}", param[0], Key));
                                 break;
                             }
 
@@ -2973,7 +2974,7 @@ namespace Server.MirObjects
 
                                 if (item == null)
                                 {
-                                    MessageQueue.Enqueue(string.Format("无法创建用户物品: {0}, 页: {1}", param[0], Key));
+                                    MessageQueue.Enqueue(string.Format("无法创建用户物品: {0}, 页码: {1}", param[0], Key));
                                     return;
                                 }
 
@@ -3004,7 +3005,7 @@ namespace Server.MirObjects
 
                             if (info == null)
                             {
-                                MessageQueue.Enqueue(string.Format("无法获取物品信息: {0}, 页: {1}", param[0], Key));
+                                MessageQueue.Enqueue(string.Format("TAKEITEM命令未能获取物品信息: {0}, 页码: {1}", param[0], Key));
                                 break;
                             }
 
@@ -3467,6 +3468,7 @@ namespace Server.MirObjects
                                     MapObject ob = cell.Objects[j];
 
                                     if (ob.Race != ObjectType.Monster) continue;
+                                    if (ob.Master != null && ob.Master.Race == ObjectType.Player) continue;
                                     if (ob.Dead) continue;
 
                                     if (!string.IsNullOrEmpty(param[2]) && string.Compare(param[2], ((MonsterObject)ob).Info.Name, true) != 0)
@@ -3477,6 +3479,7 @@ namespace Server.MirObjects
                             }
                         }
                         break;
+
                     case ActionType.GroupRecall:
                         {
                             if (player.GroupMembers == null) return;
@@ -3536,7 +3539,7 @@ namespace Server.MirObjects
                                 }
                                 catch (ArgumentException)
                                 {
-                                    MessageQueue.Enqueue(string.Format("操作不正确: {0}, 页: {1}", param[1], Key));
+                                    MessageQueue.Enqueue(string.Format("以列表的玩家为对象的NPC命令CALC中错误使用 {0} 操作符, 页码: {1}", param[1], Key));
                                 }
                             }
                             else
@@ -3722,7 +3725,7 @@ namespace Server.MirObjects
 
                             if (info == null)
                             {
-                                MessageQueue.Enqueue(string.Format("无法获取物品信息: {0}, 页: {1}", param[0], Key));
+                                MessageQueue.Enqueue(string.Format("使用ADDMAILITEM命令无法获取物品信息: {0}, 页码: {1}", param[0], Key));
                                 break;
                             }
 
@@ -3732,7 +3735,7 @@ namespace Server.MirObjects
 
                                 if (item == null)
                                 {
-                                    MessageQueue.Enqueue(string.Format("无法创建用户物品: {0}, 页: {1}", param[0], Key));
+                                    MessageQueue.Enqueue(string.Format("使用ADDMAILITEM命令无法创建用户物品: {0}, 页码: {1}", param[0], Key));
                                     return;
                                 }
 
@@ -4218,8 +4221,8 @@ namespace Server.MirObjects
                         {
                             if (!player.IsGM)
                             {
-                                player.ReceiveChat($"非游戏管理员，该命令对你不可用", ChatType.System);
-                                MessageQueue.Enqueue($"非管理员玩家: {player.Name} 发起了 @CONQUESTREPAIRALL 命令");
+                                player.ReceiveChat($"非游戏管理员，该命令无效", ChatType.System);
+                                MessageQueue.Enqueue($"非管理员玩家: {player.Name} 调用了 @CONQUESTREPAIRALL 命令");
                                 return;
                             }
 
@@ -4227,16 +4230,16 @@ namespace Server.MirObjects
                             var conquest = Envir.Conquests.FirstOrDefault(z => z.Info.Index == tempInt);
                             if (conquest == null) return;
 
-                            MessageQueue.Enqueue($"@CONQUESTREPAIRALL invoked by GM: {player.Name} on account index: {player.Info.AccountInfo.Index}");
+                            MessageQueue.Enqueue($"游戏管理员:{player.Name} 在账户目录为:{player.Info.AccountInfo.Index}上调用了 @CONQUESTREPAIRALL 命令");
                             MessageQueue.Enqueue($"攻城战: {conquest.Info.Name}");
 
                             if (conquest.Guild != null)
                             {
-                                MessageQueue.Enqueue($"拥有者: {conquest.Guild.Name}");
+                                MessageQueue.Enqueue($"城堡拥有者: {conquest.Guild.Name}");
                             }
                             else
                             {
-                                MessageQueue.Enqueue($"当前没有拥有者");
+                                MessageQueue.Enqueue($"城堡当前没有拥有者");
                             }
 
                             int _fixed = 0;
@@ -4443,7 +4446,7 @@ namespace Server.MirObjects
                                 }
                                 catch (ArgumentException)
                                 {
-                                    MessageQueue.Enqueue(string.Format("操作不正确: {0}, 页: {1}", param[1], Key));
+                                    MessageQueue.Enqueue(string.Format("以列表的怪物为对象的NPC命令CALC中错误使用 {0} 操作符: {0}, 页码: {1}", param[1], Key));
                                 }
                             }
                             else

@@ -847,7 +847,7 @@ namespace Server.MirObjects
 
                     if (!found)
                     {
-                        MessageQueue.Enqueue(string.Format("玩家: {0} 执行NPC脚本命令: '{1}' 被阻 ", player.Name, key));
+                        MessageQueue.Enqueue(string.Format("玩家: {0} 执行NPC脚本命令: '{1}' 被阻止 ", player.Name, key));
                         return;
                     }
                 }
