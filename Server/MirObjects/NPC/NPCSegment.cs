@@ -1370,6 +1370,9 @@ namespace Server.MirObjects
                 case "MAP":
                     newValue = player.CurrentMap.Info.FileName;
                     break;
+                case "MAPNAME":
+                    newValue = player.CurrentMap.Info.Title;
+                    break;
                 case "X_COORD":
                     newValue = player.CurrentLocation.X.ToString();
                     break;
@@ -1533,6 +1536,9 @@ namespace Server.MirObjects
                     break;
                 case "MAP":
                     newValue = Monster.CurrentMap.Info.FileName;
+                    break;
+                case "MAPNAME":
+                    newValue = Monster.CurrentMap.Info.Title;
                     break;
                 case "X_COORD":
                     newValue = Monster.CurrentLocation.X.ToString();

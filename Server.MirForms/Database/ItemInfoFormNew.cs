@@ -302,7 +302,7 @@ namespace Server.Database
                 return;
             }
 
-            string rowFilter = string.Format("([ItemType] = '{0}' OR '{0}' = -1) AND [ItemName] LIKE '%{1}%'", filterType, filterText);
+            string rowFilter = string.Format("([ItemType] = '{0}' 或 '{0}' = -1) 并且 [ItemName] 包含 '%{1}%'", filterType, filterText);
 
             (itemInfoGridView.DataSource as DataTable).DefaultView.RowFilter = rowFilter;
         }

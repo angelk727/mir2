@@ -33,9 +33,9 @@ namespace AutoPatcherAdmin
 
         private void CompleteDownload()
         {
-            FileLabel.Text = "Complete...";
-            SpeedLabel.Text = "Complete...";
-            ActionLabel.Text = "Complete...";
+            FileLabel.Text = "已完成...";
+            SpeedLabel.Text = "已完成...";
+            ActionLabel.Text = "已完成...";
 
             progressBar1.Value = 100;
             progressBar2.Value = 100;
@@ -47,9 +47,9 @@ namespace AutoPatcherAdmin
 
         private void CompleteUpload()
         {
-            FileLabel.Text = "Complete...";
-            SpeedLabel.Text = "Complete...";
-            ActionLabel.Text = "Complete...";
+            FileLabel.Text = "已完成...";
+            SpeedLabel.Text = "已完成...";
+            ActionLabel.Text = "已完成...";
 
             progressBar1.Value = 100;
             progressBar2.Value = 100;
@@ -339,7 +339,7 @@ namespace AutoPatcherAdmin
                 FileLabel.Text = e.FileName.TrimStart(TempUploadDirectory.ToCharArray()).TrimStart('\\');
                 SpeedLabel.Text = ((double)e.CPS / 1024).ToString("0.##") + " KB/s";
 
-                ActionLabel.Text = string.Format("Uploading... Files: {0}", uploadCount);
+                ActionLabel.Text = string.Format("上传中... 文件数量: {0}", uploadCount);
             };
 
             session.FileTransferred += (o, e) =>

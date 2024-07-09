@@ -2249,8 +2249,8 @@ namespace Server.MirObjects
                                 GainItem(item);
                             }
 
-                            ReceiveChat(string.Format("{0} x{1} has been created.", iInfo.FriendlyName, tempCount), ChatType.System);
-                            MessageQueue.Enqueue(string.Format("Player {0} has attempted to Create {1} x{2}", Name, iInfo.Name, tempCount));
+                            ReceiveChat(string.Format("{0} x{1} 已被制造", iInfo.FriendlyName, tempCount), ChatType.System);
+                            MessageQueue.Enqueue(string.Format("玩家 {0} 试图制造 {1} x{2}", Name, iInfo.Name, tempCount));
                         }
                         break;
                     case "CLEARBUFFS":
@@ -2524,7 +2524,7 @@ namespace Server.MirObjects
                         for (int i = 0; i < GroupMembers.Count; i++)
                         {
                             PlayerObject playerSend = GroupMembers[i];
-                            playerSend.ReceiveChat(string.Format("{0} has rolled a {1}", Name, diceNum), ChatType.Group);
+                            playerSend.ReceiveChat(string.Format("{0} 掷出了 {1}", Name, diceNum), ChatType.Group);
                         }
                         break;
 
@@ -2542,14 +2542,14 @@ namespace Server.MirObjects
 
                             if (info == null)
                             {
-                                ReceiveChat(string.Format("Player {0} was not found", parts[1]), ChatType.System);
+                                ReceiveChat(string.Format("未找到玩家 {0}", parts[1]), ChatType.System);
                                 return;
                             }
 
                             Envir.SaveArchivedCharacter(info);
 
-                            ReceiveChat(string.Format("Player {0} has been backed up", info.Name), ChatType.System);
-                            MessageQueue.Enqueue(string.Format("Player {0} has been backed up by {1}", info.Name, Name));
+                            ReceiveChat(string.Format("玩家 {0} 已被备份", info.Name), ChatType.System);
+                            MessageQueue.Enqueue(string.Format("玩家 {0} 已被 {1} 备份", info.Name, Name));
                         }
                         break;
 
@@ -2561,13 +2561,13 @@ namespace Server.MirObjects
 
                             if (data == null)
                             {
-                                ReceiveChat(string.Format("Player {0} was not found", parts[1]), ChatType.System);
+                                ReceiveChat(string.Format("未找到玩家 {0}", parts[1]), ChatType.System);
                                 return;
                             }
 
                             if (data == Info)
                             {
-                                ReceiveChat("Cannot archive the player you are on", ChatType.System);
+                                ReceiveChat("不能归档当前玩家", ChatType.System);
                                 return;
                             }
 
@@ -2575,7 +2575,7 @@ namespace Server.MirObjects
 
                             if (account == null)
                             {
-                                ReceiveChat(string.Format("Player {0} was not found in any account", parts[1]), ChatType.System);
+                                ReceiveChat(string.Format("未在任何账户中找到玩家 {0}", parts[1]), ChatType.System);
                                 return;
                             }
 
@@ -2584,8 +2584,8 @@ namespace Server.MirObjects
                             Envir.CharacterList.Remove(data);
                             account.Characters.Remove(data);
 
-                            ReceiveChat(string.Format("Player {0} has been archived", data.Name), ChatType.System);
-                            MessageQueue.Enqueue(string.Format("Player {0} has been archived by {1}", data.Name, Name));
+                            ReceiveChat(string.Format("玩家 {0} 已被归档", data.Name), ChatType.System);
+                            MessageQueue.Enqueue(string.Format("玩家 {0} 已被 {1} 归档", data.Name, Name));
                         }
                         break;
 
@@ -2599,7 +2599,7 @@ namespace Server.MirObjects
 
                             if (bak == null)
                             {
-                                ReceiveChat(string.Format("Player {0} 无法加载-请尝试指定完整的存档文件名", parts[1]), ChatType.System);
+                                ReceiveChat(string.Format("玩家 {0} 无法加载-请尝试指定完整的存档文件名", parts[1]), ChatType.System);
                                 return;
                             }
 
@@ -2607,20 +2607,20 @@ namespace Server.MirObjects
 
                             if (info == null)
                             {
-                                ReceiveChat(string.Format("Player {0} was not found", parts[1]), ChatType.System);
+                                ReceiveChat(string.Format("未找到玩家 {0}", parts[1]), ChatType.System);
                                 return;
                             }
 
                             if (info.Index != bak.Index)
                             {
-                                ReceiveChat("Cannot load this player due to mismatching ID's", ChatType.System);
+                                ReceiveChat("由于ID不匹配，无法加载该玩家", ChatType.System);
                                 return;
                             }
 
                             info = bak;
 
-                            ReceiveChat(string.Format("Player {0} has been loaded", info.Name), ChatType.System);
-                            MessageQueue.Enqueue(string.Format("Player {0} has been loaded by {1}", info.Name, Name));
+                            ReceiveChat(string.Format("玩家 {0} 已被加载", info.Name), ChatType.System);
+                            MessageQueue.Enqueue(string.Format("玩家 {0} 已被 {1} 加载", info.Name, Name));
                         }
                         break;
 
@@ -2657,7 +2657,7 @@ namespace Server.MirObjects
 
                                     if (data == null)
                                     {
-                                        ReceiveChat(string.Format("Player {0} 无法恢复-请尝试指定完整的存档文件名", parts[1]), ChatType.System);
+                                        ReceiveChat(string.Format("玩家 {0} 无法恢复-请尝试指定完整的存档文件名", parts[1]), ChatType.System);
                                         return;
                                     }
 
@@ -2673,7 +2673,7 @@ namespace Server.MirObjects
                                 }
                                 else
                                 {
-                                    ReceiveChat(string.Format("Player {0} was not found", parts[1]), ChatType.System);
+                                    ReceiveChat(string.Format("未找到玩家 {0}", parts[1]), ChatType.System);
                                     return;
                                 }
                             }
@@ -2684,8 +2684,8 @@ namespace Server.MirObjects
                                 data.DeleteDate = DateTime.MinValue;
                             }
 
-                            ReceiveChat(string.Format("Player {0} has been restored by", data.Name), ChatType.System);
-                            MessageQueue.Enqueue(string.Format("Player {0} has been restored by {1}", data.Name, Name));
+                            ReceiveChat(string.Format("玩家 {0} 已被恢复", data.Name), ChatType.System);
+                            MessageQueue.Enqueue(string.Format("玩家 {0} 已被 {1} 恢复", data.Name, Name));
                         }
                         break;
 
@@ -3933,7 +3933,7 @@ namespace Server.MirObjects
 
                             player.Revive(MaxHealth, true);
 
-                            Helpers.ChatSystem.SystemMessage(chatMessage: $"{player} was revived to full health by GM: {Name}");
+                            Helpers.ChatSystem.SystemMessage(chatMessage: $"{player} 被管理员 {Name} 复活并恢复为满血状态");
                         }
                         break;
                     case "DELETESKILL":
@@ -3979,7 +3979,7 @@ namespace Server.MirObjects
                             ReceiveChat(string.Format("{1} 的 {0} 技能已移除", skill1.ToString(), player.Name), ChatType.Hint);
                             player.ReceiveChat(string.Format("技能 {0} 已经移除", skill1), ChatType.Hint);
 
-                            Helpers.ChatSystem.SystemMessage(chatMessage: $"{player} Skill {skill1.ToString()} was removed by GM: {Name}");
+                            Helpers.ChatSystem.SystemMessage(chatMessage: $"{player} 的技能 {skill1.ToString()} 被管理员 {Name} 移除");
                         }
                         else
                         {
@@ -12824,7 +12824,7 @@ namespace Server.MirObjects
 
             if (mentor == null)
             {
-                ReceiveChat(String.Format("未找到名字 {0}.", Name), ChatType.System);
+                ReceiveChat(String.Format("未找到名字 {0}", Name), ChatType.System);
             }
             else
             {
@@ -12957,7 +12957,7 @@ namespace Server.MirObjects
 
             if (mentor == null)
             {
-                MessageQueue.EnqueueDebugging(Name + " 有师傅，但找不到师傅的ID " + Info.Mentor);
+                MessageQueue.EnqueueDebugging(Name + " 虽然有师傅，但找不到师傅的ID " + Info.Mentor);
                 return;
             }
 

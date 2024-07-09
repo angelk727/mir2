@@ -888,8 +888,8 @@ namespace Server.MirObjects
             GuildA.WarringGuilds.Remove(GuildB);
             GuildB.WarringGuilds.Remove(GuildA);
 
-            GuildA.SendMessage(string.Format("War ended with {0}.", GuildB.Name), ChatType.Guild);
-            GuildB.SendMessage(string.Format("War ended with {0}.", GuildA.Name), ChatType.Guild);
+            GuildA.SendMessage(string.Format("与 {0} 的之间的战争已结束", GuildB.Name), ChatType.Guild);
+            GuildB.SendMessage(string.Format("与 {0} 的之间的战争已结束", GuildA.Name), ChatType.Guild);
             GuildA.UpdatePlayersColours();
             GuildB.UpdatePlayersColours();
         }
