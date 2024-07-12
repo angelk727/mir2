@@ -17,12 +17,14 @@ public enum WeatherSetting : ushort
     红色余烬 = 2,
     白色余烬 = 4,
     黄色余烬 = 8,
-    火焰粒子 = 16,
-    雪天 = 32,
+    落雪 = 16,
+    飘雪 = 32,
     雨天 = 64,
     黄色花瓣 = 128,
     红色花瓣 = 256,
     粉色花瓣 = 512,
+    沙尘 = 1024,
+    沙雾 = 2048,
 }
 public enum PanelType : byte
 {

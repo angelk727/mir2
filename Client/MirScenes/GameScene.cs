@@ -12557,12 +12557,9 @@ namespace Client.MirScenes
             List<ParticleImageInfo> textures = new List<ParticleImageInfo>();
             foreach (WeatherSetting itemWeather in Enum.GetValues(typeof(WeatherSetting)).Cast<object>().ToArray())
             {
-                //if not enabled skip
                 if ((Weather & itemWeather) != itemWeather)
                     continue;
 
-            //foreach (WeatherSetting itemWeather in Weather)
-            //{
                 switch (itemWeather)
                 {
                     case WeatherSetting.黄色花瓣:
@@ -12570,7 +12567,6 @@ namespace Client.MirScenes
                         textures.Add(new ParticleImageInfo(Libraries.Weather, 359, 170, 50));
                         textures.Add(new ParticleImageInfo(Libraries.Weather, 531, 55, 50));
                         textures.Add(new ParticleImageInfo(Libraries.Weather, 587, 200, 50));
-
 
                         ParticleEngine LeavesEngine2 = new ParticleEngine(textures, new Vector2(2f, 0), ParticleType.Leaves);
                         Vector2 lVelocity = new Vector2(0F, 0F);
@@ -12584,12 +12580,12 @@ namespace Client.MirScenes
                         LeavesEngine2.GenerateParticles = false;
                         GameScene.Scene.ParticleEngines.Add(LeavesEngine2);
                         break;
+
                     case WeatherSetting.红色花瓣:
                         textures = new List<ParticleImageInfo>();
                         textures.Add(new ParticleImageInfo(Libraries.Weather, 359, 170, 50));
                         textures.Add(new ParticleImageInfo(Libraries.Weather, 531, 55, 50));
                         textures.Add(new ParticleImageInfo(Libraries.Weather, 587, 200, 50));
-
 
                         ParticleEngine FLeavesEngine2 = new ParticleEngine(textures, new Vector2(2f, 0), ParticleType.FireyLeaves);
                         Vector2 FlVelocity = new Vector2(0F, 0F);
@@ -12603,11 +12599,11 @@ namespace Client.MirScenes
                         FLeavesEngine2.GenerateParticles = false;
                         GameScene.Scene.ParticleEngines.Add(FLeavesEngine2);
                         break;
+
                     case WeatherSetting.雨天:
                         textures = new List<ParticleImageInfo>();
                         //Rain
                         textures.Add(new ParticleImageInfo(Libraries.Weather, 164, 150, 50));
-
 
                         ParticleEngine RainEngine2 = new ParticleEngine(textures, new Vector2(2f, 0), ParticleType.Rain);
                         Vector2 rsevelocity = new Vector2(0F, 0F);
@@ -12624,24 +12620,43 @@ namespace Client.MirScenes
                         GameScene.Scene.ParticleEngines.Add(RainEngine2);
                         break;
 
-                    case WeatherSetting.雪天:
+                    case WeatherSetting.落雪:
+                        textures = new List<ParticleImageInfo>();
+                        textures.Add(new ParticleImageInfo(Libraries.Weather, 790, 40, 50));
+
+                        ParticleEngine snowfall = new ParticleEngine(textures, new Vector2(2f, 0), ParticleType.Snow);
+                        Vector2 snowfallVelocity = new Vector2(0F, 0F);
+                        var xSnowfallVar = 800;
+                        var ySnowfallVar = 600;
+                        for (int y = ySnowfallVar * -1; y < Settings.ScreenHeight + ySnowfallVar; y += ySnowfallVar)
+                            for (int x = xSnowfallVar * -1; x < Settings.ScreenWidth + xSnowfallVar; x += xSnowfallVar)
+                            {
+                                Particle part = snowfall.GenerateNewParticle(ParticleType.Snow);
+                                part.Position = new Vector2(x, y);
+                                part.Velocity = snowfallVelocity;
+                            }
+                        snowfall.GenerateParticles = false;
+                        GameScene.Scene.ParticleEngines.Add(snowfall);
+                        break;
+
+                    case WeatherSetting.飘雪:
                         textures = new List<ParticleImageInfo>();
                         textures.Add(new ParticleImageInfo(Libraries.Weather, 43, 20, 50));
 
-                        ParticleEngine RainEngine = new ParticleEngine(textures, new Vector2(0, 0), ParticleType.Snow);
-                        Vector2 rsvelocity = new Vector2(1F, -1F);
+                        ParticleEngine snowFlurry = new ParticleEngine(textures, new Vector2(0, 0), ParticleType.Snow);
+                        Vector2 snowFlurryVelocity = new Vector2(1F, -1F);
 
                         for (int y = -400; y < Settings.ScreenHeight + 400; y += 400)
                             for (int x = -400; x < Settings.ScreenWidth + 400; x += 400)
                             {
-                                Particle part = RainEngine.GenerateNewParticle(ParticleType.Snow);
+                                Particle part = snowFlurry.GenerateNewParticle(ParticleType.Snow);
                                 part.Position = new Vector2(x, y);
-                                part.Velocity = rsvelocity;
+                                part.Velocity = snowFlurryVelocity;
                             }
-                        RainEngine.GenerateParticles = false;
-                        GameScene.Scene.ParticleEngines.Add(RainEngine);
-
+                        snowFlurry.GenerateParticles = false;
+                        GameScene.Scene.ParticleEngines.Add(snowFlurry);
                         break;
+
                     case WeatherSetting.雾天:
                         List<ParticleImageInfo> ftextures = new List<ParticleImageInfo>();
                         ftextures.Add(new ParticleImageInfo(Libraries.Weather, 0));
@@ -12657,10 +12672,10 @@ namespace Client.MirScenes
                                 part.Velocity = fvelocity;
                             }
 
-
                         fengine.GenerateParticles = false;
                         GameScene.Scene.ParticleEngines.Add(fengine);
                         break;
+
                     case WeatherSetting.红色余烬:
                         var rtextures = new List<ParticleImageInfo>();
                         rtextures.Add(new ParticleImageInfo(Libraries.Weather, 1, 9, 150));
@@ -12668,19 +12683,19 @@ namespace Client.MirScenes
                         var rengine = new ParticleEngine(rtextures, new Vector2(0, 0), ParticleType.RedFogEmber);
                         GameScene.Scene.ParticleEngines.Add(rengine);
                         break;
-                    case WeatherSetting.白色余烬:
 
+                    case WeatherSetting.白色余烬:
                         textures = new List<ParticleImageInfo>();
                         textures.Add(new ParticleImageInfo(Libraries.Weather, 1, 9, 150));
                         var whiteEmberEngine = new ParticleEngine(textures, new Vector2(0, 0), ParticleType.WhiteEmber);
                         GameScene.Scene.ParticleEngines.Add(whiteEmberEngine);
                         break;
-                    case WeatherSetting.粉色花瓣:
 
+                    case WeatherSetting.粉色花瓣:
                         textures = new List<ParticleImageInfo>();
-                        textures.Add(new ParticleImageInfo(Libraries.Weather, 359, 170, 50));
-                        textures.Add(new ParticleImageInfo(Libraries.Weather, 531, 55, 50));
-                        textures.Add(new ParticleImageInfo(Libraries.Weather, 587, 200, 50));
+                        textures.Add(new ParticleImageInfo(Libraries.Weather, 359, 172, 50));
+                        textures.Add(new ParticleImageInfo(Libraries.Weather, 531, 117, 100));
+                        textures.Add(new ParticleImageInfo(Libraries.Weather, 648, 140, 80));
                         //textures.Add(new ParticleImageInfo(Libraries.Weather, 10, 20, 50));
 
                         var pEmberEngine = new ParticleEngine(textures, new Vector2(0, 0), ParticleType.PurpleLeaves);
@@ -12697,27 +12712,48 @@ namespace Client.MirScenes
                         break;
 
                     case WeatherSetting.黄色余烬:
-
                         textures = new List<ParticleImageInfo>();
                         textures.Add(new ParticleImageInfo(Libraries.Weather, 1, 9, 100));
 
                         var yellowEmberEngine = new ParticleEngine(textures, new Vector2(0, 0), ParticleType.YellowEmber);
                         GameScene.Scene.ParticleEngines.Add(yellowEmberEngine);
                         break;
-                    case WeatherSetting.火焰粒子:
 
+                    case WeatherSetting.沙尘:
                         textures = new List<ParticleImageInfo>();
-                        //textures.Add(new ParticleImageInfo(Libraries.StateEffect, 640)); << TODO - Win
-                        //   textures.Add(new ParticleImageInfo(Libraries.Prguse4, 642));
-                        var fEmberEngine = new ParticleEngine(textures, new Vector2(0, 0), ParticleType.Bird);
-                        GameScene.Scene.ParticleEngines.Add(fEmberEngine);
+                        textures.Add(new ParticleImageInfo(Libraries.Weather, 830, 20, 100));
+
+                        ParticleEngine sandstorm = new ParticleEngine(textures, new Vector2(0, 0), ParticleType.Sand);
+
+                        for (int y = -400; y < Settings.ScreenHeight + 400; y += 400)
+                            for (int x = -400; x < Settings.ScreenWidth + 400; x += 400)
+                            {
+                                Particle part = sandstorm.GenerateNewParticle(ParticleType.Sand);
+                                part.Position = new Vector2(x, y);
+                            }
+
+                        sandstorm.GenerateParticles = false;
+                        GameScene.Scene.ParticleEngines.Add(sandstorm);
                         break;
 
+                    case WeatherSetting.沙雾:
+                        textures = new List<ParticleImageInfo>();
+                        textures.Add(new ParticleImageInfo(Libraries.Weather, 850, 20, 200));
 
+                        ParticleEngine sandfogstorm = new ParticleEngine(textures, new Vector2(0, 0), ParticleType.Fog);
+
+                        for (int y = -400; y < Settings.ScreenHeight + 400; y += 400)
+                            for (int x = -400; x < Settings.ScreenWidth + 400; x += 400)
+                            {
+                                Particle part = sandfogstorm.GenerateNewParticle(ParticleType.Fog);
+                                part.Position = new Vector2(x, y);
+                            }
+
+                        sandfogstorm.GenerateParticles = false;
+                        GameScene.Scene.ParticleEngines.Add(sandfogstorm);
+                        break;
                 }
-
             }
-            
         }
 
         public void RemoveObject(MapObject ob)
