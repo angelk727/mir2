@@ -3230,7 +3230,10 @@ namespace Client.MirScenes
             AddItem(p.Item);
             User.RefreshStats();
 
-            OutputMessage(string.Format(GameLanguage.YouGained, p.Item.FriendlyName));
+            if (p.Item.Info.Type != ItemType.特殊消耗品)
+            {
+                OutputMessage(string.Format(GameLanguage.YouGained, p.Item.FriendlyName));
+            }
         }
         private void GainedQuestItem(S.GainedQuestItem p)
         {
@@ -10594,7 +10597,7 @@ namespace Client.MirScenes
         public bool Lightning, Fire;
         public byte MapDarkLight;
         public long LightningTime, FireTime;
-        public WeatherSetting Weather = WeatherSetting.None;
+        public WeatherSetting Weather = WeatherSetting.无效果;
         public bool FloorValid, LightsValid;
 
         public long OutputDelay;
@@ -11634,8 +11637,9 @@ namespace Client.MirScenes
 
                     messageBox.YesButton.Click += (o, a) =>
                     {
-                        Network.Enqueue(new C.DropItem 
-                        {   UniqueID = cell.Item.UniqueID, 
+                        Network.Enqueue(new C.DropItem
+                        {
+                            UniqueID = cell.Item.UniqueID,
                             Count = 1,
                             HeroInventory = cell.GridType == MirGridType.HeroInventory
                         });
@@ -12561,7 +12565,7 @@ namespace Client.MirScenes
             //{
                 switch (itemWeather)
                 {
-                    case WeatherSetting.Leaves:
+                    case WeatherSetting.黄色花瓣:
                         textures = new List<ParticleImageInfo>();
                         textures.Add(new ParticleImageInfo(Libraries.Weather, 359, 170, 50));
                         textures.Add(new ParticleImageInfo(Libraries.Weather, 531, 55, 50));
@@ -12580,7 +12584,7 @@ namespace Client.MirScenes
                         LeavesEngine2.GenerateParticles = false;
                         GameScene.Scene.ParticleEngines.Add(LeavesEngine2);
                         break;
-                    case WeatherSetting.FireyLeaves:
+                    case WeatherSetting.红色花瓣:
                         textures = new List<ParticleImageInfo>();
                         textures.Add(new ParticleImageInfo(Libraries.Weather, 359, 170, 50));
                         textures.Add(new ParticleImageInfo(Libraries.Weather, 531, 55, 50));
@@ -12599,7 +12603,7 @@ namespace Client.MirScenes
                         FLeavesEngine2.GenerateParticles = false;
                         GameScene.Scene.ParticleEngines.Add(FLeavesEngine2);
                         break;
-                    case WeatherSetting.Rain:
+                    case WeatherSetting.雨天:
                         textures = new List<ParticleImageInfo>();
                         //Rain
                         textures.Add(new ParticleImageInfo(Libraries.Weather, 164, 150, 50));
@@ -12620,7 +12624,7 @@ namespace Client.MirScenes
                         GameScene.Scene.ParticleEngines.Add(RainEngine2);
                         break;
 
-                    case WeatherSetting.Snow:
+                    case WeatherSetting.雪天:
                         textures = new List<ParticleImageInfo>();
                         textures.Add(new ParticleImageInfo(Libraries.Weather, 43, 20, 50));
 
@@ -12638,7 +12642,7 @@ namespace Client.MirScenes
                         GameScene.Scene.ParticleEngines.Add(RainEngine);
 
                         break;
-                    case WeatherSetting.Fog:
+                    case WeatherSetting.雾天:
                         List<ParticleImageInfo> ftextures = new List<ParticleImageInfo>();
                         ftextures.Add(new ParticleImageInfo(Libraries.Weather, 0));
                         ParticleEngine fengine = new ParticleEngine(ftextures, new Vector2(0, 0), ParticleType.Fog);
@@ -12657,21 +12661,21 @@ namespace Client.MirScenes
                         fengine.GenerateParticles = false;
                         GameScene.Scene.ParticleEngines.Add(fengine);
                         break;
-                    case WeatherSetting.RedEmber:
+                    case WeatherSetting.红色余烬:
                         var rtextures = new List<ParticleImageInfo>();
                         rtextures.Add(new ParticleImageInfo(Libraries.Weather, 1, 9, 150));
 
                         var rengine = new ParticleEngine(rtextures, new Vector2(0, 0), ParticleType.RedFogEmber);
                         GameScene.Scene.ParticleEngines.Add(rengine);
                         break;
-                    case WeatherSetting.WhiteEmber:
+                    case WeatherSetting.白色余烬:
 
                         textures = new List<ParticleImageInfo>();
                         textures.Add(new ParticleImageInfo(Libraries.Weather, 1, 9, 150));
                         var whiteEmberEngine = new ParticleEngine(textures, new Vector2(0, 0), ParticleType.WhiteEmber);
                         GameScene.Scene.ParticleEngines.Add(whiteEmberEngine);
                         break;
-                    case WeatherSetting.PurpleLeaves:
+                    case WeatherSetting.粉色花瓣:
 
                         textures = new List<ParticleImageInfo>();
                         textures.Add(new ParticleImageInfo(Libraries.Weather, 359, 170, 50));
@@ -12692,7 +12696,7 @@ namespace Client.MirScenes
                         GameScene.Scene.ParticleEngines.Add(pEmberEngine);
                         break;
 
-                    case WeatherSetting.YellowEmber:
+                    case WeatherSetting.黄色余烬:
 
                         textures = new List<ParticleImageInfo>();
                         textures.Add(new ParticleImageInfo(Libraries.Weather, 1, 9, 100));
@@ -12700,7 +12704,7 @@ namespace Client.MirScenes
                         var yellowEmberEngine = new ParticleEngine(textures, new Vector2(0, 0), ParticleType.YellowEmber);
                         GameScene.Scene.ParticleEngines.Add(yellowEmberEngine);
                         break;
-                    case WeatherSetting.FireParticle:
+                    case WeatherSetting.火焰粒子:
 
                         textures = new List<ParticleImageInfo>();
                         //textures.Add(new ParticleImageInfo(Libraries.StateEffect, 640)); << TODO - Win

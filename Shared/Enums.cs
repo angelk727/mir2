@@ -12,24 +12,23 @@
 //[Flags]
 public enum WeatherSetting : ushort
 {
-    None = 0,
-    Fog = 1,
-    RedEmber = 2,
-    WhiteEmber = 4,
-    YellowEmber = 8,
-    FireParticle = 16,
-    Snow = 32,
-    Rain = 64,
-    Leaves = 128,
-    FireyLeaves = 256,
-    PurpleLeaves = 512,
+    无效果 = 0,
+    雾天 = 1,
+    红色余烬 = 2,
+    白色余烬 = 4,
+    黄色余烬 = 8,
+    火焰粒子 = 16,
+    雪天 = 32,
+    雨天 = 64,
+    黄色花瓣 = 128,
+    红色花瓣 = 256,
+    粉色花瓣 = 512,
 }
 public enum PanelType : byte
 {
     Buy,
     BuySub,
     Craft,
-
     Sell,
     Repair,
     SpecialRepair,

@@ -415,7 +415,7 @@ namespace ServerPackets
         public LightSetting Lights;
         public bool Lightning, Fire;
         public byte MapDarkLight;
-        public WeatherSetting WeatherParticles = WeatherSetting.None;
+        public WeatherSetting WeatherParticles = WeatherSetting.无效果;
 
         protected override void ReadPacket(BinaryReader reader)
         {
@@ -2910,7 +2910,7 @@ namespace ServerPackets
         public Point Location;
         public MirDirection Direction;
         public byte MapDarkLight;
-        public WeatherSetting Weather = WeatherSetting.None;
+        public WeatherSetting Weather = WeatherSetting.无效果;
 
 
         protected override void ReadPacket(BinaryReader reader)

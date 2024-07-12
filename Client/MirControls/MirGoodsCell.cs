@@ -72,7 +72,7 @@ namespace Client.MirControls
 
             if (UsePearls)
             {
-                PriceLabel.Text = string.Format("Price: {0} pearl{1}", (uint)(Item.Price() * GameScene.NPCRate), Item.Price() > 1 ? "s" : "");
+                PriceLabel.Text = string.Format("价格: {0} 珍珠{1}", (uint)(Item.Price() * GameScene.NPCRate), Item.Price() > 1 ? "(颗)" : "");
             }
             else if (Recipe)
             {
