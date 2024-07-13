@@ -953,7 +953,10 @@ public enum ItemType : byte
     镶嵌宝石 = 39,
     怪物蛋 = 40,
     攻城弹药 = 41, //TODO
-    封印 = 42
+    封印 = 42,
+    绝技破坏 = 43,
+    绝技守护 = 44,
+    绝技灵丹 = 45
 }
 
 public enum MirGridType : byte
@@ -1496,6 +1499,12 @@ public enum BuffType : byte
     远古气息,
     华丽雨光,
     龙之特效,
+    龙的特效,
+    增强组队,
+    天灵水,
+    玉清水,
+    甜筒HP,
+    甜筒MP,
     内尔族的灵药,
     摩鲁的赤色药剂,
     摩鲁的青色药剂,

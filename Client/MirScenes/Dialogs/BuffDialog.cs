@@ -365,6 +365,12 @@ namespace Client.MirScenes.Dialogs
                 case BuffType.龙之特效:
                     text += "特效增益加成\n";
                     break;
+                case BuffType.龙的特效:
+                    text += "特效增益加成\n";
+                    break;
+                case BuffType.增强组队:
+                    text += "来自队伍的加成\n";
+                    break;
                 case BuffType.英雄灵气:
                     text += "英雄在线加成\n";
                     break;
@@ -579,12 +585,24 @@ namespace Client.MirScenes.Dialogs
                     return 330;
                 case BuffType.龙之特效:
                     return 167;
+                case BuffType.龙的特效:
+                    return 332;
                 case BuffType.奇异药水:
                     return 810;
+                case BuffType.天灵水:
+                    return 626;
+                case BuffType.玉清水:
+                    return 627;
+                case BuffType.甜筒HP:
+                    return 333;
+                case BuffType.甜筒MP:
+                    return 334;
                 case BuffType.内尔族的灵药:
                     return 652;
                 case BuffType.英雄灵气:
                     return 259;
+                case BuffType.增强组队:
+                    return 840;
                 case BuffType.暗影侵袭:
                     return 841;
                 case BuffType.古代宗师祝福:
