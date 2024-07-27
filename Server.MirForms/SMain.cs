@@ -1,4 +1,5 @@
 ﻿using CustomFormControl;
+using Server.Account;
 using Server.Database;
 using Server.MirDatabase;
 using Server.MirEnvir;
@@ -556,11 +557,55 @@ namespace Server
         {
 
         }
+
         private void heroesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SystemInfoForm form = new SystemInfoForm(8);
 
             form.ShowDialog();
         }
+
+        private void CharacterToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CharacterInfoForm form = new CharacterInfoForm();
+
+            form.ShowDialog();
+        }
+
+        private void recipeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RecipeInfoForm form = new RecipeInfoForm();
+
+            form.ShowDialog();
+        }
+
+        #region Monsters Tab
+        private void LoadMonstersButton_Click(object sender, EventArgs e)
+        {
+            MonsterListView.Items.Clear();
+            for (int i = 0; i < Envir.MapList.Count; i++)
+            {
+                var map = Envir.MapList[i];
+                ListViewItem ListItem = new ListViewItem(i.ToString()) { Tag = this };
+
+                ListItem.SubItems.Add(map.Info.Title);
+                ListItem.SubItems.Add(map.Info.FileName);
+                ListItem.SubItems.Add(map.GetAllMonstersObjectsCount().ToString());
+                int totalSpawnsCount = 0;
+                int errorCount = 0;
+
+                foreach (var spawn in map.Respawns)
+                {
+                    totalSpawnsCount += spawn.Info.Count;
+                    errorCount += spawn.ErrorCount;
+                }
+
+                ListItem.SubItems.Add(totalSpawnsCount.ToString());
+                ListItem.SubItems.Add(errorCount.ToString());
+
+                MonsterListView.Items.Add(ListItem);
+            }
+        }
+        #endregion
     }
 }

@@ -60,6 +60,15 @@ namespace Server
             columnHeader4 = new ColumnHeader();
             columnHeader5 = new ColumnHeader();
             columnHeader6 = new ColumnHeader();
+            tabPage6 = new TabPage();
+            LoadMonstersButton = new Button();
+            MonsterListView = new ListView();
+            columnHeader7 = new ColumnHeader();
+            columnHeader8 = new ColumnHeader();
+            columnHeader9 = new ColumnHeader();
+            columnHeader10 = new ColumnHeader();
+            columnHeader11 = new ColumnHeader();
+            columnHeader12 = new ColumnHeader();
             StatusBar = new StatusStrip();
             PlayersLabel = new ToolStripStatusLabel();
             MonsterLabel = new ToolStripStatusLabel();
@@ -106,11 +115,13 @@ namespace Server
             gemToolStripMenuItem = new ToolStripMenuItem();
             conquestToolStripMenuItem = new ToolStripMenuItem();
             respawnsToolStripMenuItem = new ToolStripMenuItem();
+            heroesToolStripMenuItem = new ToolStripMenuItem();
             monsterTunerToolStripMenuItem = new ToolStripMenuItem();
             dropBuilderToolStripMenuItem = new ToolStripMenuItem();
+            CharacterToolStripMenuItem = new ToolStripMenuItem();
             UpTimeLabel = new ToolStripTextBox();
             InterfaceTimer = new Timer(components);
-            heroesToolStripMenuItem = new ToolStripMenuItem();
+            recipeToolStripMenuItem = new ToolStripMenuItem();
             MainTabs.SuspendLayout();
             tabPage1.SuspendLayout();
             tabPage2.SuspendLayout();
@@ -118,6 +129,7 @@ namespace Server
             groupBox1.SuspendLayout();
             tabPage4.SuspendLayout();
             tabPage5.SuspendLayout();
+            tabPage6.SuspendLayout();
             StatusBar.SuspendLayout();
             MainMenu.SuspendLayout();
             SuspendLayout();
@@ -129,6 +141,7 @@ namespace Server
             MainTabs.Controls.Add(tabPage3);
             MainTabs.Controls.Add(tabPage4);
             MainTabs.Controls.Add(tabPage5);
+            MainTabs.Controls.Add(tabPage6);
             MainTabs.Dock = DockStyle.Fill;
             MainTabs.Location = new Point(0, 25);
             MainTabs.Margin = new Padding(4, 3, 4, 3);
@@ -354,6 +367,69 @@ namespace Server
             // 
             columnHeader6.Text = "金币";
             columnHeader6.Width = 75;
+            //
+            // tabPage6
+            // 
+            tabPage6.Controls.Add(LoadMonstersButton);
+            tabPage6.Controls.Add(MonsterListView);
+            tabPage6.Location = new Point(4, 24);
+            tabPage6.Name = "tabPage6";
+            tabPage6.Size = new Size(558, 379);
+            tabPage6.TabIndex = 5;
+            tabPage6.Text = "怪物";
+            tabPage6.UseVisualStyleBackColor = true;
+            // 
+            // LoadMonstersButton
+            // 
+            LoadMonstersButton.Location = new Point(480, 7);
+            LoadMonstersButton.Name = "LoadMonstersButton";
+            LoadMonstersButton.Size = new Size(75, 23);
+            LoadMonstersButton.TabIndex = 1;
+            LoadMonstersButton.Text = "读取";
+            LoadMonstersButton.UseVisualStyleBackColor = true;
+            LoadMonstersButton.Click += LoadMonstersButton_Click;
+            // 
+            // MonsterListView
+            // 
+            MonsterListView.Columns.AddRange(new ColumnHeader[] { columnHeader7, columnHeader8, columnHeader9, columnHeader10, columnHeader11, columnHeader12 });
+            MonsterListView.Dock = DockStyle.Bottom;
+            MonsterListView.GridLines = true;
+            MonsterListView.Location = new Point(0, 36);
+            MonsterListView.Name = "MonsterListView";
+            MonsterListView.Size = new Size(558, 343);
+            MonsterListView.TabIndex = 0;
+            MonsterListView.UseCompatibleStateImageBehavior = false;
+            MonsterListView.View = View.Details;
+            // 
+            // columnHeader7
+            // 
+            columnHeader7.Text = "编号";
+            columnHeader7.Width = 50;
+            // 
+            // columnHeader8
+            // 
+            columnHeader8.Text = "地图名";
+            columnHeader8.Width = 120;
+            // 
+            // columnHeader9
+            // 
+            columnHeader9.Text = "地图文件名";
+            columnHeader9.Width = 100;
+            // 
+            // columnHeader10
+            // 
+            columnHeader10.Text = "当前怪物";
+            columnHeader10.Width = 110;
+            // 
+            // columnHeader11
+            // 
+            columnHeader11.Text = "最大怪物数";
+            columnHeader11.Width = 110;
+            // 
+            // columnHeader12
+            // 
+            columnHeader12.Text = "错误";
+            columnHeader12.Width = 55;
             // 
             // StatusBar
             // 
@@ -404,7 +480,7 @@ namespace Server
             // MainMenu
             // 
             MainMenu.BackColor = Color.Transparent;
-            MainMenu.Items.AddRange(new ToolStripItem[] { controlToolStripMenuItem, accountToolStripMenuItem, databaseFormsToolStripMenuItem, configToolStripMenuItem1, UpTimeLabel });
+            MainMenu.Items.AddRange(new ToolStripItem[] { controlToolStripMenuItem, accountToolStripMenuItem, databaseFormsToolStripMenuItem, configToolStripMenuItem1, CharacterToolStripMenuItem, UpTimeLabel });
             MainMenu.Location = new Point(0, 0);
             MainMenu.Name = "MainMenu";
             MainMenu.Padding = new Padding(7, 2, 0, 2);
@@ -501,7 +577,7 @@ namespace Server
             // 
             // databaseFormsToolStripMenuItem
             // 
-            databaseFormsToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { mapInfoToolStripMenuItem, itemInfoToolStripMenuItem, monsterInfoToolStripMenuItem, itemNEWToolStripMenuItem, monsterExperimentalToolStripMenuItem, nPCInfoToolStripMenuItem, questInfoToolStripMenuItem, magicInfoToolStripMenuItem, gameshopToolStripMenuItem });
+            databaseFormsToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { mapInfoToolStripMenuItem, itemInfoToolStripMenuItem, monsterInfoToolStripMenuItem, itemNEWToolStripMenuItem, monsterExperimentalToolStripMenuItem, nPCInfoToolStripMenuItem, questInfoToolStripMenuItem, magicInfoToolStripMenuItem, gameshopToolStripMenuItem, recipeToolStripMenuItem });
             databaseFormsToolStripMenuItem.Name = "databaseFormsToolStripMenuItem";
             databaseFormsToolStripMenuItem.Size = new Size(56, 21);
             databaseFormsToolStripMenuItem.Text = "数据库";
@@ -684,6 +760,13 @@ namespace Server
             respawnsToolStripMenuItem.Text = "刷新周期";
             respawnsToolStripMenuItem.Click += respawnsToolStripMenuItem_Click;
             // 
+            // heroesToolStripMenuItem
+            // 
+            heroesToolStripMenuItem.Name = "heroesToolStripMenuItem";
+            heroesToolStripMenuItem.Size = new Size(139, 22);
+            heroesToolStripMenuItem.Text = "英雄系统";
+            heroesToolStripMenuItem.Click += heroesToolStripMenuItem_Click;
+            // 
             // monsterTunerToolStripMenuItem
             // 
             monsterTunerToolStripMenuItem.Name = "monsterTunerToolStripMenuItem";
@@ -697,6 +780,13 @@ namespace Server
             dropBuilderToolStripMenuItem.Size = new Size(160, 22);
             dropBuilderToolStripMenuItem.Text = "物品掉落设置";
             dropBuilderToolStripMenuItem.Click += dropBuilderToolStripMenuItem_Click;
+            //
+            // CharacterToolStripMenuItem
+            // 
+            CharacterToolStripMenuItem.Name = "CharacterToolStripMenuItem";
+            CharacterToolStripMenuItem.Size = new Size(75, 20);
+            CharacterToolStripMenuItem.Text = "角色";
+            CharacterToolStripMenuItem.Click += CharacterToolStripMenuItem_Click;
             // 
             // UpTimeLabel
             // 
@@ -711,14 +801,14 @@ namespace Server
             // 
             InterfaceTimer.Enabled = true;
             InterfaceTimer.Tick += InterfaceTimer_Tick;
+            //
+             // recipeToolStripMenuItem
             // 
-            // heroesToolStripMenuItem
-            // 
-            heroesToolStripMenuItem.Name = "heroesToolStripMenuItem";
-            heroesToolStripMenuItem.Size = new Size(180, 22);
-            heroesToolStripMenuItem.Text = "英雄系统";
-            heroesToolStripMenuItem.Click += heroesToolStripMenuItem_Click;
-            // 
+            recipeToolStripMenuItem.Name = "recipeToolStripMenuItem";
+            recipeToolStripMenuItem.Size = new Size(203, 22);
+            recipeToolStripMenuItem.Text = "合成配方";
+            recipeToolStripMenuItem.Click += recipeToolStripMenuItem_Click;
+            //  
             // SMain
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
@@ -746,6 +836,7 @@ namespace Server
             groupBox1.PerformLayout();
             tabPage4.ResumeLayout(false);
             tabPage5.ResumeLayout(false);
+            tabPage6.ResumeLayout(false);
             StatusBar.ResumeLayout(false);
             StatusBar.PerformLayout();
             MainMenu.ResumeLayout(false);
@@ -832,6 +923,17 @@ namespace Server
         private ColumnHeader columnHeader6;
         private ToolStripTextBox UpTimeLabel;
         private ToolStripMenuItem heroesToolStripMenuItem;
+        private ToolStripMenuItem CharacterToolStripMenuItem;
+        private TabPage tabPage6;
+        private Button LoadMonstersButton;
+        private ListView MonsterListView;
+        private ColumnHeader columnHeader7;
+        private ColumnHeader columnHeader8;
+        private ColumnHeader columnHeader9;
+        private ColumnHeader columnHeader10;
+        private ColumnHeader columnHeader11;
+        private ColumnHeader columnHeader12;
+        private ToolStripMenuItem recipeToolStripMenuItem;
     }
 }
 
