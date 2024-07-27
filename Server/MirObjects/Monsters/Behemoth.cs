@@ -38,7 +38,7 @@ namespace Server.MirObjects.Monsters
                     case 0:
                     case 1:
                     case 2:
-                        base.Attack(); //重击
+                        base.Attack();
                         break;
                     case 3:
                         {
@@ -75,7 +75,7 @@ namespace Server.MirObjects.Monsters
                     {
                         case 0:
                             Broadcast(new S.ObjectRangeAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation, Type = 0 });
-                            SpawnSlaves(); //召唤怪物
+                            SpawnSlaves();
                             break;
                         case 1:
                             {
@@ -222,7 +222,7 @@ namespace Server.MirObjects.Monsters
 
                 if (Walk(dir)) return;
 
-                switch (Envir.Random.Next(2)) //不赞同
+                switch (Envir.Random.Next(2))
                 {
                     case 0:
                         for (int i = 0; i < 7; i++)
@@ -258,7 +258,7 @@ namespace Server.MirObjects.Monsters
                 location = new Point(Target.CurrentLocation.X + Envir.Random.Next(-distance, distance + 1),
                                           Target.CurrentLocation.Y + Envir.Random.Next(-distance, distance + 1));
 
-                if (Teleport(CurrentMap, location, true, 12)) return true; //12为显示瞬移特效号
+                if (Teleport(CurrentMap, location, true, 12)) return true;
             }
 
             return false;

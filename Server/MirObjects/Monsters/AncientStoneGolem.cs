@@ -34,13 +34,13 @@ namespace Server.MirObjects.Monsters
 
             ActionTime = Envir.Time + 300;
             AttackTime = Envir.Time + AttackSpeed;
-            //穿刺攻击
+
             if (HealthPercent < 90  && Envir.Random.Next(3) == 0)
             {
                 AxeThump();
                 return;
             }
-            //飞石攻击
+
             if ( Envir.Random.Next(3) == 0)
             {
                 FlyStone();
@@ -92,7 +92,7 @@ namespace Server.MirObjects.Monsters
             MoveTo(Target.Front);
         }
 
-        private void AxeThump() //穿刺攻击
+        private void AxeThump()
         {
                 Broadcast(new S.ObjectAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation});
 
@@ -102,7 +102,7 @@ namespace Server.MirObjects.Monsters
                 LineAttack(damage, 4, 300, DefenceType.MACAgility);
          }
 
-        private void FlyStone() //飞石攻击
+        private void FlyStone()
         {
                 Broadcast(new S.ObjectRangeAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation, TargetID = Target.ObjectID, Type = 0 });
                 AttackTime = Envir.Time + AttackSpeed + 500;
@@ -114,13 +114,13 @@ namespace Server.MirObjects.Monsters
                 PoisonTarget(Target, 3, 5, PoisonType.Dazed);
         }
 
-        private void Thrust(MapObject target) //旋风冲击
+        private void Thrust(MapObject target)
         {
             MirDirection jumpDir = Functions.DirectionFromPoint(CurrentLocation, target.CurrentLocation);
 
             Point location;
 
-            for (int i = 0; i < 1; i++) //1为冲击格数
+            for (int i = 0; i < 1; i++)
             {
                 location = Functions.PointMove(CurrentLocation, jumpDir, 1);
                 if (!CurrentMap.ValidPoint(location)) return;

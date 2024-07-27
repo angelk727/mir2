@@ -58,7 +58,7 @@ namespace Server.MirObjects.Monsters
 
         protected override void CompleteRangeAttack(IList<object> data)
         {
-            //后退攻击不会造成伤害
+
         }
     }
 }

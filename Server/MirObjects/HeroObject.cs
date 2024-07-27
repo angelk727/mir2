@@ -449,7 +449,7 @@ namespace Server.MirObjects
                             temp.CurrentDura = (ushort)Math.Min(temp.MaxDura, temp.CurrentDura + 5000);
                             temp.DuraChanged = false;
 
-                            ReceiveChat("武器得到部分修复", ChatType.Hint);
+                            ReceiveChat("英雄的武器得到部分修复", ChatType.Hint);
                             Owner.Enqueue(new S.ItemRepaired { UniqueID = temp.UniqueID, MaxDura = temp.MaxDura, CurrentDura = temp.CurrentDura });
                             break;
                         case 5: //WarGodOil
@@ -467,8 +467,21 @@ namespace Server.MirObjects
                             temp.CurrentDura = temp.MaxDura;
                             temp.DuraChanged = false;
 
-                            ReceiveChat("武器得到完全修复", ChatType.Hint);
+                            ReceiveChat("英雄的武器得到完全修复", ChatType.Hint);
                             Owner.Enqueue(new S.ItemRepaired { UniqueID = temp.UniqueID, MaxDura = temp.MaxDura, CurrentDura = temp.CurrentDura });
+                            break;
+                        case 6: //ResurrectionScroll
+                            if (CurrentMap.Info.NoReincarnation)
+                            {
+                                ReceiveChat(string.Format("当前地图禁用复活"), ChatType.System);
+                                Owner.Enqueue(p);
+                                return;
+                            }
+                            if (Dead)
+                            {
+                                MP = Stats[Stat.MP];
+                                Revive(MaxHealth, true);
+                            }
                             break;
                     }
                     break;
@@ -505,7 +518,7 @@ namespace Server.MirObjects
                     temp.CurrentDura = (ushort)Math.Min(temp.MaxDura, temp.CurrentDura + item.CurrentDura);
                     temp.DuraChanged = false;
 
-                    ReceiveChat("坐骑已经吃饱", ChatType.Hint);
+                    ReceiveChat("英雄的坐骑已经吃饱", ChatType.Hint);
                     Owner.Enqueue(new S.ItemRepaired { UniqueID = temp.UniqueID, MaxDura = temp.MaxDura, CurrentDura = temp.CurrentDura });
 
                     RefreshStats();
@@ -607,7 +620,7 @@ namespace Server.MirObjects
                     item.CurrentDura = (ushort)(item.CurrentDura - 1000);
                     Enqueue(new S.DuraChanged { UniqueID = item.UniqueID, CurrentDura = item.CurrentDura });
                     RefreshStats();
-                    ReceiveChat("复活之力使你从死亡中获得的重生", ChatType.System);
+                    ReceiveChat("复活之力使你的英雄从死亡中获得的重生", ChatType.System);
                     return;
                 }
             }

@@ -20,7 +20,7 @@ namespace Server.MirObjects.Monsters
         {
             switch (info.Effect)
             {
-                case 2: //燃烧昆仑大门
+                case 2:
                     BlockArray = new Point[]
                     {
                         new Point(0, -1),
@@ -38,7 +38,7 @@ namespace Server.MirObjects.Monsters
                         new Point(-4, 4)
                     };
                     break;
-                case 3: //地下通道门1
+                case 3:
                     BlockArray = new Point[]
                     {
                         new Point(1, 1),
@@ -48,7 +48,7 @@ namespace Server.MirObjects.Monsters
                         new Point(-1, -2),
                     };
                     break;
-                case 4: //地下通道门2
+                case 4:
                     BlockArray = new Point[]
                     {
                         new Point(1, -1),

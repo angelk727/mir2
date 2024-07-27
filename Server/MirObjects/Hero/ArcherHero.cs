@@ -171,9 +171,13 @@ namespace Server.MirObjects
                 Direction = Functions.DirectionFromPoint(CurrentLocation, Target.CurrentLocation);
                 RangeAttack(Direction, Target.CurrentLocation, Target.ObjectID);
 
-                if (Target != null && Target.Dead)
+                if (Target != null && Target.Dead && TargetDistance > ViewRange)
                 {
                     FindTarget();
+                }
+                else
+                {
+                    MoveTo(Target.CurrentLocation);
                 }
             }
         }
@@ -187,9 +191,13 @@ namespace Server.MirObjects
                 Magic(NextMagicSpell, NextMagicDirection, NextMagicTargetID, NextMagicLocation);
                 NextMagicSpell = Spell.None;
 
-                if (Target != null && Target.Dead)
+                if (Target != null && Target.Dead && TargetDistance > ViewRange)
                 {
                     FindTarget();
+                }
+                else
+                {
+                    MoveTo(Target.CurrentLocation);
                 }
             }
         }

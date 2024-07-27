@@ -37,19 +37,19 @@ namespace Server.MirObjects.Monsters
 
             ActionTime = Envir.Time + 300;
             AttackTime = Envir.Time + AttackSpeed;
-            //蓄力重击 Type 2=近3
+
             if (Envir.Time > _AxeThumpTime && HealthPercent < 90 && Envir.Random.Next(4) == 0)
             {
                 AxeThump();
                 return;
             }
-            //飞斧攻击
+
             if (Envir.Time > _FlyAxeTime && HealthPercent < 85 && Envir.Random.Next(4) == 0)
             {
                 FlyAxe();
                 return;
             }
-            //增加特效
+
             if (Envir.Time > _BuffTime && HealthPercent < 80 && Envir.Random.Next(4) == 0)
             {
                 ButcherSpellBuff();
@@ -67,7 +67,6 @@ namespace Server.MirObjects.Monsters
             }
 
             else
-            //普通攻击
             {
 
 
@@ -113,7 +112,7 @@ namespace Server.MirObjects.Monsters
             MoveTo(Target.Front);
         }
 
-        private void AxeThump() //蓄力重击
+        private void AxeThump()
         {
             byte stompLoops = (byte)Envir.Random.Next(5, 10);
             int stompDuration = stompLoops * 100;
@@ -135,7 +134,7 @@ namespace Server.MirObjects.Monsters
             return;
         }
 
-        private void FlyAxe() //飞斧攻击
+        private void FlyAxe()
         {
             Broadcast(new S.ObjectRangeAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation, TargetID = Target.ObjectID, Type = 3 });
 
@@ -196,13 +195,13 @@ namespace Server.MirObjects.Monsters
             });
         }
 
-        private void Thrust(MapObject target) //旋风冲击
+        private void Thrust(MapObject target)
         {
             MirDirection jumpDir = Functions.DirectionFromPoint(CurrentLocation, target.CurrentLocation);
 
             Point location;
 
-            for (int i = 0; i < 1; i++) //1为冲击格数
+            for (int i = 0; i < 1; i++)
             {
                 location = Functions.PointMove(CurrentLocation, jumpDir, 1);
                 if (!CurrentMap.ValidPoint(location)) return;
@@ -231,7 +230,7 @@ namespace Server.MirObjects.Monsters
             Broadcast(new S.ObjectDashAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation, Distance = 1 });
         }
 
-        private void ButcherSpellBuff() //诅咒特效
+        private void ButcherSpellBuff()
         {
             Broadcast(new S.ObjectAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation, Type = 1 });
 

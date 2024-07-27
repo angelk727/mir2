@@ -209,7 +209,6 @@ namespace Client.MirObjects
 
             BaseSound = (ushort)BaseImage * 10;
 
-            //特殊动作 石化状态 坐下动作等
             switch (BaseImage)
             {
                 case Monster.BoneFamiliar:
@@ -272,7 +271,7 @@ namespace Client.MirObjects
                 case Monster.CaveStatue:
                     Frames = FrameSet.CaveStatue[(byte)Direction];
                     break;
-                case Monster.SabukGate://沙巴克城门 对应 Frames.cs 中的设置
+                case Monster.SabukGate:
                     Frames = FrameSet.Gates[((ushort)BaseImage) - 950];
                     break;
                 default:
@@ -302,7 +301,7 @@ namespace Client.MirObjects
 
             NextMotion -= NextMotion % 100;
 
-            if (Settings.Effect) //设置怪物脚下光环，适合与死后无尸体且不能复活的怪物
+            if (Settings.Effect)
             {
                 switch (BaseImage)
                 {
@@ -1455,7 +1454,7 @@ namespace Client.MirObjects
                         }
                     }
                     break;
-                case MirAction.刺客冲击: //冲击动作特效
+                case MirAction.刺客冲击:
                     if (CMain.Time >= NextMotion)
                     {
                         GameScene.Scene.MapControl.TextureValid = false;
@@ -1602,7 +1601,7 @@ namespace Client.MirObjects
                                 case Monster.DigOutZombie:
                                 case Monster.Armadillo:
                                 case Monster.ArmadilloElder:
-                                    Remove(); //----删除影像
+                                    Remove();
                                     return;
                                 case Monster.ZumaStatue:
                                 case Monster.ZumaGuardian:
@@ -1623,7 +1622,7 @@ namespace Client.MirObjects
                                 case Monster.秦庙石狮: //544
                                 case Monster.古老遗骸: //552
                                 case Monster.Mon575S:
-                                    Stoned = true; //-----石化
+                                    Stoned = true;
                                     return;
                             }
 
@@ -2028,7 +2027,7 @@ namespace Client.MirObjects
                                             case Monster.Armadillo:
                                                 Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Armadillo], 504 + (int)Direction * 12, 12, 6 * Frame.Interval, this));
                                                 break;
-                                            case Monster.RhinoWarrior: //359 转圈爆破效果
+                                            case Monster.RhinoWarrior: //359
                                                 MapControl.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.RhinoWarrior], 376 + (int)Direction * 8, 8, 100, this) { Blend = true, DrawBehind = true });
                                                 MapControl.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.RhinoWarrior], 440 + (int)Direction * 8, 8, 100, this) { Blend = true });
                                                 break;
@@ -2087,7 +2086,7 @@ namespace Client.MirObjects
                                                 MapControl.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.FrozenAxeman], 694, 6, 60, FA4431, CMain.Time + 600));
                                                 break;
                                             case Monster.HammerDwarf: //500 
-                                                Point HD500 = Functions.PointMove(CurrentLocation, Direction, 0); //设置0为正前方、1为前方2位、以此类推 (注：front 为默认 1前方两位 可不用此格式)
+                                                Point HD500 = Functions.PointMove(CurrentLocation, Direction, 0);
                                                 MapControl.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.HammerDwarf], 520 + (int)Direction * 6, 6, 200, HD500, CMain.Time + 300));
                                                 break;
                                             case Monster.Mon575S:
@@ -2269,7 +2268,7 @@ namespace Client.MirObjects
                                         case Monster.GasToad: //355
                                             Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.GasToad], 440, 9, 9 * Frame.Interval, this));
                                             break;
-                                        case Monster.HornedCommander: //409 ///蓄力旋风
+                                        case Monster.HornedCommander: //409
                                             {
                                                 int loops = CurrentActionLevel;
                                                 int duration = 7 * FrameInterval;
@@ -2492,7 +2491,7 @@ namespace Client.MirObjects
                                 case 1:
                                     switch (BaseImage)
                                     {
-                                        case Monster.HornedCommander: //409 ///蓄力重锤
+                                        case Monster.HornedCommander: //409
                                             {
                                                 int loops = CurrentActionLevel;
                                                 int duration = 5 * FrameInterval;
@@ -2678,7 +2677,7 @@ namespace Client.MirObjects
                                                     };
                                                 }
                                                 break;
-                                            case Monster.ReaperWizard: //563 单组图片
+                                            case Monster.ReaperWizard: //563
                                                 missile = CreateProjectile(456, Libraries.Monsters[(ushort)Monster.ReaperWizard], true, 5, 30, -5, direction16: false);
 
                                                 if (missile.Target != null)
@@ -2690,7 +2689,7 @@ namespace Client.MirObjects
                                                     };
                                                 }
                                                 break;
-                                            case Monster.FeatheredWolf: //496 单组图片
+                                            case Monster.FeatheredWolf: //496
                                                 missile = CreateProjectile(456, Libraries.Monsters[(ushort)Monster.FeatheredWolf], true, 4, 30, -4, direction16: false);
 
                                                 if (missile.Target != null)
@@ -2890,7 +2889,7 @@ namespace Client.MirObjects
                                                     CreateProjectile(7200, Libraries.Magic3, true, 6, 30, 4);
                                                 }
                                                 break;
-                                            case Monster.FlameTiger: //228 创建一个投射物品的效果
+                                            case Monster.FlameTiger: //228
                                                 if (MapControl.GetObject(TargetID) != null)
                                                 {
                                                     CreateProjectile(2330, Libraries.Magic3, true, 5, 30, 5);
@@ -3023,7 +3022,7 @@ namespace Client.MirObjects
                                                     };
                                                 }
                                                 break;
-                                            case Monster.ArcherGuard: //71 远程16方向(3张空6张)
+                                            case Monster.ArcherGuard: //71
                                                 if (MapControl.GetObject(TargetID) != null)
                                                     CreateProjectile(38, Libraries.Monsters[(ushort)Monster.ArcherGuard], false, 3, 30, 6);
                                                 break;
@@ -3031,7 +3030,7 @@ namespace Client.MirObjects
                                                 if (MapControl.GetObject(TargetID) != null)
                                                     CreateProjectile(280, Libraries.Monsters[(ushort)Monster.SpittingToad], true, 6, 30, 0);
                                                 break;
-                                            case Monster.ArcherGuard2: //199 远程16方向
+                                            case Monster.ArcherGuard2: //199
                                                 if (MapControl.GetObject(TargetID) != null)
                                                     CreateProjectile(6, Libraries.Monsters[(ushort)Monster.ArcherGuard2], true, 2, 30, 6, lightDistance: 6, direction16: true, Color.Green, TargetID);
                                                 break;
@@ -3608,7 +3607,7 @@ namespace Client.MirObjects
                                                     ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Swain1], 504, 14, 600, ob) { Blend = true });
                                                 }
                                                 break;
-                                            case Monster.Butcher: //516 创建一个投射物品的效果
+                                            case Monster.Butcher: //516
                                                 if (MapControl.GetObject(TargetID) != null)
                                                 {
                                                     CreateProjectile(680, Libraries.Monsters[(ushort)Monster.Butcher], true, 5, 30, 5);
@@ -4953,7 +4952,7 @@ namespace Client.MirObjects
                     return;
             }
         }
-        public void PlayReviveSound() //复活声音
+        public void PlayReviveSound()
         {
             switch (BaseImage)
             {
@@ -5670,7 +5669,7 @@ namespace Client.MirObjects
                             break;
                     }
                     break;
-                case Monster.HellKeeper: //275 单组图片
+                case Monster.HellKeeper: //275
                     switch (CurrentAction)
                     {
                         case MirAction.近距攻击2:
@@ -6613,10 +6612,10 @@ namespace Client.MirObjects
                         case MirAction.近距攻击2:
                             Libraries.Monsters[(ushort)Monster.HornedCommander].DrawBlend((784 + FrameIndex + (int)Direction * 8), DrawLocation, Color.White, true);
                             break;
-                        case MirAction.远程攻击1: //正确：远程攻击1
+                        case MirAction.远程攻击1:
                             Libraries.Monsters[(ushort)Monster.HornedCommander].DrawBlend((912 + FrameIndex + (int)Direction * 8), DrawLocation, Color.White, true);
                             break;
-                        case MirAction.近距攻击5: //正确：近距攻击5
+                        case MirAction.近距攻击5:
                             Libraries.Monsters[(ushort)Monster.HornedCommander].DrawBlend((1058 + FrameIndex + (int)Direction * 10), DrawLocation, Color.White, true);
                             break;
                     }

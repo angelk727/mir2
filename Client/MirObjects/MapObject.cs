@@ -281,8 +281,12 @@ namespace Client.MirObjects
                     Effects.Add(new BuffEffect(Libraries.Magic3, 3470, 8, 1400, this, true, type) { Repeat = true });
                     break;
                 case BuffType.龙之特效:
-                    Effects.Add(new BuffEffect(Libraries.Magic3, 7040, 32, 1600, this, true, type) { Blend = true, Repeat = true, Delay = 60000 });
-                    Effects.Add(new BuffEffect(Libraries.Magic3, 7080, 25, 1200, this, true, type) { Repeat = true, DrawBehind = true , Delay = 10000 });
+                    Effects.Add(new BuffEffect(Libraries.Magic3, 7040, 32, 1600, this, true, type, Color.FromArgb(158, 255, 158, 98)) { Blend = true, Repeat = true, Delay = 60000 });
+                    Effects.Add(new BuffEffect(Libraries.Magic3, 7080, 25, 1200, this, true, type, Color.FromArgb(158, 255, 255, 255)) { Repeat = true, DrawBehind = true , Delay = 10000 });
+                    break;
+                case BuffType.龙的特效:
+                    Effects.Add(new BuffEffect(Libraries.Magic3, 7040, 32, 1600, this, true, type, Color.FromArgb(158, 98, 255, 255)) { Blend = true, Repeat = true, Delay = 60000 });
+                    Effects.Add(new BuffEffect(Libraries.Magic3, 7080, 25, 1200, this, true, type, Color.FromArgb(158, 255, 255, 255)) { Repeat = true, DrawBehind = true, Delay = 10000 });
                     break;
                 case BuffType.GeneralMeowMeowShield:
                     Effects.Add(new BuffEffect(Libraries.Monsters[(ushort)Monster.GeneralMeowMeow], 569, 7, 700, this, true, type) { Repeat = true, Light = 1 });

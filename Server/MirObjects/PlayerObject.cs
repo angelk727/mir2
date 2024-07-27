@@ -5806,24 +5806,47 @@ namespace Server.MirObjects
                             }
                             break;
                         case 13://Hero unlock autopot
-                            if (!HeroSpawned || Hero.AutoPot)
+                            if (!HeroSpawned)
                             {
+                                ReceiveChat(string.Format("没有激活的英雄无法使用该物品"), ChatType.System);
+                                Enqueue(p);
+                                return;
+                            }
+                            if (Hero.AutoPot)
+                            {
+                                ReceiveChat(string.Format("当前英雄已开启自动补给功能"), ChatType.System);
                                 Enqueue(p);
                                 return;
                             }
                             Hero.AutoPot = true;
                             Enqueue(new S.UnlockHeroAutoPot());
-                            ReceiveChat("英雄背包功能已解锁", ChatType.Hint);
+                            ReceiveChat("英雄背包自动补给功能已解锁", ChatType.Hint);
                             break;
                         case 14: //Increase maximum hero count
                             if (Info.MaximumHeroCount >= Settings.MaximumHeroCount)
                             {
-                                ReceiveChat("英雄持有数已达上限", ChatType.Hint);
+                                ReceiveChat(string.Format("英雄持有数量已达上限"), ChatType.System);
                                 Enqueue(p);
                                 return;
                             }
                             Info.MaximumHeroCount++;
                             Array.Resize(ref Info.Heroes, Info.MaximumHeroCount);
+                            break;
+                        case 15: //Increase Hero Inventory
+                            if (!HeroSpawned)
+                            {
+                                ReceiveChat(string.Format("没有激活的英雄无法使用该物品"), ChatType.System);
+                                Enqueue(p);
+                                return;
+                            }
+                            if (Hero.Info.Inventory.Length >= 42)
+                            {
+                                ReceiveChat(string.Format("当前英雄背包格已达到上限"), ChatType.System);
+                                Enqueue(p);
+                                return;
+                            }
+                            Hero.Enqueue(new S.ResizeInventory { Size = Hero.Info.ResizeInventory() });
+                            ReceiveChat("当前英雄的背包格解锁成功", ChatType.Hint);
                             break;
                     }
                     break;
@@ -5973,7 +5996,7 @@ namespace Server.MirObjects
                                 {
                                     var time = item.Info.Durability;
 
-                                    AddBuff(BuffType.包容万金, this, time * Settings.Minute, new Stats { [Stat.背包负重] = item.GetTotal(Stat.幸运) });
+                                    AddBuff(BuffType.包容万斤, this, time * Settings.Minute, new Stats { [Stat.背包负重] = item.GetTotal(Stat.幸运) });
                                 }
                                 break;
                         }

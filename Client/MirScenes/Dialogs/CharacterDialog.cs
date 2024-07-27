@@ -255,7 +255,7 @@ namespace Client.MirScenes.Dialogs
                                 if (actor.WeaponEffect == 75)
                                     Libraries.StateitemEffect.DrawBlend(180, DisplayLocation, Color.White, true, 1F);
                                 break;
-                            case 104: //刺客武器特效只允许在 0-20 韩服特效为6x2个 范围超出客户端不能运行 目前尚未找到限制的代码 这段代码直接限制客户端
+                            case 104:
                                 if (actor.WeaponEffect == 104)
                                     Libraries.StateitemEffect.DrawBlend(80, DisplayLocation, Color.White, true, 1F);
                                 break;

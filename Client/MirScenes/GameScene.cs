@@ -9040,7 +9040,7 @@ namespace Client.MirScenes
             return null;
         }
 
-        public MirControl ItemSetInfoLabel(UserItem item, bool Inspect = false)//自添加套装显示
+        public MirControl ItemSetInfoLabel(UserItem item, bool Inspect = false)
         {
             ushort level = Inspect ? InspectDialog.Level : MapObject.User.Level;
             MirClass job = Inspect ? InspectDialog.Class : MapObject.User.Class;
@@ -10091,7 +10091,7 @@ namespace Client.MirScenes
             outlines[9] = StoryInfoLabel(item, inspect);
             //GM Made
             outlines[10] = GMMadeLabel(item);
-			//套装 Info Label
+			//Info Label
             outlines[11] = ItemSetInfoLabel(item, inspect);
 
             foreach (var outline in outlines)

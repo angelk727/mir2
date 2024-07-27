@@ -133,16 +133,22 @@ namespace Client.MirScenes.Dialogs
                 var buffLibrary = Libraries.BuffIcon;
 
                 //ArcherSpells - VampireShot,PoisonShot
+                if (buffImage >= 30000)
+                {
+                    buffImage -= 30000;
+                    buffLibrary = Libraries.MagIcon;
+                }
+
                 if (buffImage >= 20000)
                 {
                     buffImage -= 20000;
-                    buffLibrary = Libraries.MagIcon;
+                    buffLibrary = Libraries.Prguse2;
                 }
 
                 if (buffImage >= 10000)
                 {
                     buffImage -= 10000;
-                    buffLibrary = Libraries.Prguse2;
+                    buffLibrary = Libraries.Prguse;
                 }
 
                 var location = new Point(Size.Width - 10 - 23 - (i * 23) + ((10 * 23) * (i / 10)), 6 + ((i / 10) * 24));
@@ -473,148 +479,150 @@ namespace Client.MirScenes.Dialogs
             {
                 //Skills
                 case BuffType.血龙剑法:
-                    return 76;
+                    return 30152;
                 case BuffType.天上秘术:
-                    return 77;
+                    return 30154;
                 case BuffType.剑气爆:
-                    return 49;
+                    return 30098;
                 case BuffType.金刚不坏:
-                    return 80;
+                    return 30160;
                 case BuffType.金刚不坏秘籍:
-                    return 84;
+                    return 30168;
                 case BuffType.天务:
-                    return 72;
+                    return 30144;
                 case BuffType.深延术:
-                    return 73;
+                    return 30146;
                 case BuffType.魔法盾:
-                    return 30;
+                    return 30060;
                 case BuffType.金刚术:
-                    return 98;
+                    return 30196;
                 case BuffType.隐身术:
-                case BuffType.隐身戒指:
-                    return 17;
+                    return 30034;
                 case BuffType.体迅风:
-                    return 60;
+                    return 30120;
                 case BuffType.幽灵盾:
-                    return 13;
+                    return 30026;
                 case BuffType.神圣战甲术:
-                    return 14;
+                    return 30028;
                 case BuffType.护身气幕:
-                    return 50;
+                    return 30100;
                 case BuffType.无极真气:
-                    return 35;
+                    return 30070;
                 case BuffType.诅咒术:
-                    return 45;
+                    return 30090;
                 case BuffType.先天气功:
-                    return 57;
+                    return 30114;
 
                 case BuffType.轻身步:
-                    return 67;
+                    return 30134;
                 case BuffType.风身术:
-                    return 68;
+                    return 30136;
                 case BuffType.月影术:
-                    return 65;
+                    return 30130;
                 case BuffType.烈火身:
-                    return 70;
+                    return 30140;
 
                 case BuffType.气流术:
-                    return 96;
+                    return 30192;
                 case BuffType.吸血地闪:
-                    return 100;
+                    return 30200;
                 case BuffType.毒魔闪:
-                    return 102;
+                    return 30204;
                 case BuffType.精神状态:
-                    return 199;
+                    return 59;
 
                 //Monster
                 case BuffType.惩戒真言:
+                    return 115;
                 case BuffType.至尊威严:
-                    return 217;
+                    return 122;
                 case BuffType.御体之力:
-                    return 219;
+                    return 107;
                 case BuffType.失明状态:
-                    return 226;
+                    return 88;
                 case BuffType.死亡印记:
-                    return 205;
+                    return 111;
                 case BuffType.寒冰护甲:
-                    return 228;
+                    return 4;
                 case BuffType.伤口加深:
-                    return 231;
+                    return 94;
                 case BuffType.麻痹状态:
-                    return 234;
+                    return 96;
                 case BuffType.绝对封锁:
-                    return 265;
+                    return 61;
                 case BuffType.Mon564NSealing:
-                    return 266;
+                    return 61;
                 case BuffType.防御诅咒:
-                    return 422;
+                    return 67;
                 case BuffType.烈火焚烧:
-                    return 848;
+                    return 548;
 
                 //Special
                 case BuffType.游戏管理:
-                    return 173;
+                    return 20121;
                 case BuffType.General:
-                    return 182;
+                    return 20122;
+                case BuffType.隐身戒指:
+                    return 24;
                 case BuffType.金币辉煌:
-                    return 168;
-                case BuffType.包容万金:
-                    return 235;
+                    return 10907;
+                case BuffType.包容万斤:
+                    return 10872;
                 case BuffType.变形效果:
-                    return 241;
+                    return 10890;
                 case BuffType.火传穷薪:
                 case BuffType.衣钵相传:
-                    return 248;
+                    return 80;
                 case BuffType.心心相映:
-                    return 201;
+                    return 64;
                 case BuffType.公会特效:
-                    return 203;
+                    return 63;
                 case BuffType.精力充沛:
-                    return 186;
+                    return 508;
                 case BuffType.时间之殇:
-                    return 261;
+                    return 75;
                 case BuffType.技巧项链:
-                    return 200;
+                    return 60;
                 case BuffType.新人特效:
-                    return 182;
+                    return 10903;
                 case BuffType.安息之气:
-                    return 186;
-                case BuffType.远古气息:
-                    return 808;
-                case BuffType.华丽雨光:
-                    return 330;
-                case BuffType.龙之特效:
-                    return 167;
-                case BuffType.龙的特效:
-                    return 332;
-                case BuffType.奇异药水:
-                    return 810;
-                case BuffType.天灵水:
-                    return 626;
-                case BuffType.玉清水:
-                    return 627;
-                case BuffType.甜筒HP:
-                    return 333;
-                case BuffType.甜筒MP:
                     return 334;
+                case BuffType.远古气息:
+                    return 334;
+                case BuffType.华丽雨光:
+                    return 30;
+                case BuffType.龙之特效:
+                    return 31;
+                case BuffType.龙的特效:
+                    return 32;
+                case BuffType.奇异药水:
+                    return 510;
+                case BuffType.天灵水:
+                    return 326;
+                case BuffType.玉清水:
+                    return 327;
+                case BuffType.甜筒HP:
+                    return 33;
+                case BuffType.甜筒MP:
+                    return 34;
                 case BuffType.内尔族的灵药:
-                    return 652;
+                    return 352;
                 case BuffType.英雄灵气:
-                    return 259;
+                    return 44;
                 case BuffType.增强组队:
-                    return 840;
+                    return 540;
                 case BuffType.暗影侵袭:
-                    return 841;
+                    return 541;
                 case BuffType.古代宗师祝福:
-                    return 842;
+                    return 542;
                 case BuffType.黄金宗师祝福:
-                    return 843;
+                    return 543;
                 case BuffType.摩鲁的赤色药剂:
-                    return 844;
+                    return 544;
                 case BuffType.摩鲁的青色药剂:
-                    return 845;
+                    return 545;
                 case BuffType.摩鲁的黄色药剂:
-                    return 846;
+                    return 546;
 
                 //Stats
                 case BuffType.攻击力提升:
@@ -631,7 +639,7 @@ namespace Client.MirScenes.Dialogs
                 case BuffType.获取经验提升:
                 case BuffType.物品掉落提升:
                 case BuffType.技能经验提升:
-                    return 161;
+                    return 10893;
                 default:
                     return 0;
             }

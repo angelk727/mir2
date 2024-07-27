@@ -262,12 +262,12 @@ namespace Client.MirScenes.Dialogs
                                 break;
                             case 12:
                                 if (GameScene.User.MountType == 12)
-                                    MountImage.Index = 1450; //这里是客户端文件新添加的16张动作图片
+                                    MountImage.Index = 1450;
                                 break;
                             default:
                                 break;
                         }
-                //MountImage.Index = StartIndex + (GameScene.User.MountType * 20);//源代码这种写法简单暴力
+                //MountImage.Index = StartIndex + (GameScene.User.MountType * 20);
                 MountImage.Animated = true;
 
                 UserItem item = MapObject.User.Equipment[(int)EquipmentSlot.坐骑];

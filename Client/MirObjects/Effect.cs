@@ -390,19 +390,43 @@ namespace Client.MirObjects
     public class BuffEffect : Effect
     {
         public BuffType BuffType;
+        public Color DrawColour { get; set; } = Color.White;
 
-        public BuffEffect(MLibrary library, int baseIndex, int count, int duration, MapObject owner, bool blend, BuffType buffType)
+        public BuffEffect(MLibrary library, int baseIndex, int count, int duration, MapObject owner, bool blend, BuffType buffType, Color? drawColour = null)
             : base(library, baseIndex, count, duration, owner, 0)
         {
             Repeat = true;
             Blend = blend;
             BuffType = buffType;
             Light = -1;
+            DrawColour = drawColour ?? Color.White;
         }
 
         public override void Process()
         {
             base.Process();
+        }
+
+        public override void Draw()
+        {
+            if (CMain.Time < Start) return;
+
+            if (Owner != null)
+            {
+                DrawLocation = Owner.DrawLocation;
+            }
+            else
+            {
+                DrawLocation = new Point((Source.X - MapObject.User.Movement.X + MapControl.OffSetX) * MapControl.CellWidth,
+                                         (Source.Y - MapObject.User.Movement.Y + MapControl.OffSetY) * MapControl.CellHeight);
+                DrawLocation.Offset(DrawOffset);
+                DrawLocation.Offset(MapObject.User.OffSetMove);
+            }
+
+            if (Blend)
+                Library.DrawBlend(BaseIndex + CurrentFrame, DrawLocation, DrawColour, true, Rate);
+            else
+                Library.Draw(BaseIndex + CurrentFrame, DrawLocation, DrawColour, true);
         }
     }
 

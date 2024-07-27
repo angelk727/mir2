@@ -344,7 +344,7 @@ namespace Client.MirObjects
                 WeaponLibrary1 = null;
                 WeaponLibrary2 = null;
 
-                if (TransformType == 18) //自添加
+                if (TransformType == 18)
                 {
                     WingEffect = 19;
                     WingLibrary = WingEffect - 1 < Libraries.TransformEffect.Length ? Libraries.TransformEffect[WingEffect - 1] : null;
@@ -421,7 +421,7 @@ namespace Client.MirObjects
                             {
                                 WeaponLibrary2 = Index < Libraries.ARWeaponsS.Length ? Libraries.ARWeaponsS[Index] : null;
 
-                                if (WeaponEffect > 0)  //自添加
+                                if (WeaponEffect > 0)
                                     WeaponEffectLibrary2 = WeaponEffect < Libraries.ARWeaponsEffectS.Length ? Libraries.ARWeaponsEffectS[WeaponEffect] : null;
                                 else
                                     WeaponEffectLibrary2 = null;
@@ -529,7 +529,7 @@ namespace Client.MirObjects
                             WeaponLibrary1 = Index < Libraries.AWeaponsL.Length ? Libraries.AWeaponsR[Index] : null;
                             WeaponLibrary2 = Index < Libraries.AWeaponsR.Length ? Libraries.AWeaponsL[Index] : null;
 
-                            if (WeaponEffect >= 100 && WeaponEffect <= 199) //自添加
+                            if (WeaponEffect >= 100 && WeaponEffect <= 199)
                             {
                                 WeaponEffectLibrary1 = WeaponEffect - 100 < Libraries.AWeaponEffectL.Length ? Libraries.AWeaponEffectR[WeaponEffect - 100] : null;
                                 WeaponEffectLibrary2 = WeaponEffect - 100 < Libraries.AWeaponEffectR.Length ? Libraries.AWeaponEffectL[WeaponEffect - 100] : null;
@@ -1710,7 +1710,7 @@ namespace Client.MirObjects
 
                             #endregion
 
-                            #region HealingRare //自添加治愈术秘籍
+                            #region HealingRare
 
                             case Spell.HealingRare:
                                 Effects.Add(new Effect(Libraries.Magic, 200, 10, Frame.Count * FrameInterval, this));
@@ -1755,7 +1755,7 @@ namespace Client.MirObjects
 
                             #endregion
 
-                            #region GreatFireBallRare  //自添加大火球秘籍
+                            #region GreatFireBallRare
 
                             case Spell.GreatFireBallRare:
                                 GreatFireBallRareStopTime = CMain.Time + 4000;
@@ -1806,7 +1806,7 @@ namespace Client.MirObjects
                                 break;
                             #endregion
 
-                            #region StormEscapeRare //自添加雷仙风秘籍
+                            #region StormEscapeRare
 
                             case Spell.StormEscapeRare:
                                 Effects.Add(new Effect(Libraries.Magic3, 590, 10, Frame.Count * FrameInterval, this));
@@ -1870,7 +1870,7 @@ namespace Client.MirObjects
 
                             #endregion
 
-                            #region ImmortalSkinRare //自添加金刚不坏秘籍
+                            #region ImmortalSkinRare
 
                             case Spell.ImmortalSkinRare:
                                 Effects.Add(new Effect(Libraries.Magic3, 550, 17, Frame.Count * FrameInterval * 4, this));
@@ -1880,7 +1880,7 @@ namespace Client.MirObjects
 
                             #endregion
 
-                            #region HeavenlySecrets //自添加天上秘术
+                            #region HeavenlySecrets
                             case Spell.HeavenlySecrets:
                                 Effects.Add(new Effect(Libraries.Magic3, 200, 8, Frame.Count * FrameInterval * 4, this));
                                 Effects.Add(new Effect(Libraries.Magic3, 210, 7, Frame.Count * FrameInterval, this));
@@ -2187,7 +2187,7 @@ namespace Client.MirObjects
 
                             #endregion
 
-                            #region EntrapmentRare//自添加捕绳剑秘籍
+                            #region EntrapmentRare
 
                             case Spell.EntrapmentRare:
                                 Effects.Add(new Effect(Libraries.Magic2, 990, 10, Frame.Count * FrameInterval, this));
@@ -5380,7 +5380,7 @@ namespace Client.MirObjects
                                 case MirAction.近距攻击3:
                                     Libraries.TransformWeaponEffect[18].DrawBlend(232 + ((int)Direction * 8) + FrameIndex, DrawLocation, Color.White, true, 0.3F);
                                     break;
-                                //case MirAction.施法动作: //同45问题一致暂屏蔽此特效
+                                //case MirAction.施法动作:
                                 //    Libraries.TransformWeaponEffect[18].DrawBlend(296 + ((int)Direction * 6) + FrameIndex, DrawLocation, Color.White, true, 0.7F);
                                 //    break;
                                 case MirAction.挖矿展示:
@@ -5469,7 +5469,7 @@ namespace Client.MirObjects
                                 case MirAction.近距攻击3:
                                     Libraries.TransformWeaponEffect[45].DrawBlend(232 + ((int)Direction * 8) + FrameIndex, DrawLocation, Color.White, true, 0.7F);
                                     break;
-                                //case MirAction.施法动作: //因为与近距攻击3冲突暂关闭此特效，待解决后开启
+                                //case MirAction.施法动作:
                                     //Libraries.TransformWeaponEffect[45].DrawBlend(296 + ((int)Direction * 6) + FrameIndex, DrawLocation, Color.White, true, 0.7F);
                                     //break;
                                 case MirAction.挖矿展示:
@@ -5497,7 +5497,7 @@ namespace Client.MirObjects
         }
 
 
-        public void DrawWeapon() //角色武器1
+        public void DrawWeapon()
         {
             if (Weapon < 0) return;
 

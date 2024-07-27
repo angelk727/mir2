@@ -4,7 +4,7 @@ using S = ServerPackets;
 
 namespace Server.MirObjects.Monsters
 {
-    //TODO - 具有后退动画，无法获得精确的运动
+    //TODO
 
     public class ChieftainArcher : MonsterObject
     {

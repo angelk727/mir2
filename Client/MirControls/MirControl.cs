@@ -8,7 +8,7 @@ namespace Client.MirControls
     public class MirControl : IDisposable
     {
         public static MirControl ActiveControl, MouseControl;
-        
+
         public virtual Point DisplayLocation { get { return Parent == null ? Location : Parent.DisplayLocation.Add(Location); } }
         public Rectangle DisplayRectangle { get { return new Rectangle(DisplayLocation, Size); } }
 
@@ -163,7 +163,7 @@ namespace Client.MirControls
 
         #region Controls
         public List<MirControl> Controls { get; private set; }
-        public event EventHandler ControlAdded , ControlRemoved;
+        public event EventHandler ControlAdded, ControlRemoved;
         private void AddControl(MirControl control)
         {
             Controls.Add(control);
@@ -237,9 +237,9 @@ namespace Client.MirControls
 
         #region Events
         protected bool HasShown;
-        public event EventHandler Click , DoubleClick, BeforeDraw , AfterDraw , MouseEnter , MouseLeave , Shown , BeforeShown, Disposing;
-        public event MouseEventHandler MouseWheel,MouseMove, MouseDown, MouseUp;
-        public event KeyEventHandler KeyDown , KeyUp;
+        public event EventHandler Click, DoubleClick, BeforeDraw, AfterDraw, MouseEnter, MouseLeave, Shown, BeforeShown, Disposing;
+        public event MouseEventHandler MouseWheel, MouseMove, MouseDown, MouseUp;
+        public event KeyEventHandler KeyDown, KeyUp;
         public event KeyPressEventHandler KeyPress;
         #endregion
 
@@ -442,9 +442,9 @@ namespace Client.MirControls
 
         #region Size
 
-// ReSharper disable InconsistentNaming
+        // ReSharper disable InconsistentNaming
         protected Size _size;
-// ReSharper restore InconsistentNaming
+        // ReSharper restore InconsistentNaming
 
         public virtual Size Size
         {
@@ -468,7 +468,7 @@ namespace Client.MirControls
         {
             TextureValid = false;
             Redraw();
-            
+
             if (SizeChanged != null)
                 SizeChanged.Invoke(this, EventArgs.Empty);
         }
@@ -594,7 +594,7 @@ namespace Client.MirControls
 
             if (Shown != null)
                 Shown.Invoke(this, EventArgs.Empty);
-            
+
             HasShown = true;
         }
         #endregion
@@ -1001,7 +1001,7 @@ namespace Client.MirControls
         {
             var theFont = new System.Drawing.Font(font.Name, font.Size * 96f / CMain.Graphics.DpiX, font.Style);
             font.Dispose();
-            
+
             return theFont;
         }
         #endregion

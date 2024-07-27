@@ -97,7 +97,7 @@ namespace Server.MirDatabase
                 new BuffInfo { Type = BuffType.防御提升, Properties = BuffProperty.PauseInSafeZone, StackType = BuffStackType.ResetStatAndDuration },
                 new BuffInfo { Type = BuffType.魔法防御提升, Properties = BuffProperty.PauseInSafeZone, StackType = BuffStackType.ResetStatAndDuration },
                 new BuffInfo { Type = BuffType.奇异药水, Properties = BuffProperty.PauseInSafeZone, StackType = BuffStackType.StackDuration },
-                new BuffInfo { Type = BuffType.包容万金, Properties = BuffProperty.PauseInSafeZone, StackType = BuffStackType.StackDuration },
+                new BuffInfo { Type = BuffType.包容万斤, Properties = BuffProperty.PauseInSafeZone, StackType = BuffStackType.StackDuration },
                 new BuffInfo { Type = BuffType.准确命中提升, Properties = BuffProperty.PauseInSafeZone, StackType = BuffStackType.ResetStatAndDuration },
                 new BuffInfo { Type = BuffType.敏捷躲避提升, Properties = BuffProperty.PauseInSafeZone, StackType = BuffStackType.ResetStatAndDuration },
                 new BuffInfo { Type = BuffType.技能经验提升, Properties = BuffProperty.PauseInSafeZone, StackType = BuffStackType.ResetStatAndDuration },
