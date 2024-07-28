@@ -1,14 +1,4 @@
-﻿﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-
-namespace Server.Database
+﻿namespace Server.Database
 {
     public partial class RecipeInfoForm : Form
     {
@@ -58,7 +48,7 @@ namespace Server.Database
             if (Directory.Exists(directoryPath))
             {
                 // Get all recipe files from the directory
-                string[] recipeFiles = Directory.GetFiles(directoryPath);
+                string[] recipeFiles = Directory.GetFiles(directoryPath, "*.txt");
 
                 // Clear existing items from ListBox
                 RecipeList.Items.Clear();
@@ -78,7 +68,7 @@ namespace Server.Database
             }
             else
             {
-                MessageBox.Show("The recipe directory does not exist.", "Directory Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("配方目录不存在", "目录错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         #endregion
@@ -110,7 +100,7 @@ namespace Server.Database
             }
             else
             {
-                MessageBox.Show("The selected recipe file does not exist.", "File Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("所选的配方文件不存在", "文件错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         #endregion
@@ -300,7 +290,7 @@ namespace Server.Database
             // Ensure the directory exists
             if (!Directory.Exists(directoryPath))
             {
-                MessageBox.Show("The recipe directory does not exist.", "Directory Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("配方目录不存在", "目录错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -314,7 +304,7 @@ namespace Server.Database
             // Check if file already exists
             if (File.Exists(filePath) && fileName != TempFileName)
             {
-                MessageBox.Show("A file with this name already exists.", "File Exists", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("已存在同名文件", "文件已存在", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -348,13 +338,13 @@ namespace Server.Database
             string newDisplayName = ItemTextBox.Text.Trim();
             if (string.IsNullOrEmpty(newDisplayName))
             {
-                MessageBox.Show("Filename cannot be empty.", "Invalid Filename", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("文件名不能为空", "无效文件名", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             // Prepare full filename with extension
             string newFileName = $"{newDisplayName}.txt";
-            string oldDisplayName = RecipeList.SelectedItem.ToString().Substring(3).Trim(); // Extract old display name
+            string oldDisplayName = RecipeList.SelectedItem.ToString().Substring(RecipeList.SelectedItem.ToString().IndexOf(' ') + 1).Trim(); // Extract old display name
             string oldFileName = $"{oldDisplayName}.txt";
 
             // Paths for old and new files
@@ -382,7 +372,7 @@ namespace Server.Database
                 }
                 catch (IOException ex)
                 {
-                    MessageBox.Show($"An error occurred while renaming the file: {ex.Message}", "Rename Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show($"重命名文件时发生错误: {ex.Message}", "重命名错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             #endregion

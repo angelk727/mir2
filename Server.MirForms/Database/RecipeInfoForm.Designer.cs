@@ -1,4 +1,4 @@
-﻿﻿namespace Server.Database
+﻿namespace Server.Database
 {
     partial class RecipeInfoForm
     {
