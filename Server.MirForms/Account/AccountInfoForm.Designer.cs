@@ -233,7 +233,7 @@ namespace Server
             // 
             // characterStatus
             // 
-            characterStatus.Text = "职位";
+            characterStatus.Text = "账户角色状态";
             characterStatus.Width = 163;
             // 
             // LastIPSearch

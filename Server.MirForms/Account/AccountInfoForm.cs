@@ -229,17 +229,17 @@ namespace Server
 
                     if (character.LastLoginDate > character.LastLogoutDate)
                     {
-                        status = $"Online: {(SMain.Envir.Now - character.LastLoginDate).TotalMinutes.ToString("##")} minutes";
+                        status = $"在线: {(SMain.Envir.Now - character.LastLoginDate).TotalMinutes.ToString("##")} 分钟";
                         listItem.ForeColor = Color.Green;
                     }
                     else
                     {
-                        status = $"Offline: {character.LastLogoutDate}";
+                        status = $"离线: {character.LastLogoutDate}";
                     }
 
                     if (character.Deleted)
                     {
-                        status = $"Deleted: {character.DeleteDate}";
+                        status = $"注销: {character.DeleteDate}";
                         listItem.ForeColor = Color.Red;
                     }
 
