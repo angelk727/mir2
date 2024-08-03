@@ -7712,26 +7712,20 @@ namespace Server.MirObjects
             else if (gem.GetTotal(Stat.生命恢复) > 0)
                 return item.AddedStats[Stat.生命恢复];
 
-            // Definitions are missing for these.
-            /*
-            else if ((gem.Info.HPrate) > 0)
-                return item.h
+            else if (gem.GetTotal(Stat.生命值数率) > 0)
+                return item.AddedStats[Stat.生命值数率];
 
-            else if ((gem.Info.MPrate) > 0)
-                return 
+            else if (gem.GetTotal(Stat.法力值数率) > 0)
+                return item.AddedStats[Stat.法力值数率];
 
-            else if ((gem.Info.SpellRecovery) > 0)
-                return 
+            else if (gem.GetTotal(Stat.法力恢复) > 0)
+                return item.AddedStats[Stat.法力恢复];
 
-            else if ((gem.Info.Holy) > 0)
-                return 
+            else if (gem.GetTotal(Stat.神圣) > 0)
+                return item.AddedStats[Stat.神圣];
 
-            else if ((gem.Info.Strong + gem.Strong) > 0)
-                return 
-
-            else if (gem.Info.HPrate > 0)
-                return
-            */
+            else if (gem.GetTotal(Stat.强度) > 0)
+                return item.AddedStats[Stat.强度];
             return 0;
         }
         public bool CanGainItem(UserItem item)

@@ -954,9 +954,9 @@ public enum ItemType : byte
     怪物蛋 = 40,
     攻城弹药 = 41, //TODO
     封印 = 42,
-    绝技破坏 = 43,
-    绝技守护 = 44,
-    绝技灵丹 = 45
+    攻击型绝技 = 43,
+    防御型绝技 = 44,
+    技能型绝技 = 45
 }
 
 public enum MirGridType : byte

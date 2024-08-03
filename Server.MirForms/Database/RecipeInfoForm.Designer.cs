@@ -42,6 +42,11 @@
             ToolsGroupBox = new GroupBox();
             ToolTextBox = new TextBox();
             IngredientsGroupBox = new GroupBox();
+            label8 = new Label();
+            Quality4TextBox = new TextBox();
+            Quality3TextBox = new TextBox();
+            Quality2TextBox = new TextBox();
+            Quality1TextBox = new TextBox();
             IngredientName4TextBox = new TextBox();
             IngredientName3TextBox = new TextBox();
             IngredientName2TextBox = new TextBox();
@@ -179,6 +184,11 @@
             // 
             // IngredientsGroupBox
             // 
+            IngredientsGroupBox.Controls.Add(label8);
+            IngredientsGroupBox.Controls.Add(Quality4TextBox);
+            IngredientsGroupBox.Controls.Add(Quality3TextBox);
+            IngredientsGroupBox.Controls.Add(Quality2TextBox);
+            IngredientsGroupBox.Controls.Add(Quality1TextBox);
             IngredientsGroupBox.Controls.Add(IngredientName4TextBox);
             IngredientsGroupBox.Controls.Add(IngredientName3TextBox);
             IngredientsGroupBox.Controls.Add(IngredientName2TextBox);
@@ -191,10 +201,47 @@
             IngredientsGroupBox.Controls.Add(IngredientAmount1TextBox);
             IngredientsGroupBox.Location = new Point(153, 229);
             IngredientsGroupBox.Name = "IngredientsGroupBox";
-            IngredientsGroupBox.Size = new Size(200, 181);
+            IngredientsGroupBox.Size = new Size(299, 181);
             IngredientsGroupBox.TabIndex = 8;
             IngredientsGroupBox.TabStop = false;
             IngredientsGroupBox.Text = "所需材料(必填)";
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Location = new Point(215, 25);
+            label8.Name = "label8";
+            label8.Size = new Size(65, 17);
+            label8.TabIndex = 24;
+            label8.Text = "持久/品质";
+            // 
+            // Quality4TextBox
+            // 
+            Quality4TextBox.Location = new Point(207, 150);
+            Quality4TextBox.Name = "Quality4TextBox";
+            Quality4TextBox.Size = new Size(83, 23);
+            Quality4TextBox.TabIndex = 23;
+            // 
+            // Quality3TextBox
+            // 
+            Quality3TextBox.Location = new Point(207, 117);
+            Quality3TextBox.Name = "Quality3TextBox";
+            Quality3TextBox.Size = new Size(83, 23);
+            Quality3TextBox.TabIndex = 22;
+            // 
+            // Quality2TextBox
+            // 
+            Quality2TextBox.Location = new Point(207, 84);
+            Quality2TextBox.Name = "Quality2TextBox";
+            Quality2TextBox.Size = new Size(83, 23);
+            Quality2TextBox.TabIndex = 21;
+            // 
+            // Quality1TextBox
+            // 
+            Quality1TextBox.Location = new Point(207, 51);
+            Quality1TextBox.Name = "Quality1TextBox";
+            Quality1TextBox.Size = new Size(83, 23);
+            Quality1TextBox.TabIndex = 20;
             // 
             // IngredientName4TextBox
             // 
@@ -284,7 +331,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(360, 418);
+            ClientSize = new Size(455, 418);
             Controls.Add(NewRecipeButton);
             Controls.Add(IngredientsGroupBox);
             Controls.Add(ToolsGroupBox);
@@ -329,5 +376,10 @@
         private TextBox IngredientName2TextBox;
         private TextBox IngredientName1TextBox;
         private Button NewRecipeButton;
+        private Label label8;
+        private TextBox Quality4TextBox;
+        private TextBox Quality3TextBox;
+        private TextBox Quality2TextBox;
+        private TextBox Quality1TextBox;
     }
 }

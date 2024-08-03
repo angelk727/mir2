@@ -802,7 +802,7 @@ namespace Server
             InterfaceTimer.Enabled = true;
             InterfaceTimer.Tick += InterfaceTimer_Tick;
             //
-             // recipeToolStripMenuItem
+            // recipeToolStripMenuItem
             // 
             recipeToolStripMenuItem.Name = "recipeToolStripMenuItem";
             recipeToolStripMenuItem.Size = new Size(203, 22);
