@@ -721,7 +721,28 @@ public enum Monster : ushort
     Mon579N = 579,
     Mon580N = 580,  //Mon59.wil
     Mon583N = 583,
-    //N=Normal S=Stoned T=Tree
+    Mon586N = 586,
+    Mon588N = 588,
+    Mon589N = 588,
+    Mon590N = 590,  //Mon60.wil
+    Mon591N = 591,
+    Mon592N = 592,
+    Mon593N = 593,
+    Mon594N = 594,
+    Mon595N = 595,
+    Mon596N = 596,
+    Mon597N = 597,
+    Mon598N = 598,
+    Mon599N = 599,
+    Mon600N = 600,  //Mon61.wil
+    Mon601N = 601,
+    Mon602N = 602,
+    Mon603N = 603,
+    Mon604N = 604,
+    Mon605N = 605,
+    Mon608N = 608,
+    Mon609N = 609,
+    //N=Normal S=Stoned T=Tree B=Boss
 
     //Special
     EvilMir = 900,
