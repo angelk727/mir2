@@ -29,6 +29,8 @@ namespace Client.MirGraphics
             Magic2 = new MLibrary(Settings.DataPath + "Magic2"),
             Magic3 = new MLibrary(Settings.DataPath + "Magic3"),
             Effect = new MLibrary(Settings.DataPath + "Effect"),
+            Effect2 = new MLibrary(Settings.DataPath + "Effect2"),
+            Effect_32bit = new MLibrary(Settings.DataPath + "Effect_32bit"),
             MagicC = new MLibrary(Settings.DataPath + "MagicC"),
             GuildSkill = new MLibrary(Settings.DataPath + "GuildSkill"),
             Weather = new MLibrary(Settings.DataPath + "Weather");
@@ -279,6 +281,10 @@ namespace Client.MirGraphics
             Progress++;
 
             Effect.Initialize();
+            Progress++;
+            Effect2.Initialize();
+            Progress++;
+            Effect_32bit.Initialize();
             Progress++;
 
             Weather.Initialize();

@@ -809,7 +809,7 @@ namespace Client.MirScenes.Dialogs
             {
                 if (GameScene.SelectedCell == null && GameScene.Gold > 0)
                 {
-                    MirAmountBox amountBox = new MirAmountBox("Send Amount:", 116, GameScene.Gold);
+                    MirAmountBox amountBox = new MirAmountBox("发送数量:", 116, GameScene.Gold);
 
                     amountBox.OKButton.Click += (c, a) =>
                     {
