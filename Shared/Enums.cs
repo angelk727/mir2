@@ -723,7 +723,7 @@ public enum Monster : ushort
     Mon583N = 583,
     Mon586N = 586,
     Mon588N = 588,
-    Mon589N = 588,
+    Mon589N = 589,
     Mon590N = 590,  //Mon60.wil
     Mon591N = 591,
     Mon592N = 592,
@@ -1369,7 +1369,8 @@ public enum Spell : byte
     Mon571NFireBomb = 233,
     Mon572NFlame = 234,
     Mon572NDarkVortex = 235,
-    Mon573NBigCobweb = 236
+    Mon573NBigCobweb = 236,
+    Mon609NBomb = 237
 }
 
 public enum SpellEffect : byte

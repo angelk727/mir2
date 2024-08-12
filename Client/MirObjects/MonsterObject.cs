@@ -3682,6 +3682,18 @@ namespace Client.MirObjects
                                                     };
                                                 }
                                                 break;
+                                            case Monster.Mon609N:
+                                                missile = CreateProjectile(584, Libraries.Monsters[(ushort)Monster.Mon609N], false, 13, 20, -13);
+
+                                                 if (missile.Target != null)
+                                                {
+                                                    missile.Complete += (o, e) =>
+                                                    {
+                                                        if (missile.Target.CurrentAction == MirAction.死后尸体) return;
+                                                        missile.Target.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon609N], 597, 8, 300, missile.Target) { Blend = true });
+                                                    };
+                                                }
+                                                 break;
                                             case Monster.ReaperPriest: //487
                                                 ob = MapControl.GetObject(TargetID);
                                                 if (ob != null)
@@ -7768,6 +7780,17 @@ namespace Client.MirObjects
                         case MirAction.近距攻击2:
                             Libraries.Monsters[(ushort)Monster.Mon577N].DrawBlend((481 + FrameIndex + (int)Direction * 8), DrawLocation, Color.White, true);
                             Libraries.Monsters[(ushort)Monster.Mon577N].DrawBlend((545 + FrameIndex + (int)Direction * 8), DrawLocation, Color.White, true);
+                            break;
+                    }
+                    break;
+                case Monster.Mon609N:
+                    switch (CurrentAction)
+                    {
+                        case MirAction.近距攻击1:
+                            Libraries.Monsters[(ushort)Monster.Mon609N].DrawBlend((464 + FrameIndex + (int)Direction * 7), DrawLocation, Color.White, true);
+                            break;
+                        case MirAction.近距攻击2:
+                            Libraries.Monsters[(ushort)Monster.Mon609N].DrawBlend((520 + FrameIndex + (int)Direction * 8), DrawLocation, Color.White, true);
                             break;
                     }
                     break;

@@ -457,6 +457,8 @@ namespace Server.MirObjects
                     return new Mon575S(info);
                 case 577:
                     return new Mon577N(info);
+                case 609:
+                    return new Mon609N(info);
                 case 900:
                     return new EvilMir(info);
                 case 901:

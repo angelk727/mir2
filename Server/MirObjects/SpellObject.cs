@@ -620,6 +620,17 @@ namespace Server.MirObjects
                         ob.Struck(Value, DefenceType.MAC);
                     }
                     break;
+                case Spell.Mon609NBomb:
+                    {
+                        if (ob.Race != ObjectType.Player && ob.Race != ObjectType.Monster && ob.Race != ObjectType.Hero) return;
+                        if (ob.Dead) return;
+                        if (ob == Caster) return;
+                        if (!ob.IsAttackTarget(Caster)) return;
+                        if (Value == 0) return;
+
+                        ob.Struck(Value, DefenceType.MAC);
+                    }
+                    break;
             }
         }
 
@@ -751,6 +762,7 @@ namespace Server.MirObjects
                 case Spell.Mon572NFlame:
                 case Spell.Mon572NDarkVortex:
                 case Spell.Mon573NBigCobweb:
+                case Spell.Mon609NBomb:
                     if (!Show)
                         return null;
 
