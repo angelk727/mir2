@@ -82,6 +82,10 @@ namespace Server.MirDatabase
                 new BuffInfo { Type = BuffType.新人特效, Properties = BuffProperty.RemoveOnExit, StackType = BuffStackType.Infinite }, //???
                 new BuffInfo { Type = BuffType.英雄灵气, Properties = BuffProperty.None, StackType = BuffStackType.Infinite },
                 new BuffInfo { Type = BuffType.暗影侵袭, Properties = BuffProperty.RemoveOnExit, StackType = BuffStackType.Infinite },
+                new BuffInfo { Type = BuffType.攻击型绝技, Properties = BuffProperty.None, StackType = BuffStackType.Infinite },
+                new BuffInfo { Type = BuffType.防御型绝技, Properties = BuffProperty.None, StackType = BuffStackType.Infinite },
+                new BuffInfo { Type = BuffType.技能型绝技, Properties = BuffProperty.None, StackType = BuffStackType.Infinite },
+                new BuffInfo { Type = BuffType.共用型绝技, Properties = BuffProperty.None, StackType = BuffStackType.Infinite },
 
                 //Stats
                 new BuffInfo { Type = BuffType.获取经验提升, Properties = BuffProperty.PauseInSafeZone, StackType = BuffStackType.ResetStatAndDuration },

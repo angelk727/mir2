@@ -13919,7 +13919,7 @@ namespace Server.MirObjects
 
             if (heroCount >= Info.MaximumHeroCount)
             {
-                ReceiveChat(string.Format("不能再召唤英雄"), ChatType.Hint);
+                ReceiveChat(string.Format("无法再召唤新的英雄"), ChatType.Hint);
                 return false;
             }
 
@@ -13935,7 +13935,7 @@ namespace Server.MirObjects
                 }
                 else
                 {
-                    ReceiveChat(string.Format("已添加到英雄存储中"), ChatType.Hint);
+                    ReceiveChat(string.Format("已添加到英雄存储库中"), ChatType.Hint);
                     Enqueue(new S.NewHeroInfo { Info = hero.ClientInformation, StorageIndex = i - 1 });
                 }
 

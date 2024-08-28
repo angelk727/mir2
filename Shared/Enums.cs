@@ -977,7 +977,8 @@ public enum ItemType : byte
     封印 = 42,
     攻击型绝技 = 43,
     防御型绝技 = 44,
-    技能型绝技 = 45
+    技能型绝技 = 45,
+    绝技材料 = 46
 }
 
 public enum MirGridType : byte
@@ -1502,6 +1503,10 @@ public enum BuffType : byte
     技能经验提升,
     英雄灵气,
     暗影侵袭,
+    攻击型绝技,
+    防御型绝技,
+    技能型绝技,
+    共用型绝技,
 
     //Stats
     攻击力提升 = 200,
