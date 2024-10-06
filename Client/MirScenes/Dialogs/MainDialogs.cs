@@ -3699,6 +3699,15 @@ namespace Client.MirScenes.Dialogs
                 case Spell.ImmortalSkinRare:
                     SkillButton.Hint = string.Format("金刚不坏-秘籍：\n主动技能\n金刚护体降低自身攻击力来提升防御力", Magic.Level, Magic.Level == 0 ? Magic.Level1 : Magic.Level == 1 ? Magic.Level2 : Magic.Level == 2 ? Magic.Level3 : 0);
                     break;
+                case Spell.LionRoarRare:
+                    SkillButton.Hint = string.Format("狮子吼-秘籍：\n主动技能\n麻痹周围目标持续时间随等级增长\n可麻痹等级不高于自身等级 + 3级的目标", Magic.Level, Magic.Level == 0 ? Magic.Level1 : Magic.Level == 1 ? Magic.Level2 : Magic.Level == 2 ? Magic.Level3 : 0, Magic.BaseCost);
+                    break;
+                case Spell.DimensionalSword:
+                    SkillButton.Hint = string.Format("时空剑：\n主动技能\n将时空劈砍发挥到极限\n瞬移至敌人背后造成伤害\n刺斩范围2格内的目标", Magic.Level, Magic.Level == 0 ? Magic.Level1 : Magic.Level == 1 ? Magic.Level2 : Magic.Level == 2 ? Magic.Level3 : 0, Magic.BaseCost);
+                    break;
+                case Spell.DimensionalSwordRare:
+                    SkillButton.Hint = string.Format("时空剑-秘籍：\n主动技能\n将时空劈砍发挥到极限\n瞬移至敌人背后造成伤害\n刺斩范围3格内的目标", Magic.Level, Magic.Level == 0 ? Magic.Level1 : Magic.Level == 1 ? Magic.Level2 : Magic.Level == 2 ? Magic.Level3 : 0, Magic.BaseCost);
+                    break;
                 //Wizard
                 case Spell.FireBall:
                     SkillButton.Hint = string.Format("火球术：\n主动技能\n掷出一枚火球造成远程伤害", Magic.Level, Magic.Level == 0 ? Magic.Level1 : Magic.Level == 1 ? Magic.Level2 : Magic.Level == 2 ? Magic.Level3 : 0, Magic.BaseCost);

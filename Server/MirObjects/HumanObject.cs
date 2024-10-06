@@ -3658,6 +3658,7 @@ namespace Server.MirObjects
                     Purification(target, magic);
                     break;
                 case Spell.LionRoar:
+                case Spell.LionRoarRare:
                 case Spell.BattleCry:
                     CurrentMap.ActionList.Add(new DelayedAction(DelayedType.Magic, Envir.Time + 500, this, magic, CurrentLocation));
                     break;
@@ -3678,6 +3679,12 @@ namespace Server.MirObjects
                     break;
                 case Spell.SlashingBurst:
                     SlashingBurst(magic, out cast);
+                    break;
+                case Spell.DimensionalSword:
+                    DimensionalSword(target, magic, out cast);
+                    break;
+                case Spell.DimensionalSwordRare:
+                    DimensionalSwordRare(target, magic, out cast);
                     break;
                 case Spell.Rage:
                     Rage(magic);
@@ -5265,6 +5272,65 @@ namespace Server.MirObjects
             //AddObjects(Direction, 1);
 
             //Enqueue(new S.UserAttackMove { Direction = Direction, Location = location });
+        }
+        private void DimensionalSword(MapObject target, UserMagic magic, out bool cast)
+        {
+            cast = false;
+
+            int damageBase = GetAttackPower(Stats[Stat.MinDC], Stats[Stat.MaxDC]);
+            int damageFinal = magic.GetDamage(damageBase);
+
+            DelayedAction action = new DelayedAction(DelayedType.Magic, Envir.Time + 500, this, magic, damageFinal, CurrentLocation, Direction, 1);
+            CurrentMap.ActionList.Add(action);
+
+            if (target == null || !target.IsAttackTarget(this)) return;
+            if (Functions.MaxDistance(CurrentLocation, target.CurrentLocation) > 2) return;
+            if (target.CurrentMap != CurrentMap) return;
+
+            Point backLocation = Functions.PointMove(target.CurrentLocation, Functions.ReverseDirection(target.Direction), 1);
+
+            if (CurrentMap.ValidPoint(backLocation))
+            {
+                Teleport(CurrentMap, backLocation, false);
+
+                Direction = Functions.DirectionFromPoint(CurrentLocation, target.CurrentLocation);
+                Enqueue(new S.UserAttackMove { Direction = Direction, Location = CurrentLocation });
+
+                target.Attacked(this, damageFinal, DefenceType.AC, false);
+                cast = true;
+            }
+        }
+        private void DimensionalSwordRare(MapObject target, UserMagic magic, out bool cast)
+        {
+            cast = false;
+
+            int damageBase = GetAttackPower(Stats[Stat.MinDC], Stats[Stat.MaxDC]);
+            int damageFinal = magic.GetDamage(damageBase);
+
+            DelayedAction action = new DelayedAction(DelayedType.Magic, Envir.Time + 500, this, magic, damageFinal, CurrentLocation, Direction, 1);
+            CurrentMap.ActionList.Add(action);
+
+            if (target == null || !target.IsAttackTarget(this)) return;
+            if (Functions.MaxDistance(CurrentLocation, target.CurrentLocation) > 3) return;
+            if (target.CurrentMap != CurrentMap) return;
+
+            Point backLocation = Functions.PointMove(target.CurrentLocation, Functions.ReverseDirection(target.Direction), 1);
+
+            if (CurrentMap.ValidPoint(backLocation))
+            {
+                CurrentMap.GetCell(CurrentLocation).Remove(this);
+                RemoveObjects(Direction, 1);
+
+                CurrentLocation = backLocation;
+                CurrentMap.GetCell(CurrentLocation).Add(this);
+                AddObjects(Direction, 1);
+
+                Direction = Functions.DirectionFromPoint(CurrentLocation, target.CurrentLocation);
+                Enqueue(new S.UserAttackMove { Direction = Direction, Location = CurrentLocation });
+
+                target.Attacked(this, damageFinal, DefenceType.AC, false);
+                cast = true;
+            }
         }
         private void FurySpell(UserMagic magic, out bool cast)
         {

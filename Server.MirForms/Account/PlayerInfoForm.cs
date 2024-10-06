@@ -150,9 +150,19 @@ namespace Server
 
             foreach (int completedQuestID in Character.CompletedQuests)
             {
-                // Display the completed quest in the listview
+                QuestInfo completedQuest = SMain.Envir.GetQuestInfo(completedQuestID);
+
                 ListViewItem item = new ListViewItem(completedQuestID.ToString());
-                item.SubItems.Add("Completed");
+                item.SubItems.Add("已完成");
+                item.SubItems.Add(completedQuest.Name.ToString());
+                QuestInfoListViewNF.Items.Add(item);
+            }
+
+            foreach (QuestProgressInfo currentQuest in Character.CurrentQuests)
+            {
+                ListViewItem item = new ListViewItem(currentQuest.Index.ToString());
+                item.SubItems.Add("进行中");
+                item.SubItems.Add(currentQuest.Info.Name.ToString());
                 QuestInfoListViewNF.Items.Add(item);
             }
         }
@@ -175,15 +185,15 @@ namespace Server
 
                 if (i < 6)
                 {
-                    inventoryItemListItem.SubItems.Add($"Belt | Slot: [{i + 1}]");
+                    inventoryItemListItem.SubItems.Add($"物品栏 | 位置: [{i + 1}]");
                 }
                 else if (i >= 6 && i < 46)
                 {
-                    inventoryItemListItem.SubItems.Add($"Inventory Bag I | Slot: [{i - 5}]");
+                    inventoryItemListItem.SubItems.Add($"背包 | 位置: [{i - 5}]");
                 }
                 else
                 {
-                    inventoryItemListItem.SubItems.Add($"Inventory Bag II | Slot: [{i - 45}]");
+                    inventoryItemListItem.SubItems.Add($"扩展背包 | 位置: [{i - 45}]");
                 }
 
                 inventoryItemListItem.SubItems.Add($"{inventoryItem.FriendlyName}");
@@ -201,7 +211,7 @@ namespace Server
                 if (questItem == null) continue;
 
                 ListViewItem questItemListItem = new ListViewItem($"{questItem.UniqueID}");
-                questItemListItem.SubItems.Add($"Quest Bag | Slot: [{i + 1}]");
+                questItemListItem.SubItems.Add($"任务物品 | 位置: [{i + 1}]");
 
                 questItemListItem.SubItems.Add($"{questItem.FriendlyName}");
                 questItemListItem.SubItems.Add($"{questItem.Count}/{questItem.Info.StackSize}");
@@ -220,11 +230,11 @@ namespace Server
 
                 if (i < 80)
                 {
-                    storeItemListItem.SubItems.Add($"Storage I | Slot: [{i + 1}]");
+                    storeItemListItem.SubItems.Add($"仓库 | 位置: [{i + 1}]");
                 }
                 else
                 {
-                    storeItemListItem.SubItems.Add($"Storage II | Slot: [{i - 79}]");
+                    storeItemListItem.SubItems.Add($"扩展仓库 | 位置: [{i - 79}]");
                 }
 
                 storeItemListItem.SubItems.Add($"{storeItem.FriendlyName}");
@@ -242,7 +252,7 @@ namespace Server
 
                 ListViewItem equipItemListItem = new ListViewItem($"{equipItem.UniqueID}");
 
-                equipItemListItem.SubItems.Add($"Equipment | Slot: [{i + 1}]");
+                equipItemListItem.SubItems.Add($"装备栏 | 位置: [{i + 1}]");
 
                 equipItemListItem.SubItems.Add($"{equipItem.FriendlyName}");
                 equipItemListItem.SubItems.Add($"{equipItem.Count}/{equipItem.Info.StackSize}");
@@ -439,6 +449,7 @@ namespace Server
             UpdatePlayerItems();
             UpdatePlayerMagics();
             UpdatePlayerQuests();
+            UpdateHeroList();
         }
         #endregion
 
@@ -465,6 +476,31 @@ namespace Server
             }
 
             UpdateTabs();
+        }
+        #endregion
+
+        #region Hero List
+        private void UpdateHeroList()
+        {
+            ClearHeroList();
+
+            //if (Character?.Player == null) return;
+            if (Character == null || Character.Heroes == null) return;
+
+            foreach (HeroInfo hero in Character.Heroes)
+            {
+                if (hero == null) continue;
+                var listItem = new ListViewItem(hero.Name) { Tag = hero }; // Create a ListViewItem for the hero
+                listItem.SubItems.Add(hero.Level.ToString()); // Hero level
+                listItem.SubItems.Add(hero.Class.ToString()); // Hero class
+                listItem.SubItems.Add(hero.Gender.ToString()); // Hero gender
+
+                HeroListView.Items.Add(listItem); // Add the item to the ListView control
+            }
+        }
+        private void ClearHeroList()
+        {
+            HeroListView.Items.Clear(); // Assuming HeroView is the ListView for displaying heroes
         }
         #endregion
     }

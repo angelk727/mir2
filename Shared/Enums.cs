@@ -1224,6 +1224,9 @@ public enum Spell : byte
     ImmortalSkin = 17,
     EntrapmentRare = 18,
     ImmortalSkinRare = 19,
+    LionRoarRare = 20,
+    DimensionalSword = 21,
+    DimensionalSwordRare = 22,
 
     //Wizard
     FireBall = 31,

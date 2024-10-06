@@ -94,7 +94,7 @@ namespace Client.MirObjects
 
         public bool RidingMount, Sprint, FastRun, Fishing, FoundFish;
         public long StanceTime, MountTime, FishingTime;
-        public long BlizzardStopTime, ReincarnationStopTime, SlashingBurstTime, GreatFireBallRareStopTime;
+        public long BlizzardStopTime, ReincarnationStopTime, SlashingBurstTime, GreatFireBallRareStopTime, DimensionalSwordTime;
 
         public short MountType = -1, TransformType = -1;
 
@@ -1166,6 +1166,15 @@ namespace Client.MirObjects
                                     GameScene.SpellTime = CMain.Time + 1500; //Spell Delay
                                 }
                                 break;
+                            case Spell.DimensionalSword:
+                            case Spell.DimensionalSwordRare:
+                                Frames.TryGetValue(MirAction.近距攻击1, out Frame);
+                                if (this == User)
+                                {
+                                    MapControl.NextAction = CMain.Time + 2000; // 80%
+                                    GameScene.SpellTime = CMain.Time + 1500; //Spell Delay
+                                }
+                                break;
                             case Spell.CounterAttack:
                                 Frames.TryGetValue(MirAction.近距攻击1, out Frame);
                                 if (this == User)
@@ -1865,7 +1874,7 @@ namespace Client.MirObjects
                             case Spell.ImmortalSkin:
                                 Effects.Add(new Effect(Libraries.Magic3, 550, 17, Frame.Count * FrameInterval * 4, this));
                                 Effects.Add(new Effect(Libraries.Magic3, 570, 5, Frame.Count * FrameInterval, this));
-                                SoundManager.PlaySound(20000 + (ushort)Spell * 10);
+                                SoundManager.PlaySound(20000 + ((ushort)Spell * 10));
                                 break;
 
                             #endregion
@@ -1875,7 +1884,7 @@ namespace Client.MirObjects
                             case Spell.ImmortalSkinRare:
                                 Effects.Add(new Effect(Libraries.Magic3, 550, 17, Frame.Count * FrameInterval * 4, this));
                                 Effects.Add(new Effect(Libraries.Magic3, 570, 5, Frame.Count * FrameInterval, this));
-                                SoundManager.PlaySound(20000 + (ushort)Spell * 10);
+                                SoundManager.PlaySound(20170);
                                 break;
 
                             #endregion
@@ -2169,6 +2178,15 @@ namespace Client.MirObjects
 
                             #endregion
 
+                            #region LionRoarRare
+
+                            case Spell.LionRoarRare:
+                                Effects.Add(new Effect(Libraries.Magic_32bit, 930, 21, 1200, this));
+                                SoundManager.PlaySound(20000 + (ushort)Spell * 10);
+                                break;
+
+                            #endregion
+
                             #region TwinDrakeBlade
 
                             case Spell.TwinDrakeBlade:
@@ -2190,8 +2208,8 @@ namespace Client.MirObjects
                             #region EntrapmentRare
 
                             case Spell.EntrapmentRare:
-                                Effects.Add(new Effect(Libraries.Magic2, 990, 10, Frame.Count * FrameInterval, this));
-                                SoundManager.PlaySound(20000 + (ushort)Spell * 10);
+                                Effects.Add(new Effect(Libraries.Magic3, 4370, 10, Frame.Count * FrameInterval, this));
+                                SoundManager.PlaySound(20070);
                                 break;
 
                             #endregion
@@ -2216,12 +2234,55 @@ namespace Client.MirObjects
 
                             #endregion
 
+                            #region DimensionalSword
+
+                            case Spell.DimensionalSword:
+                                Effects.Add(new Effect(Libraries.Magic_32bit, 1160, 3, 300, this));
+                                Effects.Add(new Effect(Libraries.Magic_32bit, 1180 + (int)Direction * 10, 4, 4 * FrameInterval, this));
+                                SoundManager.PlaySound(20000 + (ushort)Spell * 10);
+
+                                MapObject target = MapControl.GetObject(TargetID);
+
+                                if (target == null) return;
+
+                                if (target.Race == ObjectType.Monster || target.Race == ObjectType.Player)
+                                {
+                                    Effects.Add(new Effect(Libraries.Magic_32bit, 990 + ((int)Direction * 20), 11, 1000, this));
+                                    Effects.Add(new Effect(Libraries.Magic_32bit, 970, 8, 500, this, CMain.Time + 500) { Blend = true });
+                                    DimensionalSwordTime = CMain.Time + 2000;
+                                }
+                                break;
+
+                            #endregion
+
+                            #region DimensionalSwordRare
+
+                            case Spell.DimensionalSwordRare:
+                                Effects.Add(new Effect(Libraries.Magic_32bit, 1160, 3, 300, this));
+                                Effects.Add(new Effect(Libraries.Magic_32bit, 1300 + (int)Direction * 10, 6, 6 * FrameInterval, this));
+                                SoundManager.PlaySound(20210);
+
+                                MapObject targetRare = MapControl.GetObject(TargetID);
+
+                                if (targetRare == null) return;
+
+                                if (targetRare.Race == ObjectType.Monster || targetRare.Race == ObjectType.Player)
+                                {
+                                    Effects.Add(new Effect(Libraries.Magic_32bit, 990 + ((int)Direction * 20), 11, 1000, this));
+                                    Effects.Add(new Effect(Libraries.Magic_32bit, 1270, 15, 500, this, CMain.Time + 500) { Blend = true });
+                                    SoundManager.PlaySound(20211);
+                                    DimensionalSwordTime = CMain.Time + 2000;
+                                }
+                                break;
+
+                            #endregion
+
                             #region CounterAttack
 
                             case Spell.CounterAttack:
                                 Effects.Add(new Effect(Libraries.Magic3, 160, 10, Frame.Count * FrameInterval, this));
                                 SoundManager.PlaySound(20000 + (ushort)Spell * 10);
-                                Effects.Add(new Effect(Libraries.Magic, 3480 + (int)Direction * 10, 10, 10 * FrameInterval, this));
+                                Effects.Add(new Effect(Libraries.Magic, 3480 + (int)Direction * 10, 6, 6 * FrameInterval, this));
                                 Point location = Functions.PointMove(CurrentLocation, Direction, 1);
                                 MapControl.Effects.Add(new Effect(Libraries.Magic3, 170, 6, 600, location, CMain.Time + 200));
                                 SoundManager.PlaySound(20000 + (ushort)Spell * 10 + 5);
@@ -3534,14 +3595,13 @@ namespace Client.MirObjects
                                     #region HealingcircleRare
 
                                     case Spell.HealingcircleRare:
-                                        SoundManager.PlaySound(20000 + (ushort)Spell * 10);
+                                        SoundManager.PlaySound(20860);
                                         missile = CreateProjectile(1160, Libraries.Magic, true, 3, 30, 7);
                                         missile.Explode = true;
 
                                         missile.Complete += (o, e) =>
                                         {
                                             MapControl.Effects.Add(new Effect(Libraries.Magic3, 620, 10, 1200, TargetPoint));
-                                            SoundManager.PlaySound(20000 + (ushort)Spell.HealingcircleRare * 10 + 1);
                                         };
                                         ReincarnationStopTime = 0;
                                         break;

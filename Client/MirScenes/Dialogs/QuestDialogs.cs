@@ -251,7 +251,7 @@ namespace Client.MirScenes.Dialogs
                 Location = new Point(266, 3),
                 Sound = SoundList.ButtonA,
             };
-            helpButton.Click += (o, e) => GameScene.Scene.HelpDialog.DisplayPage("Quests");
+            helpButton.Click += (o, e) => GameScene.Scene.HelpDialog.DisplayPage("任务");
 
         }
 

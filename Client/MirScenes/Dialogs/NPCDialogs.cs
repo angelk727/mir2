@@ -137,7 +137,7 @@ namespace Client.MirScenes.Dialogs
                 Location = new Point(390, 3),
                 Sound = SoundList.ButtonA,
             };
-            HelpButton.Click += (o, e) => GameScene.Scene.HelpDialog.DisplayPage("Purchasing");
+            HelpButton.Click += (o, e) => GameScene.Scene.HelpDialog.DisplayPage("购买物品");
 
             BigButtonDialog = new BigButtonDialog()
             {

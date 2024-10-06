@@ -856,7 +856,8 @@ namespace Server.MirEnvir
             if (squareEdgeLength > 1)
             {
                 spread = (int)((squareEdgeLength - 1) / 2);
-            } else
+            }
+            else
             {
                 spread = fallBackSpread; // 3x3
             }
@@ -1540,6 +1541,43 @@ namespace Server.MirEnvir
 
                 #endregion
 
+                #region LionRoarRare
+
+                case Spell.LionRoarRare:
+                    location = (Point)data[2];
+
+                    for (int y = location.Y - 2; y <= location.Y + 2; y++)
+                    {
+                        if (y < 0) continue;
+                        if (y >= Height) break;
+
+                        for (int x = location.X - 2; x <= location.X + 2; x++)
+                        {
+                            if (x < 0) continue;
+                            if (x >= Width) break;
+
+                            cell = GetCell(x, y);
+
+                            if (!cell.Valid || cell.Objects == null) continue;
+
+                            for (int i = 0; i < cell.Objects.Count; i++)
+                            {
+                                MapObject target = cell.Objects[i];
+                                if (target.Race != ObjectType.Monster) continue;
+                                //Only targets
+                                if (!target.IsAttackTarget(player) || player.Level + 3 < target.Level) continue;
+                                target.ApplyPoison(new Poison { PType = PoisonType.LRParalysis, Duration = magic.Level + 2, TickSpeed = 1000 }, player);
+                                target.OperateTime = 0;
+                                train = true;
+                            }
+
+                        }
+
+                    }
+
+                    break;
+
+                #endregion
                 #region PoisonCloud
 
                 case Spell.PoisonCloud:
@@ -1711,6 +1749,28 @@ namespace Server.MirEnvir
                             break;
                         }
                     }
+                    break;
+
+                #endregion
+
+                #region DimensionalSword
+
+                case Spell.DimensionalSword:
+
+                    value = (int)data[2];
+                    if (value > 0)
+                        train = true;
+                    break;
+
+                #endregion
+
+                #region DimensionalSwordRare
+
+                case Spell.DimensionalSwordRare:
+
+                    value = (int)data[2];
+                    if (value > 0)
+                        train = true;
                     break;
 
                 #endregion

@@ -28,6 +28,7 @@ namespace Client.MirGraphics
             Magic = new MLibrary(Settings.DataPath + "Magic"),
             Magic2 = new MLibrary(Settings.DataPath + "Magic2"),
             Magic3 = new MLibrary(Settings.DataPath + "Magic3"),
+            Magic_32bit = new MLibrary(Settings.DataPath + "Magic_32bit"),
             Effect = new MLibrary(Settings.DataPath + "Effect"),
             Effect2 = new MLibrary(Settings.DataPath + "Effect2"),
             Effect_32bit = new MLibrary(Settings.DataPath + "Effect_32bit"),
@@ -276,6 +277,8 @@ namespace Client.MirGraphics
             Magic2.Initialize();
             Progress++;
             Magic3.Initialize();
+            Progress++;
+            Magic_32bit.Initialize();
             Progress++;
             MagicC.Initialize();
             Progress++;

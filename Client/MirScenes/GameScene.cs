@@ -4740,11 +4740,11 @@ namespace Client.MirScenes
                         SoundManager.PlaySound(20000 + (ushort)Spell.FatalSword * 10);
                         break;
                     case SpellEffect.StormEscape:
-                        ob.Effects.Add(new Effect(Libraries.Magic3, 610, 10, 600, ob));
+                        ob.Effects.Add(new Effect(Libraries.Magic3, 610, 8, 600, ob));
                         SoundManager.PlaySound(SoundList.Teleport);
                         break;
                     case SpellEffect.StormEscapeRare:
-                        ob.Effects.Add(new Effect(Libraries.Magic3, 610, 10, 600, ob));
+                        ob.Effects.Add(new Effect(Libraries.Magic3, 610, 8, 600, ob));
                         SoundManager.PlaySound(SoundList.Teleport);
                         break;
                     case SpellEffect.Teleport:
@@ -4834,8 +4834,8 @@ namespace Client.MirScenes
                         ob.Effects.Add(new Effect(Libraries.Magic2, 1020, 8, 1200, ob));
                         break;
                     case SpellEffect.EntrapmentRare:
-                        ob.Effects.Add(new Effect(Libraries.Magic2, 1010, 10, 1500, ob));
-                        ob.Effects.Add(new Effect(Libraries.Magic2, 1020, 8, 1200, ob));
+                        ob.Effects.Add(new Effect(Libraries.Magic3, 4390, 10, 1500, ob));
+                        ob.Effects.Add(new Effect(Libraries.Magic3, 4400, 8, 1200, ob));
                         break;
                     case SpellEffect.Critical:
                         //ob.Effects.Add(new Effect(Libraries.CustomEffects, 0, 12, 60, ob));
@@ -12094,6 +12094,8 @@ namespace Client.MirScenes
                 case Spell.DarkBody:
                 case Spell.FireBounce:
                 case Spell.MeteorShower:
+                case Spell.DimensionalSword:
+                case Spell.DimensionalSwordRare:
                     if (actor.NextMagicObject != null)
                     {
                         if (!actor.NextMagicObject.Dead && actor.NextMagicObject.Race != ObjectType.Item && actor.NextMagicObject.Race != ObjectType.Merchant)

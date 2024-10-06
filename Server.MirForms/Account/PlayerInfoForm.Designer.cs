@@ -77,6 +77,11 @@
             label7 = new Label();
             tabControl1 = new TabControl();
             PlayerInfoTab = new TabPage();
+            HeroListView = new ListView();
+            columnHeader1 = new ColumnHeader();
+            columnHeader2 = new ColumnHeader();
+            columnHeader3 = new ColumnHeader();
+            columnHeader4 = new ColumnHeader();
             SearchBox = new GroupBox();
             FlagSearchBox = new NumericUpDown();
             FlagSearch = new Label();
@@ -104,6 +109,7 @@
             Level = new ColumnHeader();
             HP = new ColumnHeader();
             Location = new ColumnHeader();
+            QuestNameHeader = new ColumnHeader();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
             groupBox3.SuspendLayout();
@@ -647,6 +653,7 @@
             // 
             // PlayerInfoTab
             // 
+            PlayerInfoTab.Controls.Add(HeroListView);
             PlayerInfoTab.Controls.Add(SearchBox);
             PlayerInfoTab.Controls.Add(groupBox1);
             PlayerInfoTab.Controls.Add(groupBox2);
@@ -659,6 +666,37 @@
             PlayerInfoTab.TabIndex = 0;
             PlayerInfoTab.Text = "玩家信息";
             PlayerInfoTab.UseVisualStyleBackColor = true;
+            // 
+            // HeroListView
+            // 
+            HeroListView.Columns.AddRange(new ColumnHeader[] { columnHeader1, columnHeader2, columnHeader3, columnHeader4 });
+            HeroListView.FullRowSelect = true;
+            HeroListView.GridLines = true;
+            HeroListView.Location = new Point(352, 284);
+            HeroListView.Name = "HeroListView";
+            HeroListView.Size = new Size(325, 147);
+            HeroListView.TabIndex = 49;
+            HeroListView.UseCompatibleStateImageBehavior = false;
+            HeroListView.View = View.Details;
+            // 
+            // columnHeader1
+            // 
+            columnHeader1.Text = "英雄名字";
+            columnHeader1.Width = 100;
+            // 
+            // columnHeader2
+            // 
+            columnHeader2.Text = "等级";
+            columnHeader2.Width = 80;
+            // 
+            // columnHeader3
+            // 
+            columnHeader3.Text = "职业";
+            columnHeader3.Width = 80;
+            // 
+            // columnHeader4
+            // 
+            columnHeader4.Text = "性别";
             // 
             // SearchBox
             // 
@@ -859,6 +897,11 @@
             Location.Text = "位置";
             Location.Width = 240;
             // 
+            // QuestNameHeader
+            // 
+            QuestNameHeader.Text = "Name";
+            QuestNameHeader.Width = 200;
+            // 
             // PlayerInfoForm
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
@@ -966,5 +1009,11 @@
         private ColumnHeader DurabilityHeader;
         private Label CurrentXY;
         private Label label7;
+        private ListView HeroListView;
+        private ColumnHeader columnHeader1;
+        private ColumnHeader columnHeader2;
+        private ColumnHeader columnHeader3;
+        private ColumnHeader columnHeader4;
+        private ColumnHeader QuestNameHeader;
     }
 }
