@@ -1,4 +1,6 @@
-﻿namespace Client.MirObjects
+﻿using System.Buffers.Binary;
+
+namespace Client.MirObjects
 {
     public class CellInfo
     {
@@ -271,48 +273,96 @@
         {
             try
             {
-                int offSet = 21;
-                   
-                int w = BitConverter.ToInt16(Bytes, offSet);
-                offSet += 2;
-                int xor = BitConverter.ToInt16(Bytes, offSet);
-                offSet += 2;
-                int h = BitConverter.ToInt16(Bytes, offSet);
-                Width = w ^ xor;
-                Height = h ^ xor;
+                ReadOnlySpan<byte> span = Bytes.AsSpan();
+
+                int initialOffset = 21;
+
+                short w = BinaryPrimitives.ReadInt16LittleEndian(span.Slice(initialOffset, 2));
+                initialOffset += 2;
+
+                short xor = BinaryPrimitives.ReadInt16LittleEndian(span.Slice(initialOffset, 2));
+                initialOffset += 2;
+
+                short h = BinaryPrimitives.ReadInt16LittleEndian(span.Slice(initialOffset, 2));
+                initialOffset += 2;
+
+                Width = (w ^ xor);
+                Height = (h ^ xor);
                 MapCells = new CellInfo[Width, Height];
 
-                offSet = 54;
+                int offSet = 54;
+                int mapSize = Width * Height;
+                int cellSize = 15;
 
-                for (int x = 0; x < Width; x++)
-                    for (int y = 0; y < Height; y++)
+                ReadOnlySpan<byte> mapSpan = span.Slice(offSet, mapSize * cellSize);
+
+                const int BackImageXor = unchecked((int)0xAA38AA38);
+
+                for (int i = 0; i < mapSize; i++)
+                {
+                    int x = i / Height;
+                    int y = i % Height;
+
+                    int cellOffset = i * cellSize;
+
+                    int backImageRaw = BinaryPrimitives.ReadInt32LittleEndian(mapSpan.Slice(cellOffset, 4));
+                    int backImage = backImageRaw ^ BackImageXor;
+                    cellOffset += 4;
+
+                    short middleImage = (short)(BinaryPrimitives.ReadInt16LittleEndian(mapSpan.Slice(cellOffset, 2)) ^ xor);
+                    cellOffset += 2;
+
+                    short frontImage = (short)(BinaryPrimitives.ReadInt16LittleEndian(mapSpan.Slice(cellOffset, 2)) ^ xor);
+                    cellOffset += 2;
+
+                    byte doorIndex = (byte)(mapSpan[cellOffset] & 0x7F);
+                    cellOffset += 1;
+
+                    byte doorOffset = mapSpan[cellOffset];
+                    cellOffset += 1;
+
+                    byte frontAnimationFrame = mapSpan[cellOffset];
+                    cellOffset += 1;
+
+                    byte frontAnimationTick = mapSpan[cellOffset];
+                    cellOffset += 1;
+
+                    short frontIndex = (short)(mapSpan[cellOffset] + 2);
+                    cellOffset += 1;
+
+                    byte light = mapSpan[cellOffset];
+                    cellOffset += 1;
+
+                    byte unknown = mapSpan[cellOffset];
+                    cellOffset += 1;
+
+                    var cell = new CellInfo
                     {
-                        MapCells[x, y] = new CellInfo
-                            {
-                                BackIndex = 0,
-                                BackImage = (int)(BitConverter.ToInt32(Bytes, offSet) ^ 0xAA38AA38),
-                                MiddleIndex = 1,
-                                MiddleImage = (short)(BitConverter.ToInt16(Bytes, offSet += 4) ^ xor),
-                                FrontImage = (short)(BitConverter.ToInt16(Bytes, offSet += 2) ^ xor),
-                                DoorIndex = (byte)(Bytes[offSet += 2] & 0x7F),
-                                DoorOffset = Bytes[++offSet],
-                                FrontAnimationFrame = Bytes[++offSet],
-                                FrontAnimationTick = Bytes[++offSet],
-                                FrontIndex = (short)(Bytes[++offSet] + 2),
-                                Light = Bytes[++offSet],
-                                Unknown = Bytes[++offSet],
-                            };
-                        offSet++;
+                        BackIndex = 0,
+                        BackImage = backImage,
+                        MiddleIndex = 1,
+                        MiddleImage = middleImage,
+                        FrontImage = frontImage,
+                        DoorIndex = doorIndex,
+                        DoorOffset = doorOffset,
+                        FrontAnimationFrame = frontAnimationFrame,
+                        FrontAnimationTick = frontAnimationTick,
+                        FrontIndex = frontIndex,
+                        Light = light,
+                        Unknown = unknown
+                    };
 
-                        if (MapCells[x, y].FrontIndex == 102)
-                            MapCells[x, y].FrontIndex = 90;
+                    if (cell.FrontIndex == 102)
+                        cell.FrontIndex = 90;
 
-                        if (MapCells[x, y].FrontIndex >= 255)
-                            MapCells[x, y].FrontIndex = -1;
+                    if (cell.FrontIndex >= 255)
+                        cell.FrontIndex = -1;
 
-                        if (MapCells[x, y].Light >= 100 && MapCells[x, y].Light <= 119)
-                            MapCells[x, y].FishingCell = true;
-                    }
+                    if (cell.Light >= 100 && cell.Light <= 119)
+                        cell.FishingCell = true;
+
+                    MapCells[x, y] = cell;
+                }
             }
             catch (Exception ex)
             {

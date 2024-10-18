@@ -263,6 +263,118 @@ namespace Server
         }
         #endregion
 
+        #region Namelists
+        private void UpdateNamelists()
+        {
+            // Define the directory path for the Namelists folder
+            string namelistsPath = Path.Combine("Envir", "Namelists");
+
+            // Ensure the directory exists
+            if (!Directory.Exists(namelistsPath))
+            {
+                NamelistView.Items.Clear();
+                NamelistView.Items.Add("未找到 Namelists 目录");
+                return;
+            }
+
+            // Get the player's name from NameTextBox
+            string playerName = NameTextBox.Text;
+
+            // Clear the NamelistView before updating
+            NamelistView.Items.Clear();
+
+            // Track whether any matching files are found
+            bool filesFound = false;
+
+            // Iterate over each text file in the directory and subdirectories
+            foreach (string filePath in Directory.GetFiles(namelistsPath, "*.txt", SearchOption.AllDirectories))
+            {
+                // Read all lines from the current file
+                string[] lines = File.ReadAllLines(filePath);
+
+                // Check if any line contains the player's name
+                if (lines.Any(line => line.Contains(playerName)))
+                {
+                    // Get the relative path from the Namelists directory
+                    string relativePath = Path.GetRelativePath(namelistsPath, filePath);
+
+                    // Remove the .txt extension
+                    relativePath = Path.ChangeExtension(relativePath, null);
+
+                    // Add the relative path to the NamelistView
+                    NamelistView.Items.Add(relativePath);
+                    filesFound = true;
+                }
+            }
+
+            // If no files contain the player's name, add a message to the NamelistView
+            if (!filesFound)
+            {
+                NamelistView.Items.Add("尚未匹配到含有该玩家的名字的文件");
+            }
+        }
+        private void NamelistView_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            DeleteNamelistButton.Enabled = NamelistView.SelectedItems.Count > 0;
+        }
+        private void DeleteNamelistButton_Click(object sender, EventArgs e)
+        {
+            if (NamelistView.SelectedItems.Count == 0)
+                return;
+
+            // Get the selected namelist file path (assuming one file can be selected at a time)
+            string selectedFile = NamelistView.SelectedItems[0].Text;
+
+            // Combine the selected item with the Namelists path
+            string namelistsPath = Path.Combine("Envir", "Namelists");
+            string fullPath = Path.Combine(namelistsPath, selectedFile + ".txt");
+
+            // Show a confirmation message box
+            DialogResult result = MessageBox.Show($"确定要从 '{selectedFile}' 中删除该玩家吗?",
+                                                  "确认删除", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+
+            if (result == DialogResult.Yes)
+            {
+                // Get the player's name from NameTextBox
+                string playerName = NameTextBox.Text;
+
+                // Read all lines, then rewrite the file without the player's name
+                var lines = File.ReadAllLines(fullPath).Where(line => !line.Contains(playerName)).ToArray();
+                File.WriteAllLines(fullPath, lines);
+
+                // Optionally, update the NamelistView after deletion
+                UpdateNamelists();
+            }
+        }
+        private void Viewnamelistbutton_Click(object sender, EventArgs e)
+        {
+            if (NamelistView.SelectedItems.Count == 0)
+            {
+                MessageBox.Show("请选择一个 名字列表 文件后进行查看");
+                return;
+            }
+
+            // Get the selected namelist file path
+            string selectedFile = NamelistView.SelectedItems[0].Text;
+            string namelistsPath = Path.Combine("Envir", "Namelists");
+            string fullPath = Path.Combine(namelistsPath, selectedFile + ".txt");
+
+            // Check if the file exists
+            if (File.Exists(fullPath))
+            {
+                // Read the content of the file
+                string fileContent = File.ReadAllText(fullPath);
+
+                // Display the file content in a message box (or you can use a TextBox)
+                MessageBox.Show(fileContent, $"{selectedFile} 的内容", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                MessageBox.Show("未找到选中的 名字列表 文件");
+            }
+        }
+        #endregion
+
         #region Buttons
         private void UpdateButton_Click(object sender, EventArgs e)
         {
@@ -424,18 +536,18 @@ namespace Server
 
                 if (flagValue)
                 {
-                    ResultLabel.Text = $"Flag {flagIndex} is Active";
+                    ResultLabel.Text = $"标志 {flagIndex} 是激活状态";
                     ResultLabel.ForeColor = Color.Green;
                 }
                 else
                 {
-                    ResultLabel.Text = $"Flag {flagIndex} is Inactive";
+                    ResultLabel.Text = $"标志 {flagIndex} 是未激活状态";
                     ResultLabel.ForeColor = Color.Red;
                 }
             }
             else
             {
-                ResultLabel.Text = "Invalid Flag Number";
+                ResultLabel.Text = "无效的标志编号";
                 ResultLabel.ForeColor = Color.Red;
             }
         }
@@ -450,6 +562,7 @@ namespace Server
             UpdatePlayerMagics();
             UpdatePlayerQuests();
             UpdateHeroList();
+            UpdateNamelists();
         }
         #endregion
 
@@ -473,6 +586,9 @@ namespace Server
                 case 4:
                     Size = new Size(663, 510);
                     break;
+                case 5:
+                    Size = new Size(403, 510);
+                    break;
             }
 
             UpdateTabs();
@@ -484,23 +600,23 @@ namespace Server
         {
             ClearHeroList();
 
-            //if (Character?.Player == null) return;
             if (Character == null || Character.Heroes == null) return;
 
             foreach (HeroInfo hero in Character.Heroes)
             {
                 if (hero == null) continue;
-                var listItem = new ListViewItem(hero.Name) { Tag = hero }; // Create a ListViewItem for the hero
-                listItem.SubItems.Add(hero.Level.ToString()); // Hero level
-                listItem.SubItems.Add(hero.Class.ToString()); // Hero class
-                listItem.SubItems.Add(hero.Gender.ToString()); // Hero gender
 
-                HeroListView.Items.Add(listItem); // Add the item to the ListView control
+                var listItem = new ListViewItem(hero.Name ?? "Unknown") { Tag = hero };
+                listItem.SubItems.Add(hero.Level.ToString());
+                listItem.SubItems.Add(hero.Class.ToString());
+                listItem.SubItems.Add(hero.Gender.ToString());
+
+                HeroListView.Items.Add(listItem);
             }
         }
         private void ClearHeroList()
         {
-            HeroListView.Items.Clear(); // Assuming HeroView is the ListView for displaying heroes
+            HeroListView.Items.Clear();
         }
         #endregion
     }

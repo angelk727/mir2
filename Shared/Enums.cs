@@ -742,6 +742,7 @@ public enum Monster : ushort
     Mon605N = 605,
     Mon608N = 608,
     Mon609N = 609,
+    Mon610B = 610,
     //N=Normal S=Stoned T=Tree B=Boss
 
     //Special

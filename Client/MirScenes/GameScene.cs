@@ -11145,16 +11145,17 @@ namespace Client.MirScenes
                         animation &= 0x7F;
                     }
                     else
+                    {
                         blend = false;
+                    }
 
-                    
                     if (animation > 0)
                     {
                         byte animationTick = M2CellInfo[x, y].FrontAnimationTick;
                         index += (AnimationCount % (animation + (animation * animationTick))) / (1 + animationTick);
                     }
 
-                    
+
                     if (M2CellInfo[x, y].DoorIndex > 0)
                     {
                         Door DoorInfo = GetDoor(M2CellInfo[x, y].DoorIndex);
@@ -11171,20 +11172,31 @@ namespace Client.MirScenes
                             }
                         }
                     }
-
                     s = Libraries.MapLibs[fileIndex].GetSize(index);
+
                     if (s.Width == CellWidth && s.Height == CellHeight && animation == 0) continue;
-                    if ((s.Width == CellWidth * 2) && (s.Height == CellHeight * 2) && (animation == 0)) continue;
+                    if (s.Width == CellWidth * 2 && s.Height == CellHeight * 2 && animation == 0) continue;
+
+                    Point offset = Libraries.MapLibs[fileIndex].GetOffSet(index);
 
                     if (blend)
                     {
-                        if ((fileIndex > 99) & (fileIndex < 199))
-                            Libraries.MapLibs[fileIndex].DrawBlend(index, new Point(drawX, drawY - (3 * CellHeight)), Color.White, true);
-                        else
-                            Libraries.MapLibs[fileIndex].DrawBlend(index, new Point(drawX, drawY - s.Height), Color.White, (index >= 2723 && index <= 2732));
+                        if (fileIndex > 0 && fileIndex < 199)
+                        {
+                            Libraries.MapLibs[fileIndex].DrawBlend(index, new Point(drawX, drawY - (3 * CellHeight)), Color.White, true, 1.0f);
+                        }
                     }
                     else
-                        Libraries.MapLibs[fileIndex].Draw(index, drawX, drawY - s.Height);
+                    {
+                        if ((fileIndex == 28 || fileIndex == 90) && animation > 0)
+                        {
+                            Libraries.MapLibs[fileIndex].Draw(index, drawX + offset.X, drawY + offset.Y - CellHeight);
+                        }
+                        else
+                        {
+                            Libraries.MapLibs[fileIndex].Draw(index, drawX, drawY - s.Height);
+                        }
+                    }
                     #endregion
                 }
 
