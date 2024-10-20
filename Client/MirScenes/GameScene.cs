@@ -11075,6 +11075,7 @@ namespace Client.MirScenes
                     if (x >= Width) break;
                     int drawX = (x - User.Movement.X + OffSetX) * CellWidth - OffSetX + User.OffSetMove.X;
                     int index;
+                    int backIndex;
                     byte animation;
                     bool blend;
                     Size s;
@@ -11132,6 +11133,7 @@ namespace Client.MirScenes
 
                     #region Draw front layer
                     index = (M2CellInfo[x, y].FrontImage & 0x7FFF) - 1;
+                    backIndex = (M2CellInfo[x, y].BackImage & 0x7FFF) - 1;
 
                     if (index < 0) continue;
 
@@ -11173,11 +11175,27 @@ namespace Client.MirScenes
                         }
                     }
                     s = Libraries.MapLibs[fileIndex].GetSize(index);
+                    Point offset = Libraries.MapLibs[fileIndex].GetOffSet(index);
+
+                    if (backIndex == 23175 && index == 7776)
+                    {
+                        Libraries.MapLibs[fileIndex].Draw(index + 1109, drawX + (2 * CellWidth), drawY - (17 * CellHeight));
+                    }
+                    if (backIndex == 23081 && index == 7764)
+                    {
+                        Libraries.MapLibs[fileIndex].Draw(index + 1120, drawX, drawY - (17 * CellHeight));
+                    }
+                    if (backIndex == 23322 && index == 7623)
+                    {
+                        Libraries.MapLibs[fileIndex].Draw(index + 1262, drawX, drawY - (21 * CellHeight));
+                    }
+                    if (backIndex == 18999 && index == 7796)
+                    {
+                        Libraries.MapLibs[fileIndex].Draw(index + 1069, new Point(drawX + offset.X + (2 * CellWidth), drawY + offset.Y - (21 * CellHeight)), Color.White, true);
+                    }
 
                     if (s.Width == CellWidth && s.Height == CellHeight && animation == 0) continue;
                     if (s.Width == CellWidth * 2 && s.Height == CellHeight * 2 && animation == 0) continue;
-
-                    Point offset = Libraries.MapLibs[fileIndex].GetOffSet(index);
 
                     if (blend)
                     {
@@ -11188,7 +11206,11 @@ namespace Client.MirScenes
                     }
                     else
                     {
-                        if ((fileIndex == 28 || fileIndex == 90) && animation > 0)
+                        if ((fileIndex == 28) && (animation > 0) && (index >= 7610 && index <= 7617))
+                        {
+                            Libraries.MapLibs[fileIndex].Draw(index + 1230, new Point(drawX + offset.X, drawY + offset.Y - CellHeight), Color.White, true);
+                        }
+                        else if ((fileIndex == 28 || fileIndex == 90) && animation > 0)
                         {
                             Libraries.MapLibs[fileIndex].Draw(index, drawX + offset.X, drawY + offset.Y - CellHeight);
                         }

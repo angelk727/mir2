@@ -135,17 +135,17 @@ namespace Client.MirObjects
     {
         public int Width, Height;
         public CellInfo[,] MapCells;
-        private string FileName;
+        private readonly string FileName;
         private byte[] Bytes;
         
         public MapReader(string FileName)
         {
             this.FileName = FileName;
 
-            initiate();
+            Initiate();
         }
 
-        private void initiate()
+        private void Initiate()
         {
             if (File.Exists(FileName))
             {
