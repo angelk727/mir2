@@ -12483,7 +12483,21 @@ namespace Client.MirScenes
             if (!GameScene.User.HasFishingRod || GameScene.User.FishingTime + 1000 > CMain.Time) return false;
             if (GameScene.User.CurrentAction != MirAction.站立动作) return false;
             if (GameScene.User.Direction != dir) return false;
-            if (GameScene.User.TransformType >= 6 && GameScene.User.TransformType <= 9) return false;
+
+            switch (GameScene.User.TransformType)
+            {
+                case 6:
+                case 7:
+                case 8:
+                case 9:
+                case 33:
+                case 34:
+                case 35:
+                case 36:
+                case 37:
+                case 38:
+                    return false;
+            }
 
             Point point = Functions.PointMove(User.CurrentLocation, dir, 3);
 

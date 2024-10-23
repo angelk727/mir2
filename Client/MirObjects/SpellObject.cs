@@ -403,7 +403,7 @@ namespace Client.MirObjects
                     break;
                 case Spell.SwordFormation:
                     DrawColour = Color.FromArgb(180, 200, 200, 160);
-                    BodyLibrary = Libraries.Monsters[(ushort)Monster.修士剑客];
+                    BodyLibrary = Libraries.Monsters[(ushort)Monster.Mon550N];
                     DrawFrame = 450;
                     FrameInterval = 100;
                     FrameCount = 10;
@@ -411,7 +411,7 @@ namespace Client.MirObjects
                     Blend = true;
                     Repeat = false;
                     DrawBehind = true;
-                    MapControl.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.修士剑客], 460, 8, 800, CurrentLocation, CMain.Time + 1000) { Blend = true});
+                    MapControl.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon550N], 460, 8, 800, CurrentLocation, CMain.Time + 1000) { Blend = true});
                     break;
                 case Spell.Mon564NWhirlwind:
                     BodyLibrary = Libraries.Monsters[(ushort)Monster.Mon564N];

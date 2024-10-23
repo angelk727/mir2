@@ -4,9 +4,9 @@ using S = ServerPackets;
 
 namespace Server.MirObjects.Monsters
 {
-    public class 修士剑客 : MonsterObject
+    public class Mon550N : MonsterObject
     {
-        protected internal 修士剑客(MonsterInfo info)
+        protected internal Mon550N(MonsterInfo info)
             : base(info)
         {
         }

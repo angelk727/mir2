@@ -5,7 +5,7 @@ using S = ServerPackets;
 
 namespace Server.MirObjects.Monsters
 {
-    public class 秦庙石狮 : MonsterObject
+    public class Mon544S : MonsterObject
     {
         public bool Stoned = true;
 
@@ -24,7 +24,7 @@ namespace Server.MirObjects.Monsters
             }
         }
 
-        protected internal 秦庙石狮(MonsterInfo info) : base(info)
+        protected internal Mon544S(MonsterInfo info) : base(info)
         {
         }
 

@@ -8872,15 +8872,28 @@ namespace Server.MirObjects
 
         public void ToggleRide()
         {
+            switch (TransformType)
+            {
+                case 33:
+                case 34:
+                case 35:
+                case 36:
+                case 37:
+                case 38:
+                    ReceiveChat("此类外形不能使用坐骑", ChatType.System);
+                    return;
+            }
+
             if (Mount.MountType > -1)
             {
                 RidingMount = !RidingMount;
                 RefreshMount();
             }
             else
+            {
                 ReceiveChat("没有坐骑...", ChatType.System);
+            }
         }
-
         #endregion
     }
 }

@@ -10261,24 +10261,7 @@ namespace Server.MirObjects
             byte nibbleMin = 0, nibbleMax = 0;
             byte failedAddSuccessMin = 0, failedAddSuccessMax = 0;
             FishingProgressMax = Settings.FishingAttempts;//30;
-            switch (TransformType)
-            {
-                case 6:
-                case 9:
-                case 10:
-                case 11:
-                case 12:
-                case 13:
-                case 33:
-                case 34:
-                case 35:
-                case 36:
-                case 37:
-                case 38:
-                    Fishing = false;
-                    ReceiveChat("此类外形不能钓鱼", ChatType.System);
-                    return;
-            }
+
             if (rod == null || !rod.Info.IsFishingRod || rod.CurrentDura == 0)
             {
                 Fishing = false;

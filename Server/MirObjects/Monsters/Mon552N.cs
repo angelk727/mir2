@@ -5,7 +5,7 @@ using S = ServerPackets;
 
 namespace Server.MirObjects.Monsters
 {
-    public class 古老遗骸 : MonsterObject
+    public class Mon552N : MonsterObject
     {
         public bool Stoned = true;
         public bool HenshinMode = false;
@@ -25,7 +25,7 @@ namespace Server.MirObjects.Monsters
             }
         }
 
-        protected internal 古老遗骸(MonsterInfo info) : base(info)
+        protected internal Mon552N(MonsterInfo info) : base(info)
         {
         }
 
@@ -95,7 +95,7 @@ namespace Server.MirObjects.Monsters
                 Name = Name,
                 NameColour = NameColour,
                 Location = CurrentLocation,
-                Image = HenshinMode ? Monster.遗骸骷髅 : Monster.古老遗骸,
+                Image = HenshinMode ? Monster.Mon553N : Monster.Mon552N,
                 Direction = Direction,
                 Effect = Info.Effect,
                 AI = Info.AI,

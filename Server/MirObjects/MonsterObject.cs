@@ -434,11 +434,11 @@ namespace Server.MirObjects
                 case 534:
                     return new MirEmperor(info);
                 case 544:
-                    return new 秦庙石狮(info);
+                    return new Mon544S(info);
                 case 550:
-                    return new 修士剑客(info);
+                    return new Mon550N(info);
                 case 552:
-                    return new 古老遗骸(info);
+                    return new Mon552N(info);
                 case 562:
                     return new Mon562N(info);
                 case 563:

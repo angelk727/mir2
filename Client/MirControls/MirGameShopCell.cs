@@ -586,13 +586,10 @@ namespace Client.MirControls
             PreviewImage.Library = Libraries.Transform[ViewerItem.Info.Shape];
             PreviewImage.AnimationCount = 6;
             PreviewImage.Animated = true;
-
         }
 
         private void DrawMask()
         {
-
-
         }
 
     }

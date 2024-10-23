@@ -247,8 +247,8 @@ namespace Client.MirObjects
                 case Monster.FireballScroll:
                 case Monster.PurpleFaeFlower: //466
                 case Monster.FeralFlameFurbolg: //522,
-                case Monster.秦庙石狮: //544
-                case Monster.古老遗骸: //552
+                case Monster.Mon544S: //544
+                case Monster.Mon552N: //552
                 case Monster.Mon575S:
                     Stoned = info.Extra;
                     break;
@@ -804,14 +804,14 @@ namespace Client.MirObjects
                             case Monster.SpectralWraith: //530
                                 Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.SpectralWraith], 592, 9, 9 * 180, this) { Blend = true });
                                 break;
-                            case Monster.秦庙石狮: //544
-                                Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.秦庙石狮], 544, 8, 8 * Frame.Interval, this) { Blend = true, DrawBehind = true });
+                            case Monster.Mon544S: //544
+                                Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon544S], 544, 8, 8 * Frame.Interval, this) { Blend = true, DrawBehind = true });
                                 break;
-                            case Monster.修士刺客: //551
-                                Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.修士刺客], 370, 10, 10 * 200, this) { Blend = true, DrawBehind = true });
+                            case Monster.Mon551N: //551
+                                Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon551N], 370, 10, 10 * 200, this) { Blend = true, DrawBehind = true });
                                 break;
-                            case Monster.度量宫武士: //554
-                                Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.度量宫武士], 346, 10, 10 * 200, this) { Blend = true });
+                            case Monster.Mon554N: //554
+                                Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon554N], 346, 10, 10 * 200, this) { Blend = true });
                                 break;
                         }
                         break;
@@ -860,8 +860,8 @@ namespace Client.MirObjects
                             case Monster.FeralTundraFurbolg: //521
                                 Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.FeralTundraFurbolg], 632 + (int)Direction * 7, 7, 7 * Frame.Interval, this) { Start = CMain.Time + 1200 });
                                 break;
-                            case Monster.度量宫武士: //554
-                                Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.度量宫武士], 356 + (int)Direction * 8, 8, 8 * Frame.Interval, this) { DrawBehind = true, Blend = true });
+                            case Monster.Mon554N: //554
+                                Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon554N], 356 + (int)Direction * 8, 8, 8 * Frame.Interval, this) { DrawBehind = true, Blend = true });
                                 break;
                             case Monster.Mon562N:
                                 Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon562N], 658, 8, 8 * 200, this) { Blend = true });
@@ -1170,7 +1170,7 @@ namespace Client.MirObjects
                                 Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.ShardMaiden], 661 + (int)Direction * 7, 7, 7 * Frame.Interval, this));
                                 break;
                             case Monster.NobleArcher: //503
-                            case Monster.远古弓箭魂魄: //557
+                            case Monster.Mon557B: //557
                                 Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.NobleArcher], 504, 8, 8 * Frame.Interval, this) { Blend = true, DrawBehind = true });
                                 break;
                             case Monster.Mon564N:
@@ -1528,8 +1528,8 @@ namespace Client.MirObjects
                                 case Monster.FireballScroll:
                                 case Monster.PurpleFaeFlower: //466
                                 case Monster.FeralFlameFurbolg: //522,
-                                case Monster.秦庙石狮: //544
-                                case Monster.古老遗骸: //552
+                                case Monster.Mon544S: //544
+                                case Monster.Mon552N: //552
                                 case Monster.Mon575S:
                                     Stoned = false;
                                     break;
@@ -1568,9 +1568,9 @@ namespace Client.MirObjects
                                             case Monster.CreeperPlant: //383
                                                 Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.CreeperPlant], 250, 6, 6 * 100, this));
                                                 break;
-                                            //case Monster.秦庙石狮: //544 暂不知做什么的特效
-                                            //Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.秦庙石狮], 552, 8, Frame.Count * Frame.Interval, this) { Blend = true });
-                                            //Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.秦庙石狮], 560, 8, Frame.Count * Frame.Interval, this) { Blend = true, DrawBehind = true });
+                                            //case Monster.Mon544S: //544 暂不知做什么的特效
+                                            //Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon544S], 552, 8, Frame.Count * Frame.Interval, this) { Blend = true });
+                                            //Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon544S], 560, 8, Frame.Count * Frame.Interval, this) { Blend = true, DrawBehind = true });
                                             //break;
                                         }
                                         break;
@@ -1619,8 +1619,8 @@ namespace Client.MirObjects
                                 case Monster.PoisonScroll:
                                 case Monster.FireballScroll:
                                 case Monster.PurpleFaeFlower: //466
-                                case Monster.秦庙石狮: //544
-                                case Monster.古老遗骸: //552
+                                case Monster.Mon544S: //544
+                                case Monster.Mon552N: //552
                                 case Monster.Mon575S:
                                     Stoned = true;
                                     return;
@@ -1837,12 +1837,12 @@ namespace Client.MirObjects
                                                 if (ob != null)
                                                     ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Serpentirian], 418, 3, 600, ob));
                                                 break;
-                                            case Monster.蜥蜴: //543
+                                            case Monster.Mon543N: //543
                                                 Point Point543 = Functions.PointMove(CurrentLocation, Direction, 2);
-                                                MapControl.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.蜥蜴], 328, 10, 800, Point543, CMain.Time) { DrawBehind = true, Blend = true });
+                                                MapControl.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon543N], 328, 10, 800, Point543, CMain.Time) { DrawBehind = true, Blend = true });
                                                 break;
-                                            case Monster.修士剑客: //550
-                                                Effect Effect550 = new Effect(Libraries.Monsters[(ushort)Monster.修士剑客], 442, 8, 300, front, CMain.Time + 300);
+                                            case Monster.Mon550N: //550
+                                                Effect Effect550 = new Effect(Libraries.Monsters[(ushort)Monster.Mon550N], 442, 8, 300, front, CMain.Time + 300);
                                                 MapControl.Effects.Add(Effect550);
                                                 break;
                                             case Monster.Mon571N:
@@ -2049,8 +2049,8 @@ namespace Client.MirObjects
                                             case Monster.BloodLord: //532
                                                 MapControl.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.BloodLord], 400, 10, 400, front, CMain.Time + 600) { Blend = true, DrawBehind = true });
                                                 break;
-                                            case Monster.陶俑枪兵: //544 
-                                                MapControl.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.陶俑枪兵], 536, 8, 200, front, CMain.Time + 800));
+                                            case Monster.Mon548N: //544 
+                                                MapControl.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon548N], 536, 8, 200, front, CMain.Time + 800));
                                                 break;
                                         }
                                     }
@@ -2132,16 +2132,16 @@ namespace Client.MirObjects
                                                 MapControl.Effects.Add(flyingStatueEffect1);
                                                 break;
                                             case Monster.NobleWarrior: //502
-                                            case Monster.远古武士魂魄: //556
+                                            case Monster.Mon556B: //556
                                                 Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.NobleWarrior], 464, 8, 300, this));
                                                 Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.NobleWarrior], 478, 12, 300, this));
                                                 break;
-                                            case Monster.蜥蜴: //543
-                                                Point 蜥蜴2 = Functions.PointMove(CurrentLocation, Direction, 2);
-                                                MapControl.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.蜥蜴], 338, 11, 800, 蜥蜴2, CMain.Time) { Blend = true });
+                                            case Monster.Mon543N: //543
+                                                Point sourceMon543N = Functions.PointMove(CurrentLocation, Direction, 2);
+                                                MapControl.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon543N], 338, 11, 800, sourceMon543N, CMain.Time) { Blend = true });
                                                 break;
-                                            case Monster.度量宫武士: //554
-                                                MapControl.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.度量宫武士], 468, 10, 300, front, CMain.Time + 300));
+                                            case Monster.Mon554N: //554
+                                                MapControl.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon554N], 468, 10, 300, front, CMain.Time + 300));
                                                 break;
                                         }
                                     }
@@ -2747,27 +2747,27 @@ namespace Client.MirObjects
                                             case Monster.HardenRhino: //328
                                                 Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.HardenRhino], 392, 5, 5 * Frame.Interval, this));
                                                 break;
-                                            case Monster.机关车: //547
-                                                missile = CreateProjectile(368, Libraries.Monsters[(ushort)Monster.机关车], true, 3, 60, 0);
+                                            case Monster.Mon547N: //547
+                                                missile = CreateProjectile(368, Libraries.Monsters[(ushort)Monster.Mon547N], true, 3, 60, 0);
 
                                                 if (missile.Target != null)
                                                 {
                                                     missile.Complete += (o, e) =>
                                                     {
                                                         if (missile.Target.CurrentAction == MirAction.死后尸体) return;
-                                                        missile.Target.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.机关车], 416, 10, 600, missile.Target) { Blend = true });
+                                                        missile.Target.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon547N], 416, 10, 600, missile.Target) { Blend = true });
                                                     };
                                                 }
                                                 break;
-                                            case Monster.陶俑弓兵: //549
-                                                missile = CreateProjectile(200, Libraries.Monsters[(ushort)Monster.陶俑弓兵], true, 4, 60, 0);
+                                            case Monster.Mon549N: //549
+                                                missile = CreateProjectile(200, Libraries.Monsters[(ushort)Monster.Mon549N], true, 4, 60, 0);
 
                                                 if (missile.Target != null)
                                                 {
                                                     missile.Complete += (o, e) =>
                                                     {
                                                         if (missile.Target.CurrentAction == MirAction.死后尸体) return;
-                                                        missile.Target.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.陶俑弓兵], 264, 8, 600, missile.Target) { Blend = true });
+                                                        missile.Target.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon549N], 264, 8, 600, missile.Target) { Blend = true });
                                                     };
                                                 }
                                                 break;
@@ -3583,12 +3583,12 @@ namespace Client.MirObjects
                                                 }
                                                 break;
                                             case Monster.NobleArcher: //503
-                                            case Monster.远古弓箭魂魄: //557
+                                            case Monster.Mon557B: //557
                                                 if (MapControl.GetObject(TargetID) != null)
                                                     CreateProjectile(400, Libraries.Monsters[(ushort)Monster.NobleArcher], true, 6, 30, 6, direction16: false);
                                                 break;
                                             case Monster.NoblePriest: //504
-                                            case Monster.远古术士魂魄: //558
+                                            case Monster.Mon558B: //558
                                                 missile = CreateProjectile(400, Libraries.Monsters[(ushort)Monster.NoblePriest], true, 5, 30, 0, direction16: false);
 
                                                 if (missile.Target != null)
@@ -3620,46 +3620,46 @@ namespace Client.MirObjects
                                                     ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.SpectralWraith], 659, 8, 300, ob, CMain.Time + 300) { Blend = true });
                                                 }
                                                 break;
-                                            case Monster.毒蛾: //542
-                                                missile = CreateProjectile(336, Libraries.Monsters[(ushort)Monster.毒蛾], true, 8, 50, 0, direction16: false);
+                                            case Monster.Mon542N: //542
+                                                missile = CreateProjectile(336, Libraries.Monsters[(ushort)Monster.Mon542N], true, 8, 50, 0, direction16: false);
 
                                                 if (missile.Target != null)
                                                 {
                                                     missile.Complete += (o, e) =>
                                                     {
                                                         if (missile.Target.CurrentAction == MirAction.死后尸体) return;
-                                                        missile.Target.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.毒蛾], 400, 15, 800, missile.Target) { Blend = true, DrawBehind = true });
+                                                        missile.Target.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon542N], 400, 15, 800, missile.Target) { Blend = true, DrawBehind = true });
                                                     };
                                                 }
                                                 break;
-                                            case Monster.守护炎魔: //545
+                                            case Monster.Mon545N: //545
                                                 ob = MapControl.GetObject(TargetID);
                                                 if (ob != null)
                                                 {
-                                                    ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.守护炎魔], 752, 14, 600, ob) { Blend = true });
+                                                    ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon545N], 752, 14, 600, ob) { Blend = true });
                                                 }
                                                 break;
-                                            case Monster.修士刺客: //551
-                                                missile = CreateProjectile(380, Libraries.Monsters[(ushort)Monster.修士刺客], true, 10, 50, 0, direction16: false);
+                                            case Monster.Mon551N: //551
+                                                missile = CreateProjectile(380, Libraries.Monsters[(ushort)Monster.Mon551N], true, 10, 50, 0, direction16: false);
 
                                                 if (missile.Target != null)
                                                 {
                                                     missile.Complete += (o, e) =>
                                                     {
                                                         if (missile.Target.CurrentAction == MirAction.死后尸体) return;
-                                                        missile.Target.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.修士刺客], 460, 6, 800, missile.Target) { Blend = true });
+                                                        missile.Target.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon551N], 460, 6, 800, missile.Target) { Blend = true });
                                                     };
                                                 }
                                                 break;
-                                            case Monster.度量宫术士: //555
-                                                missile = CreateProjectile(398, Libraries.Monsters[(ushort)Monster.度量宫术士], true, 8, 50, 0, direction16: true);
+                                            case Monster.Mon555N: //555
+                                                missile = CreateProjectile(398, Libraries.Monsters[(ushort)Monster.Mon555N], true, 8, 50, 0, direction16: true);
 
                                                 if (missile.Target != null)
                                                 {
                                                     missile.Complete += (o, e) =>
                                                     {
                                                         if (missile.Target.CurrentAction == MirAction.死后尸体) return;
-                                                        missile.Target.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.度量宫术士], 526, 10, 600, missile.Target) { Blend = true });
+                                                        missile.Target.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon555N], 526, 10, 600, missile.Target) { Blend = true });
                                                     };
                                                 }
                                                 break;
@@ -4157,7 +4157,7 @@ namespace Client.MirObjects
                                                 }
                                                 break;
                                             case Monster.NobleArcher: //503
-                                            case Monster.远古弓箭魂魄: //557
+                                            case Monster.Mon557B: //557
                                                 missile = CreateProjectile(496, Libraries.Monsters[(ushort)Monster.NobleArcher], true, 8, 30, -8, direction16: false);
 
                                                 if (missile.Target != null)
@@ -4169,7 +4169,7 @@ namespace Client.MirObjects
                                                 }
                                                 break;
                                             case Monster.NoblePriest: //504
-                                            case Monster.远古术士魂魄: //558
+                                            case Monster.Mon558B: //558
                                                 if (MapControl.GetObject(TargetID) != null)
                                                     CreateProjectile(454, Libraries.Monsters[(ushort)Monster.NoblePriest], true, 6, 30, 0, direction16: false);
                                                 break;
@@ -4196,11 +4196,11 @@ namespace Client.MirObjects
                                                     };
                                                 }
                                                 break;
-                                            case Monster.守护炎魔: //545
+                                            case Monster.Mon545N: //545
                                                 ob = MapControl.GetObject(TargetID);
                                                 if (ob != null)
                                                 {
-                                                    ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.守护炎魔], 766, 14, 600, ob) { Blend = true, DrawBehind = true });
+                                                    ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon545N], 766, 14, 600, ob) { Blend = true, DrawBehind = true });
                                                 }
                                                 break;
                                             case Monster.Mon564N:
@@ -4293,7 +4293,7 @@ namespace Client.MirObjects
                                                 }
                                                 break;
                                             case Monster.NobleArcher: //503
-                                            case Monster.远古弓箭魂魄: //557
+                                            case Monster.Mon557B: //557
                                                 ob = MapControl.GetObject(TargetID);
                                                 if (ob != null)
                                                 {
@@ -4301,7 +4301,7 @@ namespace Client.MirObjects
                                                 }
                                                 break;
                                             case Monster.NoblePriest: //504
-                                            case Monster.远古术士魂魄: //558
+                                            case Monster.Mon558B: //558
                                                 missile = CreateProjectile(502, Libraries.Monsters[(ushort)Monster.NoblePriest], true, 3, 30, -3, direction16: false);
 
                                                 if (missile.Target != null)
@@ -4462,33 +4462,33 @@ namespace Client.MirObjects
                                         case Monster.BloodLord: //532
                                             Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.BloodLord], 410, 10, Frame.Count * Frame.Interval, this));
                                             break;
-                                        case Monster.老鼠: //541
-                                            Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.老鼠], 325, 9, 9 * Frame.Interval, this) { Blend = true, DrawBehind = true });
+                                        case Monster.Mon541N: //541
+                                            Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon541N], 325, 9, 9 * Frame.Interval, this) { Blend = true, DrawBehind = true });
                                             break;
-                                        case Monster.毒蛾: //542
-                                            Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.毒蛾], 415, 10, 10 * Frame.Interval, this) { Blend = true, DrawBehind = true });
+                                        case Monster.Mon542N: //542
+                                            Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon542N], 415, 10, 10 * Frame.Interval, this) { Blend = true, DrawBehind = true });
                                             break;
-                                        case Monster.蜥蜴: //543
-                                            Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.蜥蜴], 349, 10, 10 * Frame.Interval, this) { Blend = true, DrawBehind = true });
+                                        case Monster.Mon543N: //543
+                                            Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon543N], 349, 10, 10 * Frame.Interval, this) { Blend = true, DrawBehind = true });
                                             break;
-                                        case Monster.木盒: //546
-                                            Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.木盒], 96, 8, 8 * Frame.Interval, this) { Blend = true, DrawBehind = true });
+                                        case Monster.Mon546T: //546
+                                            Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon546T], 96, 8, 8 * Frame.Interval, this) { Blend = true, DrawBehind = true });
                                             break;
-                                        case Monster.机关车: //547
-                                            Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.机关车], 506, 10, 10 * Frame.Interval, this) { Blend = true, DrawBehind = true });
+                                        case Monster.Mon547N: //547
+                                            Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon547N], 506, 10, 10 * Frame.Interval, this) { Blend = true, DrawBehind = true });
                                             break;
-                                        case Monster.修士剑客: //550
-                                            Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.修士剑客], 352, 10, 10 * Frame.Interval, this) { Blend = true, DrawBehind = true });
+                                        case Monster.Mon550N: //550
+                                            Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon550N], 352, 10, 10 * Frame.Interval, this) { Blend = true, DrawBehind = true });
                                             break;
-                                        case Monster.修士刺客: //551
-                                            Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.修士刺客], 360, 10, 10 * Frame.Interval, this) { Blend = true, DrawBehind = true });
+                                        case Monster.Mon551N: //551
+                                            Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon551N], 360, 10, 10 * Frame.Interval, this) { Blend = true, DrawBehind = true });
                                             break;
-                                        case Monster.度量宫武士: //554
-                                            Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.度量宫武士], 336, 10, 10 * Frame.Interval, this) { Blend = true, DrawBehind = true });
-                                            Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.度量宫武士], 420 + (int)Direction * 6, 6, 200 * Frame.Interval, this));
+                                        case Monster.Mon554N: //554
+                                            Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon554N], 336, 10, 10 * Frame.Interval, this) { Blend = true, DrawBehind = true });
+                                            Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon554N], 420 + (int)Direction * 6, 6, 200 * Frame.Interval, this));
                                             break;
-                                        case Monster.度量宫术士: //555
-                                            Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.度量宫术士], 328, 6, 6 * Frame.Interval, this) { Blend = true, DrawBehind = true });
+                                        case Monster.Mon555N: //555
+                                            Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon555N], 328, 6, 6 * Frame.Interval, this) { Blend = true, DrawBehind = true });
                                             break;
                                         case Monster.Mon562N:
                                             Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon562N], 676 + (int)Direction * 9, 9, 8 * Frame.Interval, this, CMain.Time + 300));
@@ -4563,9 +4563,9 @@ namespace Client.MirObjects
                         {
                             switch (BaseImage)
                             {
-                                case Monster.古老遗骸: //552
-                                    BodyLibrary = Libraries.Monsters[(ushort)Monster.遗骸骷髅];
-                                    BaseImage = Monster.遗骸骷髅;
+                                case Monster.Mon552N: //552
+                                    BodyLibrary = Libraries.Monsters[(ushort)Monster.Mon553N];
+                                    BaseImage = Monster.Mon553N;
                                     BaseSound = (ushort)BaseImage * 10;
                                     Frames = BodyLibrary.Frames ?? FrameSet.DefaultMonster;
                                     break;
@@ -7483,216 +7483,216 @@ namespace Client.MirObjects
                             break;
                     }
                     break;
-                case Monster.猪八戒: //540
+                case Monster.Mon540N: //540
                     switch (CurrentAction)
                     {
                         case MirAction.近距攻击1:
-                            Libraries.Monsters[(ushort)Monster.猪八戒].DrawBlend(328 + FrameIndex + (int)Direction * 9, DrawLocation, Color.White, true);
+                            Libraries.Monsters[(ushort)Monster.Mon540N].DrawBlend(328 + FrameIndex + (int)Direction * 9, DrawLocation, Color.White, true);
                             break;
                     }
                     break;
-                case Monster.老鼠: //541
+                case Monster.Mon541N: //541
                     switch (CurrentAction)
                     {
 
                         case MirAction.近距攻击1:
-                            Libraries.Monsters[(ushort)Monster.老鼠].DrawBlend(256 + FrameIndex + (int)Direction * 8, DrawLocation, Color.White, true);
+                            Libraries.Monsters[(ushort)Monster.Mon541N].DrawBlend(256 + FrameIndex + (int)Direction * 8, DrawLocation, Color.White, true);
                             break;
                     }
                     break;
-                case Monster.秦庙石狮: //544
+                case Monster.Mon544S: //544
                     switch (CurrentAction)
                     {
 
                         case MirAction.近距攻击1:
-                            Libraries.Monsters[(ushort)Monster.秦庙石狮].DrawBlend(400 + FrameIndex + (int)Direction * 9, DrawLocation, Color.White, true);
+                            Libraries.Monsters[(ushort)Monster.Mon544S].DrawBlend(400 + FrameIndex + (int)Direction * 9, DrawLocation, Color.White, true);
                             break;
                         case MirAction.近距攻击2:
-                            Libraries.Monsters[(ushort)Monster.秦庙石狮].DrawBlend(472 + FrameIndex + (int)Direction * 9, DrawLocation, Color.White, true);
+                            Libraries.Monsters[(ushort)Monster.Mon544S].DrawBlend(472 + FrameIndex + (int)Direction * 9, DrawLocation, Color.White, true);
                             break;
                     }
                     break;
-                case Monster.守护炎魔: //545
+                case Monster.Mon545N: //545
                     switch (CurrentAction)
                     {
                         case MirAction.站立动作:
-                            Libraries.Monsters[(ushort)Monster.守护炎魔].DrawBlend((376 + FrameIndex + (int)Direction * 6), DrawLocation, Color.White, true);
+                            Libraries.Monsters[(ushort)Monster.Mon545N].DrawBlend((376 + FrameIndex + (int)Direction * 6), DrawLocation, Color.White, true);
                             break;
                         case MirAction.行走动作:
-                            Libraries.Monsters[(ushort)Monster.守护炎魔].DrawBlend((424 + FrameIndex + (int)Direction * 4), DrawLocation, Color.White, true);
+                            Libraries.Monsters[(ushort)Monster.Mon545N].DrawBlend((424 + FrameIndex + (int)Direction * 4), DrawLocation, Color.White, true);
                             break;
                         case MirAction.近距攻击1:
-                            Libraries.Monsters[(ushort)Monster.守护炎魔].DrawBlend((456 + FrameIndex + (int)Direction * 7), DrawLocation, Color.White, true);
+                            Libraries.Monsters[(ushort)Monster.Mon545N].DrawBlend((456 + FrameIndex + (int)Direction * 7), DrawLocation, Color.White, true);
                             break;
                         case MirAction.远程攻击1:
-                            Libraries.Monsters[(ushort)Monster.守护炎魔].DrawBlend((512 + FrameIndex + (int)Direction * 9), DrawLocation, Color.White, true);
+                            Libraries.Monsters[(ushort)Monster.Mon545N].DrawBlend((512 + FrameIndex + (int)Direction * 9), DrawLocation, Color.White, true);
                             break;
                         case MirAction.远程攻击2:
-                            Libraries.Monsters[(ushort)Monster.守护炎魔].DrawBlend((584 + FrameIndex + (int)Direction * 8), DrawLocation, Color.White, true);
+                            Libraries.Monsters[(ushort)Monster.Mon545N].DrawBlend((584 + FrameIndex + (int)Direction * 8), DrawLocation, Color.White, true);
                             break;
                         case MirAction.被击动作:
-                            Libraries.Monsters[(ushort)Monster.守护炎魔].DrawBlend((648 + FrameIndex + (int)Direction * 3), DrawLocation, Color.White, true);
+                            Libraries.Monsters[(ushort)Monster.Mon545N].DrawBlend((648 + FrameIndex + (int)Direction * 3), DrawLocation, Color.White, true);
                             break;
                         case MirAction.死亡动作:
-                            Libraries.Monsters[(ushort)Monster.守护炎魔].DrawBlend((672 + FrameIndex + (int)Direction * 10), DrawLocation, Color.White, true);
+                            Libraries.Monsters[(ushort)Monster.Mon545N].DrawBlend((672 + FrameIndex + (int)Direction * 10), DrawLocation, Color.White, true);
                             break;
                     }
                     break;
-                case Monster.机关车: //547
+                case Monster.Mon547N: //547
                     switch (CurrentAction)
                     {
                         case MirAction.远程攻击1:
-                            Libraries.Monsters[(ushort)Monster.机关车].DrawBlend((288 + FrameIndex + (int)Direction * 10), DrawLocation, Color.White, true);
+                            Libraries.Monsters[(ushort)Monster.Mon547N].DrawBlend((288 + FrameIndex + (int)Direction * 10), DrawLocation, Color.White, true);
                             break;
                         case MirAction.死亡动作:
-                            Libraries.Monsters[(ushort)Monster.机关车].DrawBlend((426 + FrameIndex + (int)Direction * 10), DrawLocation, Color.White, true);
+                            Libraries.Monsters[(ushort)Monster.Mon547N].DrawBlend((426 + FrameIndex + (int)Direction * 10), DrawLocation, Color.White, true);
                             break;
                     }
                     break;
-                case Monster.陶俑枪兵: //548
+                case Monster.Mon548N: //548
                     switch (CurrentAction)
                     {
                         case MirAction.近距攻击1:
-                            Libraries.Monsters[(ushort)Monster.陶俑枪兵].DrawBlend((304 + FrameIndex + (int)Direction * 9), DrawLocation, Color.White, true);
+                            Libraries.Monsters[(ushort)Monster.Mon548N].DrawBlend((304 + FrameIndex + (int)Direction * 9), DrawLocation, Color.White, true);
                             break;
                         case MirAction.近距攻击2:
-                            Libraries.Monsters[(ushort)Monster.陶俑枪兵].DrawBlend((376 + FrameIndex + (int)Direction * 10), DrawLocation, Color.White, true);
-                            Libraries.Monsters[(ushort)Monster.陶俑枪兵].DrawBlend((456 + FrameIndex + (int)Direction * 10), DrawLocation, Color.White, true);
+                            Libraries.Monsters[(ushort)Monster.Mon548N].DrawBlend((376 + FrameIndex + (int)Direction * 10), DrawLocation, Color.White, true);
+                            Libraries.Monsters[(ushort)Monster.Mon548N].DrawBlend((456 + FrameIndex + (int)Direction * 10), DrawLocation, Color.White, true);
                             break;
                     }
                     break;
-                case Monster.修士剑客: //550
+                case Monster.Mon550N: //550
                     switch (CurrentAction)
                     {
                         case MirAction.近距攻击1:
-                            Libraries.Monsters[(ushort)Monster.修士剑客].DrawBlend(362 + FrameIndex + (int)Direction * 10, DrawLocation, Color.FromArgb(135, 255, 200, 135), true);
+                            Libraries.Monsters[(ushort)Monster.Mon550N].DrawBlend(362 + FrameIndex + (int)Direction * 10, DrawLocation, Color.FromArgb(135, 255, 200, 135), true);
                             break;
                     }
                     break;
-                case Monster.古老遗骸: //552
-                case Monster.遗骸骷髅: //553
+                case Monster.Mon552N: //552
+                case Monster.Mon553N: //553
                     switch (CurrentAction)
                     {
                         case MirAction.近距攻击1:
-                            Libraries.Monsters[(ushort)Monster.古老遗骸].DrawBlend(336 + FrameIndex + (int)Direction * 8, DrawLocation, Color.White, true);
+                            Libraries.Monsters[(ushort)Monster.Mon552N].DrawBlend(336 + FrameIndex + (int)Direction * 8, DrawLocation, Color.White, true);
                             break;
                         case MirAction.复活动作:
-                            Libraries.Monsters[(ushort)Monster.古老遗骸].DrawBlend(400 + FrameIndex, DrawLocation, Color.White, true);
+                            Libraries.Monsters[(ushort)Monster.Mon552N].DrawBlend(400 + FrameIndex, DrawLocation, Color.White, true);
                             break;
                     }
                     break;
-                case Monster.度量宫术士: //555
+                case Monster.Mon555N: //555
                     switch (CurrentAction)
                     {
                         case MirAction.近距攻击1:
-                            Libraries.Monsters[(ushort)Monster.度量宫术士].DrawBlend((334 + FrameIndex + (int)Direction * 8), DrawLocation, Color.White, true);
+                            Libraries.Monsters[(ushort)Monster.Mon555N].DrawBlend((334 + FrameIndex + (int)Direction * 8), DrawLocation, Color.White, true);
                             break;
                     }
                     break;
-                case Monster.远古武士魂魄: //556
+                case Monster.Mon556B: //556
                     switch (CurrentAction)
                     {
                         case MirAction.站立动作:
-                            Libraries.Monsters[(ushort)Monster.远古武士魂魄].DrawBlend((400 + FrameIndex + (int)Direction * 6), DrawLocation, Color.White, true);
+                            Libraries.Monsters[(ushort)Monster.Mon556B].DrawBlend((400 + FrameIndex + (int)Direction * 6), DrawLocation, Color.White, true);
                             break;
                         case MirAction.行走动作:
-                            Libraries.Monsters[(ushort)Monster.远古武士魂魄].DrawBlend((448 + FrameIndex + (int)Direction * 6), DrawLocation, Color.White, true);
+                            Libraries.Monsters[(ushort)Monster.Mon556B].DrawBlend((448 + FrameIndex + (int)Direction * 6), DrawLocation, Color.White, true);
                             break;
                         case MirAction.近距攻击1:
-                            Libraries.Monsters[(ushort)Monster.远古武士魂魄].DrawBlend((496 + FrameIndex + (int)Direction * 8), DrawLocation, Color.White, true);
+                            Libraries.Monsters[(ushort)Monster.Mon556B].DrawBlend((496 + FrameIndex + (int)Direction * 8), DrawLocation, Color.White, true);
                             Libraries.Monsters[(ushort)Monster.NobleWarrior].DrawBlend((400 + FrameIndex + (int)Direction * 8), DrawLocation, Color.White, true);
                             break;
                         case MirAction.近距攻击2:
-                            Libraries.Monsters[(ushort)Monster.远古武士魂魄].DrawBlend((560 + FrameIndex + (int)Direction * 10), DrawLocation, Color.White, true);
+                            Libraries.Monsters[(ushort)Monster.Mon556B].DrawBlend((560 + FrameIndex + (int)Direction * 10), DrawLocation, Color.White, true);
                             break;
                         case MirAction.远程攻击1:
-                            Libraries.Monsters[(ushort)Monster.远古武士魂魄].DrawBlend((640 + FrameIndex + (int)Direction * 8), DrawLocation, Color.White, true);
+                            Libraries.Monsters[(ushort)Monster.Mon556B].DrawBlend((640 + FrameIndex + (int)Direction * 8), DrawLocation, Color.White, true);
                             break;
                         case MirAction.被击动作:
-                            Libraries.Monsters[(ushort)Monster.远古武士魂魄].DrawBlend((704 + FrameIndex + (int)Direction * 4), DrawLocation, Color.White, true);
+                            Libraries.Monsters[(ushort)Monster.Mon556B].DrawBlend((704 + FrameIndex + (int)Direction * 4), DrawLocation, Color.White, true);
                             break;
                         case MirAction.死亡动作:
-                            Libraries.Monsters[(ushort)Monster.远古武士魂魄].DrawBlend((736 + FrameIndex + (int)Direction * 8), DrawLocation, Color.White, true);
+                            Libraries.Monsters[(ushort)Monster.Mon556B].DrawBlend((736 + FrameIndex + (int)Direction * 8), DrawLocation, Color.White, true);
                             break;
                     }
                     break;
-                case Monster.远古弓箭魂魄: //557
+                case Monster.Mon557B: //557
                     switch (CurrentAction)
                     {
                         case MirAction.站立动作:
-                            Libraries.Monsters[(ushort)Monster.远古弓箭魂魄].DrawBlend((400 + FrameIndex + (int)Direction * 6), DrawLocation, Color.White, true);
+                            Libraries.Monsters[(ushort)Monster.Mon557B].DrawBlend((400 + FrameIndex + (int)Direction * 6), DrawLocation, Color.White, true);
                             break;
                         case MirAction.行走动作:
-                            Libraries.Monsters[(ushort)Monster.远古弓箭魂魄].DrawBlend((448 + FrameIndex + (int)Direction * 6), DrawLocation, Color.White, true);
+                            Libraries.Monsters[(ushort)Monster.Mon557B].DrawBlend((448 + FrameIndex + (int)Direction * 6), DrawLocation, Color.White, true);
                             break;
                         case MirAction.远程攻击1:
-                            Libraries.Monsters[(ushort)Monster.远古弓箭魂魄].DrawBlend((496 + FrameIndex + (int)Direction * 9), DrawLocation, Color.White, true);
+                            Libraries.Monsters[(ushort)Monster.Mon557B].DrawBlend((496 + FrameIndex + (int)Direction * 9), DrawLocation, Color.White, true);
                             break;
                         case MirAction.远程攻击2:
-                            Libraries.Monsters[(ushort)Monster.远古弓箭魂魄].DrawBlend((568 + FrameIndex + (int)Direction * 10), DrawLocation, Color.White, true);
+                            Libraries.Monsters[(ushort)Monster.Mon557B].DrawBlend((568 + FrameIndex + (int)Direction * 10), DrawLocation, Color.White, true);
                             break;
                         case MirAction.远程攻击3:
-                            Libraries.Monsters[(ushort)Monster.远古弓箭魂魄].DrawBlend((648 + FrameIndex + (int)Direction * 8), DrawLocation, Color.White, true);
+                            Libraries.Monsters[(ushort)Monster.Mon557B].DrawBlend((648 + FrameIndex + (int)Direction * 8), DrawLocation, Color.White, true);
                             break;
                         case MirAction.被击动作:
-                            Libraries.Monsters[(ushort)Monster.远古弓箭魂魄].DrawBlend((712 + FrameIndex + (int)Direction * 3), DrawLocation, Color.White, true);
+                            Libraries.Monsters[(ushort)Monster.Mon557B].DrawBlend((712 + FrameIndex + (int)Direction * 3), DrawLocation, Color.White, true);
                             break;
                         case MirAction.死亡动作:
-                            Libraries.Monsters[(ushort)Monster.远古弓箭魂魄].DrawBlend((736 + FrameIndex + (int)Direction * 8), DrawLocation, Color.White, true);
+                            Libraries.Monsters[(ushort)Monster.Mon557B].DrawBlend((736 + FrameIndex + (int)Direction * 8), DrawLocation, Color.White, true);
                             break;
                     }
                     break;
-                case Monster.远古术士魂魄: //558
+                case Monster.Mon558B: //558
                     switch (CurrentAction)
                     {
                         case MirAction.站立动作:
-                            Libraries.Monsters[(ushort)Monster.远古术士魂魄].DrawBlend((400 + FrameIndex + (int)Direction * 6), DrawLocation, Color.White, true);
+                            Libraries.Monsters[(ushort)Monster.Mon558B].DrawBlend((400 + FrameIndex + (int)Direction * 6), DrawLocation, Color.White, true);
                             break;
                         case MirAction.行走动作:
-                            Libraries.Monsters[(ushort)Monster.远古术士魂魄].DrawBlend((448 + FrameIndex + (int)Direction * 6), DrawLocation, Color.White, true);
+                            Libraries.Monsters[(ushort)Monster.Mon558B].DrawBlend((448 + FrameIndex + (int)Direction * 6), DrawLocation, Color.White, true);
                             break;
                         case MirAction.远程攻击1:
-                            Libraries.Monsters[(ushort)Monster.远古术士魂魄].DrawBlend((496 + FrameIndex + (int)Direction * 8), DrawLocation, Color.White, true);
+                            Libraries.Monsters[(ushort)Monster.Mon558B].DrawBlend((496 + FrameIndex + (int)Direction * 8), DrawLocation, Color.White, true);
                             break;
                         case MirAction.远程攻击2:
-                            Libraries.Monsters[(ushort)Monster.远古术士魂魄].DrawBlend((560 + FrameIndex + (int)Direction * 8), DrawLocation, Color.White, true);
+                            Libraries.Monsters[(ushort)Monster.Mon558B].DrawBlend((560 + FrameIndex + (int)Direction * 8), DrawLocation, Color.White, true);
                             break;
                         case MirAction.远程攻击3:
-                            Libraries.Monsters[(ushort)Monster.远古术士魂魄].DrawBlend((624 + FrameIndex + (int)Direction * 9), DrawLocation, Color.White, true);
+                            Libraries.Monsters[(ushort)Monster.Mon558B].DrawBlend((624 + FrameIndex + (int)Direction * 9), DrawLocation, Color.White, true);
                             break;
                         case MirAction.被击动作:
-                            Libraries.Monsters[(ushort)Monster.远古术士魂魄].DrawBlend((696 + FrameIndex + (int)Direction * 3), DrawLocation, Color.White, true);
+                            Libraries.Monsters[(ushort)Monster.Mon558B].DrawBlend((696 + FrameIndex + (int)Direction * 3), DrawLocation, Color.White, true);
                             break;
                         case MirAction.死亡动作:
-                            Libraries.Monsters[(ushort)Monster.远古术士魂魄].DrawBlend((720 + FrameIndex + (int)Direction * 10), DrawLocation, Color.White, true);
+                            Libraries.Monsters[(ushort)Monster.Mon558B].DrawBlend((720 + FrameIndex + (int)Direction * 10), DrawLocation, Color.White, true);
                             break;
                     }
                     break;
-                case Monster.远古刺客魂魄: //559
+                case Monster.Mon559B: //559
                     switch (CurrentAction)
                     {
                         case MirAction.站立动作:
-                            Libraries.Monsters[(ushort)Monster.远古刺客魂魄].DrawBlend((408 + FrameIndex + (int)Direction * 6), DrawLocation, Color.White, true);
+                            Libraries.Monsters[(ushort)Monster.Mon559B].DrawBlend((408 + FrameIndex + (int)Direction * 6), DrawLocation, Color.White, true);
                             break;
                         case MirAction.行走动作:
-                            Libraries.Monsters[(ushort)Monster.远古刺客魂魄].DrawBlend((456 + FrameIndex + (int)Direction * 6), DrawLocation, Color.White, true);
+                            Libraries.Monsters[(ushort)Monster.Mon559B].DrawBlend((456 + FrameIndex + (int)Direction * 6), DrawLocation, Color.White, true);
                             break;
                         case MirAction.近距攻击1:
-                            Libraries.Monsters[(ushort)Monster.远古刺客魂魄].DrawBlend((504 + FrameIndex + (int)Direction * 8), DrawLocation, Color.White, true);
+                            Libraries.Monsters[(ushort)Monster.Mon559B].DrawBlend((504 + FrameIndex + (int)Direction * 8), DrawLocation, Color.White, true);
                             Libraries.Monsters[(ushort)Monster.NobleAssassin].DrawBlend((408 + FrameIndex + (int)Direction * 8), DrawLocation, Color.White, true);
                             break;
                         case MirAction.近距攻击2:
-                            Libraries.Monsters[(ushort)Monster.远古刺客魂魄].DrawBlend((568 + FrameIndex + (int)Direction * 9), DrawLocation, Color.White, true);
+                            Libraries.Monsters[(ushort)Monster.Mon559B].DrawBlend((568 + FrameIndex + (int)Direction * 9), DrawLocation, Color.White, true);
                             Libraries.Monsters[(ushort)Monster.NobleAssassin].DrawBlend((472 + FrameIndex + (int)Direction * 9), DrawLocation, Color.White, true);
                             break;
                         case MirAction.远程攻击1:
-                            Libraries.Monsters[(ushort)Monster.远古刺客魂魄].DrawBlend((640 + FrameIndex + (int)Direction * 9), DrawLocation, Color.White, true);
+                            Libraries.Monsters[(ushort)Monster.Mon559B].DrawBlend((640 + FrameIndex + (int)Direction * 9), DrawLocation, Color.White, true);
                             break;
                         case MirAction.被击动作:
-                            Libraries.Monsters[(ushort)Monster.远古刺客魂魄].DrawBlend((712 + FrameIndex + (int)Direction * 4), DrawLocation, Color.White, true);
+                            Libraries.Monsters[(ushort)Monster.Mon559B].DrawBlend((712 + FrameIndex + (int)Direction * 4), DrawLocation, Color.White, true);
                             break;
                         case MirAction.死亡动作:
-                            Libraries.Monsters[(ushort)Monster.远古刺客魂魄].DrawBlend((744 + FrameIndex + (int)Direction * 9), DrawLocation, Color.White, true);
+                            Libraries.Monsters[(ushort)Monster.Mon559B].DrawBlend((744 + FrameIndex + (int)Direction * 9), DrawLocation, Color.White, true);
                             break;
                     }
                     break;

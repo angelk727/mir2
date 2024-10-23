@@ -293,10 +293,18 @@ namespace Client.MirObjects
                     case 48:
                     case 49:
                     case 50:
+                    case 51:
+                    case 52:
                         showFishing = false;
                         break;
                     case 6:
                     case 9:
+                    case 33:
+                    case 34:
+                    case 35:
+                    case 36:
+                    case 37:
+                    case 38:
                         showMount = false;
                         showFishing = false;
                         break;
@@ -318,18 +326,29 @@ namespace Client.MirObjects
                     case MirAction.弓箭奔跑:
                         Frames.TryGetValue(MirAction.跑步动作, out Frame);
                         break;
+                    case MirAction.站立姿势:
+                        Frames.TryGetValue(MirAction.站立姿势, out Frame);
+                        break;
                     case MirAction.近距攻击1:
-                    case MirAction.近距攻击2:
-                    case MirAction.近距攻击3:
                     case MirAction.近距攻击4:
+                        Frames.TryGetValue(MirAction.近距攻击1, out Frame);
+                        break;
+                    case MirAction.近距攻击2:
+                    case MirAction.挖矿动作:
+                        Frames.TryGetValue(MirAction.近距攻击2, out Frame);
+                        break;
+                    case MirAction.近距攻击3:
+                        Frames.TryGetValue(MirAction.近距攻击3, out Frame);
+                        break;
+                    case MirAction.施法动作:
                     case MirAction.远程攻击1:
                     case MirAction.远程攻击2:
                     case MirAction.远程攻击3:
-                        Frames.TryGetValue(MirAction.近距攻击1, out Frame);
+                        Frames.TryGetValue(MirAction.施法动作, out Frame);
                         break;
                 }
 
-                if (MountType > 6 && RidingMount)
+                if (MountType >= 0 && RidingMount && TransformType <= 44)
                 {
                     ArmourOffSet = -416;
                     BodyLibrary = TransformType < Libraries.TransformMounts.Length ? Libraries.TransformMounts[TransformType] : Libraries.TransformMounts[0];
@@ -5428,21 +5447,22 @@ namespace Client.MirObjects
                                     Libraries.TransformWeaponEffect[18].DrawBlend(128 + ((int)Direction * 1) + FrameIndex, DrawLocation, Color.White, true, 0.3F);
                                     break;
                                 case MirAction.近距攻击1:
-                                case MirAction.近距攻击2:
-                                case MirAction.近距攻击4:
-                                case MirAction.远程攻击1:
-                                case MirAction.远程攻击2:
+                                case MirAction.近距攻击4:                                
                                     Libraries.TransformWeaponEffect[18].DrawBlend(136 + ((int)Direction * 6) + FrameIndex, DrawLocation, Color.White, true, 0.3F);
                                     break;
+                                case MirAction.近距攻击2:
                                 case MirAction.挖矿动作:
                                     Libraries.TransformWeaponEffect[18].DrawBlend(184 + ((int)Direction * 6) + FrameIndex, DrawLocation, Color.White, true, 0.3F);
                                     break;
                                 case MirAction.近距攻击3:
                                     Libraries.TransformWeaponEffect[18].DrawBlend(232 + ((int)Direction * 8) + FrameIndex, DrawLocation, Color.White, true, 0.3F);
                                     break;
-                                //case MirAction.施法动作:
-                                //    Libraries.TransformWeaponEffect[18].DrawBlend(296 + ((int)Direction * 6) + FrameIndex, DrawLocation, Color.White, true, 0.7F);
-                                //    break;
+                                case MirAction.施法动作:
+                                case MirAction.远程攻击1:
+                                case MirAction.远程攻击2:
+                                case MirAction.远程攻击3:
+                                    Libraries.TransformWeaponEffect[18].DrawBlend(296 + ((int)Direction * 6) + FrameIndex, DrawLocation, Color.White, true, 0.7F);
+                                    break;
                                 case MirAction.挖矿展示:
                                     Libraries.TransformWeaponEffect[18].DrawBlend(344 + ((int)Direction * 2) + FrameIndex, DrawLocation, Color.White, true, 0.3F);
                                     break;
@@ -5520,6 +5540,7 @@ namespace Client.MirObjects
                                     Libraries.TransformWeaponEffect[45].DrawBlend(128 + ((int)Direction * 1) + FrameIndex, DrawLocation, Color.White, true, 0.7F);
                                     break;
                                 case MirAction.近距攻击1:
+                                case MirAction.近距攻击4:
                                     Libraries.TransformWeaponEffect[45].DrawBlend(136 + ((int)Direction * 6) + FrameIndex, DrawLocation, Color.White, true, 0.7F);
                                     break;
                                 case MirAction.近距攻击2:
@@ -5529,9 +5550,12 @@ namespace Client.MirObjects
                                 case MirAction.近距攻击3:
                                     Libraries.TransformWeaponEffect[45].DrawBlend(232 + ((int)Direction * 8) + FrameIndex, DrawLocation, Color.White, true, 0.7F);
                                     break;
-                                //case MirAction.施法动作:
-                                    //Libraries.TransformWeaponEffect[45].DrawBlend(296 + ((int)Direction * 6) + FrameIndex, DrawLocation, Color.White, true, 0.7F);
-                                    //break;
+                                case MirAction.施法动作:
+                                case MirAction.远程攻击1:
+                                case MirAction.远程攻击2:
+                                case MirAction.远程攻击3:
+                                    Libraries.TransformWeaponEffect[45].DrawBlend(296 + ((int)Direction * 6) + FrameIndex, DrawLocation, Color.White, true, 0.7F);
+                                    break;
                                 case MirAction.挖矿展示:
                                     Libraries.TransformWeaponEffect[45].DrawBlend(344 + ((int)Direction * 2) + FrameIndex, DrawLocation, Color.White, true, 0.7F);
                                     break;
