@@ -813,6 +813,9 @@ namespace Client.MirObjects
                             case Monster.Mon554N: //554
                                 Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon554N], 346, 10, 10 * 200, this) { Blend = true });
                                 break;
+                            case Monster.Mon601N:
+                                Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon601N], 515 + (int)Direction * 10, 10, Frame.Count * Frame.Interval, this));
+                                break;
                         }
                         break;
                     case MirAction.近距攻击2:
@@ -1083,6 +1086,12 @@ namespace Client.MirObjects
                                 break;
                             case Monster.Mon572N:
                                 Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon572N], 424, 1, 600, this) { Blend = true });
+                                break;
+                            case Monster.Mon601N:
+                                Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon601N], 344 + (int)Direction * 8, 8, Frame.Count * Frame.Interval, this));
+                                break;
+                            case Monster.Mon602N:
+                                Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon602N], 200 + (int)Direction * 8, 8, Frame.Count * Frame.Interval, this));
                                 break;
                         }
                         break;
@@ -2541,9 +2550,6 @@ namespace Client.MirObjects
                                         SoundManager.PlaySound(BaseSound + 6);
                                     }
                                     break;
-
-
-
                             }
                             FrameIndex = Frame.Count - 1;
                             SetAction();
@@ -2804,6 +2810,30 @@ namespace Client.MirObjects
                                                     {
                                                         if (missile.Target.CurrentAction == MirAction.死后尸体) return;
                                                         missile.Target.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon577N], 424, 9, 300, missile.Target) { Blend = true });
+                                                    };
+                                                }
+                                                break;
+                                            case Monster.Mon601N:
+                                                missile = CreateProjectile(408, Libraries.Monsters[(ushort)Monster.Mon601N], true, 6, 30, 0, direction16: true);
+
+                                                if (missile.Target != null)
+                                                {
+                                                    missile.Complete += (o, e) =>
+                                                    {
+                                                        if (missile.Target.CurrentAction == MirAction.死后尸体) return;
+                                                        missile.Target.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon601N], 504, 11, 300, missile.Target) { Blend = true });
+                                                    };
+                                                }
+                                                break;
+                                             case Monster.Mon602N:
+                                                missile = CreateProjectile(264, Libraries.Monsters[(ushort)Monster.Mon602N], true, 6, 30, 0, direction16: true);
+
+                                                if (missile.Target != null)
+                                                {
+                                                    missile.Complete += (o, e) =>
+                                                    {
+                                                        if (missile.Target.CurrentAction == MirAction.死后尸体) return;
+                                                        missile.Target.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon602N], 360, 8, 300, missile.Target) { Blend = true });
                                                     };
                                                 }
                                                 break;
