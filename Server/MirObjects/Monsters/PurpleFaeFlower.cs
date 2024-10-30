@@ -4,7 +4,7 @@ using S = ServerPackets;
 
 namespace Server.MirObjects.Monsters
 {
-    class PurpleFaeFlower : ZumaMonster
+    class PurpleFaeFlower : MonsterObject
     {
         protected override bool CanMove { get { return false; } }
 

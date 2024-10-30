@@ -554,7 +554,7 @@ namespace Server.MirObjects
                         ob.Struck(Value, DefenceType.MAC);
                     }
                     break;
-                case Spell.Mon570NRupture:
+                case Spell.Mon570BRupture:
                     {
                         if (ob.Race != ObjectType.Player && ob.Race != ObjectType.Monster && ob.Race != ObjectType.Hero) return;
                         if (ob.Dead) return;
@@ -565,7 +565,7 @@ namespace Server.MirObjects
                         ob.Struck(Value, DefenceType.MAC);
                     }
                     break;
-                case Spell.Mon570NLightningCloud:
+                case Spell.Mon570BLightningCloud:
                     {
                         if (ob.Race != ObjectType.Player && ob.Race != ObjectType.Monster && ob.Race != ObjectType.Hero) return;
                         if (ob.Dead) return;
@@ -576,7 +576,7 @@ namespace Server.MirObjects
                         ob.Struck(Value, DefenceType.MAC);
                     }
                     break;
-                case Spell.Mon571NFireBomb:
+                case Spell.Mon571BFireBomb:
                     {
                         if (ob.Race != ObjectType.Player && ob.Race != ObjectType.Monster && ob.Race != ObjectType.Hero) return;
                         if (ob.Dead) return;
@@ -587,7 +587,7 @@ namespace Server.MirObjects
                         ob.Struck(Value, DefenceType.MAC);
                     }
                     break;
-                case Spell.Mon572NDarkVortex:
+                case Spell.Mon572BDarkVortex:
                     {
                         if (ob.Race != ObjectType.Player && ob.Race != ObjectType.Monster && ob.Race != ObjectType.Hero) return;
                         if (ob.Dead) return;
@@ -598,7 +598,7 @@ namespace Server.MirObjects
                         ob.Struck(Value, DefenceType.MAC);
                     }
                     break;
-                case Spell.Mon572NFlame:
+                case Spell.Mon572BFlame:
                     {
                         if (ob.Race != ObjectType.Player && ob.Race != ObjectType.Monster && ob.Race != ObjectType.Hero) return;
                         if (ob.Dead) return;
@@ -609,7 +609,18 @@ namespace Server.MirObjects
                         ob.Struck(Value, DefenceType.MAC);
                     }
                     break;
-                case Spell.Mon573NBigCobweb:
+                case Spell.Mon573BBigCobweb:
+                    {
+                        if (ob.Race != ObjectType.Player && ob.Race != ObjectType.Monster && ob.Race != ObjectType.Hero) return;
+                        if (ob.Dead) return;
+                        if (ob == Caster) return;
+                        if (!ob.IsAttackTarget(Caster)) return;
+                        if (Value == 0) return;
+
+                        ob.Struck(Value, DefenceType.MAC);
+                    }
+                    break;
+                case Spell.Mon603BWhirlPool:
                     {
                         if (ob.Race != ObjectType.Player && ob.Race != ObjectType.Monster && ob.Race != ObjectType.Hero) return;
                         if (ob.Dead) return;
@@ -756,12 +767,13 @@ namespace Server.MirObjects
                 case Spell.RiklebitesBlast:
                 case Spell.SwordFormation:
                 case Spell.Mon564NWhirlwind:
-                case Spell.Mon570NRupture:
-                case Spell.Mon570NLightningCloud:
-                case Spell.Mon571NFireBomb:
-                case Spell.Mon572NFlame:
-                case Spell.Mon572NDarkVortex:
-                case Spell.Mon573NBigCobweb:
+                case Spell.Mon570BRupture:
+                case Spell.Mon570BLightningCloud:
+                case Spell.Mon571BFireBomb:
+                case Spell.Mon572BFlame:
+                case Spell.Mon572BDarkVortex:
+                case Spell.Mon573BBigCobweb:
+                case Spell.Mon603BWhirlPool:
                 case Spell.Mon609NBomb:
                     if (!Show)
                         return null;

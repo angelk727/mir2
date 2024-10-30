@@ -590,7 +590,7 @@ public enum Monster : ushort
     ArcherGuard3 = 440,  //Mon45.wil
     Bunny2 = 441,
     FrozenMiner = 442,
-    FrozenAxeman = 443,
+    Mon443N = 443,
     FrozenMagician = 444,
     SnowYeti = 445,
     IceCrystalSoldier = 446,
@@ -618,7 +618,7 @@ public enum Monster : ushort
     FurbolgWarrior = 469,
     FurbolgArcher = 470,  //Mon48.wil
     FurbolgCommander = 471,
-    RedFaeFlower = 472,
+    Mon472N = 472,
     FurbolgGuard = 473,
     GlacierBeast = 474,
     GlacierWarrior = 475,
@@ -709,10 +709,10 @@ public enum Monster : ushort
     Mon563N = 563,
     Mon564N = 564,
     Mon565T = 565,
-    Mon570N = 570,  //Mon58.wil
-    Mon571N = 571,
-    Mon572N = 572,
-    Mon573N = 573,
+    Mon570B = 570,  //Mon58.wil
+    Mon571B = 571,
+    Mon572B = 572,
+    Mon573B = 573,
     Mon574T = 574,
     Mon575S = 575,
     Mon576T = 576,
@@ -722,6 +722,7 @@ public enum Monster : ushort
     Mon580N = 580,  //Mon59.wil
     Mon583N = 583,
     Mon586N = 586,
+    Mon587N = 587,
     Mon588N = 588,
     Mon589N = 589,
     Mon590N = 590,  //Mon60.wil
@@ -737,9 +738,11 @@ public enum Monster : ushort
     Mon600N = 600,  //Mon61.wil
     Mon601N = 601,
     Mon602N = 602,
-    Mon603N = 603,
+    Mon603B = 603,
     Mon604N = 604,
     Mon605N = 605,
+    Mon606N = 606,
+    Mon607N = 607,
     Mon608N = 608,
     Mon609N = 609,
     Mon610B = 610,
@@ -1369,13 +1372,14 @@ public enum Spell : byte
     RiklebitesRollCall = 228, //518
     SwordFormation = 229, //550
     Mon564NWhirlwind = 230,
-    Mon570NRupture = 231,
-    Mon570NLightningCloud = 232,
-    Mon571NFireBomb = 233,
-    Mon572NFlame = 234,
-    Mon572NDarkVortex = 235,
-    Mon573NBigCobweb = 236,
-    Mon609NBomb = 237
+    Mon570BRupture = 231,
+    Mon570BLightningCloud = 232,
+    Mon571BFireBomb = 233,
+    Mon572BFlame = 234,
+    Mon572BDarkVortex = 235,
+    Mon573BBigCobweb = 236,
+    Mon603BWhirlPool = 237,
+    Mon609NBomb = 238
 }
 
 public enum SpellEffect : byte
@@ -1426,8 +1430,8 @@ public enum SpellEffect : byte
     Mon562NLightning,
     Mon563NPoisonCloud,
     Mon564NFlame,
-    Mon572NLightning,
-    Mon573NCobweb
+    Mon572BLightning,
+    Mon573BCobweb
 }
 
 

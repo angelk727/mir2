@@ -5,10 +5,10 @@ using S = ServerPackets;
 
 namespace Server.MirObjects.Monsters
 {
-    public class FrozenAxeman : MonsterObject
+    public class Mon443N : MonsterObject
     {
         public long PushTime;
-        protected internal FrozenAxeman(MonsterInfo info)
+        protected internal Mon443N(MonsterInfo info)
             : base(info)
         {
         }

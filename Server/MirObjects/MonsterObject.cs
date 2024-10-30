@@ -358,7 +358,7 @@ namespace Server.MirObjects
                 case 442:
                     return new FrozenMiner(info);
                 case 443:
-                    return new FrozenAxeman(info);
+                    return new Mon443N(info);
                 case 444:
                     return new FrozenMagician(info);
                 case 445:
@@ -397,6 +397,8 @@ namespace Server.MirObjects
                     return new HoodedSummoner(info);
                 case 466:
                     return new PurpleFaeFlower(info);
+                case 472:
+                    return new Mon472N(info);
                 case 484:
                     return new ShardMaiden(info);
                 case 487:
@@ -446,13 +448,13 @@ namespace Server.MirObjects
                 case 564:
                     return new Mon564N(info);
                 case 570:
-                    return new Mon570N(info);
+                    return new Mon570B(info);
                 case 571:
-                    return new Mon571N(info);
+                    return new Mon571B(info);
                 case 572:
-                    return new Mon572N(info);
+                    return new Mon572B(info);
                 case 573:
-                    return new Mon573N(info);
+                    return new Mon573B(info);
                 case 575:
                     return new Mon575S(info);
                 case 577:
@@ -461,6 +463,8 @@ namespace Server.MirObjects
                     return new Mon601N(info);
                 case 602:
                     return new Mon602N(info);
+                case 603:
+                    return new Mon603B(info);
                 case 609:
                     return new Mon609N(info);
                 case 900:

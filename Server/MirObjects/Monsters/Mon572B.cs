@@ -5,9 +5,9 @@ using S = ServerPackets;
 
 namespace Server.MirObjects.Monsters
 {
-    public class Mon572N : MonsterObject
+    public class Mon572B : MonsterObject
     {
-        protected internal Mon572N(MonsterInfo info)
+        protected internal Mon572B(MonsterInfo info)
             : base(info)
         {
         }
@@ -52,7 +52,7 @@ namespace Server.MirObjects.Monsters
                         DelayedAction action = new(DelayedType.RangeDamage, Envir.Time + 500, Target, damage, DefenceType.MACAgility, false);
                         ActionList.Add(action);
 
-                        Broadcast(new S.ObjectEffect { ObjectID = targets[i].ObjectID, Effect = SpellEffect.Mon572NLightning });
+                        Broadcast(new S.ObjectEffect { ObjectID = targets[i].ObjectID, Effect = SpellEffect.Mon572BLightning });
                     }
                 }
                 else
@@ -71,7 +71,7 @@ namespace Server.MirObjects.Monsters
                         DelayedAction action = new(DelayedType.RangeDamage, Envir.Time + 500, Target, damage, DefenceType.MACAgility, false);
                         ActionList.Add(action);
 
-                        Broadcast(new S.ObjectEffect { ObjectID = targets[i].ObjectID, Effect = SpellEffect.Mon572NLightning });
+                        Broadcast(new S.ObjectEffect { ObjectID = targets[i].ObjectID, Effect = SpellEffect.Mon572BLightning });
                         PoisonTarget(targets[i], 15, 10, PoisonType.Blindness, 1000);
                     }
                 }
@@ -94,7 +94,7 @@ namespace Server.MirObjects.Monsters
                                 DelayedAction action = new(DelayedType.RangeDamage, Envir.Time + 500, Target, damage, DefenceType.MACAgility, false);
                                 ActionList.Add(action);
 
-                                Broadcast(new S.ObjectEffect { ObjectID = targets[i].ObjectID, Effect = SpellEffect.Mon572NLightning });
+                                Broadcast(new S.ObjectEffect { ObjectID = targets[i].ObjectID, Effect = SpellEffect.Mon572BLightning });
                                 PoisonTarget(targets[i], 25, 10, PoisonType.Blindness, 1000);
                             }
                         }
@@ -103,12 +103,12 @@ namespace Server.MirObjects.Monsters
                         {
                             Broadcast(new S.ObjectRangeAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation, TargetID = Target.ObjectID });
 
-                            Mon572NSpell();
+                            Mon572BSpell();
                         }
                         break;
                 }
         }
-        private void Mon572NSpell()
+        private void Mon572BSpell()
         {
             List<MapObject> targets = FindAllTargets(Info.ViewRange, CurrentLocation);
             int count = targets.Count;
@@ -137,7 +137,7 @@ namespace Server.MirObjects.Monsters
 
                     SpellObject ob = new()
                     {
-                        Spell = Envir.Random.Next(2) == 0 ? Spell.Mon572NDarkVortex : Spell.Mon572NFlame,
+                        Spell = Envir.Random.Next(2) == 0 ? Spell.Mon572BDarkVortex : Spell.Mon572BFlame,
                         Value = damage,
                         ExpireTime = Envir.Time + time + start,
                         TickSpeed = 3000,

@@ -5,7 +5,7 @@ namespace Server.MirObjects.Monsters
 {
     public class Mon602N : MonsterObject
     {
-        public long FearTime;
+        public long ReloadTime;
         protected override bool CanMove { get { return false; } }
 
         protected internal Mon602N(MonsterInfo info)
@@ -45,13 +45,13 @@ namespace Server.MirObjects.Monsters
         {
             if (Target == null || !CanAttack) return;
 
-            if (InAttackRange() && Envir.Time < FearTime)
+            if (InAttackRange() && Envir.Time < ReloadTime)
             {
                 Attack();
                 return;
             }
 
-            FearTime = Envir.Time + 5000;
+            ReloadTime = Envir.Time + 5000;
 
             if (Envir.Time < ShockTime)
             {

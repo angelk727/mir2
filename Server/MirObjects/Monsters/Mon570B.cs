@@ -5,11 +5,11 @@ using S = ServerPackets;
 
 namespace Server.MirObjects.Monsters
 {
-    public class Mon570N : MonsterObject
+    public class Mon570B : MonsterObject
     {
         public bool callmob = true;
 
-        protected internal Mon570N(MonsterInfo info)
+        protected internal Mon570B(MonsterInfo info)
             : base(info)
         {
         }
@@ -64,7 +64,7 @@ namespace Server.MirObjects.Monsters
 
                             SpellObject ob = new()
                             {
-                                Spell = Spell.Mon570NRupture,
+                                Spell = Spell.Mon570BRupture,
                                 Value = damage,
                                 ExpireTime = Envir.Time + time + start,
                                 TickSpeed = 1000,
@@ -114,7 +114,7 @@ namespace Server.MirObjects.Monsters
 
                                     SpellObject ob = new()
                                     {
-                                        Spell = Spell.Mon570NLightningCloud,
+                                        Spell = Spell.Mon570BLightningCloud,
                                         Value = damage,
                                         ExpireTime = Envir.Time + time + start,
                                         TickSpeed = 1000,
@@ -204,7 +204,7 @@ namespace Server.MirObjects.Monsters
 
             SpellObject ob = new()
             {
-                Spell = Spell.Mon570NRupture,
+                Spell = Spell.Mon570BRupture,
                 Value = damage,
                 ExpireTime = Envir.Time + time + start,
                 TickSpeed = 1000,
@@ -231,7 +231,7 @@ namespace Server.MirObjects.Monsters
                 MonsterObject mob;
 
                 {
-                    mob = GetMonster(Envir.GetMonsterInfo(Settings.Mon570NMirrorImageMob));
+                    mob = GetMonster(Envir.GetMonsterInfo(Settings.Mon570BMob));
                 }
 
                 if (mob == null) continue;

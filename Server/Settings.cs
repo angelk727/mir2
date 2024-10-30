@@ -176,8 +176,9 @@ namespace Server
                              ShardMaidenMob2 = "地宫修道者",
                              ShardMaidenMob3 = "冰封学者",
                              ShardMaidenMob4 = "冰封贤者",
-                             Mon570NMirrorImageMob = "江白1",
-                             Mon573NMob = "飞燕魔蛛",
+                             Mon570BMob = "江白1",
+                             Mon573BMob = "飞燕魔蛛",
+                             Mon603BMob = "变异骨怪",
                              HeroName = "Hero";
 
         public static string HealRing = "Healing",
@@ -435,8 +436,9 @@ namespace Server
             ShardMaidenMob2 = Reader.ReadString("Game", "ShardMaidenMob2", ShardMaidenMob2);
             ShardMaidenMob3 = Reader.ReadString("Game", "ShardMaidenMob3", ShardMaidenMob3);
             ShardMaidenMob4 = Reader.ReadString("Game", "ShardMaidenMob4", ShardMaidenMob4);
-            Mon570NMirrorImageMob = Reader.ReadString("Game", "Mon570NMirrorImageMob", Mon570NMirrorImageMob);
-            Mon573NMob = Reader.ReadString("Game", "Mon573NMob", Mon573NMob);
+            Mon570BMob = Reader.ReadString("Game", "Mon570BMob", Mon570BMob);
+            Mon573BMob = Reader.ReadString("Game", "Mon573BMob", Mon573BMob);
+            Mon603BMob = Reader.ReadString("Game", "Mon603BMob", Mon603BMob);
             WhiteSnake = Reader.ReadString("Game", "WhiteSnake", WhiteSnake);
             AngelName = Reader.ReadString("Game", "AngelName", AngelName);
             BombSpiderName = Reader.ReadString("Game", "BombSpiderName", BombSpiderName);
@@ -771,8 +773,9 @@ namespace Server
             Reader.Write("Game", "ShardMaidenMob3", ShardMaidenMob3);
             Reader.Write("Game", "ShardMaidenMob4", ShardMaidenMob4);
 
-            Reader.Write("Game", "Mon570NMirrorImageMob", Mon570NMirrorImageMob);
-            Reader.Write("Game", "Mon573NMob", Mon573NMob);
+            Reader.Write("Game", "Mon570BMob", Mon570BMob);
+            Reader.Write("Game", "Mon573BMob", Mon573BMob);
+            Reader.Write("Game", "Mon603BMob", Mon603BMob);
 
             Reader.Write("IntelligentCreatures", "CreatureBlackStoneName", CreatureBlackStoneName);
 

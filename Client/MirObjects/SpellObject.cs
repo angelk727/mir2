@@ -425,8 +425,8 @@ namespace Client.MirObjects
                     Repeat = true;
                     SoundManager.PlaySound(8306);
                     break;
-                case Spell.Mon570NRupture:
-                    BodyLibrary = Libraries.Monsters[(ushort)Monster.Mon570N];
+                case Spell.Mon570BRupture:
+                    BodyLibrary = Libraries.Monsters[(ushort)Monster.Mon570B];
                     DrawColour = Color.FromArgb(180, 255, 200, 180);
                     LightColour = Color.White;
                     Light = 3;
@@ -438,8 +438,8 @@ namespace Client.MirObjects
                     DrawBehind = true;
                     SoundManager.PlaySound(8306);
                     break;
-                case Spell.Mon570NLightningCloud:
-                    BodyLibrary = Libraries.Monsters[(ushort)Monster.Mon570N];
+                case Spell.Mon570BLightningCloud:
+                    BodyLibrary = Libraries.Monsters[(ushort)Monster.Mon570B];
                     DrawColour = Color.FromArgb(180, 200, 200, 180);
                     LightColour = Color.White;
                     Light = 1;
@@ -450,10 +450,10 @@ namespace Client.MirObjects
                     Repeat = false;
                     DrawBehind = true;
                     SoundManager.PlaySound(8306);
-                    MapControl.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon570N], 566, 8, 300, CurrentLocation, CMain.Time + 1000) { Blend = true });
+                    MapControl.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon570B], 566, 8, 300, CurrentLocation, CMain.Time + 1000) { Blend = true });
                     break;
-                case Spell.Mon571NFireBomb:
-                    BodyLibrary = Libraries.Monsters[(ushort)Monster.Mon571N];
+                case Spell.Mon571BFireBomb:
+                    BodyLibrary = Libraries.Monsters[(ushort)Monster.Mon571B];
                     DrawColour = Color.FromArgb(180, 200, 200, 180);
                     LightColour = Color.White;
                     Light = 3;
@@ -463,10 +463,10 @@ namespace Client.MirObjects
                     Blend = true;
                     Repeat = true;
                     SoundManager.PlaySound(8306);
-                    MapControl.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon571N], 584, 6, 600, CurrentLocation) { Blend = true });
+                    MapControl.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon571B], 584, 6, 600, CurrentLocation) { Blend = true });
                     break;
-                case Spell.Mon572NFlame:
-                    BodyLibrary = Libraries.Monsters[(ushort)Monster.Mon572N];
+                case Spell.Mon572BFlame:
+                    BodyLibrary = Libraries.Monsters[(ushort)Monster.Mon572B];
                     DrawColour = Color.FromArgb(180, 200, 200, 180);
                     LightColour = Color.White;
                     Light = 3;
@@ -476,10 +476,10 @@ namespace Client.MirObjects
                     Blend = true;
                     Repeat = true;
                     SoundManager.PlaySound(8306);
-                    MapControl.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon572N], 488, 4, 600, CurrentLocation) { Blend = true });
+                    MapControl.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon572B], 488, 4, 600, CurrentLocation) { Blend = true });
                     break;
-                case Spell.Mon572NDarkVortex:
-                    BodyLibrary = Libraries.Monsters[(ushort)Monster.Mon572N];
+                case Spell.Mon572BDarkVortex:
+                    BodyLibrary = Libraries.Monsters[(ushort)Monster.Mon572B];
                     DrawColour = Color.FromArgb(180, 200, 200, 180);
                     LightColour = Color.White;
                     Light = 3;
@@ -490,10 +490,10 @@ namespace Client.MirObjects
                     Repeat = true;
                     DrawBehind = true;
                     SoundManager.PlaySound(8306);
-                    MapControl.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon572N], 516, 7, 600, CurrentLocation) { Blend = false });
+                    MapControl.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon572B], 516, 7, 600, CurrentLocation) { Blend = false });
                     break;
-                case Spell.Mon573NBigCobweb:
-                    BodyLibrary = Libraries.Monsters[(ushort)Monster.Mon573N];
+                case Spell.Mon573BBigCobweb:
+                    BodyLibrary = Libraries.Monsters[(ushort)Monster.Mon573B];
                     DrawColour = Color.FromArgb(180, 255, 200, 180);
                     LightColour = Color.White;
                     Light = 3;
@@ -503,7 +503,7 @@ namespace Client.MirObjects
                     Blend = true;
                     Repeat = true;
                     SoundManager.PlaySound(8306);
-                    MapControl.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon573N], 539, 4, 1000, CurrentLocation) { Blend = true });
+                    MapControl.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon573B], 539, 4, 1000, CurrentLocation) { Blend = true });
                     break;
                 case Spell.Mon609NBomb:
                     BodyLibrary = Libraries.Monsters[(ushort)Monster.Mon609N];
@@ -558,23 +558,26 @@ namespace Client.MirObjects
                     case Spell.Mon564NWhirlwind:
                         if (FrameIndex == 0 && CMain.Random.Next(3) == 0) SoundManager.PlaySound(8306);
                         break;
-                    case Spell.Mon570NRupture:
+                    case Spell.Mon570BRupture:
                         if (FrameIndex == 0 && CMain.Random.Next(3) == 0) SoundManager.PlaySound(8306);
                         break;
-                    case Spell.Mon570NLightningCloud:
+                    case Spell.Mon570BLightningCloud:
                         if (FrameIndex == 0 && CMain.Random.Next(3) == 0) SoundManager.PlaySound(8306);
                         break;
-                    case Spell.Mon571NFireBomb:
+                    case Spell.Mon571BFireBomb:
                         if (FrameIndex == 0 && CMain.Random.Next(3) == 0) SoundManager.PlaySound(8306);
                         break;
-                    case Spell.Mon572NFlame:
+                    case Spell.Mon572BFlame:
                         if (FrameIndex == 0 && CMain.Random.Next(3) == 0) SoundManager.PlaySound(8306);
                         break;
-                    case Spell.Mon572NDarkVortex:
+                    case Spell.Mon572BDarkVortex:
                         if (FrameIndex == 0 && CMain.Random.Next(3) == 0) SoundManager.PlaySound(8306);
                         break;
-                    case Spell.Mon573NBigCobweb:
+                    case Spell.Mon573BBigCobweb:
                         if (FrameIndex == 0 && CMain.Random.Next(3) == 0) SoundManager.PlaySound(8306);
+                        break;
+                    case Spell.Mon603BWhirlPool:
+                        if (FrameIndex == 0 && CMain.Random.Next(3) == 0) SoundManager.PlaySound(6237);
                         break;
                     case Spell.Mon609NBomb:
                         if (FrameIndex == 0 && CMain.Random.Next(3) == 0) SoundManager.PlaySound(8306);

@@ -5,12 +5,12 @@ using S = ServerPackets;
 
 namespace Server.MirObjects.Monsters
 {
-    public class Mon573N : MonsterObject
+    public class Mon573B : MonsterObject
     {
         public long _BigCobwebTime;
-        public long _Mon573NBuffTime;
+        public long _Mon573BBuffTime;
 
-        protected internal Mon573N(MonsterInfo info)
+        protected internal Mon573B(MonsterInfo info)
             : base(info)
         {
         }
@@ -109,19 +109,19 @@ namespace Server.MirObjects.Monsters
                                 DelayedAction action = new(DelayedType.RangeDamage, Envir.Time + 500, Target, damage, DefenceType.MACAgility, false);
                                 ActionList.Add(action);
 
-                                Broadcast(new S.ObjectEffect { ObjectID = targets[i].ObjectID, Effect = SpellEffect.Mon573NCobweb });
+                                Broadcast(new S.ObjectEffect { ObjectID = targets[i].ObjectID, Effect = SpellEffect.Mon573BCobweb });
                                 PoisonTarget(targets[i], 5, 5, PoisonType.Slow, 1000);
                             }
                         }
                         break;
                     case 4:
-                        if (Envir.Time >= _Mon573NBuffTime)
+                        if (Envir.Time >= _Mon573BBuffTime)
                         {
                             Broadcast(new S.ObjectRangeAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation, TargetID = Target.ObjectID, Type = 1 });
 
                             if (Dead) return;
 
-                            if (Envir.Time >= _Mon573NBuffTime)
+                            if (Envir.Time >= _Mon573BBuffTime)
                             {
                                 var maxAC = 35;
                                 var maxMAC = 35;
@@ -133,7 +133,7 @@ namespace Server.MirObjects.Monsters
                                 };
                                 Target.AddBuff(BuffType.防御诅咒, this, Settings.Second * 10, stats);
                             }
-                            _Mon573NBuffTime = Envir.Time + 30000;
+                            _Mon573BBuffTime = Envir.Time + 30000;
                         }
                         break;
                     case 5:
@@ -149,7 +149,7 @@ namespace Server.MirObjects.Monsters
                         }
                         break;
                     case 6:
-                        if (HealthPercent <= 80)
+                        if (HealthPercent <= 80 && SlaveList.Count < 3)
                         {
                             Broadcast(new S.ObjectRangeAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation, TargetID = Target.ObjectID, Type = 1 });
                             SpawnSlaves();
@@ -186,7 +186,7 @@ namespace Server.MirObjects.Monsters
 
                     SpellObject ob = new()
                     {
-                        Spell = Spell.Mon573NBigCobweb,
+                        Spell = Spell.Mon573BBigCobweb,
                         Value = damage,
                         ExpireTime = Envir.Time + time + start,
                         TickSpeed = 3000,
@@ -235,7 +235,7 @@ namespace Server.MirObjects.Monsters
 
             foreach (var location in validLocations)
             {
-                MonsterObject mob = GetMonster(Envir.GetMonsterInfo(Settings.Mon573NMob));
+                MonsterObject mob = GetMonster(Envir.GetMonsterInfo(Settings.Mon573BMob));
                 if (mob == null) continue;
 
                 mob.Spawn(CurrentMap, location);

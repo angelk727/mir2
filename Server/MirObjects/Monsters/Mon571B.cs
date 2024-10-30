@@ -5,9 +5,9 @@ using S = ServerPackets;
 
 namespace Server.MirObjects.Monsters
 {
-    public class Mon571N : MonsterObject
+    public class Mon571B : MonsterObject
     {
-        protected internal Mon571N(MonsterInfo info)
+        protected internal Mon571B(MonsterInfo info)
             : base(info)
         {
         }
@@ -95,7 +95,7 @@ namespace Server.MirObjects.Monsters
                             if (damage == 0) return;
 
                             TriangleAttack(damage, 3, 1, 900);
-                            Mon571NFireBomb();
+                            Mon571BFireBomb();
                             DelayedAction action = new(DelayedType.Damage, Envir.Time + 300, Target, damage, DefenceType.AC, false);
                             ActionList.Add(action);
                         }
@@ -148,7 +148,7 @@ namespace Server.MirObjects.Monsters
                 }
             }
         }
-        private void Mon571NFireBomb()
+        private void Mon571BFireBomb()
         {
             List<MapObject> targets = FindAllTargets(Info.ViewRange, CurrentLocation);
             int count = targets.Count;
@@ -177,7 +177,7 @@ namespace Server.MirObjects.Monsters
 
                     SpellObject ob = new()
                     {
-                        Spell = Spell.Mon571NFireBomb,
+                        Spell = Spell.Mon571BFireBomb,
                         Value = damage,
                         ExpireTime = Envir.Time + time + start,
                         TickSpeed = 3000,

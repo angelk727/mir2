@@ -375,10 +375,10 @@ namespace Client.MirObjects
                     Effects.Add(new BuffEffect(Libraries.Monsters[(ushort)Monster.Mon564N], 1016, 10, 600, this, true, type) { Repeat = true, Light = 1 });
                     break;
                 case BuffType.烈火焚烧:
-                    Effects.Add(new BuffEffect(Libraries.Monsters[(ushort)Monster.Mon571N], 574, 10, 600, this, true, type) { Repeat = true, Light = 1 });
+                    Effects.Add(new BuffEffect(Libraries.Monsters[(ushort)Monster.Mon571B], 574, 10, 600, this, true, type) { Repeat = true, Light = 1 });
                     break;
                 case BuffType.防御诅咒:
-                    Effects.Add(new BuffEffect(Libraries.Monsters[(ushort)Monster.Mon573N], 562, 6, 600, this, true, type) { Repeat = true, Light = 1 });
+                    Effects.Add(new BuffEffect(Libraries.Monsters[(ushort)Monster.Mon573B], 562, 6, 600, this, true, type) { Repeat = true, Light = 1 });
                     break;
             }
         }
