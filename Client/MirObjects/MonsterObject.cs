@@ -302,7 +302,7 @@ namespace Client.MirObjects
 
             NextMotion -= NextMotion % 100;
 
-            if (Settings.Effect)
+            if (Settings.Effect && !Dead)
             {
                 switch (BaseImage)
                 {
