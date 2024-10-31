@@ -1882,6 +1882,10 @@ namespace Client.MirObjects
                                                 Effect Mon575SEffect1 = new Effect(Libraries.Monsters[(ushort)Monster.Mon575S], 394, 9, 300, front, CMain.Time + 300);
                                                 MapControl.Effects.Add(Mon575SEffect1);
                                                 break;
+                                            case Monster.Mon590N:
+                                                Effect Mon590NEffect = new Effect(Libraries.Monsters[(ushort)Monster.Mon590N], 456, 6, 300, front, CMain.Time);
+                                                MapControl.Effects.Add(Mon590NEffect);
+                                                break;
                                         }
                                     }
                                     break;
