@@ -579,6 +579,27 @@ namespace Server
             form.ShowDialog();
         }
 
+        private void accountsToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            AccountInfoForm form = new AccountInfoForm();
+
+            form.ShowDialog();
+        }
+
+        private void marketToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Market form = new Market();
+
+            form.ShowDialog();
+        }
+
+        private void namelistsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Namelists form = new Namelists();
+
+            form.ShowDialog();
+        }
+
         #region Monsters Tab
         private void LoadMonstersButton_Click(object sender, EventArgs e)
         {

@@ -52,7 +52,7 @@ namespace Server.MirObjects.Monsters
         protected override void ProcessTarget()
         {
             if (Target == null) return;
-            //备注：这是否意味着如果主要目标站在附近，没有人会被传送+这是否意味著它总是试图传送x/y坐标最低的人？）
+
             if (Functions.MaxDistance(CurrentLocation, Target.CurrentLocation) > 3 && Envir.Random.Next(10) == 0 && Envir.Time >= RecallTime)
             {
                 RecallTime = Envir.Time + 10000;

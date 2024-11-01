@@ -421,7 +421,7 @@ public enum Monster : ushort
     FrozenRedZuma = 268,
     GreaterWeaver = 269,
     SpiderWarrior = 270,  //Mon28.wil
-    SpiderBarbarian = 271,
+    Mon271N = 271,
     HellSlasher = 272,
     HellPirate = 273,
     HellCannibal = 274,

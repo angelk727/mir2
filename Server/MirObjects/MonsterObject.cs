@@ -143,6 +143,8 @@ namespace Server.MirObjects
                     return new StoningStatue(info);
                 case 259:
                     return new FlyingStatue(info);
+                case 271:
+                    return new Mon271N(info);
                 case 272:
                     return new HellSlasher(info);
                 case 273:

@@ -3572,6 +3572,13 @@ namespace Client.MirObjects
                                             case Monster.ChariotBallista:
                                                 missile = CreateProjectile(38, Libraries.Siege[(ushort)Monster.ChariotBallista - 940], false, 3, 30, 6);
                                                 break;
+                                            case Monster.Mon271N:
+                                                ob = MapControl.GetObject(TargetID);
+                                                if (ob != null)
+                                                {
+                                                    ob.Effects.Add(new Effect(Libraries.Magic, 3850, 20, 600, ob));
+                                                }
+                                                break;
                                             case Monster.HoodedIceMage: //482
                                                 ob = MapControl.GetObject(TargetID);
                                                 if (ob != null)
