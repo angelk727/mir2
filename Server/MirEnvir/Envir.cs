@@ -476,9 +476,9 @@ namespace Server.MirEnvir
                 if (GetMonsterInfo(Settings.GeneralMeowMeowMob3, true) == null) return "缺少必要怪物无法启动服务器 " + Settings.GeneralMeowMeowMob3;
                 if (GetMonsterInfo(Settings.GeneralMeowMeowMob4, true) == null) return "缺少必要怪物无法启动服务器 " + Settings.GeneralMeowMeowMob4;
                 if (GetMonsterInfo(Settings.KingHydraxMob, true) == null) return "缺少必要怪物无法启动服务器 " + Settings.KingHydraxMob;
-                if (GetMonsterInfo(Settings.HornedCommanderMob1, true) == null) return "缺少必要怪物无法启动服务器 " + Settings.HornedCommanderMob1;
-                if (GetMonsterInfo(Settings.HornedCommanderMob2, true) == null) return "缺少必要怪物无法启动服务器 " + Settings.HornedCommanderMob2;
-                if (GetMonsterInfo(Settings.HornedCommanderBombMob, true) == null) return "缺少必要怪物无法启动服务器 " + Settings.HornedCommanderBombMob;
+                if (GetMonsterInfo(Settings.Mon409BMob1, true) == null) return "缺少必要怪物无法启动服务器 " + Settings.Mon409BMob1;
+                if (GetMonsterInfo(Settings.Mon409BMob2, true) == null) return "缺少必要怪物无法启动服务器 " + Settings.Mon409BMob2;
+                if (GetMonsterInfo(Settings.Mon409BBombMob, true) == null) return "缺少必要怪物无法启动服务器 " + Settings.Mon409BBombMob;
                 if (GetMonsterInfo(Settings.SnowWolfKingMob, true) == null) return "缺少必要怪物无法启动服务器 " + Settings.SnowWolfKingMob;
                 if (GetMonsterInfo(Settings.CallScrollMob, true) == null) return "缺少必要怪物无法启动服务器 " + Settings.CallScrollMob;
                 if (GetMonsterInfo(Settings.ShardMaidenMob1, true) == null) return "缺少必要怪物无法启动服务器 " + Settings.ShardMaidenMob1;

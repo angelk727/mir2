@@ -393,8 +393,8 @@ namespace Server.MirObjects
                         ob.Struck(Value, DefenceType.AC);
                     }
                     break;
-                case Spell.HornedCommanderRockFall:
-                case Spell.HornedCommanderRockSpike:
+                case Spell.Mon409BRockFall:
+                case Spell.Mon409BRockSpike:
                     {
                         if (ob.Race != ObjectType.Player && ob.Race != ObjectType.Monster) return;
                         if (ob.Dead) return;
@@ -544,93 +544,15 @@ namespace Server.MirObjects
                     }
                     break;
                 case Spell.Mon564NWhirlwind:
-                    {
-                        if (ob.Race != ObjectType.Player && ob.Race != ObjectType.Monster && ob.Race != ObjectType.Hero) return;
-                        if (ob.Dead) return;
-                        if (ob == Caster) return;
-                        if (!ob.IsAttackTarget(Caster)) return;
-                        if (Value == 0) return;
-
-                        ob.Struck(Value, DefenceType.MAC);
-                    }
-                    break;
                 case Spell.Mon570BRupture:
-                    {
-                        if (ob.Race != ObjectType.Player && ob.Race != ObjectType.Monster && ob.Race != ObjectType.Hero) return;
-                        if (ob.Dead) return;
-                        if (ob == Caster) return;
-                        if (!ob.IsAttackTarget(Caster)) return;
-                        if (Value == 0) return;
-
-                        ob.Struck(Value, DefenceType.MAC);
-                    }
-                    break;
                 case Spell.Mon570BLightningCloud:
-                    {
-                        if (ob.Race != ObjectType.Player && ob.Race != ObjectType.Monster && ob.Race != ObjectType.Hero) return;
-                        if (ob.Dead) return;
-                        if (ob == Caster) return;
-                        if (!ob.IsAttackTarget(Caster)) return;
-                        if (Value == 0) return;
-
-                        ob.Struck(Value, DefenceType.MAC);
-                    }
-                    break;
                 case Spell.Mon571BFireBomb:
-                    {
-                        if (ob.Race != ObjectType.Player && ob.Race != ObjectType.Monster && ob.Race != ObjectType.Hero) return;
-                        if (ob.Dead) return;
-                        if (ob == Caster) return;
-                        if (!ob.IsAttackTarget(Caster)) return;
-                        if (Value == 0) return;
-
-                        ob.Struck(Value, DefenceType.MAC);
-                    }
-                    break;
                 case Spell.Mon572BDarkVortex:
-                    {
-                        if (ob.Race != ObjectType.Player && ob.Race != ObjectType.Monster && ob.Race != ObjectType.Hero) return;
-                        if (ob.Dead) return;
-                        if (ob == Caster) return;
-                        if (!ob.IsAttackTarget(Caster)) return;
-                        if (Value == 0) return;
-
-                        ob.Struck(Value, DefenceType.MAC);
-                    }
-                    break;
                 case Spell.Mon572BFlame:
-                    {
-                        if (ob.Race != ObjectType.Player && ob.Race != ObjectType.Monster && ob.Race != ObjectType.Hero) return;
-                        if (ob.Dead) return;
-                        if (ob == Caster) return;
-                        if (!ob.IsAttackTarget(Caster)) return;
-                        if (Value == 0) return;
-
-                        ob.Struck(Value, DefenceType.MAC);
-                    }
-                    break;
                 case Spell.Mon573BBigCobweb:
-                    {
-                        if (ob.Race != ObjectType.Player && ob.Race != ObjectType.Monster && ob.Race != ObjectType.Hero) return;
-                        if (ob.Dead) return;
-                        if (ob == Caster) return;
-                        if (!ob.IsAttackTarget(Caster)) return;
-                        if (Value == 0) return;
-
-                        ob.Struck(Value, DefenceType.MAC);
-                    }
-                    break;
+                case Spell.Mon580BPoisonousMist:
+                case Spell.Mon580BDenseFog:
                 case Spell.Mon603BWhirlPool:
-                    {
-                        if (ob.Race != ObjectType.Player && ob.Race != ObjectType.Monster && ob.Race != ObjectType.Hero) return;
-                        if (ob.Dead) return;
-                        if (ob == Caster) return;
-                        if (!ob.IsAttackTarget(Caster)) return;
-                        if (Value == 0) return;
-
-                        ob.Struck(Value, DefenceType.MAC);
-                    }
-                    break;
                 case Spell.Mon609NBomb:
                     {
                         if (ob.Race != ObjectType.Player && ob.Race != ObjectType.Monster && ob.Race != ObjectType.Hero) return;
@@ -753,8 +675,8 @@ namespace Server.MirObjects
                 case Spell.FlyingStatueIceTornado:
                 case Spell.DarkOmaKingNuke:
                 case Spell.HornedSorcererDustTornado:
-                case Spell.HornedCommanderRockFall:
-                case Spell.HornedCommanderRockSpike:
+                case Spell.Mon409BRockFall:
+                case Spell.Mon409BRockSpike:
                 case Spell.HealingCircle:
                 case Spell.HealingcircleRare:
                 case Spell.YangDragonFlame:
@@ -773,6 +695,8 @@ namespace Server.MirObjects
                 case Spell.Mon572BFlame:
                 case Spell.Mon572BDarkVortex:
                 case Spell.Mon573BBigCobweb:
+                case Spell.Mon580BPoisonousMist:
+                case Spell.Mon580BDenseFog:
                 case Spell.Mon603BWhirlPool:
                 case Spell.Mon609NBomb:
                     if (!Show)

@@ -50,7 +50,7 @@ namespace Server.MirObjects.Monsters
             ShockTime = 0;
 
             Direction = Functions.DirectionFromPoint(CurrentLocation, Target.CurrentLocation);
-            bool ranged = CurrentLocation == Target.CurrentLocation || !Functions.InRange(CurrentLocation, Target.CurrentLocation, 1);
+            bool ranged = CurrentLocation == Target.CurrentLocation || !Functions.InRange(CurrentLocation, Target.CurrentLocation, 2);
 
             AttackTime = Envir.Time + AttackSpeed;
 
@@ -200,18 +200,12 @@ namespace Server.MirObjects.Monsters
         private void Thrust(MapObject target)
         {
             MirDirection jumpDir = Functions.DirectionFromPoint(CurrentLocation, target.CurrentLocation);
-
             Point location;
 
-            for (int i = 0; i < 1; i++)
+            for (int i = 0; i < 2; i++)
             {
                 location = Functions.PointMove(CurrentLocation, jumpDir, 1);
                 if (!CurrentMap.ValidPoint(location)) return;
-            }
-
-            for (int i = 0; i < 1; i++)
-            {
-                location = Functions.PointMove(CurrentLocation, jumpDir, 1);
 
                 CurrentMap.GetCell(CurrentLocation).Remove(this);
                 RemoveObjects(jumpDir, 1);

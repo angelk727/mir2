@@ -59,6 +59,10 @@
         ConquestOwner,
         CheckGuildNameList,
         CheckTimer,
+        HeroLevel,
+        CheckHeroClass,
+        CheckHeroGender,
+        CheckHeroItem,
         CheckBuff,
         CheckTransform
     }

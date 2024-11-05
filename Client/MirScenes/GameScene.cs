@@ -14,6 +14,7 @@ using Client.Utils;
 using System.Text.RegularExpressions;
 using static System.Net.Mime.MediaTypeNames;
 using Client.MirGraphics.Particles;
+using System.Reflection;
 
 namespace Client.MirScenes
 {
@@ -4043,9 +4044,9 @@ namespace Client.MirScenes
                             playDefaultSound = false;
                             break;
                         }
-                    case 10: //HornedCommander
+                    case 10: //Mon409B
                         {
-                            MapControl.Effects.Add(effect = new Effect(Libraries.Monsters[(ushort)Monster.HornedCommander], 976, 10, 1000, ob.CurrentLocation));
+                            MapControl.Effects.Add(effect = new Effect(Libraries.Monsters[(ushort)Monster.Mon409B], 976, 10, 1000, ob.CurrentLocation));
                             SoundManager.PlaySound(8455);
                             playDefaultSound = false;
                             break;
@@ -4151,9 +4152,9 @@ namespace Client.MirScenes
                             playDefaultSound = false;
                             break;
                         }
-                    case 10: //HornedCommander
+                    case 10:
                         {
-                            ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.HornedCommander], 976, 10, 1000, ob));
+                            ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon409B], 976, 10, 1000, ob));
                             SoundManager.PlaySound(8455);
                             playDefaultSound = false;
                             break;
@@ -4982,6 +4983,41 @@ namespace Client.MirScenes
                     case SpellEffect.Mon573BCobweb:
                         ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon573B], 547, 4, 300, ob) { Blend = true });
                         ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon573B], 551, 4, 1000, ob) { Blend = true });
+                        break;
+                    case SpellEffect.Mon580BSpikeTrap:
+                        ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon580B], 803, 14, 900, ob) { Blend = true, DrawBehind = true });
+                        ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon580B], 845, 13, 300, ob) { Blend = true, DrawBehind = true });
+                        break;
+                    case SpellEffect.Mon580BLightning:
+                        {
+                            MirDirection direction = ob.Direction;//怎样设置为施法者的方向呢？
+
+                            if (direction == MirDirection.Up || direction == MirDirection.Down)
+                            {
+
+                                ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon580B], 897, 9, 1000, ob));
+                                //{
+                                //    Repeat = p.Time > 0,
+                                //    RepeatUntil = p.Time > 0 ? CMain.Time + p.Time : 0
+                                //});
+                            }
+                            else if (direction == MirDirection.Left || direction == MirDirection.UpLeft || direction == MirDirection.DownLeft)
+                            {
+                                ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon580B], 888, 9, 1000, ob));
+                                //{
+                                //    Repeat = p.Time > 0,
+                                //    RepeatUntil = p.Time > 0 ? CMain.Time + p.Time : 0
+                                //});
+                            }
+                            else if (direction == MirDirection.Right || direction == MirDirection.UpRight || direction == MirDirection.DownRight)
+                            {
+                                ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon580B], 907, 9, 1000, ob));
+                                //{
+                                //    Repeat = p.Time > 0,
+                                //    RepeatUntil = p.Time > 0 ? CMain.Time + p.Time : 0
+                                //});
+                            }
+                        }
                         break;
                 }
 

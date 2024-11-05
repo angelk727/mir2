@@ -316,7 +316,7 @@ namespace Server.MirObjects
                 case 408:
                     return new BoulderSpirit(info);
                 case 409:
-                    return new HornedCommander(info);
+                    return new Mon409B(info);
                 case 410:
                     return new TurtleGrass(info);
                 case 411:
@@ -461,8 +461,14 @@ namespace Server.MirObjects
                     return new Mon575S(info);
                 case 577:
                     return new Mon577N(info);
+                case 579:
+                    return new Mon579B(info);
+                case 580:
+                    return new Mon580B(info);
                 case 590:
                     return new Mon590N(info);
+                case 593:
+                    return new Mon593N(info);
                 case 601:
                     return new Mon601N(info);
                 case 602:

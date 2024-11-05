@@ -319,12 +319,8 @@ namespace Client.MirObjects
                 case BuffType.HornedWarriorShield:
                     Effects.Add(new BuffEffect(Libraries.Monsters[(ushort)Monster.HornedWarrior], 960, 18, 1800, this, true, type) { Repeat = true });
                     break;
-                case BuffType.HornedCommanderShield:
-                    Effects.Add(effect = new BuffEffect(Libraries.Monsters[(ushort)Monster.HornedCommander], 1341, 1, 100, this, true, type) { Repeat = false, Light = 1 });
-                    effect.Complete += (o, e) =>
-                    {
-                        Effects.Add(new BuffEffect(Libraries.Monsters[(ushort)Monster.HornedCommander], 1342, 16, 1600, this, true, type) { Repeat = true, Light = 1 });
-                    };
+                case BuffType.Mon409BShieldBuff:
+                    Effects.Add(new BuffEffect(Libraries.Monsters[(ushort)Monster.Mon409B], 1334, 7, 1800, this, true, type) { Repeat = true });
                     break;		
                 case BuffType.ChieftainSwordBuff:
                     Effects.Add(effect = new BuffEffect(Libraries.Monsters[(ushort)Monster.ChieftainSword], 1331, 6, 100, this, true, type) { Repeat = false, Light = 1 });
@@ -379,6 +375,20 @@ namespace Client.MirObjects
                     break;
                 case BuffType.防御诅咒:
                     Effects.Add(new BuffEffect(Libraries.Monsters[(ushort)Monster.Mon573B], 562, 6, 600, this, true, type) { Repeat = true, Light = 1 });
+                    break;
+                case BuffType.Mon579BShield:
+                    Effects.Add(effect = new BuffEffect(Libraries.Monsters[(ushort)Monster.Mon579B], 572, 5, 500, this, true, type) { Repeat = false, Light = 1 });
+                    effect.Complete += (o, e) =>
+                    {
+                    Effects.Add(new BuffEffect(Libraries.Monsters[(ushort)Monster.Mon579B], 577, 10, 600, this, true, type) { Repeat = true, Light = 1 });
+                    };
+                    break;
+                case BuffType.Mon580BShield:
+                    Effects.Add(effect = new BuffEffect(Libraries.Monsters[(ushort)Monster.Mon580B], 858, 6, 500, this, true, type) { Repeat = false, Light = 1 });
+                    effect.Complete += (o, e) =>
+                    {
+                    Effects.Add(new BuffEffect(Libraries.Monsters[(ushort)Monster.Mon580B], 864, 18, 800, this, true, type) { Repeat = true, Light = 1 });
+                    };
                     break;
             }
         }

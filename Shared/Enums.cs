@@ -556,7 +556,7 @@ public enum Monster : ushort
     HornedSorceror = 406,
     BlueSoul = 407,
     BoulderSpirit = 408,
-    HornedCommander = 409,
+    Mon409B = 409,
     Turtlegrass = 410, //Mon42.wil
     ManTree = 411,
     Bear = 412,
@@ -718,8 +718,9 @@ public enum Monster : ushort
     Mon576T = 576,
     Mon577N = 577,
     Mon578N = 578,
-    Mon579N = 579,
-    Mon580N = 580,  //Mon59.wil
+    Mon579B = 579,
+    Mon580B = 580,  //Mon59.wil
+    Mon581N = 581,
     Mon583N = 583,
     Mon586N = 586,
     Mon587N = 587,
@@ -1358,9 +1359,9 @@ public enum Spell : byte
     TreeQueenGroundRoots = 214, //365
     DarkOmaKingNuke = 215, //378
     HornedSorcererDustTornado = 216, //406
-    HornedCommanderRockFall = 217, //409
-    HornedCommanderRockSpike = 218, //409
-    HornedCommanderShield = 219, //409
+    Mon409BRockFall = 217,
+    Mon409BRockSpike = 218,
+    Mon409BShield = 219,
     YangDragonFlame = 220, //414
     YangDragonIcyBurst = 221, //414
     ShardGuardianIceBomb = 222, //476
@@ -1378,8 +1379,10 @@ public enum Spell : byte
     Mon572BFlame = 234,
     Mon572BDarkVortex = 235,
     Mon573BBigCobweb = 236,
-    Mon603BWhirlPool = 237,
-    Mon609NBomb = 238
+    Mon580BPoisonousMist = 237,
+    Mon580BDenseFog = 238,
+    Mon603BWhirlPool = 239,
+    Mon609NBomb = 240
 }
 
 public enum SpellEffect : byte
@@ -1431,7 +1434,9 @@ public enum SpellEffect : byte
     Mon563NPoisonCloud,
     Mon564NFlame,
     Mon572BLightning,
-    Mon573BCobweb
+    Mon573BCobweb,
+    Mon580BLightning,
+    Mon580BSpikeTrap
 }
 
 
@@ -1476,7 +1481,7 @@ public enum BuffType : byte
     惩戒真言,
     御体之力,
     HornedWarriorShield,
-    HornedCommanderShield,
+    Mon409BShieldBuff,
     失明状态,
     ChieftainSwordBuff,
     寒冰护甲,
@@ -1490,6 +1495,8 @@ public enum BuffType : byte
     Mon564NSealing,
     烈火焚烧,
     防御诅咒,
+    Mon579BShield,
+    Mon580BShield,
 
     //Special
     游戏管理 = 100,

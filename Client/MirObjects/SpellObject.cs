@@ -280,8 +280,8 @@ namespace Client.MirObjects
                     Repeat = true;
                     SoundManager.PlaySound(8306);
                     break;
-                case Spell.HornedCommanderRockFall:
-                    BodyLibrary = Libraries.Monsters[(ushort)Monster.HornedCommander];
+                case Spell.Mon409BRockFall:
+                    BodyLibrary = Libraries.Monsters[(ushort)Monster.Mon409B];
                     DrawFrame = 1178;
                     FrameInterval = 100;
                     FrameCount = 12;
@@ -289,18 +289,18 @@ namespace Client.MirObjects
                     Repeat = true;
                     SoundManager.PlaySound(4089);
                     break;
-                case Spell.HornedCommanderRockSpike:
-                    BodyLibrary = Libraries.Monsters[(ushort)Monster.HornedCommander];
+                case Spell.Mon409BRockSpike:
+                    BodyLibrary = Libraries.Monsters[(ushort)Monster.Mon409B];
                     DrawFrame = 1358;
                     FrameInterval = 100;
                     FrameCount = 9;
                     Blend = false;
                     Repeat = true;
                     SoundManager.PlaySound(8457);
-                    MapControl.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.HornedCommander], 1367, 9, 900, CurrentLocation) { Blend = true });
+                    MapControl.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon409B], 1367, 9, 900, CurrentLocation) { Blend = true });
                     break;
-                case Spell.HornedCommanderShield:
-                    BodyLibrary = Libraries.Monsters[(ushort)Monster.HornedCommander];
+                case Spell.Mon409BShield:
+                    BodyLibrary = Libraries.Monsters[(ushort)Monster.Mon409B];
                     DrawColour = Color.White;
                     DrawFrame = 1341;
                     FrameInterval = 100;
@@ -308,7 +308,6 @@ namespace Client.MirObjects
                     Light = 5;
                     Blend = true;
                     Repeat = true;
-                    DrawBehind = true;
                     break;
                 case Spell.YangDragonFlame:
                     DrawColour = Color.FromArgb(200, 200, 200, 200);
@@ -505,6 +504,32 @@ namespace Client.MirObjects
                     SoundManager.PlaySound(8306);
                     MapControl.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon573B], 539, 4, 1000, CurrentLocation) { Blend = true });
                     break;
+                case Spell.Mon580BPoisonousMist:
+                    BodyLibrary = Libraries.Monsters[(ushort)Monster.Mon580B];
+                    DrawColour = Color.FromArgb(180, 255, 200, 180);
+                    LightColour = Color.White;
+                    Light = 3;
+                    DrawFrame = 783;
+                    FrameInterval = 100;
+                    FrameCount = 10;
+                    Blend = true;
+                    Repeat = true;
+                    DrawBehind = true;
+                    SoundManager.PlaySound(8306);
+                    break;
+                case Spell.Mon580BDenseFog:
+                    BodyLibrary = Libraries.Monsters[(ushort)Monster.Mon580B];
+                    DrawColour = Color.FromArgb(180, 255, 200, 180);
+                    LightColour = Color.White;
+                    Light = 3;
+                    DrawFrame = 793;
+                    FrameInterval = 100;
+                    FrameCount = 10;
+                    Blend = true;
+                    Repeat = true;
+                    DrawBehind = true;
+                    SoundManager.PlaySound(8306);
+                    break;
                 case Spell.Mon609NBomb:
                     BodyLibrary = Libraries.Monsters[(ushort)Monster.Mon609N];
                     DrawColour = Color.FromArgb(180, 255, 200, 180);
@@ -547,7 +572,7 @@ namespace Client.MirObjects
                     case Spell.ButcherFlyAxe:
                         if (FrameIndex == 0 && CMain.Random.Next(3) == 0) SoundManager.PlaySound(8306);
                         break;
-                    case Spell.HornedCommanderRockSpike:
+                    case Spell.Mon409BRockSpike:
                         if (Ended)
                         {
                             DrawFrame = 1366;
@@ -574,6 +599,12 @@ namespace Client.MirObjects
                         if (FrameIndex == 0 && CMain.Random.Next(3) == 0) SoundManager.PlaySound(8306);
                         break;
                     case Spell.Mon573BBigCobweb:
+                        if (FrameIndex == 0 && CMain.Random.Next(3) == 0) SoundManager.PlaySound(8306);
+                        break;
+                    case Spell.Mon580BPoisonousMist:
+                        if (FrameIndex == 0 && CMain.Random.Next(3) == 0) SoundManager.PlaySound(8306);
+                        break;
+                    case Spell.Mon580BDenseFog:
                         if (FrameIndex == 0 && CMain.Random.Next(3) == 0) SoundManager.PlaySound(8306);
                         break;
                     case Spell.Mon603BWhirlPool:
