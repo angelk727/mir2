@@ -582,7 +582,7 @@ namespace Client.MirScenes.Dialogs
             {
                 Players[i] = new MirImageControl
                 {
-                    Index = 1350,
+                    Index = 1351,
                     Library = Libraries.Prguse2,
                     Parent = this,
                     NotControl = false,
@@ -743,11 +743,6 @@ namespace Client.MirScenes.Dialogs
                         Players[i].Visible = false;
                     }
                 }
-
-
-
-
-
             }
             else
             {
