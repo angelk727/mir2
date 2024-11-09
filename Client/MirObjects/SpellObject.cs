@@ -530,6 +530,16 @@ namespace Client.MirObjects
                     DrawBehind = true;
                     SoundManager.PlaySound(8306);
                     break;
+                case Spell.Mon580BRoot:
+                    BodyLibrary = Libraries.Monsters[(ushort)Monster.Mon580B];
+                    DrawFrame = 803;
+                    FrameInterval = 100;
+                    FrameCount = 14;
+                    Blend = false;
+                    Repeat = false;
+                    DrawBehind = true;
+                    SoundManager.PlaySound(8343);
+                    break;
                 case Spell.Mon609NBomb:
                     BodyLibrary = Libraries.Monsters[(ushort)Monster.Mon609N];
                     DrawColour = Color.FromArgb(180, 255, 200, 180);

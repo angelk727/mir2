@@ -552,6 +552,7 @@ namespace Server.MirObjects
                 case Spell.Mon573BBigCobweb:
                 case Spell.Mon580BPoisonousMist:
                 case Spell.Mon580BDenseFog:
+                case Spell.Mon580BRoot:
                 case Spell.Mon603BWhirlPool:
                 case Spell.Mon609NBomb:
                     {

@@ -655,6 +655,7 @@ namespace Client.MirObjects
                             case Monster.Mon572B:
                             case Monster.Mon575S:
                             case Monster.Mon579B:
+                            case Monster.Mon580B:
                                 Remove();
                                 return false;
                             default:

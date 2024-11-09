@@ -1381,8 +1381,9 @@ public enum Spell : byte
     Mon573BBigCobweb = 236,
     Mon580BPoisonousMist = 237,
     Mon580BDenseFog = 238,
-    Mon603BWhirlPool = 239,
-    Mon609NBomb = 240
+    Mon580BRoot = 239,
+    Mon603BWhirlPool = 240,
+    Mon609NBomb = 241
 }
 
 public enum SpellEffect : byte

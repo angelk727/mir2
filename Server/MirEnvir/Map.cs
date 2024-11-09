@@ -800,11 +800,11 @@ namespace Server.MirEnvir
                         {
                             respawn.ErrorCount++;
 
-                            Logger.GetLogger(LogType.Spawn).Info($"Failed to spawn: " +
-                                $"mapindex: {respawn.Map.Info.Index}, " +
-                                $"mob info: index: {respawn.Info.MonsterIndex}, " +
-                                $"spawncoords ({respawn.Info.Location.X}:{respawn.Info.Location.Y}), " +
-                                $"range {respawn.Info.Spread}");
+                            Logger.GetLogger(LogType.Spawn).Info($"怪物刷新失败: " +
+                                $"地图编号: {respawn.Map.Info.Index}, " +
+                                $"怪物信息: index: {respawn.Info.MonsterIndex}, " +
+                                $"刷新坐标 ({respawn.Info.Location.X}:{respawn.Info.Location.Y}), " +
+                                $"范围 {respawn.Info.Spread}");
                         }
 
                     }
