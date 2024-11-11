@@ -7,18 +7,22 @@ namespace Server.MirObjects.Monsters
     public class Mon580B : MonsterObject
     {
         private long _mon580BShieldTime;
-        private const int MaxSpawnCount = 3;
+        private const int MaxSpawnCount = 1;
         private const int SpellStartDelay = 500;
         private const int SpellDuration = Settings.Second * 7;
+
         protected internal Mon580B(MonsterInfo info)
             : base(info)
         {
+            NameColour = Color.OrangeRed;
         }
+
         protected override bool InAttackRange()
         {
             if (Target.CurrentMap != CurrentMap) return false;
             return CurrentMap == Target.CurrentMap && Functions.InRange(CurrentLocation, Target.CurrentLocation, Info.ViewRange);
         }
+
         protected override void Attack()
         {
             if (!Target.IsAttackTarget(this))
@@ -37,8 +41,16 @@ namespace Server.MirObjects.Monsters
             ActionTime = Envir.Time + 500;
             AttackTime = Envir.Time + AttackSpeed;
 
+            if (CurrentMap.Info.FileName == "icedragon_hide_5" && SlaveList.Count < 1)
+            {
+                Broadcast(new S.ObjectAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation, Type = 2 });
+                SpawnSlaves();
+            }
+
             if (HealthPercent < 80)
+            {
                 Mon580BShield();
+            }
 
             if (Envir.Random.Next(2) > 0)
             {
@@ -55,8 +67,10 @@ namespace Server.MirObjects.Monsters
                         int damage = GetAttackPower(Stats[Stat.MinDC], Stats[Stat.MaxDC]);
                         if (damage == 0) return;
 
-                        PoisonTarget(target, chanceToPoison: 15, poisonDuration: 10, PoisonType.Blindness, poisonTickSpeed: 1000);
-                        DelayedAction action = new(DelayedType.RangeDamage, Envir.Time + 500, target, damage, DefenceType.ACAgility, false);
+                        PoisonTarget(target, chanceToPoison: 15, poisonDuration: 10, PoisonType.Blindness,
+                            poisonTickSpeed: 1000);
+                        DelayedAction action = new(DelayedType.RangeDamage, Envir.Time + 500, target, damage,
+                            DefenceType.ACAgility, false);
                         ActionList.Add(action);
 
                         Broadcast(new S.ObjectEffect { ObjectID = target.ObjectID, Effect = SpellEffect.Mon580BSpikeTrap });
@@ -75,7 +89,8 @@ namespace Server.MirObjects.Monsters
                         int damage = GetAttackPower(Stats[Stat.MinDC], Stats[Stat.MaxDC]);
                         if (damage == 0) return;
 
-                        DelayedAction action = new(DelayedType.RangeDamage, Envir.Time + 500, target, damage, DefenceType.ACAgility, false);
+                        DelayedAction action = new(DelayedType.RangeDamage, Envir.Time + 500, target, damage,
+                            DefenceType.ACAgility, false);
                         ActionList.Add(action);
 
                         Broadcast(new S.ObjectEffect { ObjectID = target.ObjectID, Effect = SpellEffect.Mon580BSpikeTrap });
@@ -83,51 +98,46 @@ namespace Server.MirObjects.Monsters
                 }
             }
             else
-                switch (Envir.Random.Next(4))
+                switch (Envir.Random.Next(3))
                 {
                     case 0:
-                    {
-                        Broadcast(new S.ObjectAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation, Type = 2 });
-
-                        SpawnSlaves();
-                    }
-                        break;
-                    case 1:
                     {
                         Broadcast(new S.ObjectAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation, Type = 3 });
 
                         RootAttack();
                     }
                         break;
-                    case 2:
+                    case 1:
                     {
                         Broadcast(new S.ObjectAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation, Type = 4 });
 
                         Mon580BSpells();
                     }
                         break;
-                    case 3:
+                    case 2:
+                    {
+                        List<MapObject> targets = FindAllTargets(Info.ViewRange, CurrentLocation);
+                        if (targets.Count == 0) return;
+
+                        Broadcast(new S.ObjectRangeAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation, TargetID = Target.ObjectID, Type = 0 });
+
+                        foreach (var target in targets)
                         {
-                            List<MapObject> targets = FindAllTargets(Info.ViewRange, CurrentLocation);
-                            if (targets.Count == 0) return;
+                            Target = target;
+                            int damage = GetAttackPower(Stats[Stat.MinMC], Stats[Stat.MaxMC]);
+                            if (damage == 0) return;
 
-                            Broadcast(new S.ObjectRangeAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation, TargetID = Target.ObjectID, Type = 0 });
+                            DelayedAction action = new(DelayedType.RangeDamage, Envir.Time + 500, target, damage,
+                                DefenceType.MACAgility, false);
+                            ActionList.Add(action);
 
-                            foreach (var target in targets)
-                            {
-                                Target = target;
-                                int damage = GetAttackPower(Stats[Stat.MinMC], Stats[Stat.MaxMC]);
-                                if (damage == 0) return;
-
-                                DelayedAction action = new(DelayedType.RangeDamage, Envir.Time + 500, target, damage, DefenceType.MACAgility, false);
-                                ActionList.Add(action);
-
-                                Broadcast(new S.ObjectEffect { ObjectID = target.ObjectID, Effect = SpellEffect.Mon580BLightning });
-                            }
+                            Broadcast(new S.ObjectEffect { ObjectID = target.ObjectID, Effect = SpellEffect.Mon580BLightning });
                         }
+                    }
                         break;
                 }
         }
+
         private void RootAttack()
         {
             int[] possibleEdgeLengths = [7, 9, 11, 13, 15, 17];
@@ -225,7 +235,6 @@ namespace Server.MirObjects.Monsters
             }
         }
 
-
         private void Mon580BShield()
         {
             if (Envir.Time < _mon580BShieldTime + 90 * 1000) return;
@@ -259,40 +268,25 @@ namespace Server.MirObjects.Monsters
             AddBuff(BuffType.Mon580BShield, this, shieldTime, stats);
             _mon580BShieldTime = Envir.Time;
         }
+
         private void SpawnSlaves()
         {
+
+            if (CurrentMap.Info.FileName != "icedragon_hide_5") return;
+
             int currentSpawnCount = SlaveList.Count;
             int spawnCount = Math.Min(MaxSpawnCount - currentSpawnCount, MaxSpawnCount);
 
             if (spawnCount <= 0) return;
 
-            Random rand = new Random();
-            List<Point> validLocations = [];
+            Point spawnLocation = new Point(121, 83);
 
-            int minX = Math.Max(0, CurrentLocation.X - 5);
-            int maxX = Math.Min(CurrentMap.Width - 1, CurrentLocation.X + 5);
-            int minY = Math.Max(0, CurrentLocation.Y - 5);
-            int maxY = Math.Min(CurrentMap.Height - 1, CurrentLocation.Y + 5);
-
-            while (validLocations.Count < spawnCount)
-            {
-                int x = rand.Next(minX, maxX + 1);
-                int y = rand.Next(minY, maxY + 1);
-                Point newLocation = new Point(x, y);
-
-                if (CurrentMap.GetCell(x, y).Valid && (x != CurrentLocation.X || y != CurrentLocation.Y) &&
-                    !validLocations.Any(loc => loc.X == x && loc.Y == y))
-                {
-                    validLocations.Add(newLocation);
-                }
-            }
-
-            foreach (var location in validLocations)
+            for (int i = 0; i < spawnCount; i++)
             {
                 MonsterObject mob = GetMonster(Envir.GetMonsterInfo(Settings.Mon580BMob));
                 if (mob == null) continue;
 
-                mob.Spawn(CurrentMap, location);
+                mob.Spawn(CurrentMap, spawnLocation);
                 mob.ActionTime = Envir.Time + 2000;
                 SlaveList.Add(mob);
             }

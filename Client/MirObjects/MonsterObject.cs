@@ -49,7 +49,7 @@ namespace Client.MirObjects
 
         public FrameSet Frames = new FrameSet();
         public Frame Frame;
-        public int FrameIndex, FrameInterval, EffectFrameIndex, EffectFrameInterval; //新添加 ？？
+        public int FrameIndex, FrameInterval, EffectFrameIndex;
 
         public uint TargetID;
         public Point TargetPoint;
@@ -656,6 +656,10 @@ namespace Client.MirObjects
                             case Monster.Mon575S:
                             case Monster.Mon579B:
                             case Monster.Mon580B:
+                            case Monster.Mon581D:
+                            case Monster.Mon582D:
+                            case Monster.Mon584D:
+                            case Monster.Mon585D:
                                 Remove();
                                 return false;
                             default:

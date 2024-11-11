@@ -2,7 +2,6 @@ using System.Drawing;
 ﻿using Server.MirDatabase;
 using Server.MirEnvir;
 using Server.MirObjects.Monsters;
-using System.Diagnostics.Eventing.Reader;
 using S = ServerPackets;
 
 namespace Server.MirObjects
@@ -465,6 +464,11 @@ namespace Server.MirObjects
                     return new Mon579B(info);
                 case 580:
                     return new Mon580B(info);
+                case 581:
+                case 582:
+                case 584:
+                case 585:
+                    return new Mon581D(info);
                 case 590:
                     return new Mon590N(info);
                 case 593:
@@ -633,7 +637,7 @@ namespace Server.MirObjects
         public long ShockTime, RageTime, HallucinationTime;
         public bool BindingShotCenter, PoisonStopRegen = true;
 
-        protected bool Alone = false, Stacking = false;
+        protected bool Alone, Stacking;
 
         public byte PetLevel;
         public uint PetExperience;
@@ -820,7 +824,7 @@ namespace Server.MirObjects
         {
             if (ShockTime < Envir.Time) BindingShotCenter = false;
 
-            Color colour = Color.White;
+            Color colour = NameColour;
 
             switch (PetLevel)
             {
@@ -937,7 +941,7 @@ namespace Server.MirObjects
 
             if (Info.HasDieScript && (Envir.MonsterNPC != null))
             {
-                Envir.MonsterNPC.Call(this, string.Format("[@_DIE({0})]", Info.Index));
+                Envir.MonsterNPC.Call(monster: this, key: $"[@_DIE({Info.Index})]");
             }
 
             if (EXPOwner != null && EXPOwner.Node != null && Master == null && (EXPOwner.Race == ObjectType.Player || EXPOwner.Race == ObjectType.Hero))
@@ -963,7 +967,7 @@ namespace Server.MirObjects
             PoisonList.Clear();
             Envir.MonsterCount--;
             if (CurrentMap != null)
-            CurrentMap.MonsterCount--;
+                CurrentMap.MonsterCount--;
         }
 
         public MapObject GetAttacker(MapObject attacker)
@@ -1567,7 +1571,6 @@ namespace Server.MirObjects
                             {
                                 Sneaking = false;
                             }
-                            break;
                         }
                         break;
                     case BuffType.绝对封锁:
@@ -1683,8 +1686,6 @@ namespace Server.MirObjects
                             break;
                     }
                 }
-
-                return;
             }
         }
 
@@ -2288,17 +2289,15 @@ namespace Server.MirObjects
                 case AttackMode.Group:
                     return Master.GroupMembers == null || !Master.GroupMembers.Contains(attacker);
                 case AttackMode.Guild:
-                    {
-                        if (!(Master is PlayerObject)) return false;
-                        PlayerObject master = (PlayerObject)Master;
-                        return master.MyGuild == null || master.MyGuild != attacker.MyGuild;
-                    }
+                {
+                    if (!(Master is PlayerObject playerMaster)) return false;
+                    return playerMaster.MyGuild == null || playerMaster.MyGuild != attacker.MyGuild;
+                }
                 case AttackMode.EnemyGuild:
-                    {
-                        if (!(Master is PlayerObject)) return false;
-                        PlayerObject master = (PlayerObject)Master;
-                        return (master.MyGuild != null && attacker.MyGuild != null) && master.MyGuild.IsEnemy(attacker.MyGuild);
-                    }
+                {
+                    if (!(Master is PlayerObject playerMaster)) return false;
+                    return playerMaster.MyGuild != null && attacker.MyGuild != null && playerMaster.MyGuild.IsEnemy(attacker.MyGuild);
+                }
                 case AttackMode.RedBrown:
                     return Master.PKPoints >= 200 || Envir.Time < Master.BrownTime;
                 default:
@@ -2437,7 +2436,7 @@ namespace Server.MirObjects
             if (Envir.Random.Next(100) < (attacker.Stats[Stat.暴击倍率] * Settings.CriticalRateWeight))
             {
                 Broadcast(new S.ObjectEffect { ObjectID = ObjectID, Effect = SpellEffect.Critical });
-                damage = Math.Min(int.MaxValue, damage + (int)Math.Floor(damage * (((double)attacker.Stats[Stat.暴击伤害] / (double)Settings.CriticalDamageWeight) * 10)));
+                damage = Math.Min(int.MaxValue, damage + (int)Math.Floor(damage * (attacker.Stats[Stat.暴击伤害] / (double)Settings.CriticalDamageWeight * 10)));
                 BroadcastDamageIndicator(DamageType.Critical);
             }
 
@@ -2984,7 +2983,6 @@ namespace Server.MirObjects
                         for (int b = -Globals.DataRange; b <= Globals.DataRange; b++)
                         {
                             int x = CurrentLocation.X + b;
-                            if (x < 0 || x >= CurrentMap.Width) continue;
                             if (x < 0 || x >= CurrentMap.Width) continue;
 
                             Cell cell = CurrentMap.GetCell(x, y);

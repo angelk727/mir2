@@ -663,9 +663,10 @@ public enum Monster : ushort
     AncientStoneGolem = 514,
     Serpentirian = 515,
     Butcher = 516,
+    Mon517P = 517,
     Riklebites = 518,
-    GongDoor = 519,
-    Gong = 520,  //Mon53.wil
+    Mon519D = 519,
+    Mon520P = 520,  //Mon53.wil
     FeralTundraFurbolg = 521,
     FeralFlameFurbolg = 522,
     EnhanceFlameFurbolg = 523,
@@ -720,8 +721,11 @@ public enum Monster : ushort
     Mon578N = 578,
     Mon579B = 579,
     Mon580B = 580,  //Mon59.wil
-    Mon581N = 581,
+    Mon581D = 581,
+    Mon582D = 582,
     Mon583N = 583,
+    Mon584D = 584,
+    Mon585D = 585,
     Mon586N = 586,
     Mon587N = 587,
     Mon588N = 588,
@@ -747,7 +751,7 @@ public enum Monster : ushort
     Mon608N = 608,
     Mon609N = 609,
     Mon610B = 610,
-    //N=Normal S=Stoned T=Tree B=Boss
+    //B=Boss D=Door N=Normal P=Peculiar S=Stoned T=Tree
 
     //Special
     EvilMir = 900,

@@ -281,10 +281,42 @@ namespace Server
             string tempCredit = GameGoldTextBox.Text.Replace(",", "");
 
             info.Name = NameTextBox.Text;
-            info.Level = Convert.ToByte(LevelTextBox.Text);
-            info.PKPoints = Convert.ToInt32(PKPointsTextBox.Text);
-            info.AccountInfo.Gold = Convert.ToUInt32(tempGold);
-            info.AccountInfo.Credit = Convert.ToUInt32(tempCredit);
+
+            if (ushort.TryParse(LevelTextBox.Text, out ushort level))
+            {
+                info.Level = level;
+            }
+            else
+            {
+                return;
+            }
+
+            if (int.TryParse(PKPointsTextBox.Text, out int pkPoints))
+            {
+                info.PKPoints = pkPoints;
+            }
+            else
+            {
+                return;
+            }
+
+            if (uint.TryParse(tempGold, out uint gold))
+            {
+                info.AccountInfo.Gold = gold;
+            }
+            else
+            {
+                return;
+            }
+
+            if (uint.TryParse(tempCredit, out uint credit))
+            {
+                info.AccountInfo.Credit = credit;
+            }
+            else
+            {
+                return;
+            }
 
             UpdateTabs();
         }

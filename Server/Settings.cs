@@ -178,7 +178,7 @@ namespace Server
                              ShardMaidenMob4 = "冰封贤者",
                              Mon570BMob = "江白1",
                              Mon573BMob = "飞燕魔蛛",
-                             Mon580BMob = "冰蛇柱",
+                             Mon580BMob = "冰墙1",
                              Mon603BMob = "变异骨怪",
                              HeroName = "Hero";
 

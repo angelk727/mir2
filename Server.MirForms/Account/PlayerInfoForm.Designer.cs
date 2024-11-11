@@ -1000,7 +1000,7 @@
         private ColumnHeader PetName;
         private ColumnHeader Level;
         private ColumnHeader HP;
-        private ColumnHeader Location;
+        private new ColumnHeader Location;
         private CustomFormControl.ListViewNF PlayerItemInfoListViewNF;
         private ColumnHeader UIDHeader;
         private ColumnHeader LocationHeader;
