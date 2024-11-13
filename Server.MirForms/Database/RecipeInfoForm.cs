@@ -2,24 +2,25 @@
 {
     public partial class RecipeInfoForm : Form
     {
+        private static readonly char[] spaceDelimiter = new[] { ' ' };
+
         private string currentFilePath;
         private bool isModified = false;
-        private readonly string originalCraftAmount;
-        private readonly string originalChance;
-        private readonly string originalGold;
-        private readonly string originalTool;
-        private readonly string originalIngredientName1;
-        private readonly string originalIngredientAmount1;
-        private readonly string Quality1;
-        private readonly string originalIngredientName2;
-        private readonly string originalIngredientAmount2;
-        private readonly string Quality2;
-        private readonly string originalIngredientName3;
-        private readonly string originalIngredientAmount3;
-        private readonly string Quality3;
-        private readonly string originalIngredientName4;
-        private readonly string originalIngredientAmount4;
-        private readonly string Quality4;
+        private readonly string originalCraftAmount = "";
+        private readonly string originalChance = "";
+        private readonly string originalGold = "";
+        private readonly string originalTool = "";
+        private readonly string originalIngredientName1 = "";
+        private readonly string originalIngredientAmount1 = "";
+        private readonly string Quality1 = "";
+        private readonly string originalIngredientName2 = "";
+        private readonly string originalIngredientAmount2 = "";
+        private readonly string Quality2 = "";
+        private readonly string originalIngredientName3 = "";
+        private readonly string originalIngredientAmount3 = "";
+        private readonly string originalIngredientName4 = "";
+        private readonly string originalIngredientAmount4 = "";
+        private readonly string Quality4 = "";
         private bool isUpdatingTextBox = false;
 
         public RecipeInfoForm()
@@ -87,7 +88,7 @@
             }
 
             string selectedItem = RecipeList.SelectedItem.ToString();
-            string fileNameWithoutExtension = selectedItem.Substring(selectedItem.IndexOf(' ') + 1);
+            string fileNameWithoutExtension = selectedItem.Split(' ', 2)[1];
 
             ItemTextBox.Text = fileNameWithoutExtension;
             currentFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Envir", "Recipe", fileNameWithoutExtension + ".txt");
@@ -119,7 +120,7 @@
                     continue;
                 }
 
-                if (line.StartsWith("[") && line.EndsWith("]"))
+                if (line.StartsWith('[') && line.EndsWith(']'))
                 {
                     currentSection = line;
                     continue;
@@ -128,7 +129,7 @@
                 switch (currentSection)
                 {
                     case "[Recipe]":
-                        var recipeParts = line.Split(new[] { ' ' }, 2);
+                        var recipeParts = line.Split(spaceDelimiter, 2);
                         if (recipeParts.Length == 2)
                         {
                             string key = recipeParts[0].Trim();
@@ -154,10 +155,11 @@
                         break;
 
                     case "[Ingredients]":
-                        string[] parts = line.Split(new[] { ' ' }, 3);
-                        string ingredientName = parts[0].Trim();
-                        string ingredientAmount = parts.Length > 1 ? parts[1].Trim() : "";
-                        string ingredientQuality = parts.Length > 2 ? parts[2].Trim() : "";
+                        var ingredientParts = line.Split(spaceDelimiter, 3);
+                        string ingredientName = ingredientParts[0].Trim();
+                        string ingredientAmount = ingredientParts.Length > 1 ? ingredientParts[1].Trim() : "";
+                        string ingredientQuality = ingredientParts.Length > 2 ? ingredientParts[2].Trim() : "";
+
 
                         switch (ingredientIndex)
                         {
@@ -327,6 +329,7 @@
                     RecipeList.Items.RemoveAt(RecipeList.SelectedIndex);
 
                     File.Delete(currentFilePath);
+                    LoadRecipes();
 
                     MessageBox.Show("配方已删除", "删除成功", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
@@ -404,7 +407,7 @@
             }
 
             string newFileName = $"{newDisplayName}.txt";
-            string oldDisplayName = RecipeList.SelectedItem.ToString().Substring(RecipeList.SelectedItem.ToString().IndexOf(' ') + 1).Trim();
+            string oldDisplayName = RecipeList.SelectedItem.ToString().Split(' ', 2)[1].Trim();
             string oldFileName = $"{oldDisplayName}.txt";
 
             string directoryPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Envir", "Recipe");
