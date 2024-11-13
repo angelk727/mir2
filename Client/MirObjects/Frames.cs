@@ -4,7 +4,7 @@
     {
         public static FrameSet Player;
         public static FrameSet DefaultNPC, DefaultMonster;
-        public static List<FrameSet> DragonStatue, GreatFoxSpirit, HellBomb, CaveStatue, Gates;
+        public static List<FrameSet> DragonStatue, GreatFoxSpirit, HellBomb, Mon380P, Gates;
 
         static FrameSet()
         {
@@ -142,16 +142,16 @@
             frame.Add(MirAction.被击动作, new Frame(88, 9, -9, 100) { Blend = true });
             #endregion
 
-            #region CaveStatues
-            //CaveStatue1
-            CaveStatue = new List<FrameSet> { (frame = new FrameSet()) };
+            #region Mon380P
+            //Mon380P1
+            Mon380P = new List<FrameSet> { (frame = new FrameSet()) };
             frame.Add(MirAction.站立动作, new Frame(0, 1, -1, 100) { Blend = false });
             frame.Add(MirAction.被击动作, new Frame(0, 1, -1, 100) { Blend = false });
             frame.Add(MirAction.死亡动作, new Frame(2, 8, -8, 100) { Blend = false });
             frame.Add(MirAction.死后尸体, new Frame(9, 1, -1, 100) { Blend = false });
 
-            //CaveStatue2
-            CaveStatue.Add(frame = new FrameSet());
+            //Mon380P2
+            Mon380P.Add(frame = new FrameSet());
             frame.Add(MirAction.站立动作, new Frame(18, 1, -1, 100) { Blend = false });
             frame.Add(MirAction.被击动作, new Frame(18, 1, -1, 100) { Blend = false });
             frame.Add(MirAction.死亡动作, new Frame(20, 8, -8, 100) { Blend = false });

@@ -273,7 +273,7 @@ namespace Server.MirObjects
                 case 378:
                     return new DarkOmaKing(info);
                 case 380:
-                    return new CaveStatue(info);
+                    return new Mon380P(info);
                 case 381:
                     return new Mandrill(info);
                 case 382:

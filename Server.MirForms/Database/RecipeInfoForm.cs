@@ -4,22 +4,24 @@
     {
         private string currentFilePath;
         private bool isModified = false;
-        private string originalCraftAmount;
-        private string originalChance;
-        private string originalGold;
-        private string originalTool;
-        private string originalIngredientName1;
-        private string originalIngredientAmount1;
-        private string Quality1;
-        private string originalIngredientName2;
-        private string originalIngredientAmount2;
-        private string Quality2;
-        private string originalIngredientName3;
-        private string originalIngredientAmount3;
-        private string Quality3;
-        private string originalIngredientName4;
-        private string originalIngredientAmount4;
-        private string Quality4;
+        private readonly string originalCraftAmount;
+        private readonly string originalChance;
+        private readonly string originalGold;
+        private readonly string originalTool;
+        private readonly string originalIngredientName1;
+        private readonly string originalIngredientAmount1;
+        private readonly string Quality1;
+        private readonly string originalIngredientName2;
+        private readonly string originalIngredientAmount2;
+        private readonly string Quality2;
+        private readonly string originalIngredientName3;
+        private readonly string originalIngredientAmount3;
+        private readonly string Quality3;
+        private readonly string originalIngredientName4;
+        private readonly string originalIngredientAmount4;
+        private readonly string Quality4;
+        private bool isUpdatingTextBox = false;
+
         public RecipeInfoForm()
         {
             InitializeComponent();
@@ -44,32 +46,22 @@
             Quality4TextBox.TextChanged += TextBox_TextChanged;
             #endregion
         }
+
         #region Form Load
         private void RecipeInfoForm_Load(object sender, EventArgs e)
         {
-            // Define the path to the directory containing recipes
             string currentDirectory = AppDomain.CurrentDomain.BaseDirectory;
             string directoryPath = Path.Combine(currentDirectory, "Envir", "Recipe");
 
-            // Ensure the directory exists
             if (Directory.Exists(directoryPath))
             {
-                // Get all recipe files from the directory
                 string[] recipeFiles = Directory.GetFiles(directoryPath, "*.txt");
-
-                // Clear existing items from ListBox
                 RecipeList.Items.Clear();
 
-                // Populate the ListBox with recipe file names with index
                 for (int i = 0; i < recipeFiles.Length; i++)
                 {
-                    // Get the file name without the path and without the extension
                     string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(recipeFiles[i]);
-
-                    // Format the item with an index number
                     string listItem = $"{i + 1}. {fileNameWithoutExtension}";
-
-                    // Add the formatted item to the ListBox
                     RecipeList.Items.Add(listItem);
                 }
             }
@@ -118,7 +110,6 @@
             string currentSection = "";
             int ingredientIndex = 1;
 
-            // Clear previous data
             ClearTextBoxes();
 
             foreach (string line in fileLines)
@@ -218,57 +209,158 @@
             IngredientName4TextBox.Clear();
             IngredientAmount4TextBox.Clear();
             Quality4TextBox.Clear();
+
+            isModified = false;
+        }
+
+        private void ClearTextButton_Click(object sender, EventArgs e)
+        {
+            ClearTextBoxes();
         }
         #endregion
 
         #region Save Recipe
         private void SaveRecipe()
         {
-            if (string.IsNullOrEmpty(currentFilePath))
+            string recipeName = ItemTextBox.Text.Trim();
+
+            if (string.IsNullOrEmpty(recipeName))
             {
+                MessageBox.Show("配方名不能为空!", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            using (StreamWriter writer = new StreamWriter(currentFilePath))
+            string currentDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            string directoryPath = Path.Combine(currentDirectory, "Envir", "Recipe");
+
+            if (!Directory.Exists(directoryPath))
             {
-                writer.WriteLine("[Recipe]");
-                writer.WriteLine($"Amount {CraftAmountTextBox.Text}");
-                writer.WriteLine($"Chance {ChanceTextBox.Text}");
-                writer.WriteLine($"Gold {GoldTextBox.Text}");
-                writer.WriteLine();
-
-                writer.WriteLine("[Tools]");
-                writer.WriteLine(ToolTextBox.Text);
-                writer.WriteLine();
-
-                writer.WriteLine("[Ingredients]");
-                if (!string.IsNullOrEmpty(IngredientName1TextBox.Text))
-                {
-                    writer.WriteLine($"{IngredientName1TextBox.Text} {IngredientAmount1TextBox.Text} {Quality1TextBox.Text}");
-                }
-                if (!string.IsNullOrEmpty(IngredientName2TextBox.Text))
-                {
-                    writer.WriteLine($"{IngredientName2TextBox.Text} {IngredientAmount2TextBox.Text} {Quality1TextBox.Text}");
-                }
-                if (!string.IsNullOrEmpty(IngredientName3TextBox.Text))
-                {
-                    writer.WriteLine($"{IngredientName3TextBox.Text} {IngredientAmount3TextBox.Text} {Quality1TextBox.Text}");
-                }
-                if (!string.IsNullOrEmpty(IngredientName4TextBox.Text))
-                {
-                    writer.WriteLine($"{IngredientName4TextBox.Text} {IngredientAmount4TextBox.Text} {Quality1TextBox.Text}");
-                }
+                Directory.CreateDirectory(directoryPath);
             }
 
-            // Mark as not modified
-            isModified = false;
+            string filePath = Path.Combine(directoryPath, recipeName + ".txt");
+
+            bool isNewRecipe = string.IsNullOrEmpty(currentFilePath);
+
+            if (isNewRecipe)
+            {
+                if (File.Exists(filePath))
+                {
+                    var confirmation = MessageBox.Show($"文件 \"{recipeName}.txt\" 已存在，是否覆盖?", "确认覆盖", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                    if (confirmation == DialogResult.No)
+                    {
+                        return;
+                    }
+                }
+            }
+            else
+            {
+                filePath = currentFilePath;
+            }
+
+            try
+            {
+                using (StreamWriter writer = new StreamWriter(filePath))
+                {
+                    writer.WriteLine("[Recipe]");
+                    writer.WriteLine($"Amount {CraftAmountTextBox.Text}");
+                    writer.WriteLine($"Chance {ChanceTextBox.Text}");
+                    writer.WriteLine($"Gold {GoldTextBox.Text}");
+                    writer.WriteLine();
+
+                    writer.WriteLine("[Tools]");
+                    writer.WriteLine(ToolTextBox.Text);
+                    writer.WriteLine();
+
+                    writer.WriteLine("[Ingredients]");
+                    if (!string.IsNullOrEmpty(IngredientName1TextBox.Text))
+                    {
+                        writer.WriteLine($"{IngredientName1TextBox.Text} {IngredientAmount1TextBox.Text} {Quality1TextBox.Text}");
+                    }
+                    if (!string.IsNullOrEmpty(IngredientName2TextBox.Text))
+                    {
+                        writer.WriteLine($"{IngredientName2TextBox.Text} {IngredientAmount2TextBox.Text} {Quality1TextBox.Text}");
+                    }
+                    if (!string.IsNullOrEmpty(IngredientName3TextBox.Text))
+                    {
+                        writer.WriteLine($"{IngredientName3TextBox.Text} {IngredientAmount3TextBox.Text} {Quality1TextBox.Text}");
+                    }
+                    if (!string.IsNullOrEmpty(IngredientName4TextBox.Text))
+                    {
+                        writer.WriteLine($"{IngredientName4TextBox.Text} {IngredientAmount4TextBox.Text} {Quality1TextBox.Text}");
+                    }
+                }
+
+                isModified = false;
+
+                currentFilePath = filePath;
+
+                if (isNewRecipe)
+                {
+                    isModified = false;
+                    LoadRecipes();
+                    MessageBox.Show($"配方 \"{recipeName}.txt\" 已成功保存!", "保存成功", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"保存配方时出错: {ex.Message}", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
+        private void SaveRecipeButton_Click(object sender, EventArgs e)
+        {
+            SaveRecipe();
+        }
+        #endregion
+
+        #region Delete Recipe
+        private void DeleteRecipeButton_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(currentFilePath) || !File.Exists(currentFilePath)) return;
+
+            var confirmation = MessageBox.Show("确定要删除这个配方吗？", "删除配方", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (confirmation == DialogResult.Yes)
+            {
+                try
+                {
+                    RecipeList.Items.RemoveAt(RecipeList.SelectedIndex);
+
+                    File.Delete(currentFilePath);
+
+                    MessageBox.Show("配方已删除", "删除成功", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    if (RecipeList.Items.Count > 0)
+                    {
+                        RecipeList.SelectedIndex = 0;
+                    }
+
+                    isModified = false;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"删除配方时出错: {ex.Message}", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        #endregion
+
+        #region Form Closing Event
         private void RecipeInfoForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (isModified)
             {
-                SaveRecipe();
+                var result = MessageBox.Show("您有未保存的更改，是否保存？", "保存更改", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+
+                if (result == DialogResult.Yes)
+                {
+                    SaveRecipe();
+                }
+                else if (result == DialogResult.Cancel)
+                {
+                    e.Cancel = true;
+                }
             }
         }
         #endregion
@@ -276,7 +368,6 @@
         #region Text Box Change Events
         private void TextBox_TextChanged(object sender, EventArgs e)
         {
-            // Check if any text box value has changed from its original value
             if (CraftAmountTextBox.Text != originalCraftAmount ||
                 ChanceTextBox.Text != originalChance ||
                 GoldTextBox.Text != originalGold ||
@@ -286,10 +377,9 @@
                 Quality1TextBox.Text != Quality1 ||
                 IngredientName2TextBox.Text != originalIngredientName2 ||
                 IngredientAmount2TextBox.Text != originalIngredientAmount2 ||
-                Quality2TextBox.Text != Quality2 ||
+                Quality3TextBox.Text != Quality2 ||
                 IngredientName3TextBox.Text != originalIngredientName3 ||
                 IngredientAmount3TextBox.Text != originalIngredientAmount3 ||
-                Quality3TextBox.Text != Quality3 ||
                 IngredientName4TextBox.Text != originalIngredientName4 ||
                 IngredientAmount4TextBox.Text != originalIngredientAmount4 ||
                 Quality4TextBox.Text != Quality4)
@@ -299,103 +389,100 @@
         }
         #endregion
 
-        #region Create new Recipe
-        private const string TempFileName = "UntitledRecipe.txt";
-        private void NewRecipeButton_Click(object sender, EventArgs e)
-        {
-            // Define the path to the directory containing recipes
-            string currentDirectory = AppDomain.CurrentDomain.BaseDirectory;
-            string directoryPath = Path.Combine(currentDirectory, "Envir", "Recipe");
-
-            // Ensure the directory exists
-            if (!Directory.Exists(directoryPath))
-            {
-                MessageBox.Show("配方目录不存在", "目录错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            // Get the filename from ItemTextBox and prepare full filename
-            string displayFileName = ItemTextBox.Text.Trim();
-            string fileName = string.IsNullOrEmpty(displayFileName) ? TempFileName : $"{displayFileName}.txt";
-
-            // Path to the file
-            string filePath = Path.Combine(directoryPath, fileName);
-
-            // Check if file already exists
-            if (File.Exists(filePath) && fileName != TempFileName)
-            {
-                MessageBox.Show("已存在同名文件", "文件已存在", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            // Create an empty text file at the generated path
-            File.Create(filePath).Close(); // .Create() creates the file, .Close() closes the file handle
-
-            // Update the ListBox to include the new recipe file
-            string newItem = $"{RecipeList.Items.Count + 1}. {Path.GetFileNameWithoutExtension(fileName)}";
-            RecipeList.Items.Add(newItem);
-
-            // Select the new item in the ListBox
-            RecipeList.SelectedIndex = RecipeList.Items.Count - 1;
-
-            // Set the ItemTextBox to the new filename without extension if it was initially temporary
-            if (fileName == TempFileName)
-            {
-                ItemTextBox.Text = Path.GetFileNameWithoutExtension(fileName);
-            }
-        }
-        #endregion
-
-        #region Name Text Box
-        private bool isUpdatingTextBox = false;
+        #region Item Text Box TextChanged
         private void ItemTextBox_TextChanged(object sender, EventArgs e)
         {
-            // Ensure there's a selected item in the ListBox
-            if (RecipeList.SelectedIndex == -1)
+            if (RecipeList.SelectedIndex == -1 || isUpdatingTextBox)
                 return;
 
-            // Get the new display filename from ItemTextBox
             string newDisplayName = ItemTextBox.Text.Trim();
+
             if (string.IsNullOrEmpty(newDisplayName))
             {
                 MessageBox.Show("文件名不能为空", "无效文件名", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            // Prepare full filename with extension
             string newFileName = $"{newDisplayName}.txt";
-            string oldDisplayName = RecipeList.SelectedItem.ToString().Substring(RecipeList.SelectedItem.ToString().IndexOf(' ') + 1).Trim(); // Extract old display name
+            string oldDisplayName = RecipeList.SelectedItem.ToString().Substring(RecipeList.SelectedItem.ToString().IndexOf(' ') + 1).Trim();
             string oldFileName = $"{oldDisplayName}.txt";
 
-            // Paths for old and new files
             string directoryPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Envir", "Recipe");
             string oldFilePath = Path.Combine(directoryPath, oldFileName);
             string newFilePath = Path.Combine(directoryPath, newFileName);
 
-            // Check if the new filename already exists
+            if (oldFileName == newFileName)
+                return;
+
             if (File.Exists(newFilePath))
             {
-                // Revert the ItemTextBox to the old filename
                 ItemTextBox.Text = oldDisplayName;
+                MessageBox.Show("该文件名已存在", "文件名冲突", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            // Rename the file if needed
-            if (oldFileName != newFileName && File.Exists(oldFilePath))
+            try
             {
-                try
+                isUpdatingTextBox = true;
+
+                if (File.Exists(oldFilePath))
                 {
                     File.Move(oldFilePath, newFilePath);
-
-                    // Update ListBox item
                     RecipeList.Items[RecipeList.SelectedIndex] = $"{RecipeList.SelectedIndex + 1}. {newDisplayName}";
-                }
-                catch (IOException ex)
-                {
-                    MessageBox.Show($"重命名文件时发生错误: {ex.Message}", "重命名错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    currentFilePath = newFilePath;
                 }
             }
-            #endregion
+            catch (IOException ex)
+            {
+                MessageBox.Show($"重命名文件时发生错误: {ex.Message}", "重命名错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                isUpdatingTextBox = false;
+            }
         }
+        #endregion
+
+        #region New Recipe Button Click
+        private void NewRecipeButton_Click(object sender, EventArgs e)
+        {
+            isUpdatingTextBox = true;
+
+            ClearTextBoxes();
+            ItemTextBox.Text = string.Empty;
+            RecipeList.ClearSelected();
+            isModified = false;
+            currentFilePath = string.Empty;
+            ItemTextBox.Focus();
+
+            isUpdatingTextBox = false;
+        }
+        #endregion
+
+        #region ClearLoadRecipes
+        private void LoadRecipes()
+        {
+            RecipeList.Items.Clear();
+
+            string currentDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            string directoryPath = Path.Combine(currentDirectory, "Envir", "Recipe");
+
+            if (Directory.Exists(directoryPath))
+            {
+                string[] recipeFiles = Directory.GetFiles(directoryPath, "*.txt");
+
+                for (int i = 0; i < recipeFiles.Length; i++)
+                {
+                    string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(recipeFiles[i]);
+                    string listItem = $"{i + 1}. {fileNameWithoutExtension}";
+                    RecipeList.Items.Add(listItem);
+                }
+            }
+            else
+            {
+                MessageBox.Show("配方目录不存在", "目录错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        #endregion
     }
 }

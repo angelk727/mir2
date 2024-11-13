@@ -528,7 +528,7 @@ public enum Monster : ushort
     HealingBead = 376,
     PowerUpBead = 377,
     DarkOmaKing = 378,
-    CaveStatue = 380,  //Mon39.wil
+    Mon380P = 380,  //Mon39.wil
     Mandrill = 381,
     PlagueCrab = 382,
     CreeperPlant = 383,

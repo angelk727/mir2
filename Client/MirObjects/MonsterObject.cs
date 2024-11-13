@@ -194,8 +194,8 @@ namespace Client.MirObjects
                 case Monster.HellBomb3:
                     BodyLibrary = Libraries.Monsters[(ushort)Monster.HellLord];
                     break;
-                case Monster.CaveStatue:
-                    BodyLibrary = Libraries.Monsters[(ushort)Monster.CaveStatue];
+                case Monster.Mon380P:
+                    BodyLibrary = Libraries.Monsters[(ushort)Monster.Mon380P];
                     break;
                 default:
                     BodyLibrary = Libraries.Monsters[(ushort)BaseImage];
@@ -269,8 +269,8 @@ namespace Client.MirObjects
                 case Monster.HellBomb3:
                     Frames = FrameSet.HellBomb[((ushort)BaseImage) - 903];
                     break;
-                case Monster.CaveStatue:
-                    Frames = FrameSet.CaveStatue[(byte)Direction];
+                case Monster.Mon380P:
+                    Frames = FrameSet.Mon380P[(byte)Direction];
                     break;
                 case Monster.SabukGate:
                     Frames = FrameSet.Gates[((ushort)BaseImage) - 950];
@@ -320,8 +320,8 @@ namespace Client.MirObjects
                     case Monster.FrozenZumaStatue:
                         Effects.Add(new Effect(Libraries.Effect, 600, 1, 1 * Frame.Interval, this) { DrawBehind = true, Repeat = true }); // Blue effect
                         break;
-                    case Monster.CaveStatue: //380
-                        Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.CaveStatue], 10, 8, 2400, this) { Blend = true, Repeat = true });
+                    case Monster.Mon380P: //380
+                        Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon380P], 10, 8, 2400, this) { Blend = true, Repeat = true });
                         break;
                     case Monster.Mon572B:
                         Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon572B], 376, 30, 3000, this) { Blend = true, Repeat = true, DrawBehind = true });

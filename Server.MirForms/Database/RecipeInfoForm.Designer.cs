@@ -58,6 +58,9 @@
             IngredientAmount2TextBox = new TextBox();
             IngredientAmount1TextBox = new TextBox();
             NewRecipeButton = new Button();
+            DeleteRecipeButton = new Button();
+            SaveRecipeButton = new Button();
+            ClearTextButton = new Button();
             RecipeGroupBox.SuspendLayout();
             ToolsGroupBox.SuspendLayout();
             IngredientsGroupBox.SuspendLayout();
@@ -69,7 +72,7 @@
             RecipeList.ItemHeight = 17;
             RecipeList.Location = new Point(12, 14);
             RecipeList.Name = "RecipeList";
-            RecipeList.Size = new Size(135, 361);
+            RecipeList.Size = new Size(135, 327);
             RecipeList.TabIndex = 0;
             RecipeList.SelectedIndexChanged += RecipeList_SelectedIndexChanged;
             // 
@@ -211,7 +214,7 @@
             label8.AutoSize = true;
             label8.Location = new Point(215, 25);
             label8.Name = "label8";
-            label8.Size = new Size(65, 17);
+            label8.Size = new Size(61, 17);
             label8.TabIndex = 24;
             label8.Text = "持久/品质";
             // 
@@ -319,13 +322,43 @@
             // 
             // NewRecipeButton
             // 
-            NewRecipeButton.Location = new Point(40, 382);
+            NewRecipeButton.Location = new Point(7, 382);
             NewRecipeButton.Name = "NewRecipeButton";
-            NewRecipeButton.Size = new Size(75, 26);
+            NewRecipeButton.Size = new Size(67, 26);
             NewRecipeButton.TabIndex = 9;
-            NewRecipeButton.Text = "新配方";
+            NewRecipeButton.Text = "新建配方";
             NewRecipeButton.UseVisualStyleBackColor = true;
             NewRecipeButton.Click += NewRecipeButton_Click;
+            // 
+            // DeleteRecipeButton
+            // 
+            DeleteRecipeButton.Location = new Point(79, 382);
+            DeleteRecipeButton.Name = "DeleteRecipeButton";
+            DeleteRecipeButton.Size = new Size(67, 26);
+            DeleteRecipeButton.TabIndex = 9;
+            DeleteRecipeButton.Text = "删除配方";
+            DeleteRecipeButton.UseVisualStyleBackColor = true;
+            DeleteRecipeButton.Click += DeleteRecipeButton_Click;
+            // 
+            // SaveRecipeButton
+            // 
+            SaveRecipeButton.Location = new Point(7, 352);
+            SaveRecipeButton.Name = "SaveRecipeButton";
+            SaveRecipeButton.Size = new Size(67, 26);
+            SaveRecipeButton.TabIndex = 9;
+            SaveRecipeButton.Text = "保存配方";
+            SaveRecipeButton.UseVisualStyleBackColor = true;
+            SaveRecipeButton.Click += SaveRecipeButton_Click;
+            // 
+            // ClearTextButton
+            // 
+            ClearTextButton.Location = new Point(79, 352);
+            ClearTextButton.Name = "ClearTextButton";
+            ClearTextButton.Size = new Size(67, 26);
+            ClearTextButton.TabIndex = 9;
+            ClearTextButton.Text = "清空配方";
+            ClearTextButton.UseVisualStyleBackColor = true;
+            ClearTextButton.Click += ClearTextButton_Click;
             // 
             // RecipeInfoForm
             // 
@@ -333,6 +366,9 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(455, 418);
             Controls.Add(NewRecipeButton);
+            Controls.Add(DeleteRecipeButton);
+            Controls.Add(SaveRecipeButton);
+            Controls.Add(ClearTextButton);
             Controls.Add(IngredientsGroupBox);
             Controls.Add(ToolsGroupBox);
             Controls.Add(RecipeGroupBox);
@@ -376,6 +412,9 @@
         private TextBox IngredientName2TextBox;
         private TextBox IngredientName1TextBox;
         private Button NewRecipeButton;
+        private Button DeleteRecipeButton;
+        private Button SaveRecipeButton;
+        private Button ClearTextButton;
         private Label label8;
         private TextBox Quality4TextBox;
         private TextBox Quality3TextBox;
