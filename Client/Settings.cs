@@ -188,13 +188,13 @@ namespace Client
 
         //AutoPatcher
         public static bool P_Patcher = true;
-        public static string P_Host = @"http://127.0.0.1/mir2/cmir/patch/";//默认 mirfiles.com
+        public static string P_Host = @"http://127.0.0.1/mir2/cmir/patch/";//默认 http://mirfiles.com/mir2/cmir/patch/
         public static string P_PatchFileName = @"PList.gz";
         public static bool P_NeedLogin = false;
         public static string P_Login = string.Empty;
         public static string P_Password = string.Empty;
         public static string P_ServerName = string.Empty;
-        public static string P_BrowserAddress = "https://127.0.0.1/mir2-patchsite/";//默认 www.lomcn.org
+        public static string P_BrowserAddress = "http://www.127.0.0.1/mir2-patchsite/";//默认 https://www.lomcn.org/mir2-patchsite/
         public static string P_Client = Application.StartupPath + "\\";
         public static bool P_AutoStart = false;
         public static int P_Concurrency = 1;
@@ -305,9 +305,9 @@ namespace Client
             if (P_BrowserAddress.StartsWith("www.", StringComparison.OrdinalIgnoreCase)) P_BrowserAddress = P_BrowserAddress.Insert(0, "http://");
 
             //Temp check to update everyones address
-            if (P_Host.ToLower() == "http://127.0.0.1/mir2/cmir/patch/")//默认 mirfiles.co.uk
+            if (P_Host.ToLower() == "http://127.0.0.1/mir2/cmir/patch/")//默认 http://mirfiles.co.uk/mir2/cmir/patch/
             {
-                P_Host = "http://127.0.0.1/mir2/cmir/patch/";//默认 mirfiles.com
+                P_Host = "http://127.0.0.1/mir2/cmir/patch/";//默认 http://mirfiles.com/mir2/cmir/patch/
             }
 
             if (P_Concurrency < 1) P_Concurrency = 1;

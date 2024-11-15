@@ -429,7 +429,7 @@ namespace AutoPatcherAdmin
                 FileLabel.Text = e.FileName.Replace(rootPath, "");
                 SpeedLabel.Text = ((double)e.CPS / 1024).ToString("0.##") + " KB/s";
 
-                ActionLabel.Text = "Downloading... Files";
+                ActionLabel.Text = "下载... 文件";
             };
 
             session.FileTransferred += (o, e) =>
@@ -539,7 +539,7 @@ namespace AutoPatcherAdmin
             {
                 ListButton.Enabled = true;
                 MessageBox.Show(ex.ToString());
-                ActionLabel.Text = "Error...";
+                ActionLabel.Text = "错误...";
             }
         }
 
@@ -559,7 +559,7 @@ namespace AutoPatcherAdmin
 
                 GetOldFileList();
 
-                ActionLabel.Text = "Checking Files...";
+                ActionLabel.Text = "校验文件...";
                 Refresh();
 
                 GetNewFileList();
@@ -592,7 +592,7 @@ namespace AutoPatcherAdmin
             {
                 ProcessButton.Enabled = true;
                 MessageBox.Show(ex.ToString());
-                ActionLabel.Text = "Error...";
+                ActionLabel.Text = "错误...";
             }
         }
 
@@ -631,7 +631,7 @@ namespace AutoPatcherAdmin
             {
                 btnFixGZ.Enabled = true;
                 MessageBox.Show(ex.ToString(), "Error");
-                ActionLabel.Text = "Error...";
+                ActionLabel.Text = "错误...";
             }
         }
 
@@ -655,7 +655,7 @@ namespace AutoPatcherAdmin
             {
                 DownloadExistingButton.Enabled = true;
                 MessageBox.Show(ex.ToString(), "Error");
-                ActionLabel.Text = "Error...";
+                ActionLabel.Text = "错误...";
             }
         }
 

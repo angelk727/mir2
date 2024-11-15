@@ -89,7 +89,7 @@ namespace Launcher
             }
             catch (EndOfStreamException ex)
             {
-                MessageBox.Show("End of stream found. Host is likely using a pre version 1.1.0.0 patch system");
+                MessageBox.Show("发现数据流已结束。主机可能正在使用早于版本 1.1.0.0 的补丁系统");
                 Completed = true;
                 SaveError(ex.ToString());
             }
@@ -349,16 +349,23 @@ namespace Launcher
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", authInfo);
                 }
 
-                var task = Task.Run(() => client
-                    .GetAsync(new Uri(Settings.P_Host + Path.ChangeExtension(fileName, ".gz")), HttpCompletionOption.ResponseHeadersRead));
+                string uriString = Settings.P_Host + Path.ChangeExtension(fileName, ".gz");
 
-                var response = task.Result;
-
-                using Stream sm = response.Content.ReadAsStream();
-                using MemoryStream ms = new();
-                sm.CopyTo(ms);
-                byte[] data = ms.ToArray();
-                return data;
+                if (Uri.IsWellFormedUriString(uriString, UriKind.Absolute))
+                {
+                    var task = Task.Run(() => client.GetAsync(new Uri(uriString), HttpCompletionOption.ResponseHeadersRead));
+                    var response = task.Result;
+                    using Stream sm = response.Content.ReadAsStream();
+                    using MemoryStream ms = new();
+                    sm.CopyTo(ms);
+                    byte[] data = ms.ToArray();
+                    return data;
+                }
+                else
+                {
+                    MessageBox.Show(string.Format("请检查启动器的 HOST 设置格式是否正确\n可能是缺少或多余的斜杠或拼写错误造成的。\n如果不需要补丁，可以忽略此错误。"), "HOST 格式错误");
+                    return null;
+                }
             }
         }
 
@@ -414,8 +421,15 @@ namespace Launcher
 
             if (Settings.P_BrowserAddress != "")
             {
-                Main_browser.NavigationCompleted += Main_browser_NavigationCompleted;
-                Main_browser.Source = new Uri(Settings.P_BrowserAddress);
+                if (Uri.IsWellFormedUriString(Settings.P_BrowserAddress, UriKind.Absolute))
+                {
+                    Main_browser.NavigationCompleted += Main_browser_NavigationCompleted;
+                    Main_browser.Source = new Uri(Settings.P_BrowserAddress);
+                }
+                else
+                {
+                    MessageBox.Show(string.Format("请检查启动器的 BROWSER 设置格式是否正确。\n可能是缺少或多余的斜杠或拼写错误造成的。\n如果不需要特别注意此设置，可以忽略此错误。"), "BROWSER 格式错误");
+                }
             }
 
             RepairOldFiles();
@@ -641,8 +655,8 @@ namespace Launcher
                 CurrentPercent_label.Visible = true;
                 TotalPercent_label.Visible = true;
 
-                if (LabelSwitch) ActionLabel.Text = string.Format("{0} 剩余文件数", _fileCount - _currentCount);
-                else ActionLabel.Text = string.Format("{剩余 0:#,##0}MB ",  ((_totalBytes) - (_completedBytes + currentBytes)) / 1024 / 1024);
+                if (LabelSwitch) ActionLabel.Text = string.Format("{0} 剩余文件", _fileCount - _currentCount);
+                else ActionLabel.Text = string.Format("{0:#,##0}MB 待更文件", ((_totalBytes) - (_completedBytes + currentBytes)) / 1024 / 1024);
 
                 if (Settings.P_Concurrency > 1)
                 {
