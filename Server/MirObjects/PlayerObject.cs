@@ -3025,7 +3025,7 @@ namespace Server.MirObjects
                         player = this;
                         Spell skill;
 
-                        if (!Enum.TryParse(parts.Length > 3 ? parts[2] : parts[1], true, out skill)) return;
+                        if (!Enum.TryParse(parts.Length > 3 ? parts[2] : parts[1], true, out skill) || !Enum.IsDefined(skill)) return;
 
                         if (skill == Spell.None) return;
 
@@ -3050,7 +3050,7 @@ namespace Server.MirObjects
                         {
                             player.Info.Magics.FirstOrDefault(e => e.Spell == skill).Level = spellLevel;
 
-                            string skillChangeMsg = $"游戏管理员:{Name} 将玩家:{player.Name} 的技能 {skill.ToString()} 技能等级调整为 {spellLevel} 级";
+                            string skillChangeMsg = $"{player.Name} 的技能 {skill.ToString()} 被管理员 {Name} 调整为 {spellLevel}";
 
                             player.ReceiveChat(string.Format(" {0} 技能等级调整为 {1}", skill.ToString(), spellLevel), ChatType.Hint);
                             Helpers.ChatSystem.SystemMessage(chatMessage: skillChangeMsg);
@@ -3066,7 +3066,7 @@ namespace Server.MirObjects
                                 ReceiveChat(string.Format("{0} 技能等级由 {1} 提升到 {2}", player.Name, skill.ToString(), spellLevel), ChatType.Hint);
                             }
 
-                            string skillLearnedMg = $"游戏管理员:{Name} 给玩家:{player.Name} 增加技能 {skill.ToString()} 并将技能等级调整为 {spellLevel} 级";
+                            string skillLearnedMg = $"{player.Name} 已有技能 {skill.ToString()} ，被管理员 {Name} 调整为 {spellLevel}";
                             Helpers.ChatSystem.SystemMessage(chatMessage: skillLearnedMg);
 
                             player.Info.Magics.Add(magic);
@@ -4759,6 +4759,12 @@ namespace Server.MirObjects
                 return;
             }
 
+            if (gridTo == MirGridType.Socket && temp.Info.Type != ItemType.镶嵌宝石)
+            {
+                Enqueue(p);
+                return;
+            }
+
             if ((temp.SoulBoundId != -1) && (temp.SoulBoundId != Info.Index))
             {
                 Enqueue(p);
@@ -4851,6 +4857,13 @@ namespace Server.MirObjects
                         Enqueue(p);
                         return;
                     }
+
+                    if (!Account.IsValidStorageIndex(to))
+                    {
+                        Enqueue(p);
+                        return;
+                    }
+
                     toArray = Account.Storage;
                     fromArray = Info.Equipment;
                     fromGrid = MirGridType.Equipment;
@@ -4965,6 +4978,13 @@ namespace Server.MirObjects
                         Enqueue(p);
                         return;
                     }
+
+                    if (!Account.IsValidStorageIndex(to))
+                    {
+                        Enqueue(p);
+                        return;
+                    }
+
                     array = Account.Storage;
                     break;
                 default:
@@ -5096,6 +5116,13 @@ namespace Server.MirObjects
                         Enqueue(p);
                         return;
                     }
+
+                    if (!Account.IsValidStorageIndex(to) || !Account.IsValidStorageIndex(from))
+                    {
+                        Enqueue(p);
+                        return;
+                    }
+
                     array = Account.Storage;
                     break;
                 case MirGridType.Trade:
@@ -5183,6 +5210,12 @@ namespace Server.MirObjects
                 return;
             }
 
+            if (!Account.IsValidStorageIndex(to))
+            {
+                Enqueue(p);
+                return;
+            }
+
             UserItem temp = Info.Inventory[from];
 
             if (temp == null)
@@ -5242,6 +5275,12 @@ namespace Server.MirObjects
 
 
             if (from < 0 || from >= Account.Storage.Length)
+            {
+                Enqueue(p);
+                return;
+            }
+
+            if (!Account.IsValidStorageIndex(from))
             {
                 Enqueue(p);
                 return;
@@ -5367,10 +5406,20 @@ namespace Server.MirObjects
                 Enqueue(p);
                 return;
             }
+
             if ((toArray[to] != null) && (toArray[to].Cursed) && (!UnlockCurse))
             {
                 Enqueue(p);
                 return;
+            }
+
+            if (grid == MirGridType.Storage)
+            {
+                if (!Account.IsValidStorageIndex(index))
+                {
+                    Enqueue(p);
+                    return;
+                }
             }
 
             if ((temp.SoulBoundId != -1) && (temp.SoulBoundId != Info.Index))
@@ -6156,17 +6205,36 @@ namespace Server.MirObjects
             UserItem temp = null;
 
 
+            var index = -1;
             for (int i = 0; i < array.Length; i++)
             {
                 if (array[i] == null || array[i].UniqueID != id) continue;
+                index = i;
                 temp = array[i];
                 break;
             }
 
-            if (temp == null || count >= temp.Count || FreeSpace(array) == 0 || count < 1)
+            if (temp == null || index == -1 || count >= temp.Count || FreeSpace(array) == 0 || count < 1)
             {
                 Enqueue(p);
                 return;
+            }
+
+            if (grid == MirGridType.Storage)
+            {
+                var nindex = -1;
+                for (int i = 0; i < array.Length; i++)
+                {
+                    if (array[i] != null) continue;
+                    nindex = i;
+                    break;
+                }
+
+                if (!Account.IsValidStorageIndex(index) || !Account.IsValidStorageIndex(nindex))
+                {
+                    Enqueue(p);
+                    return;
+                }
             }
 
             temp.Count -= count;
@@ -6362,6 +6430,15 @@ namespace Server.MirObjects
                 return;
             }
 
+            if (gridFrom == MirGridType.Storage)
+            {
+                if (!Account.IsValidStorageIndex(index))
+                {
+                    Enqueue(p);
+                    return;
+                }
+            }
+
 
             UserItem tempTo = null;
             int toIndex = -1;
@@ -6378,6 +6455,15 @@ namespace Server.MirObjects
             {
                 Enqueue(p);
                 return;
+            }
+
+            if (gridTo == MirGridType.Storage)
+            {
+                if (!Account.IsValidStorageIndex(toIndex))
+                {
+                    Enqueue(p);
+                    return;
+                }
             }
 
             if (tempTo.Info.Type != ItemType.护身符 && (gridFrom == MirGridType.Equipment || gridTo == MirGridType.Equipment))
@@ -8283,8 +8369,64 @@ namespace Server.MirObjects
             Enqueue(new S.MarketFail { Reason = 7 });
         }
 
-        public void MarketGetBack(ulong auctionID)
+        public void MarketGetBack(int mode, ulong auctionID)
         {
+            AuctionInfo GetAuction(ulong auctionID)
+            {
+                foreach (var auction in Account.Auctions)
+                {
+                    if (auction.AuctionID == auctionID)
+                        return auction;
+                }
+                return null;
+            }
+
+            bool TakeAuction(AuctionInfo auction)
+            {
+                if (auction.Sold && auction.Expired)
+                {
+                    MessageQueue.Enqueue(string.Format("拍卖已售出且已过期 {0}", Account.AccountID));
+                    return false;
+                }
+
+                if (!auction.Sold || auction.Expired)
+                {
+                    if (!CanGainItem(auction.Item))
+                    {
+                        Enqueue(new S.MarketFail { Reason = 5 });
+                        return false;
+                    }
+
+                    if (auction.CurrentBuyerInfo != null)
+                    {
+                        string message = string.Format("在对 {0} 的竞拍中已被超越。现退还 {1:#,##0} 金币", auction.Item.FriendlyName, auction.CurrentBid);
+
+                        Envir.MailCharacter(auction.CurrentBuyerInfo, gold: auction.CurrentBid, customMessage: message);
+                    }
+
+                    GainItem(auction.Item);
+                    return true;
+                }
+
+                if (mode == 2)
+                    return false;
+
+                uint cost = auction.ItemType == MarketItemType.Consign ? auction.Price : auction.CurrentBid;
+
+                if (!CanGainGold(cost))
+                {
+                    Enqueue(new S.MarketFail { Reason = 8 });
+                    return false;
+                }
+
+                uint gold = (uint)Math.Max(0, cost - cost * Globals.Commission);
+
+                GainGold(gold);
+                Enqueue(new S.MarketSuccess { Message = string.Format("您以 {1:#,##0} 金币的价格出售了 {0}。\n收益：{2:#,##0} 金币。\n佣金：{3:#,##0} 金币", auction.Item.FriendlyName, cost, gold, cost - gold) });
+                return true;
+            }
+
+
             if (Dead)
             {
                 Enqueue(new S.MarketFail { Reason = 0 });
@@ -8303,56 +8445,47 @@ namespace Server.MirObjects
                 if (ob.ObjectID != NPCObjectID) continue;
                 if (!Functions.InRange(ob.CurrentLocation, CurrentLocation, Globals.DataRange)) return;
 
-                foreach (AuctionInfo auction in Account.Auctions)
+                if (mode == 0)
                 {
-                    if (auction.AuctionID != auctionID) continue;
-
-                    if (auction.Sold && auction.Expired)
+                    var auction = GetAuction(auctionID);
+                    if (auction != null)
                     {
-                        MessageQueue.Enqueue(string.Format("{0}流拍或已售出物品 ", Account.AccountID));
-                        return;
-                    }
-
-                    if (!auction.Sold || auction.Expired)
-                    {
-                        if (!CanGainItem(auction.Item))
+                        if (TakeAuction(auction))
                         {
-                            Enqueue(new S.MarketFail { Reason = 5 });
+                            Account.Auctions.Remove(auction);
+                            Envir.Auctions.Remove(auction);
+                            MarketSearch(MatchName, MatchType);
                             return;
                         }
+                    }
+                }
+                else
+                {
+                    int count = 0;
+                    var node = Account.Auctions.First;
+                    while (node != null)
+                    {
+                        var next = node.Next;
 
-                        if (auction.CurrentBuyerInfo != null)
+                        var auction = node.Value;
+                        if (auction != null)
                         {
-                            string message = string.Format("{0} 竞拍价格被超越，返还定金 {1:#,##0} 金币", auction.Item.FriendlyName, auction.CurrentBid);
-
-                            Envir.MailCharacter(auction.CurrentBuyerInfo, gold: auction.CurrentBid, customMessage: message);
+                            if (TakeAuction(auction))
+                            {
+                                Account.Auctions.Remove(node);
+                                Envir.Auctions.Remove(auction);
+                                count++;
+                            }
                         }
+                        node = next;
+                    }
 
-                        Account.Auctions.Remove(auction);
-                        Envir.Auctions.Remove(auction);
-                        GainItem(auction.Item);
+                    if (count > 0)
+                    {
                         MarketSearch(MatchName, MatchType);
                         return;
                     }
-
-                    uint cost = auction.ItemType == MarketItemType.Consign ? auction.Price : auction.CurrentBid;
-
-                    if (!CanGainGold(cost))
-                    {
-                        Enqueue(new S.MarketFail { Reason = 8 });
-                        return;
-                    }
-
-                    uint gold = (uint)Math.Max(0, cost - cost * Globals.Commission);
-
-                    Account.Auctions.Remove(auction);
-                    Envir.Auctions.Remove(auction);
-                    GainGold(gold);
-                    Enqueue(new S.MarketSuccess { Message = string.Format("{0}卖出价格: {1:#,##0}金币 \n收入: {2:#,##0}金币\n佣金: {3:#,##0}金币‎", auction.Item.FriendlyName, cost, gold, cost - gold) });
-                    MarketSearch(MatchName, MatchType);
-                    return;
                 }
-
             }
 
             Enqueue(new S.MarketFail { Reason = 7 });
@@ -13093,9 +13226,9 @@ namespace Server.MirObjects
                 }
                 else
                 {
-                        ReceiveChat("没有足够的实力购买", ChatType.System);
-                        MessageQueue.EnqueueDebugging(Info.Name + " 正在尝试购买 " + Product.Info.FriendlyName + " x " + Quantity + " - 没有足够的货币");
-                        return;
+                    ReceiveChat("没有足够的实力购买", ChatType.System);
+                    MessageQueue.EnqueueDebugging(Info.Name + " 正在尝试购买 " + Product.Info.FriendlyName + " x " + Quantity + " - 没有足够的货币");
+                    return;
                 }
             }
             else
@@ -13941,6 +14074,11 @@ namespace Server.MirObjects
             }
 
             Enqueue(p);
+        }
+
+        public void SendNPCGoods(List<UserItem> goods, float rate, PanelType panelType, bool hideAddedStats = false)
+        {
+            Enqueue(new S.NPCGoods { List = goods, Rate = rate, Type = panelType, HideAddedStats = hideAddedStats });
         }
     }
 }

@@ -74,13 +74,13 @@
             SaveDelayTextBox = new TextBox();
             label6 = new Label();
             tabPage5 = new TabPage();
-            label16 = new Label();
-            lineMessageTimeTextBox = new TextBox();
-            label17 = new Label();
             gameMasterEffect_CheckBox = new CheckBox();
             SafeZoneHealingCheckBox = new CheckBox();
             SafeZoneBorderCheckBox = new CheckBox();
             VPathDialog = new OpenFileDialog();
+            label16 = new Label();
+            lineMessageTimeTextBox = new TextBox();
+            label17 = new Label();
             configTabs.SuspendLayout();
             tabPage1.SuspendLayout();
             groupBox1.SuspendLayout();
@@ -618,36 +618,6 @@
             tabPage5.Text = "其他选项";
             tabPage5.UseVisualStyleBackColor = true;
             // 
-            // label16
-            // 
-            label16.AutoSize = true;
-            label16.Location = new Point(227, 122);
-            label16.Margin = new Padding(5, 0, 5, 0);
-            label16.Name = "label16";
-            label16.Size = new Size(32, 17);
-            label16.TabIndex = 29;
-            label16.Text = "分钟";
-            // 
-            // lineMessageTimeTextBox
-            // 
-            lineMessageTimeTextBox.Location = new Point(183, 116);
-            lineMessageTimeTextBox.Margin = new Padding(5, 7, 5, 7);
-            lineMessageTimeTextBox.MaxLength = 5;
-            lineMessageTimeTextBox.Name = "lineMessageTimeTextBox";
-            lineMessageTimeTextBox.Size = new Size(41, 23);
-            lineMessageTimeTextBox.TabIndex = 28;
-            lineMessageTimeTextBox.Text = "10";
-            // 
-            // label17
-            // 
-            label17.AutoSize = true;
-            label17.Location = new Point(76, 120);
-            label17.Margin = new Padding(5, 0, 5, 0);
-            label17.Name = "label17";
-            label17.Size = new Size(104, 17);
-            label17.TabIndex = 27;
-            label17.Text = "在线信息显示频率";
-            // 
             // gameMasterEffect_CheckBox
             // 
             gameMasterEffect_CheckBox.AutoSize = true;
@@ -689,6 +659,36 @@
             VPathDialog.Filter = "Executable Files (*.exe)|*.exe";
             VPathDialog.Multiselect = true;
             // 
+            // label16
+            // 
+            label16.AutoSize = true;
+            label16.Location = new Point(227, 122);
+            label16.Margin = new Padding(5, 0, 5, 0);
+            label16.Name = "label16";
+            label16.Size = new Size(32, 17);
+            label16.TabIndex = 29;
+            label16.Text = "分钟";
+            // 
+            // lineMessageTimeTextBox
+            // 
+            lineMessageTimeTextBox.Location = new Point(183, 116);
+            lineMessageTimeTextBox.Margin = new Padding(5, 7, 5, 7);
+            lineMessageTimeTextBox.MaxLength = 5;
+            lineMessageTimeTextBox.Name = "lineMessageTimeTextBox";
+            lineMessageTimeTextBox.Size = new Size(41, 23);
+            lineMessageTimeTextBox.TabIndex = 28;
+            lineMessageTimeTextBox.Text = "10";
+            // 
+            // label17
+            // 
+            label17.AutoSize = true;
+            label17.Location = new Point(76, 120);
+            label17.Margin = new Padding(5, 0, 5, 0);
+            label17.Name = "label17";
+            label17.Size = new Size(104, 17);
+            label17.TabIndex = 27;
+            label17.Text = "在线信息显示频率";
+            // 
             // ConfigForm
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
@@ -714,6 +714,7 @@
             tabPage5.ResumeLayout(false);
             tabPage5.PerformLayout();
             ResumeLayout(false);
+
         }
 
         #endregion

@@ -340,6 +340,9 @@ namespace Server.MirObjects
 
         public virtual void Spawned()
         {
+            if (Node != null)
+                throw new InvalidOperationException("节点不为空，对象已经生成");
+
             Node = Envir.Objects.AddLast(this);
             if ((Race == ObjectType.Monster) && Settings.Multithreaded)
             {
@@ -356,7 +359,8 @@ namespace Server.MirObjects
         }
         public virtual void Despawn()
         {
-            if (Node == null) return;
+            if (Node == null)
+                throw new InvalidOperationException("节点为空，对象已经消失");
             
             Broadcast(new S.ObjectRemove { ObjectID = ObjectID });
             Envir.Objects.Remove(Node);

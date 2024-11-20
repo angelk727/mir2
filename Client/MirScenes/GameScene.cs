@@ -191,6 +191,7 @@ namespace Client.MirScenes
         public static long NPCTime;
         public static uint NPCID;
         public static float NPCRate;
+        public static PanelType NPCPanelType;
         public static uint DefaultNPCID;
         public static bool HideAddedStoreStats;
 
@@ -4203,15 +4204,16 @@ namespace Client.MirScenes
         {
             for (int i = 0; i < p.List.Count; i++)
             {
-                p.List[i].Info = GetInfo(p.List[i].ItemIndex);
+                p.List[i].Info = GetItemInfo(p.List[i].ItemIndex);
             }
 
             NPCRate = p.Rate;
+            NPCPanelType = p.Type;
             HideAddedStoreStats = p.HideAddedStats;
 
             if (!NPCDialog.Visible) return;
 
-            switch (p.Type)
+            switch (NPCPanelType)
             {
                 case PanelType.Buy:
                     NPCGoodsDialog.UsePearls = false;
@@ -4235,10 +4237,11 @@ namespace Client.MirScenes
         {
             for (int i = 0; i < p.List.Count; i++)
             {
-                p.List[i].Info = GetInfo(p.List[i].ItemIndex);
+                p.List[i].Info = GetItemInfo(p.List[i].ItemIndex);
             }
 
             NPCRate = p.Rate;
+            NPCPanelType = p.Type;
 
             if (!NPCDialog.Visible) return;
 
@@ -7009,13 +7012,7 @@ namespace Client.MirScenes
 
         public ItemInfo GetItemInfo(int index)
         {
-            for (var i = 0; i < ItemInfoList.Count; i++)
-            {
-                var info = ItemInfoList[i];
-                if (info.Index != index) continue;
-                return info;
-            }
-            return null;
+            return ItemInfoList.Find(x => x.Index == index);
         }
 
         public static void BindQuest(ClientQuestProgress quest)
@@ -10249,18 +10246,6 @@ namespace Client.MirScenes
 
             MemoLabel.Size = new Size(Math.Max(MemoLabel.Size.Width, memoLabel.DisplayRectangle.Right + 4),
                 Math.Max(MemoLabel.Size.Height, memoLabel.DisplayRectangle.Bottom + 4));
-        }
-
-        public static ItemInfo GetInfo(int index)
-        {
-            for (int i = 0; i < ItemInfoList.Count; i++)
-            {
-                ItemInfo info = ItemInfoList[i];
-                if (info.Index != index) continue;
-                return info;
-            }
-
-            return null;
         }
 
         public string GetUserName(uint id)

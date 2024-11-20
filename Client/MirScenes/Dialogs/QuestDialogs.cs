@@ -186,11 +186,9 @@ namespace Client.MirScenes.Dialogs
 
             MirButton positionBar = new MirButton
             {
-                Index = 205,
-                HoverIndex = 206,
-                PressedIndex = 206,
-                Library = Libraries.Prguse2,
-                Location = new Point(292, 149),
+                Index = 955,
+                Library = Libraries.Prguse,
+                Location = new Point(291, 149),
                 Parent = this,
                 Movable = true,
                 Sound = SoundList.None,
@@ -251,7 +249,22 @@ namespace Client.MirScenes.Dialogs
                 Location = new Point(266, 3),
                 Sound = SoundList.ButtonA,
             };
-            helpButton.Click += (o, e) => GameScene.Scene.HelpDialog.DisplayPage("任务");
+
+            bool isHelpDialogVisible = false;
+
+            helpButton.Click += (o, e) =>
+            {
+                if (isHelpDialogVisible)
+                {
+                    GameScene.Scene.HelpDialog.Visible = false;
+                    isHelpDialogVisible = false;
+                }
+                else
+                {
+                    GameScene.Scene.HelpDialog.DisplayPage("任务");
+                    isHelpDialogVisible = true;
+                }
+            };
 
         }
 
@@ -510,11 +523,9 @@ namespace Client.MirScenes.Dialogs
 
             MirButton positionBar = new MirButton
             {
-                Index = 205,
-                HoverIndex = 206,
-                PressedIndex = 206,
-                Library = Libraries.Prguse2,
-                Location = new Point(293, 48),
+                Index = 955,
+                Library = Libraries.Prguse,
+                Location = new Point(292, 48),
                 Parent = this,
                 Movable = true,
                 Sound = SoundList.None,
@@ -608,19 +619,6 @@ namespace Client.MirScenes.Dialogs
                 Sound = SoundList.ButtonA,
             };
             closeButton.Click += (o, e) => Hide();
-
-            //MirButton helpButton = new MirButton
-            //{
-            //    Index = 257,
-            //    HoverIndex = 258,
-            //    PressedIndex = 259,
-            //    Library = Libraries.Prguse2,
-            //    Parent = this,
-            //    Location = new Point(266, 3),
-            //    Sound = SoundList.ButtonA,
-            //};
-            //helpButton.Click += (o, e) => GameScene.Scene.HelpDialog.DisplayPage("Quests");
-
         }
 
         public void DisplayQuestDetails(ClientQuestProgress quest)

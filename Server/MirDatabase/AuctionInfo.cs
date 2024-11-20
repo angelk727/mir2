@@ -93,9 +93,9 @@ namespace Server.MirDatabase
                 case MarketItemType.GameShop:
                     return "";
                 case MarketItemType.Consign:
-                    return userMatch ? (Sold ? "已售出" : (Expired ? "Expired" : "待售中")) : SellerInfo.Name;
+                    return userMatch ? (Sold ? "已售出" : (Expired ? "已过期" : "待售中")) : SellerInfo.Name;
                 case MarketItemType.Auction:
-                    return userMatch ? (Sold ? "已售出" : (Expired ? "Expired" : CurrentBid > Price ? "竞价中" : "无竞价")) : SellerInfo.Name;
+                    return userMatch ? (Sold ? "已售出" : (Expired ? "已过期" : CurrentBid > Price ? "竞价中" : "无竞价")) : SellerInfo.Name;
             }
 
             return "";

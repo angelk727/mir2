@@ -31,6 +31,7 @@ public enum PanelType : byte
     Buy,
     BuySub,
     Craft,
+
     Sell,
     Repair,
     SpecialRepair,
@@ -132,6 +133,8 @@ public enum ItemGrade : byte
     神物 = 4,
     英雄 = 5,
 }
+
+
 
 public enum RefinedValue : byte
 {
@@ -2090,7 +2093,7 @@ public enum HeroBehaviour : byte
     瞬回 = 6
 }
 
-public enum SpellToggleState : sbyte
+public enum SpellToggleState: sbyte
 {
     None = -1,
     False = 0,
