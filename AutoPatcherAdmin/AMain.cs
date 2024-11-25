@@ -147,7 +147,11 @@ namespace AutoPatcherAdmin
 
             for (int i = 0; i < files.Length; i++)
             {
-                NewList.Add(GetFileInformation(files[i]));
+                var fileInfo = GetFileInformation(files[i]);
+                if (fileInfo != null)
+                {
+                    NewList.Add(fileInfo);
+                }
             }
         }
 
@@ -242,7 +246,7 @@ namespace AutoPatcherAdmin
         {
             if (session.Opened) return;
 
-            Uri uri = null;
+            Uri uri = new Uri(Settings.Host);
 
             if (!string.IsNullOrEmpty(Settings.Host))
             {
@@ -272,30 +276,41 @@ namespace AutoPatcherAdmin
             session.Open(sessionOptions);
         }
 
-
         private void BeginUpload()
         {
-            if (UploadList == null) return;
+            if (UploadList == null || UploadList.Count == 0) return;
 
             progressBar1.Value = 0;
             progressBar2.Value = 0;
 
-            int uploadCount = UploadList.Count;
+            int totalFiles = UploadList.Count;
+            int uploadedFiles = 0;
 
             while (UploadList.Count > 0)
             {
                 FileInformation info = UploadList.Dequeue();
 
-                CreateTempUploadFiles(info, File.ReadAllBytes(Settings.Client + (info.FileName)));
+                string filePath = Settings.Client + info.FileName;
+                if (!File.Exists(filePath)) continue;
+
+                byte[] fileData = File.ReadAllBytes(filePath);
+                CreateTempUploadFiles(info, fileData);
+
+                uploadedFiles++;
+                int progress = (int)((double)uploadedFiles / totalFiles * 100);
+                progressBar1.Value = progress;
+                progressBar2.Value = progress;
             }
 
             CleanUp();
 
             CreateTempUploadFiles(new FileInformation { FileName = PatchFileName }, CreateNewList());
-            UploadFiles(++uploadCount);
+            UploadFiles(totalFiles);
 
-            UploadList = null;
+            UploadList.Clear();
+            ActionLabel.Text = "上传完成！";
         }
+
         private void CreateTempUploadFiles(FileInformation info, byte[] raw)
         {
             string fileName = info.FileName.Replace(@"\", "/");
@@ -308,7 +323,7 @@ namespace AutoPatcherAdmin
                 fileName += ".gz";
             }
 
-            var sourceDir = Path.GetDirectoryName(fileName);
+            var sourceDir = Path.GetDirectoryName(fileName) ?? string.Empty;
             var tempSourceDir = Path.Combine(TempUploadDirectory, sourceDir);
 
             var tempFilePath = Path.Combine(TempUploadDirectory, fileName).Replace(@"\", "/");
@@ -371,9 +386,6 @@ namespace AutoPatcherAdmin
 
             DeleteDirectory(TempUploadDirectory);
         }
-
-
-
 
         private byte[] DownloadFile(string fileName)
         {
@@ -466,7 +478,7 @@ namespace AutoPatcherAdmin
 
                 var currentPath = Path.Combine(TempDownloadDirectory, filename);
 
-                var relativeDestDir = Path.GetDirectoryName(info.FileName);
+                var relativeDestDir = Path.GetDirectoryName(info.FileName) ?? string.Empty;
                 var destDir = Path.Combine(Settings.Client, relativeDestDir);
                 var destFilename = Path.Combine(Settings.Client, info.FileName);
 
@@ -497,19 +509,24 @@ namespace AutoPatcherAdmin
             DeleteDirectory(TempDownloadDirectory);
         }
 
-
-
-
         private void ListButton_Click(object sender, EventArgs e)
         {
             try
             {
                 ListButton.Enabled = false;
+
+                if (string.IsNullOrWhiteSpace(ClientTextBox.Text) || !Directory.Exists(ClientTextBox.Text))
+                {
+                    ListButton.Enabled = true;
+                    MessageBox.Show("客户端路径无效，请检查输入！");
+                    return;
+                }
+
                 Settings.Client = ClientTextBox.Text;
                 Settings.Host = HostTextBox.Text;
                 Settings.Login = LoginTextBox.Text;
                 Settings.Password = PasswordTextBox.Text;
-                Settings.Protocol = (string)ProtocolDropDown.SelectedItem;
+                Settings.Protocol = ProtocolDropDown.SelectedItem?.ToString() ?? string.Empty;
 
                 GetOldFileList();
                 GetNewFileList();
@@ -548,18 +565,25 @@ namespace AutoPatcherAdmin
             try
             {
                 ProcessButton.Enabled = false;
+                if (string.IsNullOrWhiteSpace(ClientTextBox.Text) || !Directory.Exists(ClientTextBox.Text))
+                {
+                    ProcessButton.Enabled = true;
+                    MessageBox.Show("客户端路径无效，请检查输入！");
+                    return;
+                }
+
                 Settings.Client = ClientTextBox.Text;
                 Settings.Host = HostTextBox.Text;
                 Settings.Login = LoginTextBox.Text;
                 Settings.Password = PasswordTextBox.Text;
                 Settings.AllowCleanUp = AllowCleanCheckBox.Checked;
-                Settings.Protocol = (string)ProtocolDropDown.SelectedItem;
+                Settings.Protocol = ProtocolDropDown.SelectedItem?.ToString() ?? string.Empty;
 
                 UploadList = new Queue<FileInformation>();
 
                 GetOldFileList();
 
-                ActionLabel.Text = "校验文件...";
+                ActionLabel.Text = "正在校验更新列表与客户端文件夹的差异...";
                 Refresh();
 
                 GetNewFileList();
@@ -586,7 +610,6 @@ namespace AutoPatcherAdmin
                 }
 
                 BeginUpload();
-
             }
             catch (Exception ex)
             {
@@ -596,17 +619,24 @@ namespace AutoPatcherAdmin
             }
         }
 
-        private void btnFixGZ_Click(object sender, EventArgs e)
+        private void BtnFixGZ_Click(object sender, EventArgs e)
         {
             try
             {
                 btnFixGZ.Enabled = false;
 
+                if (string.IsNullOrWhiteSpace(ClientTextBox.Text) || !Directory.Exists(ClientTextBox.Text))
+                {
+                    btnFixGZ.Enabled = true;
+                    MessageBox.Show("客户端路径无效，请检查输入！");
+                    return;
+                }
+
                 Settings.Client = ClientTextBox.Text;
                 Settings.Host = HostTextBox.Text;
                 Settings.Login = LoginTextBox.Text;
                 Settings.Password = PasswordTextBox.Text;
-                Settings.Protocol = (string)ProtocolDropDown.SelectedItem;
+                Settings.Protocol = ProtocolDropDown.SelectedItem?.ToString() ?? string.Empty;
 
                 GetOldFileList();
                 GetNewFileList();
@@ -627,7 +657,7 @@ namespace AutoPatcherAdmin
 
                 FixFilenameExtensions();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 btnFixGZ.Enabled = true;
                 MessageBox.Show(ex.ToString(), "Error");
@@ -640,12 +670,20 @@ namespace AutoPatcherAdmin
             try
             {
                 DownloadExistingButton.Enabled = false;
+
+                if (string.IsNullOrWhiteSpace(ClientTextBox.Text) || !Directory.Exists(ClientTextBox.Text))
+                {
+                    DownloadExistingButton.Enabled = true;
+                    MessageBox.Show("客户端路径无效，请检查输入！");
+                    return;
+                }
+
                 Settings.Client = ClientTextBox.Text;
                 Settings.Host = HostTextBox.Text;
                 Settings.Login = LoginTextBox.Text;
                 Settings.Password = PasswordTextBox.Text;
                 Settings.AllowCleanUp = AllowCleanCheckBox.Checked;
-                Settings.Protocol = (string)ProtocolDropDown.SelectedItem;
+                Settings.Protocol = ProtocolDropDown.SelectedItem?.ToString() ?? string.Empty;
 
                 GetOldFileList();
                 DownloadFiles();
@@ -663,7 +701,6 @@ namespace AutoPatcherAdmin
         {
 
         }
-
 
         private void DeleteDirectory(string target_dir)
         {
