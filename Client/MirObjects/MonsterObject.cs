@@ -7913,11 +7913,30 @@ namespace Client.MirObjects
                             break;
                     }
                     break;
+                case Monster.Mon578N:
+                    switch (CurrentAction)
+                    {
+                        case MirAction.近距攻击2:
+                            Libraries.Monsters[(ushort)Monster.Mon578N].DrawBlend((352 + FrameIndex + (int)Direction * 6), DrawLocation, Color.White, true);
+                            break;
+                        case MirAction.近距攻击3:
+                            Libraries.Monsters[(ushort)Monster.Mon578N].DrawBlend((400 + FrameIndex + (int)Direction * 11), DrawLocation, Color.White, true);
+                            break;
+                    }
+                    break;
                 case Monster.Mon579B:
                     switch (CurrentAction)
                     {
                         case MirAction.刺客冲击:
                             Libraries.Monsters[(ushort)Monster.Mon579B].DrawBlend((494 + FrameIndex + (int)Direction * 8), DrawLocation, Color.White, true);
+                            break;
+                    }
+                    break;
+                case Monster.Mon588N:
+                    switch (CurrentAction)
+                    {
+                        case MirAction.近距攻击1:
+                            Libraries.Monsters[(ushort)Monster.Mon588N].DrawBlend((408 + FrameIndex + (int)Direction * 6), DrawLocation, Color.White, true);
                             break;
                     }
                     break;
@@ -7937,6 +7956,28 @@ namespace Client.MirObjects
                             break;
                         case MirAction.近距攻击2:
                             Libraries.Monsters[(ushort)Monster.Mon605N].DrawBlend((456 + FrameIndex + (int)Direction * 6), DrawLocation, Color.White, true);
+                            break;
+                    }
+                    break;
+                case Monster.Mon607N:
+                    switch (CurrentAction)
+                    {
+                        case MirAction.近距攻击1:
+                            Libraries.Monsters[(ushort)Monster.Mon607N].DrawBlend((480 + FrameIndex + (int)Direction * 6), DrawLocation, Color.White, true);
+                            break;
+                        case MirAction.近距攻击5:
+                            Libraries.Monsters[(ushort)Monster.Mon607N].DrawBlend((545 + FrameIndex + (int)Direction * 10), DrawLocation, Color.White, true);
+                            break;
+                    }
+                    break;
+                case Monster.Mon608N:
+                    switch (CurrentAction)
+                    {
+                        case MirAction.近距攻击1:
+                            Libraries.Monsters[(ushort)Monster.Mon608N].DrawBlend((472 + FrameIndex + (int)Direction * 6), DrawLocation, Color.White, true);
+                            break;
+                        case MirAction.死亡动作:
+                            Libraries.Monsters[(ushort)Monster.Mon608N].DrawBlend((392 + FrameIndex + (int)Direction * 10), DrawLocation, Color.White, true);
                             break;
                     }
                     break;

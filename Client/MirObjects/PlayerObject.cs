@@ -2552,17 +2552,7 @@ namespace Client.MirObjects
                         //NextMotion += FrameInterval;
                     }
 
-                    if (WingEffect > 0 && CMain.Time >= NextMotion2)
-                    {
-                        if (this == User) GameScene.Scene.MapControl.TextureValid = false;
-
-                        if (SkipFrames) UpdateFrame2();
-
-                        if (UpdateFrame2() >= Frame.EffectCount)
-                            EffectFrameIndex = Frame.EffectCount - 1;
-                        else
-                            NextMotion2 += EffectFrameInterval;
-                    }
+                    UpdateWingEffect();
                     break;
                 case MirAction.弓箭跳跃:
                     if (!GameScene.CanMove) return;
@@ -2582,17 +2572,7 @@ namespace Client.MirObjects
                             SoundManager.PlaySound(20000 + 127 * 10 + 7);
                     }
                     //Backstep wingeffect
-                    if (WingEffect > 0 && CMain.Time >= NextMotion2)
-                    {
-                        if (this == User) GameScene.Scene.MapControl.TextureValid = false;
-
-                        if (SkipFrames) UpdateFrame2();
-
-                        if (UpdateFrame2() >= Frame.EffectCount)
-                            EffectFrameIndex = Frame.EffectCount - 1;
-                        else
-                            NextMotion2 += EffectFrameInterval;
-                    }
+                    UpdateWingEffect();
                     break;
                 case MirAction.左冲动作:
                     if (!GameScene.CanMove) return;
@@ -2639,7 +2619,7 @@ namespace Client.MirObjects
                         SetAction();
                     }
 
-                    if (FrameIndex < 0) EffectFrameIndex = 0;
+                    if (EffectFrameIndex < 0) EffectFrameIndex = 0;
                     break;
 
                 case MirAction.站立动作:
@@ -2665,17 +2645,7 @@ namespace Client.MirObjects
                         }
                     }
 
-                    if (WingEffect > 0 && CMain.Time >= NextMotion2)
-                    {
-                        GameScene.Scene.MapControl.TextureValid = false;
-
-                        if (SkipFrames) UpdateFrame2();
-
-                        if (UpdateFrame2() >= Frame.EffectCount)
-                            EffectFrameIndex = Frame.EffectCount - 1;
-                        else
-                            NextMotion2 += EffectFrameInterval;
-                    }
+                    UpdateWingEffect();
                     break;  
 
 
@@ -2734,17 +2704,7 @@ namespace Client.MirObjects
                         }
                     }
 
-                    if (WingEffect > 0 && CMain.Time >= NextMotion2)
-                    {
-                        GameScene.Scene.MapControl.TextureValid = false;
-
-                        if (SkipFrames) UpdateFrame2();
-
-                        if (UpdateFrame2() >= Frame.EffectCount)
-                            EffectFrameIndex = Frame.EffectCount - 1;
-                        else
-                            NextMotion2 += EffectFrameInterval;
-                    }
+                    UpdateWingEffect();
                     break;     
 
                 case MirAction.近距攻击1:
@@ -2781,17 +2741,7 @@ namespace Client.MirObjects
                         }
                     }
 
-                    if (WingEffect > 0 && CMain.Time >= NextMotion2)
-                    {
-                        GameScene.Scene.MapControl.TextureValid = false;
-
-                        if (SkipFrames) UpdateFrame2();
-
-                        if (UpdateFrame2() >= Frame.EffectCount)
-                            EffectFrameIndex = Frame.EffectCount - 1;
-                        else
-                            NextMotion2 += EffectFrameInterval;
-                    }
+                    UpdateWingEffect();
                     break;
 
                 case MirAction.远程攻击1:
@@ -2851,8 +2801,7 @@ namespace Client.MirObjects
                         else
                             NextMotion2 += EffectFrameInterval;
                     }
-                    if (User == this)
-                        AutoSpell();
+                    UpdateWingEffect();
                     break;
 
                 case MirAction.远程攻击2:
@@ -3081,17 +3030,8 @@ namespace Client.MirObjects
                             }
                         }
                     }
-                    if (WingEffect > 0 && CMain.Time >= NextMotion2)
-                    {
-                        GameScene.Scene.MapControl.TextureValid = false;
 
-                        if (SkipFrames) UpdateFrame2();
-
-                        if (UpdateFrame2() >= Frame.EffectCount)
-                            EffectFrameIndex = Frame.EffectCount - 1;
-                        else
-                            NextMotion2 += EffectFrameInterval;
-                    }
+                    UpdateWingEffect();
                     break;
 
                 case MirAction.被击动作:
@@ -3112,17 +3052,8 @@ namespace Client.MirObjects
                             NextMotion += FrameInterval;
                         }
                     }
-                    if (WingEffect > 0 && CMain.Time >= NextMotion2)
-                    {
-                        GameScene.Scene.MapControl.TextureValid = false;
 
-                        if (SkipFrames) UpdateFrame2();
-
-                        if (UpdateFrame2() >= Frame.EffectCount)
-                            EffectFrameIndex = Frame.EffectCount - 1;
-                        else
-                            NextMotion2 += EffectFrameInterval;
-                    }
+                    UpdateWingEffect();
                     break;
                 case MirAction.施法动作:
                     if (CMain.Time >= NextMotion)
@@ -3801,17 +3732,8 @@ namespace Client.MirObjects
 
                         }
                     }
-                    if (WingEffect > 0 && CMain.Time >= NextMotion2)
-                    {
-                        GameScene.Scene.MapControl.TextureValid = false;
 
-                        if (SkipFrames) UpdateFrame2();
-
-                        if (UpdateFrame2() >= Frame.EffectCount)
-                            EffectFrameIndex = Frame.EffectCount - 1;
-                        else
-                            NextMotion2 += EffectFrameInterval;
-                    }
+                    UpdateWingEffect();
                     break;
                 case MirAction.死亡动作:
                     if (CMain.Time >= NextMotion)
@@ -3835,17 +3757,8 @@ namespace Client.MirObjects
                             NextMotion += FrameInterval;
                         }
                     }
-                    if (WingEffect > 0 && CMain.Time >= NextMotion2)
-                    {
-                        GameScene.Scene.MapControl.TextureValid = false;
 
-                        if (SkipFrames) UpdateFrame2();
-
-                        if (UpdateFrame2() >= Frame.EffectCount)
-                            EffectFrameIndex = Frame.EffectCount - 1;
-                        else
-                            NextMotion2 += EffectFrameInterval;
-                    }
+                    UpdateWingEffect();
                     break;
                 case MirAction.死后尸体:
                     break;
@@ -3902,6 +3815,21 @@ namespace Client.MirObjects
             if (Frame.Reverse) return Math.Abs(--EffectFrameIndex);
 
             return ++EffectFrameIndex;
+        }
+
+        private void UpdateWingEffect()
+        {
+            if (WingEffect > 0 && CMain.Time >= NextMotion2)
+            {
+                GameScene.Scene.MapControl.TextureValid = false;
+
+                if (SkipFrames) UpdateFrame2();
+
+                if (UpdateFrame2() >= Frame.EffectCount)
+                    EffectFrameIndex = Frame.EffectCount - 1;
+                else
+                    NextMotion2 += EffectFrameInterval;
+            }
         }
 
 
@@ -5593,9 +5521,9 @@ namespace Client.MirObjects
         }
 
 
-        public void DrawWeapon()
-        {
-            if (Weapon < 0) return;
+		public void DrawWeapon()
+		{
+			if (Weapon < 0) return;
 
 			if (WeaponLibrary1 != null)
 			{

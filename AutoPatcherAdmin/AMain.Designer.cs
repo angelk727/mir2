@@ -221,7 +221,7 @@
             this.DownloadExistingButton.Name = "DownloadExistingButton";
             this.DownloadExistingButton.Size = new System.Drawing.Size(156, 30);
             this.DownloadExistingButton.TabIndex = 23;
-            this.DownloadExistingButton.Text = "导入现有数据";
+            this.DownloadExistingButton.Text = "下载现有数据";
             this.DownloadExistingButton.UseVisualStyleBackColor = true;
             this.DownloadExistingButton.Click += new System.EventHandler(this.DownloadExistingButton_Click);
             // 
@@ -231,9 +231,9 @@
             this.btnFixGZ.Name = "btnFixGZ";
             this.btnFixGZ.Size = new System.Drawing.Size(88, 30);
             this.btnFixGZ.TabIndex = 24;
-            this.btnFixGZ.Text = "修复 *.gz";
+            this.btnFixGZ.Text = "修复列表";
             this.btnFixGZ.UseVisualStyleBackColor = true;
-            this.btnFixGZ.Click += new System.EventHandler(this.btnFixGZ_Click);
+            this.btnFixGZ.Click += new System.EventHandler(this.BtnFixGZ_Click);
             // 
             // ProtocolDropDown
             // 
