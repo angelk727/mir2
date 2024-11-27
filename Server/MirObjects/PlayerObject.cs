@@ -2126,8 +2126,7 @@ namespace Server.MirObjects
 
                                 ReceiveChat(string.Format("角色 {0} 等级 {1} -> {2}", player.Name, old, player.Level), ChatType.System);
                                 MessageQueue.Enqueue(string.Format("游戏管理员:{3} 将角色:{0} 从{1}->{2}级", player.Name, old, player.Level, Name));
-                                Helpers.ChatSystem.SystemMessage(chatMessage: $"Player {player.Name} has been Levelled: {old} -> {player.Level} by GM: {Name}");
-
+                                Helpers.ChatSystem.SystemMessage(chatMessage: $"玩家 {player.Name} 的等级已被提升：{old} -> {player.Level}，操作人：管理员 {Name}");
                                 return;
                             }
                         }
@@ -2174,7 +2173,7 @@ namespace Server.MirObjects
 
                                 ReceiveChat(string.Format("{0}的英雄等级 {1} -> {2}", player.Name, old, hero.Level), ChatType.System);
                                 MessageQueue.Enqueue(string.Format("游戏管理员:{3} 将玩家{0}的英雄等级由{1}调整到{2}", player.Name, old, hero.Level, Name));
-                                Helpers.ChatSystem.SystemMessage(chatMessage: $"Player {player.Name}'s hero has been Levelled: {old} -> {hero.Level} by GM: {Name}");
+                                Helpers.ChatSystem.SystemMessage(chatMessage: $"玩家 {player.Name} 的英雄等级已被提升：{old} -> {hero.Level}，操作人：管理员 {Name}");
                                 return;
                             }
                         }
@@ -8369,7 +8368,7 @@ namespace Server.MirObjects
             Enqueue(new S.MarketFail { Reason = 7 });
         }
 
-        public void MarketGetBack(int mode, ulong auctionID)
+        public void MarketGetBack(MarketCollectionMode mode, ulong auctionID)
         {
             AuctionInfo GetAuction(ulong auctionID)
             {
@@ -8389,41 +8388,46 @@ namespace Server.MirObjects
                     return false;
                 }
 
-                if (!auction.Sold || auction.Expired)
+                if (mode == MarketCollectionMode.Any || (mode == MarketCollectionMode.Expired && auction.Expired))
                 {
-                    if (!CanGainItem(auction.Item))
+                    if (!auction.Sold || auction.Expired)
                     {
-                        Enqueue(new S.MarketFail { Reason = 5 });
+                        if (!CanGainItem(auction.Item))
+                        {
+                            Enqueue(new S.MarketFail { Reason = 5 });
+                            return false;
+                        }
+
+                        if (auction.CurrentBuyerInfo != null)
+                        {
+                        string message = string.Format("在对 {0} 的竞拍中已被超越。现退还 {1:#,##0} 金币", auction.Item.FriendlyName, auction.CurrentBid);
+
+                            Envir.MailCharacter(auction.CurrentBuyerInfo, gold: auction.CurrentBid, customMessage: message);
+                        }
+
+                        GainItem(auction.Item);
+                        return true;
+                    }
+                }
+
+                if (mode == MarketCollectionMode.Any || (mode == MarketCollectionMode.Sold && auction.Sold))
+                {
+                    uint cost = auction.ItemType == MarketItemType.Consign ? auction.Price : auction.CurrentBid;
+
+                    if (!CanGainGold(cost))
+                    {
+                        Enqueue(new S.MarketFail { Reason = 8 });
                         return false;
                     }
 
-                    if (auction.CurrentBuyerInfo != null)
-                    {
-                        string message = string.Format("在对 {0} 的竞拍中已被超越。现退还 {1:#,##0} 金币", auction.Item.FriendlyName, auction.CurrentBid);
+                    uint gold = (uint)Math.Max(0, cost - cost * Globals.Commission);
 
-                        Envir.MailCharacter(auction.CurrentBuyerInfo, gold: auction.CurrentBid, customMessage: message);
-                    }
-
-                    GainItem(auction.Item);
+                    GainGold(gold);
+                Enqueue(new S.MarketSuccess { Message = string.Format("您以 {1:#,##0} 金币的价格出售了 {0}。\n收益：{2:#,##0} 金币。\n佣金：{3:#,##0} 金币", auction.Item.FriendlyName, cost, gold, cost - gold) });
                     return true;
                 }
 
-                if (mode == 2)
-                    return false;
-
-                uint cost = auction.ItemType == MarketItemType.Consign ? auction.Price : auction.CurrentBid;
-
-                if (!CanGainGold(cost))
-                {
-                    Enqueue(new S.MarketFail { Reason = 8 });
-                    return false;
-                }
-
-                uint gold = (uint)Math.Max(0, cost - cost * Globals.Commission);
-
-                GainGold(gold);
-                Enqueue(new S.MarketSuccess { Message = string.Format("您以 {1:#,##0} 金币的价格出售了 {0}。\n收益：{2:#,##0} 金币。\n佣金：{3:#,##0} 金币", auction.Item.FriendlyName, cost, gold, cost - gold) });
-                return true;
+                return false;
             }
 
 

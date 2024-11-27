@@ -165,8 +165,8 @@ namespace Server
             ExportMongenButton = new Button();
             VisualizerButton = new Button();
             toolTip1 = new ToolTip(components);
-            MapSearchTxt = new TextBox();
-            MapSearchLabel = new Label();
+            MapSearchButton = new Button();
+            MapSearchTextBox = new TextBox();
             MapTabs.SuspendLayout();
             tabPage1.SuspendLayout();
             ((ISupportInitialize)MinimapPreview).BeginInit();
@@ -1690,32 +1690,30 @@ namespace Server
             VisualizerButton.UseVisualStyleBackColor = true;
             VisualizerButton.Click += VisualizerButton_Click;
             // 
-            // MapSearchTxt
+            // MapSearchButton
             // 
-            MapSearchTxt.Location = new Point(80, 10);
-            MapSearchTxt.Margin = new Padding(4, 3, 4, 3);
-            MapSearchTxt.Name = "MapSearchTxt";
-            MapSearchTxt.Size = new Size(155, 23);
-            MapSearchTxt.TabIndex = 21;
-            MapSearchTxt.KeyUp += MapSearchTxt_KeyUp;
+            MapSearchButton.Location = new Point(240, 12);
+            MapSearchButton.Name = "MapSearchButton";
+            MapSearchButton.Size = new Size(75, 23);
+            MapSearchButton.TabIndex = 33;
+            MapSearchButton.Text = "查找";
+            MapSearchButton.UseVisualStyleBackColor = true;
+            MapSearchButton.Click += MapSearchButton_Click;
             // 
-            // MapSearchLabel
+            // MapSearchTextBox
             // 
-            MapSearchLabel.AutoSize = true;
-            MapSearchLabel.Location = new Point(13, 13);
-            MapSearchLabel.Margin = new Padding(4, 0, 4, 0);
-            MapSearchLabel.Name = "MapSearchLabel";
-            MapSearchLabel.Size = new Size(59, 17);
-            MapSearchLabel.TabIndex = 21;
-            MapSearchLabel.Text = "名称搜索:";
+            MapSearchTextBox.Location = new Point(14, 11);
+            MapSearchTextBox.Name = "MapSearchTextBox";
+            MapSearchTextBox.Size = new Size(220, 23);
+            MapSearchTextBox.TabIndex = 35;
             // 
             // MapInfoForm
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(886, 646);
-            Controls.Add(MapSearchLabel);
-            Controls.Add(MapSearchTxt);
+            Controls.Add(MapSearchTextBox);
+            Controls.Add(MapSearchButton);
             Controls.Add(VisualizerButton);
             Controls.Add(ExportMongenButton);
             Controls.Add(ImportMongenButton);
@@ -1886,7 +1884,7 @@ namespace Server
         private PictureBox MinimapPreview;
         private ListBox lstParticles;
         private Label label48;
-        private TextBox MapSearchTxt;
-        private Label MapSearchLabel;
+        private Button MapSearchButton;
+        private TextBox MapSearchTextBox;
     }
 }

@@ -2102,3 +2102,10 @@ public enum SpellToggleState: sbyte
     False = 0,
     True = 1
 }
+
+public enum MarketCollectionMode : byte
+{
+    Any = 0,
+    Sold = 1,
+    Expired = 2
+}
