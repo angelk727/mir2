@@ -32,6 +32,8 @@
             tabPage1 = new TabPage();
             MonsterInfoPanel = new Panel();
             MonstersPreview = new PictureBox();
+            label13 = new Label();
+            DropPathTextBox = new TextBox();
             fileNameLabel = new Label();
             label11 = new Label();
             UndeadCheckBox = new CheckBox();
@@ -94,8 +96,6 @@
             PasteMButton = new Button();
             CopyMButton = new Button();
             DropBuilderButton = new Button();
-            DropPathTextBox = new TextBox();
-            label13 = new Label();
             TxtSearchMonster = new TextBox();
             label24 = new Label();
             tabControl1.SuspendLayout();
@@ -203,7 +203,26 @@
             MonstersPreview.Size = new Size(168, 218);
             MonstersPreview.TabIndex = 64;
             MonstersPreview.TabStop = false;
-            //
+            // 
+            // label13
+            // 
+            label13.AutoSize = true;
+            label13.Location = new Point(8, 350);
+            label13.Margin = new Padding(4, 0, 4, 0);
+            label13.Name = "label13";
+            label13.Size = new Size(80, 17);
+            label13.TabIndex = 92;
+            label13.Text = "爆率文件路径";
+            // 
+            // DropPathTextBox
+            // 
+            DropPathTextBox.Location = new Point(102, 343);
+            DropPathTextBox.Margin = new Padding(4);
+            DropPathTextBox.Name = "DropPathTextBox";
+            DropPathTextBox.Size = new Size(375, 23);
+            DropPathTextBox.TabIndex = 91;
+            DropPathTextBox.TextChanged += DropPathTextBox_TextChanged;
+            // 
             // fileNameLabel
             // 
             fileNameLabel.AutoSize = true;
@@ -839,32 +858,13 @@
             DropBuilderButton.UseVisualStyleBackColor = true;
             DropBuilderButton.Click += DropBuilderButton_Click;
             // 
-            // DropPathTextBox
-            // 
-            DropPathTextBox.Location = new Point(102, 343);
-            DropPathTextBox.Margin = new Padding(4);
-            DropPathTextBox.Name = "DropPathTextBox";
-            DropPathTextBox.Size = new Size(375, 23);
-            DropPathTextBox.TabIndex = 91;
-            DropPathTextBox.TextChanged += DropPathTextBox_TextChanged;
-            // 
-            // label13
-            // 
-            label13.AutoSize = true;
-            label13.Location = new Point(8, 350);
-            label13.Margin = new Padding(4, 0, 4, 0);
-            label13.Name = "label13";
-            label13.Size = new Size(80, 17);
-            label13.TabIndex = 92;
-            label13.Text = "爆率文件路径";
-            // 
             // TxtSearchMonster
             // 
             TxtSearchMonster.Location = new Point(324, 34);
             TxtSearchMonster.Name = "TxtSearchMonster";
             TxtSearchMonster.Size = new Size(133, 23);
             TxtSearchMonster.TabIndex = 27;
-            TxtSearchMonster.TextChanged += TxtSearchMonster_TextChanged;
+            TxtSearchMonster.KeyUp += TxtSearchMonster_KeyUp;
             // 
             // label24
             // 
@@ -899,7 +899,7 @@
             MonsterInfoPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)MonstersPreview).EndInit();
             ResumeLayout(false);
-
+            PerformLayout();
         }
 
         #endregion

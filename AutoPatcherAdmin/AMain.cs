@@ -585,7 +585,7 @@ namespace AutoPatcherAdmin
                     }
                 }
 
-                BeginUpload();
+                //BeginUpload();
 
             }
             catch (Exception ex)

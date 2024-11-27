@@ -49,7 +49,7 @@ namespace Server
         {
             //Group<MapInfo> orderedMapInfoList = Envir.MapInfoList.OrderBy(m => m.Title).ToList();
 
-            if (MapInfoListBox.Items.Count != Envir.MapInfoList.Count)
+            if (MapInfoListBox.Items.Count != Envir.MapInfoList.Count && string.IsNullOrWhiteSpace(MapSearchTxt.Text.Trim()))
             {
                 MapInfoListBox.Items.Clear();
                 DestMapComboBox.Items.Clear();
@@ -117,14 +117,14 @@ namespace Server
 
             if (mi.WeatherParticles != WeatherSetting.无效果)
             {
-                for (int i = 0; i <  lstParticles.Items.Count; i++)
+                for (int i = 0; i < lstParticles.Items.Count; i++)
                 {
                     var item = lstParticles.Items[i];
-                    if (item != null) 
+                    if (item != null)
                     {
                         if (((mi.WeatherParticles & (WeatherSetting)item)) == (WeatherSetting)item)
                             lstParticles.SetSelected(i, true);
-                            continue;
+                        continue;
                     }
                 }
             }
@@ -1815,6 +1815,28 @@ namespace Server
                 _selectedMapInfos[i].WeatherParticles = newvalue;
 
 
+            }
+        }
+
+        private void MapSearchTxt_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                SearchForMap();
+            }
+        }
+        private void SearchForMap()
+        {
+            MapInfoListBox.SelectedItem = "";
+            List<MapInfo> results = Envir.MapInfoList.FindAll(x => x.Title.ToLower().Contains(MapSearchTxt.Text.ToLower()));
+
+            if (results.Count > 0)
+            {
+                MapInfoListBox.Items.Clear();
+                foreach (MapInfo item in results)
+                {
+                    MapInfoListBox.Items.Add(item);
+                }
             }
         }
     }

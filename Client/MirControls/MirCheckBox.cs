@@ -61,6 +61,12 @@ namespace Client.MirControls
         #region LabelText
         public string LabelText
         {
+            get
+            {
+                if (_label == null || _label.IsDisposed)
+                    return "";
+                return _label.Text;
+            }
             set
             {
                 if (_label == null || _label.IsDisposed)

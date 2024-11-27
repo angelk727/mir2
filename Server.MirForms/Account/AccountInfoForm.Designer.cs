@@ -650,7 +650,7 @@ namespace Server
             // 
             // GameGold
             // 
-            GameGold.Text = "信用币";
+            GameGold.Text = "元宝";
             GameGold.Width = 70;
             // 
             // MatchFilterCheckBox
@@ -707,7 +707,7 @@ namespace Server
             TotalServerCredit.Name = "TotalServerCredit";
             TotalServerCredit.Size = new Size(107, 17);
             TotalServerCredit.TabIndex = 23;
-            TotalServerCredit.Text = "服务器信用币总数:";
+            TotalServerCredit.Text = "服务器元宝总数:";
             // 
             // FilterIPTextBox
             // 
