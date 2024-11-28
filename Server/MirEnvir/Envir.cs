@@ -3796,7 +3796,11 @@ namespace Server.MirEnvir
 
             MessageQueue.Enqueue("NPC脚本已重新加载");
         }
-
+        public void ReloadLua()
+        {
+            DefaultNPC = NPCScript.GetOrAdd((uint)Random.Next(1000000, 1999999), Settings.DefaultNPCFilename, NPCScriptType.AutoPlayer);
+            MessageQueue.Enqueue("触发脚本已重新加载");
+        }
         public void ReloadDrops()
         {
             for (var i = 0; i < MonsterInfoList.Count; i++)

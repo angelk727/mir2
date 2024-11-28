@@ -80,10 +80,10 @@ namespace Server
             startServerToolStripMenuItem = new ToolStripMenuItem();
             stopServerToolStripMenuItem = new ToolStripMenuItem();
             rebootServerToolStripMenuItem = new ToolStripMenuItem();
+            closeServerToolStripMenuItem = new ToolStripMenuItem();
             clearBlockedIPsToolStripMenuItem = new ToolStripMenuItem();
             toolStripMenuItem1 = new ToolStripSeparator();
             toolStripSeparator1 = new ToolStripSeparator();
-            closeServerToolStripMenuItem = new ToolStripMenuItem();
             reloadToolStripMenuItem = new ToolStripMenuItem();
             nPCsToolStripMenuItem = new ToolStripMenuItem();
             dropsToolStripMenuItem = new ToolStripMenuItem();
@@ -131,6 +131,7 @@ namespace Server
             CharacterToolStripMenuItem = new ToolStripMenuItem();
             UpTimeLabel = new ToolStripTextBox();
             InterfaceTimer = new Timer(components);
+            触发脚本ToolStripMenuItem = new ToolStripMenuItem();
             MainTabs.SuspendLayout();
             tabPage1.SuspendLayout();
             tabPage2.SuspendLayout();
@@ -525,6 +526,13 @@ namespace Server
             rebootServerToolStripMenuItem.Text = "重启服务器";
             rebootServerToolStripMenuItem.Click += rebootServerToolStripMenuItem_Click;
             // 
+            // closeServerToolStripMenuItem
+            // 
+            closeServerToolStripMenuItem.Name = "closeServerToolStripMenuItem";
+            closeServerToolStripMenuItem.Size = new Size(180, 22);
+            closeServerToolStripMenuItem.Text = "关闭服务器";
+            closeServerToolStripMenuItem.Click += closeServerToolStripMenuItem_Click;
+            // 
             // clearBlockedIPsToolStripMenuItem
             // 
             clearBlockedIPsToolStripMenuItem.Name = "clearBlockedIPsToolStripMenuItem";
@@ -542,16 +550,9 @@ namespace Server
             toolStripSeparator1.Name = "toolStripSeparator1";
             toolStripSeparator1.Size = new Size(177, 6);
             // 
-            // closeServerToolStripMenuItem
-            // 
-            closeServerToolStripMenuItem.Name = "closeServerToolStripMenuItem";
-            closeServerToolStripMenuItem.Size = new Size(180, 22);
-            closeServerToolStripMenuItem.Text = "关闭服务器";
-            closeServerToolStripMenuItem.Click += closeServerToolStripMenuItem_Click;
-            // 
             // reloadToolStripMenuItem
             // 
-            reloadToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { nPCsToolStripMenuItem, dropsToolStripMenuItem, lineMessageToolStripMenuItem, 物品信息ToolStripMenuItem, 怪物信息ToolStripMenuItem, toolStripMenuItem2, 任务信息ToolStripMenuItem, 配方信息ToolStripMenuItem, 商城物品ToolStripMenuItem });
+            reloadToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { nPCsToolStripMenuItem, dropsToolStripMenuItem, lineMessageToolStripMenuItem, 物品信息ToolStripMenuItem, 怪物信息ToolStripMenuItem, toolStripMenuItem2, 任务信息ToolStripMenuItem, 配方信息ToolStripMenuItem, 商城物品ToolStripMenuItem, 触发脚本ToolStripMenuItem });
             reloadToolStripMenuItem.Name = "reloadToolStripMenuItem";
             reloadToolStripMenuItem.Size = new Size(180, 22);
             reloadToolStripMenuItem.Text = "重新加载";
@@ -878,6 +879,13 @@ namespace Server
             InterfaceTimer.Enabled = true;
             InterfaceTimer.Tick += InterfaceTimer_Tick;
             // 
+            // 触发脚本ToolStripMenuItem
+            // 
+            触发脚本ToolStripMenuItem.Name = "触发脚本ToolStripMenuItem";
+            触发脚本ToolStripMenuItem.Size = new Size(180, 22);
+            触发脚本ToolStripMenuItem.Text = "触发脚本";
+            触发脚本ToolStripMenuItem.Click += 触发脚本ToolStripMenuItem_Click;
+            // 
             // SMain
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
@@ -1012,6 +1020,7 @@ namespace Server
         private ToolStripMenuItem 任务信息ToolStripMenuItem;
         private ToolStripMenuItem 配方信息ToolStripMenuItem;
         private ToolStripMenuItem 商城物品ToolStripMenuItem;
+        private ToolStripMenuItem 触发脚本ToolStripMenuItem;
     }
 }
 

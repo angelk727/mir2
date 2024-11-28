@@ -665,5 +665,10 @@ namespace Server
         {
             Envir.ReloadGameShop();
         }
+
+        private void 触发脚本ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Envir.ReloadLua();
+        }
     }
 }
