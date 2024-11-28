@@ -1517,17 +1517,17 @@ namespace ClientPackets
     {
         public override short Index { get { return (short)ClientPacketIds.MarketGetBack; } }
 
-        public MarketCollectionMode Mode;
+        public byte Mode;       // 0: Normal, 1: All solds, 2: All expired
         public ulong AuctionID;
 
         protected override void ReadPacket(BinaryReader reader)
         {
-            Mode = (MarketCollectionMode)reader.ReadByte();
+            Mode = reader.ReadByte();
             AuctionID = reader.ReadUInt64();
         }
         protected override void WritePacket(BinaryWriter writer)
         {
-            writer.Write((byte)Mode);
+            writer.Write(Mode);
             writer.Write(AuctionID);
         }
     }

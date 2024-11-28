@@ -64,7 +64,6 @@
         CheckHeroGender,
         CheckHeroItem,
         CheckBuff,
-        CheckTransform,
-        IsGuildLeader
+        CheckTransform
     }
 }

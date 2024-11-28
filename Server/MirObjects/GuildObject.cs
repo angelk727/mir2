@@ -407,7 +407,7 @@ namespace Server.MirObjects
                     if (MemberRank.Members.Count > 1) //Allows other leaders to leave without another leader online.
                         goto AllOk;
                 }
-                Kicker.ReceiveChat("会长不能脱离公会, 如需脱离请将会长权限授予其他会员", ChatType.System);
+                Kicker.ReceiveChat("解散行会的权限必须是最后一位行会会长", ChatType.System);
                 return false;
             }
 

@@ -363,7 +363,7 @@ namespace Server
             // 
             // columnHeader5
             // 
-            columnHeader5.Text = "公会等级";
+            columnHeader5.Text = "等级";
             columnHeader5.Width = 75;
             // 
             // columnHeader6

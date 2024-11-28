@@ -413,9 +413,6 @@ namespace Server.MirObjects
 
                     CheckList.Add(new NPCChecks(CheckType.CheckTransform, parts[1]));
                     break;
-                case "ISGUILDLEADER":
-                    CheckList.Add(new NPCChecks(CheckType.IsGuildLeader));
-                    break;
             }
 
         }
@@ -2814,10 +2811,6 @@ namespace Server.MirObjects
                             }
                             failed = player.TransformType != transformType;
                         }
-                        break;
-
-                    case CheckType.IsGuildLeader:
-                        failed = player.MyGuild == null || player.MyGuild.Ranks.Count == 0 || player.MyGuild.Ranks[0] != player.MyGuildRank;
                         break;
 
                 }
