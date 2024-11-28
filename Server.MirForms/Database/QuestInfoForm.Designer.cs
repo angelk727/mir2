@@ -68,6 +68,7 @@
             ExportButton = new Button();
             ImportButton = new Button();
             ExportSelectedButton = new Button();
+            QuestSearchBox = new TextBox();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             QuestInfoPanel.SuspendLayout();
@@ -78,7 +79,7 @@
             tabControl1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             tabControl1.Controls.Add(tabPage1);
             tabControl1.Location = new Point(203, 54);
-            tabControl1.Margin = new Padding(4, 4, 4, 4);
+            tabControl1.Margin = new Padding(4);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
             tabControl1.Size = new Size(702, 375);
@@ -88,9 +89,9 @@
             // 
             tabPage1.Controls.Add(QuestInfoPanel);
             tabPage1.Location = new Point(4, 26);
-            tabPage1.Margin = new Padding(4, 4, 4, 4);
+            tabPage1.Margin = new Padding(4);
             tabPage1.Name = "tabPage1";
-            tabPage1.Padding = new Padding(4, 4, 4, 4);
+            tabPage1.Padding = new Padding(4);
             tabPage1.Size = new Size(694, 345);
             tabPage1.TabIndex = 0;
             tabPage1.Text = "信息";
@@ -130,7 +131,7 @@
             QuestInfoPanel.Controls.Add(label1);
             QuestInfoPanel.Enabled = false;
             QuestInfoPanel.Location = new Point(4, 8);
-            QuestInfoPanel.Margin = new Padding(4, 4, 4, 4);
+            QuestInfoPanel.Margin = new Padding(4);
             QuestInfoPanel.Name = "QuestInfoPanel";
             QuestInfoPanel.Size = new Size(682, 326);
             QuestInfoPanel.TabIndex = 11;
@@ -148,7 +149,7 @@
             // TimeLimitTextBox
             // 
             TimeLimitTextBox.Location = new Point(532, 193);
-            TimeLimitTextBox.Margin = new Padding(4, 4, 4, 4);
+            TimeLimitTextBox.Margin = new Padding(4);
             TimeLimitTextBox.Name = "TimeLimitTextBox";
             TimeLimitTextBox.Size = new Size(140, 23);
             TimeLimitTextBox.TabIndex = 58;
@@ -167,7 +168,7 @@
             // RequiredMaxLevelTextBox
             // 
             RequiredMaxLevelTextBox.Location = new Point(532, 40);
-            RequiredMaxLevelTextBox.Margin = new Padding(4, 4, 4, 4);
+            RequiredMaxLevelTextBox.Margin = new Padding(4);
             RequiredMaxLevelTextBox.MaxLength = 3;
             RequiredMaxLevelTextBox.Name = "RequiredMaxLevelTextBox";
             RequiredMaxLevelTextBox.Size = new Size(140, 23);
@@ -187,7 +188,7 @@
             // QFlagTextBox
             // 
             QFlagTextBox.Location = new Point(102, 283);
-            QFlagTextBox.Margin = new Padding(4, 4, 4, 4);
+            QFlagTextBox.Margin = new Padding(4);
             QFlagTextBox.Name = "QFlagTextBox";
             QFlagTextBox.Size = new Size(209, 23);
             QFlagTextBox.TabIndex = 54;
@@ -226,7 +227,7 @@
             // QItemTextBox
             // 
             QItemTextBox.Location = new Point(102, 248);
-            QItemTextBox.Margin = new Padding(4, 4, 4, 4);
+            QItemTextBox.Margin = new Padding(4);
             QItemTextBox.Name = "QItemTextBox";
             QItemTextBox.Size = new Size(209, 23);
             QItemTextBox.TabIndex = 49;
@@ -235,7 +236,7 @@
             // QKillTextBox
             // 
             QKillTextBox.Location = new Point(102, 212);
-            QKillTextBox.Margin = new Padding(4, 4, 4, 4);
+            QKillTextBox.Margin = new Padding(4);
             QKillTextBox.Name = "QKillTextBox";
             QKillTextBox.Size = new Size(209, 23);
             QKillTextBox.TabIndex = 48;
@@ -244,7 +245,7 @@
             // QGotoTextBox
             // 
             QGotoTextBox.Location = new Point(102, 178);
-            QGotoTextBox.Margin = new Padding(4, 4, 4, 4);
+            QGotoTextBox.Margin = new Padding(4);
             QGotoTextBox.Name = "QGotoTextBox";
             QGotoTextBox.Size = new Size(209, 23);
             QGotoTextBox.TabIndex = 47;
@@ -285,7 +286,7 @@
             RequiredClassComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             RequiredClassComboBox.FormattingEnabled = true;
             RequiredClassComboBox.Location = new Point(532, 108);
-            RequiredClassComboBox.Margin = new Padding(4, 4, 4, 4);
+            RequiredClassComboBox.Margin = new Padding(4);
             RequiredClassComboBox.Name = "RequiredClassComboBox";
             RequiredClassComboBox.Size = new Size(140, 25);
             RequiredClassComboBox.TabIndex = 43;
@@ -296,7 +297,7 @@
             RequiredQuestComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             RequiredQuestComboBox.FormattingEnabled = true;
             RequiredQuestComboBox.Location = new Point(532, 74);
-            RequiredQuestComboBox.Margin = new Padding(4, 4, 4, 4);
+            RequiredQuestComboBox.Margin = new Padding(4);
             RequiredQuestComboBox.Name = "RequiredQuestComboBox";
             RequiredQuestComboBox.Size = new Size(140, 25);
             RequiredQuestComboBox.TabIndex = 42;
@@ -305,7 +306,7 @@
             // RequiredMinLevelTextBox
             // 
             RequiredMinLevelTextBox.Location = new Point(532, 6);
-            RequiredMinLevelTextBox.Margin = new Padding(4, 4, 4, 4);
+            RequiredMinLevelTextBox.Margin = new Padding(4);
             RequiredMinLevelTextBox.MaxLength = 3;
             RequiredMinLevelTextBox.Name = "RequiredMinLevelTextBox";
             RequiredMinLevelTextBox.Size = new Size(140, 23);
@@ -327,7 +328,7 @@
             QTypeComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             QTypeComboBox.FormattingEnabled = true;
             QTypeComboBox.Location = new Point(102, 108);
-            QTypeComboBox.Margin = new Padding(4, 4, 4, 4);
+            QTypeComboBox.Margin = new Padding(4);
             QTypeComboBox.Name = "QTypeComboBox";
             QTypeComboBox.Size = new Size(209, 25);
             QTypeComboBox.TabIndex = 31;
@@ -346,7 +347,7 @@
             // OpenQButton
             // 
             OpenQButton.Location = new Point(316, 140);
-            OpenQButton.Margin = new Padding(4, 4, 4, 4);
+            OpenQButton.Margin = new Padding(4);
             OpenQButton.Name = "OpenQButton";
             OpenQButton.Size = new Size(88, 30);
             OpenQButton.TabIndex = 30;
@@ -357,7 +358,7 @@
             // QFileNameTextBox
             // 
             QFileNameTextBox.Location = new Point(102, 143);
-            QFileNameTextBox.Margin = new Padding(4, 4, 4, 4);
+            QFileNameTextBox.Margin = new Padding(4);
             QFileNameTextBox.Name = "QFileNameTextBox";
             QFileNameTextBox.Size = new Size(209, 23);
             QFileNameTextBox.TabIndex = 22;
@@ -376,7 +377,7 @@
             // QGroupTextBox
             // 
             QGroupTextBox.Location = new Point(102, 74);
-            QGroupTextBox.Margin = new Padding(4, 4, 4, 4);
+            QGroupTextBox.Margin = new Padding(4);
             QGroupTextBox.MaxLength = 20;
             QGroupTextBox.Name = "QGroupTextBox";
             QGroupTextBox.Size = new Size(209, 23);
@@ -386,7 +387,7 @@
             // QNameTextBox
             // 
             QNameTextBox.Location = new Point(102, 40);
-            QNameTextBox.Margin = new Padding(4, 4, 4, 4);
+            QNameTextBox.Margin = new Padding(4);
             QNameTextBox.MaxLength = 30;
             QNameTextBox.Name = "QNameTextBox";
             QNameTextBox.Size = new Size(209, 23);
@@ -406,7 +407,7 @@
             // QuestIndexTextBox
             // 
             QuestIndexTextBox.Location = new Point(102, 6);
-            QuestIndexTextBox.Margin = new Padding(4, 4, 4, 4);
+            QuestIndexTextBox.Margin = new Padding(4);
             QuestIndexTextBox.Name = "QuestIndexTextBox";
             QuestIndexTextBox.ReadOnly = true;
             QuestIndexTextBox.Size = new Size(54, 23);
@@ -425,7 +426,7 @@
             // RemoveButton
             // 
             RemoveButton.Location = new Point(108, 16);
-            RemoveButton.Margin = new Padding(4, 4, 4, 4);
+            RemoveButton.Margin = new Padding(4);
             RemoveButton.Name = "RemoveButton";
             RemoveButton.Size = new Size(88, 30);
             RemoveButton.TabIndex = 14;
@@ -436,7 +437,7 @@
             // AddButton
             // 
             AddButton.Location = new Point(14, 16);
-            AddButton.Margin = new Padding(4, 4, 4, 4);
+            AddButton.Margin = new Padding(4);
             AddButton.Name = "AddButton";
             AddButton.Size = new Size(88, 30);
             AddButton.TabIndex = 13;
@@ -450,7 +451,7 @@
             QuestInfoListBox.FormattingEnabled = true;
             QuestInfoListBox.ItemHeight = 17;
             QuestInfoListBox.Location = new Point(14, 54);
-            QuestInfoListBox.Margin = new Padding(4, 4, 4, 4);
+            QuestInfoListBox.Margin = new Padding(4);
             QuestInfoListBox.Name = "QuestInfoListBox";
             QuestInfoListBox.SelectionMode = SelectionMode.MultiExtended;
             QuestInfoListBox.Size = new Size(181, 361);
@@ -460,7 +461,7 @@
             // PasteMButton
             // 
             PasteMButton.Location = new Point(298, 16);
-            PasteMButton.Margin = new Padding(4, 4, 4, 4);
+            PasteMButton.Margin = new Padding(4);
             PasteMButton.Name = "PasteMButton";
             PasteMButton.Size = new Size(88, 30);
             PasteMButton.TabIndex = 22;
@@ -471,7 +472,7 @@
             // CopyMButton
             // 
             CopyMButton.Location = new Point(203, 16);
-            CopyMButton.Margin = new Padding(4, 4, 4, 4);
+            CopyMButton.Margin = new Padding(4);
             CopyMButton.Name = "CopyMButton";
             CopyMButton.Size = new Size(88, 30);
             CopyMButton.TabIndex = 21;
@@ -481,7 +482,7 @@
             // ExportButton
             // 
             ExportButton.Location = new Point(818, 16);
-            ExportButton.Margin = new Padding(4, 4, 4, 4);
+            ExportButton.Margin = new Padding(4);
             ExportButton.Name = "ExportButton";
             ExportButton.Size = new Size(88, 30);
             ExportButton.TabIndex = 23;
@@ -492,7 +493,7 @@
             // ImportButton
             // 
             ImportButton.Location = new Point(581, 16);
-            ImportButton.Margin = new Padding(4, 4, 4, 4);
+            ImportButton.Margin = new Padding(4);
             ImportButton.Name = "ImportButton";
             ImportButton.Size = new Size(88, 30);
             ImportButton.TabIndex = 24;
@@ -503,7 +504,7 @@
             // ExportSelectedButton
             // 
             ExportSelectedButton.Location = new Point(674, 16);
-            ExportSelectedButton.Margin = new Padding(4, 4, 4, 4);
+            ExportSelectedButton.Margin = new Padding(4);
             ExportSelectedButton.Name = "ExportSelectedButton";
             ExportSelectedButton.Size = new Size(136, 30);
             ExportSelectedButton.TabIndex = 25;
@@ -511,11 +512,22 @@
             ExportSelectedButton.UseVisualStyleBackColor = true;
             ExportSelectedButton.Click += ExportSelected_Click;
             // 
+            // QuestSearchBox
+            // 
+            QuestSearchBox.Location = new Point(394, 20);
+            QuestSearchBox.Margin = new Padding(4);
+            QuestSearchBox.MaxLength = 30;
+            QuestSearchBox.Name = "QuestSearchBox";
+            QuestSearchBox.Size = new Size(169, 23);
+            QuestSearchBox.TabIndex = 60;
+            QuestSearchBox.KeyUp += QuestSearchBox_KeyUp;
+            // 
             // QuestInfoForm
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(919, 435);
+            Controls.Add(QuestSearchBox);
             Controls.Add(ExportSelectedButton);
             Controls.Add(ImportButton);
             Controls.Add(ExportButton);
@@ -525,7 +537,7 @@
             Controls.Add(RemoveButton);
             Controls.Add(AddButton);
             Controls.Add(QuestInfoListBox);
-            Margin = new Padding(4, 4, 4, 4);
+            Margin = new Padding(4);
             Name = "QuestInfoForm";
             Text = "任务信息列表";
             FormClosed += QuestInfoForm_FormClosed;
@@ -534,6 +546,7 @@
             QuestInfoPanel.ResumeLayout(false);
             QuestInfoPanel.PerformLayout();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -578,5 +591,6 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox TimeLimitTextBox;
+        private TextBox QuestSearchBox;
     }
 }

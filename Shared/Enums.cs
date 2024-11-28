@@ -1037,7 +1037,9 @@ public enum EquipmentSlot : byte
     腰带 = 10,
     靴子 = 11,
     守护石 = 12,
-    坐骑 = 13
+    坐骑 = 13,
+    变身 = 14,
+    盾牌 = 15
 }
 
 public enum MountSlot : byte
@@ -1561,6 +1563,7 @@ public enum BuffType : byte
     摩鲁的黄色药剂,
     古代宗师祝福,
     黄金宗师祝福,
+    DogYoLin7
 }
 
 [Flags]

@@ -7,6 +7,7 @@ using Client.MirSounds;
 using SlimDX;
 using Font = System.Drawing.Font;
 using C = ClientPackets;
+using System.Windows.Forms;
 
 namespace Client.MirScenes.Dialogs
 {
@@ -21,7 +22,7 @@ namespace Client.MirScenes.Dialogs
         public MirImageControl ExperienceBar, WeightBar, LeftCap, RightCap;
         public MirButton GameShopButton, MenuButton, InventoryButton, CharacterButton, SkillButton, QuestButton, OptionButton;
         public MirControl HealthOrb;
-        public MirLabel HealthLabel, ManaLabel, TopLabel, BottomLabel, LevelLabel, CharacterName, ExperienceLabel, GoldLabel, WeightLabel, SpaceLabel, AModeLabel, PModeLabel, SModeLabel;
+        public MirLabel HealthLabel, ManaLabel, TopLabel, BottomLabel, LevelLabel, CharacterName, ExperienceLabel, GoldLabel, WeightLabel, SpaceLabel, AModeLabel, PModeLabel, SModeLabel, PingLabel;
         public HeroInfoPanel HeroInfoPanel;
         public HeroBehaviourPanel HeroBehaviourPanel;
         public HeroAIDialog HeroAIDialog;
@@ -39,6 +40,16 @@ namespace Client.MirScenes.Dialogs
             Library = Libraries.Prguse;
             Location = new Point(((Settings.ScreenWidth / 2) - (Size.Width / 2)), Settings.ScreenHeight - Size.Height);
             PixelDetect = true;
+
+            PingLabel = new MirLabel
+            {
+                AutoSize = true,
+                ForeColour = Color.Yellow,
+                OutLineColour = Color.Black,
+                Parent = this,
+                Location = new Point(Settings.Resolution != 800 ? 1065 : 675, Settings.Resolution != 800 ? -463 : -265),
+                Visible = true
+            };
 
             LeftCap = new MirImageControl
             {
@@ -434,7 +445,7 @@ namespace Client.MirScenes.Dialogs
                     SModeLabel.Text = "[技能模式 Ctrl]";
                     break;
             }
-
+            OnPingChanged();
             if (Settings.HPView)
             {
                 HealthLabel.Text = string.Format("生命值 {0}/{1}", User.HP, User.Stats[Stat.HP]);
@@ -465,6 +476,24 @@ namespace Client.MirScenes.Dialogs
             CharacterName.Text = User.Name;
             SpaceLabel.Text = User.Inventory.Count(t => t == null).ToString();
             WeightLabel.Text = (MapObject.User.Stats[Stat.背包负重] - MapObject.User.CurrentBagWeight).ToString();
+        }
+        public void OnPingChanged()
+        {
+            if (GameScene.Scene.PingTime < 100)
+            {
+                PingLabel.ForeColour = Color.Lime;
+            }
+            else if (GameScene.Scene.PingTime < 300)
+            {
+                PingLabel.ForeColour = Color.Yellow;
+            }
+            else
+            {
+                PingLabel.ForeColour = Color.Red;
+            }
+
+            PingLabel.Text = string.Format("Ping: {0}  FPS: {1}", GameScene.Scene.PingTime, CMain.FPS);
+            PingLabel.Visible = Settings.ShowPing;
         }
 
         private void Label_SizeChanged(object sender, EventArgs e)
@@ -765,6 +794,8 @@ namespace Client.MirScenes.Dialogs
 
         public void ReceiveChat(string text, ChatType type)
         {
+            if (Settings.HideSystem2 && type == ChatType.System2)
+                return;
             Color foreColour, backColour;
 
             switch (type)

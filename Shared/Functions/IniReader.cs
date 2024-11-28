@@ -30,7 +30,17 @@ public class InIReader
     #endregion
 
     #region Functions
-    private string FindValue(string section, string key)
+
+    public List<string> GetSections()
+    {
+        List<string> sections = new List<string>();
+        for (int a = 0; a < _contents.Count; a++)
+            if (_contents[a].StartsWith("[") && _contents[a].EndsWith("]"))
+                sections.Add(_contents[a].Substring(1, _contents[a].Length - 2));
+
+        return sections;
+    }
+    public string FindValue(string section, string key)
     {
         for (int a = 0; a < _contents.Count; a++)
             if (String.CompareOrdinal(_contents[a], "[" + section + "]") == 0)

@@ -73,7 +73,7 @@ namespace Client.MirObjects
 
         public long BlindTime;
         public byte BlindCount;
-
+        public uint Health, MaxHealth;
         private byte percentHealth;
         public virtual byte PercentHealth
         {
@@ -112,7 +112,7 @@ namespace Client.MirObjects
 
         public MLibrary BodyLibrary;
         public Color DrawColour = Color.White, NameColour = Color.White, LightColour = Color.White;
-        public MirLabel NameLabel, ChatLabel, GuildLabel;
+        public MirLabel NameLabel, ChatLabel, GuildLabel, HealthBarLabel;
         public long ChatTime;
         public int DrawFrame, DrawWingFrame;
         public Point DrawLocation, Movement, FinalDrawLocation, OffSetMove;
@@ -472,6 +472,22 @@ namespace Client.MirObjects
             };
             ChatTime = CMain.Time + 5000;
         }
+
+        public virtual void DrawHealthNum()
+        {
+            if (!Settings.ShowHealth)
+                return;
+
+            CreateHealthNum();
+
+            if (HealthBarLabel == null || HealthBarLabel.IsDisposed || Dead) return;
+            if (MaxHealth == 0)
+                return;
+
+            HealthBarLabel.Text = String.Format("{0}/{1}", Health, MaxHealth);
+            HealthBarLabel.Location = new Point(DisplayRectangle.X + (48 - HealthBarLabel.Size.Width) / 2, DisplayRectangle.Y - (65 + HealthBarLabel.Size.Height) - (Dead ? 35 : 0));
+            HealthBarLabel.Draw();
+        }
         public virtual void DrawChat()
         {
             if (ChatLabel == null || ChatLabel.IsDisposed) return;
@@ -600,6 +616,21 @@ namespace Client.MirObjects
             Libraries.Prguse2.Draw(index, new Rectangle(0, 0, (int)(32 * PercentHealth / 100F), 4), new Point(DisplayRectangle.X + 8, DisplayRectangle.Y - 64), Color.White, false);
         }
 
+        protected void CreateHealthNum()
+        {
+            if (HealthBarLabel != null) return;
+
+            HealthBarLabel = new MirLabel
+            {
+                AutoSize = true,
+                BackColour = Color.Transparent,
+                ForeColour = Color.White,
+                OutLine = true,
+                OutLineColour = Color.Black,
+                DrawFormat = TextFormatFlags.HorizontalCenter,
+                Text = "",
+            };
+        }
         public void DrawPoison()
         {
             byte poisoncount = 0;

@@ -84,6 +84,7 @@
             ExportButton = new Button();
             ImportButton = new Button();
             ExportSelectedButton = new Button();
+            NPCSearchTxt = new TextBox();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)NPCPreview).BeginInit();
@@ -730,11 +731,21 @@
             ExportSelectedButton.UseVisualStyleBackColor = true;
             ExportSelectedButton.Click += ExportSelected_Click;
             // 
+            // NPCSearchTxt
+            // 
+            NPCSearchTxt.Location = new Point(394, 20);
+            NPCSearchTxt.Margin = new Padding(4, 3, 4, 3);
+            NPCSearchTxt.Name = "NPCSearchTxt";
+            NPCSearchTxt.Size = new Size(177, 23);
+            NPCSearchTxt.TabIndex = 65;
+            NPCSearchTxt.KeyUp += NPCSearchTxt_KeyUp;
+            // 
             // NPCInfoForm
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(917, 453);
+            Controls.Add(NPCSearchTxt);
             Controls.Add(ExportSelectedButton);
             Controls.Add(ImportButton);
             Controls.Add(ExportButton);
@@ -758,6 +769,7 @@
             ((System.ComponentModel.ISupportInitialize)EndMin_num).EndInit();
             ((System.ComponentModel.ISupportInitialize)StartMin_num).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -818,5 +830,6 @@
         private System.Windows.Forms.CheckBox TeleportToCheckBox;
         private CheckBox ConquestVisible_checkbox;
         private PictureBox NPCPreview;
+        private TextBox NPCSearchTxt;
     }
 }

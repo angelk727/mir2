@@ -4,9 +4,11 @@
     public List<BaseStat> Stats = new List<BaseStat>();
 
     public Stats Caps = new Stats();
+    
 
     public BaseStats(MirClass job)
     {
+
         Job = job;
 
         switch (job)

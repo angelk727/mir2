@@ -53,7 +53,7 @@ namespace Server
 
         private void UpdateInterface()
         {
-            if (NPCInfoListBox.Items.Count != Envir.NPCInfoList.Count)
+            if (NPCInfoListBox.Items.Count != Envir.NPCInfoList.Count && string.IsNullOrWhiteSpace(NPCSearchTxt.Text.Trim()))
             {
                 NPCInfoListBox.Items.Clear();
 
@@ -642,6 +642,28 @@ namespace Server
 
             for (int i = 0; i < _selectedNPCInfos.Count; i++)
                 _selectedNPCInfos[i].ConquestVisible = ConquestVisible_checkbox.Checked;
+        }
+
+        private void NPCSearchTxt_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                SearchForNPC();
+            }
+        }
+        private void SearchForNPC()
+        {
+            NPCInfoListBox.SelectedItem = "";
+            List<NPCInfo> results = Envir.NPCInfoList.FindAll(x => x.Name.ToLower().Contains(NPCSearchTxt.Text.ToLower()));
+
+            if (results.Count > 0)
+            {
+                NPCInfoListBox.Items.Clear();
+                foreach (NPCInfo item in results)
+                {
+                    NPCInfoListBox.Items.Add(item);
+                }
+            }
         }
     }
 }

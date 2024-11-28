@@ -59,7 +59,7 @@
                          LastOnline = "上次连线",
 
                          Gold = "金币",
-                         Credit = "信用币",
+                         Credit = "元宝",
 
                          YouGained = "你获得了 {0}",
 
