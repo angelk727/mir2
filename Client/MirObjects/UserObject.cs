@@ -1,5 +1,4 @@
-﻿using Client.MirMagic;
-using Client.MirScenes;
+﻿using Client.MirScenes;
 using Client.MirScenes.Dialogs;
 using S = ServerPackets;
 
@@ -101,7 +100,7 @@ namespace Client.MirObjects
             ExpandedStorageExpiryTime = info.ExpandedStorageExpiryTime;
 
             Magics = info.Magics;
-            for (int i = 0; i < Magics.Count; i++)
+            for (int i = 0; i < Magics.Count; i++ )
             {
                 Magics[i].CastTime += CMain.Time;
             }
@@ -176,44 +175,11 @@ namespace Client.MirObjects
         private void RefreshLevelStats()
         {
             Light = 0;
+
             foreach (var stat in CoreStats.Stats)
             {
                 Stats[stat.Type] = stat.Calculate(Class, Level);
             }
-        }
-
-        public bool IsMagicInCD(Spell spell)
-        {
-            return GetMagicTimeLeft(spell) > 0;
-        }
-
-        public int GetMagicTimeLeft(Spell spell)
-        {
-            ClientMagic magic = GetMagic(spell);
-            return GetMagicTimeLeft(magic);
-        }
-
-        public int GetMagicTimeLeft(ClientMagic magic)
-        {
-            if (magic == null || magic.CastTime <= 0)
-                return 0;
-
-            return Math.Max(0, (int)(magic.CastTime + GetMagicDelay(magic) - CMain.Time));
-        }
-        public int GetMagicDelay(ClientMagic magic)
-        {
-            long extraDelay = 0;
-            if (magic.Spell == Spell.SlashingBurst && Buffs.Any(x => x == BuffType.金刚不坏))
-                extraDelay = 30000;
-            else if (magic.Spell == Spell.HeavenlySecrets && magic.Level == 4)
-                return 300000;
-
-            return (int)(magic.Delay + extraDelay);
-        }
-
-        public bool CheckMagicMP(ClientMagic magic)
-        {
-            return magic.BaseCost + magic.LevelCost * magic.Level <= MP;
         }
 
         private void RefreshBagWeight()
@@ -371,7 +337,7 @@ namespace Client.MirObjects
 
                 Stats.Add(realItem.Stats);
                 Stats.Add(temp.AddedStats);
-
+        
                 if (realItem.Light > Light) Light = realItem.Light;
                 if (realItem.Unique != SpecialItemMode.None)
                 {
@@ -651,7 +617,7 @@ namespace Client.MirObjects
         private void RefreshSkills()
         {
             int[] spiritSwordLvPlus = { 0, 3, 5, 8 };
-            int[] slayingLvPlus = { 5, 6, 7, 8 };
+            int[] slayingLvPlus = {5, 6, 7, 8};
             for (int i = 0; i < Magics.Count; i++)
             {
                 ClientMagic magic = Magics[i];
@@ -869,156 +835,7 @@ namespace Client.MirObjects
             NextMagicDirection = 0;
             NextMagicLocation = Point.Empty;
             NextMagicObject = null;
-        }
-
-        public override void DrawHealthNum()
-        {
-            if (!Settings.ShowHealth)
-                return;
-
-            CreateHealthNum();
-
-            if (HealthBarLabel == null || HealthBarLabel.IsDisposed || Dead) return;
-
-            if (Level > 0 && Settings.ShowLevel)
-                HealthBarLabel.Text = String.Format("{0}/{1}/Z{2}", HP, Stats[Stat.HP], Level);
-            else
-                HealthBarLabel.Text = String.Format("{0}/{1}", HP, Stats[Stat.HP]);
-
-            HealthBarLabel.Location = new Point(DisplayRectangle.X + (48 - HealthBarLabel.Size.Width) / 2, DisplayRectangle.Y - (65 + HealthBarLabel.Size.Height) - (Dead ? 35 : 0));
-            HealthBarLabel.Draw();
-        }
-
-        public bool CanRun(MirDirection dir)
-        {
-            if (User.InTrapRock) return false;
-            if (User.CurrentBagWeight > User.Stats[Stat.背包负重]) return false;
-            if (User.CurrentWearWeight > User.Stats[Stat.背包负重]) return false;
-            if (CanWalk(dir) && GameScene.Scene.MapControl.EmptyCell(Functions.PointMove(User.CurrentLocation, dir, 2)))
-            {
-                if (User.RidingMount || User.Sprint && !User.Sneaking)
-                {
-                    return GameScene.Scene.MapControl.EmptyCell(Functions.PointMove(User.CurrentLocation, dir, 3));
-                }
-
-                return true;
-            }
-
-            return false;
-        }
-
-        public bool CanWalk(MirDirection dir)
-        {
-            return GameScene.Scene.MapControl.EmptyCell(Functions.PointMove(CurrentLocation, dir, 1)) && !InTrapRock;
-        }
-
-        public bool CanRideAttack()
-        {
-            if (RidingMount)
-            {
-                UserItem item = Equipment[(int)EquipmentSlot.坐骑];
-                if (item == null || item.Slots.Length < 4 || item.Slots[(int)MountSlot.Bells] == null) return false;
-            }
-
-            return true;
-        }
-
-        public UserItem GetPoison(int count, byte shape = 0)
-        {
-            for (int i = 0; i < Inventory.Length; i++)
-            {
-                UserItem item = Inventory[i];
-                if (item != null && item.Info.Type == ItemType.护身符 && item.Count >= count)
-                {
-                    if (shape == 0)
-                    {
-                        if (item.Info.Shape == 1 || item.Info.Shape == 2)
-                            return item;
-                    }
-                    else
-                    {
-                        if (item.Info.Shape == shape)
-                            return item;
-                    }
-                }
-            }
-
-            return null;
-        }
-        public UserItem GetAmulet(int count, int shape = 0)
-        {
-            for (int i = 0; i < Inventory.Length; i++)
-            {
-                UserItem item = Inventory[i];
-                if (item != null && item.Info.Type == ItemType.护身符 && item.Info.Shape == shape && item.Count >= count)
-                    return item;
-            }
-
-            return null;
-        }
-        public bool IsMagicToggle(Spell spell)
-        {
-            ClientMagic clientMagic = GetMagic(spell);
-            return clientMagic != null && clientMagic.Toggle;
-        }
-        protected override void AutoSpell()
-        {
-            Spell = Spell.None;
-            ClientMagic magic;
-            if (!RidingMount)
-            {
-                if (IsMagicToggle(Spell.Slaying) && TargetObject != null)
-                    Spell = Spell.Slaying;
-
-                if (IsMagicToggle(Spell.Thrusting))// && GameScene.Scene.MapControl.HasTarget(Functions.PointMove(CurrentLocation, Direction, 2)))
-                    Spell = Spell.Thrusting;
-
-                if (IsMagicToggle(Spell.HalfMoon))
-                {
-                    if (TargetObject != null && GameScene.Scene.MapControl.CanHalfMoon(CurrentLocation, Direction))
-                    {
-                        magic = GetMagic(Spell.HalfMoon);
-                        if (magic != null && CheckMagicMP(magic))
-                            Spell = Spell.HalfMoon;
-                    }
-                }
-
-                if (IsMagicToggle(Spell.CrossHalfMoon))
-                {
-                    if (TargetObject != null && GameScene.Scene.MapControl.CanCrossHalfMoon(CurrentLocation))
-                    {
-                        magic = GetMagic(Spell.CrossHalfMoon);
-                        if (magic != null && CheckMagicMP(magic))
-                            Spell = Spell.CrossHalfMoon;
-                    }
-                }
-
-                if (IsMagicToggle(Spell.DoubleSlash))
-                {
-                    magic = GetMagic(Spell.DoubleSlash);
-                    if (magic != null && CheckMagicMP(magic))
-                        Spell = Spell.DoubleSlash;
-                }
-
-
-                if (IsMagicToggle(Spell.TwinDrakeBlade) && TargetObject != null)
-                {
-                    magic = GetMagic(Spell.TwinDrakeBlade);
-                    if (magic != null && CheckMagicMP(magic))
-                        Spell = Spell.TwinDrakeBlade;
-                }
-
-                if (IsMagicToggle(Spell.FlamingSword))
-                {
-                    if (TargetObject != null && Functions.InRange(CurrentLocation, TargetObject.CurrentLocation, 1))
-                    {
-                        magic = GetMagic(Spell.FlamingSword);
-                        if (magic != null)
-                            Spell = Spell.FlamingSword;
-                    }
-                }
-            }
-        }
+        } 
     }
 }
 

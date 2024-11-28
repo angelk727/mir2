@@ -26,7 +26,6 @@ namespace Client
                 _useTestConfig = value;
             }
         }
-        public static InIReader AssistReader;
 
         public const string DataPath = @".\Data\",
                             MapPath = @".\Map\",
@@ -199,99 +198,6 @@ namespace Client
         public static string P_Client = Application.StartupPath + "\\";
         public static bool P_AutoStart = false;
         public static int P_Concurrency = 1;
-        // assist
-        [InI("Assist")]
-        public static bool FreeShift = true;
-
-        [InI("Assist")]
-        public static bool StruckShield = false;
-
-        [InI("Assist")]
-        public static bool SmartCrsHit = false;
-
-        [InI("Assist")]
-        public static bool SmartFireHit = true;
-
-        [InI("Assist")]
-        public static bool SmartSheild = false;
-
-        [InI("Assist")]
-        public static bool SmartChangeSign = true;
-
-        [InI("Assist")]
-        public static bool SmartChangePoison = true;
-
-        [InI("Assist")]
-        public static bool SmartElementalBarrier = true;
-
-        [InI("Assist")]
-        public static bool 开启保护 = true;
-
-        [InI("Assist")]
-        public static bool AutoPick = true;
-
-        [InI("Assist")]
-        public static bool 自动双龙斩 = false;
-
-        [InI("Assist")]
-        public static bool ShowLevel = false;
-
-        [InI("Assist")]
-        public static bool ShowTransform = true;
-
-        [InI("Assist")]
-        public static bool ShowGuildName = true;
-
-        [InI("Assist")]
-        public static int NumBackCityHP = 50;
-
-        [InI("Assist")]
-        public static int UseItemInterval = 3000;
-
-        [InI("Assist")]
-        public static bool ShowPing = true;
-
-        [InI("Assist")]
-        public static bool ShowHealth = true;
-
-        [InI("Assist")]
-        public static string PercentItem0 = "体力恢复药";
-
-        [InI("Assist")]
-        public static string PercentItem1 = "魔力恢复药";
-
-        [InI("Assist")]
-        public static string PercentItem2 = "回城卷";
-
-        [InI("Assist")]
-        public static int ProtectPercent0 = 50;
-
-        [InI("Assist")]
-        public static int ProtectPercent1 = 50;
-
-        [InI("Assist")]
-        public static int ProtectPercent2 = 5;
-
-        [InI("Assist")]
-        public static bool ShowGroupInfo = true;
-
-        [InI("Assist")]
-        public static bool ShowHeal = true;
-
-        [InI("Assist")]
-        public static bool ShowDamage = true;
-
-        [InI("Assist")]
-        public static bool ShowMonsterName = true;
-
-        [InI("Assist")]
-        public static bool ShowNPCName = true;
-
-        [InI("Assist")]
-        public static bool HideDead = false;
-
-        [InI("Assist")]
-        public static bool HideSystem2 = false;
 
         public static void Load()
         {
@@ -486,13 +392,6 @@ namespace Client
             Reader.Write("Launcher", "Browser", P_BrowserAddress);
             Reader.Write("Launcher", "AutoStart", P_AutoStart);
             Reader.Write("Launcher", "ConcurrentDownloads", P_Concurrency);
-
-            Reader.Save();
-            if (AssistReader != null)
-            {
-                InIAttribute.WriteInI<Settings>(AssistReader);
-                AssistReader.Save();
-            }
         }
 
         public static void LoadTrackedQuests(string charName)

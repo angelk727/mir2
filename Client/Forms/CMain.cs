@@ -7,7 +7,6 @@ using System.Runtime.InteropServices;
 using System.Security;
 using Client.MirControls;
 using Client.MirGraphics;
-using Client.MirMagic;
 using Client.MirNetwork;
 using Client.MirScenes;
 using Client.MirSounds;
@@ -47,7 +46,6 @@ namespace Client
         public static double BytesSent, BytesReceived;
 
         public static KeyBindSettings InputKeys = new KeyBindSettings();
-        public static MagicConfMgr MagicConf = new MagicConfMgr();
 
         public CMain()
         {

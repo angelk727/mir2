@@ -39,7 +39,7 @@ namespace Server
 
         private void UpdateInterface()
         {
-            if (MonsterInfoListBox.Items.Count != Envir.MonsterInfoList.Count && string.IsNullOrWhiteSpace(TxtSearchMonster.Text.Trim()))
+            if (MonsterInfoListBox.Items.Count != Envir.MonsterInfoList.Count)
             {
                 MonsterInfoListBox.Items.Clear();
 
@@ -735,35 +735,21 @@ namespace Server
             for (int i = 0; i < _selectedMonsterInfos.Count; i++)
                 _selectedMonsterInfos[i].DropPath = text;
         }
-        //private void TxtSearchMonster_TextChanged(object sender, EventArgs e)
-        //{
-        //    string searchText = TxtSearchMonster.Text.Trim();
-
-        //    if (string.IsNullOrWhiteSpace(searchText))
-        //    {
-        //        ResetMonsterList();
-        //        return;
-        //    }
-
-        //    MonsterInfo foundMonster = Envir.MonsterInfoList.FirstOrDefault(info => info.Name.Equals(searchText, StringComparison.OrdinalIgnoreCase));
-
-        //    if (foundMonster != null)
-        //    {
-        //        MonsterInfoListBox.SelectedItem = foundMonster;
-        //    }
-        //}
-        private void SearchForMonster()
+        private void TxtSearchMonster_TextChanged(object sender, EventArgs e)
         {
-            MonsterInfoListBox.SelectedItem = "";
-            List<MonsterInfo> results = Envir.MonsterInfoList.FindAll(x => x.Name.ToLower().Contains(TxtSearchMonster.Text.ToLower()));
+            string searchText = TxtSearchMonster.Text.Trim();
 
-            if (results.Count > 0)
+            if (string.IsNullOrWhiteSpace(searchText))
             {
-                MonsterInfoListBox.Items.Clear();
-                foreach (MonsterInfo item in results)
-                {
-                    MonsterInfoListBox.Items.Add(item);
-                }
+                ResetMonsterList();
+                return;
+            }
+
+            MonsterInfo foundMonster = Envir.MonsterInfoList.FirstOrDefault(info => info.Name.Equals(searchText, StringComparison.OrdinalIgnoreCase));
+
+            if (foundMonster != null)
+            {
+                MonsterInfoListBox.SelectedItem = foundMonster;
             }
         }
 
@@ -775,14 +761,6 @@ namespace Server
                 MonsterInfoListBox.Items.Add(monsterInfo);
             }
             TxtSearchMonster.Text = string.Empty;
-        }
-
-        private void TxtSearchMonster_KeyUp(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                SearchForMonster();
-            }
         }
     }
 }

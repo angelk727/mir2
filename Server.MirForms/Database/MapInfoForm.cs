@@ -37,7 +37,7 @@ namespace Server
 
             lstParticles.Items.AddRange(Enum.GetValues(typeof(WeatherSetting)).Cast<object>().ToArray());
 
-            UpdateInterface();
+            UpdateInterface(true);
         }
         private void MapInfoForm_FormClosed(object sender, FormClosedEventArgs e)
         {
@@ -45,22 +45,34 @@ namespace Server
         }
 
 
-        private void UpdateInterface()
+        private void UpdateInterface(bool refresh = false)
         {
             //Group<MapInfo> orderedMapInfoList = Envir.MapInfoList.OrderBy(m => m.Title).ToList();
+            MapInfoListBox.SelectedIndexChanged -= MapInfoListBox_SelectedIndexChanged;
 
-            if (MapInfoListBox.Items.Count != Envir.MapInfoList.Count)
+            if (refresh || MapInfoListBox.Items.Count != Envir.MapInfoList.Count)
             {
+                MapInfo selectedMap = MapInfoListBox.SelectedItem as MapInfo;
+
                 MapInfoListBox.Items.Clear();
                 DestMapComboBox.Items.Clear();
                 lstParticles.SelectedItems.Clear();
 
                 for (int i = 0; i < Envir.MapInfoList.Count; i++)
                 {
+                    if (!string.IsNullOrEmpty(MapSearchTextBox.Text) && !Envir.MapInfoList[i].Title.Contains(MapSearchTextBox.Text, StringComparison.OrdinalIgnoreCase))
+                        continue;
+
                     MapInfoListBox.Items.Add(Envir.MapInfoList[i]);
                     DestMapComboBox.Items.Add(Envir.MapInfoList[i]);
                 }
+                // Restore the selection if possible
+                if (selectedMap != null && MapInfoListBox.Items.Contains(selectedMap))
+                {
+                    MapInfoListBox.SelectedItem = selectedMap;
+                }
             }
+            MapInfoListBox.SelectedIndexChanged += MapInfoListBox_SelectedIndexChanged;
 
             _selectedMapInfos = MapInfoListBox.SelectedItems.Cast<MapInfo>().ToList();
 
@@ -117,14 +129,14 @@ namespace Server
 
             if (mi.WeatherParticles != WeatherSetting.无效果)
             {
-                for (int i = 0; i <  lstParticles.Items.Count; i++)
+                for (int i = 0; i < lstParticles.Items.Count; i++)
                 {
                     var item = lstParticles.Items[i];
-                    if (item != null) 
+                    if (item != null)
                     {
                         if (((mi.WeatherParticles & (WeatherSetting)item)) == (WeatherSetting)item)
                             lstParticles.SetSelected(i, true);
-                            continue;
+                        continue;
                     }
                 }
             }
@@ -602,7 +614,7 @@ namespace Server
         private void AddButton_Click(object sender, EventArgs e)
         {
             Envir.CreateMapInfo();
-            UpdateInterface();
+            UpdateInterface(true);
         }
         private void RemoveButton_Click(object sender, EventArgs e)
         {
@@ -616,7 +628,7 @@ namespace Server
 
             MapTabs.SelectTab(0);
 
-            UpdateInterface();
+            UpdateInterface(true);
         }
         private void MapInfoListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -626,7 +638,18 @@ namespace Server
             MZListlistBox.Items.Clear();
             lstParticles.SelectedItems.Clear();
 
-            UpdateInterface();
+            // Update selected map information
+            _selectedMapInfos = MapInfoListBox.SelectedItems.Cast<MapInfo>().ToList();
+
+            // If no maps are selected, reset the UI
+            if (_selectedMapInfos == null || _selectedMapInfos.Count == 0)
+            {
+                UpdateInterface(false);
+                return;
+            }
+
+            // Update the interface for the selected maps
+            UpdateInterface(false);
         }
         private void FileNameTextBox_TextChanged(object sender, EventArgs e)
         {
@@ -1409,7 +1432,7 @@ namespace Server
             MirForms.ConvertMapInfo.Start(Envir);
 
             MirForms.ConvertMapInfo.End();
-            UpdateInterface();
+            UpdateInterface(true);
             MessageBox.Show("地图数据导入完成");
 
         }
@@ -1546,7 +1569,7 @@ namespace Server
 
             if (!hasImported) return;
 
-            UpdateInterface();
+            UpdateInterface(true);
             MessageBox.Show("刷怪数据导入完成");
         }
         private void ExportMonGenButton_Click(object sender, EventArgs e)
@@ -1816,28 +1839,15 @@ namespace Server
 
 
             }
+            UpdateInterface(true);
         }
 
-        //private void MapSearchTxt_KeyUp(object sender, KeyEventArgs e)
-        //{
-        //    if (e.KeyCode == Keys.Enter)
-        //    {
-        //        SearchForMap();
-        //    }
-        //}
-        //private void SearchForMap()
-        //{
-        //    MapInfoListBox.SelectedItem = "";
-        //    List<MapInfo> results = Envir.MapInfoList.FindAll(x => x.Title.ToLower().Contains(MapSearchTxt.Text.ToLower()));
+        private void MapSearchButton_Click(object sender, EventArgs e)
+        {
+            if (MapSearchTextBox.Text == null)
+                return;
 
-        //    if (results.Count > 0)
-        //    {
-        //        MapInfoListBox.Items.Clear();
-        //        foreach (MapInfo item in results)
-        //        {
-        //            MapInfoListBox.Items.Add(item);
-        //        }
-        //    }
-        //}
+            UpdateInterface(true);
+        }
     }
 }

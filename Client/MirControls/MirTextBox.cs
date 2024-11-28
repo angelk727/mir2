@@ -143,7 +143,6 @@ namespace Client.MirControls
         public bool CanLoseFocus;
         public readonly TextBox TextBox;
         private Pen CaretPen;
-        public bool FocusWhenVisible = true;
 
         #endregion
 
@@ -242,7 +241,6 @@ namespace Client.MirControls
         }
 
         #endregion
-        public bool OnlyNumber = false;
 
         public MirTextBox()
         {

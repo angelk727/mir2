@@ -42,7 +42,7 @@ namespace Server
 
         private void UpdateInterface()
         {
-            if (QuestInfoListBox.Items.Count != Envir.QuestInfoList.Count && string.IsNullOrWhiteSpace(QuestSearchBox.Text.Trim()))
+            if (QuestInfoListBox.Items.Count != Envir.QuestInfoList.Count)
             {
                 QuestInfoListBox.Items.Clear();
                 RequiredQuestComboBox.Items.Clear();
@@ -101,7 +101,7 @@ namespace Server
             if (Convert.ToInt32(RequiredMaxLevelTextBox.Text) <= 0) RequiredMaxLevelTextBox.Text = byte.MaxValue.ToString();
 
             QuestInfo tempQuest = Envir.QuestInfoList.FirstOrDefault(c => c.Index == info.RequiredQuest);
-
+                
             if (tempQuest == null)
             {
                 tempQuest = (QuestInfo)RequiredQuestComboBox.Items[0];
@@ -116,7 +116,7 @@ namespace Server
             {
                 info = _selectedQuestInfos[i];
 
-                if (QFileNameTextBox.Text != info.FileName) QFileNameTextBox.Text = string.Empty;
+                if(QFileNameTextBox.Text != info.FileName) QFileNameTextBox.Text = string.Empty;
                 if (QNameTextBox.Text != info.Name) QNameTextBox.Text = string.Empty;
                 if (QGroupTextBox.Text != info.Group) QGroupTextBox.Text = string.Empty;
 
@@ -177,7 +177,7 @@ namespace Server
             }
 
 
-            string[] npcs = data.Split(new[] { '\t' }, StringSplitOptions.RemoveEmptyEntries);
+            string[] npcs = data.Split(new[] {'\t'}, StringSplitOptions.RemoveEmptyEntries);
 
 
             //for (int i = 1; i < npcs.Length; i++)
@@ -360,7 +360,7 @@ namespace Server
             for (int i = 0; i < _selectedQuestInfos.Count; i++)
             {
                 QuestInfo temp = (QuestInfo)RequiredQuestComboBox.SelectedItem;
-
+                
                 _selectedQuestInfos[i].RequiredQuest = temp.Index;
             }
         }
@@ -382,7 +382,7 @@ namespace Server
             if (File.Exists(scriptPath))
             {
                 Shared.Helpers.FileIO.OpenScript(scriptPath, true);
-            }
+            } 
             else
             {
                 Directory.CreateDirectory(Path.GetDirectoryName(scriptPath));
@@ -411,28 +411,6 @@ namespace Server
 
             for (int i = 0; i < _selectedQuestInfos.Count; i++)
                 _selectedQuestInfos[i].TimeLimitInSeconds = temp;
-        }
-
-        private void QuestSearchBox_KeyUp(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                SearchForQuest();
-            }
-        }
-        private void SearchForQuest()
-        {
-            QuestInfoListBox.SelectedItem = "";
-            List<QuestInfo> results = Envir.QuestInfoList.FindAll(x => x.Name.ToLower().Contains(QuestSearchBox.Text.ToLower()));
-
-            if (results.Count > 0)
-            {
-                QuestInfoListBox.Items.Clear();
-                foreach (QuestInfo item in results)
-                {
-                    QuestInfoListBox.Items.Add(item);
-                }
-            }
         }
     }
 }

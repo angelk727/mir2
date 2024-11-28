@@ -108,9 +108,6 @@ namespace Client.MirObjects
                     }
                 }
 
-                if (Settings.HideDead && CellObjects[i].DeadTime > 0)
-                    continue;
-
                 CellObjects[i].Draw();
             }
         }

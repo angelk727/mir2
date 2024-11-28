@@ -165,6 +165,8 @@ namespace Server
             ExportMongenButton = new Button();
             VisualizerButton = new Button();
             toolTip1 = new ToolTip(components);
+            MapSearchButton = new Button();
+            MapSearchTextBox = new TextBox();
             MapTabs.SuspendLayout();
             tabPage1.SuspendLayout();
             ((ISupportInitialize)MinimapPreview).BeginInit();
@@ -442,7 +444,7 @@ namespace Server
             tabPage6.Margin = new Padding(4, 3, 4, 3);
             tabPage6.Name = "tabPage6";
             tabPage6.Padding = new Padding(4, 3, 4, 3);
-            tabPage6.Size = new Size(622, 327);
+            tabPage6.Size = new Size(622, 533);
             tabPage6.TabIndex = 5;
             tabPage6.Text = "属性";
             tabPage6.UseVisualStyleBackColor = true;
@@ -730,7 +732,7 @@ namespace Server
             tabPage3.Location = new Point(4, 26);
             tabPage3.Margin = new Padding(4, 3, 4, 3);
             tabPage3.Name = "tabPage3";
-            tabPage3.Size = new Size(622, 327);
+            tabPage3.Size = new Size(622, 533);
             tabPage3.TabIndex = 2;
             tabPage3.Text = "安全区";
             tabPage3.UseVisualStyleBackColor = true;
@@ -871,7 +873,7 @@ namespace Server
             tabPage2.Margin = new Padding(4, 3, 4, 3);
             tabPage2.Name = "tabPage2";
             tabPage2.Padding = new Padding(4, 3, 4, 3);
-            tabPage2.Size = new Size(622, 327);
+            tabPage2.Size = new Size(622, 533);
             tabPage2.TabIndex = 1;
             tabPage2.Text = "刷怪点";
             tabPage2.UseVisualStyleBackColor = true;
@@ -1182,7 +1184,7 @@ namespace Server
             tabPage4.Margin = new Padding(4, 3, 4, 3);
             tabPage4.Name = "tabPage4";
             tabPage4.Padding = new Padding(4, 3, 4, 3);
-            tabPage4.Size = new Size(622, 327);
+            tabPage4.Size = new Size(622, 533);
             tabPage4.TabIndex = 3;
             tabPage4.Text = "地图出入点";
             tabPage4.UseVisualStyleBackColor = true;
@@ -1437,7 +1439,7 @@ namespace Server
             tabPage7.Margin = new Padding(4, 3, 4, 3);
             tabPage7.Name = "tabPage7";
             tabPage7.Padding = new Padding(4, 3, 4, 3);
-            tabPage7.Size = new Size(622, 327);
+            tabPage7.Size = new Size(622, 533);
             tabPage7.TabIndex = 6;
             tabPage7.Text = "矿区";
             tabPage7.UseVisualStyleBackColor = true;
@@ -1688,11 +1690,30 @@ namespace Server
             VisualizerButton.UseVisualStyleBackColor = true;
             VisualizerButton.Click += VisualizerButton_Click;
             // 
+            // MapSearchButton
+            // 
+            MapSearchButton.Location = new Point(240, 12);
+            MapSearchButton.Name = "MapSearchButton";
+            MapSearchButton.Size = new Size(75, 23);
+            MapSearchButton.TabIndex = 33;
+            MapSearchButton.Text = "查找";
+            MapSearchButton.UseVisualStyleBackColor = true;
+            MapSearchButton.Click += MapSearchButton_Click;
+            // 
+            // MapSearchTextBox
+            // 
+            MapSearchTextBox.Location = new Point(14, 11);
+            MapSearchTextBox.Name = "MapSearchTextBox";
+            MapSearchTextBox.Size = new Size(220, 23);
+            MapSearchTextBox.TabIndex = 35;
+            // 
             // MapInfoForm
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(886, 646);
+            Controls.Add(MapSearchTextBox);
+            Controls.Add(MapSearchButton);
             Controls.Add(VisualizerButton);
             Controls.Add(ExportMongenButton);
             Controls.Add(ImportMongenButton);
@@ -1727,6 +1748,7 @@ namespace Server
             MineZonepanel.ResumeLayout(false);
             MineZonepanel.PerformLayout();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -1862,5 +1884,7 @@ namespace Server
         private PictureBox MinimapPreview;
         private ListBox lstParticles;
         private Label label48;
+        private Button MapSearchButton;
+        private TextBox MapSearchTextBox;
     }
 }

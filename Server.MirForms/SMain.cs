@@ -635,35 +635,5 @@ namespace Server
             }
         }
         #endregion
-
-        private void 物品信息ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Envir.ReloadItems();
-        }
-
-        private void 怪物信息ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Envir.ReloadMonsters();
-        }
-
-        private void toolStripMenuItem2_Click(object sender, EventArgs e)
-        {
-            Envir.ReloadMagics();
-        }
-
-        private void 任务信息ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Envir.ReloadQuests();
-        }
-
-        private void 配方信息ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Envir.ReloadCrafts();
-        }
-
-        private void 商城物品ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Envir.ReloadGameShop();
-        }
     }
 }

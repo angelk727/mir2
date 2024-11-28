@@ -1,6 +1,4 @@
-﻿using System.Security.Cryptography.Xml;
-
-namespace Client
+﻿namespace Client
 {
 
     public enum KeybindOptions : int
@@ -102,8 +100,7 @@ namespace Client
         HeroEquipment,
         HeroSkills,
         TargetSpellLockOn,
-        PetmodeFocusMasterTarget,
-        Assist
+        PetmodeFocusMasterTarget
     }
 
     public class KeyBind
@@ -221,7 +218,7 @@ namespace Client
             list.Add(InputKey);
             InputKey = new KeyBind { Group = "功能框", Description = "任务栏 开/关", function = KeybindOptions.Quests, RequireAlt = 0, RequireShift = 2, RequireTilde = 2, RequireCtrl = 2, Key = Keys.Q };
             list.Add(InputKey);
-            InputKey = new KeyBind { Group = "功能框", Description = "设置 开/关", function = KeybindOptions.Assist, RequireAlt = 2, RequireShift = 2, RequireTilde = 2, RequireCtrl = 2, Key = Keys.F12 };
+            InputKey = new KeyBind { Group = "功能框", Description = "设置 开/关", function = KeybindOptions.Options, RequireAlt = 2, RequireShift = 2, RequireTilde = 2, RequireCtrl = 2, Key = Keys.F12 };
             list.Add(InputKey);
             InputKey = new KeyBind { Group = "功能框", Description = "设置 开/关", function = KeybindOptions.Options2, RequireAlt = 2, RequireShift = 2, RequireTilde = 2, RequireCtrl = 2, Key = Keys.O };
             list.Add(InputKey);

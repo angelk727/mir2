@@ -608,6 +608,7 @@ namespace AutoPatcherAdmin
                         }
                     }
                 }
+
                 BeginUpload();
             }
             catch (Exception ex)

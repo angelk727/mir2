@@ -354,7 +354,7 @@
             GameGold.Name = "GameGold";
             GameGold.Size = new Size(55, 13);
             GameGold.TabIndex = 22;
-            GameGold.Text = "元宝 : ";
+            GameGold.Text = "信用币 : ";
             // 
             // GameGoldTextBox
             // 

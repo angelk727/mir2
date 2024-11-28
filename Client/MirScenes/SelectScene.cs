@@ -283,9 +283,6 @@ namespace Client.MirScenes
             {
                 CharacterIndex = Characters[_selected].Index
             });
-            if (!Directory.Exists("./Configs/")) Directory.CreateDirectory("./Configs/");
-            Settings.AssistReader = new InIReader("./Configs/" + Characters[_selected].Name + ".txt");
-            InIAttribute.ReadInI<Settings>(Settings.AssistReader);
         }
 
         public override void Process()

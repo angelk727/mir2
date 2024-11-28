@@ -7,7 +7,6 @@ using S = ServerPackets;
 using C = ClientPackets;
 using Client.MirScenes.Dialogs;
 using System.Reflection;
-using ServerPackets;
 
 namespace Client.MirObjects
 {
@@ -270,7 +269,7 @@ namespace Client.MirObjects
             bool showMount = true;
             bool showFishing = true;
 
-            if (TransformType > -1 && Settings.ShowTransform)
+            if (TransformType > -1)
             {
                 #region Transform
                 
@@ -2508,10 +2507,7 @@ namespace Client.MirObjects
             }
 
         }
-        protected virtual void AutoSpell()
-        {
 
-        }
         public virtual void ProcessFrames()
         {
             if (Frame == null) return;
@@ -2708,15 +2704,9 @@ namespace Client.MirObjects
                     break;     
 
                 case MirAction.近距攻击1:
-                    //if (User == this)
-                    //    AutoSpell();
-                //break;
                 case MirAction.近距攻击2:
                 case MirAction.近距攻击3:
                 case MirAction.近距攻击4:
-                    //if (User == this)
-                    //    AutoSpell();
-                    //break;
                 case MirAction.坐骑攻击:
                 case MirAction.挖矿动作:
                     if (CMain.Time >= NextMotion)
@@ -2790,17 +2780,6 @@ namespace Client.MirObjects
                         }
                     }
 
-                    if (WingEffect > 0 && CMain.Time >= NextMotion2)
-                    {
-                        GameScene.Scene.MapControl.TextureValid = false;
-
-                        if (SkipFrames) UpdateFrame2();
-
-                        if (UpdateFrame2() >= Frame.EffectCount)
-                            EffectFrameIndex = Frame.EffectCount - 1;
-                        else
-                            NextMotion2 += EffectFrameInterval;
-                    }
                     UpdateWingEffect();
                     break;
 
@@ -5726,31 +5705,11 @@ namespace Client.MirObjects
             CreateGuildLabel();
         }
 
-        public override void DrawHealthNum()
-        {
-            if (!Settings.ShowHealth)
-                return;
-
-            CreateHealthNum();
-
-            if (HealthBarLabel == null || HealthBarLabel.IsDisposed || Dead) return;
-            if ( PercentHealth== 0)
-                return;
-
-            if (Level > 0 && Settings.ShowLevel)
-                HealthBarLabel.Text = String.Format("{0}/{1}/Z{2}", Health, MaxHealth, Level);
-            else
-                HealthBarLabel.Text = String.Format("{0}/{1}", Health, MaxHealth);
-
-            HealthBarLabel.Location = new Point(DisplayRectangle.X + (48 - HealthBarLabel.Size.Width) / 2, DisplayRectangle.Y - (65 + HealthBarLabel.Size.Height) - (Dead ? 35 : 0));
-            HealthBarLabel.Draw();
-        }
-
         public override void DrawName()
         {
             CreateLabel();
 
-            if (GuildLabel != null && !string.IsNullOrEmpty(GuildName) && Settings.ShowGuildName)
+            if (GuildLabel != null && !string.IsNullOrEmpty(GuildName))
             {
                 GuildLabel.Text = GuildName;
                 GuildLabel.Location = new Point(DisplayRectangle.X + (50 - GuildLabel.Size.Width) / 2, DisplayRectangle.Y - (19 - GuildLabel.Size.Height / 2) + (Dead ? 35 : 8)); //was 48 -

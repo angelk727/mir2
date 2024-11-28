@@ -1,5 +1,4 @@
 ﻿using System.Drawing;
-using System.Reflection;
 
 public class ClientMagic
 {
@@ -14,7 +13,6 @@ public class ClientMagic
 
     public bool IsTempSpell;
     public long CastTime, Delay;
-    public bool Toggle;
 
     public ClientMagic() { }
 
@@ -642,141 +640,5 @@ public class ClientHeroInformation
         string text = Name;
         text += Environment.NewLine + $"Level {Level} {Enum.GetName(typeof(MirGender), Gender).ToLower()} {Enum.GetName(typeof(MirClass), Class).ToLower()}";
         return text;
-    }
-}
-
-public class InIAttribute : Attribute
-{
-    public string Section;
-    public bool SaveToFile;
-    public InIAttribute(string section, bool bSave = true)
-    {
-        this.Section = section;
-        this.SaveToFile = bSave;
-    }
-
-    public static void SetIni<T>(string key, string value) where T : class, new()
-    {
-        key = key.Substring(1);
-        Type objType = typeof(T);
-        //取属性上的自定义特性
-        foreach (FieldInfo fieldInfo in objType.GetFields())
-        {
-            object[] objAttrs = fieldInfo.GetCustomAttributes(typeof(InIAttribute), true);
-            if (objAttrs.Length <= 0)
-                continue;
-
-            InIAttribute attr = objAttrs[0] as InIAttribute;
-            if (attr == null)
-                continue;
-
-            if (string.Compare(fieldInfo.Name, key, StringComparison.OrdinalIgnoreCase) != 0)
-                continue;
-
-            if (fieldInfo.FieldType == typeof(bool))
-            {
-                bool result;
-                bool.TryParse(value, out result);
-                fieldInfo.SetValue(null, result);
-            }
-            else if (fieldInfo.FieldType == typeof(int))
-            {
-                int result;
-                int.TryParse(value, out result);
-                fieldInfo.SetValue(null, value);
-            }
-            else if (fieldInfo.FieldType == typeof(string))
-            {
-                fieldInfo.SetValue(null, value);
-            }
-        }
-    }
-
-
-    public static void ReadInI<T>(InIReader reader) where T : class, new()
-    {
-        Type objType = typeof(T);
-        //取属性上的自定义特性
-        foreach (FieldInfo fieldInfo in objType.GetFields())
-        {
-            object[] objAttrs = fieldInfo.GetCustomAttributes(typeof(InIAttribute), true);
-            if (objAttrs.Length <= 0)
-                continue;
-
-            InIAttribute attr = objAttrs[0] as InIAttribute;
-            if (attr == null)
-                continue;
-
-            if (reader.FindValue(attr.Section, fieldInfo.Name) == null)
-                continue;
-
-            if (fieldInfo.FieldType == typeof(bool))
-            {
-                bool value = reader.ReadBoolean(attr.Section, fieldInfo.Name, false);
-                fieldInfo.SetValue(null, value);
-            }
-            else if (fieldInfo.FieldType == typeof(int))
-            {
-                int value = reader.ReadInt32(attr.Section, fieldInfo.Name, 0);
-                fieldInfo.SetValue(null, value);
-            }
-            else if (fieldInfo.FieldType == typeof(string))
-            {
-                string value = reader.ReadString(attr.Section, fieldInfo.Name, "");
-                fieldInfo.SetValue(null, value);
-            }
-            else if (fieldInfo.FieldType == typeof(ushort))
-            {
-                ushort value = reader.ReadUInt16(attr.Section, fieldInfo.Name, 0);
-                fieldInfo.SetValue(null, value);
-            }
-            else if (fieldInfo.FieldType == typeof(byte))
-            {
-                byte value = reader.ReadByte(attr.Section, fieldInfo.Name, 0);
-                fieldInfo.SetValue(null, value);
-            }
-            else if (fieldInfo.FieldType == typeof(short))
-            {
-                short value = reader.ReadInt16(attr.Section, fieldInfo.Name, 0);
-                fieldInfo.SetValue(null, value);
-            }
-            else
-                throw new Exception("Un support exception." + fieldInfo.FieldType);
-        }
-    }
-
-    public static void WriteInI<T>(InIReader reader) where T : class, new()
-    {
-        Type objType = typeof(T);
-        //取属性上的自定义特性
-        foreach (FieldInfo fieldInfo in objType.GetFields())
-        {
-            object[] objAttrs = fieldInfo.GetCustomAttributes(typeof(InIAttribute), true);
-
-            if (objAttrs.Length <= 0)
-                continue;
-
-            InIAttribute attr = objAttrs[0] as InIAttribute;
-            if (attr == null)
-                continue;
-
-            if (!attr.SaveToFile)
-                continue;
-
-            if (fieldInfo.FieldType == typeof(bool))
-                reader.Write(attr.Section, fieldInfo.Name, (bool)fieldInfo.GetValue(null));
-            else if (fieldInfo.FieldType == typeof(int))
-                reader.Write(attr.Section, fieldInfo.Name, (int)fieldInfo.GetValue(null));
-            else if (fieldInfo.FieldType == typeof(string))
-                reader.Write(attr.Section, fieldInfo.Name, (string)fieldInfo.GetValue(null));
-            else if (fieldInfo.FieldType == typeof(ushort))
-                reader.Write(attr.Section, fieldInfo.Name, (ushort)fieldInfo.GetValue(null));
-            else if (fieldInfo.FieldType == typeof(byte))
-                reader.Write(attr.Section, fieldInfo.Name, (byte)fieldInfo.GetValue(null));
-            else if (fieldInfo.FieldType == typeof(short))
-                reader.Write(attr.Section, fieldInfo.Name, (short)fieldInfo.GetValue(null));
-            else
-                throw new Exception("Un support exception." + fieldInfo.FieldType);
-        }
     }
 }

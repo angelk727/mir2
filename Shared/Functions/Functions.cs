@@ -507,8 +507,4 @@ public static class Functions
             }
         }
     }
-    public static int Distance(Point p1, Point p2)
-    {
-        return Math.Abs(p1.X - p2.X) + Math.Abs(p1.Y - p2.Y);
-    }
 }

@@ -105,7 +105,7 @@
             label21.Name = "label21";
             label21.Size = new Size(71, 17);
             label21.TabIndex = 91;
-            label21.Text = "元宝价格:";
+            label21.Text = "信用币价格:";
             // 
             // GPPrice_textbox
             // 
@@ -180,7 +180,7 @@
             CreditOnlyBox.Name = "CreditOnlyBox";
             CreditOnlyBox.Size = new Size(63, 21);
             CreditOnlyBox.TabIndex = 118;
-            CreditOnlyBox.Text = "元宝";
+            CreditOnlyBox.Text = "信用币";
             CreditOnlyBox.UseVisualStyleBackColor = true;
             CreditOnlyBox.CheckedChanged += CreditOnly_CheckedChanged;
             // 
@@ -369,7 +369,7 @@
             label2.Name = "label2";
             label2.Size = new Size(113, 17);
             label2.TabIndex = 92;
-            label2.Text = "元宝 x 金币 比例:";
+            label2.Text = "信用币 x 金币 比例:";
             // 
             // CredxGold_textbox
             // 
