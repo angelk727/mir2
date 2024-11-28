@@ -38,6 +38,7 @@ namespace Client.MirScenes.Dialogs
         public MirCheckBox CheckBoxProtect;
         public MirLabel[] LabelProtect;
         public MirLabel[] LabelUse;
+        public MirLabel[] LabelTip;
         public MirTextBox[] TextBoxProtectPercent;
         public MirTextBox[] TextBoxProtectItem;
         public MirTextBox TextBoxSpell;
@@ -219,6 +220,7 @@ namespace Client.MirScenes.Dialogs
             TextBoxProtectPercent = new MirTextBox[3];
             TextBoxProtectItem = new MirTextBox[3];
             TextBoxSpell = new MirTextBox();
+            LabelTip = new MirLabel[3];
 
             CreateProtectControls(0, 0);
             CreateProtectControls(1, 1);
@@ -351,7 +353,19 @@ namespace Client.MirScenes.Dialogs
             int height = 95 + 25 * index;
             LabelProtect[index] = new MirLabel { AutoSize = true, Location = new Point(26, height), Parent = this, Text = type == 0 ? "生命百分比低于" : "魔法百分比低于" };
 
-            TextBoxProtectPercent[index] = new MirTextBox { Location = new Point(120, height), Parent = this, Size = new Size(30, 15), MaxLength = Globals.MaxPasswordLength, OnlyNumber = true, CanLoseFocus = true, FocusWhenVisible = false, Font = new Font(Settings.FontName, 8F) };
+            TextBoxProtectPercent[index] = new MirTextBox
+            {
+                Location = new Point(120, height),
+                Parent = this,
+                Size = new Size(30, 15),
+                MaxLength = Globals.MaxPasswordLength,
+                OnlyNumber = true,
+                CanLoseFocus = true,
+                FocusWhenVisible = false,
+                Font = new Font(Settings.FontName, 8F),
+                BackColour = Color.White,
+                ForeColour = Color.Black
+            };
             TextBoxProtectPercent[index].TextBox.TextChanged += (o, e) => PercentPercentTextBox_changed(index);
             TextBoxProtectPercent[index].Text = String.Format("{0}", GameScene.Scene.AssistHelper.GetProtectPercent(index));
 
@@ -366,9 +380,12 @@ namespace Client.MirScenes.Dialogs
                 CanLoseFocus = true,
                 FocusWhenVisible = false,
                 Font = new Font(Settings.FontName, 8F),
+                BackColour = Color.White,
+                ForeColour = Color.Black
             };
             TextBoxProtectItem[index].TextBox.TextChanged += (o, e) => PercentItemTextBox_changed(index);
             TextBoxProtectItem[index].Text = GameScene.Scene.AssistHelper.GetProtectItemName(index);
+            LabelTip[index] = new MirLabel { AutoSize = true, Location = new Point(285, height), Parent = this, Text = "填关键字" };
         }
 
         private void PercentItemTextBox_changed(int i)
@@ -417,6 +434,7 @@ namespace Client.MirScenes.Dialogs
                 LabelUse[i].Visible = j == PROTECT;
                 TextBoxProtectPercent[i].Visible = j == PROTECT;
                 TextBoxProtectItem[i].Visible = j == PROTECT;
+                LabelTip[i].Visible = j == PROTECT;
             }
             TextBoxSpell.Visible = j == BASE;
 

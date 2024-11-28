@@ -628,10 +628,10 @@ namespace Client.MirObjects
                 for (int i = 0; i < User.Inventory.Length; i++)
                 {
                     UserItem item = User.Inventory[i];
-
+                    
                     if (item != null && item.Info != null && item.Info.Name.Contains(itemName))
                     {
-                        Network.Enqueue(new C.UseItem { UniqueID = item.UniqueID });
+                        Network.Enqueue(new C.UseItem { UniqueID = item.UniqueID, Grid = MirGridType.Inventory });
                         break;
                     }
                 }
