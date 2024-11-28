@@ -1817,5 +1817,27 @@ namespace Server
 
             }
         }
+
+        //private void MapSearchTxt_KeyUp(object sender, KeyEventArgs e)
+        //{
+        //    if (e.KeyCode == Keys.Enter)
+        //    {
+        //        SearchForMap();
+        //    }
+        //}
+        //private void SearchForMap()
+        //{
+        //    MapInfoListBox.SelectedItem = "";
+        //    List<MapInfo> results = Envir.MapInfoList.FindAll(x => x.Title.ToLower().Contains(MapSearchTxt.Text.ToLower()));
+
+        //    if (results.Count > 0)
+        //    {
+        //        MapInfoListBox.Items.Clear();
+        //        foreach (MapInfo item in results)
+        //        {
+        //            MapInfoListBox.Items.Add(item);
+        //        }
+        //    }
+        //}
     }
 }

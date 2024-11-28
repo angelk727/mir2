@@ -3011,9 +3011,9 @@ namespace Server.MirObjects
 
                         player.GainCredit(count);
 
-                        string creditMsg = $"游戏管理员:{Name} 给予玩家:{player.Name} {count} 信用币";
+                        string creditMsg = $"游戏管理员:{Name} 给予玩家:{player.Name} {count} 元宝";
 
-                        MessageQueue.Enqueue(string.Format("玩家 {0} 已获得 {1} 信用币", player.Name, count));
+                        MessageQueue.Enqueue(string.Format("玩家 {0} 已获得 {1} 元宝", player.Name, count));
                         Helpers.ChatSystem.SystemMessage(chatMessage: creditMsg);
 
                         break;
@@ -8182,7 +8182,7 @@ namespace Server.MirObjects
 
                     Account.Credit -= auction.Price;
                     GainItem(item);
-                    Enqueue(new S.MarketSuccess { Message = string.Format("购买 {0} 消费 {1:#,##0} 信用币", auction.Item.FriendlyName, auction.Price) });
+                    Enqueue(new S.MarketSuccess { Message = string.Format("购买 {0} 消费 {1:#,##0} 元宝", auction.Item.FriendlyName, auction.Price) });
                     MarketSearch(MatchName, MatchType);
 
                     return;
