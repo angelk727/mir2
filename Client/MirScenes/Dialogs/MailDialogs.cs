@@ -8,9 +8,9 @@ namespace Client.MirScenes.Dialogs
 {
     public class MailListDialog : MirImageControl
     {
-        MirImageControl TitleLabel;
+        //MirImageControl TitleLabel;
         MirButton HelpButton, CloseButton;
-        MirLabel TitleTypeLabel, TitleSenderLabel, TitleMessageLabel;
+        //MirLabel TitleTypeLabel, TitleSenderLabel, TitleMessageLabel;
         //Send / Reply (Can only reply if index exists, button will disapear if not) / Read / Delete / Block List / Bug Report (new system??)
 
         MirLabel PageLabel;

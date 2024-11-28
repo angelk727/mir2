@@ -97,7 +97,7 @@ namespace Client.MirObjects
 
     public class AssistHelper
     {
-        private long lastUseItemTick;
+        //private long lastUseItemTick;
         private long[] UseItemTime = new long[3];
 
         private byte useAmuletShape = 1;

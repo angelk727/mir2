@@ -29,7 +29,7 @@
                 {
                     Index = 1331,
                     Library = Libraries.Prguse2,
-                    Location = new Point(42, 20 + 30*i),
+                    Location = new Point(42, 20 + 30 * i),
                     Parent = this,
                     NotControl = true,
                 };
@@ -49,7 +49,7 @@
             }
         }
 
-        public void Hide()
+        public override void Hide()
         {
             if (this.Visible)
             {
@@ -57,7 +57,7 @@
             }
         }
 
-        public void Show()
+        public override void Show()
         {
             if (!this.Visible)
             {
@@ -77,7 +77,7 @@
 
             this.Size = new Size(160, 40 * GroupDialog.GroupList.Count);
 
-            int num = 0;
+            //int num = 0;
             UpdatePlayerObj(0, GameScene.User.Name, Color.White, (100f * GameScene.User.PercentHealth) / 100f);
 
             int index = 1;
@@ -100,9 +100,9 @@
                 }
 
                 if (ob != null)
-                    UpdatePlayerObj(index, name, Color.White,  (100f * ob.PercentHealth) / 100f);
+                    UpdatePlayerObj(index, name, Color.White, (100f * ob.PercentHealth) / 100f);
                 else
-                    UpdatePlayerObj(index, name, Color.Gray,  -1);
+                    UpdatePlayerObj(index, name, Color.Gray, -1);
                 ++index;
             }
 
@@ -113,7 +113,7 @@
             }
         }
 
-        private void UpdatePlayerObj(int index, string name, Color color,  double percent)
+        private void UpdatePlayerObj(int index, string name, Color color, double percent)
         {
             Name[index].Text = name;
             Name[index].Visible = true;

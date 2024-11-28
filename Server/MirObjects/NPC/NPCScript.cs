@@ -6,7 +6,7 @@ using S = ServerPackets;
 
 namespace Server.MirObjects
 {
-    public class NPCScript
+    public partial class NPCScript
     {
         protected static Envir Envir
         {
@@ -96,6 +96,11 @@ namespace Server.MirObjects
             FileName = fileName;
             Type = type;
 
+            LuaFileName = Path.Combine(Settings.NPCPath, fileName + ".lua");
+            if (File.Exists(LuaFileName))
+                LoadLua();
+            else
+                LuaFileName = null;
             Load();
 
             Envir.Scripts.Add(ScriptID, this);
@@ -784,6 +789,7 @@ namespace Server.MirObjects
         public void Call(MonsterObject monster, string key)
         {
             key = key.ToUpper();
+            if (this.LuaFileName != null) CallLua(monster, key);
 
             for (int i = 0; i < NPCPages.Count; i++)
             {
@@ -805,6 +811,7 @@ namespace Server.MirObjects
         public void Call(string key)
         {
             key = key.ToUpper();
+            if (LuaFileName != null) CallLua(key);
 
             for (int i = 0; i < NPCPages.Count; i++)
             {
@@ -826,6 +833,7 @@ namespace Server.MirObjects
         public void Call(PlayerObject player, uint objectID, string key)
         {
             key = key.ToUpper();
+            if (LuaFileName != null) CallLua(player, objectID, key);
 
             if (!player.NPCDelayed)
             {
