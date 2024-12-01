@@ -54,6 +54,7 @@
                          Close = "关闭 ({0})",
                          GameMaster = "管理员",
                          Report = "公告",
+                         GroupHealthPanel = "组队状态",
 
                          PatchErr = "无法获取补丁程序",
                          LastOnline = "上次连线",
@@ -340,6 +341,7 @@
         GameLanguage.ExpireNever = reader.ReadString("Language", "ExpireNever", GameLanguage.ExpireNever);
         GameLanguage.ExpirePaused = reader.ReadString("Language", "ExpirePaused", GameLanguage.ExpirePaused);
         GameLanguage.Never = reader.ReadString("Language", "Never", GameLanguage.Never);
+        GameLanguage.GroupHealthPanel = reader.ReadString("Language", "GroupHealthPanel", GameLanguage.GroupHealthPanel);
 
         GameLanguage.PatchErr = reader.ReadString("Language", "PatchErr", GameLanguage.PatchErr);
         GameLanguage.LastOnline = reader.ReadString("Language", "LastOnline", GameLanguage.LastOnline);
@@ -585,6 +587,7 @@
         reader.Write("Language", "Close", GameLanguage.Close);
         reader.Write("Language", "GameMaster", GameLanguage.GameMaster);
         reader.Write("Language", "Report", GameLanguage.Report);
+        reader.Write("Language", "GroupHealthPanel", GameLanguage.GroupHealthPanel);
 
 
         reader.Write("Language", "Expire", GameLanguage.Expire);

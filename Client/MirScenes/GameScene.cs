@@ -12,9 +12,7 @@ using Effect = Client.MirObjects.Effect;
 using Client.MirScenes.Dialogs;
 using Client.Utils;
 using System.Text.RegularExpressions;
-using static System.Net.Mime.MediaTypeNames;
 using Client.MirGraphics.Particles;
-using System.Reflection;
 
 namespace Client.MirScenes
 {
@@ -101,6 +99,8 @@ namespace Client.MirScenes
         public DuraStatusDialog DuraStatusPanel;
         public TradeDialog TradeDialog;
         public GuestTradeDialog GuestTradeDialog;
+        public GroupStatusDialog GroupStatusPanel;
+        public GroupHealthPanel GroupHealthPanel;
 
         public HeroMenuPanel HeroMenuPanel;
         public HeroBehaviourPanel HeroBehaviourPanel;
@@ -267,6 +267,9 @@ namespace Client.MirScenes
             DuraStatusPanel = new DuraStatusDialog { Parent = this, Visible = true };
             TradeDialog = new TradeDialog { Parent = this, Visible = false };
             GuestTradeDialog = new GuestTradeDialog { Parent = this, Visible = false };            
+
+            GroupStatusPanel = new GroupStatusDialog { Parent = this, Visible = true };
+            GroupHealthPanel = new GroupHealthPanel { Parent = this, Visible = false };
 
             SocketDialog = new SocketDialog { Parent = this, Visible = false };
 
@@ -782,6 +785,8 @@ namespace Client.MirScenes
                             CharacterDuraPanel.Show();
                             DuraStatusPanel.Show();
                             BuffsDialog.Show();
+                            GroupStatusPanel.Show();
+                            GroupHealthPanel.Show();
                         }
                         else
                         {
@@ -793,6 +798,8 @@ namespace Client.MirScenes
                             CharacterDuraPanel.Hide();
                             DuraStatusPanel.Hide();
                             BuffsDialog.Hide();
+                            GroupStatusPanel.Show();
+                            GroupHealthPanel.Show();
                         }
                         break;
                     case KeybindOptions.DropView:
@@ -10502,6 +10509,9 @@ namespace Client.MirScenes
                 RelationshipDialog = null;
                 CharacterDuraPanel = null;
                 DuraStatusPanel = null;
+
+                GroupStatusPanel = null;
+                GroupHealthPanel = null;
 
                 HoverItem = null;
                 SelectedCell = null;

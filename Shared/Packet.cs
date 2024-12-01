@@ -41,7 +41,7 @@ public abstract class Packet
         }
         catch (Exception e)
         {
-            throw new InvalidDataException();
+            throw new InvalidDataException("数据包解析失败", e);
         }
 
         extra = new byte[rawBytes.Length - length];

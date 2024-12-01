@@ -2038,7 +2038,9 @@ namespace Client.MirScenes.Dialogs
             LocationLabel.Location = new Point(46, y);
             LightSetting.Location = new Point(102, y);
 
-            GameScene.Scene.DuraStatusPanel.Location = new Point(GameScene.Scene.MiniMapDialog.Location.X + 86,
+            GameScene.Scene.DuraStatusPanel.Location = new Point(GameScene.Scene.MiniMapDialog.Location.X + 83,
+            GameScene.Scene.MiniMapDialog.Size.Height);
+            GameScene.Scene.GroupStatusPanel.Location = new Point(GameScene.Scene.MiniMapDialog.Location.X + 63,
             GameScene.Scene.MiniMapDialog.Size.Height);
         }
 
@@ -2052,7 +2054,9 @@ namespace Client.MirScenes.Dialogs
             LocationLabel.Location = new Point(46, y);
             LightSetting.Location = new Point(102, y);
 
-            GameScene.Scene.DuraStatusPanel.Location = new Point(GameScene.Scene.MiniMapDialog.Location.X + 86,
+            GameScene.Scene.DuraStatusPanel.Location = new Point(GameScene.Scene.MiniMapDialog.Location.X + 83,
+            GameScene.Scene.MiniMapDialog.Size.Height);
+            GameScene.Scene.GroupStatusPanel.Location = new Point(GameScene.Scene.MiniMapDialog.Location.X + 63,
             GameScene.Scene.MiniMapDialog.Size.Height);
         }
 
@@ -4157,16 +4161,14 @@ namespace Client.MirScenes.Dialogs
 
         public DuraStatusDialog()
         {
-            Size = new Size(40, 19);
-            Location = new Point((GameScene.Scene.MiniMapDialog.Location.X + 86), GameScene.Scene.MiniMapDialog.Size.Height);
+            Size = new Size(30, 30);
+            Location = new Point((GameScene.Scene.MiniMapDialog.Location.X + 83), GameScene.Scene.MiniMapDialog.Size.Height);
 
             Character = new MirButton()
             {
                 Index = 2113,
                 Library = Libraries.Prguse,
                 Parent = this,
-                Size = new Size(20, 19),
-                Location = new Point(20, 0),
                 HoverIndex = 2111,
                 PressedIndex = 2112,
                 Sound = SoundList.ButtonA,
@@ -4428,6 +4430,201 @@ namespace Client.MirScenes.Dialogs
             GameScene.Scene.DuraStatusPanel.Character.Index = 2110;
 
             GetCharacterDura();
+        }
+    }
+    public sealed class GroupStatusDialog : MirImageControl
+    {
+        public MirButton GroupStatusSwitch;
+        public GroupStatusDialog()
+        {
+            Size = new Size(30, 30);
+            Location = new Point((GameScene.Scene.MiniMapDialog.Location.X + 63), GameScene.Scene.MiniMapDialog.Size.Height);
+
+            GroupStatusSwitch = new MirButton()
+            {
+                Index = 1335,
+                Library = Libraries.Prguse2,
+                Parent = this,
+                HoverIndex = 1333,
+                PressedIndex = 1334,
+                Sound = SoundList.ButtonA,
+                Hint = GameLanguage.GroupHealthPanel
+            };
+            GroupStatusSwitch.Click += (o, e) =>
+            {
+                if (GameScene.Scene.GroupHealthPanel.Visible == true)
+                {
+                    GameScene.Scene.GroupHealthPanel.Hide();
+                }
+                else
+                {
+                    GameScene.Scene.GroupHealthPanel.Show();
+                }
+            };
+        }
+
+    }
+
+    public class GroupHealthPanel : MirImageControl
+    {
+        private const int MaxMembers = 7;
+        private const int PanelWidth = 160;
+        private const int NameYOffset = 200;
+        private const int HealthYOffset = 220;
+        private const int HealthBarHeight = 8;
+
+        private readonly List<PlayerUI> playerUIList;
+
+        public GroupHealthPanel()
+        {
+            Size = new Size(PanelWidth, 160);
+
+            playerUIList = new List<PlayerUI>();
+
+            for (int i = 0; i < MaxMembers; i++)
+            {
+                PlayerUI playerUI = new PlayerUI
+                {
+                    NameLabel = new MirLabel
+                    {
+                        Location = new Point(870, NameYOffset + i * 30),
+                        AutoSize = true,
+                        Parent = this,
+                        NotControl = true,
+                        OutLineColour = Color.Black,
+                        OutLine = true,
+                        DrawFormat = TextFormatFlags.VerticalCenter | TextFormatFlags.HorizontalCenter,
+                        Visible = false
+                    },
+                    HealthBar = new MirImageControl
+                    {
+                        Index = 1331,
+                        Library = Libraries.Prguse2,
+                        Location = new Point(870, HealthYOffset + i * 30),
+                        NotControl = true,
+                        Parent = this,
+                        DrawImage = false,
+                        Visible = false
+                    }
+                };
+
+                playerUI.HealthBar.BeforeDraw += Health_BeforeDraw;
+                playerUIList.Add(playerUI);
+            }
+        }
+
+        protected internal override void DrawControl()
+        {
+            base.DrawControl();
+
+            if (!Visible) return;
+
+            if (GroupDialog.GroupList == null || GroupDialog.GroupList.Count <= 1)
+            {
+                Hide();
+                return;
+            }
+
+            Show();
+
+            Size = new Size(PanelWidth, Math.Min(GroupDialog.GroupList.Count, MaxMembers) * 30);
+
+            int playerIndex = GroupDialog.GroupList.IndexOf(GameScene.User.Name);
+
+            for (int i = 0; i < GroupDialog.GroupList.Count; i++)
+            {
+                int memberIndex = (playerIndex + i) % GroupDialog.GroupList.Count;
+                string memberName = GroupDialog.GroupList[memberIndex];
+                PlayerObject player = MapControl.Objects.OfType<PlayerObject>().FirstOrDefault(p => p.Name == memberName);
+
+                double healthPercent = player != null ? player.PercentHealth : 0;
+
+                PlayerUI playerUI = playerUIList[i];
+
+                playerUI.NameLabel.Text = memberName;
+                playerUI.NameLabel.Visible = true;
+
+                if (player == null)
+                {
+                    playerUI.NameLabel.ForeColour = Color.OrangeRed;
+                    healthPercent = 1;
+                    UpdatePlayerHealth(playerUI.HealthBar, healthPercent);                    
+                    playerUI.HealthBar.Visible = true;
+                    continue;
+                }
+                else if (healthPercent <= 0)
+                {
+                    playerUI.NameLabel.ForeColour = Color.Gray;
+                }
+                else
+                {
+                    playerUI.NameLabel.ForeColour = Color.White;
+                }
+
+                UpdatePlayerHealth(playerUI.HealthBar, healthPercent);
+            }
+
+            for (int i = GroupDialog.GroupList.Count; i < MaxMembers; ++i)
+            {
+                playerUIList[i].NameLabel.Visible = false;
+                playerUIList[i].HealthBar.Visible = false;
+                if (playerUIList[i].LeaderIcon != null) playerUIList[i].LeaderIcon.Visible = false;
+            }
+        }
+
+        private void UpdatePlayerHealth(MirImageControl healthBar, double percent)
+        {
+            int healthBarLength = (int)(PanelWidth * Math.Clamp(percent, 0, 1));
+            healthBar.Size = new Size(healthBarLength, HealthBarHeight);
+            healthBar.Visible = true;
+        }
+
+        private void Health_BeforeDraw(object sender, EventArgs e)
+        {
+            MirImageControl healthControl = (MirImageControl)sender;
+
+            if (healthControl.Library == null) return;
+
+            PlayerUI playerUI = playerUIList.FirstOrDefault(ui => ui.HealthBar == healthControl);
+            if (playerUI == null) return;
+
+            string playerName = playerUI.NameLabel.Text;
+            if (string.IsNullOrEmpty(playerName)) return;
+
+            PlayerObject player = MapControl.Objects.OfType<PlayerObject>().FirstOrDefault(p => p.Name == playerName);
+            if (player == null) return;
+
+            double percent = player.PercentHealth / 100f;
+            if (percent > 1) percent = 1;
+            if (percent <= 0) return;
+
+            Rectangle section = new Rectangle
+            {
+                Size = new Size((int)(healthControl.Size.Width * percent), healthControl.Size.Height)
+            };
+
+            healthControl.Library.Draw(healthControl.Index, section, healthControl.DisplayLocation, Color.White, false);
+        }
+
+        public override void Show()
+        {
+            if (Visible) return;
+            Visible = true;
+            GameScene.Scene.GroupStatusPanel.GroupStatusSwitch.Index = 1332;
+        }
+
+        public override void Hide()
+        {
+            if (!Visible) return;
+
+            Visible = false;
+            GameScene.Scene.GroupStatusPanel.GroupStatusSwitch.Index = 1335;
+        }
+        public class PlayerUI
+        {
+            public MirLabel NameLabel { get; set; }
+            public MirImageControl HealthBar { get; set; }
+            public MirImageControl LeaderIcon { get; set; }
         }
     }
 }
