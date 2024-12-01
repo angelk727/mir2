@@ -50,6 +50,15 @@ namespace Server.MirEnvir
 
         private bool IsMatch(DateTime date)
         {
+            if (date.Kind == DateTimeKind.Local)
+            {
+                date = date.ToUniversalTime();
+            }
+            else if (date.Kind == DateTimeKind.Unspecified)
+            {
+                date = DateTime.SpecifyKind(date, DateTimeKind.Local).ToUniversalTime();
+            }
+
             if (Month != null && date.Month != Month) return false;
             if (Day != null && date.Day != Day) return false;
             if (Hour != null && date.Hour != Hour) return false;
