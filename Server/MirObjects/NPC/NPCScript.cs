@@ -101,7 +101,7 @@ namespace Server.MirObjects
                 LoadLua();
             else
                 LuaFileName = null;
-            Load();
+                Load();
 
             Envir.Scripts.Add(ScriptID, this);
         }
@@ -144,6 +144,7 @@ namespace Server.MirObjects
             if (!Directory.Exists(Settings.NPCPath)) return;
 
             string fileName = Path.Combine(Settings.NPCPath, FileName + ".txt");
+            string fileNameLua = Path.Combine(Settings.NPCPath, FileName + ".lua");
 
             if (File.Exists(fileName))
             {
@@ -166,6 +167,7 @@ namespace Server.MirObjects
                 }
             }
             else
+                if (!File.Exists(fileNameLua))
                 MessageQueue.Enqueue(string.Format("找不到脚本: {0}", FileName));
         }
         public void ClearInfo()

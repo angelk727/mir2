@@ -3796,6 +3796,25 @@ namespace Server.MirEnvir
 
             MessageQueue.Enqueue("NPC脚本已重新加载");
         }
+
+        public void ReloadSingleNPC(string npckey)
+        {
+
+            if (int.TryParse(npckey, out int k))
+            {
+                var script = Scripts[k] as NPCScript;
+                var fileName = script.FileName;
+
+                if (script.LuaFileName!=null)
+                    script.LoadLua();
+                else
+                    script.Load();
+                MessageQueue.Enqueue("NPC脚本已重新加载");
+                return;
+            }
+            MessageQueue.Enqueue("NPC序号错误，无法加载");
+        }
+
         public void ReloadLua()
         {
             DefaultNPC = NPCScript.GetOrAdd((uint)Random.Next(1000000, 1999999), Settings.DefaultNPCFilename, NPCScriptType.AutoPlayer);

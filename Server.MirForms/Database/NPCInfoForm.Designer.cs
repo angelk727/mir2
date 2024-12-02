@@ -30,6 +30,7 @@
         {
             tabControl1 = new TabControl();
             tabPage1 = new TabPage();
+            ReloadScriptButton = new Button();
             NPCPreview = new PictureBox();
             TeleportToCheckBox = new CheckBox();
             label15 = new Label();
@@ -107,6 +108,7 @@
             // 
             // tabPage1
             // 
+            tabPage1.Controls.Add(ReloadScriptButton);
             tabPage1.Controls.Add(NPCPreview);
             tabPage1.Controls.Add(TeleportToCheckBox);
             tabPage1.Controls.Add(label15);
@@ -140,6 +142,17 @@
             tabPage1.TabIndex = 0;
             tabPage1.Text = "信息";
             tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // ReloadScriptButton
+            // 
+            ReloadScriptButton.Location = new Point(68, 231);
+            ReloadScriptButton.Margin = new Padding(4, 3, 4, 3);
+            ReloadScriptButton.Name = "ReloadScriptButton";
+            ReloadScriptButton.Size = new Size(88, 31);
+            ReloadScriptButton.TabIndex = 65;
+            ReloadScriptButton.Text = "重载脚本";
+            ReloadScriptButton.UseVisualStyleBackColor = true;
+            ReloadScriptButton.Click += ReloadScriptButton_Click;
             // 
             // NPCPreview
             // 
@@ -294,8 +307,9 @@
             ClearHButton.Name = "ClearHButton";
             ClearHButton.Size = new Size(88, 31);
             ClearHButton.TabIndex = 19;
-            ClearHButton.Text = "清除记录";
+            ClearHButton.Text = "清除回收记录";
             ClearHButton.UseVisualStyleBackColor = true;
+            ClearHButton.Click += ClearHButton_Click;
             // 
             // NNameTextBox
             // 
@@ -831,5 +845,6 @@
         private CheckBox ConquestVisible_checkbox;
         private PictureBox NPCPreview;
         private TextBox NPCSearchTxt;
+        private Button ReloadScriptButton;
     }
 }

@@ -5,6 +5,10 @@ using System.Text.RegularExpressions;
 using S = ServerPackets;
 using NLua;
 using System.Text;
+using C = ClientPackets;
+using Server.MirObjects;
+using System.Numerics;
+
 
 namespace Server.MirObjects
 {
@@ -13,10 +17,17 @@ namespace Server.MirObjects
     {
         public string LuaFileName = null;
 
-        Lua lua = new Lua();
+        Lua lua;
 
         public void LoadLua()
         {
+            if (lua! != null)
+            {
+                lua.Close();
+                lua?.Dispose();
+                lua = null;
+            }
+            lua = new Lua();
             lua.State.Encoding = Encoding.UTF8;
             //初始化Lua库
             lua.LoadCLRPackage();
@@ -30,10 +41,20 @@ namespace Server.MirObjects
                 MessageQueue.Enqueue($"脚本错误：{ex.Message}");
             }
         }
+       
         public void CallLua(string key)
         {
-            key = key.Remove(0, 3);
-            key = key.Remove(key.Length - 1);
+            if (key.Contains("[@_"))
+            {
+                key = key.Remove(0, 3);
+                key = key.Remove(key.Length - 1);
+            }
+            else
+            {
+                key = key.Remove(0, 2);
+                key = key.Remove(key.Length - 1);
+            }
+
             if (key.EndsWith(')'))
                 try
                 {
@@ -72,23 +93,32 @@ namespace Server.MirObjects
         #region 注册全局命令
         public void RegistGlobalLuaFunctions()
         {
-            lua.RegisterFunction("GIVEGOLD", this, typeof(NPCScript).GetMethod("GIVEGOLD"));
-            lua.RegisterFunction("MOVE", this, typeof(NPCScript).GetMethod("MOVE"));
-            lua.RegisterFunction("INSTANCEMOVE", this, typeof(NPCScript).GetMethod("INSTANCEMOVE"));
-            lua.RegisterFunction("TAKEGOLD", this, typeof(NPCScript).GetMethod("TAKEGOLD"));
-            lua.RegisterFunction("GIVEITEM", this, typeof(NPCScript).GetMethod("GIVEITEM"));
-            lua.RegisterFunction("TAKEITEM", this, typeof(NPCScript).GetMethod("TAKEITEM"));
+            List<string> functions = new List<string> { "GIVEGOLD", "MOVE", "INSTANCEMOVE", "TAKEGOLD", "GIVEITEM", "TAKEITEM", "OpenNPC", "EXIT", "GETPLAYINFO","LOCALMESSAGE",
+                //"USERNAME", "CHECKHUM", "GROUPLEADER", "GROUPCHECKNEARBY", "MONCLEAR", "SETTIMER", "TIMERECALL", "GROUPTELEPORT" 
+            };
+
+            foreach (var functionName in functions)
+            {
+                try
+                {
+                    lua.RegisterFunction(functionName, this, typeof(NPCScript).GetMethod(functionName));
+                }
+                catch (NLua.Exceptions.LuaException ex)
+                {
+
+                    MessageQueue.Enqueue($"脚本错误：{ex.Message}");
+                }
+
+            }
         }
         #endregion
-
         public void GIVEGOLD(uint gold)
         {
-            if (lua["player"] is PlayerObject player)
-            {
-                if (gold + player.Account.Gold >= uint.MaxValue)
-                    gold = uint.MaxValue - player.Account.Gold;
-                player.GainGold(gold);
-            }
+            var player = lua["player"] as PlayerObject;
+            if (gold + player.Account.Gold >= uint.MaxValue)
+                gold = uint.MaxValue - player.Account.Gold;
+            player.GainGold(gold);
+
 
         }
         public void MOVE(string MapNumber, int X_Coord, int Y_Coord)
@@ -193,6 +223,49 @@ namespace Server.MirObjects
                 break;
             }
             player.RefreshStats();
+        }
+
+        public void OpenNPC(string content, int image = 0, int maxLine = 0)
+        {
+            if (content != null)
+            {
+                var player = lua["player"] as PlayerObject;
+                char[] separators = new char[] { '\n' };
+                // 使用String.Split方法分割字符串
+                string[] parts = content.Split(separators, StringSplitOptions.None);
+                // 将分割后的字符串数组转换为List<string>
+                player.NPCSpeech = new List<string>(parts);
+
+                player.Enqueue(new S.NPCResponse { Page = player.NPCSpeech });
+            }
+        }
+
+        public void EXIT()
+        {
+            var player = lua["player"] as PlayerObject;
+            //关闭npc对话框
+        }
+
+        public string GETPLAYINFO(string SAY)
+        {
+            var player = lua["player"] as PlayerObject;
+            List<string>
+               say = new List<string>(),
+               buttons = new List<string>(),
+               elseSay = new List<string>(),
+               elseActs = new List<string>(),
+               elseButtons = new List<string>(),
+               gotoButtons = new List<string>();
+            NPCPage page = new NPCPage("");
+            return new NPCSegment(page, say, buttons, elseSay, elseButtons, gotoButtons).ReplaceValue(player, SAY);
+        }
+
+        public void LOCALMESSAGE(string type,string Content)
+        {
+            var player = lua["player"] as PlayerObject;
+            ChatType chatType;
+            if (!Enum.TryParse(type, true, out chatType)) return;
+            player.ReceiveChat(Content, chatType);
         }
     }
 }

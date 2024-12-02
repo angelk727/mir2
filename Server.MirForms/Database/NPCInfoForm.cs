@@ -10,6 +10,7 @@ namespace Server
         public string NPCListPath = Path.Combine(Settings.ExportPath, "NPCList.txt");
 
         public Envir Envir => SMain.EditEnvir;
+        public Envir EnvirMain => SMain.Envir;
 
         private List<NPCInfo> _selectedNPCInfos;
 
@@ -388,18 +389,22 @@ namespace Server
         {
             if (NFileNameTextBox.Text == string.Empty) return;
 
-            var scriptPath = Path.Combine(Settings.NPCPath, NFileNameTextBox.Text + ".txt");
+            var scriptPathLua = Path.Combine(Settings.NPCPath, NFileNameTextBox.Text + ".lua");
+            var scriptPathTxt = Path.Combine(Settings.NPCPath, NFileNameTextBox.Text + ".txt");
 
-            if (File.Exists(scriptPath))
+            if (File.Exists(scriptPathLua))
             {
-                Shared.Helpers.FileIO.OpenScript(scriptPath, true);
+                Shared.Helpers.FileIO.OpenScript(scriptPathLua, true);
             }
-
+            else if(File.Exists(scriptPathTxt))
+            {
+                Shared.Helpers.FileIO.OpenScript(scriptPathTxt, true);
+            }
             else
             {
-                Directory.CreateDirectory(Path.GetDirectoryName(scriptPath));
-                File.Create(scriptPath).Close();
-                Shared.Helpers.FileIO.OpenScript(scriptPath, true);
+                Directory.CreateDirectory(Path.GetDirectoryName(scriptPathTxt));
+                File.Create(scriptPathTxt).Close();
+                Shared.Helpers.FileIO.OpenScript(scriptPathTxt, true);
             }
         }
 
@@ -664,6 +669,17 @@ namespace Server
                     NPCInfoListBox.Items.Add(item);
                 }
             }
+        }
+
+        private void ReloadScriptButton_Click(object sender, EventArgs e)
+        {
+            EnvirMain.ReloadSingleNPC(NPCIndexTextBox.Text);
+        }
+
+        private void ClearHButton_Click(object sender, EventArgs e)
+        {
+            //todo 清除回收物品
+            return;
         }
     }
 }
