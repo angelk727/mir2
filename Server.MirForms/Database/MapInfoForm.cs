@@ -1824,7 +1824,7 @@ namespace Server
             RefreshMovementList();
         }
 
-        private void lstParticles_SelectedIndexChanged(object sender, EventArgs e)
+        private void LstParticles_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (ActiveControl != sender) return;
 
@@ -1836,10 +1836,7 @@ namespace Server
             for (int i = 0; i < _selectedMapInfos.Count; i++)
             {
                 _selectedMapInfos[i].WeatherParticles = newvalue;
-
-
             }
-            UpdateInterface(true);
         }
 
         private void MapSearchButton_Click(object sender, EventArgs e)

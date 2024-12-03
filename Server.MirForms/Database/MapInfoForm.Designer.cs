@@ -245,7 +245,7 @@ namespace Server
             lstParticles.SelectionMode = SelectionMode.MultiSimple;
             lstParticles.Size = new Size(165, 242);
             lstParticles.TabIndex = 0;
-            lstParticles.SelectedIndexChanged += lstParticles_SelectedIndexChanged;
+            lstParticles.SelectedIndexChanged += LstParticles_SelectedIndexChanged;
             // 
             // MinimapPreview
             // 
