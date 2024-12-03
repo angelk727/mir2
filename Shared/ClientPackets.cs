@@ -751,12 +751,12 @@ namespace ClientPackets
         protected override void ReadPacket(BinaryReader reader)
         {
             Direction = (MirDirection) reader.ReadByte();
-            Spell = (Spell) reader.ReadByte();
+            Spell = (Spell) reader.ReadUInt16();
         }
         protected override void WritePacket(BinaryWriter writer)
         {
             writer.Write((byte)Direction);
-            writer.Write((byte)Spell);
+            writer.Write((ushort)Spell);
         }
     }
     public sealed class RangeAttack : Packet //ArcherTest
@@ -992,13 +992,13 @@ namespace ClientPackets
 
         protected override void ReadPacket(BinaryReader reader)
         {
-            Spell = (Spell) reader.ReadByte();
+            Spell = (Spell) reader.ReadUInt16();
             Key = reader.ReadByte();
             OldKey = reader.ReadByte();
         }
         protected override void WritePacket(BinaryWriter writer)
         {
-            writer.Write((byte) Spell);
+            writer.Write((ushort) Spell);
             writer.Write(Key);
             writer.Write(OldKey);
         }
@@ -1017,7 +1017,7 @@ namespace ClientPackets
         protected override void ReadPacket(BinaryReader reader)
         {
             ObjectID = reader.ReadUInt32();
-            Spell = (Spell) reader.ReadByte();
+            Spell = (Spell) reader.ReadUInt16();
             Direction = (MirDirection)reader.ReadByte();
             TargetID = reader.ReadUInt32();
             Location = new Point(reader.ReadInt32(), reader.ReadInt32());
@@ -1026,7 +1026,7 @@ namespace ClientPackets
         protected override void WritePacket(BinaryWriter writer)
         {
             writer.Write(ObjectID);
-            writer.Write((byte) Spell);
+            writer.Write((ushort) Spell);
             writer.Write((byte)Direction);
             writer.Write(TargetID);
             writer.Write(Location.X);
@@ -1396,12 +1396,12 @@ namespace ClientPackets
 
         protected override void ReadPacket(BinaryReader reader)
         {
-            Spell = (Spell)reader.ReadByte();
+            Spell = (Spell)reader.ReadUInt16();
             canUse = (SpellToggleState)reader.ReadSByte();
         }
         protected override void WritePacket(BinaryWriter writer)
         {
-            writer.Write((byte)Spell);
+            writer.Write((ushort)Spell);
             writer.Write((sbyte)canUse);
         }
     }

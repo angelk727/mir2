@@ -3871,7 +3871,7 @@ namespace Client.MirScenes.Dialogs
                     SkillButton.Hint = string.Format("烦脑：\n主动技能\n损耗目标的魔法值\n并附带其他目标效果", Magic.Level, Magic.Level == 0 ? Magic.Level1 : Magic.Level == 1 ? Magic.Level2 : Magic.Level == 2 ? Magic.Level3 : 0, Magic.BaseCost);
                     break;
                 case Spell.PetEnhancer:
-                    SkillButton.Hint = string.Format("血龙水：\n主动技能\n强化自身的召唤物", Magic.Level, Magic.Level == 0 ? Magic.Level1 : Magic.Level == 1 ? Magic.Level2 : Magic.Level == 2 ? Magic.Level3 : 0, Magic.BaseCost);
+                    SkillButton.Hint = string.Format("血龙兽：\n主动技能\n强化自身的召唤物", Magic.Level, Magic.Level == 0 ? Magic.Level1 : Magic.Level == 1 ? Magic.Level2 : Magic.Level == 2 ? Magic.Level3 : 0, Magic.BaseCost);
                     break;
                 case Spell.HealingCircle:
                     SkillButton.Hint = string.Format("阴阳五行阵：\n主动技能\n治疗区域内友方目标\n并对敌方造成法术伤害", Magic.Level, Magic.Level == 0 ? Magic.Level1 : Magic.Level == 1 ? Magic.Level2 : Magic.Level == 2 ? Magic.Level3 : 0, Magic.BaseCost);
@@ -3882,6 +3882,16 @@ namespace Client.MirScenes.Dialogs
                 case Spell.HealingcircleRare:
                     SkillButton.Hint = string.Format("阴阳五行阵-秘籍：\n主动技能\n治疗区域内友方目标\n对敌方造成法术伤害并附加毒伤害", Magic.Level, Magic.Level == 0 ? Magic.Level1 : Magic.Level == 1 ? Magic.Level2 : Magic.Level == 2 ? Magic.Level3 : 0, Magic.BaseCost);
                     break;
+                case Spell.PetEnhancerRare:
+                    SkillButton.Hint = string.Format("血龙兽-秘籍：\n主动技能\n当拥有血龙兽的能量时，你将能够一次性召唤所有召唤物\n召唤物会受到怪物的伤害减免", Magic.Level, Magic.Level == 0 ? Magic.Level1 : Magic.Level == 1 ? Magic.Level2 : Magic.Level == 2 ? Magic.Level3 : 0, Magic.BaseCost);
+                    break;
+                case Spell.MultipleEffects:
+                    SkillButton.Hint = string.Format("万效符：\n主动技能\n为自己和队友提供幽灵盾、神圣战甲、先天气功、无极真气的效果\n自身受到的伤害减少10%等效果", Magic.Level, Magic.Level == 0 ? Magic.Level1 : Magic.Level == 1 ? Magic.Level2 : Magic.Level == 2 ? Magic.Level3 : 0, Magic.BaseCost);
+                    break;
+                case Spell.MultipleEffectsRare:
+                    SkillButton.Hint = string.Format("万效符-秘籍：\n主动技能\n为自己和队友提供幽灵盾、神圣战甲、先天气功、无极真气的效果\n并施加净化术，自身受到的伤害减少20%等效果", Magic.Level, Magic.Level == 0 ? Magic.Level1 : Magic.Level == 1 ? Magic.Level2 : Magic.Level == 2 ? Magic.Level3 : 0, Magic.BaseCost);
+                    break;
+
 
                 //Assassin
                 case Spell.FatalSword:
@@ -3993,7 +4003,7 @@ namespace Client.MirScenes.Dialogs
                     SkillButton.Hint = string.Format("血龙闪：\n主动技能\n射出一只龙箭\n造成大范围的高伤害", Magic.Level, Magic.Level == 0 ? Magic.Level1 : Magic.Level == 1 ? Magic.Level2 : Magic.Level == 2 ? Magic.Level3 : 0, Magic.BaseCost);
                     break;
                 case Spell.OneWithNature:
-                    SkillButton.Hint = string.Format("血龙闪秘笈：\n主动技能\n射出一只龙箭\n造成大范围的高伤害并造成额外伤害", Magic.Level, Magic.Level == 0 ? Magic.Level1 : Magic.Level == 1 ? Magic.Level2 : Magic.Level == 2 ? Magic.Level3 : 0, Magic.BaseCost);
+                    SkillButton.Hint = string.Format("血龙闪-秘籍：\n主动技能\n射出一只龙箭\n造成大范围的高伤害并造成额外伤害", Magic.Level, Magic.Level == 0 ? Magic.Level1 : Magic.Level == 1 ? Magic.Level2 : Magic.Level == 2 ? Magic.Level3 : 0, Magic.BaseCost);
                     break;
                 case Spell.MentalState:
                     SkillButton.Hint = string.Format("精神状态：\n主动技能(需开启)\n可以调整弓箭的攻击模式", Magic.Level, Magic.Level == 0 ? Magic.Level1 : Magic.Level == 1 ? Magic.Level2 : Magic.Level == 2 ? Magic.Level3 : 0, Magic.BaseCost);

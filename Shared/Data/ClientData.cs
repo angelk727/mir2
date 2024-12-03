@@ -19,7 +19,7 @@ public class ClientMagic
     public ClientMagic(BinaryReader reader)
     {
         Name = reader.ReadString();
-        Spell = (Spell)reader.ReadByte();
+        Spell = (Spell)reader.ReadUInt16();
 
         BaseCost = reader.ReadByte();
         LevelCost = reader.ReadByte();
@@ -44,7 +44,7 @@ public class ClientMagic
     public void Save(BinaryWriter writer)
     {
         writer.Write(Name);
-        writer.Write((byte)Spell);
+        writer.Write((ushort)Spell);
 
         writer.Write(BaseCost);
         writer.Write(LevelCost);

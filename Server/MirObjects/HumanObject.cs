@@ -3,7 +3,6 @@ using System.Drawing;
 using Server.MirEnvir;
 using Server.MirNetwork;
 using Server.MirObjects.Monsters;
-using System.Numerics;
 using S = ServerPackets;
 
 namespace Server.MirObjects
@@ -3821,6 +3820,13 @@ namespace Server.MirObjects
                 case Spell.HealingCircle:
                     HealingCircle(magic, spellTargetLock ? (target != null ? target.CurrentLocation : location) : location);
                     break;
+                case Spell.PetEnhancerRare:
+                    PetEnhancerRare(magic);
+                    break;
+                case Spell.MultipleEffects:
+                case Spell.MultipleEffectsRare:
+                    MultipleEffects(magic, spellTargetLock ? (target != null ? target.CurrentLocation : location) : location, out cast);
+                    break;
 
                 //Custom Spells
                 case Spell.Portal:
@@ -4595,7 +4601,20 @@ namespace Server.MirObjects
 
             return true;
         }
+        private void MultipleEffects(UserMagic magic, Point location, out bool cast)
+        {
+            cast = false;
+            UserItem item = GetAmulet(1);
+            if (item == null) return;
+            cast = true;
 
+            int delay = Functions.MaxDistance(CurrentLocation, location) * 50 + 500;
+
+            DelayedAction action = new DelayedAction(DelayedType.Magic, Envir.Time + delay, this, magic, GetAttackPower(Stats[Stat.MinSC], Stats[Stat.MaxSC]) * 4 + (magic.Level + 1) * 50, location);
+            CurrentMap.ActionList.Add(action);
+
+            ConsumeItem(item, 1);
+        }
         private void TrapHexagon(UserMagic magic, Point location, out bool cast)
         {
             cast = false;
@@ -4953,6 +4972,55 @@ namespace Server.MirObjects
 
             ConsumeItem(item, 3);
         }
+        private void PetEnhancerRare(UserMagic magic)
+        {
+
+            List<string> summonableMonsters = new List<string> { Settings.SkeletonName, Settings.ShinsuName, Settings.AngelName };
+
+            foreach (var monsterName in summonableMonsters)
+            {
+                if (Pets.Any(monster => monster.Info.Name == monsterName && !monster.Dead))
+                    continue;
+
+                if (Pets.Count(x => x.Race == ObjectType.Monster) >= 3)
+                    continue;
+
+                int amuletType = monsterName switch
+                {
+                    var name when name == Settings.SkeletonName => 1,
+                    var name when name == Settings.ShinsuName => 5,
+                    var name when name == Settings.AngelName => 2,
+                    _ => 0
+                };
+
+                UserItem item = GetAmulet(amuletType);
+                if (item == null) continue;
+
+                MonsterInfo info = Envir.GetMonsterInfo(monsterName);
+                if (info == null) continue;
+
+                LevelMagic(magic);
+
+                ConsumeItem(item, (byte)amuletType);
+
+                var newMonster = MonsterObject.GetMonster(info);
+                newMonster.PetLevel = magic.Level;
+                newMonster.Master = this;
+
+                newMonster.MaxPetLevel = (monsterName == Settings.SkeletonName)
+                    ? (byte)(4 + magic.Level)
+                    : (byte)(1 + magic.Level * 2);
+
+                newMonster.DamageReduction = 0.75f;
+
+                newMonster.Direction = Direction;
+                newMonster.ActionTime = Envir.Time + 1000;
+
+                DelayedAction action = new DelayedAction(DelayedType.Magic, Envir.Time + 500, this, magic, newMonster, Front);
+                CurrentMap.ActionList.Add(action);
+            }
+        }
+
         #endregion
 
         #region Warrior Skills
@@ -6603,7 +6671,7 @@ namespace Server.MirObjects
                             [Stat.MaxAC] = acInc
                         };
 
-                        target.AddBuff(BuffType.血龙水, this, (Settings.Second * value), stats);
+                        target.AddBuff(BuffType.血龙兽, this, (Settings.Second * value), stats);
                         LevelMagic(magic);
                     }
                     break;

@@ -2439,6 +2439,14 @@ namespace Client.MirObjects
                                 break;
 
                             #endregion
+                            
+                            #region PetEnhancerRare
+
+                            case Spell.PetEnhancerRare:
+                                Effects.Add(new Effect(Libraries.Magic3, 200, 8, Frame.Count * FrameInterval, this));
+                                break;
+
+                            #endregion
 
                         }
 
@@ -3688,6 +3696,38 @@ namespace Client.MirObjects
                                             }
                                         }
                                         
+                                        break;
+
+                                    #endregion
+                                    
+                                    #region MultipleEffects
+
+                                    case Spell.MultipleEffects:
+                                        SoundManager.PlaySound(20000 + (ushort)Spell * 10);
+                                        missile = CreateProjectile(1160, Libraries.Magic, true, 3, 30, 7);
+                                        missile.Explode = true;
+
+                                        missile.Complete += (o, e) =>
+                                        {
+                                            MapControl.Effects.Add(new Effect(Libraries.Magic_32bit, 1700, 19, 1200, TargetPoint));
+                                            SoundManager.PlaySound(20000 + (ushort)Spell.MultipleEffects * 10 + 1);
+                                        };
+                                        break;
+
+                                    #endregion
+
+                                    #region MultipleEffectsRare
+
+                                    case Spell.MultipleEffectsRare:
+                                        SoundManager.PlaySound(20000 + (ushort)Spell * 10);
+                                        missile = CreateProjectile(1160, Libraries.Magic, true, 3, 30, 7);
+                                        missile.Explode = true;
+
+                                        missile.Complete += (o, e) =>
+                                        {
+                                            MapControl.Effects.Add(new Effect(Libraries.Magic_32bit, 1730, 26, 1200, TargetPoint));
+                                            SoundManager.PlaySound(20000 + (ushort)Spell.MultipleEffectsRare * 10 + 1);
+                                        };
                                         break;
 
                                     #endregion

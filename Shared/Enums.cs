@@ -1212,7 +1212,7 @@ public enum ItemSet : byte
     神龙套装 = 41
 }
 
-public enum Spell : byte
+public enum Spell : ushort
 {
     None = 0,
 
@@ -1241,156 +1241,159 @@ public enum Spell : byte
     DimensionalSwordRare = 22,
 
     //Wizard
-    FireBall = 31,
-    Repulsion = 32,
-    ElectricShock = 33,
-    GreatFireBall = 34,
-    HellFire = 35,
-    ThunderBolt = 36,
-    Teleport = 37,
-    FireBang = 38,
-    FireWall = 39,
-    Lightning = 40,
-    FrostCrunch = 41,
-    ThunderStorm = 42,
-    MagicShield = 43,
-    TurnUndead = 44,
-    Vampirism = 45,
-    IceStorm = 46,
-    FlameDisruptor = 47,
-    Mirroring = 48,
-    FlameField = 49,
-    Blizzard = 50,
-    MagicBooster = 51,
-    MeteorStrike = 52,
-    IceThrust = 53,
-    FastMove = 54,
-    StormEscape = 55,
-    HeavenlySecrets = 56,
-    GreatFireBallRare = 57,
-    StormEscapeRare = 58,
+    FireBall = 51,
+    Repulsion = 52,
+    ElectricShock = 53,
+    GreatFireBall = 54,
+    HellFire = 55,
+    ThunderBolt = 56,
+    Teleport = 57,
+    FireBang = 58,
+    FireWall = 59,
+    Lightning = 60,
+    FrostCrunch = 61,
+    ThunderStorm = 62,
+    MagicShield = 63,
+    TurnUndead = 64,
+    Vampirism = 65,
+    IceStorm = 66,
+    FlameDisruptor = 67,
+    Mirroring = 68,
+    FlameField = 69,
+    Blizzard = 70,
+    MagicBooster = 71,
+    MeteorStrike = 72,
+    IceThrust = 73,
+    FastMove = 74,
+    StormEscape = 75,
+    HeavenlySecrets = 76,
+    GreatFireBallRare = 77,
+    StormEscapeRare = 78,
 
     //Taoist
-    Healing = 61,
-    SpiritSword = 62,
-    Poisoning = 63,
-    SoulFireBall = 64,
-    SummonSkeleton = 65,
-    Hiding = 67,
-    MassHiding = 68,
-    SoulShield = 69,
-    Revelation = 70,
-    BlessedArmour = 71,
-    EnergyRepulsor = 72,
-    TrapHexagon = 73,
-    Purification = 74,
-    MassHealing = 75,
-    Hallucination = 76,
-    UltimateEnhancer = 77,
-    SummonShinsu = 78,
-    Reincarnation = 79,
-    SummonHolyDeva = 80,
-    Curse = 81,
-    Plague = 82,
-    PoisonCloud = 83,
-    EnergyShield = 84,
-    PetEnhancer = 85,
-    HealingCircle = 86,
-    HealingRare = 87,
-    HealingcircleRare = 88,
+    Healing = 101,
+    SpiritSword = 102,
+    Poisoning = 103,
+    SoulFireBall = 104,
+    SummonSkeleton = 105,
+    Hiding = 107,
+    MassHiding = 108,
+    SoulShield = 109,
+    Revelation = 110,
+    BlessedArmour = 111,
+    EnergyRepulsor = 112,
+    TrapHexagon = 113,
+    Purification = 114,
+    MassHealing = 115,
+    Hallucination = 116,
+    UltimateEnhancer = 117,
+    SummonShinsu = 118,
+    Reincarnation = 119,
+    SummonHolyDeva = 120,
+    Curse = 121,
+    Plague = 122,
+    PoisonCloud = 123,
+    EnergyShield = 124,
+    PetEnhancer = 125,
+    HealingCircle = 126,
+    HealingRare = 127,
+    HealingcircleRare = 128,
+    PetEnhancerRare = 129,
+    MultipleEffects = 130,
+    MultipleEffectsRare = 131,
 
     //Assassin
-    FatalSword = 91,
-    DoubleSlash = 92,
-    Haste = 93,
-    FlashDash = 94,
-    LightBody = 95,
-    HeavenlySword = 96,
-    FireBurst = 97,
-    Trap = 98,
-    PoisonSword = 99,
-    MoonLight = 100,
-    MPEater = 101,
-    SwiftFeet = 102,
-    DarkBody = 103,
-    Hemorrhage = 104,
-    CrescentSlash = 105,
-    MoonMist = 106,
-    CatTongue = 107,
+    FatalSword = 151,
+    DoubleSlash = 152,
+    Haste = 153,
+    FlashDash = 154,
+    LightBody = 155,
+    HeavenlySword = 156,
+    FireBurst = 157,
+    Trap = 158,
+    PoisonSword = 159,
+    MoonLight = 160,
+    MPEater = 161,
+    SwiftFeet = 162,
+    DarkBody = 163,
+    Hemorrhage = 164,
+    CrescentSlash = 165,
+    MoonMist = 166,
+    CatTongue = 167,
 
     //Archer
-    Focus = 121,
-    StraightShot = 122,
-    DoubleShot = 123,
-    ExplosiveTrap = 124,
-    DelayedExplosion = 125,
-    Meditation = 126,
-    BackStep = 127,
-    ElementalShot = 128,
-    Concentration = 129,
-    Stonetrap = 130,
-    ElementalBarrier = 131,
-    SummonVampire = 132,
-    VampireShot = 133,
-    SummonToad = 134,
-    PoisonShot = 135,
-    CrippleShot = 136,
-    SummonSnakes = 137,
-    NapalmShot = 138,
-    OneWithNature = 139,
-    BindingShot = 140,
-    MentalState = 141,
+    Focus = 201,
+    StraightShot = 202,
+    DoubleShot = 203,
+    ExplosiveTrap = 204,
+    DelayedExplosion = 205,
+    Meditation = 206,
+    BackStep = 207,
+    ElementalShot = 208,
+    Concentration = 209,
+    Stonetrap = 210,
+    ElementalBarrier = 211,
+    SummonVampire = 212,
+    VampireShot = 213,
+    SummonToad = 214,
+    PoisonShot = 215,
+    CrippleShot = 216,
+    SummonSnakes = 217,
+    NapalmShot = 218,
+    OneWithNature = 219,
+    BindingShot = 220,
+    MentalState = 221,
 
     //Custom
-    Blink = 151,
-    Portal = 152,
-    BattleCry = 153,
-    FireBounce = 154,
-    MeteorShower = 155,
+    Blink = 301,
+    Portal = 302,
+    BattleCry = 303,
+    FireBounce = 304,
+    MeteorShower = 305,
 
     //Map Events
-    DigOutZombie = 200,
-    Rubble = 201,
-    MapLightning = 202,
-    MapLava = 203,
-    MapQuake1 = 204,
-    MapQuake2 = 205,
-    DigOutArmadillo = 206,
-    FlyingStatueIceTornado = 207, //259
-    GeneralMeowMeowThunder = 208, //341
-    TucsonGeneralRock = 209, //354
-    StoneGolemQuake = 210, //362
-    EarthGolemPile = 211, //363
-    TreeQueenRoot = 212, //365
-    TreeQueenMassRoots = 213, //365
-    TreeQueenGroundRoots = 214, //365
-    DarkOmaKingNuke = 215, //378
-    HornedSorcererDustTornado = 216, //406
-    Mon409BRockFall = 217,
-    Mon409BRockSpike = 218,
-    Mon409BShield = 219,
-    YangDragonFlame = 220, //414
-    YangDragonIcyBurst = 221, //414
-    ShardGuardianIceBomb = 222, //476
-    GroundFissure = 223, //498
-    SkeletonBomb = 224, //508
-    FlameExplosion = 225, //509
-    ButcherFlyAxe = 226, //516
-    RiklebitesBlast = 227, //518
-    RiklebitesRollCall = 228, //518
-    SwordFormation = 229, //550
-    Mon564NWhirlwind = 230,
-    Mon570BRupture = 231,
-    Mon570BLightningCloud = 232,
-    Mon571BFireBomb = 233,
-    Mon572BFlame = 234,
-    Mon572BDarkVortex = 235,
-    Mon573BBigCobweb = 236,
-    Mon580BPoisonousMist = 237,
-    Mon580BDenseFog = 238,
-    Mon580BRoot = 239,
-    Mon603BWhirlPool = 240,
-    Mon609NBomb = 241
+    DigOutZombie = 400,
+    Rubble = 401,
+    MapLightning = 402,
+    MapLava = 403,
+    MapQuake1 = 404,
+    MapQuake2 = 405,
+    DigOutArmadillo = 406,
+    FlyingStatueIceTornado = 407, //259
+    GeneralMeowMeowThunder = 408, //341
+    TucsonGeneralRock = 409, //354
+    StoneGolemQuake = 410, //362
+    EarthGolemPile = 411, //363
+    TreeQueenRoot = 412, //365
+    TreeQueenMassRoots = 413, //365
+    TreeQueenGroundRoots = 414, //365
+    DarkOmaKingNuke = 415, //378
+    HornedSorcererDustTornado = 416, //406
+    Mon409BRockFall = 417,
+    Mon409BRockSpike = 418,
+    Mon409BShield = 419,
+    YangDragonFlame = 420, //414
+    YangDragonIcyBurst = 421, //414
+    ShardGuardianIceBomb = 422, //476
+    GroundFissure = 423, //498
+    SkeletonBomb = 424, //508
+    FlameExplosion = 425, //509
+    ButcherFlyAxe = 426, //516
+    RiklebitesBlast = 427, //518
+    RiklebitesRollCall = 428, //518
+    SwordFormation = 429, //550
+    Mon564NWhirlwind = 430,
+    Mon570BRupture = 431,
+    Mon570BLightningCloud = 432,
+    Mon571BFireBomb = 433,
+    Mon572BFlame = 434,
+    Mon572BDarkVortex = 435,
+    Mon573BBigCobweb = 436,
+    Mon580BPoisonousMist = 437,
+    Mon580BDenseFog = 438,
+    Mon580BRoot = 439,
+    Mon603BWhirlPool = 440,
+    Mon609NBomb = 441
 }
 
 public enum SpellEffect : byte
@@ -1474,7 +1477,7 @@ public enum BuffType : byte
     精神状态,
     先天气功,
     深延术,
-    血龙水,
+    血龙兽,
     金刚不坏,
     金刚不坏秘籍,
     魔法盾,

@@ -2307,7 +2307,7 @@ namespace ServerPackets
             ObjectID = reader.ReadUInt32();
             Location = new Point(reader.ReadInt32(), reader.ReadInt32());
             Direction = (MirDirection)reader.ReadByte();
-            Spell = (Spell)reader.ReadByte();
+            Spell = (Spell)reader.ReadUInt16();
             Level = reader.ReadByte();
             Type = reader.ReadByte();
         }
@@ -2318,7 +2318,7 @@ namespace ServerPackets
             writer.Write(Location.X);
             writer.Write(Location.Y);
             writer.Write((byte)Direction);
-            writer.Write((byte)Spell);
+            writer.Write((ushort)Spell);
             writer.Write(Level);
             writer.Write(Type);
         }
@@ -3290,7 +3290,7 @@ namespace ServerPackets
         protected override void ReadPacket(BinaryReader reader)
         {
             ObjectID = reader.ReadUInt32();
-            Spell = (Spell)reader.ReadByte();
+            Spell = (Spell)reader.ReadUInt16();
             Level = reader.ReadByte();
             Experience = reader.ReadUInt16();
         }
@@ -3298,7 +3298,7 @@ namespace ServerPackets
         protected override void WritePacket(BinaryWriter writer)
         {
             writer.Write(ObjectID);
-            writer.Write((byte)Spell);
+            writer.Write((ushort)Spell);
             writer.Write(Level);
             writer.Write(Experience);
         }
@@ -3318,7 +3318,7 @@ namespace ServerPackets
 
         protected override void ReadPacket(BinaryReader reader)
         {
-            Spell = (Spell)reader.ReadByte();
+            Spell = (Spell)reader.ReadUInt16();
             TargetID = reader.ReadUInt32();
             Target = new Point(reader.ReadInt32(), reader.ReadInt32());
             Cast = reader.ReadBoolean();
@@ -3333,7 +3333,7 @@ namespace ServerPackets
         }
         protected override void WritePacket(BinaryWriter writer)
         {
-            writer.Write((byte)Spell);
+            writer.Write((ushort)Spell);
             writer.Write(TargetID);
             writer.Write(Target.X);
             writer.Write(Target.Y);
@@ -3359,13 +3359,13 @@ namespace ServerPackets
         protected override void ReadPacket(BinaryReader reader)
         {
             ObjectID = reader.ReadUInt32();
-            Spell = (Spell)reader.ReadByte();
+            Spell = (Spell)reader.ReadUInt16();
             Delay = reader.ReadInt64();
         }
         protected override void WritePacket(BinaryWriter writer)
         {
             writer.Write(ObjectID);
-            writer.Write((byte)Spell);
+            writer.Write((ushort)Spell);
             writer.Write(Delay);
         }
     }
@@ -3377,11 +3377,11 @@ namespace ServerPackets
 
         protected override void ReadPacket(BinaryReader reader)
         {
-            Spell = (Spell)reader.ReadByte();
+            Spell = (Spell)reader.ReadUInt16();
         }
         protected override void WritePacket(BinaryWriter writer)
         {
-            writer.Write((byte)Spell);
+            writer.Write((ushort)Spell);
         }
     }
 
@@ -3407,7 +3407,7 @@ namespace ServerPackets
             Location = new Point(reader.ReadInt32(), reader.ReadInt32());
             Direction = (MirDirection)reader.ReadByte();
 
-            Spell = (Spell)reader.ReadByte();
+            Spell = (Spell)reader.ReadUInt16();
             TargetID = reader.ReadUInt32();
 
             Target = new Point(reader.ReadInt32(), reader.ReadInt32());
@@ -3429,7 +3429,7 @@ namespace ServerPackets
             writer.Write(Location.Y);
             writer.Write((byte)Direction);
 
-            writer.Write((byte)Spell);
+            writer.Write((ushort)Spell);
             writer.Write(TargetID);
 
             writer.Write(Target.X);
@@ -3486,13 +3486,13 @@ namespace ServerPackets
 
         protected override void ReadPacket(BinaryReader reader)
         {
-            Spell = (Spell)reader.ReadByte();
+            Spell = (Spell)reader.ReadUInt16();
             Source = reader.ReadUInt32();
             Destination = reader.ReadUInt32();
         }
         protected override void WritePacket(BinaryWriter writer)
         {
-            writer.Write((byte)Spell);
+            writer.Write((ushort)Spell);
             writer.Write(Source);
             writer.Write(Destination);
         }
@@ -3510,14 +3510,14 @@ namespace ServerPackets
         {
             TargetID = reader.ReadUInt32();
             Target = new Point(reader.ReadInt32(), reader.ReadInt32());
-            Spell = (Spell)reader.ReadByte();
+            Spell = (Spell)reader.ReadUInt16();
         }
         protected override void WritePacket(BinaryWriter writer)
         {
             writer.Write(TargetID);
             writer.Write(Target.X);
             writer.Write(Target.Y);
-            writer.Write((byte)Spell);
+            writer.Write((ushort)Spell);
         }
     }
 
@@ -3763,13 +3763,13 @@ namespace ServerPackets
         protected override void ReadPacket(BinaryReader reader)
         {
             ObjectID = reader.ReadUInt32();
-            Spell = (Spell)reader.ReadByte();
+            Spell = (Spell)reader.ReadUInt16();
             CanUse = reader.ReadBoolean();
         }
         protected override void WritePacket(BinaryWriter writer)
         {
             writer.Write(ObjectID);
-            writer.Write((byte)Spell);
+            writer.Write((ushort)Spell);
             writer.Write(CanUse);
         }
     }
@@ -3875,7 +3875,7 @@ namespace ServerPackets
             TargetID = reader.ReadUInt32();
             Target = new Point(reader.ReadInt32(), reader.ReadInt32());
             Type = reader.ReadByte();
-            Spell = (Spell)reader.ReadByte();
+            Spell = (Spell)reader.ReadUInt16();
             Level = reader.ReadByte();
         }
 
@@ -3889,7 +3889,7 @@ namespace ServerPackets
             writer.Write(Target.X);
             writer.Write(Target.Y);
             writer.Write(Type);
-            writer.Write((byte)Spell);
+            writer.Write((ushort)Spell);
             writer.Write(Level);
         }
     }
@@ -3995,7 +3995,7 @@ namespace ServerPackets
         {
             ObjectID = reader.ReadUInt32();
             Location = new Point(reader.ReadInt32(), reader.ReadInt32());
-            Spell = (Spell)reader.ReadByte();
+            Spell = (Spell)reader.ReadUInt16();
             Direction = (MirDirection)reader.ReadByte();
             Param = reader.ReadBoolean();
         }
@@ -4005,7 +4005,7 @@ namespace ServerPackets
             writer.Write(ObjectID);
             writer.Write(Location.X);
             writer.Write(Location.Y);
-            writer.Write((byte)Spell);
+            writer.Write((ushort)Spell);
             writer.Write((byte)Direction);
             writer.Write(Param);
         }

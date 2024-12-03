@@ -34,7 +34,7 @@ namespace Server.MirDatabase
         public MagicInfo (BinaryReader reader, int version = int.MaxValue, int Customversion = int.MaxValue)
         {
             Name = reader.ReadString();
-            Spell = (Spell)reader.ReadByte();
+            Spell = (Spell)reader.ReadUInt16();
             BaseCost = reader.ReadByte();
             LevelCost = reader.ReadByte();
             Icon = reader.ReadByte();
@@ -63,7 +63,7 @@ namespace Server.MirDatabase
         public void Save(BinaryWriter writer)
         {
             writer.Write(Name);
-            writer.Write((byte)Spell);
+            writer.Write((ushort)Spell);
             writer.Write(BaseCost);
             writer.Write(LevelCost);
             writer.Write(Icon);
@@ -119,7 +119,7 @@ namespace Server.MirDatabase
         }
         public UserMagic(BinaryReader reader, int version, int customVersion)
         {
-            Spell = (Spell) reader.ReadByte();
+            Spell = (Spell) reader.ReadUInt16();
             Info = GetMagicInfo(Spell);
 
             Level = reader.ReadByte();
@@ -134,7 +134,7 @@ namespace Server.MirDatabase
         }
         public void Save(BinaryWriter writer)
         {
-            writer.Write((byte) Spell);
+            writer.Write((ushort) Spell);
 
             writer.Write(Level);
             writer.Write(Key);

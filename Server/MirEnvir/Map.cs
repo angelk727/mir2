@@ -935,7 +935,7 @@ namespace Server.MirEnvir
 
                 #endregion
 
-                #region SummonSkeleton, SummonShinsu, SummonHolyDeva, ArcherSummons
+                #region SummonSkeleton, SummonShinsu, SummonHolyDeva, ArcherSummons, PetEnhancerRare
 
                 case Spell.SummonSkeleton:
                 case Spell.SummonShinsu:
@@ -943,6 +943,7 @@ namespace Server.MirEnvir
                 case Spell.SummonVampire:
                 case Spell.SummonToad:
                 case Spell.SummonSnakes:
+                case Spell.PetEnhancerRare:
                     monster = (MonsterObject)data[2];
                     front = (Point)data[3];
 
@@ -2528,6 +2529,7 @@ namespace Server.MirEnvir
                     break;
 
                 #endregion
+
                 #region HealingCircle
 
                 case Spell.HealingCircle:
@@ -2586,8 +2588,216 @@ namespace Server.MirEnvir
 
                     break;
 
+                #endregion
+
+                #region MultipleEffects, MultipleEffectsRare
+
+                case Spell.MultipleEffects:
+                    value = (int)data[2];
+                    location = (Point)data[3];
+
+                    BuffType type1 = BuffType.幽灵盾;
+                    BuffType type2 = BuffType.神圣战甲术;
+                    BuffType type3 = BuffType.无极真气;
+                    BuffType type4 = BuffType.先天气功;
+
+                    for (int y = location.Y - 3; y <= location.Y + 3; y++)
+                    {
+                        if (y < 0) continue;
+                        if (y >= Height) break;
+
+                        for (int x = location.X - 3; x <= location.X + 3; x++)
+                        {
+                            if (x < 0) continue;
+                            if (x >= Width) break;
+
+                            cell = GetCell(x, y);
+
+                            if (!cell.Valid || cell.Objects == null) continue;
+
+                            for (int i = 0; i < cell.Objects.Count; i++)
+                            {
+                                MapObject target = cell.Objects[i];
+
+                                if (target.Node == null) continue;
+
+                                switch (target.Race)
+                                {
+                                    case ObjectType.Monster:
+                                    case ObjectType.Player:
+                                    case ObjectType.Hero:
+                                        if (target.IsFriendlyTarget(player))
+                                        {
+                                            var stats1 = new Stats
+                                            {
+                                                [Stat.MaxMAC] = target.Level / 7 + 4
+                                            };
+
+                                            var stats2 = new Stats
+                                            {
+                                                [Stat.MaxAC] = target.Level / 7 + 4
+                                            };
+
+                                            target.AddBuff(type1, player, Settings.Second * value, stats1);
+                                            target.AddBuff(type2, player, Settings.Second * value, stats2);
+
+                                            int chance = 10 - (player.Stats[Stat.幸运] / 3 + magic.Level + 1);
+                                            if (chance < 2) chance = 2;
+
+                                            var stats3 = new Stats();
+                                            int valueUE = player.Stats[Stat.MaxSC] >= 5 ? Math.Min(8, player.Stats[Stat.MaxSC] / 5) : 1;
+
+                                            if (target.Race == ObjectType.Monster || ((HumanObject)target).Class == MirClass.战士 || ((HumanObject)target).Class == MirClass.刺客)
+                                            {
+                                                stats3[Stat.MaxDC] = valueUE;
+                                            }
+                                            else if (((HumanObject)target).Class == MirClass.法师 || ((HumanObject)target).Class == MirClass.弓箭)
+                                            {
+                                                stats3[Stat.MaxMC] = valueUE;
+                                            }
+                                            else if (((HumanObject)target).Class == MirClass.道士)
+                                            {
+                                                stats3[Stat.MaxSC] = valueUE;
+                                            }
+
+                                            target.AddBuff(type3, player, Settings.Second * value, stats3);
+
+                                            var stats4 = new Stats
+                                            {
+                                                [Stat.气功盾恢复数率] = (int)Math.Round((1 / (decimal)chance) * 100),
+                                                [Stat.气功盾恢复生命值] = (int)(player.Stats[Stat.HP] * 0.05)
+                                            };
+
+                                            target.AddBuff(type4, player, Settings.Second * value, stats4);
+
+                                            target.OperateTime = 0;
+
+                                            train = true;
+                                        }
+                                        break;
+                                }
+                            }
+                        }
+                    }
+                    break;
+
+                case Spell.MultipleEffectsRare:
+                    value = (int)data[2];
+                    location = (Point)data[3];
+
+                    BuffType typeRare1 = BuffType.幽灵盾;
+                    BuffType typeRare2 = BuffType.神圣战甲术;
+                    BuffType typeRare3 = BuffType.无极真气;
+                    BuffType typeRare4 = BuffType.先天气功;
+
+                    for (int y = location.Y - 3; y <= location.Y + 3; y++)
+                    {
+                        if (y < 0) continue;
+                        if (y >= Height) break;
+
+                        for (int x = location.X - 3; x <= location.X + 3; x++)
+                        {
+                            if (x < 0) continue;
+                            if (x >= Width) break;
+
+                            cell = GetCell(x, y);
+
+                            if (!cell.Valid || cell.Objects == null) continue;
+
+                            for (int i = 0; i < cell.Objects.Count; i++)
+                            {
+                                MapObject target = cell.Objects[i];
+
+                                if (target.Node == null) continue;
+
+                                switch (target.Race)
+                                {
+                                    case ObjectType.Monster:
+                                    case ObjectType.Player:
+                                    case ObjectType.Hero:
+                                        if (target.IsFriendlyTarget(player))
+                                        {
+                                            if (Envir.Random.Next(4) <= magic.Level)
+                                            {
+                                                for (int j = 0; j < target.Buffs.Count; j++)
+                                                {
+                                                    var buff = target.Buffs[j];
+
+                                                    if (!buff.Properties.HasFlag(BuffProperty.Debuff)) continue;
+
+                                                    target.RemoveBuff(buff.Type);
+                                                }
+
+                                                if (target.PoisonList.Any(x => x.PType == PoisonType.DelayedExplosion))
+                                                {
+                                                    target.ExplosionInflictedTime = 0;
+                                                    target.ExplosionInflictedStage = 0;
+
+                                                    player.Enqueue(new S.RemoveDelayedExplosion { ObjectID = target.ObjectID });
+
+                                                    target.Broadcast(new S.RemoveDelayedExplosion { ObjectID = target.ObjectID });
+                                                }
+
+                                                target.PoisonList.Clear();
+                                                target.OperateTime = 0;
+                                            }
+
+                                            var stats1 = new Stats
+                                            {
+                                                [Stat.MaxMAC] = target.Level / 7 + 4
+                                            };
+
+                                            var stats2 = new Stats
+                                            {
+                                                [Stat.MaxAC] = target.Level / 7 + 4
+                                            };
+
+                                            target.AddBuff(typeRare1, player, Settings.Second * value, stats1);
+                                            target.AddBuff(typeRare2, player, Settings.Second * value, stats2);
+
+                                            int chance = 10 - (player.Stats[Stat.幸运] / 3 + magic.Level + 1);
+                                            if (chance < 2) chance = 2;
+
+                                            var stats3 = new Stats();
+                                            int valueUE = player.Stats[Stat.MaxSC] >= 5 ? Math.Min(8, player.Stats[Stat.MaxSC] / 5) : 1;
+
+                                            if (target.Race == ObjectType.Monster || ((HumanObject)target).Class == MirClass.战士 || ((HumanObject)target).Class == MirClass.刺客)
+                                            {
+                                                stats3[Stat.MaxDC] = valueUE;
+                                            }
+                                            else if (((HumanObject)target).Class == MirClass.法师 || ((HumanObject)target).Class == MirClass.弓箭)
+                                            {
+                                                stats3[Stat.MaxMC] = valueUE;
+                                            }
+                                            else if (((HumanObject)target).Class == MirClass.道士)
+                                            {
+                                                stats3[Stat.MaxSC] = valueUE;
+                                            }
+
+                                            target.AddBuff(typeRare3, player, Settings.Second * value, stats3);
+
+                                            var stats4 = new Stats
+                                            {
+                                                [Stat.气功盾恢复数率] = (int)Math.Round((1 / (decimal)chance) * 100),
+                                                [Stat.气功盾恢复生命值] = (int)(player.Stats[Stat.HP] * 0.05)
+                                            };
+
+                                            target.AddBuff(typeRare4, player, Settings.Second * value, stats4);
+
+                                            target.OperateTime = 0;
+
+                                            train = true;
+                                        }
+                                        break;
+                                }
+                            }
+                        }
+                    }
+                    break;
+
                     #endregion
-        }
+
+            }
 
             if (train)
                 player.LevelMagic(magic);
