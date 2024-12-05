@@ -17,6 +17,7 @@ namespace Client.MirGraphics
             Prguse = new MLibrary(Settings.DataPath + "Prguse"),
             Prguse2 = new MLibrary(Settings.DataPath + "Prguse2"),
             Prguse3 = new MLibrary(Settings.DataPath + "Prguse3"),
+            UI_32bit = new MLibrary(Settings.DataPath + "UI_32bit"),
             StateitemEffect = new MLibrary(Settings.DataPath + "StateitemEffect"),
             BuffIcon = new MLibrary(Settings.DataPath + "BuffIcon"),
             Help = new MLibrary(Settings.DataPath + "Help"),
@@ -236,6 +237,9 @@ namespace Client.MirGraphics
             Progress++;
 
             Prguse3.Initialize();
+            Progress++;
+
+            UI_32bit.Initialize();
             Progress++;
 
             Title.Initialize();

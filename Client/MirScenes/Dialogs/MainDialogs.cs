@@ -319,7 +319,7 @@ namespace Client.MirScenes.Dialogs
                 Library = Libraries.Prguse,
                 Parent = this,
                 Location = new Point(Size.Width - 160, 65),
-                Size = new Size(20, 20),
+                Size = new Size(30, 30),
                 Sound = SoundList.ButtonA,
                 Visible = false
             };
@@ -4484,6 +4484,7 @@ namespace Client.MirScenes.Dialogs
         private const int HealthBarHeight = 8;
 
         private readonly List<PlayerUI> playerUIList;
+        private readonly int clientWidth = Program.Form.ClientSize.Width;
 
         public GroupHealthPanel()
         {
@@ -4497,7 +4498,7 @@ namespace Client.MirScenes.Dialogs
                 {
                     NameLabel = new MirLabel
                     {
-                        Location = new Point(870, NameYOffset + i * 30),
+                        Location = new Point(clientWidth - 140, NameYOffset + i * 30),
                         AutoSize = true,
                         Parent = this,
                         NotControl = true,
@@ -4510,7 +4511,7 @@ namespace Client.MirScenes.Dialogs
                     {
                         Index = 1331,
                         Library = Libraries.Prguse2,
-                        Location = new Point(870, HealthYOffset + i * 30),
+                        Location = new Point(clientWidth - 140, HealthYOffset + i * 30),
                         NotControl = true,
                         Parent = this,
                         DrawImage = false,
