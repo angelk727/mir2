@@ -83,6 +83,7 @@ namespace Server.MirDatabase
                 new BuffInfo { Type = BuffType.General, Properties = BuffProperty.None, StackType = BuffStackType.None }, //???
                 new BuffInfo { Type = BuffType.新人特效, Properties = BuffProperty.RemoveOnExit, StackType = BuffStackType.Infinite }, //???
                 new BuffInfo { Type = BuffType.英雄灵气, Properties = BuffProperty.None, StackType = BuffStackType.Infinite },
+                new BuffInfo { Type = BuffType.组队加成, Properties = BuffProperty.None, StackType = BuffStackType.Infinite },
                 new BuffInfo { Type = BuffType.暗影侵袭, Properties = BuffProperty.RemoveOnExit, StackType = BuffStackType.Infinite },
                 new BuffInfo { Type = BuffType.攻击型绝技, Properties = BuffProperty.None, StackType = BuffStackType.Infinite },
                 new BuffInfo { Type = BuffType.防御型绝技, Properties = BuffProperty.None, StackType = BuffStackType.Infinite },
@@ -113,7 +114,7 @@ namespace Server.MirDatabase
                 new BuffInfo { Type = BuffType.华丽雨光, Properties = BuffProperty.RemoveOnDeath, StackType = BuffStackType.None, Visible = true },
                 new BuffInfo { Type = BuffType.龙之特效, Properties = BuffProperty.RemoveOnDeath, StackType = BuffStackType.AttrStackStat, Visible = true },
                 new BuffInfo { Type = BuffType.龙的特效, Properties = BuffProperty.RemoveOnDeath, StackType = BuffStackType.AttrStackStat, Visible = true },
-                new BuffInfo { Type = BuffType.增强组队, Properties = BuffProperty.RemoveOnDeath, StackType = BuffStackType.AttrStackStat, Visible = true },
+                new BuffInfo { Type = BuffType.强化队伍, Properties = BuffProperty.RemoveOnDeath, StackType = BuffStackType.AttrStackStat, Visible = true },
                 new BuffInfo { Type = BuffType.内尔族的灵药, Properties = BuffProperty.RemoveOnDeath, StackType = BuffStackType.None },
                 new BuffInfo { Type = BuffType.天灵水, Properties = BuffProperty.RemoveOnDeath, StackType = BuffStackType.None },
                 new BuffInfo { Type = BuffType.玉清水, Properties = BuffProperty.RemoveOnDeath, StackType = BuffStackType.None },

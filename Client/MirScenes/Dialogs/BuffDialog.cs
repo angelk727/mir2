@@ -374,7 +374,10 @@ namespace Client.MirScenes.Dialogs
                 case BuffType.龙的特效:
                     text += "特效增益加成\n";
                     break;
-                case BuffType.增强组队:
+                case BuffType.组队加成:
+                    text += "来自组队的加成\n";
+                    break;
+                case BuffType.强化队伍:
                     text += "来自队伍的加成\n";
                     break;
                 case BuffType.英雄灵气:
@@ -542,6 +545,8 @@ namespace Client.MirScenes.Dialogs
                     return 115;
                 case BuffType.至尊威严:
                     return 122;
+                case BuffType.组队加成:
+                    return 106;
                 case BuffType.御体之力:
                     return 107;
                 case BuffType.失明状态:
@@ -623,7 +628,7 @@ namespace Client.MirScenes.Dialogs
                     return 138;
                 case BuffType.共用型绝技:
                     return 139;
-                case BuffType.增强组队:
+                case BuffType.强化队伍:
                     return 540;
                 case BuffType.暗影侵袭:
                     return 541;
