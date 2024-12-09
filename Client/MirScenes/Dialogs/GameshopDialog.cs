@@ -198,10 +198,10 @@ namespace Client.MirScenes.Dialogs
 
             PaymentTypeCredit = new MirCheckBox
             {
-                LabelText = "信用购买",
+                LabelText = "元宝购买",
                 Location = new Point(340, 449),
                 Parent = this,
-                Hint = "勾选项为信用点购买",
+                Hint = "勾选项为元宝购买",
                 Index = 2086,
                 UnTickedIndex = 2086,
                 TickedIndex = 2087,

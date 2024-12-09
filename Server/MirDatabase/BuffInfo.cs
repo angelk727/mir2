@@ -123,7 +123,8 @@ namespace Server.MirDatabase
                 new BuffInfo { Type = BuffType.摩鲁的青色药剂, Properties = BuffProperty.RemoveOnDeath, StackType = BuffStackType.None },
                 new BuffInfo { Type = BuffType.摩鲁的黄色药剂, Properties = BuffProperty.RemoveOnDeath, StackType = BuffStackType.None },
                 new BuffInfo { Type = BuffType.古代宗师祝福, Properties = BuffProperty.RemoveOnDeath, StackType = BuffStackType.None },
-                new BuffInfo { Type = BuffType.黄金宗师祝福, Properties = BuffProperty.None, StackType = BuffStackType.None }
+                new BuffInfo { Type = BuffType.黄金宗师祝福, Properties = BuffProperty.None, StackType = BuffStackType.None },
+                new BuffInfo { Type = BuffType.落物纷飞, Properties = BuffProperty.PauseInSafeZone, StackType = BuffStackType.None }
 
             };
 

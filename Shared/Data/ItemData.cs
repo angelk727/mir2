@@ -171,6 +171,10 @@ public class ItemInfo
         {
             Stats[Stat.反弹伤害] = reader.ReadByte();
             Stats[Stat.吸血数率] = reader.ReadByte();
+            Stats[Stat.星星等级] = reader.ReadByte();
+            Stats[Stat.词条1] = reader.ReadByte();
+            Stats[Stat.词条2] = reader.ReadByte();
+            Stats[Stat.词条3] = reader.ReadByte();
         }
 
         Unique = (SpecialItemMode)reader.ReadInt16();

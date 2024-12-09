@@ -101,7 +101,7 @@ namespace Server.MirObjects
                 LoadLua();
             else
                 LuaFileName = null;
-                Load();
+            Load();
 
             Envir.Scripts.Add(ScriptID, this);
         }
@@ -145,7 +145,7 @@ namespace Server.MirObjects
 
             string fileName = Path.Combine(Settings.NPCPath, FileName + ".txt");
             string fileNameLua = Path.Combine(Settings.NPCPath, FileName + ".lua");
-
+            
             if (File.Exists(fileName))
             {
                 List<string> lines = File.ReadAllLines(fileName).ToList();

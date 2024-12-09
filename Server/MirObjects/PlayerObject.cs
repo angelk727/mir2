@@ -5796,7 +5796,7 @@ namespace Server.MirObjects
                             if (item.Info.Price > 0)
                             {
                                 GainCredit(item.Info.Price);
-                                ReceiveChat(String.Format("{0} 信用资金已添加到帐户", item.Info.Price), ChatType.Hint);
+                                ReceiveChat(String.Format("{0} 元宝资金已添加到帐户", item.Info.Price), ChatType.Hint);
                             }
                             break;
                         case 8: //MapShoutScroll

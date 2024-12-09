@@ -3791,29 +3791,33 @@ namespace Server.MirEnvir
 
             foreach (var key in keys)
             {
-                Scripts[key].Load();
+
+                if(Scripts[key].LuaFileName != null)
+                    Scripts[key].LoadLua();
+                else
+                    Scripts[key].Load();
             }
 
             MessageQueue.Enqueue("NPC脚本已重新加载");
         }
+        //无法根据index获取对应脚本，暂时先不做
+        //public void ReloadSingleNPC(int index=0)
+        //{
 
-        public void ReloadSingleNPC(string npckey)
-        {
+        //    if (index!=0)
+        //    {
+        //        var script = Scripts[index] as NPCScript;
+        //        var fileName = script.FileName;
 
-            if (int.TryParse(npckey, out int k))
-            {
-                var script = Scripts[k] as NPCScript;
-                var fileName = script.FileName;
-
-                if (script.LuaFileName!=null)
-                    script.LoadLua();
-                else
-                    script.Load();
-                MessageQueue.Enqueue("NPC脚本已重新加载");
-                return;
-            }
-            MessageQueue.Enqueue("NPC序号错误，无法加载");
-        }
+        //        if (script.LuaFileName != null)
+        //            script.LoadLua();
+        //        else
+        //            script.Load();
+        //        MessageQueue.Enqueue("NPC脚本已重新加载");
+        //        return;
+        //    }
+        //    MessageQueue.Enqueue("NPC序号错误，无法加载");
+        //}
 
         public void ReloadLua()
         {

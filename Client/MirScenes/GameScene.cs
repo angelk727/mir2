@@ -5991,7 +5991,7 @@ namespace Client.MirScenes
                     MirMessageBox.Show("死亡状态不能使用");
                     break;
                 case 1:
-                    MirMessageBox.Show("完成购买不支持信用币");
+                    MirMessageBox.Show("完成购买不支持元宝币");
                     break;
                 case 2:
                     MirMessageBox.Show("商品已售出");
@@ -6747,25 +6747,27 @@ namespace Client.MirScenes
             switch (p.result)
             {
                 case -4:
-                    messageBox = new MirMessageBox("没有足够的材料", MirMessageBoxButtons.OK);
+                    MirMessageBox.Show("材料不足", MirMessageBoxButtons.OK);
                     MapControl.AwakeningAction = false;
                     break;
                 case -3:
-                    messageBox = new MirMessageBox(GameLanguage.LowGold, MirMessageBoxButtons.OK);
+                    MirMessageBox.Show(GameLanguage.LowGold, MirMessageBoxButtons.OK);
                     MapControl.AwakeningAction = false;
                     break;
                 case -2:
-                    messageBox = new MirMessageBox("觉醒已达上限", MirMessageBoxButtons.OK);
+                    MirMessageBox.Show("已唤醒到最高等级", MirMessageBoxButtons.OK);
                     MapControl.AwakeningAction = false;
                     break;
                 case -1:
-                    messageBox = new MirMessageBox("此物品不能觉醒", MirMessageBoxButtons.OK);
+                    MirMessageBox.Show("不能唤醒此物品", MirMessageBoxButtons.OK);
                     MapControl.AwakeningAction = false;
                     break;
                 case 0:
                     //messageBox = new MirMessageBox("Upgrade Failed.", MirMessageBoxButtons.OK);
+                    ChatDialog.ReceiveChat("唤醒失败...", ChatType.System);
                     break;
                 case 1:
+                    ChatDialog.ReceiveChat("唤醒成功！", ChatType.System);
                     //messageBox = new MirMessageBox("Upgrade Success.", MirMessageBoxButtons.OK);
                     break;
 
@@ -7212,6 +7214,10 @@ namespace Client.MirScenes
 
             if (HoverItem.RefineAdded > 0)
                 nameLabel.Text = "(*)" + nameLabel.Text;
+            if (item.AddedStats[Stat.星星等级] > 0)
+            {
+                nameLabel.Text = $"{nameLabel.Text}       {item.AddedStats[Stat.星星等级]}星";
+            }
 
             ItemLabel.Size = new Size(Math.Max(ItemLabel.Size.Width, nameLabel.DisplayRectangle.Right + 4),
                 Math.Max(ItemLabel.Size.Height, nameLabel.DisplayRectangle.Bottom));

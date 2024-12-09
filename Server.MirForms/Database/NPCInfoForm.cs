@@ -673,7 +673,7 @@ namespace Server
 
         private void ReloadScriptButton_Click(object sender, EventArgs e)
         {
-            EnvirMain.ReloadSingleNPC(NPCIndexTextBox.Text);
+            EnvirMain.ReloadNPCs();
         }
 
         private void ClearHButton_Click(object sender, EventArgs e)

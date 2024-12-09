@@ -399,13 +399,13 @@ namespace Client.MirGraphics
 
             for (int i = 0; i < AWeaponEffectL.Length; i++)
             {
-                AWeaponsL[i].Initialize();
+                AWeaponEffectL[i].Initialize();
                 Progress++;
             }
 
             for (int i = 0; i < AWeaponEffectR.Length; i++)
             {
-                AWeaponsR[i].Initialize();
+                AWeaponEffectR[i].Initialize();
                 Progress++;
             }
 

@@ -1563,7 +1563,8 @@ public enum BuffType : byte
     摩鲁的黄色药剂,
     古代宗师祝福,
     黄金宗师祝福,
-    DogYoLin7
+    DogYoLin7,
+    落物纷飞
 }
 
 [Flags]

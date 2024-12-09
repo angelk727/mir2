@@ -15,7 +15,6 @@ using Server.MirEnvir;
 using Server.MirForms.Systems;
 using Server.MirObjects;
 using Server.Systems;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Server.Account
 {
@@ -118,5 +117,20 @@ namespace Server.Account
         }
 
         #endregion
+
+        private void CharactersList_DoubleClick(object sender, EventArgs e)
+        {
+            
+            ListView list = sender as ListView;
+            if (list.SelectedItems.Count > 0)
+            {
+                ListViewItem item = list.SelectedItems[0];
+                string index = item.SubItems[0].Text;
+
+                PlayerInfoForm form = new PlayerInfoForm(Convert.ToUInt32(index));
+
+                form.Show();
+            }
+        }
     }
 }

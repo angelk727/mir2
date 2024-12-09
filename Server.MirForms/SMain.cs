@@ -175,119 +175,119 @@ namespace Server
         {
             ItemInfoForm form = new ItemInfoForm();
 
-            form.ShowDialog();
+            form.Show();
         }
 
         private void monsterInfoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MonsterInfoForm form = new MonsterInfoForm();
 
-            form.ShowDialog();
+            form.Show();
         }
 
         private void nPCInfoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             NPCInfoForm form = new NPCInfoForm();
 
-            form.ShowDialog();
+            form.Show();
         }
 
         private void balanceConfigToolStripMenuItem_Click(object sender, EventArgs e)
         {
             BalanceConfigForm form = new BalanceConfigForm();
 
-            form.ShowDialog();
+            form.Show();
         }
 
         private void questInfoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             QuestInfoForm form = new QuestInfoForm();
 
-            form.ShowDialog();
+            form.Show();
         }
 
         private void serverToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ConfigForm form = new ConfigForm();
 
-            form.ShowDialog();
+            form.Show();
         }
 
         private void balanceToolStripMenuItem_Click(object sender, EventArgs e)
         {
             BalanceConfigForm form = new BalanceConfigForm();
 
-            form.ShowDialog();
+            form.Show();
         }
 
         private void accountToolStripMenuItem_Click(object sender, EventArgs e)
         {
             AccountInfoForm form = new AccountInfoForm();
 
-            form.ShowDialog();
+            form.Show();
         }
 
         private void mapInfoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MapInfoForm form = new MapInfoForm();
 
-            form.ShowDialog();
+            form.Show();
         }
 
         private void itemInfoToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
             ItemInfoForm form = new ItemInfoForm();
 
-            form.ShowDialog();
+            form.Show();
         }
 
         private void monsterInfoToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
             MonsterInfoForm form = new MonsterInfoForm();
 
-            form.ShowDialog();
+            form.Show();
         }
 
         private void nPCInfoToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
             NPCInfoForm form = new NPCInfoForm();
 
-            form.ShowDialog();
+            form.Show();
         }
 
         private void questInfoToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
             QuestInfoForm form = new QuestInfoForm();
 
-            form.ShowDialog();
+            form.Show();
         }
 
         private void dragonSystemToolStripMenuItem_Click(object sender, EventArgs e)
         {
             DragonInfoForm form = new DragonInfoForm();
 
-            form.ShowDialog();
+            form.Show();
         }
 
         private void miningToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MiningInfoForm form = new MiningInfoForm();
 
-            form.ShowDialog();
+            form.Show();
         }
 
         private void guildsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             GuildInfoForm form = new GuildInfoForm();
 
-            form.ShowDialog();
+            form.Show();
         }
 
         private void fishingToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SystemInfoForm form = new SystemInfoForm(0);
 
-            form.ShowDialog();
+            form.Show();
         }
 
         private void GlobalMessageButton_Click(object sender, EventArgs e)
@@ -314,7 +314,7 @@ namespace Server
 
                 PlayerInfoForm form = new PlayerInfoForm(Convert.ToUInt32(index));
 
-                form.ShowDialog();
+                form.Show();
             }
         }
 
@@ -328,21 +328,21 @@ namespace Server
         {
             SystemInfoForm form = new SystemInfoForm(1);
 
-            form.ShowDialog();
+            form.Show();
         }
 
         private void goodsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SystemInfoForm form = new SystemInfoForm(2);
 
-            form.ShowDialog();
+            form.Show();
         }
 
         private void relationshipToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SystemInfoForm form = new SystemInfoForm(4);
 
-            form.ShowDialog();
+            form.Show();
         }
 
         private void refiningToolStripMenuItem_Click(object sender, EventArgs e)
@@ -356,13 +356,13 @@ namespace Server
         {
             SystemInfoForm form = new SystemInfoForm(5);
 
-            form.ShowDialog();
+            form.Show();
         }
 
         private void magicInfoToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MagicInfoForm form = new MagicInfoForm();
-            form.ShowDialog();
+            form.Show();
         }
 
         private void SMain_Load(object sender, EventArgs e)
@@ -381,14 +381,14 @@ namespace Server
         {
             SystemInfoForm form = new SystemInfoForm(6);
 
-            form.ShowDialog();
+            form.Show();
         }
 
         private void conquestToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ConquestInfoForm form = new ConquestInfoForm();
 
-            form.ShowDialog();
+            form.Show();
         }
 
         private void rebootServerToolStripMenuItem_Click(object sender, EventArgs e)
@@ -400,7 +400,7 @@ namespace Server
         {
             SystemInfoForm form = new SystemInfoForm(7);
 
-            form.ShowDialog();
+            form.Show();
         }
 
         private void monsterTunerToolStripMenuItem_Click(object sender, EventArgs e)
@@ -414,34 +414,34 @@ namespace Server
 
             MonsterTunerForm form = new MonsterTunerForm();
 
-            form.ShowDialog();
+            form.Show();
         }
 
         private void gameshopToolStripMenuItem_Click(object sender, EventArgs e)
         {
             GameShop form = new GameShop();
-            form.ShowDialog();
+            form.Show();
         }
 
         private void itemNEWToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ItemInfoFormNew form = new ItemInfoFormNew();
 
-            form.ShowDialog();
+            form.Show();
         }
 
         private void monsterExperimentalToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MonsterInfoFormNew form = new MonsterInfoFormNew();
 
-            form.ShowDialog();
+            form.Show();
         }
 
         private void dropBuilderToolStripMenuItem_Click(object sender, EventArgs e)
         {
             MirForms.DropBuilder.DropGenForm GenForm = new MirForms.DropBuilder.DropGenForm();
 
-            GenForm.ShowDialog();
+            GenForm.Show();
         }
 
         private void clearBlockedIPsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -569,42 +569,42 @@ namespace Server
         {
             SystemInfoForm form = new SystemInfoForm(8);
 
-            form.ShowDialog();
+            form.Show();
         }
 
         private void CharacterToolStripMenuItem_Click(object sender, EventArgs e)
         {
             CharacterInfoForm form = new CharacterInfoForm();
 
-            form.ShowDialog();
+            form.Show();
         }
 
         private void recipeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             RecipeInfoForm form = new RecipeInfoForm();
 
-            form.ShowDialog();
+            form.Show();
         }
 
         private void accountsToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             AccountInfoForm form = new AccountInfoForm();
 
-            form.ShowDialog();
+            form.Show();
         }
 
         private void marketToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Market form = new Market();
 
-            form.ShowDialog();
+            form.Show();
         }
 
         private void namelistsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Namelists form = new Namelists();
 
-            form.ShowDialog();
+            form.Show();
         }
 
         #region Monsters Tab

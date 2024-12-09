@@ -211,13 +211,13 @@ namespace Client.MirControls
                     if (Item.CreditPrice * Quantity <= GameScene.Credit)
                     {
                         CreditCost = Item.CreditPrice * Quantity;
-                        messageBox = new MirMessageBox(string.Format("确定要用 {2} 信用点购买物品：{1} x {0} ({3}) ？", Item.Info.FriendlyName, Quantity, CreditCost, Item.Count), MirMessageBoxButtons.YesNo);
+                        messageBox = new MirMessageBox(string.Format("确定要用 {2} 元宝购买物品：{1} x {0} ({3}) ？", Item.Info.FriendlyName, Quantity, CreditCost, Item.Count), MirMessageBoxButtons.YesNo);
                         messageBox.YesButton.Click += (o, e) => Network.Enqueue(new C.GameshopBuy { GIndex = Item.GIndex, Quantity = Quantity, PType = pType });
                         messageBox.NoButton.Click += (o, e) => { };
                         messageBox.Show();
                     }
                     else
-                        GameScene.Scene.ChatDialog.ReceiveChat("没有足够的信用点购买该物品", ChatType.System);
+                        GameScene.Scene.ChatDialog.ReceiveChat("没有足够的元宝购买该物品", ChatType.System);
                     break;
                 case 1: //  Gold
                     if (Item.GoldPrice * Quantity <= GameScene.Gold)

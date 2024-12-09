@@ -7435,6 +7435,7 @@ namespace Server.MirObjects
 
             ChangeHP(armour - damage);
             return damage - armour;
+            //Attacked 添加回调
         }
         public override int Attacked(MonsterObject attacker, int damage, DefenceType type = DefenceType.ACAgility)
         {
@@ -7529,6 +7530,7 @@ namespace Server.MirObjects
 
             ChangeHP(armour - damage);
             return damage - armour;
+            //Attacked 添加回调
         }
         public override int Struck(int damage, DefenceType type = DefenceType.ACAgility)
         {
@@ -7592,6 +7594,8 @@ namespace Server.MirObjects
 
             ChangeHP(armour - damage);
             return damage - armour;
+            //StruckPlay 添加回调
+            //StruckMon 添加回调
         }
 
         public override void ApplyPoison(Poison p, MapObject Caster = null, bool NoResist = false, bool ignoreDefence = true)
