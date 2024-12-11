@@ -1,3 +1,4 @@
+## 要一起开发的联系QQ 422742957
 ## The Legend of Mir 2
 本《热血传奇2》是一个基于韩国传奇2开发汉化
 ## Crystal Source
