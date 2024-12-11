@@ -2748,7 +2748,11 @@ namespace Server.MirObjects
 
         public void GetPlayerLocation()
         {
-            if (GroupMembers == null) return;
+            if (GroupMembers == null)
+            {
+                UpdateGroupBuff();
+                return;
+            }
 
             for (int i = 0; i < GroupMembers.Count; i++)
             {
@@ -2760,9 +2764,32 @@ namespace Server.MirObjects
                 Enqueue(new S.SendMemberLocation { MemberName = member.Name, MemberLocation = member.CurrentLocation });
             }
             Enqueue(new S.SendMemberLocation { MemberName = Name, MemberLocation = CurrentLocation });
+
+            UpdateGroupBuff();
         }
 
-
+        private void UpdateGroupBuff()
+        {
+            if (GroupMembers == null || GroupMembers.Count == 0)
+            {
+                RemoveBuff(BuffType.组队加成);
+                return;
+            }
+            bool hasValidMember = false;
+            foreach (var member in GroupMembers)
+            {
+                if (member == null || member.CurrentMap == null || member.CurrentMap.Info.BigMap <= 0)
+                {
+                    continue;
+                }
+                AddBuff(BuffType.组队加成, member, 0, new Stats { [Stat.背包负重] = 100, [Stat.经验增长数率] = 5 });
+                hasValidMember = true;
+            }
+            if (!hasValidMember)
+            {
+                RemoveBuff(BuffType.组队加成);
+            }
+        }
 
         public void RangeAttack(MirDirection dir, Point location, uint targetID)
         {

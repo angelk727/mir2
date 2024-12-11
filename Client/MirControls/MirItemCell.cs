@@ -2451,7 +2451,7 @@ namespace Client.MirControls
             {
                 if (i.Weight - (Item != null ? Item.Weight : 0) + actor.CurrentWearWeight > actor.Stats[Stat.装备负重])
                 {
-                    GameScene.Scene.ChatDialog.ReceiveChat("太重了", ChatType.System);
+                    GameScene.Scene.ChatDialog.ReceiveChat("穿戴负重不足", ChatType.System);
                     return false;
                 }
             }
