@@ -6747,19 +6747,19 @@ namespace Client.MirScenes
             switch (p.result)
             {
                 case -4:
-                    MirMessageBox.Show("材料不足", MirMessageBoxButtons.OK);
+                    messageBox = new MirMessageBox("材料不足.", MirMessageBoxButtons.OK);
                     MapControl.AwakeningAction = false;
                     break;
                 case -3:
-                    MirMessageBox.Show(GameLanguage.LowGold, MirMessageBoxButtons.OK);
+                    messageBox = new MirMessageBox(GameLanguage.LowGold, MirMessageBoxButtons.OK);
                     MapControl.AwakeningAction = false;
                     break;
                 case -2:
-                    MirMessageBox.Show("已唤醒到最高等级", MirMessageBoxButtons.OK);
+                    messageBox = new MirMessageBox("已唤醒到最高等级.", MirMessageBoxButtons.OK);
                     MapControl.AwakeningAction = false;
                     break;
                 case -1:
-                    MirMessageBox.Show("不能唤醒此物品", MirMessageBoxButtons.OK);
+                    messageBox = new MirMessageBox("不能唤醒此物品.", MirMessageBoxButtons.OK);
                     MapControl.AwakeningAction = false;
                     break;
                 case 0:
