@@ -938,6 +938,10 @@ public abstract class Packet
                 return new S.Roll();
             case (short)ServerPacketIds.SetCompass:
                 return new S.SetCompass();
+            case (short)ServerPacketIds.InventoryCollating:
+                return new S.InventoryCollating();
+            case (short)ServerPacketIds.StorageCollating:
+                return new S.StorageCollating();
             default:
                 return null;
         }

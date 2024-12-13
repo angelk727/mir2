@@ -1879,6 +1879,8 @@ public enum ServerPacketIds : short
     SetCompass,
     GroupMembersMap,
     SendMemberLocation,
+    InventoryCollating,
+    StorageCollating,
 }
 
 public enum ClientPacketIds : short

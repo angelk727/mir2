@@ -299,7 +299,7 @@ public class UserItem
 
     public int WeddingRing = -1;
 
-    public UserItem[] Slots = new UserItem[0];
+    public UserItem[] Slots = new UserItem[5];
 
     public DateTime BuybackExpiryDate;
 

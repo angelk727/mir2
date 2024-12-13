@@ -6679,4 +6679,75 @@ namespace ServerPackets
             writer.Write(Location.Y);
         }
     }
+
+    public sealed class InventoryCollating : Packet
+    {
+        public override short Index { get { return (short)ServerPacketIds.InventoryCollating; } }
+
+        public UserItem[] Inventory;
+
+        protected override void ReadPacket(BinaryReader reader)
+        {
+            if (reader.ReadBoolean())
+            {
+                Inventory = new UserItem[reader.ReadInt32()];
+                for (int i = 0; i < Inventory.Length; i++)
+                {
+                    if (!reader.ReadBoolean()) continue;
+                    Inventory[i] = new UserItem(reader);
+                }
+            }
+        }
+        protected override void WritePacket(BinaryWriter writer)
+        {
+            writer.Write(Inventory != null);
+            if (Inventory != null)
+            {
+                writer.Write(Inventory.Length);
+                for (int i = 0; i < Inventory.Length; i++)
+                {
+                    writer.Write(Inventory[i] != null);
+                    if (Inventory[i] == null) continue;
+
+                    Inventory[i].Save(writer);
+                }
+            }
+        }
+    }
+
+    public sealed class StorageCollating : Packet
+    {
+        public override short Index { get { return (short)ServerPacketIds.StorageCollating; } }
+
+        public UserItem[] Storage;
+
+        protected override void ReadPacket(BinaryReader reader)
+        {
+            if (reader.ReadBoolean())
+            {
+                Storage = new UserItem[reader.ReadInt32()];
+                for (int i = 0; i < Storage.Length; i++)
+                {
+                    if (!reader.ReadBoolean()) continue;
+                    Storage[i] = new UserItem(reader);
+                }
+            }
+        }
+        protected override void WritePacket(BinaryWriter writer)
+        {
+            writer.Write(Storage != null);
+            if (Storage != null)
+            {
+                writer.Write(Storage.Length);
+                for (int i = 0; i < Storage.Length; i++)
+                {
+                    writer.Write(Storage[i] != null);
+                    if (Storage[i] == null) continue;
+
+                    Storage[i].Save(writer);
+                }
+            }
+        }
+    }
+
 }

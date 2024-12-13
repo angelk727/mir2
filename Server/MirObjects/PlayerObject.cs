@@ -3695,6 +3695,15 @@ namespace Server.MirObjects
 
                         player.GetCompletedQuests();
                         break;
+                    case "INVENTORYCOLLATING":
+                        collating();
+                        break;
+                    case "STORAGECOLLATING":
+                        collatingStorage();
+                        break;
+                    case "REMOTESTORAGE":
+                        remoteStorage();
+                        break;
 
                     case "TOGGLETRANSFORM":
                         if (HasBuff(BuffType.变形效果, out Buff transform))
@@ -14083,6 +14092,40 @@ namespace Server.MirObjects
         public void SendNPCGoods(List<UserItem> goods, float rate, PanelType panelType, bool hideAddedStats = false)
         {
             Enqueue(new S.NPCGoods { List = goods, Rate = rate, Type = panelType, HideAddedStats = hideAddedStats });
+        }
+
+        //整理背包
+        public void collating()
+        {
+            S.InventoryCollating p = new S.InventoryCollating();
+            Array.Sort(Info.Inventory, (a, b) => {
+                if (a == null && b == null) return 0;
+                if (a == null) return 1;  // a 是 null，排在后面
+                if (b == null) return -1; // b 是 null，排在后面
+                return a.ItemIndex.CompareTo(b.ItemIndex);
+            });
+            //Array.Reverse(Info.Inventory);
+            p.Inventory = Info.Inventory;
+            Enqueue(p);
+        }
+        //整理仓库
+        public void collatingStorage()
+        {
+            S.StorageCollating p = new S.StorageCollating();
+            Array.Sort(Account.Storage, (a, b) => {
+                if (a == null && b == null) return 0;
+                if (a == null) return 1;  // a 是 null，排在后面
+                if (b == null) return -1; // b 是 null，排在后面
+                return a.ItemIndex.CompareTo(b.ItemIndex);
+            });
+            p.Storage = Account.Storage;
+            Enqueue(p);
+        }
+        //远程仓库
+        public void remoteStorage()
+        {
+            Connection.SendStorage();
+            Enqueue(new S.NPCStorage());
         }
     }
 }

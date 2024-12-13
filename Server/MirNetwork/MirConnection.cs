@@ -237,6 +237,22 @@ namespace Server.MirNetwork
                 c.Enqueue(p);
         }
 
+        public void SendStorage()
+        {
+            if (StorageSent) return;
+            StorageSent = true;
+
+            for (int i = 0; i < Account.Storage.Length; i++)
+            {
+                UserItem item = Account.Storage[i];
+                if (item == null) continue;
+                //CheckItemInfo(item.Info);
+                CheckItem(item);
+            }
+
+            Enqueue(new S.UserStorage { Storage = Account.Storage }); // Should be no alter before being sent.
+        }
+
         public void Process()
         {
             if (_client == null || !_client.Connected)
