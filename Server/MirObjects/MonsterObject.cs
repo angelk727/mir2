@@ -14,390 +14,496 @@ namespace Server.MirObjects
 
             switch (info.AI)
             {
-                case 3:
-                    return new Football(info);
-                case 10:
-                    return new CannibalPlant(info);
-                case 14:
-                    return new HarvestMonster(info);
-                case 21:
-                    return new AxeSkeleton(info);
-                case 24:
-                    return new CaveMaggot(info);
-                case 31:
-                    return new FlamingWooma(info);
-                case 34:
-                    return new WoomaTaurus(info);
-                case 36:
-                    return new BoneFamiliar(info);
-                case 40:
-                    return new ShamanZombie(info);
-                case 41:
-                    return new BugBagMaggot(info);
-                case 49:
-                    return new SandWorm(info);
-                case 50:
-                    return new DigOutZombie(info);
-                case 51:
-                    return new RevivingZombie(info);
-                case 54:
-                    return new DarkDevourer(info);
-                case 55:
-                    return new PoisonHugger(info);
-                case 56:
-                    return new Hugger(info);
-                case 57:
-                    return new Behemoth(info);
-                case 61:
-                    return new ZumaMonster(info);
-                case 63:
-                    return new ZumaTaurus(info);
-                case 67:
-                    return new BombSpider(info);
-                case 83:
-                    return new Scorpion(info);
-                case 119:
-                    return new VenomSpider(info);
-                case 131:
-                    return new RedMoonEvil(info);
-                case 132:
-                    return new RootSpider(info);
-                case 133:
-                    return new BombSpider(info);
-                case 137:
-                    return new MutatedManworm(info);
-                case 138:
-                    return new CrazyManworm(info);
-                case 139:
-                    return new DarkDevourer(info);
-                case 140:
-                    return new EvilCentipede(info);
-                case 160:
-                case 161:
+                case 1:
+                case 2:
                     return new Deer(info);
-                case 163:
+                case 3:
+                    return new Tree(info);
+                case 4:
+                    //Common AI: 1 Line Attack with Poison
                     return new SpittingSpider(info);
-                case 170:
-                    return new Shinsu(info);
-                case 172:
-                    return new HolyDeva(info);
-                case 180:
-                    return new KingScorpion(info);
-                case 182:
-                    return new DarkDevil(info);
-                case 191:
-                    return new ToxicGhoul(info);
-                case 193:
-                    return new BoneSpearman(info);
-                case 196:
-                    return new BoneLord(info);
-                case 205:
-                    return new RightGuard(info);
-                case 206:
-                    return new LeftGuard(info);
-                case 207:
-                    return new MinotaurKing(info);
-                case 216:
-                case 217:
-                    return new YinDevilNode(info);
-                case 218:
-                    return new OmaKing(info);
-                case 220:
-                    return new Khazard(info);
-                case 221:
+                case 5:
+                    return new CannibalPlant(info);
+                case 6:
+                    return new Guard(info);
+                case 7:
+                    return new CaveMaggot(info);
+                case 8:
+                    //Common AI: 1 Range Projectile Attack with Fear
+                    return new AxeSkeleton(info);
+                case 9:
+                    return new HarvestMonster(info);
+                case 10:
+                    //Common AI: 1 Magic Attack
+                    return new FlamingWooma(info);
+                case 11:
+                    return new WoomaTaurus(info);
+                case 12:
+                    return new BugBagMaggot(info);
+                case 13:
+                    return new RedMoonEvil(info);
+                case 14:
+                    return new EvilCentipede(info);
+                case 15:
+                    return new ZumaMonster(info);
+                case 16:
                     return new RedThunderZuma(info);
-                case 222:
-                    return new FrostTiger(info); //Effect 0/1 
-                case 223:
-                    return new CrystalSpider(info);
-                case 224:
+                case 17:
+                    return new ZumaTaurus(info);
+                case 18:
+                    return new Shinsu(info);
+                case 19:
+                    return new KingScorpion(info);
+                case 20:
+                    return new DarkDevil(info);
+                case 21:
+                    return new IncarnatedGhoul(info);
+                case 22:
+                    return new IncarnatedZT(info);
+                case 23:
+                    return new BoneFamiliar(info);
+                case 24:
+                    return new DigOutZombie(info);
+                case 25:
+                    return new RevivingZombie(info);
+                case 26:
+                    return new ShamanZombie(info);
+                case 27:
+                    return new Khazard(info);
+                case 28:
+                    return new ToxicGhoul(info);
+                case 29:
+                    //Common AI: 1 Line Attack
+                    return new BoneSpearman(info);
+                case 30:
+                    return new BoneLord(info);
+                case 31:
+                    //Common AI: 2 Magic Attacks, 1 Close, 1 Range
+                    return new RightGuard(info);
+                case 32:
+                    //Common AI: 2 Magic Attacks, 1 Close, 1 Range Projectile
+                    return new LeftGuard(info);
+                case 33:
+                    return new MinotaurKing(info);
+                case 34:
+                    return new FrostTiger(info); //Effect 0/1
+                case 35:
+                    //Common AI: 1 Line Attack
+                    return new SandWorm(info);
+                case 36:
                     return new Yimoogi(info);
-                case 229:
-                    return new WingedTigerLord(info);
-                case 230:
+                case 37:
+                    return new CrystalSpider(info);
+                case 38:
+                    return new HolyDeva(info);
+                case 39:
+                    return new RootSpider(info);
+                case 40:
+                    return new BombSpider(info);
+                case 41:
+                case 42:
+                    return new YinDevilNode(info);
+                case 43:
+                    return new OmaKing(info);
+                case 44:
+                    //Common AI: 2 Attacks, 1 Close, 1 Line Attack
                     return new BlackFoxman(info);
-                case 231:
+                case 45:
                     return new RedFoxman(info);
-                case 232:
+                case 46:
                     return new WhiteFoxman(info);
-                case 233:
+                case 47:
                     return new TrapRock(info);
-                case 234:
+                case 48:
                     return new GuardianRock(info);
-                case 235:
+                case 49:
                     return new ThunderElement(info);
-                case 237:
+                case 50:
                     return new GreatFoxSpirit(info);
-                case 238:
+                case 51:
+                    //Common AI: 2 Physical Attacks, 1 Close, 1 Range
                     return new HedgeKekTal(info);
-                case 243:
+                case 52:
+                    return new EvilMir(info);
+                case 53:
+                    return new EvilMirBody(info);
+                case 54:
+                    return new DragonStatue(info);
+                case 55:
+                    return new HumanWizard(info);
+                case 56:
+                    return new Trainer(info);
+                case 57:
+                    return new TownArcher(info);
+                case 58:
+                    return new Guard(info);
+                case 59:
+                    return new HumanAssassin(info);
+                case 60:
+                    return new VampireSpider(info); //TODO - Clean up
+                case 61:
+                    return new SpittingToad(info);
+                case 62:
+                    return new SnakeTotem(info);
+                case 63:
+                    return new CharmedSnake(info);
+                case 64:
+                    return new IntelligentCreatureObject(info);
+                case 65:
+                    //Common AI: 2 Close attacks with WeakerTeleport
+                    return new MutatedManworm(info);
+                case 66:
+                    //Common AI: 2 Close Attacks
+                    return new CrazyManworm(info);
+                case 67:
+                    return new DarkDevourer(info);
+                case 68:
+                    return new Football(info);
+                case 69:
+                    return new PoisonHugger(info);
+                case 70:
+                    return new Hugger(info);
+                case 71:
+                    return new Behemoth(info);
+                case 72:
                     return new FinialTurtle(info);
-                case 244:
+                case 73:
                     return new TurtleKing(info);
-                case 246:
+                case 74:
                     return new LightTurtle(info);
-                case 257:
+                case 75:
+                    return new WitchDoctor(info);
+                case 76:
+                    //Common AI: 2 Close Attacks, 1 Normal, 1 Halfmoon
+                    return new HellSlasher(info);
+                case 77:
+                    //Common AI: 2 Close Attacks, 1 Normal, 1 Fullmoon
+                    return new HellPirate(info);
+                case 78:
+                    return new HellCannibal(info);
+                case 79:
+                    return new HellKeeper(info);
+                case 80:
+                    return new ConquestArcher(info);
+                case 81:
+                    return new Gate(info);
+                case 82:
+                    return new Wall(info);
+                case 83:
+                    return new Tornado(info);
+                case 84:
+                    return new WingedTigerLord(info);
+                case 85:
                     return new FlamingMutant(info);
-                case 258:
+                case 86:
+                    return new ManectricClaw(info);
+                case 87:
+                    return new ManectricBlest(info);
+                case 88:
+                    return new ManectricKing(info);
+                case 89:
+                    return new IcePillar(info);
+                case 90:
+                    return new TrollBomber(info);
+                case 91:
+                    return new TrollKing(info);
+                case 92:
+                    //Common AI: 2 Attacks with Fear, 1 Normal, 1 Long Line
+                    return new FlameSpear(info);
+                case 93:
+                    //Common AI: 2 Magic Attacks with Fear, 1 Close, 1 Range AOE
+                    return new FlameMage(info);
+                case 94:
+                    //Common AI: 2 Magic Attacks with Fear, 1 Close, 1 Close AOE
+                    return new FlameScythe(info);
+                case 95:
+                    return new FlameAssassin(info);
+                case 96:
+                    return new FlameQueen(info);
+                case 97:
+                    return new HellKnight(info);
+                case 98:
+                    return new HellLord(info);
+                case 99:
+                    return new HellBomb(info);
+                case 100:
+                    //Common AI: 1 Magic Line Attack with Poison
+                    return new VenomSpider(info);
+                case 101:
+                    return new AncientBringer(info);
+                case 102:
+                    return new IceGuard(info);
+                case 103:
+                    return new ElementGuard(info);
+                case 104:
+                    return new DemonGuard(info);
+                case 105:
+                    return new KingGuard(info);
+                case 106:
+                    return new DeathCrawler(info);
+                case 107:
+                    //Common AI: 2 Magic Attacks with Rush, 1 Close, 1 Range
+                    return new BurningZombie(info);
+                case 108:
+                    return new MudZombie(info);
+                case 109:
+                    return new HardenRhino(info);
+                case 110:
+                    return new DemonWolf(info); //Effect 0/1
+                case 111:
+                    return new WhiteMammoth(info);
+                case 112:
+                    //Common AI: 2 Close attacks
+                    return new DarkBeast(info); //Effect 0/1
+                case 113:
+                    return new ArcherGuard(info);
+                case 114:
+                    //Common AI: 1 Close attack with WeakerTeleport
+                    return new Mandrill(info);
+                case 115:
+                    return new SandSnail(info);
+                case 116:
+                    return new BlackHammerCat(info);
+                case 117:
+                    return new StrayCat(info);
+                case 118:
+                    return new CatShaman(info);
+                case 119:
+                    return new Jar1(info);
+                case 120:
+                    return new Jar2(info);
+                case 121:
+                    return new SeedingsGeneral(info);
+                case 122:
+                    return new RestlessJar(info);
+                case 123:
+                    return new GeneralMeowMeow(info);
+                case 124:
+                    return new Armadillo(info);
+                case 125:
+                    return new ArmadilloElder(info);
+                case 126:
+                    return new TucsonMage(info);
+                case 127:
+                    return new TucsonWarrior(info);
+                case 128:
+                    return new TucsonEgg(info); //Effect 0/1
+                case 129:
+                    return new SwampWarrior(info);
+                case 130:
+                    return new CannibalTentacles(info);
+                case 131:
+                    return new TucsonGeneral(info);
+                case 132:
+                    return new GasToad(info);
+                case 133:
+                    return new Mantis(info);
+                case 134:
+                    return new AssassinBird(info);
+                case 135:
                     return new StoningStatue(info);
-                case 259:
+                case 136:
                     return new FlyingStatue(info);
+                case 137:
+                    return new RhinoPriest(info);
+                case 138:
+                    return new ElephantMan(info);
+                case 139:
+                    return new StoneGolem(info);
+                case 140:
+                    return new EarthGolem(info);
+                case 141:
+                    return new TreeGuardian(info);
+                case 142:
+                    return new TreeQueen(info);
+                case 143:
+                    return new PeacockSpider(info);
+                case 144:
+                    return new OmaCannibal(info);
+                case 145:
+                    //Common AI: 2 Attacks, 1 Close, 1 Close AOE
+                    return new OmaBlest(info);
+                case 146:
+                    //Common AI: 1 Halfmoon Attack
+                    return new OmaSlasher(info);
+                case 147:
+                    return new OmaMage(info);
+                case 148:
+                    return new OmaWitchDoctor(info);
+                case 149:
+                    return new PowerBead(info); //Effect 0/1/2
+                case 150:
+                    return new DarkOmaKing(info);
+                case 151:
+                    return new CaveStatue(info);
+                case 152:
+                    return new PlagueCrab(info);
+                case 153:
+                    return new CreeperPlant(info);
+                case 154:
+                    return new Nadz(info);
+                case 155:
+                    return new AvengingSpirit(info);
+                case 156:
+                    return new AvengingWarrior(info);
+                case 157:
+                    return new AxePlant(info);
+                case 158:
+                    //Common AI: None With Attack On Death
+                    return new WoodBox(info);
+                case 159:
+                    return new DarkCaptain(info);
+                case 160:
+                    //Common AI: 1 Range Attack with Fear
+                    return new BlueSoul(info);
+                case 161:
+                    return new SackWarrior(info);
+                case 162:
+                    return new KingHydrax(info);
+                case 163:
+                    return new HornedMage(info);
+                case 164:
+                    return new HornedArcher(info); //Effect 0/1
+                case 165:
+                    return new HornedWarrior(info);
+                case 166:
+                    return new FloatingRock(info);
+                case 167:
+                    return new ScalyBeast(info);
+                case 168:
+                    return new WereTiger(info);
+                case 169:
+                    return new HornedSorceror(info);
+                case 170:
+                    return new BoulderSpirit(info);
+                case 171:
+                    return new HornedCommander(info);
+
+                //case 172: MoonSunLightningStone
+
+                case 173:
+                    return new TurtleGrass(info);
+                case 174:
+                    return new ManTree(info);
+                case 175:
+                    return new ChieftainArcher(info);
+
+                //case 176: ChieftainSword
+
+                case 177:
+                    return new FrozenKnight(info);
+                case 178:
+                    return new IcePhantom(info); //TODO
+                case 179:
+                    return new SnowWolf(info);
+                case 180:
+                    return new SnowWolfKing(info);
+                case 181:
+                    return new WaterDragon(info);
+                case 182:
+                    return new BlackTortoise(info);
+
+                //case 183: Manticore
+
+                case 184:
+                    return new DragonWarrior(info); //TODO
+
+                //case 185: DragonArcher
+
+                case 186:
+                    return new Kirin(info);
+                case 187:
+                    return new FrozenMiner(info);
+                case 188:
+                    return new FrozenAxeman(info);
+                case 189:
+                    return new FrozenMagician(info);
+                case 190:
+                    return new SnowYeti(info);
+                case 191:
+                    return new IceCrystalSoldier(info);
+                case 192:
+                    return new DarkWraith(info);
+
+                //case 193: CrystalBeast
+                //case 194: RedOrb
+                //case 195: FatalLotus
+
+                case 196:
+                    return new AntCommander(info);
+
+
+                // Sanjian
+
+                case 197:
+                    return new GlacierSnail(info);
+                case 198:
+                    return new FurbolgWarrior(info);
+                case 199:
+                    return new FurbolgArcher(info);
+                case 200:
+                    return new FurbolgCommander(info);
+                case 201:
+                    return new FurbolgGuard(info);
+                case 202:
+                    return new GlacierBeast(info);
+                case 203:
+                    return new GlacierWarrior(info);
+
+
+
+                case 210:
+                    return new HoodedSummonerScrolls(info);
+                case 211:
+                    return new HoodedSummoner(info);
+                case 212:
+                    return new PurpleFaeFlower(info);
+                case 213:
+                    return new Siege(info); //TODO
+
+                case 214:
+                    return new SepWarrior(info); //TODO
+                case 215:
+                    return new SepWizard(info); //TODO
+                case 216:
+                    return new SepTaoist(info); //TODO
+                case 217:
+                    return new SepAssassin(info); //TODO
+                case 218:
+                    return new SepArcher(info); //TODO
+                case 219:
+                    return new SepHighWarrior(info); //TODO
+                case 220:
+                    return new SepHighWizard(info); //TODO
+                case 221:
+                    return new SepHighTaoist(info); //TODO
+                case 222:
+                    return new SepHighAssassin(info); //TODO
+                case 223:
+                    return new SepHighArcher(info); //TODO
+
+                case 255://Skill 
+                    return new StoneTrap(info);
+
                 case 271:
                     return new Mon271N(info);
-                case 272:
-                    return new HellSlasher(info);
-                case 273:
-                    return new HellPirate(info);
-                case 274:
-                    return new HellCannibal(info);
-                case 275:
-                    return new HellKeeper(info);
-                case 277:
-                    return new WitchDoctor(info);
-                case 280:
-                    return new ManectricClaw(info);
-                case 285:
-                    return new ManectricBlest(info);
-                case 286:
-                    return new ManectricKing(info);
-                case 288:
-                    return new IcePillar(info);
-                case 292:
-                    return new TrollBomber(info);
-                case 294:
-                    return new TrollKing(info);
-                case 295:
-                    return new FlameSpear(info);
-                case 296:
-                    return new FlameMage(info);
-                case 297:
-                    return new FlameScythe(info);
-                case 298:
-                    return new FlameAssassin(info);
-                case 299:
-                    return new FlameQueen(info);
-                case 300:
-                    return new HellKnight(info);
-                case 304:
-                    return new HellLord(info);
-                case 306:
-                    return new IceGuard(info);
-                case 307:
-                    return new ElementGuard(info);
-                case 308:
-                    return new DemonGuard(info);
-                case 309:
-                    return new KingGuard(info);
-                case 318:
-                    return new DeathCrawler(info);
-                case 319:
-                    return new BurningZombie(info);
-                case 320:
-                    return new MudZombie(info);
-                case 328:
-                    return new HardenRhino(info);
-                case 323:
-                    return new DemonWolf(info); //Effect 0/1
-                case 324:
-                    return new WhiteMammoth(info);
-                case 325:
-                    return new DarkBeast(info); //Effect 0/1
-                case 329:
-                    return new AncientBringer(info);
-                case 334:
-                    return new BlackHammerCat(info);
-                case 335:
-                    return new StrayCat(info);
-                case 336:
-                    return new CatShaman(info);
-                case 337:
-                    return new Jar1(info);
-                case 338:
-                    return new Jar2(info);
-                case 339:
-                    return new SeedingsGeneral(info);
-                case 340:
-                    return new RestlessJar(info);
-                case 341:
-                    return new GeneralMeowMeow(info);
-                case 347:
-                    return new Armadillo(info);
-                case 348:
-                    return new ArmadilloElder(info);
-                case 345:
-                    return new TucsonMage(info);
-                case 346:
-                    return new TucsonWarrior(info);
-                case 350:
-                    return new TucsonEgg(info); //Effect 0/1
-                case 352:
-                    return new SandSnail(info);
-                case 353:
-                    return new CannibalTentacles(info);
-                case 354:
-                    return new TucsonGeneral(info);
-                case 355:
-                    return new GasToad(info);
-                case 356:
-                    return new Mantis(info);
-                case 357:
-                    return new SwampWarrior(info);
-                case 358:
-                    return new AssassinBird(info);
-                case 360:
-                    return new RhinoPriest(info);
-                case 361:
-                    return new ElephantMan(info);
-                case 362:
-                    return new StoneGolem(info);
-                case 363:
-                    return new EarthGolem(info);
-                case 364:
-                    return new TreeGuardian(info);
-                case 365:
-                    return new TreeQueen(info);
-                case 366:
-                    return new PeacockSpider(info);
-                case 369:
-                    return new OmaCannibal(info);
-                case 370:
-                    return new OmaBlest(info);
-                case 371:
-                    return new OmaSlasher(info);
-                case 373:
-                    return new OmaMage(info);
-                case 374:
-                    return new OmaWitchDoctor(info);
-                case 375:
-                    return new PowerBead(info); //Effect 0/1/2
-                case 378:
-                    return new DarkOmaKing(info);
                 case 380:
                     return new Mon380P(info);
-                case 381:
-                    return new Mandrill(info);
-                case 382:
-                    return new PlagueCrab(info);
-                case 383:
-                    return new CreeperPlant(info);
-                case 387:
-                    return new Nadz(info);
-                case 388:
-                    return new AvengingSpirit(info);
-                case 390:
-                    return new AvengingWarrior(info);
-                case 391:
-                    return new AxePlant(info);
-                case 392:
-                    return new WoodBox(info);
-                case 395:
-                    return new DarkCaptain(info);
-                case 396:
-                    return new SackWarrior(info);
-                case 397:
-                    return new WereTiger(info);
-                case 398:
-                    return new KingHydrax(info);
-                case 400:
-                    return new HornedMage(info);
-                case 401:
-                    return new HornedArcher(info); //Effect 0/1
-                case 403:
-                    return new HornedWarrior(info);
-                case 404:
-                    return new FloatingRock(info);
-                case 405:
-                    return new ScalyBeast(info);
-                case 406:
-                    return new HornedSorceror(info);
                 case 407:
                     return new BlueSoul(info);
-                case 408:
-                    return new BoulderSpirit(info);
                 case 409:
                     return new Mon409B(info);
-                case 410:
-                    return new TurtleGrass(info);
-                case 411:
-                    return new ManTree(info);
-                case 414:
-                    return new ChieftainSword(info);
-                case 417:
-                    return new ChieftainArcher(info);
-                case 419:
-                    return new StoneTrap(info);
-                case 420:
-                    return new VampireSpider(info);
-                case 421:
-                    return new SpittingToad(info);
-                case 422:
-                    return new SnakeTotem(info);
-                case 423:
-                    return new CharmedSnake(info);
-                case 427:
-                    return new FrozenKnight(info);
-                case 429:
-                    return new IcePhantom(info);
-                case 430:
-                    return new SnowWolf(info);
-                case 431:
-                    return new SnowWolfKing(info);
-                case 432:
-                    return new WaterDragon(info);
-                case 433:
-                    return new BlackTortoise(info);
-                case 434:
-                    return new Manticore(info);
-                case 435:
-                    return new DragonWarrior(info);
-                case 436:
-                    return new DragonArcher(info);
-                case 437:
-                    return new Tornado(info);
-                case 438:
-                    return new Kirin(info);
-                case 442:
-                    return new FrozenMiner(info);
+
                 case 443:
                     return new Mon443N(info);
-                case 444:
-                    return new FrozenMagician(info);
-                case 445:
-                    return new SnowYeti(info);
-                case 446:
-                    return new IceCrystalSoldier(info);
-                case 447:
-                    return new DarkWraith(info);
-                case 449:
-                    return new CrystalBeast(info);
                 //case 450: RedOrb
                 //case 455: FatalLotus
-                case 456:
-                    return new AntCommander(info);
                 case 461:
                     return new CargoBox(info);
-                case 468:
-                    return new GlacierSnail(info);
-                case 469:
-                    return new FurbolgWarrior(info);
-                case 470:
-                    return new FurbolgArcher(info);
-                case 471:
-                    return new FurbolgCommander(info);
-                case 473:
-                    return new FurbolgGuard(info);
-                case 474:
-                    return new GlacierBeast(info);
-                case 475:
-                    return new GlacierWarrior(info);
                 case 476:
                     return new ShardGuardian(info);
-                case 477:
-                    return new HoodedSummonerScrolls(info);
-                case 481:
-                    return new HoodedSummoner(info);
-                case 466:
-                    return new PurpleFaeFlower(info);
+
+
                 case 472:
                     return new Mon472N(info);
                 case 484:
@@ -481,62 +587,12 @@ namespace Server.MirObjects
                     return new Mon603B(info);
                 case 609:
                     return new Mon609N(info);
-                case 900:
-                    return new EvilMir(info);
-                case 901:
-                    return new EvilMirBody(info);
-                case 902:
-                    return new DragonStatue(info);
-                case 903:
-                    return new HellBomb(info);
-                case 950:
-                    return new Gate(info);
-                case 951:
-                    return new Wall(info);
-                case 960:
-                    return new ConquestArcher(info);
-                case 961:
-                    return new Siege(info);
-                case 970:
-                    return new IntelligentCreatureObject(info);
+
+
                 case 971:
                     return new Tree(info);
                 case 972:
                     return new CityGate(info);
-                case 980:
-                    return new Guard(info);//6
-                case 981:
-                    return new Guard(info);//58
-                case 982:
-                    return new ArcherGuard(info);//113
-                case 983:
-                    return new TownArcher(info); //57
-                case 984:
-                    return new Trainer(info);//56
-                case 985:
-                    return new HumanWizard(info);
-                case 986:
-                    return new HumanAssassin(info);
-                case 990: //990-999以下为人形怪
-                    return new SepWarrior(info);
-                case 991:
-                    return new SepWizard(info);
-                case 992:
-                    return new SepTaoist(info);
-                case 993:
-                    return new SepAssassin(info);
-                case 994:
-                    return new SepArcher(info);
-                case 995:
-                    return new SepHighWarrior(info);
-                case 996:
-                    return new SepHighWizard(info);
-                case 997:
-                    return new SepHighTaoist(info);
-                case 998:
-                    return new SepHighAssassin(info);
-                case 999:
-                    return new SepHighArcher(info);
                 default:
                     return new MonsterObject(info);
             }
