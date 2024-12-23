@@ -4146,13 +4146,13 @@ namespace Client.MirScenes
                             playDefaultSound = false;
                             break;
                         }
-                    case 10: //Mon409B
-                        {
-                            MapControl.Effects.Add(effect = new Effect(Libraries.Monsters[(ushort)Monster.Mon409B], 976, 10, 1000, ob.CurrentLocation));
-                            SoundManager.PlaySound(8455);
-                            playDefaultSound = false;
-                            break;
-                        }
+                    //case 10: //Mon409B
+                    //    {
+                    //        MapControl.Effects.Add(effect = new Effect(Libraries.Monsters[(ushort)Monster.Mon409B], 976, 10, 1000, ob.CurrentLocation));
+                    //        SoundManager.PlaySound(8455);
+                    //        playDefaultSound = false;
+                    //        break;
+                        //}
                     case 11: //SnowWolfKing
                         {
                             MapControl.Effects.Add(effect = new Effect(Libraries.Monsters[(ushort)Monster.SnowWolfKing], 609, 10, 1000, ob.CurrentLocation));
@@ -4254,13 +4254,13 @@ namespace Client.MirScenes
                             playDefaultSound = false;
                             break;
                         }
-                    case 10:
-                        {
-                            ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon409B], 976, 10, 1000, ob));
-                            SoundManager.PlaySound(8455);
-                            playDefaultSound = false;
-                            break;
-                        }
+                    //case 10:
+                    //    {
+                    //        ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon409B], 976, 10, 1000, ob));
+                    //        SoundManager.PlaySound(8455);
+                    //        playDefaultSound = false;
+                    //        break;
+                    //    }
                     case 11: //SnowWolfKing
                         {
                             ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.SnowWolfKing], 619, 10, 1000, ob));

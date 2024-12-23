@@ -101,7 +101,7 @@ namespace Server.MirObjects.Monsters
                 DelayedAction action = new DelayedAction(DelayedType.Spawn, Envir.Time + 2000, spellObj);
                 CurrentMap.ActionList.Add(action);
 
-                AddBuff(BuffType.Mon409BShieldBuff, this, Settings.Second * 12, stats);
+                AddBuff(BuffType.HornedCommanderShield, this, Settings.Second * 12, stats);
                 SpawnSlave();
                 return;
             }
@@ -275,7 +275,7 @@ namespace Server.MirObjects.Monsters
 
                 if (SlaveList.Count < 3)
                 {
-                    var mob = GetMonster(Envir.GetMonsterInfo(Settings.Mon409BMob1));
+                    var mob = GetMonster(Envir.GetMonsterInfo(Settings.HornedCommanderMob));
                     if (mob != null)
                     {
                         Point back = Functions.PointMove(CurrentLocation, Functions.ReverseDirection(Direction), 1);
@@ -452,7 +452,7 @@ namespace Server.MirObjects.Monsters
 
                     SpellObject ob = new SpellObject
                     {
-                        Spell = Spell.Mon409BRockSpike,
+                        Spell = Spell.HornedCommanderRockSpike,
                         Value = damage,
                         ExpireTime = Envir.Time + start + (Settings.Minute * 10),
                         TickSpeed = 1000,
@@ -483,7 +483,7 @@ namespace Server.MirObjects.Monsters
 
             for (int i = 0; i < 8; i++)
             {
-                var mob = GetMonster(Envir.GetMonsterInfo(Settings.Mon409BBombMob));
+                var mob = GetMonster(Envir.GetMonsterInfo(Settings.HornedCommanderBombMob));
 
                 var odd = i % 2 != 0;
 

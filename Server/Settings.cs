@@ -167,9 +167,9 @@ namespace Server
                              GeneralMeowMeowMob3 = "陵庙刀卫",
                              GeneralMeowMeowMob4 = "陵庙巫师",
                              KingHydraxMob = "大蟒",
-                             Mon409BMob1 = "魔风旋",
+                             HornedCommanderMob = "魔风旋",
                              Mon409BMob2 = "魔角大巫",
-                             Mon409BBombMob = "岩弹",
+                             HornedCommanderBombMob = "岩弹",
                              SnowWolfKingMob = "雪狼",
                              CallScrollMob = "冰蛇",
                              ShardMaidenMob1 = "地宫勇士",
@@ -428,9 +428,9 @@ namespace Server
             GeneralMeowMeowMob3 = Reader.ReadString("Game", "GeneralMeowMeowMob3", GeneralMeowMeowMob3);
             GeneralMeowMeowMob4 = Reader.ReadString("Game", "GeneralMeowMeowMob4", GeneralMeowMeowMob4);
             KingHydraxMob = Reader.ReadString("Game", "KingHydraxMob", KingHydraxMob);
-            Mon409BMob1 = Reader.ReadString("Game", "Mon409BMob1", Mon409BMob1);
+            HornedCommanderMob = Reader.ReadString("Game", "Mon409BMob1", HornedCommanderMob);
             Mon409BMob2 = Reader.ReadString("Game", "Mon409BMob2", Mon409BMob2);
-            Mon409BBombMob = Reader.ReadString("Game", "Mon409BBombMob", Mon409BBombMob);
+            HornedCommanderBombMob = Reader.ReadString("Game", "HornedCommanderBombMob", HornedCommanderBombMob);
             SnowWolfKingMob = Reader.ReadString("Game", "SnowWolfKingMob", SnowWolfKingMob);
             CallScrollMob = Reader.ReadString("Game", "CallScrollMob", CallScrollMob);
             ShardMaidenMob1 = Reader.ReadString("Game", "ShardMaidenMob1", ShardMaidenMob1);
@@ -763,9 +763,9 @@ namespace Server
             Reader.Write("Game", "GeneralMeowMeowMob4", GeneralMeowMeowMob4);
 
             Reader.Write("Game", "KingHydraxMob", KingHydraxMob);
-            Reader.Write("Game", "Mon409BMob1", Mon409BMob1);
+            Reader.Write("Game", "HornedCommanderMob", HornedCommanderMob);
             Reader.Write("Game", "Mon409BMob2", Mon409BMob2);
-            Reader.Write("Game", "Mon409BBombMob", Mon409BBombMob);
+            Reader.Write("Game", "HornedCommanderBombMob", HornedCommanderBombMob);
             Reader.Write("Game", "SnowWolfKingMob", SnowWolfKingMob);
 
             Reader.Write("Game", "CallScrollMob", CallScrollMob);

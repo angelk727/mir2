@@ -619,7 +619,7 @@ public enum Monster : ushort
     Reindeer = 397, //frames not added
     AngryReindeer = 398,
     CargoBox = 399, // Done - Basically a Pinata.
-
+    Mon380P = 380,
     Ram1 = 400,
     Ram2 = 401,
     Kite = 402,
@@ -685,7 +685,7 @@ public enum Monster : ushort
     MutantWarg = 461,
     GrassElemental = 462,
     RockElemental = 463,
-
+    WaterSoul=470,
     Mon472N = 472,
 
     CallScroll = 477,
@@ -1388,8 +1388,8 @@ public enum Spell : byte
     TreeQueenGroundRoots = 214, //365
     DarkOmaKingNuke = 215, //378
     HornedSorcererDustTornado = 216, //406
-    Mon409BRockFall = 217,
-    Mon409BRockSpike = 218,
+    HornedCommanderRockFall = 217,
+    HornedCommanderRockSpike = 218,
     Mon409BShield = 219,
     YangDragonFlame = 220, //414
     YangDragonIcyBurst = 221, //414
@@ -1511,7 +1511,7 @@ public enum BuffType : byte
     惩戒真言,
     御体之力,
     HornedWarriorShield,
-    Mon409BShieldBuff,
+    HornedCommanderShield,
     失明状态,
     ChieftainSwordBuff,
     寒冰护甲,

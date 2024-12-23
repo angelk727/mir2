@@ -393,8 +393,8 @@ namespace Server.MirObjects
                         ob.Struck(Value, DefenceType.AC);
                     }
                     break;
-                case Spell.Mon409BRockFall:
-                case Spell.Mon409BRockSpike:
+                case Spell.HornedCommanderRockFall:
+                case Spell.HornedCommanderRockSpike:
                     {
                         if (ob.Race != ObjectType.Player && ob.Race != ObjectType.Monster) return;
                         if (ob.Dead) return;
@@ -676,8 +676,8 @@ namespace Server.MirObjects
                 case Spell.FlyingStatueIceTornado:
                 case Spell.DarkOmaKingNuke:
                 case Spell.HornedSorcererDustTornado:
-                case Spell.Mon409BRockFall:
-                case Spell.Mon409BRockSpike:
+                case Spell.HornedCommanderRockFall:
+                case Spell.HornedCommanderRockSpike:
                 case Spell.HealingCircle:
                 case Spell.HealingcircleRare:
                 case Spell.YangDragonFlame:
