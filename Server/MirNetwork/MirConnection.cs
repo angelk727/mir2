@@ -168,8 +168,9 @@ namespace Server.MirNetwork
                 while ((p = Packet.ReceivePacket(_rawData, out _rawData)) != null)
                     _receiveList.Enqueue(p);
             }
-            catch
+            catch (Exception e)
             {
+                MessageQueue.Enqueue(e.ToString());
                 Envir.UpdateIPBlock(IPAddress, TimeSpan.FromHours(24));
 
                 MessageQueue.Enqueue($"{IPAddress} 已断开连接-无效数据包");

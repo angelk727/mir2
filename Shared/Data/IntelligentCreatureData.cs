@@ -10,6 +10,9 @@
     public int SemiAutoPickupRange = 0;
 
     public bool CanProduceBlackStone = false;
+    public string Info = "";
+    public string Info1 = "";
+    public string Info2 = "";
 
     public IntelligentCreatureRules()
     {
@@ -26,6 +29,10 @@
         SemiAutoPickupRange = reader.ReadInt32();
 
         CanProduceBlackStone = reader.ReadBoolean();
+
+        Info = reader.ReadString();
+        Info1 = reader.ReadString();
+        Info2 = reader.ReadString();
     }
 
     public void Save(BinaryWriter writer)
@@ -39,6 +46,9 @@
         writer.Write(SemiAutoPickupRange);
 
         writer.Write(CanProduceBlackStone);
+        writer.Write(Info);
+        writer.Write(Info1);
+        writer.Write(Info2);
     }
 }
 

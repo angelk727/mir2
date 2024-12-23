@@ -684,7 +684,7 @@ namespace Server
         }
         private void LoadImage(ushort miniMapValue)
         {
-            string imagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Envir", "Previews", "Minimaps", miniMapValue + ".bmp");
+            string imagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Envir", "Previews", "Minimaps", miniMapValue + "_MiniMap.png");
 
             if (File.Exists(imagePath))
             {

@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Diagnostics;
+using System.Text.RegularExpressions;
 using Server.MirEnvir;
 
 namespace Server.MirDatabase
@@ -33,7 +34,7 @@ namespace Server.MirDatabase
         public uint Experience;
 
         public string DropPath = "";
-        
+
         public List<DropInfo> Drops = new List<DropInfo>();
 
         public bool CanTame = true, CanPush = true, AutoRev = true, Undead = false;
@@ -53,7 +54,7 @@ namespace Server.MirDatabase
             Index = reader.ReadInt32();
             Name = reader.ReadString();
 
-            Image = (Monster) reader.ReadUInt16();
+            Image = (Monster)reader.ReadUInt16();
             AI = reader.ReadUInt16();
             Effect = reader.ReadByte();
 
@@ -145,8 +146,8 @@ namespace Server.MirDatabase
             writer.Write(Index);
             writer.Write(Name);
 
-            writer.Write((ushort) Image);
-            writer.Write((ushort) AI);
+            writer.Write((ushort)Image);
+            writer.Write((ushort)AI);
             writer.Write(Effect);
             writer.Write(Level);
             writer.Write(ViewRange);
@@ -176,10 +177,10 @@ namespace Server.MirDatabase
 
             if (data.Length < 28) return; //28
 
-            MonsterInfo info = new MonsterInfo {Name = data[0]};
+            MonsterInfo info = new MonsterInfo { Name = data[0] };
             ushort image;
             if (!ushort.TryParse(data[1], out image)) return;
-            info.Image = (Monster) image;
+            info.Image = (Monster)image;
 
             if (!ushort.TryParse(data[2], out info.AI)) return;
             if (!byte.TryParse(data[3], out info.Effect)) return;
@@ -206,7 +207,7 @@ namespace Server.MirDatabase
             if (!ushort.TryParse(data[21], out info.MoveSpeed)) return;
 
             if (!uint.TryParse(data[22], out info.Experience)) return;
-            
+
             if (!bool.TryParse(data[23], out info.CanTame)) return;
             if (!bool.TryParse(data[24], out info.CanPush)) return;
 
@@ -226,9 +227,9 @@ namespace Server.MirDatabase
         public string ToText()
         {
             return "";// string.Format("{0},{1},{2},{3},{4},{5},{6},{7},{8},{9},{10},{11},{12},{13},{14},{15},{16},{17},{18},{19},{20},{21},{22},{23},{24},{25},{26},{27}", Name, (ushort)Image, AI, Effect, Level, ViewRange,
-              //  HP, 
-                //MinAC, MaxAC, MinMAC, MaxMAC, MinDC, MaxDC, MinMC, MaxMC, MinSC, MaxSC, 
-               // Accuracy, Agility, Light, AttackSpeed, MoveSpeed, Experience, CanTame, CanPush, AutoRev, Undead, CoolEye);
+                      //  HP, 
+                      //MinAC, MaxAC, MinMAC, MaxMAC, MinDC, MaxDC, MinMC, MaxMC, MinSC, MaxSC, 
+                      // Accuracy, Agility, Light, AttackSpeed, MoveSpeed, Experience, CanTame, CanPush, AutoRev, Undead, CoolEye);
         }
 
         public override string ToString()
@@ -272,7 +273,7 @@ namespace Server.MirDatabase
 
         public static DropInfo FromLine(string s)
         {
-            string[] parts = s.Split(new[] {' '}, StringSplitOptions.RemoveEmptyEntries);
+            string[] parts = s.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
             if (parts.Length < 2)
             {
@@ -283,7 +284,7 @@ namespace Server.MirDatabase
 
             if (!int.TryParse(parts[0].Substring(2), out info.Chance)) return null;
 
-            if (string.Compare(parts[1], "Gold", StringComparison.OrdinalIgnoreCase) == 0)
+            if (string.Compare(parts[1], "金币", StringComparison.OrdinalIgnoreCase) == 0)
             {
                 if (parts.Length < 3) return null;
                 if (!uint.TryParse(parts[2], out info.Gold) || info.Gold == 0) return null;
@@ -352,7 +353,7 @@ namespace Server.MirDatabase
 
                 if (drop == null)
                 {
-                    MessageQueue.Enqueue(string.Format("未能加载 {0} 所需物品: {1}", name, lines[i]));
+                    //MessageQueue.Enqueue(string.Format("未能加载 {0} 所需物品: {1}", name, lines[i]));
                     continue;
                 }
 
@@ -384,7 +385,6 @@ namespace Server.MirDatabase
             bool start = false, finish = false;
 
             var drops = new List<DropInfo>();
-
             for (int j = startLine; j < lines.Count; j++)
             {
                 var line = lines[j].Trim();
@@ -408,17 +408,19 @@ namespace Server.MirDatabase
 
                 if (drop == null)
                 {
-                    MessageQueue.Enqueue(string.Format("未能加载 {0} 掉落物品: {1}}", name, line));
+                    //MessageQueue.Enqueue(string.Format("未能加载 {0} 掉落物品: {1}", name, line));
                     continue;
                 }
 
                 if (drop.GroupedDrop != null)
                 {
-                    ParseGroup(drop, name, lines, j + 1);
+                    try { ParseGroup(drop, name, lines, j + 1); } catch { MessageQueue.Enqueue("drop:" + drop + "-name:" + name); }
+
                 }
 
                 drops.Add(drop);
             }
+
 
             if (start && finish)
             {
