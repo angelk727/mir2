@@ -1596,7 +1596,8 @@ namespace Server.MirObjects
         {
             for (int i = 0; i < Envir.RecipeInfoList.Count; i++)
             {
-                CheckRecipeInfo(Envir.RecipeInfoList[i]);
+                if (Envir.RecipeInfoList[i] == null || Envir.RecipeInfoList[i].Item == null) continue;
+				CheckRecipeInfo(Envir.RecipeInfoList[i]);
             }
         }
         private void GetObjects()
