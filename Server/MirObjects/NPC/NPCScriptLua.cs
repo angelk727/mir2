@@ -144,7 +144,8 @@ namespace Server.MirObjects
                 "GETUID",
                 "CHECKGOLD",
                 "CHECKCREDIT",
-                "DELITEM"
+                "DELITEM",
+                "CHECKMAP"
             };
 
             foreach (var functionName in functions)
@@ -770,6 +771,13 @@ namespace Server.MirObjects
             if (uid != 0) {
                 player.Enqueue(new S.DeleteItem { UniqueID = uid, Count = count });
             }
+        }
+
+        public bool CHECKMAP(string MapName)
+        {
+            var player = lua["player"] as PlayerObject;
+            Map map = Envir.GetMapByNameAndInstance(MapName);
+            return player.CurrentMap == map;
         }
     }
 }
