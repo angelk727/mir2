@@ -145,7 +145,8 @@ namespace Server.MirObjects
                 "CHECKGOLD",
                 "CHECKCREDIT",
                 "DELITEM",
-                "CHECKMAP"
+                "CHECKMAP",
+                "CHECKPKPOINT"
             };
 
             foreach (var functionName in functions)
@@ -778,6 +779,11 @@ namespace Server.MirObjects
             var player = lua["player"] as PlayerObject;
             Map map = Envir.GetMapByNameAndInstance(MapName);
             return player.CurrentMap == map;
+        }
+        public int CHECKPKPOINT()
+        {
+            var player = lua["player"] as PlayerObject;
+            return player.PKPoints;
         }
     }
 }
