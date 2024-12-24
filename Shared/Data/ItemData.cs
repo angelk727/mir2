@@ -455,7 +455,7 @@ public class UserItem
             SealedInfo = new SealedInfo(reader, version, customVersion);
         }
 
-        if (version > 110)
+        if (version > 107)
         {
             GMMade = reader.ReadBoolean();
         }
