@@ -2469,7 +2469,7 @@ namespace Server.MirObjects
 
             if (damageWeapon)
                 attacker.DamageWeapon();
-            damage += attacker.Stats[Stat.攻击增伤];
+            damage += attacker.Stats[Stat.武器增伤];
 
             if (armour >= damage)
             {

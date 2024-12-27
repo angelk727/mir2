@@ -340,6 +340,14 @@ namespace Client.MirScenes.Dialogs
                 case BuffType.天上秘术:
                     text += "开启后(天霜冰环)和(流星火雨)\n无需引导\n";
                     break;
+                case BuffType.万效符:
+                    overridestats = true;
+                    text += string.Format("受到的伤害减少{0}%", buff.Stats[Stat.伤害减免数率] );
+                    break;
+                case BuffType.万效符秘籍:
+                    overridestats = true;
+                    text += string.Format("受到的伤害减少{0}%", buff.Stats[Stat.伤害减免数率] );
+                    break;
                 case BuffType.变形效果:
                     text += "改变外形\n功能：免助跑\n";
                     break;
@@ -521,6 +529,9 @@ namespace Client.MirScenes.Dialogs
                     return 30090;
                 case BuffType.先天气功:
                     return 30114;
+                case BuffType.万效符:
+                case BuffType.万效符秘籍:
+                    return 184;
 
                 case BuffType.轻身步:
                     return 30134;
@@ -565,6 +576,8 @@ namespace Client.MirScenes.Dialogs
                     return 61;
                 case BuffType.防御诅咒:
                     return 67;
+                case BuffType.万效符爆杀:
+                    return 193;
                 case BuffType.烈火焚烧:
                     return 548;
 
@@ -585,7 +598,7 @@ namespace Client.MirScenes.Dialogs
                 case BuffType.衣钵相传:
                     return 80;
                 case BuffType.心心相映:
-                    return 64;
+                    return 179;
                 case BuffType.公会特效:
                     return 63;
                 case BuffType.精力充沛:

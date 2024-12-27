@@ -570,7 +570,7 @@ namespace Client.MirObjects
         {
             if (MirSet.Contains(EquipmentSlot.武器) && MirSet.Contains(EquipmentSlot.盔甲))
             {
-                Stats[Stat.攻击增伤] += 15;
+                Stats[Stat.武器增伤] += 15;
             }
             if (MirSet.Contains(EquipmentSlot.头盔) && MirSet.Contains(EquipmentSlot.靴子) && MirSet.Contains(EquipmentSlot.腰带))
             {

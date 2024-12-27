@@ -2162,11 +2162,6 @@ namespace Client.MirScenes
             MapControl.NextAction = 0;
             if (User.CurrentLocation == p.Location && User.Direction == p.Direction) return;
 
-            if (Settings.DebugMode)
-            {
-                ReceiveChat(new S.Chat { Message = "Displacement", Type = ChatType.System });
-            }
-
             MapControl.RemoveObject(User);
             User.CurrentLocation = p.Location;
             User.MapLocation = p.Location;
@@ -8465,7 +8460,7 @@ namespace Client.MirScenes
 
             #region DAMAGE_REDUCTION
 
-            minValue = realItem.Stats[Stat.伤害降低数率];
+            minValue = realItem.Stats[Stat.伤害减免数率];
             maxValue = 0;
             addValue = 0;
 
@@ -11683,11 +11678,11 @@ namespace Client.MirScenes
 
             if (GameScene.SelectedCell != null)
             {
-                //if (GameScene.SelectedCell.GridType != MirGridType.Inventory)
-                //{
-                //    GameScene.SelectedCell = null;
-                //    return;
-                //}
+                if (GameScene.SelectedCell.GridType != MirGridType.Inventory && GameScene.SelectedCell.GridType != MirGridType.HeroInventory)
+                {
+                    GameScene.SelectedCell = null;
+                    return;
+                }
 
                 MirItemCell cell = GameScene.SelectedCell;
                 if (cell.Item.Info.Bind.HasFlag(BindMode.DontDrop))

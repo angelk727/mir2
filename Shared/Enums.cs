@@ -1483,6 +1483,8 @@ public enum BuffType : byte
     魔法盾,
     金刚术,
     天上秘术,
+    万效符,
+    万效符秘籍,
 
     //Monster
     HornedArcherBuff = 50,
@@ -1508,6 +1510,7 @@ public enum BuffType : byte
     防御诅咒,
     Mon579BShield,
     Mon580BShield,
+    万效符爆杀,
 
     //Special
     游戏管理 = 100,

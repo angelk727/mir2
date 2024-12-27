@@ -238,7 +238,7 @@
             label64.Name = "label64";
             label64.Size = new Size(77, 12);
             label64.TabIndex = 137;
-            label64.Text = "伤害降低数率";
+            label64.Text = "伤害减免数率";
             // 
             // GoldRatetextBox
             // 

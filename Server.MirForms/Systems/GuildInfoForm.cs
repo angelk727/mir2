@@ -114,7 +114,7 @@ namespace Server
                 BufftxtDc.Text = SelectedBuff.Stats[Stat.MaxDC].ToString();
                 BufftxtMc.Text = SelectedBuff.Stats[Stat.MaxMC].ToString();
                 BufftxtSc.Text = SelectedBuff.Stats[Stat.MaxSC].ToString();
-                BufftxtAttack.Text = SelectedBuff.Stats[Stat.攻击增伤].ToString();
+                BufftxtAttack.Text = SelectedBuff.Stats[Stat.武器增伤].ToString();
                 BufftxtHpRegen.Text = SelectedBuff.Stats[Stat.生命恢复].ToString();
                 BufftxtMpRegen.Text = SelectedBuff.Stats[Stat.法力恢复].ToString();
                 BufftxtMaxHp.Text = SelectedBuff.Stats[Stat.HP].ToString();
@@ -521,7 +521,7 @@ namespace Server
             byte temp = 0;
             if (!IsValid(ref temp, sender)) return;
             ActiveControl.BackColor = SystemColors.Window;
-            SelectedBuff.Stats[Stat.攻击增伤] = temp;
+            SelectedBuff.Stats[Stat.武器增伤] = temp;
             GuildsChanged = true;
         }
 

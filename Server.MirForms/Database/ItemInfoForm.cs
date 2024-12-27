@@ -276,7 +276,7 @@ namespace Server
             MaxDCRatetextBox.Text = info.Stats[Stat.最大物理攻击数率].ToString();
             MaxSCRatetextBox.Text = info.Stats[Stat.最大道术攻击数率].ToString();
             MaxMCRatetextBox.Text = info.Stats[Stat.最大魔法攻击数率].ToString();
-            DamageReductiontextBox.Text = info.Stats[Stat.伤害降低数率].ToString();
+            DamageReductiontextBox.Text = info.Stats[Stat.伤害减免数率].ToString();
             ExpRatetextBox.Text = info.Stats[Stat.经验增长数率].ToString();
             DropRatetextBox.Text = info.Stats[Stat.物品掉落数率].ToString();
             GoldRatetextBox.Text = info.Stats[Stat.金币收益数率].ToString();
@@ -395,7 +395,7 @@ namespace Server
                 if (MaxDCRatetextBox.Text != info.Stats[Stat.最大物理攻击数率].ToString()) MaxDCRatetextBox.Text = string.Empty;
                 if (MaxSCRatetextBox.Text != info.Stats[Stat.最大道术攻击数率].ToString()) MaxSCRatetextBox.Text = string.Empty;
                 if (MaxMCRatetextBox.Text != info.Stats[Stat.最大魔法攻击数率].ToString()) MaxMCRatetextBox.Text = string.Empty;
-                if (DamageReductiontextBox.Text != info.Stats[Stat.伤害降低数率].ToString()) DamageReductiontextBox.Text = string.Empty;
+                if (DamageReductiontextBox.Text != info.Stats[Stat.伤害减免数率].ToString()) DamageReductiontextBox.Text = string.Empty;
                 if (ExpRatetextBox.Text != info.Stats[Stat.经验增长数率].ToString()) ExpRatetextBox.Text = string.Empty;
                 if (DropRatetextBox.Text != info.Stats[Stat.物品掉落数率].ToString()) DropRatetextBox.Text = string.Empty;
                 if (GoldRatetextBox.Text != info.Stats[Stat.金币收益数率].ToString()) GoldRatetextBox.Text = string.Empty;
@@ -1772,7 +1772,7 @@ namespace Server
 
 
             for (int i = 0; i < _selectedItemInfos.Count; i++)
-                _selectedItemInfos[i].Stats[Stat.伤害降低数率] = temp;
+                _selectedItemInfos[i].Stats[Stat.伤害减免数率] = temp;
         }
 
         private void ExpRatetextBox_TextChanged(object sender, EventArgs e)

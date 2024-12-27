@@ -3560,7 +3560,7 @@ namespace Server.MirObjects
                                         AddBuff(BuffType.英雄灵气, this, 0, new Stats { [Stat.MP] = 300, [Stat.经验增长数率] = 5 });
                                         break;
                                     case MirClass.道士:
-                                        AddBuff(BuffType.英雄灵气, this, 0, new Stats { [Stat.生命恢复] = 2, [Stat.攻击增伤] = 3 });
+                                        AddBuff(BuffType.英雄灵气, this, 0, new Stats { [Stat.生命恢复] = 2, [Stat.武器增伤] = 3 });
                                         break;
                                     case MirClass.刺客:
                                         AddBuff(BuffType.英雄灵气, this, 0, new Stats { [Stat.法力恢复] = 2, [Stat.准确] = 3 });

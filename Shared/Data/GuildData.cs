@@ -145,7 +145,7 @@ public class GuildBuffInfo
         Stats[Stat.技能熟练度倍率] = reader.ReadByte("Buff-" + i.ToString(), "BuffSkillRate", 0);
         Stats[Stat.生命恢复] = reader.ReadByte("Buff-" + i.ToString(), "BuffHpRegen", 0);
         Stats[Stat.法力恢复] = reader.ReadByte("Buff-" + i.ToString(), "BuffMpRegen", 0);
-        Stats[Stat.攻击增伤] = reader.ReadByte("Buff-" + i.ToString(), "BuffAttack", 0);
+        Stats[Stat.武器增伤] = reader.ReadByte("Buff-" + i.ToString(), "BuffAttack", 0);
         Stats[Stat.物品掉落数率] = reader.ReadByte("Buff-" + i.ToString(), "BuffDropRate", 0);
         Stats[Stat.金币收益数率] = reader.ReadByte("Buff-" + i.ToString(), "BuffGoldRate", 0);
     }
@@ -174,7 +174,7 @@ public class GuildBuffInfo
         reader.Write("Buff-" + i.ToString(), "BuffSkillRate", Stats[Stat.技能熟练度倍率]);
         reader.Write("Buff-" + i.ToString(), "BuffHpRegen", Stats[Stat.生命恢复]);
         reader.Write("Buff-" + i.ToString(), "BuffMpRegen", Stats[Stat.法力恢复]);
-        reader.Write("Buff-" + i.ToString(), "BuffAttack", Stats[Stat.攻击增伤]);
+        reader.Write("Buff-" + i.ToString(), "BuffAttack", Stats[Stat.武器增伤]);
         reader.Write("Buff-" + i.ToString(), "BuffDropRate", Stats[Stat.物品掉落数率]);
         reader.Write("Buff-" + i.ToString(), "BuffGoldRate", Stats[Stat.金币收益数率]);
     }

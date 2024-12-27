@@ -43,6 +43,8 @@ namespace Server.MirDatabase
                 new BuffInfo { Type = BuffType.天上秘术, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration, Visible = true },
                 new BuffInfo { Type = BuffType.魔法盾, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration },
                 new BuffInfo { Type = BuffType.金刚术, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration },
+                new BuffInfo { Type = BuffType.万效符, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration, Visible = true },
+                new BuffInfo { Type = BuffType.万效符秘籍, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration, Visible = true },
 
                 //Monsters
                 new BuffInfo { Type = BuffType.HornedArcherBuff, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration, Visible = true },
@@ -68,6 +70,7 @@ namespace Server.MirDatabase
                 new BuffInfo { Type = BuffType.烈火焚烧, Properties = BuffProperty.Debuff, StackType = BuffStackType.ResetDuration, Visible = true },
                 new BuffInfo { Type = BuffType.Mon579BShield, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration, Visible = true },
                 new BuffInfo { Type = BuffType.Mon580BShield, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration, Visible = true },
+                new BuffInfo { Type = BuffType.万效符爆杀, Properties = BuffProperty.Debuff, StackType = BuffStackType.ResetDuration, Visible = true },
 
                 //Special
                 new BuffInfo { Type = BuffType.游戏管理, Properties = BuffProperty.None, StackType = BuffStackType.Infinite, Visible = Settings.GameMasterEffect },

@@ -2210,7 +2210,7 @@ namespace Server.MirObjects
         {
             if (MirSet.Contains(EquipmentSlot.武器) && MirSet.Contains(EquipmentSlot.盔甲))
             {
-                Stats[Stat.攻击增伤] += 15;
+                Stats[Stat.武器增伤] += 15;
             }
             if (MirSet.Contains(EquipmentSlot.头盔) && MirSet.Contains(EquipmentSlot.靴子) && MirSet.Contains(EquipmentSlot.腰带))
             {
@@ -3710,7 +3710,7 @@ namespace Server.MirObjects
                     BladeAvalanche(magic);
                     break;
                 case Spell.SlashingBurst:
-                    SlashingBurst(magic, out cast);
+                    ActionList.Add(new DelayedAction(DelayedType.Magic, Envir.Time + 300, magic));
                     break;
                 case Spell.DimensionalSword:
                     DimensionalSword(target, magic, out cast);
@@ -3857,8 +3857,10 @@ namespace Server.MirObjects
                     PetEnhancerRare(magic);
                     break;
                 case Spell.MultipleEffects:
-                case Spell.MultipleEffectsRare:
                     MultipleEffects(magic, spellTargetLock ? (target != null ? target.CurrentLocation : location) : location, out cast);
+                    break;
+                case Spell.MultipleEffectsRare:
+                    MultipleEffectsRare(magic, spellTargetLock ? (target != null ? target.CurrentLocation : location) : location, out cast);
                     break;
 
                 //Custom Spells
@@ -4639,15 +4641,60 @@ namespace Server.MirObjects
             cast = false;
             UserItem item = GetAmulet(1);
             if (item == null) return;
-            cast = true;
 
+            cast = true;
             int delay = Functions.MaxDistance(CurrentLocation, location) * 50 + 500;
 
-            DelayedAction action = new DelayedAction(DelayedType.Magic, Envir.Time + delay, this, magic, GetAttackPower(Stats[Stat.MinSC], Stats[Stat.MaxSC]) * 4 + (magic.Level + 1) * 50, location);
-            CurrentMap.ActionList.Add(action);
+            DelayedAction action = new DelayedAction(
+                DelayedType.Magic,
+                Envir.Time + delay,
+                this,
+                magic,
+                GetAttackPower(Stats[Stat.MinSC], Stats[Stat.MaxSC]) * 4 + (magic.Level + 1) * 50,
+                location
+            );
 
+            CurrentMap.ActionList.Add(action);
             ConsumeItem(item, 1);
+
+            var stats = new Stats
+            {
+                [Stat.伤害减免数率] = 10
+            };
+
+            AddBuff(BuffType.万效符, this, (Settings.Second * 30) + (magic.Level * 10000), stats, true);
+            LevelMagic(magic);
         }
+        private void MultipleEffectsRare(UserMagic magic, Point location, out bool cast)
+        {
+            cast = false;
+            UserItem item = GetAmulet(1);
+            if (item == null) return;
+
+            cast = true;
+            int delay = Functions.MaxDistance(CurrentLocation, location) * 50 + 500;
+
+            DelayedAction action = new DelayedAction(
+                DelayedType.Magic,
+                Envir.Time + delay,
+                this,
+                magic,
+                GetAttackPower(Stats[Stat.MinSC], Stats[Stat.MaxSC]) * 4 + (magic.Level + 1) * 50,
+                location
+            );
+
+            CurrentMap.ActionList.Add(action);
+            ConsumeItem(item, 1);
+
+            var stats = new Stats
+            {
+                [Stat.伤害减免数率] = 20 + (magic.Level + 5)
+            };
+
+            AddBuff(BuffType.万效符秘籍, this, (Settings.Second * 30) + (magic.Level * 10000), stats, true);
+            LevelMagic(magic);
+        }
+
         private void TrapHexagon(UserMagic magic, Point location, out bool cast)
         {
             cast = false;
@@ -5327,19 +5374,14 @@ namespace Server.MirObjects
             _stepCounter = 0;
         }
 
-        private void SlashingBurst(UserMagic magic, out bool cast)
+        private void SlashingBurst(UserMagic magic)
         {
-            cast = true;
-
-            // damage
             int damageBase = GetAttackPower(Stats[Stat.MinDC], Stats[Stat.MaxDC]);
             int damageFinal = magic.GetDamage(damageBase);
 
-            // objects = this, magic, damage, currentlocation, direction, attackRange
             DelayedAction action = new DelayedAction(DelayedType.Magic, Envir.Time + 500, this, magic, damageFinal, CurrentLocation, Direction, 1);
             CurrentMap.ActionList.Add(action);
 
-            // telpo location
             Point location = Functions.PointMove(CurrentLocation, Direction, 2);
 
             if (!CurrentMap.ValidPoint(location)) return;
@@ -5358,21 +5400,20 @@ namespace Server.MirObjects
                 }
             }
 
-            // blocked telpo cancel
             if (blocked) return;
 
-            Teleport(CurrentMap, location, false);
+            CurrentMap.GetCell(CurrentLocation).Remove(this);
+            Broadcast(new S.ObjectRemove { ObjectID = ObjectID });
+            RemoveObjects(Direction, 2);
 
-            //// move character
-            //CurrentMap.GetCell(CurrentLocation).Remove(this);
-            //RemoveObjects(Direction, 1);
+            CurrentLocation = location;
+            InTrapRock = false;
 
-            //CurrentLocation = location;
+            CurrentMap.GetCell(CurrentLocation).Add(this);
+            BroadcastInfo();
+            AddObjects(Direction, 2);
+            Enqueue(new S.UserLocation { Direction = Direction, Location = CurrentLocation });
 
-            //CurrentMap.GetCell(CurrentLocation).Add(this);
-            //AddObjects(Direction, 1);
-
-            //Enqueue(new S.UserAttackMove { Direction = Direction, Location = location });
         }
         private void DimensionalSword(MapObject target, UserMagic magic, out bool cast)
         {
@@ -6489,7 +6530,7 @@ namespace Server.MirObjects
                         if (HasBuff(BuffType.魔法盾, out _)) return;
 
                         LevelMagic(magic);
-                        AddBuff(BuffType.魔法盾, this, Settings.Second * (int)data[1], new Stats { [Stat.伤害降低数率] = (magic.Level + 2) * 10 });
+                        AddBuff(BuffType.魔法盾, this, Settings.Second * (int)data[1], new Stats { [Stat.伤害减免数率] = (magic.Level + 2) * 10 });
                     }
                     break;
 
@@ -6757,7 +6798,7 @@ namespace Server.MirObjects
                         ObtainElement(false);
                         LevelMagic(magic);
 
-                        AddBuff(BuffType.金刚术, this, Settings.Second * ((int)data[1] + barrierPower), new Stats { [Stat.伤害降低数率] = (magic.Level + 1) * 10 });
+                        AddBuff(BuffType.金刚术, this, Settings.Second * ((int)data[1] + barrierPower), new Stats { [Stat.伤害减免数率] = (magic.Level + 1) * 10 });
                         CurrentMap.Broadcast(new S.ObjectEffect { ObjectID = ObjectID, Effect = SpellEffect.ElementalBarrierUp }, CurrentLocation);
                     }
                     break;
@@ -7076,6 +7117,14 @@ namespace Server.MirObjects
                         CurrentMap.ActionList.Add(act);
                         break;
                     }
+                #endregion
+
+                #region SlashingBurst
+
+                case Spell.SlashingBurst:
+                    SlashingBurst(magic);
+                    break;
+
                     #endregion
 
             }
@@ -7429,7 +7478,7 @@ namespace Server.MirObjects
             if (damageWeapon)
                 attacker.DamageWeapon();
 
-            damage += attacker.Stats[Stat.攻击增伤];
+            damage += attacker.Stats[Stat.武器增伤];
 
             if (Envir.Random.Next(100) < Stats[Stat.反弹伤害])
             {
@@ -7442,9 +7491,9 @@ namespace Server.MirObjects
             }
 
             //MagicShield, ElementalBarrier
-            if (Stats[Stat.伤害降低数率] > 0)
+            if (Stats[Stat.伤害减免数率] > 0)
             {
-                damage -= (damage * Stats[Stat.伤害降低数率]) / 100;
+                damage -= (damage * Stats[Stat.伤害减免数率]) / 100;
             }
 
             if (armour >= damage)
@@ -7560,9 +7609,9 @@ namespace Server.MirObjects
             damage = (int)Math.Max(int.MinValue, (Math.Min(int.MaxValue, (decimal)(damage * DamageRate))));
 
             //MagicShield, ElementalBarrier
-            if (Stats[Stat.伤害降低数率] != 0)
+            if (Stats[Stat.伤害减免数率] != 0)
             {
-                damage -= (damage * Stats[Stat.伤害降低数率]) / 100;
+                damage -= (damage * Stats[Stat.伤害减免数率]) / 100;
             }
 
             if (armour >= damage)
@@ -7663,9 +7712,9 @@ namespace Server.MirObjects
             damage = (int)Math.Max(int.MinValue, (Math.Min(int.MaxValue, (decimal)(damage * DamageRate))));
 
             //MagicShield, ElementalBarrier
-            if (Stats[Stat.伤害降低数率] != 0)
+            if (Stats[Stat.伤害减免数率] != 0)
             {
-                damage -= (damage * Stats[Stat.伤害降低数率]) / 100;
+                damage -= (damage * Stats[Stat.伤害减免数率]) / 100;
             }
 
             if (armour >= damage) return 0;
