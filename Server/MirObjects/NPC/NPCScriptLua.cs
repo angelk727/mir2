@@ -5,15 +5,7 @@ using System.Text.RegularExpressions;
 using S = ServerPackets;
 using NLua;
 using System.Text;
-using C = ClientPackets;
-using Server.MirObjects;
-using System.Numerics;
-using System.IO;
-using ClientPackets;
-using Shared.Extensions;
-using ServerPackets;
-using Server.MirObjects.Monsters;
-using System;
+
 
 
 namespace Server.MirObjects
@@ -146,7 +138,10 @@ namespace Server.MirObjects
                 "CHECKCREDIT",
                 "DELITEM",
                 "CHECKMAP",
-                "CHECKPKPOINT"
+                "CHECKPKPOINT",
+                "LEVEL",
+                "INGUILD",
+                "ADDTOGUILD"
             };
 
             foreach (var functionName in functions)
@@ -784,6 +779,36 @@ namespace Server.MirObjects
         {
             var player = lua["player"] as PlayerObject;
             return player.PKPoints;
+        }
+        public int LEVEL()
+        {
+            var player = lua["player"] as PlayerObject;
+            return player.Level;
+        }
+        public bool INGUILD(string GuildName="")
+        {
+            var player = lua["player"] as PlayerObject;
+            var failed = true;
+            if (GuildName !="")
+            {
+                failed = player.MyGuild == null || player.MyGuild.Name != GuildName;
+            }
+
+            failed = player.MyGuild == null;
+            return !failed;
+        }
+        public void ADDTOGUILD(string GuildName)
+        {
+            var player = lua["player"] as PlayerObject;
+
+            if (player.MyGuild != null) return;
+
+            GuildObject guild = Envir.GetGuild(GuildName);
+
+            if (guild == null) return;
+
+            player.PendingGuildInvite = guild;
+            player.GuildInvite(true);
         }
     }
 }
