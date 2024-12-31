@@ -6,7 +6,7 @@ using C = ClientPackets;
 namespace Server.MirDatabase
 {
     public class AccountInfo
-    {       
+    {
         protected static Envir Envir
         {
             get { return Envir.Main; }
@@ -22,10 +22,10 @@ namespace Server.MirDatabase
         {
             get { return password; }
             set
-            {                
+            {
                 Salt = Crypto.GenerateSalt();
                 password = Crypto.HashPassword(value, Salt);
-                
+
             }
         }
 
@@ -58,7 +58,7 @@ namespace Server.MirDatabase
         public uint Credit;
 
         public MirConnection Connection;
-        
+
         public LinkedList<AuctionInfo> Auctions = new LinkedList<AuctionInfo>();
         public bool AdminAccount;
 
@@ -131,7 +131,7 @@ namespace Server.MirDatabase
                     Envir.SaveArchivedCharacter(info);
                     continue;
                 }
-                
+
                 if (info.LastLoginDate > DateTime.MinValue && info.LastLoginDate.AddMonths(Settings.ArchiveInactiveCharacterAfterMonths) <= Envir.Now)
                 {
                     MessageQueue.Enqueue($"玩家 {info.Name} 由于 {Settings.ArchiveInactiveCharacterAfterMonths} 月未激活已存档处理");
@@ -147,7 +147,7 @@ namespace Server.MirDatabase
                 HasExpandedStorage = reader.ReadBoolean();
                 ExpandedStorageExpiryDate = DateTime.FromBinary(reader.ReadInt64());
             }
-            
+
             Gold = reader.ReadUInt32();
             if (Envir.LoadVersion >= 63) Credit = reader.ReadUInt32();
 
@@ -238,12 +238,12 @@ namespace Server.MirDatabase
 
         public int ExpandStorage()
         {
-            if (!HasExpandedStorage)
-            {
-                if (Storage.Length == Globals.StorageGridSize)
-                    Array.Resize(ref Storage, Storage.Length + Globals.StorageGridSize);
-            }
+            //if (HasExpandedStorage)
+            //{
 
+            //}
+            if (Storage.Length == Globals.StorageGridSize)
+                Array.Resize(ref Storage, Storage.Length + Globals.StorageGridSize);
             return Storage.Length;
         }
 
