@@ -11452,7 +11452,7 @@ namespace Server.MirObjects
             {
                 if (Info.IntelligentCreatures[i].PetType != pType) continue;
 
-                MonsterInfo mInfo = Envir.GetMonsterInfo(970, (byte)pType);
+                MonsterInfo mInfo = Envir.GetMonsterInfo(64, (byte)pType);
                 if (mInfo == null) return;
 
                 MonsterObject monster = MonsterObject.GetMonster(mInfo);
