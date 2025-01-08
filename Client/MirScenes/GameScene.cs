@@ -10856,9 +10856,9 @@ namespace Client.MirScenes
             for (int i = Effects.Count - 1; i >= 0; i--)
                 Effects[i].Process();
 
-            if (MapObject.TargetObject != null && MapObject.TargetObject is MonsterObject && MapObject.TargetObject.AI == 970)
+            if (MapObject.TargetObject != null && MapObject.TargetObject is MonsterObject && MapObject.TargetObject.AI == 64)
                 MapObject.TargetObjectID = 0;
-            if (MapObject.MagicObject != null && MapObject.MagicObject is MonsterObject && MapObject.MagicObject.AI == 970)
+            if (MapObject.MagicObject != null && MapObject.MagicObject is MonsterObject && MapObject.MagicObject.AI == 64)
                 MapObject.MagicObjectID = 0;
 
             CheckInput();
@@ -11864,7 +11864,7 @@ namespace Client.MirScenes
             }
 
             if (MapObject.MouseObject != null && !MapObject.MouseObject.Dead && !(MapObject.MouseObject is ItemObject) &&
-                !(MapObject.MouseObject is NPCObject) && !(MapObject.MouseObject is MonsterObject && MapObject.MouseObject.AI == 970)
+                !(MapObject.MouseObject is NPCObject) && !(MapObject.MouseObject is MonsterObject && MapObject.MouseObject.AI == 64)
                  && !(MapObject.MouseObject is MonsterObject && MapObject.MouseObject.AI == 56))
             {
                 MapObject.TargetObjectID = MapObject.MouseObject.ObjectID;

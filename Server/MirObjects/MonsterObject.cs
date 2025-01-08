@@ -676,7 +676,7 @@ namespace Server.MirObjects
             {
                 switch (Info.AI)
                 {
-                    case 970:
+                    case 64:
                         return 0;
                     case 950:
                     case 951:
