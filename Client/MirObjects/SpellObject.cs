@@ -280,35 +280,35 @@ namespace Client.MirObjects
                     Repeat = true;
                     SoundManager.PlaySound(8306);
                     break;
-                case Spell.Mon409BRockFall:
-                    BodyLibrary = Libraries.Monsters[(ushort)Monster.Mon409B];
-                    DrawFrame = 1178;
-                    FrameInterval = 100;
-                    FrameCount = 12;
-                    Blend = true;
-                    Repeat = true;
-                    SoundManager.PlaySound(4089);
-                    break;
-                case Spell.Mon409BRockSpike:
-                    BodyLibrary = Libraries.Monsters[(ushort)Monster.Mon409B];
-                    DrawFrame = 1358;
-                    FrameInterval = 100;
-                    FrameCount = 9;
-                    Blend = false;
-                    Repeat = true;
-                    SoundManager.PlaySound(8457);
-                    MapControl.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon409B], 1367, 9, 900, CurrentLocation) { Blend = true });
-                    break;
-                case Spell.Mon409BShield:
-                    BodyLibrary = Libraries.Monsters[(ushort)Monster.Mon409B];
-                    DrawColour = Color.White;
-                    DrawFrame = 1341;
-                    FrameInterval = 100;
-                    FrameCount = 17;
-                    Light = 5;
-                    Blend = true;
-                    Repeat = true;
-                    break;
+                //case Spell.Mon409BRockFall:
+                //    BodyLibrary = Libraries.Monsters[(ushort)Monster.Mon409B];
+                //    DrawFrame = 1178;
+                //    FrameInterval = 100;
+                //    FrameCount = 12;
+                //    Blend = true;
+                //    Repeat = true;
+                //    SoundManager.PlaySound(4089);
+                //    break;
+                //case Spell.Mon409BRockSpike:
+                //    BodyLibrary = Libraries.Monsters[(ushort)Monster.Mon409B];
+                //    DrawFrame = 1358;
+                //    FrameInterval = 100;
+                //    FrameCount = 9;
+                //    Blend = false;
+                //    Repeat = true;
+                //    SoundManager.PlaySound(8457);
+                //    MapControl.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon409B], 1367, 9, 900, CurrentLocation) { Blend = true });
+                //    break;
+                //case Spell.Mon409BShield:
+                //    BodyLibrary = Libraries.Monsters[(ushort)Monster.Mon409B];
+                //    DrawColour = Color.White;
+                //    DrawFrame = 1341;
+                //    FrameInterval = 100;
+                //    FrameCount = 17;
+                //    Light = 5;
+                //    Blend = true;
+                //    Repeat = true;
+                //    break;
                 case Spell.YangDragonFlame:
                     DrawColour = Color.FromArgb(200, 200, 200, 200);
                     BodyLibrary = Libraries.Monsters[(ushort)Monster.ChieftainSword];                    
@@ -582,14 +582,14 @@ namespace Client.MirObjects
                     case Spell.ButcherFlyAxe:
                         if (FrameIndex == 0 && CMain.Random.Next(3) == 0) SoundManager.PlaySound(8306);
                         break;
-                    case Spell.Mon409BRockSpike:
-                        if (Ended)
-                        {
-                            DrawFrame = 1366;
-                            FrameCount = 1;
-                            FrameIndex = 0;
-                        }
-                        break;
+                    //case Spell.Mon409BRockSpike:
+                    //    if (Ended)
+                    //    {
+                    //        DrawFrame = 1366;
+                    //        FrameCount = 1;
+                    //        FrameIndex = 0;
+                    //    }
+                    //    break;
                     case Spell.Mon564NWhirlwind:
                         if (FrameIndex == 0 && CMain.Random.Next(3) == 0) SoundManager.PlaySound(8306);
                         break;

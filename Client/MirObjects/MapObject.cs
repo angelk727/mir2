@@ -319,8 +319,8 @@ namespace Client.MirObjects
                 case BuffType.HornedWarriorShield:
                     Effects.Add(new BuffEffect(Libraries.Monsters[(ushort)Monster.HornedWarrior], 960, 18, 1800, this, true, type) { Repeat = true });
                     break;
-                case BuffType.Mon409BShieldBuff:
-                    Effects.Add(new BuffEffect(Libraries.Monsters[(ushort)Monster.Mon409B], 1334, 7, 1800, this, true, type) { Repeat = true });
+                case BuffType.HornedCommanderShield:
+                    Effects.Add(new BuffEffect(Libraries.Monsters[(ushort)Monster.RedFaeFlower], 1334, 7, 1800, this, true, type) { Repeat = true });
                     break;		
                 case BuffType.ChieftainSwordBuff:
                     Effects.Add(effect = new BuffEffect(Libraries.Monsters[(ushort)Monster.ChieftainSword], 1331, 6, 100, this, true, type) { Repeat = false, Light = 1 });
