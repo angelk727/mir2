@@ -24,11 +24,11 @@ namespace Server
         {
             InitializeComponent();
 
-            ITypeComboBox.Items.AddRange(Enum.GetValues(typeof (ItemType)).Cast<object>().ToArray());
+            ITypeComboBox.Items.AddRange(Enum.GetValues(typeof(ItemType)).Cast<object>().ToArray());
             IGradeComboBox.Items.AddRange(Enum.GetValues(typeof(ItemGrade)).Cast<object>().ToArray());
-            RTypeComboBox.Items.AddRange(Enum.GetValues(typeof (RequiredType)).Cast<object>().ToArray());
-            RClassComboBox.Items.AddRange(Enum.GetValues(typeof (RequiredClass)).Cast<object>().ToArray());
-            RGenderComboBox.Items.AddRange(Enum.GetValues(typeof (RequiredGender)).Cast<object>().ToArray());
+            RTypeComboBox.Items.AddRange(Enum.GetValues(typeof(RequiredType)).Cast<object>().ToArray());
+            RClassComboBox.Items.AddRange(Enum.GetValues(typeof(RequiredClass)).Cast<object>().ToArray());
+            RGenderComboBox.Items.AddRange(Enum.GetValues(typeof(RequiredGender)).Cast<object>().ToArray());
             ISetComboBox.Items.AddRange(Enum.GetValues(typeof(ItemSet)).Cast<object>().ToArray());
 
             ITypeFilterComboBox.Items.AddRange(Enum.GetValues(typeof(ItemType)).Cast<object>().ToArray());
@@ -120,7 +120,7 @@ namespace Server
                 RTypeComboBox.SelectedItem = null;
                 RAmountTextBox.Text = string.Empty;
                 RClassComboBox.SelectedItem = null;
-                RGenderComboBox.SelectedItem = null;            
+                RGenderComboBox.SelectedItem = null;
                 LightTextBox.Text = string.Empty;
                 LightIntensitytextBox.Text = string.Empty;
 
@@ -146,7 +146,7 @@ namespace Server
                 HWeightTextBox.Text = string.Empty;
                 BWeightText.Text = string.Empty;
                 EffectTextBox.Text = string.Empty;
-                
+
                 PoisonRecoverytextBox.Text = string.Empty;
                 SpellRecoverytextBox.Text = string.Empty;
                 MagicResisttextBox.Text = string.Empty;
@@ -168,6 +168,7 @@ namespace Server
                 MaxSCRatetextBox.Text = string.Empty;
                 MaxMCRatetextBox.Text = string.Empty;
                 DamageReductiontextBox.Text = string.Empty;
+                DamageEnhancetextBox.Text = string.Empty;
                 ExpRatetextBox.Text = string.Empty;
                 DropRatetextBox.Text = string.Empty;
                 GoldRatetextBox.Text = string.Empty;
@@ -277,6 +278,7 @@ namespace Server
             MaxSCRatetextBox.Text = info.Stats[Stat.最大道术攻击数率].ToString();
             MaxMCRatetextBox.Text = info.Stats[Stat.最大魔法攻击数率].ToString();
             DamageReductiontextBox.Text = info.Stats[Stat.伤害降低数率].ToString();
+            DamageEnhancetextBox.Text = info.Stats[Stat.攻击增伤].ToString();
             ExpRatetextBox.Text = info.Stats[Stat.经验增长数率].ToString();
             DropRatetextBox.Text = info.Stats[Stat.物品掉落数率].ToString();
             GoldRatetextBox.Text = info.Stats[Stat.金币收益数率].ToString();
@@ -286,7 +288,7 @@ namespace Server
             LevelBasedcheckbox.Checked = info.LevelBased;
             ClassBasedcheckbox.Checked = info.ClassBased;
 
-            
+
             Bind_dontstorecheckbox.Checked = info.Bind.HasFlag(BindMode.DontStore);
             Bind_dontupgradecheckbox.Checked = info.Bind.HasFlag(BindMode.DontUpgrade);
             Bind_dontrepaircheckbox.Checked = info.Bind.HasFlag(BindMode.DontRepair);
@@ -307,7 +309,7 @@ namespace Server
             NeedIdentifycheckbox.Checked = info.NeedIdentify;
             ShowGroupPickupcheckbox.Checked = info.ShowGroupPickup;
             globalDropNotify_CheckBox.Checked = info.GlobalDropNotify;
-            
+
 
             ParalysischeckBox.Checked = info.Unique.HasFlag(SpecialItemMode.Paralize);
             TeleportcheckBox.Checked = info.Unique.HasFlag(SpecialItemMode.Teleport);
@@ -396,6 +398,7 @@ namespace Server
                 if (MaxSCRatetextBox.Text != info.Stats[Stat.最大道术攻击数率].ToString()) MaxSCRatetextBox.Text = string.Empty;
                 if (MaxMCRatetextBox.Text != info.Stats[Stat.最大魔法攻击数率].ToString()) MaxMCRatetextBox.Text = string.Empty;
                 if (DamageReductiontextBox.Text != info.Stats[Stat.伤害降低数率].ToString()) DamageReductiontextBox.Text = string.Empty;
+                if (DamageEnhancetextBox.Text != info.Stats[Stat.攻击增伤].ToString()) DamageEnhancetextBox.Text = string.Empty;
                 if (ExpRatetextBox.Text != info.Stats[Stat.经验增长数率].ToString()) ExpRatetextBox.Text = string.Empty;
                 if (DropRatetextBox.Text != info.Stats[Stat.物品掉落数率].ToString()) DropRatetextBox.Text = string.Empty;
                 if (GoldRatetextBox.Text != info.Stats[Stat.金币收益数率].ToString()) GoldRatetextBox.Text = string.Empty;
@@ -444,7 +447,7 @@ namespace Server
                 if (CanAwaken.Checked != info.CanAwakening) CanAwaken.CheckState = CheckState.Indeterminate;
                 if (TooltipTextBox.Text != info.ToolTip) TooltipTextBox.Text = string.Empty;
                 if (BlinkcheckBox.Checked != info.Unique.HasFlag(SpecialItemMode.Blink)) BlinkcheckBox.CheckState = CheckState.Indeterminate;
-        }
+            }
             RefreshUniqueTab();
         }
 
@@ -526,7 +529,7 @@ namespace Server
             if (ActiveControl != sender) return;
 
             for (int i = 0; i < _selectedItemInfos.Count; i++)
-                _selectedItemInfos[i].RequiredType = (RequiredType) RTypeComboBox.SelectedItem;
+                _selectedItemInfos[i].RequiredType = (RequiredType)RTypeComboBox.SelectedItem;
         }
         private void RGenderComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -706,9 +709,9 @@ namespace Server
                 return;
             }
             ActiveControl.BackColor = SystemColors.Window;
-            
+
             for (int i = 0; i < _selectedItemInfos.Count; i++)
-                _selectedItemInfos[i].Light = (byte)(temp + (_selectedItemInfos[i].Light / 15)*15);
+                _selectedItemInfos[i].Light = (byte)(temp + (_selectedItemInfos[i].Light / 15) * 15);
         }
         private void MinACTextBox_TextChanged(object sender, EventArgs e)
         {
@@ -2042,6 +2045,24 @@ namespace Server
             {
                 ResetItemList();
             }
+        }
+
+        private void DamageEnhancetextBox_TextChanged(object sender, EventArgs e)
+        {
+            if (ActiveControl != sender) return;
+
+            byte temp;
+
+            if (!byte.TryParse(ActiveControl.Text, out temp))
+            {
+                ActiveControl.BackColor = Color.Red;
+                return;
+            }
+            ActiveControl.BackColor = SystemColors.Window;
+
+
+            for (int i = 0; i < _selectedItemInfos.Count; i++)
+                _selectedItemInfos[i].Stats[Stat.攻击增伤] = temp;
         }
     }
 }

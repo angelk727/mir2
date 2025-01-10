@@ -210,6 +210,8 @@
             Gameshop_button = new Button();
             TxtSearchItem = new TextBox();
             label65 = new Label();
+            DamageEnhancetextBox = new TextBox();
+            label66 = new Label();
             ItemInfoPanel.SuspendLayout();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
@@ -975,6 +977,8 @@
             // 
             // tabPage2
             // 
+            tabPage2.Controls.Add(DamageEnhancetextBox);
+            tabPage2.Controls.Add(label66);
             tabPage2.Controls.Add(DropRatetextBox);
             tabPage2.Controls.Add(label63);
             tabPage2.Controls.Add(GoldRatetextBox);
@@ -2299,6 +2303,27 @@
             label65.TabIndex = 31;
             label65.Text = "搜索物品";
             // 
+            // DamageEnhancetextBox
+            // 
+            DamageEnhancetextBox.Location = new Point(479, 150);
+            DamageEnhancetextBox.Margin = new Padding(4);
+            DamageEnhancetextBox.MaxLength = 3;
+            DamageEnhancetextBox.Name = "DamageEnhancetextBox";
+            DamageEnhancetextBox.Size = new Size(41, 23);
+            DamageEnhancetextBox.TabIndex = 141;
+            DamageEnhancetextBox.TextChanged += DamageEnhancetextBox_TextChanged;
+            // 
+            // label66
+            // 
+            label66.AutoSize = true;
+            label66.Location = new Point(386, 156);
+            label66.Margin = new Padding(4, 0, 4, 0);
+            label66.Name = "label66";
+            label66.Size = new Size(80, 17);
+            label66.TabIndex = 140;
+            label66.Text = "伤害增加数值";
+
+            // 
             // ItemInfoForm
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
@@ -2520,5 +2545,7 @@
         private PictureBox ItemsPreview;
         private TextBox TxtSearchItem;
         private Label label65;
+        private TextBox DamageEnhancetextBox;
+        private Label label66;
     }
 }
