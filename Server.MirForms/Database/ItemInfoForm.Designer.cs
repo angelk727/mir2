@@ -222,21 +222,21 @@
             // 
             // DamageReductiontextBox
             // 
-            DamageReductiontextBox.Location = new Point(622, 337);
+            DamageReductiontextBox.Location = new Point(479, 181);
             DamageReductiontextBox.Margin = new Padding(4);
             DamageReductiontextBox.MaxLength = 3;
             DamageReductiontextBox.Name = "DamageReductiontextBox";
-            DamageReductiontextBox.Size = new Size(34, 23);
+            DamageReductiontextBox.Size = new Size(41, 23);
             DamageReductiontextBox.TabIndex = 139;
             DamageReductiontextBox.TextChanged += DamageReductiontextBox_TextChanged;
             // 
             // label64
             // 
             label64.AutoSize = true;
-            label64.Location = new Point(461, 173);
+            label64.Location = new Point(386, 187);
             label64.Margin = new Padding(4, 0, 4, 0);
             label64.Name = "label64";
-            label64.Size = new Size(77, 12);
+            label64.Size = new Size(80, 17);
             label64.TabIndex = 137;
             label64.Text = "伤害降低数率";
             // 
@@ -1046,6 +1046,8 @@
             tabPage2.Controls.Add(label36);
             tabPage2.Controls.Add(label32);
             tabPage2.Controls.Add(WWeightTextBox);
+            tabPage2.Controls.Add(DamageReductiontextBox);
+            tabPage2.Controls.Add(label64);
             tabPage2.Location = new Point(4, 26);
             tabPage2.Margin = new Padding(4);
             tabPage2.Name = "tabPage2";
@@ -1071,7 +1073,7 @@
             groupBox1.Controls.Add(PoisonAttacktextbox);
             groupBox1.Controls.Add(label45);
             groupBox1.Controls.Add(Holytextbox);
-            groupBox1.Location = new Point(442, 334);
+            groupBox1.Location = new Point(386, 330);
             groupBox1.Margin = new Padding(4);
             groupBox1.Name = "groupBox1";
             groupBox1.Padding = new Padding(4);
