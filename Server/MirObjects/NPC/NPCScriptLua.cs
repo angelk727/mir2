@@ -82,6 +82,7 @@ namespace Server.MirObjects
         }
         public void CallLua(PlayerObject player, uint objectID, string key)
         {
+            player.NPCObjectID = objectID;
             lua["player"] = player;
             lua["objectID"] = objectID;
             CallLua(key);
