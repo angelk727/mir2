@@ -662,9 +662,11 @@ namespace Server.MirForms.DropBuilder
             foreach (var item in ItemLists)
                 item.Clear();
 
-            LoadDropFile(false);
-            UpdateDropFile();
-
+            //LoadDropFile(false);
+            //UpdateDropFile();
+            textBoxDropList.Text = "";
+            var lines = File.ReadAllLines(GetPathOfSelectedItem());
+            textBoxDropList.Text = string.Join(Environment.NewLine, lines);
             textBoxMinLevel.Text = string.Empty;
             textBoxMaxLevel.Text = string.Empty;
             checkBoxCap.Checked = false;
@@ -942,9 +944,9 @@ namespace Server.MirForms.DropBuilder
                 foreach (var item in ItemLists)
                     item.Clear();
 
-                LoadDropFile(true);
-                UpdateDropFile();
-
+                //LoadDropFile(true);
+                //UpdateDropFile();
+                SaveDropFile();
                 buttonAdd.Enabled = true;
                 listBoxMonsters.Enabled = true;
                 tabControlSeperateItems.Enabled = true;
