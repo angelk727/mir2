@@ -42,6 +42,7 @@ namespace Server.MirObjects
 
         public const string
             MainKey = "[@MAIN]",
+            ExitKey = "[@EXIT]",
             BuyKey = "[@BUY]",
             SellKey = "[@SELL]",
             BuySellKey = "[@BUYSELL]",
@@ -145,7 +146,7 @@ namespace Server.MirObjects
 
             string fileName = Path.Combine(Settings.NPCPath, FileName + ".txt");
             string fileNameLua = Path.Combine(Settings.NPCPath, FileName + ".lua");
-            
+
             if (File.Exists(fileName))
             {
                 List<string> lines = File.ReadAllLines(fileName).ToList();
@@ -835,8 +836,10 @@ namespace Server.MirObjects
         public void Call(PlayerObject player, uint objectID, string key)
         {
             key = key.ToUpper();
-            if (LuaFileName != null) CallLua(player, objectID, key);
-
+            if (LuaFileName != null)
+            {
+                CallLua(player, objectID, key);
+            }
             if (!player.NPCDelayed)
             {
                 if (key != MainKey)
@@ -895,7 +898,6 @@ namespace Server.MirObjects
 
                 Response(player, page);
             }
-
             player.NPCData.Remove("NPCInputStr");
         }
 

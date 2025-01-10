@@ -82,7 +82,6 @@ namespace Server.MirObjects
         }
         public void CallLua(PlayerObject player, uint objectID, string key)
         {
-            player.NPCObjectID = objectID;
             lua["player"] = player;
             lua["objectID"] = objectID;
             CallLua(key);
@@ -101,7 +100,6 @@ namespace Server.MirObjects
                 "GIVEITEM",
                 "TAKEITEM",
                 "OpenNPC",
-                "EXIT",
                 "GETPLAYINFO",
                 "LOCALMESSAGE",
                 "GLOBALMESSAGE",
@@ -296,14 +294,20 @@ namespace Server.MirObjects
                 player.Enqueue(new S.NPCResponse { Page = player.NPCSpeech });
             }
         }
-        public void EXIT()
-        {
-            var player = lua["player"] as PlayerObject;
-            //¹Ø±Õnpc¶Ô»°¿ò
-        }
         public string GETPLAYINFO(string SAY)
         {
             var player = lua["player"] as PlayerObject;
+            var objectID = lua["objectID"];
+            var npcObjectId = player.NPCObjectID;
+            if (objectID is double)
+            {
+                player.NPCObjectID = Convert.ToUInt32((double)objectID);
+            }
+            else
+            {
+                // Handle the case where objectID is not a double
+                throw new InvalidCastException("objectID is not of type double");
+            }
             List<string>
                say = new List<string>(),
                buttons = new List<string>(),
@@ -312,7 +316,9 @@ namespace Server.MirObjects
                elseButtons = new List<string>(),
                gotoButtons = new List<string>();
             NPCPage page = new NPCPage("");
-            return new NPCSegment(page, say, buttons, elseSay, elseButtons, gotoButtons).ReplaceValue(player, $"<${SAY}>");
+            var v = new NPCSegment(page, say, buttons, elseSay, elseButtons, gotoButtons).ReplaceValue(player, $"<${SAY}>");
+            player.NPCObjectID = npcObjectId;
+            return v;
         }
         public void LOCALMESSAGE(int type, string Content)
         {
