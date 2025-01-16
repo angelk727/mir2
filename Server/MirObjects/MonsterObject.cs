@@ -2771,6 +2771,7 @@ namespace Server.MirObjects
                 Hidden = Hidden,
                 ShockTime = (ShockTime > 0 ? ShockTime - Envir.Time : 0),
                 BindingShotCenter = BindingShotCenter,
+                Level = Level,
                 Buffs = Buffs.Where(d => d.Info.Visible).Select(e => e.Type).ToList()
             };
         }
