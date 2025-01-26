@@ -1,7 +1,9 @@
+using System.Drawing;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
+using static AutoPatche.Form1;
 
 namespace AutoPatche
 {
@@ -22,6 +24,72 @@ namespace AutoPatche
             DirPathConten = textBox5;
             VersionNO = textBox6;
             LoadSettings();
+            InitializeDataGridView();
+            // 添加 DragEnter 和 DragDrop 事件处理程序
+            dataGridView1.DragEnter += new DragEventHandler(dataGridView1_DragEnter);
+            dataGridView1.DragDrop += new DragEventHandler(dataGridView1_DragDrop);
+        
+        }
+
+        private void InitializeDataGridView()
+        {
+            dataGridView1.Columns.Add("FileName", "文件名");
+            dataGridView1.Columns.Add("Md5", "MD5");
+            dataGridView1.Columns.Add("Size", "文件大小");
+        }
+        private void dataGridView1_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                e.Effect = DragDropEffects.Copy;
+            }
+            else
+            {
+                e.Effect = DragDropEffects.None;
+            }
+        }
+
+        private void dataGridView1_DragDrop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+                foreach (string file in files)
+                {
+                    if (Directory.Exists(file))
+                    {
+                        AddFilesFromDirectory(file);
+                    }
+                    else
+                    {
+                        AddFileToDataGridView(file);
+                    }
+                }
+            }
+        }
+
+        private void AddFilesFromDirectory(string directory)
+        {
+            var files = Directory.GetFiles(directory, "*", SearchOption.AllDirectories);
+            foreach (var file in files)
+            {
+                AddFileToDataGridView(file);
+            }
+        }
+
+        Dictionary<string, AssetEntry> Updateassets = new Dictionary<string, AssetEntry>();
+        private void AddFileToDataGridView(string file)
+        {
+            FileInfo fileInfo = new FileInfo(file);
+            string md5 = CalculateMD5(file);
+            var assetEntry = new AssetEntry
+            {
+                Md5 = md5,
+                Size = fileInfo.Length
+            };
+            string Updatefile = fileInfo.FullName.Replace(DirPath, "");
+            dataGridView1.Rows.Add(Updatefile, assetEntry.Md5, assetEntry.Size);
+
         }
 
         string DirPath = string.Empty;
@@ -99,31 +167,47 @@ namespace AutoPatche
             var assets = new Dictionary<string, AssetEntry>();
             var files = Directory.GetFiles(DirPath, "*", SearchOption.AllDirectories);
             int totalFiles = files.Length;
-            ProcessDirectory(DirPath, totalFiles);
-            void ProcessDirectory(string currentDirectory, int totalFiles)
+            assets.Clear();
+            if (dataGridView1.Rows.Count <= 1)
             {
-                var files = Directory.GetFiles(currentDirectory, "*", SearchOption.TopDirectoryOnly);
-                var directories = Directory.GetDirectories(currentDirectory, "*", SearchOption.TopDirectoryOnly);
-
-                foreach (var filePath in files)
-                {
-                    if (File.Exists(filePath))
-                    {
-                        string relativePath = filePath.Replace(DirPath, "").Replace("\\", "/").TrimStart('/');
-                        string md5 = CalculateMD5(filePath);
-                        long size = new FileInfo(filePath).Length;
-                        assets[relativePath] = new AssetEntry { Md5 = md5, Size = size };
-                    }
-                }
-
-                foreach (var directory in directories)
-                {
-                    ProcessDirectory(directory, totalFiles);
-                }
-
-                // 更新进度条
-                RemarkContent.Text += $"正在处理目录: {currentDirectory} ({assets.Count}/{totalFiles})" + Environment.NewLine;
+                MessageBox.Show("请添加更新文件");
+                return;
             }
+
+            foreach (DataGridViewRow row in dataGridView1.Rows)
+            {
+                if (row.IsNewRow) continue;
+
+                string fileName = row.Cells["FileName"].Value.ToString().Replace("\\", "/").TrimStart('/');
+                string md5 = row.Cells["Md5"].Value.ToString();
+                long size = Convert.ToInt64(row.Cells["Size"].Value);
+                assets[fileName] = new AssetEntry { Md5 = md5, Size = size };
+            }
+            //ProcessDirectory(DirPath, totalFiles);
+            //void ProcessDirectory(string currentDirectory, int totalFiles)
+            //{
+            //    var files = Directory.GetFiles(currentDirectory, "*", SearchOption.TopDirectoryOnly);
+            //    var directories = Directory.GetDirectories(currentDirectory, "*", SearchOption.TopDirectoryOnly);
+
+            //    foreach (var filePath in files)
+            //    {
+            //        if (File.Exists(filePath))
+            //        {
+            //            string relativePath = filePath.Replace(DirPath, "").Replace("\\", "/").TrimStart('/');
+            //            string md5 = CalculateMD5(filePath);
+            //            long size = new FileInfo(filePath).Length;
+            //            assets[relativePath] = new AssetEntry { Md5 = md5, Size = size };
+            //        }
+            //    }
+
+            //    foreach (var directory in directories)
+            //    {
+            //        ProcessDirectory(directory, totalFiles);
+            //    }
+
+            //    // 更新进度条
+            //    RemarkContent.Text += $"正在处理目录: {currentDirectory} ({assets.Count}/{totalFiles})" + Environment.NewLine;
+            //}
 
             var iniContent = new StringBuilder();
             iniContent.AppendLine("[RemoteManifest]");
