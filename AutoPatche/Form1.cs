@@ -1,5 +1,6 @@
-using Newtonsoft.Json;
 using System.Security.Cryptography;
+using System.Text;
+using System.Text.Json;
 using System.Text.RegularExpressions;
 
 namespace AutoPatche
@@ -54,7 +55,7 @@ namespace AutoPatche
         {
             if (Directory.Exists(DirPath))
             {
-                GenerateDirectoryJson();
+                GenerateDirectoryIni();
             }
             else
             {
@@ -62,7 +63,7 @@ namespace AutoPatche
             }
         }
 
-        private void GenerateDirectoryJson()
+        private void GenerateDirectoryIni()
         {
             if (string.IsNullOrEmpty(DirPath))
             {
@@ -76,12 +77,6 @@ namespace AutoPatche
                 return;
             }
 
-            //if (!ValidateIPAddress(IPAddrContent.Text))
-            //{
-            //    MessageBox.Show("IP地址无效，请输入有效的IP地址");
-            //    return;
-            //}
-
             if (!ValidateVersion(VersionNO.Text))
             {
                 MessageBox.Show("版本号无效，请输入有效的版本号");
@@ -93,7 +88,7 @@ namespace AutoPatche
                 MessageBox.Show("目录路径无效，请输入有效的目录路径");
                 return;
             }
-            RemarkContent.Text=string.Empty;
+            RemarkContent.Text = string.Empty;
             string outputPath = DirPathConten.Text; // 替换为你的输出路径
             string outputDirectory = OutDirPath.Text;
             if (!Directory.Exists(outputDirectory))
@@ -101,11 +96,10 @@ namespace AutoPatche
                 Directory.CreateDirectory(outputDirectory);
             }
             outputPath = Path.Combine(outputDirectory, outputPath);
-            var assets = new Dictionary<string, Asset>();
+            var assets = new Dictionary<string, AssetEntry>();
             var files = Directory.GetFiles(DirPath, "*", SearchOption.AllDirectories);
             int totalFiles = files.Length;
             ProcessDirectory(DirPath, totalFiles);
-
             void ProcessDirectory(string currentDirectory, int totalFiles)
             {
                 var files = Directory.GetFiles(currentDirectory, "*", SearchOption.TopDirectoryOnly);
@@ -118,8 +112,7 @@ namespace AutoPatche
                         string relativePath = filePath.Replace(DirPath, "").Replace("\\", "/").TrimStart('/');
                         string md5 = CalculateMD5(filePath);
                         long size = new FileInfo(filePath).Length;
-
-                        assets[relativePath] = new Asset { md5 = md5, size = size };
+                        assets[relativePath] = new AssetEntry { Md5 = md5, Size = size };
                     }
                 }
 
@@ -132,19 +125,23 @@ namespace AutoPatche
                 RemarkContent.Text += $"正在处理目录: {currentDirectory} ({assets.Count}/{totalFiles})" + Environment.NewLine;
             }
 
-            var root = new Root
+            var iniContent = new StringBuilder();
+            iniContent.AppendLine("[RemoteManifest]");
+            iniContent.AppendLine($"version={VersionNO.Text}");
+            iniContent.AppendLine($"packageUrl={IPAddrContent.Text}");
+            iniContent.AppendLine($"VersionUrl={IPAddrContent.Text}/{DirPathConten.Text}");
+            iniContent.AppendLine("assets=");
+            foreach (var asset in assets)
             {
-                assets = assets,
-                packageUrl = IPAddrContent.Text,
-                VersionUrl = IPAddrContent.Text + "/" + DirPathConten.Text,
-                version = VersionNO.Text
-            };
+                iniContent.AppendLine($"[{asset.Key}]");
+                iniContent.AppendLine($"md5={asset.Value.Md5}");
+                iniContent.AppendLine($"size={asset.Value.Size}");
+            }
 
-            string json = JsonConvert.SerializeObject(root, Formatting.Indented);
-            File.WriteAllText(outputPath, json);
+            File.WriteAllText(outputPath, iniContent.ToString());
             // 清除进度条
-            RemarkContent.Text += "目录JSON生成完毕: " + outputPath + Environment.NewLine;
-            MessageBox.Show("目录JSON生成完毕: " + outputPath);
+            RemarkContent.Text += "目录INI生成完毕: " + outputPath + Environment.NewLine;
+            MessageBox.Show("目录INI生成完毕: " + outputPath);
         }
 
         private static string CalculateMD5(string filePath)
@@ -180,7 +177,7 @@ namespace AutoPatche
         {
             if (File.Exists("settings.json"))
             {
-                var settings = JsonConvert.DeserializeObject<Settings>(File.ReadAllText("settings.json"));
+                var settings = JsonSerializer.Deserialize<Settings>(File.ReadAllText("settings.json"));
                 RemarkContent.Text = settings.RemarkContent;
                 OutDirPath.Text = settings.OutDirPath;
                 IPAddrContent.Text = settings.IPAddrContent;
@@ -199,7 +196,7 @@ namespace AutoPatche
                 DirPathConten = DirPathConten.Text,
                 VersionNO = VersionNO.Text
             };
-            File.WriteAllText("settings.json", JsonConvert.SerializeObject(settings, Formatting.Indented));
+            File.WriteAllText("settings.json", JsonSerializer.Serialize(settings, new JsonSerializerOptions { WriteIndented = true }));
         }
 
         protected override void OnFormClosing(FormClosingEventArgs e)
@@ -208,15 +205,15 @@ namespace AutoPatche
             base.OnFormClosing(e);
         }
 
-        public class Asset
+        public class AssetEntry
         {
-            public string md5 { get; set; }
-            public long size { get; set; }
+            public string Md5 { get; set; }
+            public long Size { get; set; }
         }
 
-        public class Root
+        public class RemoteManifest
         {
-            public Dictionary<string, Asset> assets { get; set; }
+            public Dictionary<string, AssetEntry> assets { get; set; }
             public string packageUrl { get; set; }
             public string VersionUrl { get; set; }
             public string version { get; set; }
@@ -240,6 +237,96 @@ namespace AutoPatche
                 return;
             }
             OutDirPath.Text = FILE;
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.Filter = "INI files (*.ini)|*.ini|All files (*.*)|*.*";
+                openFileDialog.Title = "选择一个INI文件";
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    string filePath = openFileDialog.FileName;
+                    try
+                    {
+                        var iniData = ReadIniFile(filePath);
+
+                        if (iniData != null)
+                        {
+                            MessageBox.Show("读取INI文件成功！\n" +
+                                            $"版本号: {iniData.version}\n" +
+                                            $"包URL: {iniData.packageUrl}\n" +
+                                            $"版本URL: {iniData.VersionUrl}\n" +
+                                            $"资产数量: {iniData.assets.Count()}");
+                        }
+                        else
+                        {
+                            MessageBox.Show("读取INI文件失败，文件内容无效。");
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"读取INI文件过程中发生错误: {ex.Message}");
+                    }
+                }
+            }
+        }
+
+        private RemoteManifest ReadIniFile(string filePath)
+        {
+            var data = new Dictionary<string, Dictionary<string, string>>();
+            var currentSection = new Dictionary<string, string>();
+            var sectionName = string.Empty;
+
+            foreach (var line in File.ReadAllLines(filePath))
+            {
+                var trimmedLine = line.Trim();
+
+                if (string.IsNullOrEmpty(trimmedLine) || trimmedLine.StartsWith(";"))
+                {
+                    continue;
+                }
+
+                if (trimmedLine.StartsWith("[") && trimmedLine.EndsWith("]"))
+                {
+                    sectionName = trimmedLine.Substring(1, trimmedLine.Length - 2);
+                    currentSection = new Dictionary<string, string>();
+                    data[sectionName] = currentSection;
+                }
+                else
+                {
+                    var keyValue = trimmedLine.Split(new[] { '=' }, 2);
+                    if (keyValue.Length == 2)
+                    {
+                        currentSection[keyValue[0].Trim()] = keyValue[1].Trim();
+                    }
+                }
+            }
+
+            var iniData = new RemoteManifest
+            {
+                version = data["RemoteManifest"]["version"],
+                packageUrl = data["RemoteManifest"]["packageUrl"],
+                VersionUrl = data["RemoteManifest"]["VersionUrl"],
+                assets = new Dictionary<string, AssetEntry>()
+            };
+
+            foreach (var section in data)
+            {
+                if (section.Key != "RemoteManifest")
+                {
+                    var asset = new AssetEntry
+                    {
+                        Md5 = section.Value["md5"],
+                        Size = long.Parse(section.Value["size"])
+                    };
+                    iniData.assets[section.Key] = asset;
+                }
+            }
+
+            return iniData;
         }
     }
 }
