@@ -54,6 +54,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibraryViewer", "LibraryVie
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoPatche", "AutoPatche\AutoPatche.csproj", "{DA9916E2-57F8-42FF-929A-97BE4C737239}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoPatcheWpf", "AutoPatcheWpf\AutoPatcheWpf.csproj", "{0B1F57BC-BC98-4C1B-8B9E-2DEF525B6686}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -100,6 +102,10 @@ Global
 		{DA9916E2-57F8-42FF-929A-97BE4C737239}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DA9916E2-57F8-42FF-929A-97BE4C737239}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DA9916E2-57F8-42FF-929A-97BE4C737239}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B1F57BC-BC98-4C1B-8B9E-2DEF525B6686}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B1F57BC-BC98-4C1B-8B9E-2DEF525B6686}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B1F57BC-BC98-4C1B-8B9E-2DEF525B6686}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B1F57BC-BC98-4C1B-8B9E-2DEF525B6686}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -112,6 +118,7 @@ Global
 		{A3B8CA9F-5C91-49CB-902D-62A38DF4EF93} = {02FF090B-782B-49FD-BFEC-E4B50DCFF698}
 		{456E4777-5510-49E1-BE8D-C536753964E3} = {02FF090B-782B-49FD-BFEC-E4B50DCFF698}
 		{DA9916E2-57F8-42FF-929A-97BE4C737239} = {02FF090B-782B-49FD-BFEC-E4B50DCFF698}
+		{0B1F57BC-BC98-4C1B-8B9E-2DEF525B6686} = {02FF090B-782B-49FD-BFEC-E4B50DCFF698}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {72BECBF0-1873-44F4-AC66-1E923AD0937A}
