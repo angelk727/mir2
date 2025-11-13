@@ -553,6 +553,19 @@ namespace Client.MirObjects
                     SoundManager.PlaySound(8306);
                     MapControl.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon609N], 597, 8, 1000, CurrentLocation) { Blend = true });
                     break;
+                 case Spell.Mon612NFlame:
+                    BodyLibrary = Libraries.Monsters[(ushort)Monster.Mon612N];
+                    DrawColour = Color.FromArgb(180, 200, 200, 180);
+                    LightColour = Color.White;
+                    Light = 3;
+                    DrawFrame = 476;
+                    FrameInterval = 100;
+                    FrameCount = 11;
+                    Blend = true;
+                    Repeat = true;
+                    SoundManager.PlaySound(8306);
+                    MapControl.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon612N], 487, 3, 600, CurrentLocation) { Blend = true });
+                    break;
             }
 
             NextMotion = CMain.Time + FrameInterval;
@@ -621,6 +634,9 @@ namespace Client.MirObjects
                         if (FrameIndex == 0 && CMain.Random.Next(3) == 0) SoundManager.PlaySound(6237);
                         break;
                     case Spell.Mon609NBomb:
+                        if (FrameIndex == 0 && CMain.Random.Next(3) == 0) SoundManager.PlaySound(8306);
+                        break;
+                    case Spell.Mon612NFlame:
                         if (FrameIndex == 0 && CMain.Random.Next(3) == 0) SoundManager.PlaySound(8306);
                         break;
                 }

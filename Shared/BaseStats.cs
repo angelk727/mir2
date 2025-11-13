@@ -90,8 +90,8 @@
 
         Caps[Stat.魔法躲避] = 2;
         Caps[Stat.毒物躲避] = 6;
-        Caps[Stat.暴击倍率] = 18;
-        Caps[Stat.暴击伤害] = 10;
+        Caps[Stat.暴击率] = 75;
+        Caps[Stat.暴击伤害] = 100;
         Caps[Stat.冰冻伤害] = 6;
         Caps[Stat.毒素伤害] = 6;
         Caps[Stat.生命恢复] = 8;

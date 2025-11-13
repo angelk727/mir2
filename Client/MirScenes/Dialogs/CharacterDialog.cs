@@ -339,8 +339,8 @@ namespace Client.MirScenes.Dialogs
                 SCLabel.Text = string.Format("{0}-{1}", actor.Stats[Stat.MinSC], actor.Stats[Stat.MaxSC]);
                 HealthLabel.Text = string.Format("{0}/{1}", actor.HP, actor.Stats[Stat.HP]);
                 ManaLabel.Text = string.Format("{0}/{1}", actor.MP, actor.Stats[Stat.MP]);
-                CritRLabel.Text = string.Format("{0}%", actor.Stats[Stat.暴击倍率]);
-                CritDLabel.Text = string.Format("{0}", actor.Stats[Stat.暴击伤害]);
+                CritRLabel.Text = string.Format("{0}%", actor.Stats[Stat.暴击率]);
+                CritDLabel.Text = string.Format("{0}%", actor.Stats[Stat.暴击伤害]);
                 AttkSpdLabel.Text = string.Format("{0}", actor.Stats[Stat.攻击速度]);
                 AccLabel.Text = string.Format("+{0}", actor.Stats[Stat.准确]);
                 AgilLabel.Text = string.Format("+{0}", actor.Stats[Stat.敏捷]);

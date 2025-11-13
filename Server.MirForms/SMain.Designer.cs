@@ -568,7 +568,7 @@ namespace Server
             // 
             lineMessageToolStripMenuItem.Name = "lineMessageToolStripMenuItem";
             lineMessageToolStripMenuItem.Size = new Size(180, 22);
-            lineMessageToolStripMenuItem.Text = "连接信息";
+            lineMessageToolStripMenuItem.Text = "公告信息";
             lineMessageToolStripMenuItem.Click += lineMessageToolStripMenuItem_Click;
             // 
             // accountToolStripMenuItem

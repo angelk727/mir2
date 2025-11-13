@@ -2110,10 +2110,10 @@ namespace Server.MirEnvir
 
                                             var stats = new Stats
                                             {
-                                                [Stat.最大物理攻击数率] = value2 * -1,
-                                                [Stat.最大魔法攻击数率] = value2 * -1,
-                                                [Stat.最大道术攻击数率] = value2 * -1,
-                                                [Stat.攻击速度数率] = target.Race == ObjectType.Player ? value2 * -1 : 0
+                                                [Stat.攻击强化] = value2 * -1,
+                                                [Stat.魔法攻击强化] = value2 * -1,
+                                                [Stat.道术攻击强化] = value2 * -1,
+                                                [Stat.攻击速度强化] = target.Race == ObjectType.Player ? value2 * -1 : 0
                                             };
 
                                             target.AddBuff(BuffType.诅咒术, player, Settings.Second * value, stats);

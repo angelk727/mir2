@@ -3,11 +3,11 @@ using S = ServerPackets;
 
 namespace Server.MirObjects.Monsters
 {
-    public class ZumaTaurus : ZumaMonster
+    public class Mon63B : ZumaMonster
     {
         private byte _stage = 7;
 
-        protected internal ZumaTaurus(MonsterInfo info) : base(info)
+        protected internal Mon63B(MonsterInfo info) : base(info)
         {
             Direction = MirDirection.DownLeft;
             AvoidFireWall = false;

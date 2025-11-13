@@ -318,7 +318,7 @@
             label60.Name = "label60";
             label60.Size = new Size(104, 17);
             label60.TabIndex = 130;
-            label60.Text = "最大道术攻击数率";
+            label60.Text = "道术攻击强化";
             // 
             // MaxMCRatetextBox
             // 
@@ -338,7 +338,7 @@
             label59.Name = "label59";
             label59.Size = new Size(104, 17);
             label59.TabIndex = 129;
-            label59.Text = "最大魔法攻击数率";
+            label59.Text = "魔法攻击强化";
             // 
             // MaxDCRatetextBox
             // 
@@ -358,7 +358,7 @@
             label58.Name = "label58";
             label58.Size = new Size(104, 17);
             label58.TabIndex = 128;
-            label58.Text = "最大物理攻击数率";
+            label58.Text = "攻击强化";
             // 
             // ItemInfoPanel
             // 
@@ -1088,7 +1088,7 @@
             label50.Name = "label50";
             label50.Size = new Size(56, 17);
             label50.TabIndex = 119;
-            label50.Text = "暴击倍率";
+            label50.Text = "暴击率";
             // 
             // label52
             // 

@@ -555,6 +555,7 @@ namespace Server.MirObjects
                 case Spell.Mon580BRoot:
                 case Spell.Mon603BWhirlPool:
                 case Spell.Mon609NBomb:
+                case Spell.Mon612NFlame:
                     {
                         if (ob.Race != ObjectType.Player && ob.Race != ObjectType.Monster && ob.Race != ObjectType.Hero) return;
                         if (ob.Dead) return;
@@ -700,6 +701,7 @@ namespace Server.MirObjects
                 case Spell.Mon580BDenseFog:
                 case Spell.Mon603BWhirlPool:
                 case Spell.Mon609NBomb:
+                case Spell.Mon612NFlame:
                     if (!Show)
                         return null;
 

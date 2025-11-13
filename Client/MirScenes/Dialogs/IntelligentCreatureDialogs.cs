@@ -1123,11 +1123,21 @@ namespace Client.MirScenes.Dialogs
                     AnimExDelay = 300;
                     break;
                 case IntelligentCreatureType.龙宝宝:
+                    //Library = Libraries.Pets[(ushort)Monster.龙宝宝 - 10000];
                     AnimDefaultIdx = 1790;
                     AnimDefaultCount = 6;
                     AnimDefaultDelay = 300;
                     AnimExIdx = 1800;
                     AnimExCount = 16;
+                    AnimExDelay = 300;
+                    break;
+                case IntelligentCreatureType.蛇宝宝:
+                    //Library = Libraries.Pets[(ushort)Monster.蛇宝宝 - 10000];
+                    AnimDefaultIdx = 1820;
+                    AnimDefaultCount = 4;
+                    AnimDefaultDelay = 300;
+                    AnimExIdx = 1840;
+                    AnimExCount = 8;
                     AnimExDelay = 300;
                     break;
                 case IntelligentCreatureType.None:

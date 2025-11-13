@@ -201,6 +201,7 @@ namespace Server.MirObjects
                     case IntelligentCreatureType.龙蛋:
                     case IntelligentCreatureType.火娃:
                     case IntelligentCreatureType.龙宝宝:
+                    case IntelligentCreatureType.蛇宝宝:
                         int attackType3 = Envir.Random.Next(0, 3);
                         Broadcast(new S.ObjectAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation, Type = (byte)attackType3 });
                         break;

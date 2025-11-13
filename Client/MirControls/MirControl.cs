@@ -8,7 +8,7 @@ namespace Client.MirControls
     public class MirControl : IDisposable
     {
         public static MirControl ActiveControl, MouseControl;
-
+        
         public virtual Point DisplayLocation { get { return Parent == null ? Location : Parent.DisplayLocation.Add(Location); } }
         public Rectangle DisplayRectangle { get { return new Rectangle(DisplayLocation, Size); } }
 
@@ -442,9 +442,9 @@ namespace Client.MirControls
 
         #region Size
 
-        // ReSharper disable InconsistentNaming
+// ReSharper disable InconsistentNaming
         protected Size _size;
-        // ReSharper restore InconsistentNaming
+// ReSharper restore InconsistentNaming
 
         public virtual Size Size
         {
@@ -468,7 +468,7 @@ namespace Client.MirControls
         {
             TextureValid = false;
             Redraw();
-
+            
             if (SizeChanged != null)
                 SizeChanged.Invoke(this, EventArgs.Empty);
         }
@@ -594,7 +594,7 @@ namespace Client.MirControls
 
             if (Shown != null)
                 Shown.Invoke(this, EventArgs.Empty);
-
+            
             HasShown = true;
         }
         #endregion
@@ -993,7 +993,6 @@ namespace Client.MirControls
         public virtual void Redraw()
         {
             if (Parent != null) Parent.Redraw();
-
         }
 
         #region Font
@@ -1001,7 +1000,7 @@ namespace Client.MirControls
         {
             var theFont = new System.Drawing.Font(font.Name, font.Size * 96f / CMain.Graphics.DpiX, font.Style);
             font.Dispose();
-
+            
             return theFont;
         }
         #endregion

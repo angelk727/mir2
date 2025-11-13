@@ -483,6 +483,17 @@ namespace Server.MirObjects
                                 Revive(MaxHealth, true);
                             }
                             break;
+                        case 15: //Increase Hero inventory
+                            if (Info.Inventory.Length >= 42)
+                            {
+                                ReceiveChat(string.Format("英雄库已达到最大值"), ChatType.System);
+                                Owner.Enqueue(p);
+                                return;
+                            }
+                            Enqueue(new S.ResizeInventory { Size = Info.ResizeInventory() });
+                            ReceiveChat(string.Format("英雄库存增加"), ChatType.System);
+                            Owner.Enqueue(p);
+                            break;
                     }
                     break;
                 case ItemType.技能书:
@@ -1270,7 +1281,10 @@ namespace Server.MirObjects
         {
             Owner.Enqueue(new S.HeroBaseStatsInfo { Stats = Settings.ClassBaseStats[(byte)Class] });
         }
-
+        public override void RefreshMaxExperience()
+        {
+            MaxExperience = Level < Settings.HeroExperienceList.Count ? Settings.HeroExperienceList[Level - 1] : 0;
+        }
         public override Packet GetInfo()
         {
             return new S.ObjectHero

@@ -51,7 +51,7 @@ namespace Server.MirObjects
                 case 61:
                     return new ZumaMonster(info);
                 case 63:
-                    return new ZumaTaurus(info);
+                    return new Mon63B(info);
                 case 67:
                     return new BombSpider(info);
                 case 83:
@@ -481,6 +481,14 @@ namespace Server.MirObjects
                     return new Mon603B(info);
                 case 609:
                     return new Mon609N(info);
+                case 612:
+                    return new Mon612N(info);
+                case 614:
+                    return new Mon614B(info);
+                case 615:
+                    return new Mon615B(info);
+                case 620:
+                    return new Mon620B(info);
                 case 900:
                     return new EvilMir(info);
                 case 901:
@@ -2477,7 +2485,7 @@ namespace Server.MirObjects
                 return 0;
             }
 
-            if (Envir.Random.Next(100) < (attacker.Stats[Stat.暴击倍率] * Settings.CriticalRateWeight))
+            if (Envir.Random.Next(100) < (attacker.Stats[Stat.暴击率] * Settings.CriticalRateWeight))
             {
                 Broadcast(new S.ObjectEffect { ObjectID = ObjectID, Effect = SpellEffect.Critical });
                 damage = Math.Min(int.MaxValue, damage + (int)Math.Floor(damage * (attacker.Stats[Stat.暴击伤害] / (double)Settings.CriticalDamageWeight * 10)));

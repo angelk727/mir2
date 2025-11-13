@@ -39,7 +39,7 @@ namespace Client.MirScenes
             set { MapObject.HeroObject = value; }
         }
 
-        public static long MoveTime, AttackTime, NextRunTime, LogTime, LastRunTime;
+        public static long MoveTime, AttackTime, NextRunTime, LogTime, LastRunTime, HeroSpellTime;
         public static bool CanMove, CanRun;
 
         private DateTime lastChangeTime = DateTime.MinValue;
@@ -900,8 +900,10 @@ namespace Client.MirScenes
             UserObject actor = User;
             if (key > 16)
             {
-                if (HeroObject == null) return;
+                if (HeroObject == null || CMain.Time < HeroSpellTime) return;
+
                 actor = Hero;
+                HeroSpellTime = CMain.Time + 200;
             }
 
             if (actor.Dead || actor.RidingMount || actor.Fishing) return;
@@ -912,7 +914,7 @@ namespace Client.MirScenes
                 return;
             }
 
-            if (CMain.Time < actor.BlizzardStopTime || CMain.Time < User.GreatFireBallRareStopTime || CMain.Time < actor.ReincarnationStopTime) return;
+            if (CMain.Time < actor.BlizzardStopTime || CMain.Time < actor.ReincarnationStopTime) return;
 
             ClientMagic magic = null;
 
@@ -1127,7 +1129,7 @@ namespace Client.MirScenes
 
             if (CMain.Time >= MoveTime)
             {
-                MoveTime += 100; //Move Speed
+                MoveTime = CMain.Time + 100; //Move Speed
                 CanMove = true;
                 MapControl.AnimationCount++;
                 MapControl.TextureValid = false;
@@ -7672,9 +7674,9 @@ namespace Client.MirScenes
 
             #region CRITICALRATE / FLEXIBILITY
 
-            minValue = realItem.Stats[Stat.暴击倍率];
+            minValue = realItem.Stats[Stat.暴击率];
             maxValue = 0;
-            addValue = (!hideAdded && (!HoverItem.Info.NeedIdentify || HoverItem.Identified)) ? HoverItem.AddedStats[Stat.暴击倍率] : 0;
+            addValue = (!hideAdded && (!HoverItem.Info.NeedIdentify || HoverItem.Identified)) ? HoverItem.AddedStats[Stat.暴击率] : 0;
 
             if ((minValue > 0 || maxValue > 0 || addValue > 0) && (realItem.Type != ItemType.宝玉神珠))
             {
@@ -7687,7 +7689,7 @@ namespace Client.MirScenes
                     OutLine = true,
                     Parent = ItemLabel,
                     //Text = string.Format("Critical Chance + {0}", minValue + addValue)
-                    Text = string.Format(addValue > 0 ? "暴击几率 + {0} (+{1})" : "暴击几率 + {0}", minValue + addValue, addValue)
+                    Text = string.Format(addValue > 0 ? "暴击率 + {0}% (+{1}%)" : "暴击率 + {0}%", minValue + addValue, addValue)
                 };
 
                 if(fishingItem)
@@ -7718,7 +7720,7 @@ namespace Client.MirScenes
                     OutLine = true,
                     Parent = ItemLabel,
                     //Text = string.Format("Critical Damage + {0}", minValue + addValue)
-                    Text = string.Format(addValue > 0 ? "暴击伤害 + {0} (+{1})" : "暴击伤害 + {0}", minValue + addValue, addValue)
+                    Text = string.Format(addValue > 0 ? "暴击伤害 + {0}% (+{1}%)" : "暴击伤害 + {0}%", minValue + addValue, addValue)
                 };
 
                 ItemLabel.Size = new Size(Math.Max(ItemLabel.Size.Width, CRITICALDAMAGELabel.DisplayRectangle.Right + 4),
@@ -8146,7 +8148,7 @@ namespace Client.MirScenes
 
             #region MAXACRATE
 
-            minValue = realItem.Stats[Stat.最大防御数率];
+            minValue = realItem.Stats[Stat.强化防御];
             maxValue = 0;
             addValue = 0;
 
@@ -8171,7 +8173,7 @@ namespace Client.MirScenes
 
             #region MAXMACRATE
 
-            minValue = realItem.Stats[Stat.最大魔御数率];
+            minValue = realItem.Stats[Stat.强化魔法防御];
             maxValue = 0;
             addValue = 0;
 
@@ -8388,7 +8390,7 @@ namespace Client.MirScenes
 
             #region MAX_DC_RATE
 
-            minValue = realItem.Stats[Stat.最大物理攻击数率];
+            minValue = realItem.Stats[Stat.攻击强化];
             maxValue = 0;
             addValue = 0;
 
@@ -8412,7 +8414,7 @@ namespace Client.MirScenes
 
             #region MAX_MC_RATE
 
-            minValue = realItem.Stats[Stat.最大魔法攻击数率];
+            minValue = realItem.Stats[Stat.魔法攻击强化];
             maxValue = 0;
             addValue = 0;
 
@@ -8436,7 +8438,7 @@ namespace Client.MirScenes
 
             #region MAX_SC_RATE
 
-            minValue = realItem.Stats[Stat.最大道术攻击数率];
+            minValue = realItem.Stats[Stat.道术攻击强化];
             maxValue = 0;
             addValue = 0;
 
@@ -9045,66 +9047,6 @@ namespace Client.MirScenes
                     Math.Max(ItemLabel.Size.Height, costLabel.DisplayRectangle.Bottom));
             }
 
-
-            #endregion
-
-            if (count > 0)
-            {
-                ItemLabel.Size = new Size(ItemLabel.Size.Width, ItemLabel.Size.Height + 4);
-
-                #region OUTLINE
-                MirControl outLine = new MirControl
-                {
-                    BackColour = Color.FromArgb(255, 50, 50, 50),
-                    Border = true,
-                    BorderColour = Color.Gray,
-                    NotControl = true,
-                    Parent = ItemLabel,
-                    Opacity = 0.4F,
-                    Location = new Point(0, 0)
-                };
-                outLine.Size = ItemLabel.Size;
-                #endregion
-
-                return outLine;
-            }
-            else
-            {
-                ItemLabel.Size = new Size(ItemLabel.Size.Width, ItemLabel.Size.Height - 4);
-            }
-            return null;
-        }
-
-        public MirControl ItemSetInfoLabel(UserItem item, bool Inspect = false)
-        {
-            ushort level = Inspect ? InspectDialog.Level : MapObject.User.Level;
-            MirClass job = Inspect ? InspectDialog.Class : MapObject.User.Class;
-            HoverItem = item;
-            ItemInfo realItem = Functions.GetRealItem(item.Info, level, job, ItemInfoList);
-
-            ItemLabel.Size = new Size(ItemLabel.Size.Width, ItemLabel.Size.Height + 4);
-
-            int count = 0;
-
-            #region ItemSet
-
-
-            if (realItem.Set != ItemSet.非套装)
-            {
-                count++;
-                MirLabel ItemSetLabel = new MirLabel
-                {
-                    AutoSize = true,
-                    ForeColour = Color.GreenYellow,
-                    Location = new Point(4, ItemLabel.DisplayRectangle.Bottom),
-                    OutLine = true,
-                    Parent = ItemLabel,
-                    Text = string.Format("{0}", realItem.Set)
-                };
-
-                ItemLabel.Size = new Size(Math.Max(ItemLabel.Size.Width, ItemSetLabel.DisplayRectangle.Right + 4),
-                    Math.Max(ItemLabel.Size.Height, ItemSetLabel.DisplayRectangle.Bottom));
-            }
 
             #endregion
 
@@ -10070,6 +10012,220 @@ namespace Client.MirScenes
                 return null;
             }
         }
+        public MirControl GetSetLabel(UserItem item)
+        {
+            if (item?.Info?.Set == ItemSet.非套装) return null;
+
+            ItemSet set = item.Info.Set;
+            string setName = set.ToString();
+
+            var requiredTypes = ItemInfoList.Where(i => i.Set == set)
+                                            .Select(i => i.Type)
+                                            .Distinct()
+                                            .ToList();
+
+            var equippedInfos = MapObject.User.Equipment
+                .Where(e => e?.Info?.Set == set)
+                .Select(e => e.Info)
+                .ToList();
+
+            ItemLabel.Size = new Size(ItemLabel.Size.Width, ItemLabel.Size.Height + 4);
+
+            int yOffset = ItemLabel.DisplayRectangle.Bottom;
+            void AddLabel(string text, Color color)
+            {
+                var lbl = new MirLabel
+                {
+                    AutoSize = true,
+                    ForeColour = color,
+                    Location = new Point(4, yOffset),
+                    OutLine = true,
+                    Parent = ItemLabel,
+                    Text = text.Trim()
+                };
+                yOffset = lbl.DisplayRectangle.Bottom + 4;
+                ItemLabel.Size = new Size(
+                    Math.Max(ItemLabel.Size.Width, lbl.DisplayRectangle.Right + 4),
+                    Math.Max(ItemLabel.Size.Height, yOffset));
+            }
+
+            AddLabel(setName, Color.Gold);
+            foreach (var t in requiredTypes)
+            {
+                bool on = equippedInfos.Any(i => i.Type == t);
+                AddLabel($"{(on ? "✔" : "✘")} {t}", on ? Color.LimeGreen : Color.Gray);
+            }
+
+            Dictionary<ItemSet, List<(ItemType[] Need, string[] Bonus)>> bonusDict = new()
+            {
+                [ItemSet.祈祷套装] = new() { (Array.Empty<ItemType>(), new[] { "物理攻击 + 2~5", "攻击速度 + 4", "魔法值数率 + 30", "死亡后不消失" }) },
+                [ItemSet.记忆套装] = new() { (Array.Empty<ItemType>(), new[] { "队长可召唤队友" }) },
+                [ItemSet.赤兰套装] = new() { (Array.Empty<ItemType>(), new[] { "准确 + 2", "吸血数率 + 10" }) },
+                [ItemSet.密火套装] = new() { (Array.Empty<ItemType>(), new[] { "生命值 + 50", "魔法值 + 50" }) },
+                [ItemSet.破碎套装] = new()
+                {
+                 (new[] { ItemType.戒指, ItemType.手镯 },new[] { "攻击速度 + 2" }),
+                 (new[] { ItemType.戒指, ItemType.手镯, ItemType.项链 }, new[] { "物理攻击 + 1~3" })
+                },
+                [ItemSet.幻魔石套] = new()
+                {
+                 (new[] { ItemType.戒指, ItemType.手镯 },new[] { "装备负重 + 5", "背包负重 + 20" }),
+                 (new[] { ItemType.戒指, ItemType.手镯, ItemType.项链 }, new[] { "魔法攻击 + 1~2" })
+                },
+                [ItemSet.灵玉套装] = new()
+                {
+                 (new[] { ItemType.戒指, ItemType.手镯 },new[] { "神圣 + 3" }),
+                 (new[] { ItemType.戒指, ItemType.手镯, ItemType.项链 }, new[] { "道术攻击 + 1~2"})
+                },
+                [ItemSet.五玄套装] = new() { (Array.Empty<ItemType>(), new[] { "生命值数率 + 30", "物理防御 + 2~2" }) },
+                [ItemSet.世轮套装] = new() { (Array.Empty<ItemType>(), new[] { "生命值 + 50" }) },
+                [ItemSet.绿翠套装] = new() { (Array.Empty<ItemType>(), new[] { "魔法值 + 50" }) },
+                [ItemSet.道护套装] = new() { (Array.Empty<ItemType>(), new[] { "生命值 + 30", "魔法值 + 30" }) },
+                [ItemSet.天龙套装] = new()
+                {
+                 (new[] { ItemType.盔甲, ItemType.武器 },new[] { "攻击强化 + 3" }),
+                 (new[] { ItemType.头盔, ItemType.腰带, ItemType.靴子 },new[] { "强化防御 + 3" }),
+                 (new[] { ItemType.戒指, ItemType.手镯, ItemType.项链 }, new[] { "物理攻击 + 2~6", "魔法攻击 + 2~6", "道术攻击 + 2~6", "攻击速度 + 2", "腕力负重 + 30", "装备负重 + 30", "背包负重 + 60"}),
+                 (new[] { ItemType.盔甲, ItemType.武器, ItemType.头盔, ItemType.腰带, ItemType.靴子, ItemType.戒指, ItemType.手镯, ItemType.项链 }, new[] { "幸运 + 2", "生命值 + 100", "物理防御 + 2~6", "魔法防御 + 1~4", "魔法值 + 100", "中毒恢复 + 2"})
+                },
+                [ItemSet.白骨套装] = new() { (Array.Empty<ItemType>(), new[] { "物理防御 + 0~2", "魔法攻击 + 0~1", "道术攻击 + 0~1" }) },
+                [ItemSet.虫血套装] = new() { (Array.Empty<ItemType>(), new[] { "物理攻击 + 0~1", "魔法攻击 + 0~1", "道术攻击 + 0~1", "魔法躲避 + 1", "毒物躲避 + 1" }) },
+                [ItemSet.白金套装] = new() { (Array.Empty<ItemType>(), new[] { "物理攻击 + 0~2", "物理防御 + 0~2", "腕力负重 + 1", "装备负重 + 2" }) },
+                [ItemSet.强白金套] = new() { (Array.Empty<ItemType>(), new[] { "物理攻击 + 0~3", "攻击速度 + 2", "生命值 + 30", "装备负重 + 2" }) },
+                [ItemSet.红玉套装] = new() { (Array.Empty<ItemType>(), new[] { "魔法攻击 + 0~2", "魔法防御 + 0~2 ", "腕力负重 + 1 ", "装备负重 + 2" }) },
+                [ItemSet.强红玉套] = new() { (Array.Empty<ItemType>(), new[] { "魔法攻击 + 0~2", "生命值 + 40", "敏捷 + 2", "装备负重 + 2" }) },
+                [ItemSet.软玉套装] = new() { (Array.Empty<ItemType>(), new[] { "道术攻击 + 0~2", "物理防御 + 0~1", "魔法防御 + 0~1", "腕力负重 + 1", "装备负重 + 2" }) },
+                [ItemSet.强软玉套] = new() { (Array.Empty<ItemType>(), new[] { "道术攻击 + 0~2", "神圣 + 1", "准确 + 1", "生命值 + 15", "魔法值 + 20", "敏捷 + 1", "装备负重 + 2" }) },
+                [ItemSet.贵人战套] = new() { (Array.Empty<ItemType>(), new[] { "物理攻击 + 1~1", "装备负重 + 25" }) },
+                [ItemSet.贵人法套] = new() { (Array.Empty<ItemType>(), new[] { "魔法攻击 + 1~1", "装备负重 + 17" }) },
+                [ItemSet.贵人道套] = new() { (Array.Empty<ItemType>(), new[] { "道术攻击 + 1~1", "装备负重 + 17" }) },
+                [ItemSet.贵人刺套] = new() { (Array.Empty<ItemType>(), new[] { "物理攻击 + 1~1", "装备负重 + 20" }) },
+                [ItemSet.贵人弓套] = new() { (Array.Empty<ItemType>(), new[] { "物理攻击 + 0~1", "魔法攻击 + 0~1", "装备负重 + 20" }) },
+                [ItemSet.血龙套装] = new() { (Array.Empty<ItemType>(), new[] { "神圣 + 3" }) },
+                [ItemSet.监视套装] = new() { (Array.Empty<ItemType>(), new[] { "魔法躲避 + 1", "毒物躲避 + 1" }) },
+                [ItemSet.暴压套装] = new() { (Array.Empty<ItemType>(), new[] { "物理防御 + 0~1", "敏捷 + 1" }) },
+                [ItemSet.贝玉套装] = new() { (Array.Empty<ItemType>(), new[] { "套装没有效果" }) },
+                [ItemSet.黑术套装] = new() { (Array.Empty<ItemType>(), new[] { "套装没有效果" }) },
+                [ItemSet.青玉套装] = new() { (Array.Empty<ItemType>(), new[] { "物理攻击 + 1~1", "魔法攻击 + 1~1", "物理防御 + 1~1", "魔法防御 + 0~1", "腕力负重 + 1", "装备负重 + 2" }) },
+                [ItemSet.鏃未套装] = new()
+                {
+                 (new[] { ItemType.项链, ItemType.手镯 },new[] { "生命值 + 25" }),
+                 (new[] { ItemType.项链, ItemType.手镯, ItemType.戒指 }, new[] { "魔法值 + 25", "攻击速度 + 2" })
+                },
+                [ItemSet.青宝套装] = new() { (Array.Empty<ItemType>(), new[] { "套装没有效果" }) },
+                [ItemSet.强青玉套] = new() { (Array.Empty<ItemType>(), new[] { "物理攻击 + 1~2", "魔法攻击 + 0~2", "攻击速度 + 1", "准确 + 1", "生命值 + 50" }) },
+                [ItemSet.双戒套装] = new()
+                {
+                 (new[] { ItemType.戒指, ItemType.戒指 },new[] { "物理攻击 + 0~5", "魔法攻击 + 0~5", "道术攻击 + 0~5" })
+                },
+                [ItemSet.昆仑套装] = new()
+                {
+                 (new[] { ItemType.项链, ItemType.戒指 },new[] { "物理攻击 + 0~8", "魔法攻击 + 0~8", "道术攻击 + 0~8" }),
+                 (new[] { ItemType.项链, ItemType.戒指, ItemType.手镯, ItemType.盔甲 },new[] { "强化防御 + 20%" }),//20%几率降低20%的伤害持续15秒冷却时间120秒
+                 (new[] { ItemType.武器, ItemType.头盔, ItemType.腰带, ItemType.靴子 },new[] { "攻击强化 + 20%" }),//伤害增加20%持续15秒有20%几率攻击冷却时间120秒
+                 (new[] { ItemType.武器, ItemType.头盔, ItemType.腰带, ItemType.靴子, ItemType.戒指, ItemType.项链, ItemType.手镯, ItemType.盔甲 },new[] { "暴击率 + 7%", "暴击伤害 + 40%" })//攻击时有7%的几率增加40%的暴击伤害
+                },
+            };
+
+            bool StageActivated(ItemType[] need, List<ItemInfo> equipped)
+            {
+                var needCnt = need.GroupBy(x => x)
+                                  .ToDictionary(g => g.Key, g => g.Count());
+
+                var eqCnt = equipped.GroupBy(i => i.Type)
+                                      .ToDictionary(g => g.Key, g => g.Count());
+
+                foreach (var (tp, cnt) in needCnt)
+                {
+                    if (!eqCnt.TryGetValue(tp, out int own) || own < cnt)
+                        return false;
+
+                    if (cnt >= 2)
+                    {
+                        var sameType = equipped.Where(i => i.Type == tp).ToList();
+                        var distinct = sameType.Select(i => i.Name).Distinct().Count();
+                        if (distinct < cnt) return false;
+                    }
+                }
+                return true;
+            }
+
+            var regex = new System.Text.RegularExpressions.Regex(
+                @"^\s*([\u4e00-\u9fa5A-Za-z\s]+)\+\s*(\d+)(?:\s*~\s*(\d+))?\s*$",
+                System.Text.RegularExpressions.RegexOptions.Compiled);
+
+            var merged = new Dictionary<string, (int min, int max)>();
+            var rawDict = new Dictionary<string, bool>();
+            var rangeTag = new HashSet<string>();
+
+            void Acc(string attr, int lo, int hi)
+            {
+                if (merged.TryGetValue(attr, out var cur))
+                    merged[attr] = (cur.min + lo, cur.max + hi);
+                else
+                    merged[attr] = (lo, hi);
+            }
+            void PutRaw(string txt, bool active)
+            {
+                txt = txt.Trim();
+                rawDict[txt] = rawDict.TryGetValue(txt, out var old) ? old || active : active;
+            }
+
+            if (bonusDict.TryGetValue(set, out var stages))
+            {
+                foreach (var (need, bonuses) in stages)
+                {
+                    bool stageOn = need.Length == 0
+                         ? requiredTypes.All(tp => equippedInfos.Any(i => i.Type == tp))
+                         : StageActivated(need, equippedInfos);
+
+                    foreach (string b in bonuses)
+                    {
+                        var m = regex.Match(b);
+                        if (m.Success)
+                        {
+                            string attr = m.Groups[1].Value.TrimEnd();
+                            int lo = int.Parse(m.Groups[2].Value);
+                            int hi = m.Groups[3].Success ? int.Parse(m.Groups[3].Value) : lo;
+                            if (m.Groups[3].Success) rangeTag.Add(attr);
+
+                            if (stageOn) Acc(attr, lo, hi);
+                            else PutRaw(b, false);
+                        }
+                        else
+                        {
+                            PutRaw(b, stageOn);
+                        }
+                    }
+                }
+            }
+
+            foreach (var (attr, rng) in merged)
+            {
+                bool forceRange = rangeTag.Contains(attr) || rng.min != rng.max;
+                string txt = forceRange
+                    ? $"{attr} + {rng.min}~{rng.max}"
+                    : $"{attr} + {rng.min}";
+                AddLabel(txt, Color.White);
+            }
+
+            foreach (var kv in rawDict)
+                AddLabel(kv.Key, kv.Value ? Color.White : Color.Gray);
+
+            var outline = new MirControl
+            {
+                BackColour = Color.FromArgb(255, 50, 50, 50),
+                Border = true,
+                BorderColour = Color.Gray,
+                NotControl = true,
+                Opacity = 0.4F,
+                Parent = ItemLabel,
+                Location = new Point(0, 0),
+                Size = ItemLabel.Size
+            };
+
+            return outline;
+        }
 
         public void CreateItemLabel(UserItem item, bool inspect = false, bool hideDura = false, bool hideAdded = false)
         {
@@ -10126,8 +10282,8 @@ namespace Client.MirScenes
             outlines[9] = StoryInfoLabel(item, inspect);
             //GM Made
             outlines[10] = GMMadeLabel(item);
-			//Info Label
-            outlines[11] = ItemSetInfoLabel(item, inspect);
+            //Item Set
+            outlines[11] = GetSetLabel(item);
 
             foreach (var outline in outlines)
             {
@@ -11204,7 +11360,7 @@ namespace Client.MirScenes
                     s = Libraries.MapLibs[fileIndex].GetSize(index);
                     Point offset = Libraries.MapLibs[fileIndex].GetOffSet(index);
 
-                    if (backIndex == 23175 && index == 7776)
+                    if (Index == 563 && backIndex == 23175 && index == 7776)//暂时使用后期完善
                     {
                         Libraries.MapLibs[fileIndex].Draw(index + 1109, drawX + (2 * CellWidth), drawY - (17 * CellHeight));
                     }
@@ -11222,14 +11378,29 @@ namespace Client.MirScenes
                     }
 
                     if (s.Width == CellWidth && s.Height == CellHeight && animation == 0) continue;
-                    if (s.Width == CellWidth * 2 && s.Height == CellHeight * 2 && animation == 0) continue;
+                    if ((s.Width == CellWidth * 2) && (s.Height == CellHeight * 2) && (animation == 0)) continue;
 
                     if (blend)
                     {
-                        if (fileIndex > 0 && fileIndex < 199)
+                        int offsetY;
+                        bool useSpecialBlend;
+
+                        if (fileIndex == 28)
                         {
-                            Libraries.MapLibs[fileIndex].DrawBlend(index, new Point(drawX, drawY - (3 * CellHeight)), Color.White, true, 1.0f);
+                            offsetY = CellHeight;
+                            useSpecialBlend = true;
                         }
+                        else if (fileIndex == 14 || fileIndex == 27 || (fileIndex > 99 && fileIndex < 199))
+                        {
+                            offsetY = 3 * CellHeight;
+                            useSpecialBlend = true;
+                        }
+                        else
+                        {
+                            offsetY = s.Height;
+                            useSpecialBlend = (index >= 2723 && index <= 2732);
+                        }
+                        Libraries.MapLibs[fileIndex].DrawBlend(index, new Point(drawX, drawY - offsetY), Color.White, useSpecialBlend, 0.5f);
                     }
                     else
                     {
@@ -11698,9 +11869,8 @@ namespace Client.MirScenes
 
                     messageBox.YesButton.Click += (o, a) =>
                     {
-                        Network.Enqueue(new C.DropItem
-                        {
-                            UniqueID = cell.Item.UniqueID,
+                        Network.Enqueue(new C.DropItem 
+                        {   UniqueID = cell.Item.UniqueID, 
                             Count = 1,
                             HeroInventory = cell.GridType == MirGridType.HeroInventory
                         });

@@ -76,7 +76,7 @@ namespace Server
                 SkillcheckBox.Text = "技巧项链";
                 NoDuraLosscheckBox.Text = "永不掉落";
                 PickaxecheckBox.Text = "鹤嘴锄";
-                label50.Text = "暴击倍率";
+                label50.Text = "暴击率";
                 label52.Text = "反弹伤害";
                 label51.Text = "暴击伤害";
                 label49.Text = "吸血数率";
@@ -261,8 +261,8 @@ namespace Server
             MagicResisttextBox.Text = info.Stats[Stat.魔法躲避].ToString();
             HealthRecoveryTextbox.Text = info.Stats[Stat.生命恢复].ToString();
             StrongTextbox.Text = info.Stats[Stat.强度].ToString();
-            MacRateTextbox.Text = info.Stats[Stat.最大魔御数率].ToString();
-            ACRateTextbox.Text = info.Stats[Stat.最大防御数率].ToString();
+            MacRateTextbox.Text = info.Stats[Stat.强化魔法防御].ToString();
+            ACRateTextbox.Text = info.Stats[Stat.强化防御].ToString();
             PoisonResisttextBox.Text = info.Stats[Stat.毒物躲避].ToString();
             PoisonAttacktextbox.Text = info.Stats[Stat.毒素伤害].ToString();
             Freezingtextbox.Text = info.Stats[Stat.冰冻伤害].ToString();
@@ -270,12 +270,12 @@ namespace Server
             HPratetextbox.Text = info.Stats[Stat.生命值数率].ToString();
             MPratetextbox.Text = info.Stats[Stat.法力值数率].ToString();
             HpDrainRatetextBox.Text = info.Stats[Stat.吸血数率].ToString();
-            CriticalRatetextBox.Text = info.Stats[Stat.暴击倍率].ToString();
+            CriticalRatetextBox.Text = info.Stats[Stat.暴击率].ToString();
             CriticalDamagetextBox.Text = info.Stats[Stat.暴击伤害].ToString();
             ReflecttextBox.Text = info.Stats[Stat.反弹伤害].ToString();
-            MaxDCRatetextBox.Text = info.Stats[Stat.最大物理攻击数率].ToString();
-            MaxSCRatetextBox.Text = info.Stats[Stat.最大道术攻击数率].ToString();
-            MaxMCRatetextBox.Text = info.Stats[Stat.最大魔法攻击数率].ToString();
+            MaxDCRatetextBox.Text = info.Stats[Stat.攻击强化].ToString();
+            MaxSCRatetextBox.Text = info.Stats[Stat.道术攻击强化].ToString();
+            MaxMCRatetextBox.Text = info.Stats[Stat.魔法攻击强化].ToString();
             DamageReductiontextBox.Text = info.Stats[Stat.伤害减免数率].ToString();
             ExpRatetextBox.Text = info.Stats[Stat.经验增长数率].ToString();
             DropRatetextBox.Text = info.Stats[Stat.物品掉落数率].ToString();
@@ -380,8 +380,8 @@ namespace Server
                 if (MagicResisttextBox.Text != info.Stats[Stat.魔法躲避].ToString()) MagicResisttextBox.Text = string.Empty;
                 if (HealthRecoveryTextbox.Text != info.Stats[Stat.生命恢复].ToString()) HealthRecoveryTextbox.Text = string.Empty;
                 if (StrongTextbox.Text != info.Stats[Stat.强度].ToString()) StrongTextbox.Text = string.Empty;
-                if (MacRateTextbox.Text != info.Stats[Stat.最大魔御数率].ToString()) MacRateTextbox.Text = string.Empty;
-                if (ACRateTextbox.Text != info.Stats[Stat.最大防御数率].ToString()) ACRateTextbox.Text = string.Empty;
+                if (MacRateTextbox.Text != info.Stats[Stat.强化魔法防御].ToString()) MacRateTextbox.Text = string.Empty;
+                if (ACRateTextbox.Text != info.Stats[Stat.强化防御].ToString()) ACRateTextbox.Text = string.Empty;
                 if (PoisonResisttextBox.Text != info.Stats[Stat.毒物躲避].ToString()) PoisonResisttextBox.Text = string.Empty;
                 if (PoisonAttacktextbox.Text != info.Stats[Stat.毒素伤害].ToString()) PoisonAttacktextbox.Text = string.Empty;
                 if (Freezingtextbox.Text != info.Stats[Stat.冰冻伤害].ToString()) Freezingtextbox.Text = string.Empty;
@@ -389,12 +389,12 @@ namespace Server
                 if (HPratetextbox.Text != info.Stats[Stat.生命值数率].ToString()) HPratetextbox.Text = string.Empty;
                 if (MPratetextbox.Text != info.Stats[Stat.法力值数率].ToString()) MPratetextbox.Text = string.Empty;
                 if (HpDrainRatetextBox.Text != info.Stats[Stat.吸血数率].ToString()) HpDrainRatetextBox.Text = string.Empty;
-                if (CriticalRatetextBox.Text != info.Stats[Stat.暴击倍率].ToString()) CriticalRatetextBox.Text = string.Empty;
+                if (CriticalRatetextBox.Text != info.Stats[Stat.暴击率].ToString()) CriticalRatetextBox.Text = string.Empty;
                 if (CriticalDamagetextBox.Text != info.Stats[Stat.暴击伤害].ToString()) CriticalDamagetextBox.Text = string.Empty;
                 if (ReflecttextBox.Text != info.Stats[Stat.反弹伤害].ToString()) ReflecttextBox.Text = string.Empty;
-                if (MaxDCRatetextBox.Text != info.Stats[Stat.最大物理攻击数率].ToString()) MaxDCRatetextBox.Text = string.Empty;
-                if (MaxSCRatetextBox.Text != info.Stats[Stat.最大道术攻击数率].ToString()) MaxSCRatetextBox.Text = string.Empty;
-                if (MaxMCRatetextBox.Text != info.Stats[Stat.最大魔法攻击数率].ToString()) MaxMCRatetextBox.Text = string.Empty;
+                if (MaxDCRatetextBox.Text != info.Stats[Stat.攻击强化].ToString()) MaxDCRatetextBox.Text = string.Empty;
+                if (MaxSCRatetextBox.Text != info.Stats[Stat.道术攻击强化].ToString()) MaxSCRatetextBox.Text = string.Empty;
+                if (MaxMCRatetextBox.Text != info.Stats[Stat.魔法攻击强化].ToString()) MaxMCRatetextBox.Text = string.Empty;
                 if (DamageReductiontextBox.Text != info.Stats[Stat.伤害减免数率].ToString()) DamageReductiontextBox.Text = string.Empty;
                 if (ExpRatetextBox.Text != info.Stats[Stat.经验增长数率].ToString()) ExpRatetextBox.Text = string.Empty;
                 if (DropRatetextBox.Text != info.Stats[Stat.物品掉落数率].ToString()) DropRatetextBox.Text = string.Empty;
@@ -1180,7 +1180,7 @@ namespace Server
 
 
             for (int i = 0; i < _selectedItemInfos.Count; i++)
-                _selectedItemInfos[i].Stats[Stat.最大防御数率] = temp;
+                _selectedItemInfos[i].Stats[Stat.强化防御] = temp;
         }
 
         private void MacRateTextbox_TextChanged(object sender, EventArgs e)
@@ -1198,7 +1198,7 @@ namespace Server
 
 
             for (int i = 0; i < _selectedItemInfos.Count; i++)
-                _selectedItemInfos[i].Stats[Stat.最大魔御数率] = temp;
+                _selectedItemInfos[i].Stats[Stat.强化魔法防御] = temp;
         }
 
         private void MagicResisttextBox_TextChanged(object sender, EventArgs e)
@@ -1625,7 +1625,7 @@ namespace Server
 
 
             for (int i = 0; i < _selectedItemInfos.Count; i++)
-                _selectedItemInfos[i].Stats[Stat.暴击倍率] = temp;
+                _selectedItemInfos[i].Stats[Stat.暴击率] = temp;
         }
         private void TxtSearchItem_KeyUp(object sender, KeyEventArgs e)
         {
@@ -1718,7 +1718,7 @@ namespace Server
 
 
             for (int i = 0; i < _selectedItemInfos.Count; i++)
-                _selectedItemInfos[i].Stats[Stat.最大物理攻击数率] = temp;
+                _selectedItemInfos[i].Stats[Stat.攻击强化] = temp;
         }
 
         private void MaxSCRatetextBox_TextChanged(object sender, EventArgs e)
@@ -1736,7 +1736,7 @@ namespace Server
 
 
             for (int i = 0; i < _selectedItemInfos.Count; i++)
-                _selectedItemInfos[i].Stats[Stat.最大道术攻击数率] = temp;
+                _selectedItemInfos[i].Stats[Stat.道术攻击强化] = temp;
         }
 
         private void MaxMCRatetextBox_TextChanged(object sender, EventArgs e)
@@ -1754,7 +1754,7 @@ namespace Server
 
 
             for (int i = 0; i < _selectedItemInfos.Count; i++)
-                _selectedItemInfos[i].Stats[Stat.最大魔法攻击数率] = temp;
+                _selectedItemInfos[i].Stats[Stat.魔法攻击强化] = temp;
         }
 
         private void DamageReductiontextBox_TextChanged(object sender, EventArgs e)

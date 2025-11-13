@@ -139,7 +139,7 @@ public class ItemInfo
             Stats[Stat.中毒恢复] = reader.ReadByte();
             Stats[Stat.生命值数率] = reader.ReadByte();
             Stats[Stat.法力值数率] = reader.ReadByte();
-            Stats[Stat.暴击倍率] = reader.ReadByte();
+            Stats[Stat.暴击率] = reader.ReadByte();
             Stats[Stat.暴击伤害] = reader.ReadByte();
         }
 
@@ -158,8 +158,8 @@ public class ItemInfo
 
         if (version <= 84)
         {
-            Stats[Stat.最大防御数率] = reader.ReadByte();
-            Stats[Stat.最大魔御数率] = reader.ReadByte();
+            Stats[Stat.强化防御] = reader.ReadByte();
+            Stats[Stat.强化魔法防御] = reader.ReadByte();
             Stats[Stat.神圣] = reader.ReadByte();
             Stats[Stat.冰冻伤害] = reader.ReadByte();
             Stats[Stat.毒素伤害] = reader.ReadByte();
@@ -384,7 +384,7 @@ public class UserItem
             AddedStats[Stat.生命恢复] = reader.ReadByte();
             AddedStats[Stat.法力恢复] = reader.ReadByte();
             AddedStats[Stat.中毒恢复] = reader.ReadByte();
-            AddedStats[Stat.暴击倍率] = reader.ReadByte();
+            AddedStats[Stat.暴击率] = reader.ReadByte();
             AddedStats[Stat.暴击伤害] = reader.ReadByte();
             AddedStats[Stat.冰冻伤害] = reader.ReadByte();
             AddedStats[Stat.毒素伤害] = reader.ReadByte();
@@ -820,8 +820,8 @@ public class GameShopItem
         Date = DateTime.FromBinary(reader.ReadInt64());
         if (version > 105)
         {
-            CanBuyGold = reader.ReadBoolean();
             CanBuyCredit = reader.ReadBoolean();
+            CanBuyGold = reader.ReadBoolean();
         }
 
     }
@@ -1132,6 +1132,7 @@ public class ItemSets
                 case ItemSet.贵人道套:
                 case ItemSet.贵人刺套:
                 case ItemSet.贵人弓套:
+                case ItemSet.双戒套装:
                     return 2;
                 case ItemSet.赤兰套装:
                 case ItemSet.密火套装:
@@ -1142,9 +1143,9 @@ public class ItemSets
                 case ItemSet.白骨套装:
                 case ItemSet.虫血套装:
                 case ItemSet.鏃未套装:
+                case ItemSet.青宝套装:
                     return 3;
                 case ItemSet.记忆套装:
-                case ItemSet.神龙套装:
                     return 4;
                 case ItemSet.祈祷套装:
                 case ItemSet.白金套装:
@@ -1153,16 +1154,16 @@ public class ItemSets
                 case ItemSet.强红玉套:
                 case ItemSet.软玉套装:
                 case ItemSet.强软玉套:
-                case ItemSet.龙血套装:
+                case ItemSet.血龙套装:
                 case ItemSet.监视套装:
                 case ItemSet.暴压套装:
                 case ItemSet.贝玉套装:
                 case ItemSet.黑术套装:
                 case ItemSet.强青玉套:
                 case ItemSet.青玉套装:
-                case ItemSet.圣龙套装:
                     return 5;
                 case ItemSet.天龙套装:
+                case ItemSet.昆仑套装:
                     return 8;
                 default:
                     return 0;

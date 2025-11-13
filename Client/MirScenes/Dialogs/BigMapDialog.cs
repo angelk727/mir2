@@ -743,6 +743,11 @@ namespace Client.MirScenes.Dialogs
                         Players[i].Visible = false;
                     }
                 }
+
+
+
+
+
             }
             else
             {

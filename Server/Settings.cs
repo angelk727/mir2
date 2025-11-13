@@ -99,6 +99,7 @@ namespace Server
 
         //Game
         public static List<long> ExperienceList = new List<long>();
+        public static List<long> HeroExperienceList = new List<long>();
         public static List<long> OrbsExpList = new List<long>();
         public static List<long> OrbsDefList = new List<long>();
         public static List<long> OrbsDmgList = new List<long>();
@@ -260,8 +261,8 @@ namespace Server
         //item related settings
         public static byte MagicResistWeight = 10,
                             PoisonResistWeight = 10,
-                            CriticalRateWeight = 5,
-                            CriticalDamageWeight = 50,
+                            CriticalRateWeight = 10,
+                            CriticalDamageWeight = 10,
                             FreezingAttackWeight = 10,
                             PoisonAttackWeight = 10,
                             HealthRegenWeight = 10,
@@ -561,6 +562,7 @@ namespace Server
 
             LoadVersion();
             LoadEXP();
+            LoadHeroEXP();
             LoadBaseStats();
             LoadRandomItemStats();
             LoadMines();
@@ -819,8 +821,18 @@ namespace Server
                 OrbsDmgList.Add(exp);
             }
         }
+        public static void LoadHeroEXP()
+        {
+            long exp = 100;
+            InIReader reader = new InIReader(Path.Combine(ConfigPath, "HeroExpList.ini"));
 
-        public static void LoadWorldMap()
+            for (int i = 1; i <= 500; i++)
+            {
+                exp = reader.ReadInt64("Exp", "Level" + i, exp);
+                HeroExperienceList.Add(exp);
+            }
+        }
+            public static void LoadWorldMap()
         {
             InIReader reader = null;
             string path = Path.Combine(ConfigPath, "WorldMap.ini");

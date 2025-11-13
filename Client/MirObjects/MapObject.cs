@@ -390,6 +390,13 @@ namespace Client.MirObjects
                     Effects.Add(new BuffEffect(Libraries.Monsters[(ushort)Monster.Mon580B], 864, 18, 800, this, true, type) { Repeat = true, Light = 1 });
                     };
                     break;
+                case BuffType.Mon615BShield:
+                    Effects.Add(effect = new BuffEffect(Libraries.Monsters[(ushort)Monster.Mon615B], 1133, 3, 300, this, true, type) { Repeat = false, Light = 1 });
+                    effect.Complete += (o, e) =>
+                    {
+                    Effects.Add(new BuffEffect(Libraries.Monsters[(ushort)Monster.Mon615B], 1135, 8, 800, this, true, type) { Repeat = true, Light = 1 });
+                    };
+                    break;
             }
         }
         public void RemoveBuffEffect(BuffType type)

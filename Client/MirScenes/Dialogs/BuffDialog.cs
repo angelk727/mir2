@@ -655,6 +655,8 @@ namespace Client.MirScenes.Dialogs
                     return 545;
                 case BuffType.摩鲁的黄色药剂:
                     return 546;
+                case BuffType.破天的核心:
+                    return 206;
 
                 //Stats
                 case BuffType.攻击力提升:

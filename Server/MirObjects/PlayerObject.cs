@@ -320,6 +320,12 @@ namespace Server.MirObjects
                                     }
 
                                     break;
+
+                                case (MirClass.道士):
+                                    if (pet.Name == Settings.SkeletonName || pet.Name == Settings.AngelName || pet.Name == Settings.ShinsuName)
+                                        Info.Pets.Add(new PetInfo(pet));
+
+                                    break;
                             }
 
                             break;
@@ -3566,7 +3572,7 @@ namespace Server.MirObjects
                                         AddBuff(BuffType.英雄灵气, this, 0, new Stats { [Stat.法力恢复] = 2, [Stat.准确] = 3 });
                                         break;
                                     case MirClass.弓箭:
-                                        AddBuff(BuffType.英雄灵气, this, 0, new Stats { [Stat.敏捷] = 2, [Stat.最大物理攻击数率] = 2, [Stat.最大魔法攻击数率] = 1 });
+                                        AddBuff(BuffType.英雄灵气, this, 0, new Stats { [Stat.敏捷] = 2, [Stat.攻击强化] = 2, [Stat.魔法攻击强化] = 1 });
                                         break;
                                     default:
                                         break;
@@ -6816,7 +6822,7 @@ namespace Server.MirObjects
                         successchance *= (int)tempTo.GemCount;
                     }
 
-                    successchance = successchance >= tempFrom.Info.Stats[Stat.暴击倍率] ? 0 : (tempFrom.Info.Stats[Stat.暴击倍率] - successchance) + Stats[Stat.宝石成功数率];
+                    successchance = successchance >= tempFrom.Info.Stats[Stat.暴击率] ? 0 : (tempFrom.Info.Stats[Stat.暴击率] - successchance) + Stats[Stat.宝石成功数率];
 
                     //check if combine will succeed
                     bool succeeded = Envir.Random.Next(100) < successchance;
@@ -9184,7 +9190,10 @@ namespace Server.MirObjects
 
             Enqueue(new S.NewHero { Result = 10 });            
         }
-
+        public override void RefreshMaxExperience()
+        {
+            MaxExperience = Level < Settings.ExperienceList.Count ? Settings.ExperienceList[Level - 1] : 0;
+        }
         public HeroObject GetHero()
         {
             if (HasHero && HeroSpawned)
@@ -10423,7 +10432,7 @@ namespace Server.MirObjects
                 return;
             }
 
-            flexibilityStat = (byte)Math.Max(byte.MinValue, (Math.Min(byte.MaxValue, flexibilityStat + rod.Info.Stats[Stat.暴击倍率])));
+            flexibilityStat = (byte)Math.Max(byte.MinValue, (Math.Min(byte.MaxValue, flexibilityStat + rod.Info.Stats[Stat.暴击率])));
             successStat = (sbyte)Math.Max(sbyte.MinValue, (Math.Min(sbyte.MaxValue, successStat + rod.Info.Stats[Stat.MaxAC])));
 
             if (cast)
@@ -10453,7 +10462,7 @@ namespace Server.MirObjects
                 {
                     case ItemType.鱼钩:
                         {
-                            flexibilityStat = (byte)Math.Max(byte.MinValue, (Math.Min(byte.MaxValue, flexibilityStat + temp.AddedStats[Stat.暴击倍率] + realItem.Stats[Stat.暴击倍率])));
+                            flexibilityStat = (byte)Math.Max(byte.MinValue, (Math.Min(byte.MaxValue, flexibilityStat + temp.AddedStats[Stat.暴击率] + realItem.Stats[Stat.暴击率])));
                         }
                         break;
                     case ItemType.鱼漂:
@@ -13950,13 +13959,13 @@ namespace Server.MirObjects
             else
                 hero.Spawn(CurrentMap, CurrentLocation);
 
-            for (int i = 0; i < Buffs.Count; i++)
+            for (int i = 0; i < hero.Buffs.Count; i++)
             {
-                var buff = Buffs[i];
+                var buff = hero.Buffs[i];
                 buff.LastTime = Envir.Time;
-                buff.ObjectID = ObjectID;
+                buff.ObjectID = hero.ObjectID;
 
-                AddBuff(buff.Type, null, (int)buff.ExpireTime, buff.Stats, true, true, buff.Values);
+                hero.AddBuff(buff.Type, null, (int)buff.ExpireTime, buff.Stats, true, true, buff.Values);
             }
         }
         public void DespawnHero()

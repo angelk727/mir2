@@ -212,6 +212,7 @@ public enum IntelligentCreatureType : byte
     治疗拉拉 = 14,
     猫咪超人 = 15,
     龙宝宝 = 16,
+    蛇宝宝 = 17,
 }
 
 //2 blank mob files
@@ -269,7 +270,7 @@ public enum Monster : ushort
     HighAssassin = 59,
     ZumaStatue = 61,  //Mon7.wil
     ZumaGuardian = 62,
-    ZumaTaurus = 63,
+    Mon63B = 63,//ZumaTaurus
     MudPile = 64,
     DarkDustPile = 65,
     SnowPile = 66,
@@ -753,7 +754,14 @@ public enum Monster : ushort
     Mon607N = 607,
     Mon608N = 608,
     Mon609N = 609,
-    Mon610B = 610,
+    Mon610B = 610,  //Mon62.wil
+    Mon612N = 612,
+    Mon613B = 613,
+    Mon614B = 614,
+    Mon615B = 615,
+    Mon616T = 616,
+    Mon617T = 617,
+    Mon620B = 620,  //Mon63.wil
     //B=Boss D=Door N=Normal P=Peculiar S=Stoned T=Tree
 
     //Special
@@ -812,6 +820,7 @@ public enum Monster : ushort
     治疗拉拉 = 10014,
     猫咪超人 = 10015,
     龙宝宝 = 10016,
+    蛇宝宝 = 10017,
 }
 
 public enum MirAction : byte
@@ -1200,16 +1209,17 @@ public enum ItemSet : byte
     贵人道套 = 23,
     贵人刺套 = 24,
     贵人弓套 = 25,
-    龙血套装 = 26,
+    血龙套装 = 26,
     监视套装 = 27,
     暴压套装 = 28,
     贝玉套装 = 29,
     黑术套装 = 30,
     青玉套装 = 31,
+    青宝套装 = 32,
     鏃未套装 = 38,
     强青玉套 = 39,
-    圣龙套装 = 40,
-    神龙套装 = 41
+    双戒套装 = 40,
+    昆仑套装 = 41
 }
 
 public enum Spell : ushort
@@ -1393,7 +1403,8 @@ public enum Spell : ushort
     Mon580BDenseFog = 438,
     Mon580BRoot = 439,
     Mon603BWhirlPool = 440,
-    Mon609NBomb = 441
+    Mon609NBomb = 441,
+    Mon612NFlame = 442
 }
 
 public enum SpellEffect : byte
@@ -1511,6 +1522,7 @@ public enum BuffType : byte
     Mon579BShield,
     Mon580BShield,
     万效符爆杀,
+    Mon615BShield,
 
     //Special
     游戏管理 = 100,
@@ -1568,6 +1580,7 @@ public enum BuffType : byte
     摩鲁的黄色药剂,
     古代宗师祝福,
     黄金宗师祝福,
+    破天的核心,
 }
 
 [Flags]

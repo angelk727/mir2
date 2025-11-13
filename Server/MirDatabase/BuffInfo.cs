@@ -71,6 +71,7 @@ namespace Server.MirDatabase
                 new BuffInfo { Type = BuffType.Mon579BShield, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration, Visible = true },
                 new BuffInfo { Type = BuffType.Mon580BShield, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration, Visible = true },
                 new BuffInfo { Type = BuffType.万效符爆杀, Properties = BuffProperty.Debuff, StackType = BuffStackType.ResetDuration, Visible = true },
+                new BuffInfo { Type = BuffType.Mon615BShield, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration, Visible = true },
 
                 //Special
                 new BuffInfo { Type = BuffType.游戏管理, Properties = BuffProperty.None, StackType = BuffStackType.Infinite, Visible = Settings.GameMasterEffect },
@@ -127,8 +128,8 @@ namespace Server.MirDatabase
                 new BuffInfo { Type = BuffType.摩鲁的青色药剂, Properties = BuffProperty.RemoveOnDeath, StackType = BuffStackType.None },
                 new BuffInfo { Type = BuffType.摩鲁的黄色药剂, Properties = BuffProperty.RemoveOnDeath, StackType = BuffStackType.None },
                 new BuffInfo { Type = BuffType.古代宗师祝福, Properties = BuffProperty.RemoveOnDeath, StackType = BuffStackType.None },
-                new BuffInfo { Type = BuffType.黄金宗师祝福, Properties = BuffProperty.None, StackType = BuffStackType.None }
-
+                new BuffInfo { Type = BuffType.黄金宗师祝福, Properties = BuffProperty.None, StackType = BuffStackType.None },
+                new BuffInfo { Type = BuffType.破天的核心, Properties = BuffProperty.None, StackType = BuffStackType.None }
             };
 
             return info;
