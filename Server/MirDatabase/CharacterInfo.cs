@@ -77,7 +77,7 @@ namespace Server.MirDatabase
         public List<ItemRentalInformation> RentedItemsToRemove = new List<ItemRentalInformation>();
         public bool HasRentedItem;
         public UserItem CurrentRefine = null;
-        public long CollectTime = 0;
+        public long CollectTime = 0, RefineTimeRemaining = 0;
         public List<UserMagic> Magics = new List<UserMagic>();
         public List<PetInfo> Pets = new List<PetInfo>();
         public List<Buff> Buffs = new List<Buff>();
@@ -264,6 +264,12 @@ namespace Server.MirDatabase
             for (int i = 0; i < count; i++)
             {
                 QuestProgressInfo quest = new QuestProgressInfo(reader, version, customVersion);
+
+                if (quest == null || quest.Info == null || quest.IsOrphan)
+                {
+                    Console.WriteLine($"[Load] Skipped orphan QuestProgress (Index={quest?.Index}) for character: {Name}");
+                    continue;
+                }
                 if (Envir.BindQuest(quest))
                 {
                     CurrentQuests.Add(quest);
@@ -316,8 +322,8 @@ namespace Server.MirDatabase
                 Envir.BindItem(CurrentRefine);
             }
 
-            CollectTime = reader.ReadInt64();
-            CollectTime += Envir.Time;
+            RefineTimeRemaining = reader.ReadInt64();
+            CollectTime = Envir.Time + RefineTimeRemaining;
 
             count = reader.ReadInt32();
             for (int i = 0; i < count; i++)
@@ -518,16 +524,12 @@ namespace Server.MirDatabase
                 CurrentRefine.Save(writer);
             }
 
-            if ((CollectTime - Envir.Time) < 0)
-            {
-                CollectTime = 0;
-            }
-            else
-            {
-                CollectTime -= Envir.Time;
-            }
+            RefineTimeRemaining = CollectTime - Envir.Time;
 
-            writer.Write(CollectTime);
+            if (RefineTimeRemaining < 0)
+                RefineTimeRemaining = 0;
+
+            writer.Write(RefineTimeRemaining);
 
             writer.Write(Friends.Count);
             for (int i = 0; i < Friends.Count; i++)
@@ -655,8 +657,13 @@ namespace Server.MirDatabase
 
     public class MountInfo
     {
-        public HumanObject Player;
+        private HumanObject Player { get; set; }
         public short MountType = -1;
+
+        private bool PlayerHasMap
+        {
+            get { return Player != null && Player.CurrentMap != null; }
+        }
 
         public bool CanRide
         {
@@ -664,7 +671,7 @@ namespace Server.MirDatabase
         }
         public bool CanMapRide
         {
-            get { return HasMount && !Player.CurrentMap.Info.NoMount; }
+            get { return HasMount && PlayerHasMap && !Player.CurrentMap.Info.NoMount; }
         }
         public bool CanDungeonRide
         {

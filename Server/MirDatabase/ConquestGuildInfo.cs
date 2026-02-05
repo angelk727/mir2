@@ -468,8 +468,10 @@ namespace Server.MirDatabase
             }
             else
             {
-                Gate.RepairGate();
+                Gate.HP = Gate.Stats[Stat.HP];
             }
+
+            Gate.CheckDirection();
         }
     }
 

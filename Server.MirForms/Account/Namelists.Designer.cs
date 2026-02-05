@@ -1,4 +1,4 @@
-﻿namespace Server.Account
+namespace Server.Account
 {
     partial class Namelists
     {
@@ -30,10 +30,8 @@
         {
             NamelistsGroupBox = new GroupBox();
             NamelistView = new ListView();
-            columnHeader1 = new ColumnHeader();
             PlayersGroupBox = new GroupBox();
             NamelistViewBox = new ListView();
-            columnHeader2 = new ColumnHeader();
             groupBox1 = new GroupBox();
             FindPlayerBox = new TextBox();
             RefreshButton = new Button();
@@ -49,6 +47,8 @@
             TotalUniquePlayerLabel = new Label();
             TotalPlayerLabel = new Label();
             NamelistCount = new Label();
+            columnHeader1 = new ColumnHeader();
+            columnHeader2 = new ColumnHeader();
             NamelistsGroupBox.SuspendLayout();
             PlayersGroupBox.SuspendLayout();
             groupBox1.SuspendLayout();
@@ -83,10 +83,6 @@
             NamelistView.View = View.Details;
             NamelistView.SelectedIndexChanged += NamelistView_SelectedIndexChanged;
             // 
-            // columnHeader1
-            // 
-            columnHeader1.Width = 215;
-            // 
             // PlayersGroupBox
             // 
             PlayersGroupBox.Controls.Add(NamelistViewBox);
@@ -111,10 +107,6 @@
             NamelistViewBox.TabIndex = 1;
             NamelistViewBox.UseCompatibleStateImageBehavior = false;
             NamelistViewBox.View = View.Details;
-            // 
-            // columnHeader2
-            // 
-            columnHeader2.Width = 215;
             // 
             // groupBox1
             // 
@@ -264,6 +256,14 @@
             NamelistCount.Size = new Size(111, 17);
             NamelistCount.TabIndex = 8;
             NamelistCount.Text = "名称列表文件 数量:";
+            // 
+            // columnHeader1
+            // 
+            columnHeader1.Width = 215;
+            // 
+            // columnHeader2
+            // 
+            columnHeader2.Width = 215;
             // 
             // Namelists
             // 

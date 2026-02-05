@@ -473,7 +473,7 @@ namespace Client.MirScenes.Dialogs
             MembersShowOffline = new MirLabel
             {
                 Visible = true,
-                Text = "显示在线",
+                Text = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.ShowOffline),
                 Location = new Point(245, 309),
                 Parent = MembersPage,
                 Size = new Size(150, 12),
@@ -522,7 +522,7 @@ namespace Client.MirScenes.Dialogs
                 DrawFormat = TextFormatFlags.Right,
                 Size = new Size(75, 300),
                 NotControl = true,
-                Text = "公会名称\n\n等级\n\n会员人数",
+                Text = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.GuildNameLevelMembers),
                 Visible = true,
                 Parent = StatusPage,
                 ForeColour = Color.Gray,
@@ -607,7 +607,7 @@ namespace Client.MirScenes.Dialogs
                 Location = new Point(36, 283),
                 NotControl = true,
                 Parent = StatusPage,
-                Text = "招募会员",
+                Text = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.RecruitMember),
                 Size = new Size(150, 15)
             };
 
@@ -759,7 +759,7 @@ namespace Client.MirScenes.Dialogs
             RankPage.BeforeDraw += (o, e) => RequestUpdateMembers();
             RanksSelectTextL = new MirLabel()
             {
-                Text = "编辑权限",
+                Text = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.EditRank),
                 Location = new Point(42, 18),
                 Size = new Size(150, 20),
                 ForeColour = Color.White,
@@ -769,7 +769,7 @@ namespace Client.MirScenes.Dialogs
             };
             RanksSelectTextR = new MirLabel()
             {
-                Text = "设置权限",
+                Text = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.SelectRank),
                 Location = new Point(198, 18),
                 Size = new Size(150, 20),
                 ForeColour = Color.White,
@@ -965,11 +965,11 @@ namespace Client.MirScenes.Dialogs
             {
                 string Error = "";
                 if (GameScene.Scene.GuildDialog.SparePoints < BuffInfo.PointsRequirement)
-                    Error = "点数不足";
+                    Error = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.InsufficientPointsAvailable);
                 if (GameScene.Scene.GuildDialog.Level < BuffInfo.LevelRequirement)
-                    Error = "行会等级不足以激活此特效";
+                    Error = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.GuildLevelTooLow);
                 if (!GameScene.Scene.GuildDialog.GetMyOptions().HasFlag(GuildRankOptions.CanActivateBuff))
-                    Error = "没有权限激活此特效";
+                    Error = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.GuildRankNoBuffActivation);
                 if (Error != "")
                 {
                     MirMessageBox messageBox = new MirMessageBox(Error);
@@ -984,11 +984,11 @@ namespace Client.MirScenes.Dialogs
             {
                 string Error = "";
                 if (Buff.Active)
-                    Error = "特效处于激活状态";
+                    Error = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.BuffIsActive);
                 if (GameScene.Scene.GuildDialog.Gold < BuffInfo.ActivationCost)
-                    Error = "行会资金不足";
+                    Error = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.GuildFundsInsufficient);
                 if (!GameScene.Scene.GuildDialog.GetMyOptions().HasFlag(GuildRankOptions.CanActivateBuff))
-                    Error = "没有权限激活此特效";
+                    Error = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.GuildRankNoBuffActivation);
                 if (Error != "")
                 {
                     MirMessageBox messageBox = new MirMessageBox(Error);
@@ -1082,13 +1082,13 @@ namespace Client.MirScenes.Dialogs
                     {
                         if (BuffInfo.LevelRequirement > GameScene.Scene.GuildDialog.Level)
                         {
-                            Buffs[i].Info.Text = "等级不足";
+                            Buffs[i].Info.Text = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.InsufficientLevel);
                             Buffs[i].Info.ForeColour = Color.Red;
                             Buffs[i].Icon.Index += 2;
                         }
                         else
                         {
-                            Buffs[i].Info.Text = "可用";
+                            Buffs[i].Info.Text = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.Available);
                             Buffs[i].Info.ForeColour = Buffs[i].Name.ForeColour;
                             Buffs[i].Icon.Index += 2;
                         }
@@ -1099,20 +1099,20 @@ namespace Client.MirScenes.Dialogs
                         if (BuffInfo.TimeLimit > 0)
                         {
                             if (Buff.Active)
-                                Buffs[i].Info.Text = "倒计时中";
+                                Buffs[i].Info.Text = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.CountingDown);
                             else
-                                Buffs[i].Info.Text = "失效";
+                                Buffs[i].Info.Text = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.Expired);
                         }
                         else
-                            Buffs[i].Info.Text = "获得";
+                            Buffs[i].Info.Text = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.Obtained);
                         Buffs[i].Info.ForeColour = Buffs[i].Name.ForeColour;
                         if (Buff.Active)
                         {
-                            Buffs[i].Obtained.Text = "生效";
+                            Buffs[i].Obtained.Text = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.Active);
                             Buffs[i].Icon.Index += 1;
                         }
                         else
-                            Buffs[i].Obtained.Text = "未激活";
+                            Buffs[i].Obtained.Text = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.Inactive);
                     }
                 }
             }
@@ -1156,9 +1156,9 @@ namespace Client.MirScenes.Dialogs
 
             foreach (var val in stats.Values)
             {
-                var c = val.Value < 0 ? "降低" : "提高";
+                var c = val.Value < 0 ? GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.Decreases) : GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.Increases);
 
-                var txt = $"{c} {val.Key} : {val.Value}{(val.Key.ToString().Contains("数率") ? "%" : "")}\n";
+                var txt = GameLanguage.ClientTextMap.GetLocalization((ClientTextKeys.ValueByOwnerPercent), c, val.Key, val.Value, val.Key.ToString().Contains("Percent") ? "%" : "");
 
                 text += txt;
             }
@@ -1198,17 +1198,17 @@ namespace Client.MirScenes.Dialogs
             string ReqText = "";
             if (Buff.LevelRequirement > 0)
             {
-                ReqText += "行会最低等级 " + Buff.LevelRequirement.ToString();
+                ReqText += GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.MinimumGuildLevel) + Buff.LevelRequirement.ToString();
             }
             if (Buff.PointsRequirement > 0)
             {
                 if (ReqText != "") ReqText += "\n";
-                ReqText += "需要点数 " + Buff.PointsRequirement.ToString();
+                ReqText += GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.PointsRequired) + Buff.PointsRequirement.ToString();
             }
             if (Buff.ActivationCost > 0)
             {
                 if (ReqText != "") ReqText += "\n";
-                ReqText += "激活费用 " + Buff.ActivationCost.ToString() + " 金币";
+                ReqText += GameLanguage.ClientTextMap.GetLocalization((ClientTextKeys.ActivationCostGold), Buff.ActivationCost.ToString());
                 //if (ReqText != "") ReqText += "\n";
             }
 
@@ -1234,11 +1234,11 @@ namespace Client.MirScenes.Dialogs
 
                 if (activeBuff != null && activeBuff.Active)
                 {
-                    text = string.Format("剩余时间 {0} 分钟", activeBuff.ActiveTimeRemaining);
+                    text = GameLanguage.ClientTextMap.GetLocalization((ClientTextKeys.TimeRemainingMinutes), activeBuff.ActiveTimeRemaining);
                 }
                 else
                 {
-                    text = string.Format("特效时长 {0} 分钟", Buff.TimeLimit.ToString());
+                    text = GameLanguage.ClientTextMap.GetLocalization((ClientTextKeys.BuffLengthMinutes), Buff.TimeLimit.ToString());
                 }
                 MirLabel TimeLabel = new MirLabel
                 {
@@ -1452,8 +1452,20 @@ namespace Client.MirScenes.Dialogs
         public void NewMembersList(List<GuildRank> NewRanks)
         {
             Ranks = NewRanks;
+            MemberCount = CountMembers(Ranks);
             MembersChanged = false;
             RefreshMemberList();
+        }
+        private int CountMembers(List<GuildRank> ranks)
+        {
+            if (ranks == null) return 0;
+            int total = 0;
+            for (int i = 0; i < ranks.Count; i++)
+            {
+                if (ranks[i] != null && ranks[i].Members != null)
+                    total += ranks[i].Members.Count;
+            }
+            return total;
         }
         public void RefreshMemberList()
         {
@@ -1496,7 +1508,7 @@ namespace Client.MirScenes.Dialogs
         {
             if (SelectedIndex >= Ranks.Count) return;
             if (LastGuildMsg > CMain.Time) return;
-            MirMessageBox messageBox = new MirMessageBox(string.Format("是否将 {0} 的行会权限改为 {1}?", MembersName[Index].Text, Ranks[SelectedIndex].Name), MirMessageBoxButtons.YesNo);
+            MirMessageBox messageBox = new MirMessageBox(GameLanguage.ClientTextMap.GetLocalization((ClientTextKeys.ConfirmChangeRank), MembersName[Index].Text, Ranks[SelectedIndex].Name), MirMessageBoxButtons.YesNo);
 
             messageBox.YesButton.Click += (o, a) =>
             {
@@ -1519,7 +1531,7 @@ namespace Client.MirScenes.Dialogs
         {
             if (MembersName[Index].Text == MapControl.User.Name) return;
             if (LastGuildMsg > CMain.Time) return;
-            MirMessageBox messageBox = new MirMessageBox(string.Format("确定要把 {0} 开除出行会?", MembersName[Index].Text), MirMessageBoxButtons.YesNo);
+            MirMessageBox messageBox = new MirMessageBox(GameLanguage.ClientTextMap.GetLocalization((ClientTextKeys.ConfirmKickPlayer), MembersName[Index].Text), MirMessageBoxButtons.YesNo);
 
             messageBox.YesButton.Click += (o, a) =>
             {
@@ -1613,19 +1625,19 @@ namespace Client.MirScenes.Dialogs
                         TimeSpan Diff = now - Ranks[i].Members[j].LastLogin.ToLocalTime();
                         string text;
                         if (Ranks[i].Members[j].Online)
-                            text = "在线";
+                            text = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.Online);
                         else
                         {
                             switch (Diff.Days)
                             {
                                 case 0:
-                                    text = "今天";
+                                    text = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.Today);
                                     break;
                                 case 1:
-                                    text = "昨天";
+                                    text = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.Yesterday);
                                     break;
                                 default:
-                                    text = Diff.Days + "数天前";
+                                    text = GameLanguage.ClientTextMap.GetLocalization((ClientTextKeys.DaysAgo), Diff.Days);
                                     break;
                             }
                         }
@@ -1866,10 +1878,10 @@ namespace Client.MirScenes.Dialogs
             {
                 if (Ranks.Count == 255) return;
                 if (LastGuildMsg > CMain.Time) return;
-                MirMessageBox messageBox = new MirMessageBox("是否添加新的会员别名及权限?", MirMessageBoxButtons.YesNo);
+                MirMessageBox messageBox = new MirMessageBox(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.ConfirmCreateNewRank), MirMessageBoxButtons.YesNo);
                 messageBox.YesButton.Click += (o, a) =>
                 {
-                    Network.Enqueue(new C.EditGuildMember { ChangeType = 4, RankName = String.Format("行会级别-{0}", Ranks.Count - 1) });
+                    Network.Enqueue(new C.EditGuildMember { ChangeType = 4, RankName = GameLanguage.ClientTextMap.GetLocalization((ClientTextKeys.RankTitle), Ranks.Count - 1) });
                     LastGuildMsg = CMain.Time + 5000;
                 };
                 messageBox.Show();
@@ -2001,7 +2013,7 @@ namespace Client.MirScenes.Dialogs
         public void StorageAddGold()
         {
             if (LastGuildMsg > CMain.Time) return;
-            MirAmountBox amountBox = new MirAmountBox("存入金币", 116, GameScene.Gold);
+            MirAmountBox amountBox = new MirAmountBox(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.Deposit), 116, GameScene.Gold);
 
             amountBox.OKButton.Click += (o, a) =>
             {
@@ -2019,7 +2031,7 @@ namespace Client.MirScenes.Dialogs
         public void StorageRemoveGold()
         {
             if (LastGuildMsg > CMain.Time) return;
-            MirAmountBox amountBox = new MirAmountBox("提取金币", 116, Gold);
+            MirAmountBox amountBox = new MirAmountBox(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.GoldToRetrieve), 116, Gold);
 
             amountBox.OKButton.Click += (o, a) =>
             {
@@ -2147,7 +2159,7 @@ namespace Client.MirScenes.Dialogs
 
             if (MapControl.User.GuildName == "")
             {
-                MirMessageBox messageBox = new MirMessageBox(GameLanguage.NotInGuild, MirMessageBoxButtons.OK);
+                MirMessageBox messageBox = new MirMessageBox(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.NotInGuild), MirMessageBoxButtons.OK);
                 messageBox.Show();
                 return;
             }

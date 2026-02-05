@@ -1,7 +1,8 @@
-﻿using Server.MirDatabase;
-using Server.MirEnvir;
-using System.Data;
+﻿using System.Data;
 using System.Text;
+using System.Text.RegularExpressions;
+using Server.MirDatabase;
+using Server.MirEnvir;
 
 namespace Server.Database
 {
@@ -25,7 +26,11 @@ namespace Server.Database
 
             PopulateTable();
 
+            LoadQuestScript();
+
             rbtnViewBasic.Checked = true;
+            monsterInfoGridView.CellBeginEdit += MonsterInfoGridView_CellBeginEdit;
+            monsterInfoGridView.CellEndEdit += MonsterInfoGridView_CellEndEdit;
         }
 
         public static void SetDoubleBuffered(System.Windows.Forms.Control c)
@@ -57,6 +62,8 @@ namespace Server.Database
             MonsterAutoRev.ValueType = typeof(bool);
             MonsterUndead.ValueType = typeof(bool);
             MonsterCanTame.ValueType = typeof(bool);
+            MonsterIsBoss.ValueType = typeof(bool);
+            MonsterRecall.ValueType = typeof(bool);
             MonsterDropPath.ValueType = typeof(string);
 
             //Basic
@@ -150,8 +157,10 @@ namespace Server.Database
                 row["MonsterExperience"] = item.Experience;
                 row["MonsterCanPush"] = item.CanPush;
                 row["MonsterCanTame"] = item.CanTame;
+                row["MonsterIsBoss"] = item.IsBoss;
                 row["MonsterUndead"] = item.Undead;
                 row["MonsterAutoRev"] = item.AutoRev;
+                row["MonsterRecall"] = item.CanRecall;
                 row["MonsterDropPath"] = item.DropPath;
 
                 foreach (Stat stat in StatEnums)
@@ -215,7 +224,7 @@ namespace Server.Database
 
                     if (row.Cells["Modified"].Value != null && (bool)row.Cells["Modified"].Value == false) continue;
                 }
- 
+
                 monster.Name = (string)row.Cells["MonsterName"].Value;
                 monster.Image = (Monster)row.Cells["MonsterImage"].Value;
                 monster.AI = (ushort)row.Cells["MonsterAI"].Value;
@@ -229,9 +238,11 @@ namespace Server.Database
                 monster.Experience = (uint)row.Cells["MonsterExperience"].Value;
                 monster.CanPush = (bool)row.Cells["MonsterCanPush"].Value;
                 monster.CanTame = (bool)row.Cells["MonsterCanTame"].Value;
+                monster.IsBoss = row.Cells["MonsterIsBoss"].Value != null && (bool)row.Cells["MonsterIsBoss"].Value;
                 monster.Undead = (bool)row.Cells["MonsterUndead"].Value;
                 monster.AutoRev = (bool)row.Cells["MonsterAutoRev"].Value;
-                monster.DropPath = (string)row.Cells["MonsterDropPath"].Value;
+                monster.CanRecall = row.Cells["MonsterRecall"].Value != null && (bool)row.Cells["MonsterRecall"].Value;
+                monster.DropPath = row.Cells["MonsterDropPath"].Value?.ToString() ?? string.Empty;
 
                 monster.Stats.Clear();
 
@@ -247,6 +258,7 @@ namespace Server.Database
                     }
                 }
             }
+            SaveQuestScript();
         }
 
         private DataRow FindRowByMonsterName(string value)
@@ -263,7 +275,20 @@ namespace Server.Database
 
             return null;
         }
+        private DataRow FindRowByMonsterIndex(string index)
+        {
+            foreach (DataRow row in Table.Rows)
+            {
+                var val = row["MonsterIndex"];
 
+                if (val?.ToString().Equals(index) ?? false)
+                {
+                    return row;
+                }
+            }
+
+            return null;
+        }
         private void monsterInfoGridView_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
         {
             var col = monsterInfoGridView.Columns[e.ColumnIndex];
@@ -345,9 +370,9 @@ namespace Server.Database
                         continue;
                     }
 
-                    if (col.Name.Equals("StatHP") || 
-                        col.Name.Equals("StatMinAC") || col.Name.Equals("StatMaxAC") || 
-                        col.Name.Equals("StatMinMAC") || col.Name.Equals("StatMaxMAC") || 
+                    if (col.Name.Equals("StatHP") ||
+                        col.Name.Equals("StatMinAC") || col.Name.Equals("StatMaxAC") ||
+                        col.Name.Equals("StatMinMAC") || col.Name.Equals("StatMaxMAC") ||
                         col.Name.Equals("StatMinDC") || col.Name.Equals("StatMaxDC") ||
                         col.Name.Equals("StatMinMC") || col.Name.Equals("StatMaxMC") ||
                         col.Name.Equals("StatMinSC") || col.Name.Equals("StatMaxSC") ||
@@ -392,7 +417,7 @@ namespace Server.Database
                     if (columns.Length < 2)
                     {
                         fileError = true;
-                        MessageBox.Show("没有要导入的列");
+                        MessageBox.Show("没有需要导入的列");
                     }
 
                     if (!fileError)
@@ -400,8 +425,6 @@ namespace Server.Database
                         monsterInfoGridView.EditMode = DataGridViewEditMode.EditProgrammatically;
 
                         int rowsEdited = 0;
-
-                        this.monsterInfoGridView.CurrentCell = this.monsterInfoGridView[1, 0];
 
                         for (int i = 1; i < rows.Length; i++)
                         {
@@ -417,27 +440,23 @@ namespace Server.Database
                             if (cells.Length != columns.Length)
                             {
                                 fileError = true;
-                                MessageBox.Show($"这行 {i} 列数与标题列数不匹配");
+                                MessageBox.Show($"第 {i} 行的列数量与表头列数量不匹配");
                                 break;
                             }
 
-                            var dataRow = FindRowByMonsterName(cells[0]);
+                            var dataRow = FindRowByMonsterIndex(cells[0]);
 
                             try
                             {
-                                if (dataRow != null)
-                                {
-                                    monsterInfoGridView.BeginEdit(true);
-                                }
-
+                                monsterInfoGridView.BeginEdit(true);
+                                bool isNew = false;
                                 if (dataRow == null)
                                 {
                                     dataRow = Table.NewRow();
-
-                                    Table.Rows.Add(dataRow);
+                                    isNew = true;
                                 }
 
-                                for (int j = 0; j < columns.Length; j++)
+                                for (int j = 1; j < columns.Length; j++)
                                 {
                                     var column = columns[j];
 
@@ -450,11 +469,22 @@ namespace Server.Database
 
                                     if (dataColumn == null)
                                     {
-                                        fileError = true;
-                                        MessageBox.Show($"找不到列 {column} ");
-                                        break;
+                                        throw new Exception($"找不到名为 {column} 的列");
                                     }
-
+                                    if (dataColumn.Name == "MonsterName")
+                                    {
+                                        var existingRow = FindRowByMonsterName(cells[j]);
+                                        if (existingRow != null)
+                                        {
+                                            var existingIndex = existingRow["MonsterIndex"].ToString();
+                                            var currentIndex = dataRow["MonsterIndex"].ToString() ?? "";
+                                            if (existingIndex != currentIndex)
+                                            {
+                                                throw new Exception($"怪物名称 {cells[j]} 已被使用");
+                                            }
+                                        }
+                                        if (!isNew) MonsterNameChange(dataRow[column].ToString(), cells[j]);
+                                    }
                                     if (dataColumn.ValueType.IsEnum)
                                     {
                                         dataRow[column] = Enum.Parse(dataColumn.ValueType, cells[j]);
@@ -468,34 +498,38 @@ namespace Server.Database
                                 dataRow["Modified"] = true;
 
                                 monsterInfoGridView.EndEdit();
+                                if (isNew)
+                                {
+                                    Table.Rows.Add(dataRow);
+                                }
+                                rowsEdited++;
                             }
                             catch (Exception ex)
                             {
                                 fileError = true;
                                 monsterInfoGridView.EndEdit();
 
-                                MessageBox.Show($"导入时出错 {cells[0]}. {ex.Message}");
-                                continue;
-                            }
-
-                            rowsEdited++;
-
-                            if (fileError)
-                            {
+                                MessageBox.Show($"导入项 {cells[0]} 时出错 {ex.Message}");
                                 break;
                             }
                         }
 
+                        monsterInfoGridView.EditMode = DataGridViewEditMode.EditOnKeystrokeOrF2;
                         if (!fileError)
                         {
-                            monsterInfoGridView.EditMode = DataGridViewEditMode.EditOnKeystrokeOrF2;
-                            MessageBox.Show($"{rowsEdited} 怪物数据导入完成");
+                                MessageBox.Show($"{rowsEdited} 条怪物数据导入完成");
+                        }
+                        else
+                        {
+                            monsterInfoGridView.ClearSelection();
+                            monsterInfoGridView.Rows[rowsEdited].Selected = true;
+                            monsterInfoGridView.CurrentCell = monsterInfoGridView.Rows[rowsEdited].Cells[0];
                         }
                     }
                 }
                 else
                 {
-                    MessageBox.Show("没有要导入的行");
+                    MessageBox.Show("未检测到可导入的数据行");
                 }
             }
         }
@@ -519,7 +553,7 @@ namespace Server.Database
                         catch (IOException ex)
                         {
                             fileError = true;
-                            MessageBox.Show("无法将数据写入" + ex.Message);
+                            MessageBox.Show("数据写入磁盘时发生错误：" + ex.Message);
                         }
                     }
                     if (!fileError)
@@ -529,7 +563,7 @@ namespace Server.Database
                             int columnCount = monsterInfoGridView.Columns.Count;
                             string columnNames = "";
                             string[] outputCsv = new string[monsterInfoGridView.Rows.Count + 1];
-                            for (int i = 2; i < columnCount; i++)
+                            for (int i = 1; i < columnCount; i++)
                             {
                                 columnNames += monsterInfoGridView.Columns[i].Name.ToString() + ",";
                             }
@@ -537,7 +571,7 @@ namespace Server.Database
 
                             for (int i = 1; (i - 1) < monsterInfoGridView.Rows.Count; i++)
                             {
-                                for (int j = 2; j < columnCount; j++)
+                                for (int j = 1; j < columnCount; j++)
                                 {
                                     var cell = monsterInfoGridView.Rows[i - 1].Cells[j];
 
@@ -554,18 +588,18 @@ namespace Server.Database
                             }
 
                             File.WriteAllLines(sfd.FileName, outputCsv, Encoding.UTF8);
-                            MessageBox.Show("怪物数据导出成功", "导出信息");
+                            MessageBox.Show("数据导出完成", "提示");
                         }
                         catch (Exception ex)
                         {
-                            MessageBox.Show("错误 :" + ex.Message);
+                             MessageBox.Show("导出失败: " + ex.Message);
                         }
                     }
                 }
             }
             else
             {
-                MessageBox.Show("没有怪物数据可导出", "导出信息");
+                MessageBox.Show("未找到可导出的怪物数据", "提示");
             }
         }
 
@@ -588,8 +622,10 @@ namespace Server.Database
             row.Cells["MonsterExperience"].Value = (uint)0;
             row.Cells["MonsterCanPush"].Value = (bool)true;
             row.Cells["MonsterCanTame"].Value = (bool)true;
+            row.Cells["MonsterIsBoss"].Value = (bool)false;
             row.Cells["MonsterUndead"].Value = (bool)false;
             row.Cells["MonsterAutoRev"].Value = (bool)true;
+            row.Cells["MonsterRecall"].Value = (bool)false;
             row.Cells["MonsterDropPath"].Value = "";
 
             foreach (Stat stat in StatEnums)
@@ -623,6 +659,94 @@ namespace Server.Database
         private void monsterInfoGridView_DataError(object sender, DataGridViewDataErrorEventArgs e)
         {
 
+        }
+
+        private Dictionary<string, string[]> questScriptFilesContent;
+        private bool questFileChange;
+        private string monsterNameCellOldValue;
+        private void MonsterInfoGridView_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
+        {
+            if (monsterInfoGridView.Columns[e.ColumnIndex].Name == "MonsterName")
+            {
+                monsterNameCellOldValue = monsterInfoGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value?.ToString();
+            }
+            else
+            {
+                monsterNameCellOldValue = string.Empty;
+            }
+        }
+        private void MonsterInfoGridView_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            if (monsterInfoGridView.Columns[e.ColumnIndex].Name == "MonsterName" && e.RowIndex != -1)
+            {
+                var newName = monsterInfoGridView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value?.ToString() ?? string.Empty;
+                MonsterNameChange(monsterNameCellOldValue, newName);
+                monsterNameCellOldValue = string.Empty;
+            }
+        }
+        private Dictionary<string, string[]> LoadScriptFiles(string path, string searchPattern)
+        {
+            var filesContent = new Dictionary<string, string[]>();
+            foreach (var file in Directory.GetFiles(path, searchPattern, SearchOption.AllDirectories))
+            {
+                filesContent.Add(file, File.ReadAllLines(file));
+            }
+            return filesContent;
+        }
+        private void SaveScriptFile(Dictionary<string, string[]> files)
+        {
+            foreach (var file in files)
+            {
+                File.WriteAllLines(file.Key, file.Value);
+            }
+        }
+
+        private void LoadQuestScript()
+        {
+            questScriptFilesContent = LoadScriptFiles(@"Envir\Quests", "*.txt");
+        }
+
+        private void SaveQuestScript()
+        {
+            if (questFileChange) SaveScriptFile(questScriptFilesContent);
+        }
+
+        private void MonsterNameChange(string oldName, string newName)
+        {
+            if (!string.IsNullOrWhiteSpace(oldName) && !string.IsNullOrWhiteSpace(newName) && !oldName.Equals(newName, StringComparison.OrdinalIgnoreCase))
+            {
+
+                foreach (var file in questScriptFilesContent)
+                {
+                    var lines = file.Value;
+                    bool isMonster = false;
+                    for (int i = 0; i < lines.Length; i++)
+                    {
+                        var line = lines[i];
+                        if (line.StartsWith("[@KillTasks]"))
+                        {
+                            isMonster = true;
+                        }
+                        else if (string.IsNullOrWhiteSpace(line) || line.StartsWith("["))
+                        {
+                            isMonster = false;
+                        }
+                        else if (isMonster)
+                        {
+                            var match = Regex.Match(line, @"^([^\s|[]+)(?=\s?)");
+                            if (match.Success)
+                            {
+                                string monsterName = match.Groups[1].Value;
+                                if (monsterName.Equals(oldName, StringComparison.OrdinalIgnoreCase))
+                                {
+                                    lines[i] = line.Replace(monsterName, newName);
+                                    questFileChange = true;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }

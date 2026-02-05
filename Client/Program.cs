@@ -96,7 +96,7 @@ namespace Client
                             }
 
                         if (stopwatch.ElapsedMilliseconds <= 3000) continue;
-                        MessageBox.Show("更新期间无法关闭自动修补程序");
+                        MessageBox.Show(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.FailedCloseAutoPatcherUpdate));
                         return true;
                     }
                 }
@@ -165,14 +165,14 @@ namespace Client
             var parsedOK = DisplayResolutions.GetDisplayResolutions();
             if (!parsedOK)
             {
-                MessageBox.Show("无法获取显示分辨率", "获取显示分辨率问题", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.CouldNotGetDisplayResolutions), GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.GetDisplayResolutionIssue), MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Environment.Exit(0);
             }
 
             if (!DisplayResolutions.IsSupported(Settings.Resolution))
             {
-                MessageBox.Show($"客户端不支持 {Settings.Resolution} 将设置成默认分辨率 1024x768",
-                                "无效的客户端分辨率",
+                MessageBox.Show(GameLanguage.ClientTextMap.GetLocalization((ClientTextKeys.ClientNotSupportSettingResolution), Settings.Resolution),
+                    GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.InvalidClientResolution),
                                 MessageBoxButtons.OK,
                                 MessageBoxIcon.Error);
 

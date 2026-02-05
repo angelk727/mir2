@@ -75,7 +75,7 @@ namespace Client.MirScenes.Dialogs
                 Parent = this,
                 Sound = SoundList.ButtonA,
             };
-            HelpButton.Click += (o, e) => GameScene.Scene.HelpDialog.DisplayPage("坐骑");
+            HelpButton.Click += (o, e) => GameScene.Scene.HelpDialog.DisplayPage(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.Mounts));
 
             MountImage = new MirAnimatedControl
             {
@@ -275,7 +275,7 @@ namespace Client.MirScenes.Dialogs
                 if (item != null)
                 {
                     MountName.Text = item.FriendlyName;
-                    MountLoyalty.Text = string.Format("{0} / {1} 忠诚度", item.CurrentDura, item.MaxDura);
+                    MountLoyalty.Text = GameLanguage.ClientTextMap.GetLocalization((ClientTextKeys.LoyaltyProgress), item.CurrentDura, item.MaxDura);
                 }
             }
 
@@ -299,7 +299,7 @@ namespace Client.MirScenes.Dialogs
             if (Visible) return;
             if (GameScene.User.MountType < 0)
             {
-                MirMessageBox messageBox = new MirMessageBox(GameLanguage.NoMount, MirMessageBoxButtons.OK);
+                MirMessageBox messageBox = new MirMessageBox(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.NoMount), MirMessageBoxButtons.OK);
                 messageBox.Show();
                 return;
             }

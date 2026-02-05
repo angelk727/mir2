@@ -62,7 +62,7 @@ namespace Launcher
 
                 if (OldList.Count == 0)
                 {
-                    MessageBox.Show(GameLanguage.PatchErr);
+                    MessageBox.Show(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.PatchErr));
                     Completed = true;
                     return;
                 }
@@ -87,7 +87,7 @@ namespace Launcher
             }
             catch (EndOfStreamException ex)
             {
-                MessageBox.Show("发现数据流已结束。主机可能正在使用早于版本 1.1.0.0 的补丁系统");
+                MessageBox.Show(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.EndStreamOldVersion));
                 Completed = true;
                 SaveError(ex.ToString());
             }
@@ -114,7 +114,7 @@ namespace Launcher
             var download = new Download();
             download.Info = DownloadList.Dequeue();
             DownloadFile(download);
-            
+
         }
 
         private void CleanUp()
@@ -268,7 +268,7 @@ namespace Launcher
                             //if there's another previous backup: delete it first
                             if (File.Exists(oldFilename))
                             {
-                                File.Delete(oldFilename);   
+                                File.Delete(oldFilename);
                             }
                             File.Move(fileNameOut, oldFilename);
                         }
@@ -277,18 +277,18 @@ namespace Launcher
                             SaveError(ex.ToString());
                             errorcount++;
                             if (errorcount == 5)
-                                MessageBox.Show("出现了太多问题，将不再显示以后的错误");
+                                MessageBox.Show(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.TooManyErrors));
                             if (errorcount < 5)
-                                MessageBox.Show("保存此文件时发生问题: " + fileNameOut);
+                                MessageBox.Show(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.ErrorSavingFile) + fileNameOut);
                         }
                         catch (Exception ex)
                         {
                             SaveError(ex.ToString());
                             errorcount++;
                             if (errorcount == 5)
-                                MessageBox.Show("出现了太多问题，将不再显示以后的错误");
+                                MessageBox.Show(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.TooManyErrors));
                             if (errorcount < 5)
-                                MessageBox.Show("保存此文件时发生问题: " + fileNameOut);
+                                MessageBox.Show(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.ErrorSavingFile) + fileNameOut);
                         }
                         finally
                         {
@@ -312,15 +312,15 @@ namespace Launcher
                 SaveError(ex.ToString());
                 errorcount++;
                 if (errorcount == 5)
-                    MessageBox.Show("出现了太多问题，将不再显示以后的错误");
+                    MessageBox.Show(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.TooManyErrors));
                 if (errorcount < 5)
-                    MessageBox.Show("保存此文件时发生问题: " + dl.Info.FileName);
+                    MessageBox.Show(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.ErrorSavingFile) + dl.Info.FileName);
             }
             finally
             {
                 if (ErrorFound)
                 {
-                MessageBox.Show(string.Format("下载文件失败: {0}", fileName));
+                    MessageBox.Show(GameLanguage.ClientTextMap.GetLocalization((ClientTextKeys.FileDownload_Failure), fileName));
                 }
             }
 
@@ -357,7 +357,7 @@ namespace Launcher
                 }
                 else
                 {
-                    MessageBox.Show(string.Format("请检查启动器的 HOST 设置格式是否正确\n可能是缺少或多余的斜杠或拼写错误造成的。\n如果不需要补丁，可以忽略此错误。"), "HOST 格式错误");
+                    MessageBox.Show(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.LauncherHostSettingFormatError), GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.BadHostFormat));
                     return null;
                 }
             }
@@ -390,7 +390,7 @@ namespace Launcher
                 }
                 else
                 {
-                    MessageBox.Show(string.Format("请检查启动器的 BROWSER 设置格式是否正确。\n可能是缺少或多余的斜杠或拼写错误造成的。\n如果不需要特别注意此设置，可以忽略此错误。"), "BROWSER 格式错误");
+                    MessageBox.Show(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.LauncherBrowserFormatError), GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.BadBrowserFormat));
                 }
             }
 
@@ -545,7 +545,7 @@ namespace Launcher
                 if (Completed && ActiveDownloads.Count == 0)
                 {
                     ActionLabel.Text = "";
-                    CurrentFile_label.Text = "数据更新";
+                    CurrentFile_label.Text = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.UpToDate);
                     SpeedLabel.Text = "";
                     ProgressCurrent_pb.Width = 550;
                     TotalProg_pb.Width = 550;
@@ -556,13 +556,13 @@ namespace Launcher
                     TotalPercent_label.Text = "100%";
                     InterfaceTimer.Enabled = false;
                     Launch_pb.Enabled = true;
-                    if (ErrorFound) MessageBox.Show("一个或多个文件下载失败，请检查错误", "下载失败");
+                    if (ErrorFound) MessageBox.Show(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.FilesDownloadFailed), GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.DownloadFailed));
                     ErrorFound = false;
 
                     if (CleanFiles)
                     {
                         CleanFiles = false;
-                        MessageBox.Show("文件已清理", "清理文件");
+                        MessageBox.Show(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.YourFilesCleanedUp), GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.CleanFiles));
                     }
 
                     if (Restart)
@@ -614,8 +614,8 @@ namespace Launcher
                 CurrentPercent_label.Visible = true;
                 TotalPercent_label.Visible = true;
 
-                if (LabelSwitch) ActionLabel.Text = string.Format("{0} 剩余文件", _fileCount - _currentCount);
-                else ActionLabel.Text = string.Format("{0:#,##0}MB 待更文件", ((_totalBytes) - (_completedBytes + currentBytes)) / 1024 / 1024);
+                if (LabelSwitch) ActionLabel.Text = GameLanguage.ClientTextMap.GetLocalization((ClientTextKeys.FilesRemaining), _fileCount - _currentCount);
+                else ActionLabel.Text = GameLanguage.ClientTextMap.GetLocalization((ClientTextKeys.MBRemaining), ((_totalBytes) - (_completedBytes + currentBytes)) / 1024 / 1024);
 
                 if (Settings.P_Concurrency > 1)
                 {
@@ -718,5 +718,5 @@ namespace Launcher
                     File.Move(oldFilename, originalFilename);
             }
         }
-    } 
+    }
 }

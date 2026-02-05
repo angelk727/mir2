@@ -84,6 +84,7 @@
             ExportButton = new Button();
             ImportButton = new Button();
             ExportSelectedButton = new Button();
+            NPCSearchBox = new TextBox();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)NPCPreview).BeginInit();
@@ -666,12 +667,13 @@
             // 
             NPCInfoListBox.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
             NPCInfoListBox.FormattingEnabled = true;
+            NPCInfoListBox.HorizontalScrollbar = true;
             NPCInfoListBox.ItemHeight = 17;
-            NPCInfoListBox.Location = new Point(14, 53);
+            NPCInfoListBox.Location = new Point(14, 86);
             NPCInfoListBox.Margin = new Padding(4, 3, 4, 3);
             NPCInfoListBox.Name = "NPCInfoListBox";
             NPCInfoListBox.SelectionMode = SelectionMode.MultiExtended;
-            NPCInfoListBox.Size = new Size(276, 378);
+            NPCInfoListBox.Size = new Size(276, 344);
             NPCInfoListBox.TabIndex = 15;
             NPCInfoListBox.SelectedIndexChanged += NPCInfoListBox_SelectedIndexChanged;
             // 
@@ -730,11 +732,21 @@
             ExportSelectedButton.UseVisualStyleBackColor = true;
             ExportSelectedButton.Click += ExportSelected_Click;
             // 
+            // NPCSearchBox
+            // 
+            NPCSearchBox.Location = new Point(12, 53);
+            NPCSearchBox.Name = "NPCSearchBox";
+            NPCSearchBox.PlaceholderText = "搜索";
+            NPCSearchBox.Size = new Size(278, 23);
+            NPCSearchBox.TabIndex = 26;
+            NPCSearchBox.TextChanged += NPCSearchBox_TextChanged;
+            // 
             // NPCInfoForm
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(917, 453);
+            Controls.Add(NPCSearchBox);
             Controls.Add(ExportSelectedButton);
             Controls.Add(ImportButton);
             Controls.Add(ExportButton);
@@ -758,6 +770,7 @@
             ((System.ComponentModel.ISupportInitialize)EndMin_num).EndInit();
             ((System.ComponentModel.ISupportInitialize)StartMin_num).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -818,5 +831,6 @@
         private System.Windows.Forms.CheckBox TeleportToCheckBox;
         private CheckBox ConquestVisible_checkbox;
         private PictureBox NPCPreview;
+        private TextBox NPCSearchBox;
     }
 }

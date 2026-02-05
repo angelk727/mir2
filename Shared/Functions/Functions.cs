@@ -1,4 +1,4 @@
-﻿using System.Drawing;
+using System.Drawing;
 using System.IO.Compression;
 using System.Runtime.Serialization.Formatters.Binary;
 

@@ -1,4 +1,4 @@
-﻿public class IntelligentCreatureRules
+public class IntelligentCreatureRules
 {
     public int MinimalFullness = 1;
 

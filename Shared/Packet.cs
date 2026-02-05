@@ -1,4 +1,4 @@
-﻿using C = ClientPackets;
+using C = ClientPackets;
 using S = ServerPackets;
 
 public abstract class Packet
@@ -105,6 +105,12 @@ public abstract class Packet
                 return new C.NewAccount();
             case (short)ClientPacketIds.ChangePassword:
                 return new C.ChangePassword();
+            case (short)ClientPacketIds.UnlockStorage:
+                return new C.UnlockStorage();
+            case (short)ClientPacketIds.SetStoragePassword:
+                return new C.SetStoragePassword();
+            case (short)ClientPacketIds.RemoveStoragePassword:
+                return new C.RemoveStoragePassword();
             case (short)ClientPacketIds.Login:
                 return new C.Login();
             case (short)ClientPacketIds.NewCharacter:
@@ -169,6 +175,12 @@ public abstract class Packet
                 return new C.PickUp();
             case (short)ClientPacketIds.RequestMapInfo:
                 return new C.RequestMapInfo();
+            case (short)ClientPacketIds.RequestMonsterInfo:
+                return new C.RequestMonsterInfo();
+            case (short)ClientPacketIds.RequestNPCInfo:
+                return new C.RequestNPCInfo();
+            case (short)ClientPacketIds.RequestItemInfo:
+                return new C.RequestItemInfo();
             case (short)ClientPacketIds.TeleportToNPC:
                 return new C.TeleportToNPC();
             case (short)ClientPacketIds.SearchMap:
@@ -383,6 +395,10 @@ public abstract class Packet
                 return new C.ItemRentalLockItem();
             case (short)ClientPacketIds.ConfirmItemRental:
                 return new C.ConfirmItemRental();
+            case (short)ClientPacketIds.GuildTerritoryPage:
+                return new C.GuildTerritoryPage();
+            case (short)ClientPacketIds.DeleteItem:
+                return new C.DeleteItem();
             default:
                 return null;
         }
@@ -406,6 +422,10 @@ public abstract class Packet
                 return new S.ChangePassword();
             case (short)ServerPacketIds.ChangePasswordBanned:
                 return new S.ChangePasswordBanned();
+            case (short)ServerPacketIds.StorageUnlockResult:
+                return new S.StorageUnlockResult();
+            case (short)ServerPacketIds.StoragePasswordResult:
+                return new S.StoragePasswordResult();
             case (short)ServerPacketIds.Login:
                 return new S.Login();
             case (short)ServerPacketIds.LoginBanned:
@@ -458,6 +478,10 @@ public abstract class Packet
                 return new S.ObjectChat();
             case (short)ServerPacketIds.NewItemInfo:
                 return new S.NewItemInfo();
+            case (short)ServerPacketIds.NewMonsterInfo:
+                return new S.NewMonsterInfo();
+            case (short)ServerPacketIds.NewNPCInfo:
+                return new S.NewNPCInfo();
             case (short)ServerPacketIds.NewHeroInfo:
                 return new S.NewHeroInfo();
             case (short)ServerPacketIds.NewChatItem:
@@ -938,6 +962,8 @@ public abstract class Packet
                 return new S.Roll();
             case (short)ServerPacketIds.SetCompass:
                 return new S.SetCompass();
+            case (short)ServerPacketIds.GuildTerritoryPage:
+                return new S.GuildTerritoryPage();
             default:
                 return null;
         }

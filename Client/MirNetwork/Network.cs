@@ -35,10 +35,9 @@ namespace Client.MirNetwork
 
                 ErrorShown = true;
 
-                MirMessageBox errorBox = new("连接到服务器时出错", MirMessageBoxButtons.Cancel);
+                MirMessageBox errorBox = new(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.ErrorConnectingToServer), MirMessageBoxButtons.Cancel);
                 errorBox.CancelButton.Click += (o, e) => Program.Form.Close();
-                errorBox.Label.Text = $"已达最大连接尝试次数： {MaxAttempts}" +
-                                      $"{Environment.NewLine}请稍后再试或检查您的连接设置";
+                errorBox.Label.Text = GameLanguage.ClientTextMap.GetLocalization((ClientTextKeys.MaximumConnectionAttemptsReached), MaxAttempts);
                 errorBox.Show();
                 return;
             }
@@ -200,7 +199,7 @@ namespace Client.MirNetwork
                         return;
                     }
 
-                    MirMessageBox.Show("与服务器的连接中断", true);
+                    MirMessageBox.Show(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.LostConnectionWithServer), true);
                     Disconnect();
                     return;
                 }

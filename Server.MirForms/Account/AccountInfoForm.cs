@@ -527,6 +527,38 @@ namespace Server
             }
         }
 
+        private void ClearStoragePasswordButton_Click(object sender, EventArgs e)
+        {
+            if (_selectedAccountInfos == null || _selectedAccountInfos.Count == 0) return;
+
+            if (MessageBox.Show("是否清除所选账户的存储密码？", "通知",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Asterisk) != DialogResult.Yes)
+                return;
+
+            for (int i = 0; i < _selectedAccountInfos.Count; i++)
+            {
+                AccountInfo account = _selectedAccountInfos[i];
+                account.ClearStoragePassword();
+
+                foreach (var character in account.Characters)
+                {
+                    if (character?.Player == null) continue;
+
+                    character.Player.SetStorageUnlocked(false);
+                    character.Player.ResetStorageUnlock();
+                    character.Player.Enqueue(new ServerPackets.StoragePasswordResult
+                    {
+                        Result = 4,
+                        Removing = true,
+                        HasPassword = false,
+                        LastSetTime = DateTime.MinValue
+                    });
+                }
+            }
+
+            MessageBox.Show("存储密码已清除。", "通知", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+        }
+
         private void PasswordChangeCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             if (ActiveControl != sender) return;

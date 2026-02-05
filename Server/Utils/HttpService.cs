@@ -20,8 +20,15 @@ namespace Server.Library.Utils
             if (!HttpListener.IsSupported)
             {
                 throw new InvalidOperationException(
-                    "ÒªÊ¹ÓÃHttp·şÎñÆ÷£¬²Ù×÷ÏµÍ³±ØĞëÊÇWindows XP SP2»òServer 2003»ò¸ü¸ß°æ±¾");
+                "HttpListener ä¸å—å½“å‰æ“ä½œç³»ç»Ÿæ”¯æŒï¼ˆéœ€è¦ Windows XP SP2 / Server 2003 åŠä»¥ä¸Šç‰ˆæœ¬ï¼‰ã€‚");
             }
+
+			//if (!HttpListener.IsSupported)//å¾…ä¿®å¤
+            //{
+                //throw new InvalidOperationException(ServerLanguage.GetLocalization(
+                //ServerTextKeys.HttpListenerNotSupported));
+            //}
+
             string[] prefixes = { Host };
 
             _listener = new HttpListener();
@@ -32,11 +39,11 @@ namespace Server.Library.Utils
                     _listener.Prefixes.Add(s);
                 }
                 _listener.Start();
-                MessageQueue.Instance.Enqueue("Http·şÎñÆ÷ ³É¹¦¿ªÆô");
+                MessageQueue.Instance.Enqueue(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.HttpServiceStarted));
             }
             catch (Exception err)
             {
-                MessageQueue.Instance.Enqueue("Http·şÎñÆ÷ Æô¶¯Ê§°Ü! ´íÎó:" + err);
+                MessageQueue.Instance.Enqueue(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.HttpServiceStartFailed) + err);
                 return;
             }
 

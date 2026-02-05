@@ -33,7 +33,7 @@ namespace Server.MirDatabase
             ItemInfo itemInfo = Envir.GetItemInfo(name);
             if (itemInfo == null)
             {
-                MessageQueue.Enqueue(string.Format("缺少物品: {0}", name));
+                MessageQueue.Enqueue(GameLanguage.ServerTextMap.GetLocalization((ServerTextKeys.CouldNotFindItem), name));
                 return;
             }
 
@@ -98,7 +98,7 @@ namespace Server.MirDatabase
 
                             if (info == null)
                             {
-                                MessageQueue.Enqueue(string.Format("合成配方: {1} 中缺少工具: {0}", lines[i], recipe));
+                                MessageQueue.Enqueue(GameLanguage.ServerTextMap.GetLocalization((ServerTextKeys.CouldNotFindToolRecipe), lines[i], recipe));
                                 continue;
                             }
 
@@ -115,7 +115,7 @@ namespace Server.MirDatabase
 
                             if (info == null)
                             {
-                                MessageQueue.Enqueue(string.Format("合成配方: {1} 中缺少材料: {0}", lines[i], recipe));
+                                MessageQueue.Enqueue(GameLanguage.ServerTextMap.GetLocalization((ServerTextKeys.CouldNotFindIngredientRecipe), lines[i], recipe));
                                 continue;
                             }
 
@@ -176,7 +176,7 @@ namespace Server.MirDatabase
                             }
                             catch
                             {
-                                MessageQueue.Enqueue(string.Format("无法分析 {0}, 的值: {1}", data[0], data[1]));
+                                MessageQueue.Enqueue(GameLanguage.ServerTextMap.GetLocalization((ServerTextKeys.CouldNotParseOption), data[0], data[1]));
                                 continue;
                             }
                         }

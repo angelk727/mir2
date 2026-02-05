@@ -1,4 +1,4 @@
-﻿namespace Server.Database
+namespace Server.Database
 {
     partial class Market
     {
@@ -40,9 +40,9 @@
             SearchLabel = new Label();
             RefreshListings = new Button();
             SearchGroupBox = new GroupBox();
+            DeleteListingButton = new Button();
             TotalItemsOwnedLabel = new Label();
             TotalItemsLabel = new Label();
-            DeleteListingButton = new Button();
             ActionsGroupBox = new GroupBox();
             ReasonTextBox = new TextBox();
             ReasonLabel = new Label();
@@ -153,6 +153,16 @@
             SearchGroupBox.TabStop = false;
             SearchGroupBox.Text = "搜索/统计";
             // 
+            // DeleteListingButton
+            // 
+            DeleteListingButton.Location = new Point(6, 29);
+            DeleteListingButton.Name = "DeleteListingButton";
+            DeleteListingButton.Size = new Size(96, 26);
+            DeleteListingButton.TabIndex = 4;
+            DeleteListingButton.Text = "删除列表";
+            DeleteListingButton.UseVisualStyleBackColor = true;
+            DeleteListingButton.Click += DeleteListingButton_Click;
+            // 
             // TotalItemsOwnedLabel
             // 
             TotalItemsOwnedLabel.AutoSize = true;
@@ -170,16 +180,6 @@
             TotalItemsLabel.Size = new Size(63, 17);
             TotalItemsLabel.TabIndex = 6;
             TotalItemsLabel.Text = "物品总数: ";
-            // 
-            // DeleteListingButton
-            // 
-            DeleteListingButton.Location = new Point(6, 29);
-            DeleteListingButton.Name = "DeleteListingButton";
-            DeleteListingButton.Size = new Size(96, 26);
-            DeleteListingButton.TabIndex = 4;
-            DeleteListingButton.Text = "删除列表";
-            DeleteListingButton.UseVisualStyleBackColor = true;
-            DeleteListingButton.Click += DeleteListingButton_Click;
             // 
             // ActionsGroupBox
             // 
@@ -230,7 +230,6 @@
             Controls.Add(MarketListing);
             Name = "Market";
             Text = "游戏市场窗口";
-            Load += Market_Load;
             SearchGroupBox.ResumeLayout(false);
             SearchGroupBox.PerformLayout();
             ActionsGroupBox.ResumeLayout(false);

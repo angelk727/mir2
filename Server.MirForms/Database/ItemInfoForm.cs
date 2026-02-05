@@ -575,10 +575,11 @@ namespace Server
                     LoadImage(imageNumber);
                 }
             }
-
             if (ActiveControl != sender) return;
 
-            if (!ushort.TryParse(ActiveControl.Text, out ushort temp))
+            ushort temp;
+
+            if (!ushort.TryParse(ActiveControl.Text, out temp))
             {
                 ActiveControl.BackColor = Color.Red;
                 return;
@@ -593,7 +594,6 @@ namespace Server
         {
             string filename = $"{imageValue}.bmp";
             string imagePath = Path.Combine(Environment.CurrentDirectory, "Envir", "Previews", "Items", filename);
-
             if (File.Exists(imagePath))
             {
                 using FileStream fs = new FileStream(imagePath, FileMode.Open, FileAccess.Read);
@@ -1634,12 +1634,10 @@ namespace Server
                 SearchForItem();
             }
         }
-
         private void btnClearItemSearch_Click(object sender, EventArgs e)
         {
             ResetItemList();
         }
-
         private void ResetItemList()
         {
             TxtSearchItem.Text = "";
@@ -1652,11 +1650,9 @@ namespace Server
                 }
             }
         }
-
         private void SearchForItem()
         {
             List<ItemInfo> results = Envir.ItemInfoList.FindAll(x => x.Name.ToLower().Contains(TxtSearchItem.Text.ToLower()));
-
             if (results.Count > 0)
             {
                 ItemInfoListBox.Items.Clear();
@@ -1970,7 +1966,6 @@ namespace Server
             for (int i = 0; i < _selectedItemInfos.Count; i++)
                 _selectedItemInfos[i].Bind = (NoHerocheckbox.Checked ? _selectedItemInfos[i].Bind |= BindMode.NoHero : _selectedItemInfos[i].Bind ^= BindMode.NoHero);
         }
-
         private void unableToRent_CheckBox_CheckedChanged(object sender, EventArgs e)
         {
             if (ActiveControl != sender)
@@ -2026,12 +2021,9 @@ namespace Server
             for (int i = 0; i < _selectedItemInfos.Count; i++)
                 _selectedItemInfos[i].Slots = temp;
         }
-
         private void label33_Click(object sender, EventArgs e)
         {
-
         }
-
         private void TxtSearchItem_TextChanged(object sender, EventArgs e)
         {
             if (!string.IsNullOrWhiteSpace(TxtSearchItem.Text))

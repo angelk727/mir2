@@ -39,9 +39,9 @@ namespace Client.MirScenes.Dialogs
                 Visible = true,
                 Enabled = true,
             };
-            ReportType.Items.Add("选择投诉类型");
-            ReportType.Items.Add("上报 Bug");
-            ReportType.Items.Add("投诉玩家");
+            ReportType.Items.Add(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.SelectReportType));
+            ReportType.Items.Add(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.SubmitBug));
+            ReportType.Items.Add(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.ReportPlayer));
 
             MessageArea = new MirTextBox
             {

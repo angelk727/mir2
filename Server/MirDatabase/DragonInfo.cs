@@ -120,7 +120,7 @@ namespace Server.MirDatabase
                 DropInfo drop = DropInfo.FromLine(lines[i]);
                 if (drop == null)
                 {
-                    MessageQueue.Enqueue(string.Format("加载掉落物品失败: 破天魔龙, Line {0}", lines[i]));
+                    MessageQueue.Enqueue(GameLanguage.ServerTextMap.GetLocalization((ServerTextKeys.CouldNotLoadDropDragonItem), lines[i]));
                     continue;
                 }
 

@@ -1,10 +1,14 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Diagnostics;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using Client.MirControls;
 using Client.MirGraphics;
 using Client.MirNetwork;
 using Client.MirObjects;
 using Client.MirSounds;
+using SlimDX.Direct3D9;
 using C = ClientPackets;
+using Font = System.Drawing.Font;
 
 namespace Client.MirScenes.Dialogs
 {
@@ -133,7 +137,7 @@ namespace Client.MirScenes.Dialogs
 
                 if (Reward.SelectedItemIndex < 0 && SelectedQuest.QuestInfo.RewardsSelectItem.Count > 0)
                 {
-                    MirMessageBox messageBox = new MirMessageBox("选择相应的奖励物品");
+                    MirMessageBox messageBox = new MirMessageBox(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.YouMustSelectRewardItem));
                     messageBox.Show();
                     return;
                 }
@@ -261,7 +265,7 @@ namespace Client.MirScenes.Dialogs
                 }
                 else
                 {
-                    GameScene.Scene.HelpDialog.DisplayPage("任务");
+					GameScene.Scene.HelpDialog.DisplayPage(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.Quests));
                     isHelpDialogVisible = true;
                 }
             };
@@ -337,7 +341,7 @@ namespace Client.MirScenes.Dialogs
 
         public void RefreshInterface()
         {
-            _availableQuestLabel.Text = string.Format("待接: {0}", Quests.Count);
+            _availableQuestLabel.Text = GameLanguage.ClientTextMap.GetLocalization((ClientTextKeys.AvailableQuestList), Quests.Count);
 
             int maxIndex = Quests.Count - Rows.Length;
 
@@ -596,7 +600,7 @@ namespace Client.MirScenes.Dialogs
             };
             _cancelButton.Click += (o, e) =>
             {
-                MirMessageBox messageBox = new MirMessageBox("确定要放弃这个任务", MirMessageBoxButtons.YesNo);
+                MirMessageBox messageBox = new MirMessageBox(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.AskCancelQuest), MirMessageBoxButtons.YesNo);
 
                 messageBox.YesButton.Click += (o1, a) =>
                 {
@@ -619,6 +623,19 @@ namespace Client.MirScenes.Dialogs
                 Sound = SoundList.ButtonA,
             };
             closeButton.Click += (o, e) => Hide();
+
+            //MirButton helpButton = new MirButton
+            //{
+            //    Index = 257,
+            //    HoverIndex = 258,
+            //    PressedIndex = 259,
+            //    Library = Libraries.Prguse2,
+            //    Parent = this,
+            //    Location = new Point(266, 3),
+            //    Sound = SoundList.ButtonA,
+            //};
+            //helpButton.Click += (o, e) => GameScene.Scene.HelpDialog.DisplayPage("Quests");
+
         }
 
         public void DisplayQuestDetails(ClientQuestProgress quest)
@@ -699,7 +716,7 @@ namespace Client.MirScenes.Dialogs
 
             Quests = GameScene.User.CurrentQuests;
 
-            _takenQuestsLabel.Text = string.Format("任务数: {0}/{1}", Quests.Count, Globals.MaxConcurrentQuests);
+            _takenQuestsLabel.Text = GameLanguage.ClientTextMap.GetLocalization((ClientTextKeys.TakenQuestsList), Quests.Count, Globals.MaxConcurrentQuests);
 
             var groupedQuests = Quests.GroupBy(d => d.QuestInfo.Group).ToList();
 
@@ -844,7 +861,6 @@ namespace Client.MirScenes.Dialogs
                     y += 15;
 
                     string trackedQuest = questToTrack;
-
                     _questTaskLabel = new MirLabel
                     {
                         Text = trackedQuest,
@@ -1015,7 +1031,7 @@ namespace Client.MirScenes.Dialogs
         public Font Font = new Font(Settings.FontName, 8F);
         public List<string> CurrentLines = new List<string>();
 
-        private const string TaskTitle = "任务", ProgressTitle = "完成条件", ReturnTitle = "重复任务", TimeLimitTitle = "时间限制";
+        private readonly string TaskTitle = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.Tasks), ProgressTitle = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.Progress), ReturnTitle = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.QuestReturn), TimeLimitTitle = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.TimeLimit);
 
         public QuestMessage(MirButton scrollUpButton, MirButton scrollDownButton, MirButton positionBar, int lineCount, bool displayProgress = false)
         {
@@ -1055,6 +1071,7 @@ namespace Client.MirScenes.Dialogs
             };
 
             AfterDraw += QuestMessage_AfterDraw;
+
         }
 
         private void QuestMessage_AfterDraw(object sender, EventArgs e)
@@ -1168,7 +1185,6 @@ namespace Client.MirScenes.Dialogs
             {
                 CurrentLines.Add(" ");
                 CurrentLines.Add(TaskTitle);
-
                 foreach (string task in Quest.QuestInfo.TaskDescription)
                 {
                     CurrentLines.Add(task);
@@ -1272,11 +1288,46 @@ namespace Client.MirScenes.Dialogs
 
                 List<Match> matchList = C.Matches(currentLine).Cast<Match>().ToList();
 
+                // Add link patterns (using static patterns from NPCDialog)
+                matchList.AddRange(NPCDialog.MonsterLink.Matches(currentLine).Cast<Match>());
+                matchList.AddRange(NPCDialog.NPCLink.Matches(currentLine).Cast<Match>());
+                matchList.AddRange(NPCDialog.ItemLink.Matches(currentLine).Cast<Match>());
+                
                 int oldLength = currentLine.Length;
 
                 foreach (Match match in matchList.OrderBy(o => o.Index).ToList())
                 {
                     int offSet = oldLength - currentLine.Length;
+
+                    // Check if this is a link type
+                    string linkType = null;
+                    if (NPCDialog.MonsterLink.Match(match.Value).Success)
+                        linkType = "MONSTER";
+                    else if (NPCDialog.NPCLink.Match(match.Value).Success)
+                        linkType = "NPC";
+                    else if (NPCDialog.ItemLink.Match(match.Value).Success)
+                        linkType = "ITEM";
+
+                    if (linkType != null)
+                    {
+                        string linkIdx = match.Groups["idx"].Captures.Count > 0 ? match.Groups["idx"].Captures[0].Value : match.Groups["idx"].Value;
+                        string providedName = match.Groups["name"].Success ? match.Groups["name"].Captures[0].Value : null;
+                        string displayName = NPCDialog.GetDisplayNameForLink(linkType, linkIdx, providedName);
+                        if (string.IsNullOrEmpty(displayName))
+                            displayName = $"LINK_{linkIdx}";
+
+                        int matchStart = match.Index - offSet;
+                        int matchLength = match.Length;
+
+                        currentLine = currentLine.Remove(matchStart, matchLength).Insert(matchStart, displayName);
+                        string text2 = currentLine.Substring(0, matchStart);
+                        Point offset = NPCDialog.CalculateLinkOffset(text2, _textLabel[i - TopLine]);
+
+                        Point anchorPoint = _textLabel[i - TopLine].Location.Add(offset);
+                        NewLink(displayName, linkType, linkIdx, anchorPoint);
+
+                        continue;
+                    }
 
                     Capture capture = match.Groups[1].Captures[0];
                     string[] values = capture.Value.Split('/');
@@ -1309,6 +1360,35 @@ namespace Client.MirScenes.Dialogs
             };
             temp.MouseWheel += QuestMessage_MouseWheel;
 
+            _textButtons.Add(temp);
+        }
+
+        private void NewLink(string text, string linkType, string linkIdx, Point p)
+        {
+            MirLabel temp = new MirLabel
+            {
+                AutoSize = true,
+                Visible = true,
+                Parent = this,
+                Location = p,
+                Text = text,
+                ForeColour = Color.Cyan,
+                Font = Font
+            };
+
+            temp.MouseEnter += (o, e) =>
+            {
+                temp.ForeColour = Color.Orange;
+                NPCDialog.ShowTooltipForLink(linkType, linkIdx, temp.DisplayLocation);
+            };
+
+            temp.MouseLeave += (o, e) =>
+            {
+                temp.ForeColour = Color.Cyan;
+                NPCDialog.HideTooltipForLink();
+            };
+
+            temp.MouseWheel += QuestMessage_MouseWheel;
             _textButtons.Add(temp);
         }
 
@@ -1826,7 +1906,7 @@ namespace Client.MirScenes.Dialogs
 
             string name = Quest.QuestInfo.Name;
             string level = string.Format("Lv{0}", Quest.QuestInfo.MinLevelNeeded);
-            string state = quest.Completed ? "(任务完成)" : "(进行中)";
+            string state = quest.Completed ? GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.Complete) : GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.InProgress);
 
             bool lowLevelQuest = (MapObject.User.Level - quest.QuestInfo.MinLevelNeeded) > 10;
 

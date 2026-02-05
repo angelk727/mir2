@@ -1,4 +1,4 @@
-﻿using System.Drawing;
+using System.Drawing;
 using Server.MirEnvir;
 
 namespace Server.MirDatabase
@@ -19,11 +19,14 @@ namespace Server.MirDatabase
         public string FileName = string.Empty, Title = string.Empty;
         public ushort MiniMap, BigMap, Music;
         public LightSetting Light;
-        public byte MapDarkLight = 0, MineIndex = 0;
+        public byte MapDarkLight = 0, MineIndex = 0, GTIndex = 0;
 
         public bool NoTeleport, NoReconnect, NoRandom, NoEscape, NoRecall, NoDrug, NoPosition, NoFight,
             NoThrowItem, NoDropPlayer, NoDropMonster, NoNames, NoMount, NeedBridle, Fight, NeedHole, Fire, Lightning,
-            NoTownTeleport, NoReincarnation;
+            NoTownTeleport, NoReincarnation, GT, NoExperience, NoGroup = false, NoPets, NoIntelligentCreatures, NoHero, RequiredGroup = false, FireWallLimit;
+
+        public int RequiredGroupSize = 0, FireWallCount = 0;
+
 
         public string NoReconnectMap = string.Empty;
         public int FireDamage, LightningDamage;
@@ -100,6 +103,24 @@ namespace Server.MirDatabase
             {
                 WeatherParticles = (WeatherSetting)reader.ReadUInt16();
             }
+
+            if (Envir.LoadVersion >= 111)
+            {
+                GT = reader.ReadBoolean();
+                GTIndex = reader.ReadByte();
+            }
+            if (Envir.LoadVersion >= 114)
+            {
+                NoExperience = reader.ReadBoolean();
+                NoGroup = reader.ReadBoolean();
+                NoPets = reader.ReadBoolean();
+                NoIntelligentCreatures = reader.ReadBoolean();
+                NoHero = reader.ReadBoolean();
+                RequiredGroupSize = reader.ReadInt32();
+                RequiredGroup = reader.ReadBoolean();
+                FireWallLimit = reader.ReadBoolean();
+                FireWallCount = reader.ReadInt32();
+            }
         }
 
         public void Save(BinaryWriter writer)
@@ -157,6 +178,19 @@ namespace Server.MirDatabase
 
             writer.Write((UInt16)WeatherParticles);
 
+            writer.Write(GT);
+            writer.Write(GTIndex);
+
+            writer.Write(NoExperience);
+            writer.Write(NoGroup);
+            writer.Write(NoPets);
+            writer.Write(NoIntelligentCreatures);
+            writer.Write(NoHero);
+            writer.Write(RequiredGroupSize);
+            writer.Write(RequiredGroup);
+            writer.Write(FireWallLimit);
+            writer.Write(FireWallCount);
+
         }
 
 
@@ -211,7 +245,7 @@ namespace Server.MirDatabase
 
             if (data.Length < 8) return;
 
-            MapInfo info = new MapInfo { FileName = data[0], Title = data[1] };
+            MapInfo info = new MapInfo {FileName = data[0], Title = data[1]};
 
 
             if (!ushort.TryParse(data[2], out info.MiniMap)) return;
@@ -308,6 +342,11 @@ namespace Server.MirDatabase
 
             info.Index = ++EditEnvir.MapIndex;
             EditEnvir.MapInfoList.Add(info);
+        }
+        public static string GetMapTitleByIndex(int index) // For Players Online tab
+        {
+            var mapInfo = Envir.MapInfoList.FirstOrDefault(m => m.Index == index);
+            return mapInfo != null ? mapInfo.Title : $"UnknownMap({index})";
         }
     }
 }

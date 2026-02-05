@@ -14,8 +14,13 @@ namespace Client.MirScenes.Dialogs
         public MirItemCell[] Grid;
         public MirItemCell[] QuestGrid;
 
-        public MirButton CloseButton, ItemButton, ItemButton2, QuestButton, AddButton;
+        public MirButton CloseButton, ItemButton, ItemButton2, QuestButton, AddButton, DelItemButton;
         public MirLabel GoldLabel, WeightLabel;
+
+        private bool _deleteMode;
+        private Size _binSize;
+        private MirImageControl _deleteCursorIcon;
+        public bool DeleteMode => _deleteMode;
 
         public InventoryDialog()
         {
@@ -84,7 +89,7 @@ namespace Client.MirScenes.Dialogs
             {
                 int openLevel = (GameScene.User.Inventory.Length - 46) / 4;
                 int openGold = (1000000 + openLevel * 1000000);
-                MirMessageBox messageBox = new MirMessageBox(string.Format(GameLanguage.ExtraSlots4, openGold), MirMessageBoxButtons.OKCancel);
+                MirMessageBox messageBox = new MirMessageBox(GameLanguage.ClientTextMap.GetLocalization((ClientTextKeys.ExtraSlots4), openGold), MirMessageBoxButtons.OKCancel);
 
                 messageBox.OKButton.Click += (o, a) =>
                 {
@@ -104,6 +109,27 @@ namespace Client.MirScenes.Dialogs
                 Sound = SoundList.ButtonA,
             };
             CloseButton.Click += (o, e) => Hide();
+
+            DelItemButton = new MirButton
+            {
+                Index = 366,
+                HoverIndex = 367,
+                PressedIndex = 368,
+                Location = new Point(291, 212),
+                Library = Libraries.Prguse2,
+                Parent = this,
+                Sound = SoundList.ButtonA,
+            };
+            DelItemButton.Click += DelItemButton_Click;
+
+            _deleteCursorIcon = new MirImageControl
+            {
+                Parent = GameScene.Scene,
+                Library = Libraries.Prguse2,
+                Index = 366,
+                NotControl = true,
+                Visible = false
+            };
 
             GoldLabel = new MirLabel
             {
@@ -184,9 +210,26 @@ namespace Client.MirScenes.Dialogs
 
         void Button_Click(object sender, EventArgs e)
         {
+            // Ctrl + Left-click: move selected item to the tab's bag without switching tabs.
+            if (GameScene.SelectedCell != null &&
+                e is MouseEventArgs me &&
+                me.Button == MouseButtons.Left &&
+                (Control.ModifierKeys & Keys.Control) == Keys.Control)
+            {
+                if (sender == ItemButton)
+                {
+                    TryMoveSelectedInventoryItem(false);
+                }
+                else if (sender == ItemButton2)
+                {
+                    TryMoveSelectedInventoryItem(true);
+                }
+                return;
+            }
+
             if (GameScene.User.Inventory.Length == 46 && sender == ItemButton2)
             {
-                MirMessageBox messageBox = new MirMessageBox(GameLanguage.ExtraSlots8, MirMessageBoxButtons.OKCancel);
+                MirMessageBox messageBox = new MirMessageBox(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.ExtraSlots8), MirMessageBoxButtons.OKCancel);
 
                 messageBox.OKButton.Click += (o, a) =>
                 {
@@ -223,6 +266,50 @@ namespace Client.MirScenes.Dialogs
                     }
                 }
             }
+        }
+
+        private bool TryMoveSelectedInventoryItem(bool toSecondBag)
+        {
+            // Allow dragging an item (inventory or belt) onto a bag tab to move it to that bag page.
+            var selected = GameScene.SelectedCell;
+            if (selected == null || selected.Item == null || selected.Locked || selected.GridType != MirGridType.Inventory)
+                return false;
+
+            const int firstBagVisibleSlots = 40; // 40 slots per bag page, belt is handled separately.
+            int firstBagStart = GameScene.User.BeltIdx;
+            int secondBagStart = firstBagStart + firstBagVisibleSlots;
+            int inventoryLength = GameScene.User.Inventory.Length;
+
+            bool targetIsSecond = toSecondBag;
+            if (targetIsSecond && inventoryLength <= secondBagStart) return false;          // no expanded bag
+            if (targetIsSecond && selected.ItemSlot >= secondBagStart) return false;        // already there
+            if (!targetIsSecond && selected.ItemSlot >= firstBagStart && selected.ItemSlot < secondBagStart) return false; // already in first bag
+
+            int start = targetIsSecond ? secondBagStart : firstBagStart;
+            int end = targetIsSecond ? inventoryLength : secondBagStart;
+
+            int? targetSlot = FindFirstEmptySlot(start, end, GameScene.User.Inventory);
+            if (targetSlot == null) return false; // no space
+
+            Network.Enqueue(new C.MoveItem { Grid = MirGridType.Inventory, From = selected.ItemSlot, To = targetSlot.Value });
+
+            selected.Locked = true;
+            MirItemCell targetCell = Grid.FirstOrDefault(c => c.ItemSlot == targetSlot.Value);
+            if (targetCell != null)
+                targetCell.Locked = true;
+
+            GameScene.SelectedCell = null;
+            return true;
+        }
+
+        private static int? FindFirstEmptySlot(int start, int end, UserItem[] items)
+        {
+            for (int i = start; i < end; i++)
+            {
+                if (items[i] == null)
+                    return i;
+            }
+            return null;
         }
 
         void Reset()
@@ -299,6 +386,10 @@ namespace Client.MirScenes.Dialogs
             WeightLabel.Text = GameScene.User.Inventory.Count(t => t == null).ToString();
             //WeightLabel.Text = (MapObject.User.MaxBagWeight - MapObject.User.CurrentBagWeight).ToString();
             GoldLabel.Text = GameScene.Gold.ToString("###,###,##0");
+
+            // Delete-mode cursor icon follows the mouse
+            if (_deleteMode && _deleteCursorIcon != null && _deleteCursorIcon.Visible)
+                UpdateDeleteCursorPos();
         }
 
 
@@ -309,6 +400,23 @@ namespace Client.MirScenes.Dialogs
             double percent = MapObject.User.CurrentBagWeight / (double)MapObject.User.Stats[Stat.背包负重];
             if (percent > 1) percent = 1;
             if (percent <= 0) return;
+
+            // Weight bar art based on fill
+            if (percent <= 0.50)
+            {
+                WeightBar.Library = Libraries.Prguse;
+                WeightBar.Index = 24;
+            }
+            else if (percent <= 0.75)
+            {
+                WeightBar.Library = Libraries.UI_32bit;
+                WeightBar.Index = 471;
+            }
+            else
+            {
+                WeightBar.Library = Libraries.UI_32bit;
+                WeightBar.Index = 470;
+            }
 
             Rectangle section = new Rectangle
             {
@@ -365,6 +473,129 @@ namespace Client.MirScenes.Dialogs
                     break;
             }
         }
+
+        public override void OnMouseMove(MouseEventArgs e)
+        {
+            if (_deleteMode) UpdateDeleteCursorPos();
+            base.OnMouseMove(e);
+        }
+
+        private void DelItemButton_Click(object sender, EventArgs e)
+        {
+            if (GameScene.SelectedCell != null &&
+                GameScene.SelectedCell.GridType == MirGridType.Inventory &&
+                GameScene.SelectedCell.Item != null)
+            {
+                PromptDelete(GameScene.SelectedCell);
+                return;
+            }
+            ToggleDeleteMode(!_deleteMode);
+        }
+        public override void OnMouseClick(MouseEventArgs e)
+        {
+            // Right-click anywhere on the inventory cancels the bin toggle
+            if (_deleteMode && e.Button == MouseButtons.Right)
+            {
+                ToggleDeleteMode(false);
+                return;
+            }
+
+            base.OnMouseClick(e);
+        }
+
+        public void ToggleDeleteMode(bool on)
+        {
+            _deleteMode = on;
+
+            DelItemButton.Index = on ? 368 : 366;
+
+            if (_deleteCursorIcon != null)
+            {
+                _deleteCursorIcon.Visible = on;
+
+                if (on)
+                {
+                    // Use the same library as you created the icon with (Prguse2)
+                    _deleteCursorIcon.Index = 366;
+
+                    _binSize = _deleteCursorIcon.Library != null
+                        ? _deleteCursorIcon.Library.GetSize(366)
+                        : Size.Empty;
+
+                    UpdateDeleteCursorPos();
+                }
+            }
+
+            SoundManager.PlaySound(on ? SoundList.ButtonA : SoundList.ButtonB);
+        }
+
+        private void UpdateDeleteCursorPos()
+        {
+            if (!_deleteMode || _deleteCursorIcon == null || !_deleteCursorIcon.Visible) return;
+
+            // Top-center above the pointer: bottom edge of the icon touches the cursor
+            int x = CMain.MPoint.X - (_binSize.Width / 2);
+            int y = CMain.MPoint.Y - _binSize.Height;
+
+            _deleteCursorIcon.Location = new Point(x, y);
+            _deleteCursorIcon.BringToFront();
+        }
+
+        public void PromptDelete(MirItemCell cell)
+        {
+            if (cell == null || cell.Item == null) return;
+
+            var item = cell.Item;
+            var name = item.FriendlyName;
+
+            void CancelDelete()
+            {
+                GameScene.SelectedCell = null;
+                cell.Locked = false;
+                cell.Opacity = 1F;
+                cell.Redraw();
+
+                ToggleDeleteMode(false);
+            }
+
+            void DoDelete(ushort amt)
+            {
+                SendDeleteItem(item.UniqueID, amt, false);
+
+                CancelDelete();
+            }
+
+            if (item.Count > 1)
+            {
+                var amountPrompt = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.DeleteItemAmountPrompt, name);
+                var amountBox = new MirAmountBox(amountPrompt, item.Image, item.Count);
+
+                amountBox.OKButton.Click += (o, a) =>
+                {
+                    var amt = (ushort)Math.Max(1, Math.Min(amountBox.Amount, item.Count));
+                    DoDelete(amt);
+                };
+
+                // Cancel closes the amount box AND exits delete mode
+                if (amountBox.CancelButton != null)
+                    amountBox.CancelButton.Click += (o, a) => CancelDelete();
+
+                amountBox.Show();
+            }
+            else
+            {
+                var confirmPrompt = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.DeleteItemConfirmPrompt, name);
+                var mb = new MirMessageBox(confirmPrompt, MirMessageBoxButtons.YesNo);
+                mb.YesButton.Click += (o, a) => { DoDelete(1); };
+                mb.NoButton.Click += (o, a) => { CancelDelete(); };
+                mb.Show();
+            }
+        }
+
+        private void SendDeleteItem(ulong uniqueId, ushort count, bool heroInventory)
+        {
+            Network.Enqueue(new C.DeleteItem { UniqueID = uniqueId, Count = count, HeroInventory = heroInventory });
+        }
     }
     public sealed class BeltDialog : MirImageControl
     {
@@ -403,7 +634,7 @@ namespace Client.MirScenes.Dialogs
                 Parent = this,
                 PressedIndex = 1928,
                 Sound = SoundList.ButtonA,
-                Hint = GameLanguage.Rotate
+                Hint = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.Rotate)
             };
             RotateButton.Click += (o, e) => Flip();
 
@@ -416,7 +647,7 @@ namespace Client.MirScenes.Dialogs
                 Parent = this,
                 PressedIndex = 1925,
                 Sound = SoundList.ButtonA,
-                Hint = string.Format(GameLanguage.Close, CMain.InputKeys.GetKey(KeybindOptions.Belt))
+                Hint = GameLanguage.ClientTextMap.GetLocalization((ClientTextKeys.CloseKey), CMain.InputKeys.GetKey(KeybindOptions.Belt))
             };
             CloseButton.Click += (o, e) => Hide();
 

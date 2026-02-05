@@ -538,6 +538,7 @@
             Text = "怪物调节列表";
             ResumeLayout(false);
             PerformLayout();
+
         }
 
         #endregion

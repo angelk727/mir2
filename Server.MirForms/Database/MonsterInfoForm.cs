@@ -87,6 +87,8 @@ namespace Server
                 CanTameCheckBox.Checked = false;
                 AutoRevCheckBox.Checked = false;
                 UndeadCheckBox.Checked = false;
+                CanRecallCheckBox.Checked = false;
+                IsBossCheckBox.Checked = false;
 
                 return;
             }
@@ -136,6 +138,8 @@ namespace Server
             CanTameCheckBox.Checked = info.CanTame;
             AutoRevCheckBox.Checked = info.AutoRev;
             UndeadCheckBox.Checked = info.Undead;
+            CanRecallCheckBox.Checked = info.CanRecall;
+            IsBossCheckBox.Checked = info.IsBoss;
 
             for (int i = 1; i < _selectedMonsterInfos.Count; i++)
             {
@@ -176,6 +180,9 @@ namespace Server
 
                 if (AutoRevCheckBox.Checked != info.AutoRev) AutoRevCheckBox.CheckState = CheckState.Indeterminate;
                 if (UndeadCheckBox.Checked != info.Undead) UndeadCheckBox.CheckState = CheckState.Indeterminate;
+
+                if (CanRecallCheckBox.Checked = info.CanRecall) CanRecallCheckBox.CheckState = CheckState.Indeterminate;
+                if (IsBossCheckBox.Checked = info.IsBoss) IsBossCheckBox.CheckState = CheckState.Indeterminate;
             }
 
         }
@@ -565,6 +572,20 @@ namespace Server
 
             for (int i = 0; i < _selectedMonsterInfos.Count; i++)
                 _selectedMonsterInfos[i].MoveSpeed = temp;
+        }
+        private void CanRecallCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (ActiveControl != sender) return;
+
+            for (int i = 0; i < _selectedMonsterInfos.Count; i++)
+                _selectedMonsterInfos[i].CanRecall = CanRecallCheckBox.Checked;
+        }
+        private void IsBossCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (ActiveControl != sender) return;
+
+            for (int i = 0; i < _selectedMonsterInfos.Count; i++)
+                _selectedMonsterInfos[i].IsBoss = IsBossCheckBox.Checked;
         }
         private void CanPushCheckBox_CheckedChanged(object sender, EventArgs e)
         {

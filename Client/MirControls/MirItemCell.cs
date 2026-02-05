@@ -233,7 +233,7 @@ namespace Client.MirControls
 
                             if (GameScene.Scene.ChatDialog.ChatTextBox.Text.Length + text.Length > Globals.MaxChatLength)
                             {
-                                GameScene.Scene.ChatDialog.ReceiveChat("无法链接到该物品, 信息超过允许的长度", ChatType.System);
+                                GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.UnableLinkItemMessageTooLong), ChatType.System);
                                 return;
                             }
 
@@ -258,13 +258,13 @@ namespace Client.MirControls
                             {
                                 if (FreeSpace() == 0)
                                 {
-                                    GameScene.Scene.ChatDialog.ReceiveChat("没有足够空间拆分物品", ChatType.System);
+                                    GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.NoRoomToSplitStack), ChatType.System);
                                     return;
                                 }
 
                                 if (Item.Count > 1)
                                 {
-                                    MirAmountBox amountBox = new MirAmountBox("拆分数量:", Item.Image, (uint)(Item.Count - 1));
+                                    MirAmountBox amountBox = new MirAmountBox(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.SplitAmount), Item.Image, (uint)(Item.Count - 1));
 
                                     amountBox.OKButton.Click += (o, a) =>
                                     {
@@ -317,7 +317,7 @@ namespace Client.MirControls
             MirAmountBox amountBox;
             if (Item.Count > 1)
             {
-                amountBox = new MirAmountBox("购买金额:", Item.Image, Item.Count);
+                amountBox = new MirAmountBox(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.PurchaseAmount), Item.Image, Item.Count);
 
                 amountBox.OKButton.Click += (o, e) =>
                 {
@@ -327,7 +327,7 @@ namespace Client.MirControls
             }
             else
             {
-                amountBox = new MirAmountBox("购买", Item.Image, string.Format("金额: {0:#,##0} 金币", Item.Price()));
+                amountBox = new MirAmountBox(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.Purchase), Item.Image, GameLanguage.ClientTextMap.GetLocalization((ClientTextKeys.ValueGold), Item.Price()));
 
                 amountBox.OKButton.Click += (o, e) =>
                 {
@@ -523,7 +523,7 @@ namespace Client.MirControls
                         if (CMain.Time < GameScene.UseItemTime) return;
                         if (Item.Info.Type == ItemType.药水 && Item.Info.Shape == 4)
                         {
-                            MirMessageBox messageBox = new MirMessageBox("是否要使用这个药水？", MirMessageBoxButtons.YesNo);
+                            MirMessageBox messageBox = new MirMessageBox(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.AreYouWantUsePotion), MirMessageBoxButtons.YesNo);
                             messageBox.YesButton.Click += (o, e) =>
                             {
                                 Network.Enqueue(new C.UseItem { UniqueID = Item.UniqueID, Grid = GridType });
@@ -940,7 +940,7 @@ namespace Client.MirControls
                                 {
                                     if (CMain.Ctrl)
                                     {
-                                        MirMessageBox messageBox = new MirMessageBox("是否赋能到所选物品", MirMessageBoxButtons.YesNo);
+                                        MirMessageBox messageBox = new MirMessageBox(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.YouWantCombineItems), MirMessageBoxButtons.YesNo);
                                         messageBox.YesButton.Click += (o, e) =>
                                         {
                                             //Combine
@@ -1074,12 +1074,12 @@ namespace Client.MirControls
                             case MirGridType.GuildStorage:
                                 if (Item != null)
                                 {
-                                    GameScene.Scene.ChatDialog.ReceiveChat("不能交换物品", ChatType.System);
+                                    GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.YouCannotSwapItems), ChatType.System);
                                     return;
                                 }
                                 if (!GuildDialog.MyOptions.HasFlag(GuildRankOptions.CanRetrieveItem))
                                 {
-                                    GameScene.Scene.ChatDialog.ReceiveChat("取出物品的权限不足", ChatType.System);
+                                    GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.InsufficientRightsRetrieveItems), ChatType.System);
                                     return;
                                 }
                                 Network.Enqueue(new C.GuildStorageItemChange { Type = 1, From = GameScene.SelectedCell.ItemSlot, To = ItemSlot });
@@ -1211,7 +1211,7 @@ namespace Client.MirControls
                             case MirGridType.Renting:
                                 if (GameScene.User.RentalItemLocked)
                                 {
-                                    GameScene.Scene.ChatDialog.ReceiveChat("无法删除锁定物品，取消后重试", ChatType.System);
+                                    GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.UnableRemoveLockedItem), ChatType.System);
                                     GameScene.SelectedCell = null;
                                     return;
                                 }
@@ -1440,7 +1440,7 @@ namespace Client.MirControls
                                 {
                                     if (!GuildDialog.MyOptions.HasFlag(GuildRankOptions.CanStoreItem))
                                     {
-                                        GameScene.Scene.ChatDialog.ReceiveChat("存储物品权限不足", ChatType.System);
+                                        GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.InsufficientRightsStoreItems), ChatType.System);
                                         return;
                                     }
 
@@ -1461,12 +1461,12 @@ namespace Client.MirControls
                                 {
                                     if (Item != null)
                                     {
-                                        GameScene.Scene.ChatDialog.ReceiveChat("不能交易此物品", ChatType.System);
+                                        GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.YouCannotSwapItems), ChatType.System);
                                         return;
                                     }
                                     if (!GuildDialog.MyOptions.HasFlag(GuildRankOptions.CanStoreItem))
                                     {
-                                        GameScene.Scene.ChatDialog.ReceiveChat("存储物品权限不足", ChatType.System);
+                                        GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.InsufficientRightsStoreItems), ChatType.System);
                                         return;
                                     }
                                     if (ItemArray[ItemSlot] == null)
@@ -1766,13 +1766,13 @@ namespace Client.MirControls
                         {
                             if (Item != null)
                             {
-                                GameScene.Scene.ChatDialog.ReceiveChat("不能交易此物品", ChatType.System);
+                                GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.YouCannotSwapItems), ChatType.System);
                                 return;
                             }
 
                             if (GameScene.SelectedCell.Item.Info.Bind.HasFlag(BindMode.DontTrade))
                             {
-                                GameScene.Scene.ChatDialog.ReceiveChat("不能邮寄此物品", ChatType.System);
+                                GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.YouCannotMailItem), ChatType.System);
                                 return;
                             }
 
@@ -1801,7 +1801,7 @@ namespace Client.MirControls
                                 {
                                     if (CMain.Ctrl)
                                     {
-                                        MirMessageBox messageBox = new MirMessageBox("想尝试组合这些物品吗？", MirMessageBoxButtons.YesNo);
+                                        MirMessageBox messageBox = new MirMessageBox(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.YouWantCombineItems), MirMessageBoxButtons.YesNo);
                                         messageBox.YesButton.Click += (o, e) =>
                                         {
                                             //Combine
@@ -1895,7 +1895,7 @@ namespace Client.MirControls
 
                                 if (GameScene.SelectedCell.Item.Weight + MapObject.Hero.CurrentBagWeight > MapObject.Hero.Stats[Stat.背包负重])
                                 {
-                                    GameScene.Scene.ChatDialog.ReceiveChat("无法完成操作-背包超重", ChatType.System);
+                                    GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.TooHeavyToTransfer), ChatType.System);
                                     GameScene.SelectedCell = null;
                                     return;
                                 }
@@ -2117,14 +2117,14 @@ namespace Client.MirControls
                 case MirGender.男性:
                     if (!Item.Info.RequiredGender.HasFlag(RequiredGender.男性))
                     {
-                        GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.NotFemale, ChatType.System);
+                        GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.NotFemale), ChatType.System);
                         return false;
                     }
                     break;
                 case MirGender.女性:
                     if (!Item.Info.RequiredGender.HasFlag(RequiredGender.女性))
                     {
-                        GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.NotMale, ChatType.System);
+                        GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.NotMale), ChatType.System);
                         return false;
                     }
                     break;
@@ -2135,35 +2135,35 @@ namespace Client.MirControls
                 case MirClass.战士:
                     if (!Item.Info.RequiredClass.HasFlag(RequiredClass.战士))
                     {
-                        GameScene.Scene.ChatDialog.ReceiveChat("战士不能使用此物品", ChatType.System);
+                        GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.WarriorsCannotUseItem), ChatType.System);
                         return false;
                     }
                     break;
                 case MirClass.法师:
                     if (!Item.Info.RequiredClass.HasFlag(RequiredClass.法师))
                     {
-                        GameScene.Scene.ChatDialog.ReceiveChat("魔法师不能使用此物品", ChatType.System);
+                        GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.WizardsCannotUseItem), ChatType.System);
                         return false;
                     }
                     break;
                 case MirClass.道士:
                     if (!Item.Info.RequiredClass.HasFlag(RequiredClass.道士))
                     {
-                        GameScene.Scene.ChatDialog.ReceiveChat("道士不能使用此物品", ChatType.System);
+                        GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.TaoistsCannotUseItem), ChatType.System);
                         return false;
                     }
                     break;
                 case MirClass.刺客:
                     if (!Item.Info.RequiredClass.HasFlag(RequiredClass.刺客))
                     {
-                        GameScene.Scene.ChatDialog.ReceiveChat("刺客不能使用此物品", ChatType.System);
+                        GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.AssassinsCannotUseItem), ChatType.System);
                         return false;
                     }
                     break;
                 case MirClass.弓箭:
                     if (!Item.Info.RequiredClass.HasFlag(RequiredClass.弓箭))
                     {
-                        GameScene.Scene.ChatDialog.ReceiveChat("弓箭手不能使用此物品", ChatType.System);
+                        GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.ArchersCannotUseItem), ChatType.System);
                         return false;
                     }
                     break;
@@ -2174,84 +2174,84 @@ namespace Client.MirControls
                 case RequiredType.Level:
                     if (actor.Level < Item.Info.RequiredAmount)
                     {
-                        GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.LowLevel, ChatType.System);
+                        GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.LowLevel), ChatType.System);
                         return false;
                     }
                     break;
                 case RequiredType.MaxAC:
                     if (actor.Stats[Stat.MaxAC] < Item.Info.RequiredAmount)
                     {
-                        GameScene.Scene.ChatDialog.ReceiveChat("没有足够的物理防御", ChatType.System);
+                        GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.LowAC), ChatType.System);
                         return false;
                     }
                     break;
                 case RequiredType.MaxMAC:
                     if (actor.Stats[Stat.MaxMAC] < Item.Info.RequiredAmount)
                     {
-                        GameScene.Scene.ChatDialog.ReceiveChat("没有足够的魔法防御", ChatType.System);
+                        GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.LowMAC), ChatType.System);
                         return false;
                     }
                     break;
                 case RequiredType.MaxDC:
                     if (actor.Stats[Stat.MaxDC] < Item.Info.RequiredAmount)
                     {
-                        GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.LowDC, ChatType.System);
+                        GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.LowDC), ChatType.System);
                         return false;
                     }
                     break;
                 case RequiredType.MaxMC:
                     if (actor.Stats[Stat.MaxMC] < Item.Info.RequiredAmount)
                     {
-                        GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.LowMC, ChatType.System);
+                        GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.LowMC), ChatType.System);
                         return false;
                     }
                     break;
                 case RequiredType.MaxSC:
                     if (actor.Stats[Stat.MaxSC] < Item.Info.RequiredAmount)
                     {
-                        GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.LowSC, ChatType.System);
+                        GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.LowSC), ChatType.System);
                         return false;
                     }
                     break;
                 case RequiredType.MaxLevel:
                     if (actor.Level > Item.Info.RequiredAmount)
                     {
-                        GameScene.Scene.ChatDialog.ReceiveChat("你已超出要求等级", ChatType.System);
+                        GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.YouExceededMaxLevel), ChatType.System);
                         return false;
                     }
                     break;
                 case RequiredType.MinAC:
                     if (actor.Stats[Stat.MinAC] < Item.Info.RequiredAmount)
                     {
-                        GameScene.Scene.ChatDialog.ReceiveChat("物理防御不足", ChatType.System);
+                        GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.YouDoNotHaveEnoughBaseAC), ChatType.System);
                         return false;
                     }
                     break;
                 case RequiredType.MinMAC:
                     if (actor.Stats[Stat.MinMAC] < Item.Info.RequiredAmount)
                     {
-                        GameScene.Scene.ChatDialog.ReceiveChat("魔法防御不足", ChatType.System);
+                        GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.YouDoNotHaveEnoughBaseMac), ChatType.System);
                         return false;
                     }
                     break;
                 case RequiredType.MinDC:
                     if (actor.Stats[Stat.MinDC] < Item.Info.RequiredAmount)
                     {
-                        GameScene.Scene.ChatDialog.ReceiveChat("物理攻击不足", ChatType.System);
+                        GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.YouLackBaseDC), ChatType.System);
                         return false;
                     }
                     break;
                 case RequiredType.MinMC:
                     if (actor.Stats[Stat.MinMC] < Item.Info.RequiredAmount)
                     {
-                        GameScene.Scene.ChatDialog.ReceiveChat("魔法攻击不足", ChatType.System);
+                        GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.YouLackBaseMC), ChatType.System);
                         return false;
                     }
                     break;
                 case RequiredType.MinSC:
                     if (actor.Stats[Stat.MinSC] < Item.Info.RequiredAmount)
                     {
-                        GameScene.Scene.ChatDialog.ReceiveChat("道术攻击不足", ChatType.System);
+                        GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.YouLackBaseSC), ChatType.System);
                         return false;
                     }
                     break;
@@ -2266,7 +2266,7 @@ namespace Client.MirControls
                 case ItemType.缰绳:
                     if (actor.Equipment[(int)EquipmentSlot.坐骑] == null)
                     {
-                        GameScene.Scene.ChatDialog.ReceiveChat("没有装配坐骑", ChatType.System);
+                        GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.YouDoNotHaveMountEquipped), ChatType.System);
                         return false;
                     }
                     break;
@@ -2277,7 +2277,7 @@ namespace Client.MirControls
                 case ItemType.摇轮:
                     if (actor.Equipment[(int)EquipmentSlot.武器] == null || !actor.Equipment[(int)EquipmentSlot.武器].Info.IsFishingRod)
                     {
-                        GameScene.Scene.ChatDialog.ReceiveChat("没有装配渔具", ChatType.System);
+                        GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.YouDoNotHaveFishingRodEquipped), ChatType.System);
                         return false;
                     }
                     break;
@@ -2299,14 +2299,14 @@ namespace Client.MirControls
                 case MirGender.男性:
                     if (!i.Info.RequiredGender.HasFlag(RequiredGender.男性))
                     {
-                        GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.NotFemale, ChatType.System);
+                        GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.NotFemale), ChatType.System);
                         return false;
                     }
                     break;
                 case MirGender.女性:
                     if (!i.Info.RequiredGender.HasFlag(RequiredGender.女性))
                     {
-                        GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.NotMale, ChatType.System);
+                        GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.NotMale), ChatType.System);
                         return false;
                     }
                     break;
@@ -2317,35 +2317,35 @@ namespace Client.MirControls
                 case MirClass.战士:
                     if (!i.Info.RequiredClass.HasFlag(RequiredClass.战士))
                     {
-                        GameScene.Scene.ChatDialog.ReceiveChat("战士不能使用此物品", ChatType.System);
+                        GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.WarriorsCannotUseItem), ChatType.System);
                         return false;
                     }
                     break;
                 case MirClass.法师:
                     if (!i.Info.RequiredClass.HasFlag(RequiredClass.法师))
                     {
-                        GameScene.Scene.ChatDialog.ReceiveChat("魔法师不能使用此物品", ChatType.System);
+                        GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.WizardsCannotUseItem), ChatType.System);
                         return false;
                     }
                     break;
                 case MirClass.道士:
                     if (!i.Info.RequiredClass.HasFlag(RequiredClass.道士))
                     {
-                        GameScene.Scene.ChatDialog.ReceiveChat("道士不能使用此物品", ChatType.System);
+                        GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.TaoistsCannotUseItem), ChatType.System);
                         return false;
                     }
                     break;
                 case MirClass.刺客:
                     if (!i.Info.RequiredClass.HasFlag(RequiredClass.刺客))
                     {
-                        GameScene.Scene.ChatDialog.ReceiveChat("刺客不能使用此物品", ChatType.System);
+                        GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.AssassinsCannotUseItem), ChatType.System);
                         return false;
                     }
                     break;
                 case MirClass.弓箭:
                     if (!i.Info.RequiredClass.HasFlag(RequiredClass.弓箭))
                     {
-                        GameScene.Scene.ChatDialog.ReceiveChat("弓箭手不能使用此物品", ChatType.System);
+                        GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.ArchersCannotUseItem), ChatType.System);
                         return false;
                     }
                     break;
@@ -2356,84 +2356,84 @@ namespace Client.MirControls
                 case RequiredType.Level:
                     if (actor.Level < i.Info.RequiredAmount)
                     {
-                        GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.LowLevel, ChatType.System);
+                        GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.LowLevel), ChatType.System);
                         return false;
                     }
                     break;
                 case RequiredType.MaxAC:
                     if (actor.Stats[Stat.MaxAC] < i.Info.RequiredAmount)
                     {
-                        GameScene.Scene.ChatDialog.ReceiveChat("没有足够的物理防御", ChatType.System);
+                        GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.LowAC), ChatType.System);
                         return false;
                     }
                     break;
                 case RequiredType.MaxMAC:
                     if (actor.Stats[Stat.MaxMAC] < i.Info.RequiredAmount)
                     {
-                        GameScene.Scene.ChatDialog.ReceiveChat("没有足够的魔法防御", ChatType.System);
+                        GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.LowMAC), ChatType.System);
                         return false;
                     }
                     break;
                 case RequiredType.MaxDC:
                     if (actor.Stats[Stat.MaxDC] < i.Info.RequiredAmount)
                     {
-                        GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.LowDC, ChatType.System);
+                        GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.LowDC), ChatType.System);
                         return false;
                     }
                     break;
                 case RequiredType.MaxMC:
                     if (actor.Stats[Stat.MaxMC] < i.Info.RequiredAmount)
                     {
-                        GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.LowMC, ChatType.System);
+                        GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.LowMC), ChatType.System);
                         return false;
                     }
                     break;
                 case RequiredType.MaxSC:
                     if (actor.Stats[Stat.MaxSC] < i.Info.RequiredAmount)
                     {
-                        GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.LowSC, ChatType.System);
+                        GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.LowSC), ChatType.System);
                         return false;
                     }
                     break;
                 case RequiredType.MaxLevel:
                     if (actor.Level > i.Info.RequiredAmount)
                     {
-                        GameScene.Scene.ChatDialog.ReceiveChat("已超出要求等级", ChatType.System);
+                        GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.YouExceededMaxLevel), ChatType.System);
                         return false;
                     }
                     break;
                 case RequiredType.MinAC:
                     if (actor.Stats[Stat.MinAC] < i.Info.RequiredAmount)
                     {
-                        GameScene.Scene.ChatDialog.ReceiveChat("物理防御不足", ChatType.System);
+                        GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.YouDoNotHaveEnoughBaseAC), ChatType.System);
                         return false;
                     }
                     break;
                 case RequiredType.MinMAC:
                     if (actor.Stats[Stat.MinMAC] < i.Info.RequiredAmount)
                     {
-                        GameScene.Scene.ChatDialog.ReceiveChat("魔法防御不足", ChatType.System);
+                        GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.YouDoNotHaveEnoughBaseMAC), ChatType.System);
                         return false;
                     }
                     break;
                 case RequiredType.MinDC:
                     if (actor.Stats[Stat.MinDC] < i.Info.RequiredAmount)
                     {
-                        GameScene.Scene.ChatDialog.ReceiveChat("物理攻击不足", ChatType.System);
+                        GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.YouNotEnoughBaseDC), ChatType.System);
                         return false;
                     }
                     break;
                 case RequiredType.MinMC:
                     if (actor.Stats[Stat.MinMC] < i.Info.RequiredAmount)
                     {
-                        GameScene.Scene.ChatDialog.ReceiveChat("魔法攻击不足", ChatType.System);
+                        GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.YouNotEnoughBaseMC), ChatType.System);
                         return false;
                     }
                     break;
                 case RequiredType.MinSC:
                     if (actor.Stats[Stat.MinSC] < i.Info.RequiredAmount)
                     {
-                        GameScene.Scene.ChatDialog.ReceiveChat("道术攻击不足", ChatType.System);
+                        GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.YouDoNotHaveEnoughBaseSC), ChatType.System);
                         return false;
                     }
                     break;
@@ -2443,7 +2443,7 @@ namespace Client.MirControls
             {
                 if (i.Weight - (Item != null ? Item.Weight : 0) + actor.CurrentHandWeight > actor.Stats[Stat.腕力负重])
                 {
-                    GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.TooHeavyToHold, ChatType.System);
+                    GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.TooHeavyToHold), ChatType.System);
                     return false;
                 }
             }
@@ -2451,7 +2451,7 @@ namespace Client.MirControls
             {
                 if (i.Weight - (Item != null ? Item.Weight : 0) + actor.CurrentWearWeight > actor.Stats[Stat.装备负重])
                 {
-                    GameScene.Scene.ChatDialog.ReceiveChat("太重了", ChatType.System);
+                    GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.ItIsTooHeavyToWear), ChatType.System);
                     return false;
                 }
             }

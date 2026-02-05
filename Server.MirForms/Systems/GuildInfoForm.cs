@@ -1,4 +1,6 @@
-﻿using Server.MirEnvir;
+﻿using System.Globalization;
+using Server.Library.MirDatabase;
+using Server.MirEnvir;
 using Server.MirObjects;
 
 namespace Server
@@ -39,11 +41,14 @@ namespace Server
         {
             GuildMinOwnerLeveltextBox.Text = Settings.Guild_RequiredLevel.ToString();
             GuildPPLtextBox.Text = Settings.Guild_PointPerLevel.ToString();
-            GuildExpratetextBox.Text = Settings.Guild_ExpRate.ToString();
+            GuildExpratetextBox.Text = Settings.Guild_ExpRate.ToString(CultureInfo.InvariantCulture);
             WarLengthTextBox.Text = Settings.Guild_WarTime.ToString();
             WarCostTextBox.Text = Settings.Guild_WarCost.ToString();
             NewbieGuildExptextBox.Text = Settings.NewbieGuildExpBuff.ToString();
             NewbieGuildBuffEnabledcheckBox.Checked = Settings.NewbieGuildBuffEnabled;
+            GTPriceBox.Text = Settings.BuyGTGold.ToString();
+            GTExtendPriceBox.Text = Settings.ExtendGT.ToString();
+            GTDurationBox.Text = Settings.GTDays.ToString();
 
             if ((GuildLevelListcomboBox.SelectedItem == null) || (GuildLevelListcomboBox.SelectedIndex >= Settings.Guild_ExperienceList.Count) || (GuildLevelListcomboBox.SelectedIndex >= Settings.Guild_MembercapList.Count))
             {
@@ -65,8 +70,16 @@ namespace Server
                 if (Settings.Guild_CreationCostList[GuildCreateListcomboBox.SelectedIndex].Item == null)
                     GuildItemNamecomboBox.SelectedIndex = 0;
                 else
-                    GuildItemNamecomboBox.SelectedIndex = Settings.Guild_CreationCostList[GuildCreateListcomboBox.SelectedIndex].Item.Index;
-                GuildAmounttextBox.Text = Settings.Guild_CreationCostList[GuildCreateListcomboBox.SelectedIndex].Amount.ToString();
+                {
+                    if (Envir.GetItemInfo(Settings.Guild_CreationCostList[GuildCreateListcomboBox.SelectedIndex].Item.Index) != null)
+                    {
+                        GuildItemNamecomboBox.SelectedItem = Envir.GetItemInfo(Settings.Guild_CreationCostList[GuildCreateListcomboBox.SelectedIndex].Item.Index);
+                    }
+                    else
+                    {
+                        GuildItemNamecomboBox.SelectedIndex = 0;
+                    }
+                }
             }
             if (BuffList.SelectedItem == null)
             {
@@ -100,7 +113,7 @@ namespace Server
             }
             else
             {
-                SelectedBuff  = (GuildBuffInfo)BuffList.SelectedItem;
+                SelectedBuff = (GuildBuffInfo)BuffList.SelectedItem;
                 BuffPanel.Enabled = true;
                 BufflblIndex.Text = $"编号:  {SelectedBuff.Id}";
                 BufftxtName.Text = SelectedBuff.Name;
@@ -184,13 +197,14 @@ namespace Server
         {
             if (ActiveControl != sender) return;
 
-            if (!byte.TryParse(ActiveControl.Text, out byte temp))
+            if (!float.TryParse(ActiveControl.Text, NumberStyles.Float, CultureInfo.InvariantCulture, out float temp) &&
+                !float.TryParse(ActiveControl.Text, NumberStyles.Float, CultureInfo.CurrentCulture, out temp))
             {
                 ActiveControl.BackColor = Color.Red;
                 return;
             }
             ActiveControl.BackColor = SystemColors.Window;
-            Settings.Guild_ExpRate = (float)temp / 100;
+            Settings.Guild_ExpRate = temp;
             GuildsChanged = true;
         }
 
@@ -400,7 +414,7 @@ namespace Server
 
             Settings.Guild_BuffList.Add(NewBuff);
             BuffList.Items.Add(NewBuff);
-            GuildsChanged = true;   
+            GuildsChanged = true;
         }
 
         private void BuffDelete_Click(object sender, EventArgs e)
@@ -434,7 +448,7 @@ namespace Server
         }
 
         private void BuffTxtLevelReq_TextChanged(object sender, EventArgs e)
-        {  
+        {
             byte temp = 0;
             if (!IsValid(ref temp, sender)) return;
             ActiveControl.BackColor = SystemColors.Window;
@@ -642,5 +656,48 @@ namespace Server
             SelectedBuff.Icon = temp;
             GuildsChanged = true;
         }
+        #region GT  
+        private void GTPriceBox_TextChanged(object sender, EventArgs e)
+        {
+            if (ActiveControl != sender) return;
+
+            if (!int.TryParse(ActiveControl.Text, out int temp))
+            {
+                ActiveControl.BackColor = Color.Red;
+                return;
+            }
+            ActiveControl.BackColor = SystemColors.Window;
+            Settings.BuyGTGold = temp;
+            GuildsChanged = true;
+        }
+
+        private void GTExtendPriceBox_TextChanged(object sender, EventArgs e)
+        {
+            if (ActiveControl != sender) return;
+
+            if (!int.TryParse(ActiveControl.Text, out int temp))
+            {
+                ActiveControl.BackColor = Color.Red;
+                return;
+            }
+            ActiveControl.BackColor = SystemColors.Window;
+            Settings.ExtendGT = temp;
+            GuildsChanged = true;
+        }
+
+        private void GTDurationBox_TextChanged(object sender, EventArgs e)
+        {
+            if (ActiveControl != sender) return;
+
+            if (!int.TryParse(ActiveControl.Text, out int temp))
+            {
+                ActiveControl.BackColor = Color.Red;
+                return;
+            }
+            ActiveControl.BackColor = SystemColors.Window;
+            Settings.GTDays = temp;
+            GuildsChanged = true;
+        }
+        #endregion
     }
 }

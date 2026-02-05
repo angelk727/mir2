@@ -56,6 +56,17 @@ namespace Server
             FileNameTextBox = new TextBox();
             label3 = new Label();
             tabPage6 = new TabPage();
+            FireWallCount = new TextBox();
+            FireWallCheckBox = new CheckBox();
+            RequiredGroupCheckBox = new CheckBox();
+            NoHeroesCheckbox = new CheckBox();
+            NoExperienceCheckbox = new CheckBox();
+            NoIntelligentCreatureCheckbox = new CheckBox();
+            RequiredGroupTextBox = new TextBox();
+            noGroupCheckbox = new CheckBox();
+            NoPetsCheckbox = new CheckBox();
+            GTIndexBox = new TextBox();
+            GTBox = new CheckBox();
             NoReincarnation = new CheckBox();
             NoTownTeleportCheckbox = new CheckBox();
             NoFightCheckbox = new CheckBox();
@@ -416,6 +427,17 @@ namespace Server
             // 
             // tabPage6
             // 
+            tabPage6.Controls.Add(FireWallCount);
+            tabPage6.Controls.Add(FireWallCheckBox);
+            tabPage6.Controls.Add(RequiredGroupCheckBox);
+            tabPage6.Controls.Add(NoHeroesCheckbox);
+            tabPage6.Controls.Add(NoExperienceCheckbox);
+            tabPage6.Controls.Add(NoIntelligentCreatureCheckbox);
+            tabPage6.Controls.Add(RequiredGroupTextBox);
+            tabPage6.Controls.Add(noGroupCheckbox);
+            tabPage6.Controls.Add(NoPetsCheckbox);
+            tabPage6.Controls.Add(GTIndexBox);
+            tabPage6.Controls.Add(GTBox);
             tabPage6.Controls.Add(NoReincarnation);
             tabPage6.Controls.Add(NoTownTeleportCheckbox);
             tabPage6.Controls.Add(NoFightCheckbox);
@@ -449,10 +471,124 @@ namespace Server
             tabPage6.Text = "属性";
             tabPage6.UseVisualStyleBackColor = true;
             // 
+            // FireWallCount
+            // 
+            FireWallCount.Location = new Point(477, 160);
+            FireWallCount.Name = "FireWallCount";
+            FireWallCount.Size = new Size(56, 23);
+            FireWallCount.TabIndex = 57;
+            FireWallCount.TextChanged += FireWallCount_TextChanged;
+            // 
+            // FireWallCheckBox
+            // 
+            FireWallCheckBox.AutoSize = true;
+            FireWallCheckBox.Location = new Point(398, 162);
+            FireWallCheckBox.Name = "FireWallCheckBox";
+            FireWallCheckBox.Size = new Size(75, 21);
+            FireWallCheckBox.TabIndex = 56;
+            FireWallCheckBox.Text = "火墙限制";
+            FireWallCheckBox.UseVisualStyleBackColor = true;
+            FireWallCheckBox.CheckedChanged += FireWallCheckBox_CheckedChanged;
+            // 
+            // RequiredGroupCheckBox
+            // 
+            RequiredGroupCheckBox.AutoSize = true;
+            RequiredGroupCheckBox.Location = new Point(398, 133);
+            RequiredGroupCheckBox.Margin = new Padding(4, 3, 4, 3);
+            RequiredGroupCheckBox.Name = "RequiredGroupCheckBox";
+            RequiredGroupCheckBox.Size = new Size(75, 21);
+            RequiredGroupCheckBox.TabIndex = 55;
+            RequiredGroupCheckBox.Text = "需要组队";
+            RequiredGroupCheckBox.UseVisualStyleBackColor = true;
+            RequiredGroupCheckBox.CheckedChanged += RequiredGroupCheckBox_CheckedChanged;
+            // 
+            // NoHeroesCheckbox
+            // 
+            NoHeroesCheckbox.AutoSize = true;
+            NoHeroesCheckbox.Location = new Point(203, 268);
+            NoHeroesCheckbox.Name = "NoHeroesCheckbox";
+            NoHeroesCheckbox.Size = new Size(75, 21);
+            NoHeroesCheckbox.TabIndex = 54;
+            NoHeroesCheckbox.Text = "禁用英雄";
+            NoHeroesCheckbox.UseVisualStyleBackColor = true;
+            NoHeroesCheckbox.CheckedChanged += NoHeroesCheckbox_CheckedChanged;
+            // 
+            // NoExperienceCheckbox
+            // 
+            NoExperienceCheckbox.AutoSize = true;
+            NoExperienceCheckbox.Location = new Point(19, 241);
+            NoExperienceCheckbox.Name = "NoExperienceCheckbox";
+            NoExperienceCheckbox.Size = new Size(75, 21);
+            NoExperienceCheckbox.TabIndex = 53;
+            NoExperienceCheckbox.Text = "经验禁止";
+            NoExperienceCheckbox.UseVisualStyleBackColor = true;
+            NoExperienceCheckbox.CheckedChanged += NoExperienceCheckbox_CheckedChanged;
+            // 
+            // NoIntelligentCreatureCheckbox
+            // 
+            NoIntelligentCreatureCheckbox.AutoSize = true;
+            NoIntelligentCreatureCheckbox.Location = new Point(203, 241);
+            NoIntelligentCreatureCheckbox.Name = "NoIntelligentCreatureCheckbox";
+            NoIntelligentCreatureCheckbox.Size = new Size(75, 21);
+            NoIntelligentCreatureCheckbox.TabIndex = 56;
+            NoIntelligentCreatureCheckbox.Text = "禁用灵物";
+            NoIntelligentCreatureCheckbox.UseVisualStyleBackColor = true;
+            NoIntelligentCreatureCheckbox.CheckedChanged += NoIntelligentCreatureCheckbox_CheckedChanged;
+            // 
+            // RequiredGroupTextBox
+            // 
+            RequiredGroupTextBox.Location = new Point(477, 129);
+            RequiredGroupTextBox.Name = "RequiredGroupTextBox";
+            RequiredGroupTextBox.Size = new Size(56, 23);
+            RequiredGroupTextBox.TabIndex = 53;
+            RequiredGroupTextBox.TextChanged += RequiredGroupTextBox_TextChanged;
+            // 
+            // noGroupCheckbox
+            // 
+            noGroupCheckbox.AutoSize = true;
+            noGroupCheckbox.Location = new Point(19, 268);
+            noGroupCheckbox.Name = "noGroupCheckbox";
+            noGroupCheckbox.Size = new Size(75, 21);
+            noGroupCheckbox.TabIndex = 51;
+            noGroupCheckbox.Text = "禁止组队";
+            noGroupCheckbox.UseVisualStyleBackColor = true;
+            noGroupCheckbox.CheckedChanged += noGroupCheckbox_CheckedChanged;
+            // 
+            // NoPetsCheckbox
+            // 
+            NoPetsCheckbox.AutoSize = true;
+            NoPetsCheckbox.Location = new Point(203, 214);
+            NoPetsCheckbox.Name = "NoPetsCheckbox";
+            NoPetsCheckbox.Size = new Size(75, 21);
+            NoPetsCheckbox.TabIndex = 50;
+            NoPetsCheckbox.Text = "禁用宠物";
+            NoPetsCheckbox.UseVisualStyleBackColor = true;
+            NoPetsCheckbox.CheckedChanged += NoPetsCheckbox_CheckedChanged;
+            // 
+            // GTIndexBox
+            // 
+            GTIndexBox.Location = new Point(477, 188);
+            GTIndexBox.Name = "GTIndexBox";
+            GTIndexBox.Size = new Size(56, 23);
+            GTIndexBox.TabIndex = 49;
+            GTIndexBox.TextChanged += GTIndexBox_TextChanged;
+            // 
+            // GTBox
+            // 
+            GTBox.AutoSize = true;
+            GTBox.Location = new Point(398, 189);
+            GTBox.Margin = new Padding(4, 3, 4, 3);
+            GTBox.Name = "GTBox";
+            GTBox.Size = new Size(75, 21);
+            GTBox.TabIndex = 46;
+            GTBox.Text = "行会领地";
+            GTBox.UseVisualStyleBackColor = true;
+            GTBox.CheckedChanged += GTBox_CheckedChanged;
+            // 
             // NoReincarnation
             // 
             NoReincarnation.AutoSize = true;
-            NoReincarnation.Location = new Point(19, 52);
+            NoReincarnation.Location = new Point(18, 51);
             NoReincarnation.Margin = new Padding(4, 3, 4, 3);
             NoReincarnation.Name = "NoReincarnation";
             NoReincarnation.Size = new Size(75, 21);
@@ -464,7 +600,7 @@ namespace Server
             // NoTownTeleportCheckbox
             // 
             NoTownTeleportCheckbox.AutoSize = true;
-            NoTownTeleportCheckbox.Location = new Point(19, 148);
+            NoTownTeleportCheckbox.Location = new Point(19, 133);
             NoTownTeleportCheckbox.Margin = new Padding(4, 3, 4, 3);
             NoTownTeleportCheckbox.Name = "NoTownTeleportCheckbox";
             NoTownTeleportCheckbox.Size = new Size(75, 21);
@@ -476,7 +612,7 @@ namespace Server
             // NoFightCheckbox
             // 
             NoFightCheckbox.AutoSize = true;
-            NoFightCheckbox.Location = new Point(203, 179);
+            NoFightCheckbox.Location = new Point(203, 158);
             NoFightCheckbox.Margin = new Padding(4, 3, 4, 3);
             NoFightCheckbox.Name = "NoFightCheckbox";
             NoFightCheckbox.Size = new Size(70, 21);
@@ -488,7 +624,7 @@ namespace Server
             // NeedBridleCheckbox
             // 
             NeedBridleCheckbox.AutoSize = true;
-            NeedBridleCheckbox.Location = new Point(203, 210);
+            NeedBridleCheckbox.Location = new Point(203, 187);
             NeedBridleCheckbox.Margin = new Padding(4, 3, 4, 3);
             NeedBridleCheckbox.Name = "NeedBridleCheckbox";
             NeedBridleCheckbox.Size = new Size(75, 21);
@@ -500,7 +636,7 @@ namespace Server
             // NoMountCheckbox
             // 
             NoMountCheckbox.AutoSize = true;
-            NoMountCheckbox.Location = new Point(203, 147);
+            NoMountCheckbox.Location = new Point(203, 131);
             NoMountCheckbox.Margin = new Padding(4, 3, 4, 3);
             NoMountCheckbox.Name = "NoMountCheckbox";
             NoMountCheckbox.Size = new Size(75, 21);
@@ -512,7 +648,7 @@ namespace Server
             // label19
             // 
             label19.AutoSize = true;
-            label19.Location = new Point(414, 120);
+            label19.Location = new Point(413, 104);
             label19.Margin = new Padding(4, 0, 4, 0);
             label19.Name = "label19";
             label19.Size = new Size(56, 17);
@@ -521,7 +657,7 @@ namespace Server
             // 
             // MapDarkLighttextBox
             // 
-            MapDarkLighttextBox.Location = new Point(478, 115);
+            MapDarkLighttextBox.Location = new Point(477, 101);
             MapDarkLighttextBox.Margin = new Padding(4, 3, 4, 3);
             MapDarkLighttextBox.Name = "MapDarkLighttextBox";
             MapDarkLighttextBox.Size = new Size(56, 23);
@@ -531,7 +667,7 @@ namespace Server
             // NoNamesCheckbox
             // 
             NoNamesCheckbox.AutoSize = true;
-            NoNamesCheckbox.Location = new Point(203, 117);
+            NoNamesCheckbox.Location = new Point(203, 104);
             NoNamesCheckbox.Margin = new Padding(4, 3, 4, 3);
             NoNamesCheckbox.Name = "NoNamesCheckbox";
             NoNamesCheckbox.Size = new Size(75, 21);
@@ -543,7 +679,7 @@ namespace Server
             // NoDropMonsterCheckbox
             // 
             NoDropMonsterCheckbox.AutoSize = true;
-            NoDropMonsterCheckbox.Location = new Point(203, 85);
+            NoDropMonsterCheckbox.Location = new Point(203, 77);
             NoDropMonsterCheckbox.Margin = new Padding(4, 3, 4, 3);
             NoDropMonsterCheckbox.Name = "NoDropMonsterCheckbox";
             NoDropMonsterCheckbox.Size = new Size(107, 21);
@@ -555,7 +691,7 @@ namespace Server
             // NoDropPlayerCheckbox
             // 
             NoDropPlayerCheckbox.AutoSize = true;
-            NoDropPlayerCheckbox.Location = new Point(203, 53);
+            NoDropPlayerCheckbox.Location = new Point(203, 50);
             NoDropPlayerCheckbox.Margin = new Padding(4, 3, 4, 3);
             NoDropPlayerCheckbox.Name = "NoDropPlayerCheckbox";
             NoDropPlayerCheckbox.Size = new Size(107, 21);
@@ -579,7 +715,7 @@ namespace Server
             // NoPositionCheckbox
             // 
             NoPositionCheckbox.AutoSize = true;
-            NoPositionCheckbox.Location = new Point(18, 243);
+            NoPositionCheckbox.Location = new Point(19, 214);
             NoPositionCheckbox.Margin = new Padding(4, 3, 4, 3);
             NoPositionCheckbox.Name = "NoPositionCheckbox";
             NoPositionCheckbox.Size = new Size(75, 21);
@@ -603,7 +739,7 @@ namespace Server
             // NoRecallCheckbox
             // 
             NoRecallCheckbox.AutoSize = true;
-            NoRecallCheckbox.Location = new Point(19, 186);
+            NoRecallCheckbox.Location = new Point(19, 160);
             NoRecallCheckbox.Margin = new Padding(4, 3, 4, 3);
             NoRecallCheckbox.Name = "NoRecallCheckbox";
             NoRecallCheckbox.Size = new Size(75, 21);
@@ -615,7 +751,7 @@ namespace Server
             // NoEscapeCheckbox
             // 
             NoEscapeCheckbox.AutoSize = true;
-            NoEscapeCheckbox.Location = new Point(19, 120);
+            NoEscapeCheckbox.Location = new Point(19, 106);
             NoEscapeCheckbox.Margin = new Padding(4, 3, 4, 3);
             NoEscapeCheckbox.Name = "NoEscapeCheckbox";
             NoEscapeCheckbox.Size = new Size(75, 21);
@@ -627,7 +763,7 @@ namespace Server
             // NoRandomCheckbox
             // 
             NoRandomCheckbox.AutoSize = true;
-            NoRandomCheckbox.Location = new Point(19, 92);
+            NoRandomCheckbox.Location = new Point(19, 79);
             NoRandomCheckbox.Margin = new Padding(4, 3, 4, 3);
             NoRandomCheckbox.Name = "NoRandomCheckbox";
             NoRandomCheckbox.Size = new Size(75, 21);
@@ -638,7 +774,7 @@ namespace Server
             // 
             // LightningTextbox
             // 
-            LightningTextbox.Location = new Point(478, 84);
+            LightningTextbox.Location = new Point(477, 74);
             LightningTextbox.Margin = new Padding(4, 3, 4, 3);
             LightningTextbox.Name = "LightningTextbox";
             LightningTextbox.Size = new Size(56, 23);
@@ -647,7 +783,7 @@ namespace Server
             // 
             // FireTextbox
             // 
-            FireTextbox.Location = new Point(478, 52);
+            FireTextbox.Location = new Point(477, 45);
             FireTextbox.Margin = new Padding(4, 3, 4, 3);
             FireTextbox.Name = "FireTextbox";
             FireTextbox.Size = new Size(56, 23);
@@ -656,7 +792,7 @@ namespace Server
             // 
             // NoReconnectTextbox
             // 
-            NoReconnectTextbox.Location = new Point(91, 283);
+            NoReconnectTextbox.Location = new Point(91, 328);
             NoReconnectTextbox.Margin = new Padding(4, 3, 4, 3);
             NoReconnectTextbox.Name = "NoReconnectTextbox";
             NoReconnectTextbox.Size = new Size(103, 23);
@@ -666,7 +802,7 @@ namespace Server
             // LightningCheckbox
             // 
             LightningCheckbox.AutoSize = true;
-            LightningCheckbox.Location = new Point(398, 85);
+            LightningCheckbox.Location = new Point(398, 74);
             LightningCheckbox.Margin = new Padding(4, 3, 4, 3);
             LightningCheckbox.Name = "LightningCheckbox";
             LightningCheckbox.Size = new Size(75, 21);
@@ -678,7 +814,7 @@ namespace Server
             // FireCheckbox
             // 
             FireCheckbox.AutoSize = true;
-            FireCheckbox.Location = new Point(398, 53);
+            FireCheckbox.Location = new Point(398, 47);
             FireCheckbox.Margin = new Padding(4, 3, 4, 3);
             FireCheckbox.Name = "FireCheckbox";
             FireCheckbox.Size = new Size(75, 21);
@@ -702,7 +838,7 @@ namespace Server
             // NoReconnectCheckbox
             // 
             NoReconnectCheckbox.AutoSize = true;
-            NoReconnectCheckbox.Location = new Point(19, 285);
+            NoReconnectCheckbox.Location = new Point(18, 330);
             NoReconnectCheckbox.Margin = new Padding(4, 3, 4, 3);
             NoReconnectCheckbox.Name = "NoReconnectCheckbox";
             NoReconnectCheckbox.Size = new Size(75, 21);
@@ -714,7 +850,7 @@ namespace Server
             // NoTeleportCheckbox
             // 
             NoTeleportCheckbox.AutoSize = true;
-            NoTeleportCheckbox.Location = new Point(19, 215);
+            NoTeleportCheckbox.Location = new Point(19, 187);
             NoTeleportCheckbox.Margin = new Padding(4, 3, 4, 3);
             NoTeleportCheckbox.Name = "NoTeleportCheckbox";
             NoTeleportCheckbox.Size = new Size(75, 21);
@@ -1704,6 +1840,7 @@ namespace Server
             // 
             MapSearchTextBox.Location = new Point(14, 11);
             MapSearchTextBox.Name = "MapSearchTextBox";
+            MapSearchTextBox.PlaceholderText = "搜索";
             MapSearchTextBox.Size = new Size(220, 23);
             MapSearchTextBox.TabIndex = 35;
             // 
@@ -1886,5 +2023,16 @@ namespace Server
         private Label label48;
         private Button MapSearchButton;
         private TextBox MapSearchTextBox;
+        private CheckBox GTBox;
+        private TextBox GTIndexBox;
+        private CheckBox NoPetsCheckbox;
+        private CheckBox NoIntelligentCreatureCheckbox;
+        private TextBox RequiredGroupTextBox;
+        private CheckBox noGroupCheckbox;
+        private CheckBox NoExperienceCheckbox;
+        private CheckBox NoHeroesCheckbox;
+        private CheckBox RequiredGroupCheckBox;
+        private TextBox FireWallCount;
+        private CheckBox FireWallCheckBox;
     }
 }

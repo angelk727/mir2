@@ -1,4 +1,4 @@
-﻿public class BaseStats
+public class BaseStats
 {
     public MirClass Job;
     public List<BaseStat> Stats = new List<BaseStat>();
@@ -101,6 +101,7 @@
 
     public BaseStats(BinaryReader reader)
     {
+        Job = (MirClass)reader.ReadByte();
         var count = reader.ReadInt32();
 
         for (int i = 0; i < count; i++)
@@ -120,6 +121,7 @@
 
     public void Save(BinaryWriter writer)
     {
+        writer.Write((byte)Job);
         writer.Write(Stats.Count);
 
         foreach (var stat in Stats)

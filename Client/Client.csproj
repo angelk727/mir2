@@ -37,7 +37,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="6.0.0" />
-    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3595.46" />
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3719.77" />
     <PackageReference Include="NAudio" Version="2.2.1" />
   </ItemGroup>
 
@@ -67,6 +67,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Localization\Chinese.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Localization\English.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="MIR2.ICO">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

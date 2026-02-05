@@ -1,8 +1,8 @@
-﻿using Client.MirControls;
 using Client.MirGraphics;
 using Client.MirScenes;
 using Client.MirSounds;
 using S = ServerPackets;
+using Client.MirControls;
 
 namespace Client.MirObjects
 {
@@ -65,6 +65,10 @@ namespace Client.MirObjects
 
         public SpellEffect CurrentEffect;
 
+        public uint MasterObjectId;
+
+        public MonsterType Rarity;
+
         public MonsterObject(uint objectID) : base(objectID) { }
 
         public void Load(S.ObjectMonster info, bool update = false)
@@ -91,13 +95,22 @@ namespace Client.MirObjects
             ShockTime = CMain.Time + info.ShockTime;
             BindingShotCenter = info.BindingShotCenter;
 
+            MasterObjectId = info.MasterObjectId;
+            Rarity = info.Rarity;
+
+            if (MasterObjectId == 0 && Rarity != MonsterType.Normal)
+            {
+                //Moving the rarity tag processing from the server to the client allows for more complex tag displays in the future, such as adding special markers on monster health bars.
+                //Add localization for rarity text
+                Name = $"{Rarity.ToLocalizedString()}_{Name}";
+            }
             Buffs = info.Buffs;
 
             if (Stage != info.ExtraByte)
             {
                 switch (BaseImage)
                 {
-                    case Monster.GreatFoxSpirit: //237
+                    case Monster.GreatFoxSpirit:
                         if (update)
                         {
                             Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.GreatFoxSpirit], 335, 20, 3000, this));
@@ -166,11 +179,11 @@ namespace Client.MirObjects
             //Library
             switch (BaseImage)
             {
-                case Monster.EvilMir: //900
-                case Monster.DragonStatue: //902
+                case Monster.EvilMir:
+                case Monster.DragonStatue:
                     BodyLibrary = Libraries.Dragon;
                     break;
-                case Monster.EvilMirBody: //901
+                case Monster.EvilMirBody:
                     break;
                 case Monster.Catapult:
                 case Monster.ChariotBallista:
@@ -743,6 +756,10 @@ namespace Client.MirObjects
                             case Monster.FurbolgGuard: //473
                                 Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.FurbolgGuard], 414 + (int)Direction * 6, 6, Frame.Count * Frame.Interval, this));
                                 break;
+
+
+
+
                             case Monster.Armadillo:
                                 MapControl.Effects.Add(new Effect(Libraries.Monsters[(ushort)BaseImage], 600, 12, 800, CurrentLocation, CMain.Time + 500));
                                 break;
@@ -1252,16 +1269,19 @@ namespace Client.MirObjects
                     case MirAction.被击动作:
                         uint attackerID = (uint)action.Params[0];
                         StruckWeapon = -2;
-                        for (int i = 0; i < MapControl.Objects.Count; i++)
+                        if (action.Params.Count > 1)
                         {
-                            MapObject ob = MapControl.Objects[i];
-                            if (ob.ObjectID != attackerID) continue;
-                            if (ob.Race != ObjectType.Player) break;
-                            PlayerObject player = ((PlayerObject)ob);
-                            StruckWeapon = player.Weapon;
-                            if (player.Class != MirClass.刺客 || StruckWeapon == -1) break; //弓箭?
-                            StruckWeapon = 1;
-                            break;
+                            StruckWeapon = (int)action.Params[1];
+                        }
+                        else if (MapControl.Objects.TryGetValue(attackerID, out MapObject ob))
+                        {
+                            if (ob.Race == ObjectType.Player)
+                            {
+                                PlayerObject player = (PlayerObject)ob;
+                                StruckWeapon = player.Weapon;
+                                if (player.Class == MirClass.刺客 && StruckWeapon > -1)
+                                    StruckWeapon = 1;
+                            }
                         }
                         PlayFlinchSound();
                         PlayStruckSound();

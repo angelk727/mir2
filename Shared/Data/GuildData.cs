@@ -1,4 +1,4 @@
-﻿public class GuildRank
+public class GuildRank
 {
     public List<GuildMember> Members = new List<GuildMember>();
     public string Name = "";

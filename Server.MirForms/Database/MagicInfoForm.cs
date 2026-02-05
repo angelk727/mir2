@@ -13,86 +13,85 @@ namespace Server
         public MagicInfoForm()
         {
             InitializeComponent();
-            for (int i = 0; i < Envir.MagicInfoList.Count; i++)
-                MagiclistBox.Items.Add(Envir.MagicInfoList[i]);
+            MagicSearchBox_TextChanged(this, EventArgs.Empty);
             UpdateMagicForm();
         }
 
         private void UpdateMagicForm(byte field = 0)
         {
-             _selectedMagicInfo = (MagicInfo)MagiclistBox.SelectedItem;
+            _selectedMagicInfo = (MagicInfo)MagiclistBox.SelectedItem;
 
-             lblBookValid.BackColor = SystemColors.Window;
+            lblBookValid.BackColor = SystemColors.Window;
 
-             if (_selectedMagicInfo == null)
-             {
-                 tabControl1.Enabled = false;
-                 lblBookValid.Text = "Searching";
-                 lblSelected.Text = "Selected Skill: none";
-                 lblDamageExample.Text = "";
-                 lblDamageExplained.Text = "";
-                 txtSkillIcon.Text = "0";
-                 txtSkillLvl1Points.Text = "0";
-                 txtSkillLvl1Req.Text = "0";
-                 txtSkillLvl2Points.Text = "0";
-                 txtSkillLvl2Req.Text = "0";
-                 txtSkillLvl3Points.Text = "0";
-                 txtSkillLvl3Req.Text = "0";
-                 txtMPBase.Text = "0";
-                 txtMPIncrease.Text = "0";
-                 txtDelayBase.Text = "0";
-                 txtDelayReduction.Text = "0";
-                 txtDmgBaseMin.Text = "0";
-                 txtDmgBaseMax.Text = "0";
-                 txtDmgBonusMin.Text = "0";
-                 txtDmgBonusMax.Text = "0";
-             }
-             else
-             {
-                 tabControl1.Enabled = true;
+            if (_selectedMagicInfo == null)
+            {
+                tabControl1.Enabled = false;
+                lblBookValid.Text = "搜索";
+                lblSelected.Text = "选定技能: 无";
+                lblDamageExample.Text = "";
+                lblDamageExplained.Text = "";
+                txtSkillIcon.Text = "0";
+                txtSkillLvl1Points.Text = "0";
+                txtSkillLvl1Req.Text = "0";
+                txtSkillLvl2Points.Text = "0";
+                txtSkillLvl2Req.Text = "0";
+                txtSkillLvl3Points.Text = "0";
+                txtSkillLvl3Req.Text = "0";
+                txtMPBase.Text = "0";
+                txtMPIncrease.Text = "0";
+                txtDelayBase.Text = "0";
+                txtDelayReduction.Text = "0";
+                txtDmgBaseMin.Text = "0";
+                txtDmgBaseMax.Text = "0";
+                txtDmgBonusMin.Text = "0";
+                txtDmgBonusMax.Text = "0";
+            }
+            else
+            {
+                tabControl1.Enabled = true;
                 lblSelected.Text = " 技能  " + _selectedMagicInfo.ToString();
-                 lblDamageExample.Text =
+                lblDamageExample.Text =
                     $"实际伤害 0级伤害:{GetMinPower(0):000}-{GetMaxPower(0):000} → 1级伤害:{GetMinPower(1):000}-{GetMaxPower(1):000} →→ 2级伤害:{GetMinPower(2):000}-{GetMaxPower(2):000} →→→ 3级伤害:{GetMinPower(3):000}-{GetMaxPower(3):000}";
-                 lblDamageExplained.Text =
+                lblDamageExplained.Text =
                     $"伤害公式 {{随机(最小值<->最大值)+[<(随机({_selectedMagicInfo.MPowerBase}-{_selectedMagicInfo.MPowerBase + _selectedMagicInfo.MPowerBonus})/4)X(技能等级+1)>+随机<{_selectedMagicInfo.PowerBase}-{_selectedMagicInfo.PowerBonus + _selectedMagicInfo.PowerBase}>]}}X{{{_selectedMagicInfo.MultiplierBase}+(技能等级 * {_selectedMagicInfo.MultiplierBonus})}}";
-                 txtSkillIcon.Text = _selectedMagicInfo.Icon.ToString();
-                 txtSkillLvl1Points.Text = _selectedMagicInfo.Need1.ToString();
-                 txtSkillLvl1Req.Text = _selectedMagicInfo.Level1.ToString();
-                 txtSkillLvl2Points.Text = _selectedMagicInfo.Need2.ToString();
-                 txtSkillLvl2Req.Text = _selectedMagicInfo.Level2.ToString();
-                 txtSkillLvl3Points.Text = _selectedMagicInfo.Need3.ToString();
-                 txtSkillLvl3Req.Text = _selectedMagicInfo.Level3.ToString();
-                 txtMPBase.Text = _selectedMagicInfo.BaseCost.ToString();
-                 txtMPIncrease.Text = _selectedMagicInfo.LevelCost.ToString();
-                 txtDelayBase.Text = _selectedMagicInfo.DelayBase.ToString();
-                 txtDelayReduction.Text = _selectedMagicInfo.DelayReduction.ToString();
-                 txtDmgBaseMin.Text = _selectedMagicInfo.PowerBase.ToString();
-                 txtDmgBaseMax.Text = (_selectedMagicInfo.PowerBase + _selectedMagicInfo.PowerBonus).ToString();
-                 txtDmgBonusMin.Text = _selectedMagicInfo.MPowerBase.ToString();
-                 txtDmgBonusMax.Text = (_selectedMagicInfo.MPowerBase + _selectedMagicInfo.MPowerBonus).ToString();
-                 if (field != 1)
+                txtSkillIcon.Text = _selectedMagicInfo.Icon.ToString();
+                txtSkillLvl1Points.Text = _selectedMagicInfo.Need1.ToString();
+                txtSkillLvl1Req.Text = _selectedMagicInfo.Level1.ToString();
+                txtSkillLvl2Points.Text = _selectedMagicInfo.Need2.ToString();
+                txtSkillLvl2Req.Text = _selectedMagicInfo.Level2.ToString();
+                txtSkillLvl3Points.Text = _selectedMagicInfo.Need3.ToString();
+                txtSkillLvl3Req.Text = _selectedMagicInfo.Level3.ToString();
+                txtMPBase.Text = _selectedMagicInfo.BaseCost.ToString();
+                txtMPIncrease.Text = _selectedMagicInfo.LevelCost.ToString();
+                txtDelayBase.Text = _selectedMagicInfo.DelayBase.ToString();
+                txtDelayReduction.Text = _selectedMagicInfo.DelayReduction.ToString();
+                txtDmgBaseMin.Text = _selectedMagicInfo.PowerBase.ToString();
+                txtDmgBaseMax.Text = (_selectedMagicInfo.PowerBase + _selectedMagicInfo.PowerBonus).ToString();
+                txtDmgBonusMin.Text = _selectedMagicInfo.MPowerBase.ToString();
+                txtDmgBonusMax.Text = (_selectedMagicInfo.MPowerBase + _selectedMagicInfo.MPowerBonus).ToString();
+                if (field != 1)
                     txtDmgMultBase.Text = _selectedMagicInfo.MultiplierBase.ToString();
-                 if (field != 2)
-                 txtDmgMultBoost.Text = _selectedMagicInfo.MultiplierBonus.ToString();
-                 txtRange.Text = _selectedMagicInfo.Range.ToString();
-                 ItemInfo Book = Envir.GetBook((short)_selectedMagicInfo.Spell);
-                 if (Book != null)
-                 {
-                     lblBookValid.Text = Book.Name;
-                 }
-                 else
-                 {
+                if (field != 2)
+                    txtDmgMultBoost.Text = _selectedMagicInfo.MultiplierBonus.ToString();
+                txtRange.Text = _selectedMagicInfo.Range.ToString();
+                ItemInfo Book = Envir.GetBook((short)_selectedMagicInfo.Spell);
+                if (Book != null)
+                {
+                    lblBookValid.Text = Book.Name;
+                }
+                else
+                {
                     lblBookValid.Text = "物品库没有对应的技能书";
-                     lblBookValid.BackColor = Color.Red;
-                 }
-                this.textBoxName.Text = _selectedMagicInfo.Name;
-             }
+                    lblBookValid.BackColor = Color.Red;
+                }
+                textBoxName.Text = _selectedMagicInfo.Name;
+            }
         }
 
         private int GetMaxPower(byte level)
         {
             if (_selectedMagicInfo == null) return 0;
-            return (int)Math.Round((((_selectedMagicInfo.MPowerBase + _selectedMagicInfo.MPowerBonus) / 4F) * (level + 1) + (_selectedMagicInfo.PowerBase + _selectedMagicInfo.PowerBonus))* (_selectedMagicInfo.MultiplierBase + (level * _selectedMagicInfo.MultiplierBonus)));
+            return (int)Math.Round((((_selectedMagicInfo.MPowerBase + _selectedMagicInfo.MPowerBonus) / 4F) * (level + 1) + (_selectedMagicInfo.PowerBase + _selectedMagicInfo.PowerBonus)) * (_selectedMagicInfo.MultiplierBase + (level * _selectedMagicInfo.MultiplierBonus)));
         }
         private int GetMinPower(byte level)
         {
@@ -106,6 +105,9 @@ namespace Server
             MagiclistBox = new ListBox();
             tabControl1 = new TabControl();
             tabPage1 = new TabPage();
+            label24 = new Label();
+            label23 = new Label();
+            textBoxName = new TextBox();
             lblDamageExample = new Label();
             lblDamageExplained = new Label();
             lblSelected = new Label();
@@ -155,9 +157,7 @@ namespace Server
             label1 = new Label();
             lblBookValid = new Label();
             toolTip1 = new ToolTip(components);
-            textBoxName = new TextBox();
-            label23 = new Label();
-            label24 = new Label();
+            MagicSearchBox = new TextBox();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             panel4.SuspendLayout();
@@ -209,6 +209,32 @@ namespace Server
             tabPage1.TabIndex = 0;
             tabPage1.Text = "基本设置";
             tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // label24
+            // 
+            label24.AutoSize = true;
+            label24.Location = new Point(32, 29);
+            label24.Name = "label24";
+            label24.Size = new Size(59, 17);
+            label24.TabIndex = 12;
+            label24.Text = "技能名称:";
+            // 
+            // label23
+            // 
+            label23.AutoSize = true;
+            label23.Location = new Point(181, 3);
+            label23.Name = "label23";
+            label23.Size = new Size(47, 17);
+            label23.TabIndex = 11;
+            label23.Text = "技能书:";
+            // 
+            // textBoxName
+            // 
+            textBoxName.Location = new Point(93, 26);
+            textBoxName.Name = "textBoxName";
+            textBoxName.Size = new Size(112, 23);
+            textBoxName.TabIndex = 10;
+            textBoxName.TextChanged += textBoxName_TextChanged;
             // 
             // lblDamageExample
             // 
@@ -669,35 +695,19 @@ namespace Server
             lblBookValid.TabIndex = 0;
             lblBookValid.Text = "搜索相应书籍";
             // 
-            // textBoxName
+            // MagicSearchBox
             // 
-            textBoxName.Location = new Point(93, 26);
-            textBoxName.Name = "textBoxName";
-            textBoxName.Size = new Size(112, 23);
-            textBoxName.TabIndex = 10;
-            textBoxName.TextChanged += textBoxName_TextChanged;
-            // 
-            // label23
-            // 
-            label23.AutoSize = true;
-            label23.Location = new Point(181, 3);
-            label23.Name = "label23";
-            label23.Size = new Size(47, 17);
-            label23.TabIndex = 11;
-            label23.Text = "技能书:";
-            // 
-            // label24
-            // 
-            label24.AutoSize = true;
-            label24.Location = new Point(32, 29);
-            label24.Name = "label24";
-            label24.Size = new Size(59, 17);
-            label24.TabIndex = 12;
-            label24.Text = "技能名称:";
+            MagicSearchBox.Location = new Point(291, 0);
+            MagicSearchBox.Name = "MagicSearchBox";
+            MagicSearchBox.PlaceholderText = "搜索";
+            MagicSearchBox.Size = new Size(201, 23);
+            MagicSearchBox.TabIndex = 2;
+            MagicSearchBox.TextChanged += MagicSearchBox_TextChanged;
             // 
             // MagicInfoForm
             // 
             ClientSize = new Size(927, 542);
+            Controls.Add(MagicSearchBox);
             Controls.Add(tabControl1);
             Controls.Add(MagiclistBox);
             Name = "MagicInfoForm";
@@ -715,7 +725,7 @@ namespace Server
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             ResumeLayout(false);
-
+            PerformLayout();
         }
 
         private void MagicInfoForm_FormClosed(object sender, FormClosedEventArgs e)
@@ -880,7 +890,7 @@ namespace Server
                 return;
             }
             ActiveControl.BackColor = SystemColors.Window;
-            _selectedMagicInfo.PowerBonus =  (ushort)(temp - _selectedMagicInfo.PowerBase);
+            _selectedMagicInfo.PowerBonus = (ushort)(temp - _selectedMagicInfo.PowerBase);
             UpdateMagicForm();
         }
 
@@ -936,7 +946,7 @@ namespace Server
             if (ActiveControl != sender) return;
             byte temp = 0;
             if (!IsValid(ref temp)) return;
-            
+
             ActiveControl.BackColor = SystemColors.Window;
             _selectedMagicInfo.Range = temp;
         }
@@ -973,9 +983,38 @@ namespace Server
             {
                 ActiveControl.BackColor = Color.Red;
             }
-            else {
-                ActiveControl.BackColor = SystemColors.Window;              
-            }            
+            else
+            {
+                ActiveControl.BackColor = SystemColors.Window;
+            }
         }
+
+        #region Search Box
+        private void MagicSearchBox_TextChanged(object sender, EventArgs e)
+        {
+            // Show all items when the search box is cleared or placeholder is active
+            if (string.IsNullOrWhiteSpace(MagicSearchBox.Text))
+            {
+                MagiclistBox.Items.Clear();
+                foreach (var magic in Envir.MagicInfoList)
+                {
+                    MagiclistBox.Items.Add(magic);
+                }
+                return;
+            }
+
+            string searchText = MagicSearchBox.Text.ToLower();
+            MagiclistBox.Items.Clear();
+
+            // Add filtered items to the list
+            foreach (var magic in Envir.MagicInfoList)
+            {
+                if (!string.IsNullOrEmpty(magic.Name) && magic.Name.ToLower().Contains(searchText))
+                {
+                    MagiclistBox.Items.Add(magic);
+                }
+            }
+        }
+        #endregion
     }
 }

@@ -30,12 +30,17 @@ namespace Server.MirForms
                     if (lines[i].Contains(';'))
                         lines[i] = lines[i].Substring(0, lines[i].IndexOf(";", System.StringComparison.Ordinal));
 
-                    MirDatabase.MapInfo newMapInfo = new MirDatabase.MapInfo { Index = ++EditEnvir.MapIndex };
+                    bool isNew = false;
 
                     var a = lines[i].Split(']'); // Split map info into [0] = MapFile MapName 0 || [1] = Attributes
                     string[] b = a[0].Split(' ');
-
-                    newMapInfo.FileName = b[0].TrimStart('['); // Assign MapFile from variable and trim leading '[' char
+                    string fileName = b[0].TrimStart('[');// Assign MapFile from variable and trim leading '[' char
+                    MapInfo newMapInfo = null;
+                    if ((newMapInfo = EditEnvir.MapInfoList.FirstOrDefault(it => it.FileName == fileName)) == null)
+                    {
+                        newMapInfo = new MirDatabase.MapInfo { Index = ++EditEnvir.MapIndex, FileName = fileName };
+                        isNew=true;
+                    }
                     newMapInfo.Title = b[1].Replace("*", " "); // Assign MapName from variable, replacing asterisk with space
 
                     List<string> mapAttributes = new List<string>(); // Group of all attributes associated with that map
@@ -56,6 +61,50 @@ namespace Server.MirForms
                     newMapInfo.NeedBridle = mapAttributes.Any(s => s.Contains("NEEDBRIDLE".ToUpper()));
                     newMapInfo.Fight = mapAttributes.Any(s => s.Contains("FIGHT".ToUpper()));
                     newMapInfo.NoTownTeleport = mapAttributes.Any(s => s.Contains("NOTOWNTELEPORT".ToUpper()));
+                    newMapInfo.NoExperience = mapAttributes.Any(s => s.Contains("NOEXPERIENCE".ToUpper()));
+                    newMapInfo.NoGroup = mapAttributes.Any(s => s.Contains("NOGROUP".ToUpper()));
+                    newMapInfo.NoPets = mapAttributes.Any(s => s.Contains("NOPETS".ToUpper()));
+                    newMapInfo.NoHero = mapAttributes.Any(s => s.Contains("NOHEROES".ToUpper()));
+                    newMapInfo.NoIntelligentCreatures =
+                        mapAttributes.Any(s => s.Contains("NOINTELLIGENTCREATURES".ToUpper())) ||
+                        mapAttributes.Any(s => s.Contains("NOINTELLIGENTCREATURE".ToUpper()));
+                    // --- RequiredGroup (supports legacy flag and REQUIREDGROUP(n), plus typo REQUIREGROUP) ---
+                    newMapInfo.RequiredGroupSize = 0;
+
+                    // numeric form: REQUIREDGROUP(n) / REQUIREGROUP(n)
+                    bool hasReqSize =
+                        mapAttributes.Any(x => x.StartsWith("REQUIREDGROUP(".ToUpper())) ||
+                        mapAttributes.Any(x => x.StartsWith("REQUIREGROUP(".ToUpper()));
+
+                    newMapInfo.FireWallLimit = mapAttributes.Any(x => x.StartsWith("FIREWALL(", StringComparison.OrdinalIgnoreCase));
+                    if (newMapInfo.FireWallLimit)
+                    {
+                        int index = mapAttributes.FindIndex(x => x.StartsWith("FIREWALL(", StringComparison.OrdinalIgnoreCase));
+                        var token = mapAttributes[index].Trim();
+                        var inner = token.Substring("FIREWALL(".Length).TrimEnd(')');
+                        if (int.TryParse(inner, out var parsed) && parsed > 0)
+                            newMapInfo.FireWallCount = parsed;
+                        else
+                            newMapInfo.FireWallCount = 1; // sensible fallback
+                    }
+
+                    if (hasReqSize)
+                    {
+                        int idx = mapAttributes.FindIndex(x => x.StartsWith("REQUIREDGROUP(".ToUpper()));
+                        if (idx < 0) idx = mapAttributes.FindIndex(x => x.StartsWith("REQUIREGROUP(".ToUpper()));
+
+                        string token = mapAttributes[idx];
+                        int l = token.IndexOf('(');
+                        int r = token.LastIndexOf(')');
+                        if (l >= 0 && r > l)
+                            newMapInfo.RequiredGroupSize = Convert.ToInt32(token.Substring(l + 1, r - l - 1));
+                    }
+                    else if (mapAttributes.Any(s => s.Contains("REQUIREDGROUP".ToUpper())) ||
+                             mapAttributes.Any(s => s.Contains("REQUIREGROUP".ToUpper())))
+                    {
+                        // legacy bare flag -> default to 2
+                        newMapInfo.RequiredGroupSize = 2;
+                    }
 
                     newMapInfo.Fire = mapAttributes.Any(x => x.StartsWith("FIRE(".ToUpper()));
                     if (newMapInfo.Fire)
@@ -134,7 +183,7 @@ namespace Server.MirForms
                     else if (mapAttributes.Any(s => s.Contains("DARK".ToUpper()))) // DARK = Night
                         newMapInfo.Light = LightSetting.Night;
 
-                    EditEnvir.MapInfoList.Add(newMapInfo); // Add map to list
+                    if(isNew) EditEnvir.MapInfoList.Add(newMapInfo); // Add map to list
                 }
                 else if (lines[i].StartsWith(";")) continue;
                 else
@@ -143,6 +192,7 @@ namespace Server.MirForms
 
             for (int j = 0; j < EditEnvir.MapInfoList.Count; j++)
             {
+                EditEnvir.MapInfoList[j].Movements.Clear();
                 for (int k = 0; k < lines.Length; k++)
                 {
                     try
@@ -249,7 +299,7 @@ namespace Server.MirForms
 
                             if (toMap < 0)
                             {
-                                errors.Add("目标地图连接失败: " + lines[k] + "");
+                                errors.Add("Destination Map Failed on line: " + lines[k] + "");
                                 continue;
                             }
 
@@ -259,6 +309,7 @@ namespace Server.MirForms
                             //NeedHole
                             //NeedMove
                             //ConquestIndex
+                            
                             EditEnvir.MapInfoList[j].Movements.Add(newMovement);
                         }
                     }
@@ -270,6 +321,7 @@ namespace Server.MirForms
             }
             for (int j = 0; j < EditEnvir.MapInfoList.Count; j++)
             {
+                EditEnvir.MapInfoList[j].MineZones.Clear();
                 for (int k = 0; k < lines.Length; k++)
                 {
                     if (!lines[k].StartsWith("MINEZONE")) continue;
@@ -293,6 +345,7 @@ namespace Server.MirForms
             }
             for (int j = 0; j < EditEnvir.MapInfoList.Count; j++)
             {
+                EditEnvir.MapInfoList[j].SafeZones.Clear();
                 for (int k = 0; k < lines.Length; k++)
                 {
                     //STARTZONE(0,150,150,50) || SAFEZONE(0,150,150,50)

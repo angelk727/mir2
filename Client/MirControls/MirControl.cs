@@ -163,7 +163,7 @@ namespace Client.MirControls
 
         #region Controls
         public List<MirControl> Controls { get; private set; }
-        public event EventHandler ControlAdded, ControlRemoved;
+        public event EventHandler ControlAdded , ControlRemoved;
         private void AddControl(MirControl control)
         {
             Controls.Add(control);
@@ -237,9 +237,9 @@ namespace Client.MirControls
 
         #region Events
         protected bool HasShown;
-        public event EventHandler Click, DoubleClick, BeforeDraw, AfterDraw, MouseEnter, MouseLeave, Shown, BeforeShown, Disposing;
-        public event MouseEventHandler MouseWheel, MouseMove, MouseDown, MouseUp;
-        public event KeyEventHandler KeyDown, KeyUp;
+        public event EventHandler Click , DoubleClick, BeforeDraw , AfterDraw , MouseEnter , MouseLeave , Shown , BeforeShown, Disposing;
+        public event MouseEventHandler MouseWheel,MouseMove, MouseDown, MouseUp;
+        public event KeyEventHandler KeyDown , KeyUp;
         public event KeyPressEventHandler KeyPress;
         #endregion
 

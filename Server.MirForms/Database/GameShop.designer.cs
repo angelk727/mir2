@@ -379,7 +379,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(14, 34);
+            label2.Location = new Point(12, 27);
             label2.Margin = new Padding(4, 0, 4, 0);
             label2.Name = "label2";
             label2.Size = new Size(113, 17);
@@ -388,7 +388,7 @@
             // 
             // CredxGold_textbox
             // 
-            CredxGold_textbox.Location = new Point(128, 29);
+            CredxGold_textbox.Location = new Point(128, 24);
             CredxGold_textbox.Margin = new Padding(4);
             CredxGold_textbox.MaxLength = 0;
             CredxGold_textbox.Name = "CredxGold_textbox";
@@ -485,9 +485,9 @@
             // 
             // ExportButton
             // 
-            ExportButton.Location = new Point(230, 27);
+            ExportButton.Location = new Point(128, 54);
             ExportButton.Name = "ExportButton";
-            ExportButton.Size = new Size(75, 27);
+            ExportButton.Size = new Size(95, 27);
             ExportButton.TabIndex = 115;
             ExportButton.Text = "导出数据";
             ExportButton.UseVisualStyleBackColor = true;

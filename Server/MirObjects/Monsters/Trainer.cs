@@ -186,7 +186,7 @@ namespace Server.MirObjects.Monsters
             if (_StartTime == 0)
                 timespend = 1000;
             double Dps = _totalDamage / (timespend * 0.001);
-            _currentAttacker.ReceiveChat(string.Format("{1}造成伤害 {0} , -持续每秒伤害输出: {2:#.00}", damage, attacker is MonsterObject ? "属下毒攻击" : "毒攻击", Dps), ChatType.Trainer);
+            _currentAttacker.ReceiveChat(GameLanguage.ServerTextMap.GetLocalization((ServerTextKeys.PoisonDamageDps), damage, attacker is MonsterObject ? GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.YourPetsPoison) : GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.YourPoison), Dps), ChatType.Trainer);
             Poisoned = true;
         }
 
@@ -213,7 +213,7 @@ namespace Server.MirObjects.Monsters
             if (_StartTime == 0)
                 timespend = 1000;
             double Dps = _totalDamage / (timespend * 0.001);
-            _currentAttacker.ReceiveChat(string.Format("持续伤害值: {0} -持续每秒伤害输出: {1:#.00}", amount, Dps), ChatType.Trainer);
+            _currentAttacker.ReceiveChat(GameLanguage.ServerTextMap.GetLocalization((ServerTextKeys.YourPoisonStoppedRegen), amount, Dps), ChatType.Trainer);
         }
 
 
@@ -242,7 +242,7 @@ namespace Server.MirObjects.Monsters
             if (_StartTime == 0)
                 timespend = 1000;
             double Dps = _totalDamage / (timespend * 0.001);
-            _currentAttacker.ReceiveChat(string.Format("{3}造成 {0} {1}伤害, -持续每秒伤害输出: {2:#.00}", damage, output, Dps, Pet? "属下攻击": "攻击"), ChatType.Trainer);
+            _currentAttacker.ReceiveChat(GameLanguage.ServerTextMap.GetLocalization((ServerTextKeys.PetInflictedDamageDps), damage, output, Dps, Pet? GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.YourPet): GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.You)), ChatType.Trainer);
         }
 
         private void ResetStats()
@@ -263,7 +263,7 @@ namespace Server.MirObjects.Monsters
             if (_StartTime == 0)
                 timespend = 1000;
             double Dps = _totalDamage / (timespend * 0.001);
-            _currentAttacker.ReceiveChat(string.Format("攻击平均伤害值: {0} -持续每秒伤害输出: {1:#.00}", (int)(_totalDamage / _hitCount),Dps), ChatType.Trainer);
+            _currentAttacker.ReceiveChat(GameLanguage.ServerTextMap.GetLocalization((ServerTextKeys.AverageDamageOnTrainer), (int)(_totalDamage / _hitCount),Dps), ChatType.Trainer);
         }
     }
 }

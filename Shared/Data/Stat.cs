@@ -1,4 +1,4 @@
-﻿public sealed class Stats : IEquatable<Stats>
+public sealed class Stats : IEquatable<Stats>
 {
     public SortedDictionary<Stat, int> Values { get; set; } = new SortedDictionary<Stat, int>();
     public int Count => Values.Sum(pair => Math.Abs(pair.Value));

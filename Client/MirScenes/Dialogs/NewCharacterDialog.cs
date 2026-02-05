@@ -2,6 +2,7 @@
 using Client.MirControls;
 using Client.MirGraphics;
 using Client.MirSounds;
+
 namespace Client.MirScenes.Dialogs
 {
     public sealed class NewCharacterDialog : MirImageControl
@@ -12,14 +13,14 @@ namespace Client.MirScenes.Dialogs
         public MirAnimatedControl CharacterDisplay;
 
         public MirButton OKButton,
-                         CancelButton,
-                         WarriorButton,
-                         WizardButton,
-                         TaoistButton,
-                         AssassinButton,
-                         ArcherButton,
-                         MaleButton,
-                         FemaleButton;
+            CancelButton,
+            WarriorButton,
+            WizardButton,
+            TaoistButton,
+            AssassinButton,
+            ArcherButton,
+            MaleButton,
+            FemaleButton;
 
         public MirTextBox NameTextBox;
 
@@ -29,30 +30,16 @@ namespace Client.MirScenes.Dialogs
         public MirGender Gender;
 
         #region Descriptions
-            public const string WarriorDescription =
-                "以强有力的体格为基础，特殊之处在于用剑法及刀法等技术。即便穿戴沉重的武器" +
-                "及对打猎、战斗比较适用。 体力强的战士能带许多东西，铠甲也可以" +
-                "自由活动。 但战士所戴的铠甲对魔法的防御能力相对较弱。";
 
-            public const string WizardDescription =
-                "以长时间锻炼的内功为基础，能发挥强大的攻击型魔法。魔法攻击力卓越，但体力较弱。对体力" +
-                "上直接受到攻击的防御能力较低，另外，发挥高水平的魔法时需要较长时间，此时" +
-                "可能受到对方的快速攻击。 魔法师的魔法比任何攻击能力都强大，能有效的威胁对方。";
+        public readonly string WarriorDescription = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.WarriorsDescription);
 
-            public const string TaoistDescription =
-                "以强大的精神力作为基础，可以使用治疗术帮助别人。 对" +
-                "自然很熟悉，在用毒方面的能力最强。 博学多知，能使用剑术和魔法" +
-                "，所以每时每刻都能发挥多样的法术，随机应变性强。";
+        public readonly string WizardDescription = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.WizardsDescription);
 
-            public const string AssassinDescription =
-                "以敏捷快速的攻击为基础，矫健的刺客还拥有超强的爆" +
-                "发性他们熟悉各种技能 尤其擅长瞬移、潜行技能！ 他们是暗夜" +
-                "的主人，是绝对的伤害高、攻击高、爆发型的职业。";
+        public readonly string TaoistDescription = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.TaoistsDescription);
 
-            public const string ArcherDescription =
-                "强大的远程输出：作为一个名副其实的远程物理输出职业，弓箭最擅长在敌人攻击范围之外" +
-                "对敌人造成致命打击。 多变：弓箭手永远是战场上的未知数，就必须练就准确的判断力，熟练掌握其操作技巧" +
-                " 华丽：鲜艳的服装、优雅的射击动作和绚美的特效，非弓箭手莫属!";
+        public readonly string AssassinDescription = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.AssassinsDescription);
+
+        public readonly string ArcherDescription = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.ArchersDescription);
 
         #endregion
 
@@ -268,6 +255,7 @@ namespace Client.MirScenes.Dialogs
             if (OKButton.Enabled)
                 OKButton.InvokeMouseClick(null);
         }
+
         private void CharacterNameTextBox_TextChanged(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(NameTextBox.Text))
@@ -290,12 +278,13 @@ namespace Client.MirScenes.Dialogs
         }
 
         public event EventHandler OnCreateCharacter;
+
         private void CreateCharacter()
         {
             OKButton.Enabled = false;
 
             if (OnCreateCharacter != null)
-                OnCreateCharacter.Invoke(this, EventArgs.Empty);            
+                OnCreateCharacter.Invoke(this, EventArgs.Empty);
         }
 
         private void UpdateInterface()

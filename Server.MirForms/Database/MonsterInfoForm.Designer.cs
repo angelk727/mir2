@@ -98,6 +98,8 @@
             label13 = new Label();
             TxtSearchMonster = new TextBox();
             label24 = new Label();
+            CanRecallCheckBox = new CheckBox();
+            IsBossCheckBox = new CheckBox();
             tabControl1.SuspendLayout();
             tabPage1.SuspendLayout();
             MonsterInfoPanel.SuspendLayout();
@@ -130,6 +132,8 @@
             // MonsterInfoPanel
             // 
             MonsterInfoPanel.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            MonsterInfoPanel.Controls.Add(IsBossCheckBox);
+            MonsterInfoPanel.Controls.Add(CanRecallCheckBox);
             MonsterInfoPanel.Controls.Add(MonstersPreview);
             MonsterInfoPanel.Controls.Add(label13);
             MonsterInfoPanel.Controls.Add(DropPathTextBox);
@@ -227,7 +231,7 @@
             // UndeadCheckBox
             // 
             UndeadCheckBox.AutoSize = true;
-            UndeadCheckBox.Location = new Point(360, 314);
+            UndeadCheckBox.Location = new Point(298, 314);
             UndeadCheckBox.Margin = new Padding(4);
             UndeadCheckBox.Name = "UndeadCheckBox";
             UndeadCheckBox.Size = new Size(63, 21);
@@ -239,7 +243,7 @@
             // AutoRevCheckBox
             // 
             AutoRevCheckBox.AutoSize = true;
-            AutoRevCheckBox.Location = new Point(169, 314);
+            AutoRevCheckBox.Location = new Point(140, 314);
             AutoRevCheckBox.Margin = new Padding(4);
             AutoRevCheckBox.Name = "AutoRevCheckBox";
             AutoRevCheckBox.Size = new Size(63, 21);
@@ -293,7 +297,7 @@
             // CanTameCheckBox
             // 
             CanTameCheckBox.AutoSize = true;
-            CanTameCheckBox.Location = new Point(262, 314);
+            CanTameCheckBox.Location = new Point(220, 314);
             CanTameCheckBox.Margin = new Padding(4);
             CanTameCheckBox.Name = "CanTameCheckBox";
             CanTameCheckBox.Size = new Size(63, 21);
@@ -875,6 +879,30 @@
             label24.TabIndex = 28;
             label24.Text = "搜索指定怪物";
             // 
+            // IsBossCheckBox
+            // 
+            IsBossCheckBox.AutoSize = true;
+            IsBossCheckBox.Location = new Point(377, 314);
+            IsBossCheckBox.Margin = new Padding(4);
+            IsBossCheckBox.Name = "IsBossCheckBox";
+            IsBossCheckBox.Size = new Size(79, 21);
+            IsBossCheckBox.TabIndex = 93;
+            IsBossCheckBox.Text = "Boss诱惑";
+            IsBossCheckBox.UseVisualStyleBackColor = true;
+            IsBossCheckBox.CheckedChanged += IsBossCheckBox_CheckedChanged;
+            // 
+            // CanRecallCheckBox
+            // 
+            CanRecallCheckBox.AutoSize = true;
+            CanRecallCheckBox.Location = new Point(486, 314);
+            CanRecallCheckBox.Margin = new Padding(4);
+            CanRecallCheckBox.Name = "CanRecallCheckBox";
+            CanRecallCheckBox.Size = new Size(63, 21);
+            CanRecallCheckBox.TabIndex = 94;
+            CanRecallCheckBox.Text = "可召回";
+            CanRecallCheckBox.UseVisualStyleBackColor = true;
+			CanRecallCheckBox.CheckedChanged += CanRecallCheckBox_CheckedChanged;
+            // 
             // MonsterInfoForm
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
@@ -899,6 +927,7 @@
             MonsterInfoPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)MonstersPreview).EndInit();
             ResumeLayout(false);
+            PerformLayout();
 
         }
 
@@ -974,5 +1003,7 @@
         private PictureBox MonstersPreview;
         private TextBox TxtSearchMonster;
         private Label label24;
+        private CheckBox CanRecallCheckBox;
+        private CheckBox IsBossCheckBox;
     }
 }

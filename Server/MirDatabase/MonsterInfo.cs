@@ -37,6 +37,8 @@ namespace Server.MirDatabase
         public List<DropInfo> Drops = new List<DropInfo>();
 
         public bool CanTame = true, CanPush = true, AutoRev = true, Undead = false;
+        public bool CanRecall = false;
+        public bool IsBoss = false;
 
         public bool HasSpawnScript;
         public bool HasDieScript;
@@ -133,11 +135,64 @@ namespace Server.MirDatabase
             if (Envir.LoadVersion < 89) return;
 
             DropPath = reader.ReadString();
+
+            if (Envir.LoadVersion >= 115)
+            {
+                CanRecall = reader.ReadBoolean();
+            }
+
+            if (Envir.LoadVersion >= 116)
+            {
+                IsBoss = reader.ReadBoolean();
+            }
         }
 
         public string GameName
         {
             get { return Regex.Replace(Name, @"[\d-]", string.Empty); }
+        }
+
+        public ClientMonsterInfo ClientInformation
+        {
+            get
+            {
+                Stats tooltipStats = new Stats();
+                tooltipStats[Stat.HP] = Stats[Stat.HP];
+                tooltipStats[Stat.MinAC] = Stats[Stat.MinAC];
+                tooltipStats[Stat.MaxAC] = Stats[Stat.MaxAC];
+                tooltipStats[Stat.MinMAC] = Stats[Stat.MinMAC];
+                tooltipStats[Stat.MaxMAC] = Stats[Stat.MaxMAC];
+                tooltipStats[Stat.MinDC] = Stats[Stat.MinDC];
+                tooltipStats[Stat.MaxDC] = Stats[Stat.MaxDC];
+                tooltipStats[Stat.MinMC] = Stats[Stat.MinMC];
+                tooltipStats[Stat.MaxMC] = Stats[Stat.MaxMC];
+                tooltipStats[Stat.MinSC] = Stats[Stat.MinSC];
+                tooltipStats[Stat.MaxSC] = Stats[Stat.MaxSC];
+
+                return new ClientMonsterInfo
+                {
+                    Index = Index,
+                    Name = Name,
+                    GameName = GameName,
+                    Image = Image,
+                    AI = AI,
+                    Effect = Effect,
+                    ViewRange = ViewRange,
+                    CoolEye = CoolEye,
+                    Level = Level,
+                    Light = Light,
+                    AttackSpeed = AttackSpeed,
+                    MoveSpeed = MoveSpeed,
+                    Experience = Experience,
+                    CanTame = CanTame,
+                    CanPush = CanPush,
+                    AutoRev = AutoRev,
+                    Undead = Undead,
+                    Stats = tooltipStats,
+                    CanRecall = CanRecall,
+                    IsBoss = IsBoss
+                };
+            }
         }
 
         public void Save(BinaryWriter writer)
@@ -168,6 +223,8 @@ namespace Server.MirDatabase
             writer.Write(Undead);
 
             writer.Write(DropPath);
+            writer.Write(CanRecall);
+            writer.Write(IsBoss);
         }
 
         public static void FromText(string text)
@@ -352,7 +409,7 @@ namespace Server.MirDatabase
 
                 if (drop == null)
                 {
-                    MessageQueue.Enqueue(string.Format("未能加载 {0} 所需物品: {1}", name, lines[i]));
+                    MessageQueue.Enqueue(GameLanguage.ServerTextMap.GetLocalization((ServerTextKeys.CouldNotLoadDropLine), name, lines[i]));
                     continue;
                 }
 
@@ -408,7 +465,7 @@ namespace Server.MirDatabase
 
                 if (drop == null)
                 {
-                    MessageQueue.Enqueue(string.Format("未能加载 {0} 掉落物品: {1}}", name, line));
+                    MessageQueue.Enqueue(GameLanguage.ServerTextMap.GetLocalization((ServerTextKeys.CouldNotLoadDropLine), name, line));
                     continue;
                 }
 

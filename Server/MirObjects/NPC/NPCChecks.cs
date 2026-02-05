@@ -1,4 +1,4 @@
-﻿namespace Server.MirObjects
+namespace Server.MirObjects
 {
     public class NPCChecks
     {
@@ -63,7 +63,9 @@
         CheckHeroClass,
         CheckHeroGender,
         CheckHeroItem,
+        HasGT,
         CheckBuff,
+        CheckMapLight,
         CheckTransform,
         IsGuildLeader
     }

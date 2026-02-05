@@ -47,7 +47,6 @@ namespace Server
 
         private void UpdateInterface(bool refresh = false)
         {
-            //Group<MapInfo> orderedMapInfoList = Envir.MapInfoList.OrderBy(m => m.Title).ToList();
             MapInfoListBox.SelectedIndexChanged -= MapInfoListBox_SelectedIndexChanged;
 
             if (refresh || MapInfoListBox.Items.Count != Envir.MapInfoList.Count)
@@ -60,7 +59,8 @@ namespace Server
 
                 for (int i = 0; i < Envir.MapInfoList.Count; i++)
                 {
-                    if (!string.IsNullOrEmpty(MapSearchTextBox.Text) && !Envir.MapInfoList[i].Title.Contains(MapSearchTextBox.Text, StringComparison.OrdinalIgnoreCase))
+                    if (!string.IsNullOrEmpty(MapSearchTextBox.Text) &&
+                        !Envir.MapInfoList[i].Title.Contains(MapSearchTextBox.Text, StringComparison.OrdinalIgnoreCase))
                         continue;
 
                     MapInfoListBox.Items.Add(Envir.MapInfoList[i]);
@@ -109,7 +109,15 @@ namespace Server
                 FireTextbox.Text = string.Empty;
                 LightningTextbox.Text = string.Empty;
                 MapDarkLighttextBox.Text = string.Empty;
-                //MineIndextextBox.Text = string.Empty;
+                GTBox.Checked = false;
+                GTIndexBox.Text = string.Empty;
+                NoExperienceCheckbox.Checked = false;
+                noGroupCheckbox.Checked = false;
+                NoPetsCheckbox.Checked = false;
+                NoHeroesCheckbox.Checked = false;
+                RequiredGroupTextBox.Text = string.Empty;
+                RequiredGroupCheckBox.Checked = false;
+
                 return;
             }
 
@@ -164,9 +172,23 @@ namespace Server
 
             NoMountCheckbox.Checked = mi.NoMount;
             NeedBridleCheckbox.Checked = mi.NeedBridle;
-            //MineIndextextBox.Text = mi.MineIndex.ToString();
             NoTownTeleportCheckbox.Checked = mi.NoTownTeleport;
             NoReincarnation.Checked = mi.NoReincarnation;
+
+            GTBox.Checked = mi.GT;
+            GTIndexBox.Text = mi.GTIndex.ToString();
+
+            NoExperienceCheckbox.Checked = mi.NoExperience;
+            noGroupCheckbox.Checked = mi.NoGroup;
+            NoPetsCheckbox.Checked = mi.NoPets;
+            NoIntelligentCreatureCheckbox.Checked = mi.NoIntelligentCreatures;
+            NoHeroesCheckbox.Checked = mi.NoHero;
+            RequiredGroupTextBox.Text = mi.RequiredGroupSize.ToString();
+            RequiredGroupCheckBox.Checked = mi.RequiredGroup;
+
+            FireWallCheckBox.Checked = mi.FireWallLimit;
+            FireWallCount.Text = mi.FireWallCount > 0 ? mi.FireWallCount.ToString() : string.Empty;
+            FireWallCount.Enabled = FireWallCheckBox.Checked;
 
             for (int i = 1; i < _selectedMapInfos.Count; i++)
             {
@@ -181,7 +203,6 @@ namespace Server
                 if (MineComboBox.SelectedItem == null || MineComboBox.SelectedIndex != mi.MineIndex) MineComboBox.SelectedIndex = 1;
                 if (MusicTextBox.Text != mi.Music.ToString()) MusicTextBox.Text = string.Empty;
 
-                //map attributes
                 if (NoTeleportCheckbox.Checked != mi.NoTeleport) NoTeleportCheckbox.Checked = false;
                 if (NoReconnectCheckbox.Checked != mi.NoReconnect) NoReconnectCheckbox.Checked = false;
                 if (NoReconnectTextbox.Text != mi.NoReconnectMap) NoReconnectTextbox.Text = string.Empty;
@@ -206,6 +227,23 @@ namespace Server
                 if (NeedBridleCheckbox.Checked != mi.NeedBridle) NeedBridleCheckbox.Checked = false;
                 if (NoTownTeleportCheckbox.Checked != mi.NoTownTeleport) NoTownTeleportCheckbox.Checked = false;
                 if (NoReincarnation.Checked != mi.NoReincarnation) NoReincarnation.Checked = false;
+
+                if (GTBox.Checked != mi.GT) GTBox.Checked = false;
+                if (GTIndexBox.Text != mi.GTIndex.ToString()) GTIndexBox.Text = string.Empty;
+
+                if (NoExperienceCheckbox.Checked != mi.NoExperience) NoExperienceCheckbox.Checked = false;
+                if (noGroupCheckbox.Checked != mi.NoGroup) noGroupCheckbox.Checked = false;
+                if (NoPetsCheckbox.Checked != mi.NoPets) NoPetsCheckbox.Checked = false;
+                if (NoIntelligentCreatureCheckbox.Checked != mi.NoIntelligentCreatures) NoIntelligentCreatureCheckbox.Checked = false;
+                if (NoHeroesCheckbox.Checked != mi.NoHero) NoHeroesCheckbox.Checked = false;
+                if (RequiredGroupTextBox.Text != mi.RequiredGroupSize.ToString()) RequiredGroupTextBox.Text = string.Empty;
+                if (RequiredGroupCheckBox.Checked != (mi.RequiredGroupSize > 0)) RequiredGroupCheckBox.Checked = false;
+
+                if (FireWallCount.Text != mi.FireWallCount.ToString()) FireWallCount.Text = string.Empty;
+                if (FireWallCheckBox.Checked != mi.FireWallLimit) FireWallCheckBox.Checked = false;
+
+                // Keep the enable state in sync after possible changes
+                FireWallCount.Enabled = FireWallCheckBox.Checked;
             }
 
             UpdateSafeZoneInterface();
@@ -638,17 +676,14 @@ namespace Server
             MZListlistBox.Items.Clear();
             lstParticles.SelectedItems.Clear();
 
-            // Update selected map information
             _selectedMapInfos = MapInfoListBox.SelectedItems.Cast<MapInfo>().ToList();
 
-            // If no maps are selected, reset the UI
             if (_selectedMapInfos == null || _selectedMapInfos.Count == 0)
             {
                 UpdateInterface(false);
                 return;
             }
 
-            // Update the interface for the selected maps
             UpdateInterface(false);
         }
         private void FileNameTextBox_TextChanged(object sender, EventArgs e)
@@ -756,7 +791,6 @@ namespace Server
             }
             ActiveControl.BackColor = SystemColors.Window;
 
-
             for (int i = 0; i < _selectedSafeZoneInfos.Count; i++)
                 _selectedSafeZoneInfos[i].Location.Y = temp;
 
@@ -774,7 +808,6 @@ namespace Server
                 return;
             }
             ActiveControl.BackColor = SystemColors.Window;
-
 
             for (int i = 0; i < _selectedSafeZoneInfos.Count; i++)
                 _selectedSafeZoneInfos[i].Size = temp;
@@ -918,7 +951,7 @@ namespace Server
             {
                 if (chkRespawnEnableTick.Checked)
                 {
-                    _selectedRespawnInfos[i].RespawnTicks = Math.Max((ushort)1, temp);//you can never have respawnticks set to 0 or it would bug the entire thing really
+                    _selectedRespawnInfos[i].RespawnTicks = Math.Max((ushort)1, temp);
                     _selectedRespawnInfos[i].Delay = 0;
                 }
                 else
@@ -1019,7 +1052,6 @@ namespace Server
                 return;
             }
             ActiveControl.BackColor = SystemColors.Window;
-
 
             for (int i = 0; i < _selectedMovementInfos.Count; i++)
                 _selectedMovementInfos[i].Source.X = temp;
@@ -1447,9 +1479,9 @@ namespace Server
             sfd.ShowDialog();
 
             if (sfd.FileName == string.Empty) return;
-            for (int i = 0; i < _selectedMapInfos.Count; i++)
+            using (StreamWriter sw = File.CreateText(sfd.FileNames[0]))
             {
-                using (StreamWriter sw = File.AppendText(sfd.FileNames[0]))
+                for (int i = 0; i < _selectedMapInfos.Count; i++)
                 {
                     string textOut = string.Empty;
                     textOut += $"[{_selectedMapInfos[i].FileName} {_selectedMapInfos[i].Title.Replace(' ', '*')}]";
@@ -1463,7 +1495,6 @@ namespace Server
                     textOut += PrintMapAttributes(_selectedMapInfos[i]);
                     sw.WriteLine(textOut);
 
-                    //STARTZONE(0,150,150,50) || SAFEZONE(0,150,150,50)
                     for (int j = 0; j < _selectedMapInfos[i].SafeZones.Count; j++)
                     {
                         string safeZoneOut = _selectedMapInfos[i].SafeZones[j].StartPoint ? "STARTZONE" : "SAFEZONE";
@@ -1478,7 +1509,7 @@ namespace Server
                         try
                         {
                             string movement =
-                                $"{_selectedMapInfos[i].FileName} {_selectedMapInfos[i].Movements[j].Source.X + "," + _selectedMapInfos[i].Movements[j].Source.Y} {"->"} {Envir.MapInfoList[_selectedMapInfos[i].Movements[j].MapIndex - 1].FileName} {_selectedMapInfos[i].Movements[j].Destination.X + "," + _selectedMapInfos[i].Movements[j].Destination.Y} {(_selectedMapInfos[i].Movements[j].NeedHole ? "NEEDHOLE " : "") + (_selectedMapInfos[i].Movements[j].NeedMove ? "NEEDMOVE " : "") + (_selectedMapInfos[i].Movements[j].ConquestIndex > 0 ? "NEEDCONQUEST(" + _selectedMapInfos[i].Movements[j].ConquestIndex + ")" : "") + (_selectedMapInfos[i].Movements[j].ShowOnBigMap ? "SHOWONBIGMAP " : "") + (_selectedMapInfos[i].Movements[j].Icon > 0 ? "BIGMAPICON(" + _selectedMapInfos[i].Movements[j].Icon + ")" : "")}";
+                                $"{_selectedMapInfos[i].FileName} {_selectedMapInfos[i].Movements[j].Source.X + "," + _selectedMapInfos[i].Movements[j].Source.Y} {"->"} {Envir.MapInfoList.First(it=>it.Index== _selectedMapInfos[i].Movements[j].MapIndex).FileName} {_selectedMapInfos[i].Movements[j].Destination.X + "," + _selectedMapInfos[i].Movements[j].Destination.Y} {(_selectedMapInfos[i].Movements[j].NeedHole ? "NEEDHOLE " : "") + (_selectedMapInfos[i].Movements[j].NeedMove ? "NEEDMOVE " : "") + (_selectedMapInfos[i].Movements[j].ConquestIndex > 0 ? "NEEDCONQUEST(" + _selectedMapInfos[i].Movements[j].ConquestIndex + ")" : "") + (_selectedMapInfos[i].Movements[j].ShowOnBigMap ? "SHOWONBIGMAP " : "") + (_selectedMapInfos[i].Movements[j].Icon > 0 ? "BIGMAPICON(" + _selectedMapInfos[i].Movements[j].Icon + ")" : "")}";
 
                             sw.WriteLine(movement);
                         }
@@ -1525,6 +1556,14 @@ namespace Server
             if (map.Fire) textOut += " FIRE(" + map.FireDamage + ")";
             if (map.Lightning) textOut += " LIGHTNING(" + map.LightningDamage + ")";
             if (map.NoTownTeleport) textOut += " NOTownTeleport";
+            if (map.GT) textOut += " GT(" + map.GTIndex + ")";
+            if (map.NoExperience) textOut += " NOEXPERIENCE";
+            if (map.NoGroup) textOut += " NOGROUP";
+            if (map.NoPets) textOut += " NOPETS";
+            if (map.NoIntelligentCreatures) textOut += " NOINTELLIGENTCREATURES";
+            if (map.NoHero) textOut += " NOHERO";
+            if (map.RequiredGroupSize > 1) textOut += " REQUIREDGROUP(" + map.RequiredGroupSize + ")";
+            if (map.FireWallLimit && map.FireWallCount > 0) textOut += " FIREWALL(" + map.FireWallCount + ")";
             return textOut;
         }
         private void ImportMonGenButton_Click(object sender, EventArgs e)
@@ -1832,11 +1871,11 @@ namespace Server
             foreach (WeatherSetting item in lstParticles.SelectedItems)
                 newvalue = newvalue | item;
 
-
             for (int i = 0; i < _selectedMapInfos.Count; i++)
             {
                 _selectedMapInfos[i].WeatherParticles = newvalue;
             }
+            //UpdateInterface(true); This isn't needed
         }
 
         private void MapSearchButton_Click(object sender, EventArgs e)
@@ -1845,6 +1884,151 @@ namespace Server
                 return;
 
             UpdateInterface(true);
+        }
+
+        #region GT
+        private void GTBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (ActiveControl != sender) return;
+
+            for (int i = 0; i < _selectedMapInfos.Count; i++)
+                _selectedMapInfos[i].GT = GTBox.Checked;
+        }
+
+        private void GTIndexBox_TextChanged(object sender, EventArgs e)
+        {
+            if (ActiveControl != sender) return;
+            if (!byte.TryParse(ActiveControl.Text, out byte temp))
+            {
+                ActiveControl.BackColor = Color.Red;
+                return;
+            }
+            ActiveControl.BackColor = SystemColors.Window;
+
+            for (int i = 0; i < _selectedMapInfos.Count; i++)
+                _selectedMapInfos[i].GTIndex = temp;
+        }
+        #endregion
+
+        private void NoExperienceCheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (ActiveControl != sender) return;
+
+            for (int i = 0; i < _selectedMapInfos.Count; i++)
+                _selectedMapInfos[i].NoExperience = NoExperienceCheckbox.Checked;
+        }
+
+        private void noGroupCheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (ActiveControl != sender) return;
+
+            for (int i = 0; i < _selectedMapInfos.Count; i++)
+                _selectedMapInfos[i].NoGroup = noGroupCheckbox.Checked;
+        }
+
+        private void NoPetsCheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (ActiveControl != sender) return;
+            for (int i = 0; i < _selectedMapInfos.Count; i++)
+                _selectedMapInfos[i].NoPets = NoPetsCheckbox.Checked;
+        }
+
+        private void NoIntelligentCreatureCheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (ActiveControl != sender) return;
+            for (int i = 0; i < _selectedMapInfos.Count; i++)
+                _selectedMapInfos[i].NoIntelligentCreatures = NoIntelligentCreatureCheckbox.Checked;
+        }
+        
+        private void NoHeroesCheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (ActiveControl != sender) return;
+            for (int i = 0; i < _selectedMapInfos.Count; i++)
+                _selectedMapInfos[i].NoHero = NoHeroesCheckbox.Checked;
+        }
+
+        private void RequiredGroupTextBox_TextChanged(object sender, EventArgs e)
+        {
+            if (ActiveControl != sender) return;
+
+            string txt = RequiredGroupTextBox.Text.Trim();
+            int value;
+
+            if (txt.Length == 0)
+            {
+                // blank = off
+                value = 0;
+                RequiredGroupTextBox.BackColor = SystemColors.Window;
+            }
+            else if (!int.TryParse(txt, out value))
+            {
+                RequiredGroupTextBox.BackColor = Color.Red;
+                return;
+            }
+            else
+            {
+                RequiredGroupTextBox.BackColor = SystemColors.Window;
+                // 0 or 1 = off
+                if (value <= 1) value = 0;
+                // clamp upper bound
+                value = Math.Min(Globals.MaxGroup, value);
+            }
+
+            for (int i = 0; i < _selectedMapInfos.Count; i++)
+                _selectedMapInfos[i].RequiredGroupSize = value;
+        }
+
+        private void RequiredGroupCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (ActiveControl != sender) return;
+
+            bool value = RequiredGroupCheckBox.Checked;
+
+            for (int i = 0; i < _selectedMapInfos.Count; i++)
+                _selectedMapInfos[i].RequiredGroup = value;
+        }
+
+        private void FireWallCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (ActiveControl != sender) return;
+
+            FireWallCount.Enabled = FireWallCheckBox.Checked;
+
+            for (int i = 0; i < _selectedMapInfos.Count; i++)
+            {
+                _selectedMapInfos[i].FireWallLimit = FireWallCheckBox.Checked;
+
+                if (_selectedMapInfos[i].FireWallLimit)
+                {
+                    if (!int.TryParse(FireWallCount.Text, out var parsed) || parsed <= 0)
+                    {
+                        _selectedMapInfos[i].FireWallCount = 1;
+                        FireWallCount.Text = "1";
+                    }
+                }
+            }
+        }
+
+        private void FireWallCount_TextChanged(object sender, EventArgs e)
+        {
+            if (ActiveControl != sender) return;
+
+            if (!FireWallCheckBox.Checked)
+            {
+                ActiveControl.BackColor = SystemColors.Window;
+                return;
+            }
+
+            if (!int.TryParse(FireWallCount.Text, out var temp) || temp <= 0)
+            {
+                ActiveControl.BackColor = Color.Red;
+                return;
+            }
+
+            ActiveControl.BackColor = SystemColors.Window;
+
+            for (int i = 0; i < _selectedMapInfos.Count; i++)
+                _selectedMapInfos[i].FireWallCount = temp;
         }
     }
 }

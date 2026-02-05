@@ -148,7 +148,7 @@ namespace Client.MirScenes.Dialogs
 
         public void InputRentalPeroid()
         {
-            var inputBox = new MirInputBox($"你想租用多长时间 {RentalItem.FriendlyName} to {GameScene.Scene.GuestItemRentDialog.GuestName} for? (1到30天).");
+            var inputBox = new MirInputBox(GameLanguage.ClientTextMap.GetLocalization((ClientTextKeys.RentItemDurationQuestion), RentalItem.FriendlyName, GameScene.Scene.GuestItemRentDialog.GuestName));
 
             inputBox.OKButton.Click += (o1, e1) =>
             {
@@ -170,7 +170,7 @@ namespace Client.MirScenes.Dialogs
         public void RefreshInterface()
         {
             _nameLabel.Text = GameScene.User.Name;
-            _rentalPeriodLabel.Text = $"租赁期: {RentalPeriod} 天";
+            _rentalPeriodLabel.Text = GameLanguage.ClientTextMap.GetLocalization((ClientTextKeys.RentalPeriodDays), RentalPeriod);
 
             GameScene.Scene.GuestItemRentDialog.RefreshInterface();
             GameScene.Scene.GuestItemRentingDialog.RefreshInterface();
@@ -285,7 +285,7 @@ namespace Client.MirScenes.Dialogs
                 Size = new Size(150, 14),
                 DrawFormat = TextFormatFlags.Left | TextFormatFlags.VerticalCenter,
                 NotControl = true,
-                Text = "租赁期: 0 天"
+                Text = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.RentalPeriodZeroDays)
             };
 
             _guestItemCell = new MirItemCell
@@ -302,7 +302,7 @@ namespace Client.MirScenes.Dialogs
         public void RefreshInterface()
         {
             _nameLabel.Text = _guestName;
-            _rentalPeriodLabel.Text = $"租赁期: {GuestRentalPeriod} 天";
+            _rentalPeriodLabel.Text = GameLanguage.ClientTextMap.GetLocalization((ClientTextKeys.RentalPeriodDays), GuestRentalPeriod);
 
             if (GuestLoanItem != null)
                 GameScene.Bind(GuestLoanItem);

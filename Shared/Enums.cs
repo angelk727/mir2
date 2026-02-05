@@ -1,4 +1,4 @@
-﻿public enum MouseCursor : byte
+public enum MouseCursor : byte
 {
     None,
     Default,
@@ -60,6 +60,13 @@ public enum MarketPanelType : byte
     GameShop
 }
 
+public enum MarketPriceFilter : byte
+{
+    Normal,
+    High,
+    Low
+}
+
 public enum BlendMode : sbyte
 {
     NONE = -1,
@@ -80,6 +87,14 @@ public enum DamageType : byte
     Critical = 2,
     HpRegen = 3,
     Poisoning = 4
+}
+
+public enum MonsterType : byte
+{
+    Normal = 0,
+    普通级 = 1,
+    勇士级 = 2,
+    精英级 = 3
 }
 
 [Flags]
@@ -762,6 +777,9 @@ public enum Monster : ushort
     Mon616T = 616,
     Mon617T = 617,
     Mon620B = 620,  //Mon63.wil
+    Mon622N = 622,
+    Mon623N = 623,
+    Mon624N = 624,
     //B=Boss D=Door N=Normal P=Peculiar S=Stoned T=Tree
 
     //Special
@@ -1653,6 +1671,8 @@ public enum ServerPacketIds : short
     Chat,
     ObjectChat,
     NewItemInfo,
+    NewMonsterInfo,
+    NewNPCInfo,
     NewHeroInfo,
     NewChatItem,
     MoveItem,
@@ -1894,6 +1914,9 @@ public enum ServerPacketIds : short
     SetCompass,
     GroupMembersMap,
     SendMemberLocation,
+    GuildTerritoryPage,
+    StorageUnlockResult,
+    StoragePasswordResult,
 }
 
 public enum ClientPacketIds : short
@@ -1935,6 +1958,9 @@ public enum ClientPacketIds : short
     DropGold,
     PickUp,
     RequestMapInfo,
+    RequestMonsterInfo,
+    RequestNPCInfo,
+    RequestItemInfo,
     TeleportToNPC,
     SearchMap,
     Inspect,
@@ -2048,7 +2074,13 @@ public enum ClientPacketIds : short
     CancelItemRental,
     ItemRentalLockFee,
     ItemRentalLockItem,
-    ConfirmItemRental
+    ConfirmItemRental,
+    GuildTerritoryPage,
+    PurchaseGuildTerritory,
+    DeleteItem,
+    UnlockStorage,
+    SetStoragePassword,
+    RemoveStoragePassword,
 }
 
 public enum ConquestType : byte

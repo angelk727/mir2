@@ -31,6 +31,21 @@ namespace Server.MirDatabase
 
         public byte[] Salt = new byte[24];
 
+        private string storagePassword = string.Empty;
+        public string StoragePassword
+        {
+            get { return storagePassword; }
+            set
+            {
+                StorageSalt = Crypto.GenerateSalt();
+                storagePassword = Crypto.HashPassword(value, StorageSalt);
+            }
+        }
+
+        public byte[] StorageSalt = new byte[24];
+        public bool HasStoragePassword => !string.IsNullOrEmpty(storagePassword);
+        public DateTime StoragePasswordLastSet = DateTime.MinValue;
+
         public string UserName = string.Empty;
         public DateTime BirthDate;
         public string SecretQuestion = string.Empty;
@@ -96,6 +111,13 @@ namespace Server.MirDatabase
             if (Envir.LoadVersion > 97)
                 RequirePasswordChange = reader.ReadBoolean();
 
+            if (Envir.LoadVersion >= 117)
+            {
+                storagePassword = reader.ReadString();
+                StorageSalt = reader.ReadBytes(reader.ReadInt32());
+                StoragePasswordLastSet = DateTime.FromBinary(reader.ReadInt64());
+            }
+
             UserName = reader.ReadString();
             BirthDate = DateTime.FromBinary(reader.ReadInt64());
             SecretQuestion = reader.ReadString();
@@ -120,21 +142,21 @@ namespace Server.MirDatabase
 
                 if (info.Deleted && info.DeleteDate.AddMonths(Settings.ArchiveDeletedCharacterAfterMonths) <= Envir.Now)
                 {
-                    MessageQueue.Enqueue($"玩家 {info.Name} 由于已删除角色 {Settings.ArchiveDeletedCharacterAfterMonths} 月已存档处理");
+                    MessageQueue.Enqueue(GameLanguage.ServerTextMap.GetLocalization((ServerTextKeys.PlayerArchivedAfterDeletionMonths), info.Name, Settings.ArchiveDeletedCharacterAfterMonths));
                     Envir.SaveArchivedCharacter(info);
                     continue;
                 }
 
                 if (info.LastLoginDate == DateTime.MinValue && info.CreationDate.AddMonths(Settings.ArchiveInactiveCharacterAfterMonths) <= Envir.Now)
                 {
-                    MessageQueue.Enqueue($"玩家 {info.Name} 由于 {Settings.ArchiveInactiveCharacterAfterMonths} 月未登录已存档处理");
+                    MessageQueue.Enqueue(GameLanguage.ServerTextMap.GetLocalization((ServerTextKeys.PlayerArchivedAfterNoLoginMonths), info.Name, Settings.ArchiveInactiveCharacterAfterMonths));
                     Envir.SaveArchivedCharacter(info);
                     continue;
                 }
                 
                 if (info.LastLoginDate > DateTime.MinValue && info.LastLoginDate.AddMonths(Settings.ArchiveInactiveCharacterAfterMonths) <= Envir.Now)
                 {
-                    MessageQueue.Enqueue($"玩家 {info.Name} 由于 {Settings.ArchiveInactiveCharacterAfterMonths} 月未激活已存档处理");
+                    MessageQueue.Enqueue(GameLanguage.ServerTextMap.GetLocalization((ServerTextKeys.PlayerArchivedAfterInactivityMonths), info.Name, Settings.ArchiveInactiveCharacterAfterMonths));
                     Envir.SaveArchivedCharacter(info);
                     continue;
                 }
@@ -184,6 +206,11 @@ namespace Server.MirDatabase
             writer.Write(Salt.Length);
             writer.Write(Salt);
             writer.Write(RequirePasswordChange);
+
+            writer.Write(storagePassword);
+            writer.Write(StorageSalt.Length);
+            writer.Write(StorageSalt);
+            writer.Write(StoragePasswordLastSet.ToBinary());
 
             writer.Write(UserName);
             writer.Write(BirthDate.ToBinary());
@@ -256,6 +283,20 @@ namespace Server.MirDatabase
                     return false;
             }
             return true;
+        }
+
+        public bool ValidateStoragePassword(string rawPassword)
+        {
+            if (string.IsNullOrEmpty(storagePassword)) return false;
+
+            var hashed = Crypto.HashPassword(rawPassword, StorageSalt);
+            return string.CompareOrdinal(storagePassword, hashed) == 0;
+        }
+
+        public void ClearStoragePassword()
+        {
+            storagePassword = string.Empty;
+            StoragePasswordLastSet = DateTime.MinValue;
         }
     }
 }

@@ -51,7 +51,8 @@ namespace Client.MirGraphics
         public static readonly MLibrary
             Items = new MLibrary(Settings.DataPath + "Items"),
             StateItems = new MLibrary(Settings.DataPath + "StateItem"),
-            FloorItems = new MLibrary(Settings.DataPath + "DNItems");
+            FloorItems = new MLibrary(Settings.DataPath + "DNItems"),
+            Items_Tooltip_32bit = new MLibrary(Settings.DataPath + "Items_Tooltip_32bit");
 
         //Deco
         public static readonly MLibrary
@@ -135,7 +136,7 @@ namespace Client.MirGraphics
             MapLibs[0] = new MLibrary(Settings.DataPath + "Map\\WemadeMir2\\Tiles");
             MapLibs[1] = new MLibrary(Settings.DataPath + "Map\\WemadeMir2\\Smtiles");
             MapLibs[2] = new MLibrary(Settings.DataPath + "Map\\WemadeMir2\\Objects");
-            for (int i = 2; i < 29; i++)
+            for (int i = 2; i < 29; i++) //设置
             {
                 MapLibs[i + 1] = new MLibrary(Settings.DataPath + "Map\\WemadeMir2\\Objects" + i.ToString());
             }
@@ -311,6 +312,8 @@ namespace Client.MirGraphics
             StateItems.Initialize();
             Progress++;
             FloorItems.Initialize();
+            Progress++;
+            Items_Tooltip_32bit.Initialize();
             Progress++;
 
             for (int i = 0; i < MapLibs.Length; i++)

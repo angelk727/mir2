@@ -69,6 +69,7 @@ namespace Server
             columnHeader10 = new ColumnHeader();
             columnHeader11 = new ColumnHeader();
             columnHeader12 = new ColumnHeader();
+            columnHeader13 = new ColumnHeader();
             StatusBar = new StatusStrip();
             PlayersLabel = new ToolStripStatusLabel();
             MonsterLabel = new ToolStripStatusLabel();
@@ -125,6 +126,7 @@ namespace Server
             CharacterToolStripMenuItem = new ToolStripMenuItem();
             UpTimeLabel = new ToolStripTextBox();
             InterfaceTimer = new Timer(components);
+            mapHeader = new ColumnHeader();
             MainTabs.SuspendLayout();
             tabPage1.SuspendLayout();
             tabPage2.SuspendLayout();
@@ -275,7 +277,7 @@ namespace Server
             // 
             PlayersOnlineListView.Activation = ItemActivation.OneClick;
             PlayersOnlineListView.BackColor = SystemColors.Window;
-            PlayersOnlineListView.Columns.AddRange(new ColumnHeader[] { indexHeader, nameHeader, levelHeader, classHeader, genderHeader });
+            PlayersOnlineListView.Columns.AddRange(new ColumnHeader[] { indexHeader, nameHeader, levelHeader, classHeader, genderHeader, mapHeader });
             PlayersOnlineListView.Dock = DockStyle.Fill;
             PlayersOnlineListView.FullRowSelect = true;
             PlayersOnlineListView.GridLines = true;
@@ -287,6 +289,7 @@ namespace Server
             PlayersOnlineListView.TabIndex = 0;
             PlayersOnlineListView.UseCompatibleStateImageBehavior = false;
             PlayersOnlineListView.View = View.Details;
+            PlayersOnlineListView.ColumnClick += PlayersOnlineListView_ColumnClick;
             PlayersOnlineListView.ColumnWidthChanging += PlayersOnlineListView_ColumnWidthChanging;
             PlayersOnlineListView.DoubleClick += PlayersOnlineListView_DoubleClick;
             // 
@@ -303,17 +306,14 @@ namespace Server
             // levelHeader
             // 
             levelHeader.Text = "等级";
-            levelHeader.Width = 90;
             // 
             // classHeader
             // 
             classHeader.Text = "职业";
-            classHeader.Width = 100;
             // 
             // genderHeader
             // 
             genderHeader.Text = "性别";
-            genderHeader.Width = 98;
             // 
             // tabPage5
             // 
@@ -329,7 +329,7 @@ namespace Server
             // GuildListView
             // 
             GuildListView.Activation = ItemActivation.OneClick;
-            GuildListView.Columns.AddRange(new ColumnHeader[] { columnHeader1, columnHeader2, columnHeader3, columnHeader4, columnHeader5, columnHeader6 });
+            GuildListView.Columns.AddRange(new ColumnHeader[] { columnHeader1, columnHeader2, columnHeader3, columnHeader4, columnHeader5, columnHeader6, columnHeader7 });
             GuildListView.Dock = DockStyle.Fill;
             GuildListView.FullRowSelect = true;
             GuildListView.GridLines = true;
@@ -339,12 +339,45 @@ namespace Server
             GuildListView.TabIndex = 1;
             GuildListView.UseCompatibleStateImageBehavior = false;
             GuildListView.View = View.Details;
-            GuildListView.SelectedIndexChanged += GuildListView_SelectedIndexChanged;
             GuildListView.DoubleClick += GuildListView_DoubleClick;
             // 
+            // tabPage6
+            // 
+            tabPage6.Controls.Add(LoadMonstersButton);
+            tabPage6.Controls.Add(MonsterListView);
+            tabPage6.Location = new Point(4, 24);
+            tabPage6.Name = "tabPage6";
+            tabPage6.Size = new Size(558, 379);
+            tabPage6.TabIndex = 5;
+            tabPage6.Text = "怪物";
+            tabPage6.UseVisualStyleBackColor = true;
+            // 
+            // LoadMonstersButton
+            // 
+            LoadMonstersButton.Location = new Point(480, 7);
+            LoadMonstersButton.Name = "LoadMonstersButton";
+            LoadMonstersButton.Size = new Size(75, 23);
+            LoadMonstersButton.TabIndex = 1;
+            LoadMonstersButton.Text = "刷新";
+            LoadMonstersButton.UseVisualStyleBackColor = true;
+            LoadMonstersButton.Click += LoadMonstersButton_Click;
+            // 
+            // MonsterListView
+            // 
+            MonsterListView.Columns.AddRange(new ColumnHeader[] {columnHeader8, columnHeader9, columnHeader10, columnHeader11, columnHeader12, columnHeader13 });
+            MonsterListView.Dock = DockStyle.Bottom;
+            MonsterListView.GridLines = true;
+            MonsterListView.Location = new Point(0, 36);
+            MonsterListView.Name = "MonsterListView";
+            MonsterListView.Size = new Size(558, 343);
+            MonsterListView.TabIndex = 0;
+            MonsterListView.UseCompatibleStateImageBehavior = false;
+            MonsterListView.View = View.Details;
+            //
             // columnHeader1
             // 
             columnHeader1.Text = "序号";
+            columnHeader1.Width = 45;
             // 
             // columnHeader2
             // 
@@ -370,69 +403,41 @@ namespace Server
             // 
             columnHeader6.Text = "金币";
             columnHeader6.Width = 75;
-            //
-            // tabPage6
-            // 
-            tabPage6.Controls.Add(LoadMonstersButton);
-            tabPage6.Controls.Add(MonsterListView);
-            tabPage6.Location = new Point(4, 24);
-            tabPage6.Name = "tabPage6";
-            tabPage6.Size = new Size(558, 379);
-            tabPage6.TabIndex = 5;
-            tabPage6.Text = "怪物";
-            tabPage6.UseVisualStyleBackColor = true;
-            // 
-            // LoadMonstersButton
-            // 
-            LoadMonstersButton.Location = new Point(480, 7);
-            LoadMonstersButton.Name = "LoadMonstersButton";
-            LoadMonstersButton.Size = new Size(75, 23);
-            LoadMonstersButton.TabIndex = 1;
-            LoadMonstersButton.Text = "刷新";
-            LoadMonstersButton.UseVisualStyleBackColor = true;
-            LoadMonstersButton.Click += LoadMonstersButton_Click;
-            // 
-            // MonsterListView
-            // 
-            MonsterListView.Columns.AddRange(new ColumnHeader[] { columnHeader7, columnHeader8, columnHeader9, columnHeader10, columnHeader11, columnHeader12 });
-            MonsterListView.Dock = DockStyle.Bottom;
-            MonsterListView.GridLines = true;
-            MonsterListView.Location = new Point(0, 36);
-            MonsterListView.Name = "MonsterListView";
-            MonsterListView.Size = new Size(558, 343);
-            MonsterListView.TabIndex = 0;
-            MonsterListView.UseCompatibleStateImageBehavior = false;
-            MonsterListView.View = View.Details;
             // 
             // columnHeader7
             // 
-            columnHeader7.Text = "编号";
-            columnHeader7.Width = 50;
+            columnHeader7.Text = "领地";
+            columnHeader7.Width = 120;
             // 
             // columnHeader8
             // 
-            columnHeader8.Text = "地图名";
-            columnHeader8.Width = 120;
+            columnHeader8.Text = "编号";
+            columnHeader8.Width = 50;
             // 
             // columnHeader9
             // 
-            columnHeader9.Text = "地图文件名";
-            columnHeader9.Width = 100;
+            columnHeader9.Text = "地图名";
+            columnHeader9.Width = 120;
             // 
             // columnHeader10
             // 
-            columnHeader10.Text = "当前怪物";
-            columnHeader10.Width = 110;
+            columnHeader10.Text = "地图文件名";
+            columnHeader10.Width = 100;
             // 
             // columnHeader11
             // 
-            columnHeader11.Text = "最大怪物数";
+            columnHeader11.Text = "当前怪物";
             columnHeader11.Width = 110;
             // 
             // columnHeader12
             // 
-            columnHeader12.Text = "错误";
-            columnHeader12.Width = 55;
+            columnHeader12.Text = "最大怪物数";
+            columnHeader12.Width = 110;
+            // 
+            // columnHeader13
+            // 
+            columnHeader13.Text = "错误";
+            columnHeader13.Width = 55;
             // 
             // StatusBar
             // 
@@ -833,6 +838,11 @@ namespace Server
             InterfaceTimer.Enabled = true;
             InterfaceTimer.Tick += InterfaceTimer_Tick;
             // 
+            // mapHeader
+            // 
+            mapHeader.Text = "当前地图";
+            mapHeader.Width = 220;
+            // 
             // SMain
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
@@ -950,17 +960,19 @@ namespace Server
         private TabPage tabPage6;
         private Button LoadMonstersButton;
         private ListView MonsterListView;
+        private ToolStripMenuItem recipeToolStripMenuItem;
+        private ToolStripMenuItem accountsToolStripMenuItem1;
+        private ToolStripMenuItem marketToolStripMenuItem;
+        private ToolStripMenuItem namelistsToolStripMenuItem;
+        internal TextBox ChatLogTextBox;
         private ColumnHeader columnHeader7;
         private ColumnHeader columnHeader8;
         private ColumnHeader columnHeader9;
         private ColumnHeader columnHeader10;
         private ColumnHeader columnHeader11;
         private ColumnHeader columnHeader12;
-        private ToolStripMenuItem recipeToolStripMenuItem;
-        private ToolStripMenuItem accountsToolStripMenuItem1;
-        private ToolStripMenuItem marketToolStripMenuItem;
-        private ToolStripMenuItem namelistsToolStripMenuItem;
-        internal TextBox ChatLogTextBox;
+        private ColumnHeader columnHeader13;
+        private ColumnHeader mapHeader;
     }
 }
 

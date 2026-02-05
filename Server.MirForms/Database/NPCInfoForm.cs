@@ -7,7 +7,7 @@ namespace Server
 {
     public partial class NPCInfoForm : Form
     {
-        public string NPCListPath = Path.Combine(Settings.ExportPath, "NPCList.txt");
+        public string NPCListPath = Path.Combine(Settings.ExportPath, "NPCList.csv");
 
         public Envir Envir => SMain.EditEnvir;
 
@@ -30,6 +30,8 @@ namespace Server
                 }
             }
 
+            NPCSearchBox_TextChanged(this, EventArgs.Empty);
+
             UpdateInterface();
         }
 
@@ -37,6 +39,7 @@ namespace Server
         {
             Envir.CreateNPCInfo();
             UpdateInterface();
+            RefreshNPCList(); // Without this, the newly created NPC wont show on the NPCInfoListBox, not sure why?
         }
         private void RemoveButton_Click(object sender, EventArgs e)
         {
@@ -53,42 +56,11 @@ namespace Server
 
         private void UpdateInterface()
         {
-            if (NPCInfoListBox.Items.Count != Envir.NPCInfoList.Count)
-            {
-                NPCInfoListBox.Items.Clear();
-
-                for (int i = 0; i < Envir.NPCInfoList.Count; i++)
-                    NPCInfoListBox.Items.Add(Envir.NPCInfoList[i]);
-            }
-
             _selectedNPCInfos = NPCInfoListBox.SelectedItems.Cast<NPCInfo>().ToList();
 
             if (_selectedNPCInfos.Count == 0)
             {
-                tabPage1.Enabled = false;
-                tabPage2.Enabled = false;
-                NPCIndexTextBox.Text = string.Empty;
-                NFileNameTextBox.Text = string.Empty;
-                NNameTextBox.Text = string.Empty;
-                NXTextBox.Text = string.Empty;
-                NYTextBox.Text = string.Empty;
-                NImageTextBox.Text = string.Empty;
-                NRateTextBox.Text = string.Empty;
-                MapComboBox.SelectedItem = null;
-                MinLev_textbox.Text = string.Empty;
-                MaxLev_textbox.Text = string.Empty;
-                Class_combo.Text = string.Empty;
-                ConquestHidden_combo.SelectedIndex = -1;
-                Day_combo.Text = string.Empty;
-                TimeVisible_checkbox.Checked = false;
-                StartHour_combo.Text = string.Empty;
-                EndHour_combo.Text = string.Empty;
-                StartMin_num.Value = 0;
-                EndMin_num.Value = 1;
-                Flag_textbox.Text = string.Empty;
-                ShowBigMapCheckBox.Checked = false;
-                BigMapIconTextBox.Text = string.Empty;
-                ConquestVisible_checkbox.Checked = true;
+                ClearInterface();
                 return;
             }
 
@@ -121,22 +93,37 @@ namespace Server
             TeleportToCheckBox.Checked = info.CanTeleportTo;
             ConquestVisible_checkbox.Checked = info.ConquestVisible;
             LoadImage(info.Image);
-
-
-            for (int i = 1; i < _selectedNPCInfos.Count; i++)
-            {
-                info = _selectedNPCInfos[i];
-
-                if (NFileNameTextBox.Text != info.FileName) NFileNameTextBox.Text = string.Empty;
-                if (NNameTextBox.Text != info.Name) NNameTextBox.Text = string.Empty;
-                if (NXTextBox.Text != info.Location.X.ToString()) NXTextBox.Text = string.Empty;
-
-                if (NYTextBox.Text != info.Location.Y.ToString()) NYTextBox.Text = string.Empty;
-                if (NImageTextBox.Text != info.Image.ToString()) NImageTextBox.Text = string.Empty;
-                if (NRateTextBox.Text != info.Rate.ToString()) NRateTextBox.Text = string.Empty;
-                if (BigMapIconTextBox.Text != info.BigMapIcon.ToString()) BigMapIconTextBox.Text = string.Empty;
-            }
         }
+
+        // Clear the interface when no NPCs are selected
+        private void ClearInterface()
+        {
+            tabPage1.Enabled = false;
+            tabPage2.Enabled = false;
+            NPCIndexTextBox.Text = string.Empty;
+            NFileNameTextBox.Text = string.Empty;
+            NNameTextBox.Text = string.Empty;
+            NXTextBox.Text = string.Empty;
+            NYTextBox.Text = string.Empty;
+            NImageTextBox.Text = string.Empty;
+            NRateTextBox.Text = string.Empty;
+            MapComboBox.SelectedItem = null;
+            MinLev_textbox.Text = string.Empty;
+            MaxLev_textbox.Text = string.Empty;
+            Class_combo.Text = string.Empty;
+            ConquestHidden_combo.SelectedIndex = -1;
+            Day_combo.Text = string.Empty;
+            TimeVisible_checkbox.Checked = false;
+            StartHour_combo.Text = string.Empty;
+            EndHour_combo.Text = string.Empty;
+            StartMin_num.Value = 0;
+            EndMin_num.Value = 1;
+            Flag_textbox.Text = string.Empty;
+            ShowBigMapCheckBox.Checked = false;
+            BigMapIconTextBox.Text = string.Empty;
+            ConquestVisible_checkbox.Checked = true;
+        }
+
 
         private void RefreshNPCList()
         {
@@ -166,7 +153,6 @@ namespace Server
             }
 
             UpdateInterface();
-
         }
         private void LoadImage(ushort imageValue)
         {
@@ -336,13 +322,15 @@ namespace Server
             SaveFileDialog sfd = new SaveFileDialog();
             sfd.InitialDirectory = Path.Combine(Application.StartupPath, "Exports");
             sfd.FileName = "4_NPC数据";
-            sfd.Filter = "Text File|*.txt";
+            sfd.Filter = "CSV File|*.csv";
             sfd.ShowDialog();
 
             if (sfd.FileName == string.Empty) return;
 
-            using (StreamWriter sw = File.AppendText(sfd.FileNames[0]))
+            using (StreamWriter sw = File.CreateText(sfd.FileName))
             {
+                string colume = "Index,FileName,MapFileName,LocationX,LocationY,Name,Image,Rate,ShowOnBigMap,BigMapIcon,CanTeleportTo,ConquestVisible,MinLev,MaxLev,TimeVisible,HourStart,MinuteStart,HourEnd,MinuteEnd";
+                sw.WriteLine(colume);
                 for (int j = 0; j < NPCs.Count; j++)
                 {
                     sw.WriteLine(NPCs[j].ToText());
@@ -356,22 +344,14 @@ namespace Server
             string Path = string.Empty;
 
             OpenFileDialog ofd = new OpenFileDialog();
-            ofd.Filter = "Text File|*.txt";
+            ofd.Filter = "CSV File|*.csv";
             ofd.ShowDialog();
 
             if (ofd.FileName == string.Empty) return;
 
-            Path = ofd.FileName;
+            Path = ofd.FileName;            
 
-            string data;
-            using (var sr = new StreamReader(Path))
-            {
-                data = sr.ReadToEnd();
-            }
-
-            var npcs = data.Split(new[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
-
-            foreach (var m in npcs)
+            foreach (var m in File.ReadAllLines(Path).Skip(1))
             {
                 try
                 {
@@ -643,5 +623,31 @@ namespace Server
             for (int i = 0; i < _selectedNPCInfos.Count; i++)
                 _selectedNPCInfos[i].ConquestVisible = ConquestVisible_checkbox.Checked;
         }
+
+        #region NPC Search
+        private void NPCSearchBox_TextChanged(object sender, EventArgs e)
+        {
+            string searchText = NPCSearchBox.Text.Trim().ToLower();
+
+            // Show all items if the search box is empty or contains only whitespace
+            if (string.IsNullOrWhiteSpace(searchText))
+            {
+                RefreshNPCList();
+                return;
+            }
+
+            NPCInfoListBox.Items.Clear();
+
+            // Filter NPCs based on search text
+            foreach (var npc in Envir.NPCInfoList)
+            {
+                if (!string.IsNullOrEmpty(npc.Name) && npc.Name.ToLower().Contains(searchText) ||
+                    !string.IsNullOrEmpty(npc.FileName) && npc.FileName.ToLower().Contains(searchText))
+                {
+                    NPCInfoListBox.Items.Add(npc);
+                }
+            }
+        }
+        #endregion
     }
 }

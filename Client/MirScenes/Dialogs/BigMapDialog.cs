@@ -196,7 +196,7 @@ namespace Client.MirScenes.Dialogs
                 Library = Libraries.Prguse2,
                 Parent = this,
                 Sound = SoundList.ButtonA,
-                Hint = "搜索NPC"
+                Hint = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.SearchForNPCs)
             };
             SearchButton.Click += (o, e) => Search();
 
@@ -401,12 +401,12 @@ namespace Client.MirScenes.Dialogs
         {
             if (SelectedNPC == null || !SelectedNPC.Info.CanTeleportTo) return;
 
-            MirMessageBox messageBox = new MirMessageBox($" 花费{GameScene.TeleportToNPCCost}金币移动到此NPC ", MirMessageBoxButtons.YesNo);
+            MirMessageBox messageBox = new MirMessageBox(GameLanguage.ClientTextMap.GetLocalization((ClientTextKeys.TeleportToNpcForGold), GameScene.TeleportToNPCCost), MirMessageBoxButtons.YesNo);
             messageBox.YesButton.Click += (o, e) =>
             {
                 if (GameScene.Gold < GameScene.TeleportToNPCCost)
                 {
-                    MirMessageBox messageBox2 = new MirMessageBox("金币不足", MirMessageBoxButtons.OK);
+                    MirMessageBox messageBox2 = new MirMessageBox(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.NotEnoughGold), MirMessageBoxButtons.OK);
                     messageBox2.Show();
                     return;
                 }
@@ -619,7 +619,7 @@ namespace Client.MirScenes.Dialogs
 
             if (path == null || path.Count == 0)
             {
-                GameScene.Scene.ChatDialog.ReceiveChat("目标地点不可用,无适宜的路线", ChatType.System);
+                GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.CouldNotFindPath), ChatType.System);
             }
             else
             {
@@ -684,10 +684,8 @@ namespace Client.MirScenes.Dialogs
             {
                 float x;
                 float y;
-                for (int i = MapControl.Objects.Count - 1; i >= 0; i--)
+                foreach (var ob in  MapControl.Objects.Values)
                 {
-                    MapObject ob = MapControl.Objects[i];
-
                     if (ob.Race == ObjectType.Item || ob.Dead || ob.Race == ObjectType.Spell || ob.ObjectID == MapObject.User.ObjectID) continue;
                     x = ((ob.CurrentLocation.X - startPointX) * ScaleX) + DisplayLocation.X;
                     y = ((ob.CurrentLocation.Y - startPointY) * ScaleY) + DisplayLocation.Y;
@@ -797,17 +795,17 @@ namespace Client.MirScenes.Dialogs
             Visible = false;
             Sound = SoundList.ButtonA;
 
-            string name = string.Empty;
+            string name = Info.Name;
             if (Info.Name.Contains("_"))
             {
-                string[] splitName = Info.Name.Split('_');
-
+                string[] splitName = name.Split('_');
+                name=string.Empty;
                 for (int s = 0; s < splitName.Count(); s++)
                 {
                     if (splitName[s] == string.Empty) continue;
                     if (s == splitName.Count() - 1)
                         name += splitName[s];
-                    else name += $"『{splitName[s]}』";
+                    else name += $"({splitName[s]})";
                 }
             }
 

@@ -6,6 +6,7 @@ using Server.MirEnvir;
 using Server.MirForms.Systems;
 using Server.MirObjects;
 using Server.Systems;
+using System.Collections;
 
 namespace Server
 {
@@ -34,6 +35,47 @@ namespace Server
             }
 
             indexHeader.Width = 2;
+        }
+
+        public class ListViewItemComparer : IComparer // For Players Online tab level sorting
+        {
+            private int col;
+            private SortOrder order;
+
+            public ListViewItemComparer(int column, SortOrder order)
+            {
+                col = column;
+                this.order = order;
+            }
+
+            public int Compare(object x, object y)
+            {
+                ListViewItem itemX = x as ListViewItem;
+                ListViewItem itemY = y as ListViewItem;
+
+                string stringX = itemX?.SubItems[col].Text ?? "";
+                string stringY = itemY?.SubItems[col].Text ?? "";
+
+                int result;
+
+                if (col == 2)
+                {
+                    int intX = 0, intY = 0;
+                    int.TryParse(stringX, out intX);
+                    int.TryParse(stringY, out intY);
+
+                    result = intX.CompareTo(intY);
+                }
+                else
+                {
+                    result = String.Compare(stringX, stringY);
+                }
+
+                if (order == SortOrder.Descending)
+                    result = -result;
+
+                return result;
+            }
         }
 
         public static void Enqueue(Exception ex)
@@ -129,6 +171,9 @@ namespace Server
             ListItem.SubItems.Add(character.Level.ToString());
             ListItem.SubItems.Add(character.Class.ToString());
             ListItem.SubItems.Add(character.Gender.ToString());
+
+            string mapName = MapInfo.GetMapTitleByIndex(character.CurrentMapIndex);
+            ListItem.SubItems.Add($"{mapName}");
 
             return ListItem;
         }
@@ -490,6 +535,7 @@ namespace Server
                     tempItem.SubItems.Add($"{guild.Membercount}/{guild.MemberCap}");
                     tempItem.SubItems.Add(guild.Level.ToString());
                     tempItem.SubItems.Add($"{guild.Gold}");
+                    tempItem.SubItems.Add(guild.HasGT ? guild.GTRent.ToString() : "None");
 
                     GuildListView.Items.Add(tempItem);
                 }
@@ -560,11 +606,6 @@ namespace Server
             ProcessGuildViewTab(true);
         }
 
-        private void GuildListView_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void heroesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SystemInfoForm form = new SystemInfoForm(8);
@@ -607,7 +648,25 @@ namespace Server
             form.ShowDialog();
         }
 
-        #region Monsters Tab
+        private int sortColumn = -1;
+        private void PlayersOnlineListView_ColumnClick(object sender, ColumnClickEventArgs e)
+        {
+            if (e.Column != sortColumn)
+            {
+                sortColumn = e.Column;
+                PlayersOnlineListView.Sorting = SortOrder.Ascending;
+            }
+            else
+            {
+                PlayersOnlineListView.Sorting =
+                    PlayersOnlineListView.Sorting == SortOrder.Ascending ? SortOrder.Descending : SortOrder.Ascending;
+            }
+
+            PlayersOnlineListView.ListViewItemSorter = new ListViewItemComparer(sortColumn, PlayersOnlineListView.Sorting);
+
+            PlayersOnlineListView.Sort();
+        }
+		#region Monsters Tab
         private void LoadMonstersButton_Click(object sender, EventArgs e)
         {
             MonsterListView.Items.Clear();
@@ -615,22 +674,18 @@ namespace Server
             {
                 var map = Envir.MapList[i];
                 ListViewItem ListItem = new ListViewItem(i.ToString()) { Tag = this };
-
                 ListItem.SubItems.Add(map.Info.Title);
                 ListItem.SubItems.Add(map.Info.FileName);
                 ListItem.SubItems.Add(map.GetAllMonstersObjectsCount().ToString());
                 int totalSpawnsCount = 0;
                 int errorCount = 0;
-
                 foreach (var spawn in map.Respawns)
                 {
                     totalSpawnsCount += spawn.Info.Count;
                     errorCount += spawn.ErrorCount;
                 }
-
                 ListItem.SubItems.Add(totalSpawnsCount.ToString());
                 ListItem.SubItems.Add(errorCount.ToString());
-
                 MonsterListView.Items.Add(ListItem);
             }
         }

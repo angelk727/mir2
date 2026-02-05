@@ -1,5 +1,5 @@
 using System.Drawing;
-﻿using Server.MirDatabase;
+using Server.MirDatabase;
 using Server.MirEnvir;
 using System.Text.RegularExpressions;
 using S = ServerPackets;
@@ -77,7 +77,8 @@ namespace Server.MirObjects
             TypeKey = "[TYPES]",
             UsedTypeKey = "[USEDTYPES]",
             QuestKey = "[QUESTS]",
-            SpeechKey = "[SPEECH]";
+            SpeechKey = "[SPEECH]",
+            GuildTerritoryKey = "[@GUILDTERRITORY]";
 
 
         public List<ItemType> Types = new List<ItemType>();
@@ -161,7 +162,7 @@ namespace Server.MirObjects
                 }
             }
             else
-                MessageQueue.Enqueue(string.Format("找不到脚本: {0}", FileName));
+                MessageQueue.Enqueue(GameLanguage.ServerTextMap.GetLocalization((ServerTextKeys.ScriptNotFound), FileName));
         }
         public void ClearInfo()
         {
@@ -314,7 +315,7 @@ namespace Server.MirObjects
                 string path = Path.Combine(Settings.EnvirPath, split[1].Substring(1, split[1].Length - 2));
 
                 if (!File.Exists(path))
-                    MessageQueue.Enqueue(string.Format("INSERT:未找到要调用的文件或脚本 {0}", path));
+                    MessageQueue.Enqueue(GameLanguage.ServerTextMap.GetLocalization((ServerTextKeys.InsertScriptNotFound), path));
                 else
                     newLines = File.ReadAllLines(path).ToList();
 
@@ -343,7 +344,7 @@ namespace Server.MirObjects
 
                 if (!File.Exists(path))
                 {
-                    MessageQueue.Enqueue(string.Format("INCLUDE:未找到要调用的脚本或文件 {0}", path));
+                    MessageQueue.Enqueue(GameLanguage.ServerTextMap.GetLocalization((ServerTextKeys.IncludeScriptNotFound), path));
                     return parsedLines;
                 }
 
@@ -457,7 +458,7 @@ namespace Server.MirObjects
 
                     if (nextSection || nextPage)
                     {
-                        segmentLines.Add(lines[j]);
+                    segmentLines.Add(lines[j]);
 
                         //end of segment, so need to parse it and put into the segment list within the page
                         if (segmentLines.Count > 0)
@@ -497,7 +498,7 @@ namespace Server.MirObjects
                     Page.Buttons.AddRange(currentButtons);
                     Page.SegmentList.Add(segment);
                     segmentLines.Clear();
-                }
+                }                
 
                 return Page;
             }
@@ -667,7 +668,7 @@ namespace Server.MirObjects
 
                     if (goods == null || Goods.Contains(goods))
                     {
-                        MessageQueue.Enqueue(string.Format("{1} 中未找到 {0} ", lines[i], FileName));
+                        MessageQueue.Enqueue(GameLanguage.ServerTextMap.GetLocalization((ServerTextKeys.CouldNotFindItemFile), lines[i], FileName));
                         continue;
                     }
 
@@ -766,13 +767,13 @@ namespace Server.MirObjects
 
                     if (recipe == null)
                     {
-                        MessageQueue.Enqueue(string.Format("缺少配方: {0}, 文件名: {1}", lines[i], FileName));
+                        MessageQueue.Enqueue(GameLanguage.ServerTextMap.GetLocalization((ServerTextKeys.CouldNotFindRecipe), lines[i], FileName));
                         continue;
                     }
 
                     if (recipe.Ingredients.Count == 0)
                     {
-                        MessageQueue.Enqueue(string.Format("缺少材料: {0}, 文件名: {1}", lines[i], FileName));
+                        MessageQueue.Enqueue(GameLanguage.ServerTextMap.GetLocalization((ServerTextKeys.CouldNotFindIngredients), lines[i], FileName));
                         continue;
                     }
 
@@ -847,7 +848,9 @@ namespace Server.MirObjects
 
                     if (!found)
                     {
-                        MessageQueue.Enqueue(string.Format("玩家: {0} 执行NPC脚本命令: '{1}' 被阻止 ", player.Name, key));
+                        var npc = NPCObject.Get(objectID);
+                        string npcName = npc?.Info?.GameName ?? npc?.Name ?? "Unknown";
+                        MessageQueue.Enqueue(GameLanguage.ServerTextMap.GetLocalization((ServerTextKeys.PlayerPreventedNpcAccess), player.Name, key, npcName));
                         return;
                     }
                 }
@@ -980,7 +983,7 @@ namespace Server.MirObjects
                 case RefineKey:
                     if (player.Info.CurrentRefine != null)
                     {
-                        player.ReceiveChat("精炼正在进行中...", ChatType.System);
+                        player.ReceiveChat(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.YouAreRefiningItem), ChatType.System);
                         player.Enqueue(new S.NPCRefine { Rate = (Settings.RefineCost), Refining = true });
                         break;
                     }
@@ -997,6 +1000,7 @@ namespace Server.MirObjects
                     player.Enqueue(new S.NPCReplaceWedRing { Rate = Settings.ReplaceWedRingCost });
                     break;
                 case StorageKey:
+                    player.ResetStorageUnlock();
                     player.SendStorage();
                     player.Enqueue(new S.NPCStorage());
                     break;
@@ -1046,7 +1050,7 @@ namespace Server.MirObjects
                 case GuildCreateKey:
                     if (player.Info.Level < Settings.Guild_RequiredLevel)
                     {
-                        player.ReceiveChat(String.Format("创建行会需要 {0} 级", Settings.Guild_RequiredLevel), ChatType.System);
+                        player.ReceiveChat(GameLanguage.ServerTextMap.GetLocalization((ServerTextKeys.YouNeedLevelToCreateGuild), Settings.Guild_RequiredLevel), ChatType.System);
                     }
                     else if (player.MyGuild == null)
                     {
@@ -1054,21 +1058,21 @@ namespace Server.MirObjects
                         player.Enqueue(new S.GuildNameRequest());
                     }
                     else
-                        player.ReceiveChat("你已经是公会成员", ChatType.System);
+                        player.ReceiveChat(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.YouAreInGuild), ChatType.System);
                     break;
                 case RequestWarKey:
                     if (player.MyGuild != null)
                     {
                         if (player.MyGuildRank != player.MyGuild.Ranks[0])
                         {
-                            player.ReceiveChat("必须由会长发起行会战", ChatType.System);
+                            player.ReceiveChat(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.YouMustBeLeaderToRequestWar), ChatType.System);
                             return;
                         }
                         player.Enqueue(new S.GuildRequestWar());
                     }
                     else
                     {
-                        player.ReceiveChat(GameLanguage.NotInGuild, ChatType.System);
+                        player.ReceiveChat(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.NotInGuild), ChatType.System);
                     }
                     break;
                 case SendParcelKey:
@@ -1113,7 +1117,7 @@ namespace Server.MirObjects
                 case HeroCreateKey:
                     if (player.Info.Level < Settings.Hero_RequiredLevel)
                     {
-                        player.ReceiveChat(String.Format("召唤英雄需要角色达到 {0} 级", Settings.Hero_RequiredLevel), ChatType.System);
+                        player.ReceiveChat(GameLanguage.ServerTextMap.GetLocalization((ServerTextKeys.YouMustBeLevelToCreateHero), Settings.Hero_RequiredLevel), ChatType.System);
                         break;
                     }
                     player.CanCreateHero = true;
@@ -1124,6 +1128,9 @@ namespace Server.MirObjects
                     break;
                 case HeroManageKey:
                     player.ManageHeroes();
+                    break;
+                case GuildTerritoryKey:
+                    player.GetGuildTerritories(0);
                     break;
             }
         }
@@ -1429,7 +1436,7 @@ namespace Server.MirObjects
 
             if (Envir.Random.Next(100) >= recipe.Chance + player.Stats[Stat.大师概率数率])
             {
-                player.ReceiveChat("制作失败", ChatType.System);
+                player.ReceiveChat(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.CraftingAttemptFailed), ChatType.System);
             }
             else
             {

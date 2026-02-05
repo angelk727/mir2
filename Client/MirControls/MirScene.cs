@@ -179,6 +179,12 @@ namespace Client.MirControls
                 case (short)ServerPacketIds.NewItemInfo:
                     NewItemInfo((S.NewItemInfo) p);
                     break;
+                case (short)ServerPacketIds.NewMonsterInfo:
+                    NewMonsterInfo((S.NewMonsterInfo)p);
+                    break;
+                case (short)ServerPacketIds.NewNPCInfo:
+                    NewNPCInfo((S.NewNPCInfo)p);
+                    break;
                 case (short)ServerPacketIds.NewChatItem:
                     NewChatItem((S.NewChatItem)p);
                     break;
@@ -197,6 +203,21 @@ namespace Client.MirControls
         private void NewItemInfo(S.NewItemInfo info)
         {
             GameScene.ItemInfoList.Add(info.Info);
+            GameScene.OnItemInfoReceived(info.Info.Index);
+        }
+
+        private void NewMonsterInfo(S.NewMonsterInfo info)
+        {
+            GameScene.MonsterInfoList.RemoveAll(x => x.Index == info.Info.Index);
+            GameScene.MonsterInfoList.Add(info.Info);
+            GameScene.OnMonsterInfoReceived(info.Info.Index);
+        }
+
+        private void NewNPCInfo(S.NewNPCInfo info)
+        {
+            GameScene.NPCInfoList.RemoveAll(x => x.Index == info.Info.Index);
+            GameScene.NPCInfoList.Add(info.Info);
+            GameScene.OnNPCInfoReceived(info.Info.Index);
         }
 
         private void NewHeroInfo(S.NewHeroInfo info)
@@ -245,22 +266,22 @@ namespace Client.MirControls
             switch (p.Reason)
             {
                 case 0:
-                    MirMessageBox.Show(GameLanguage.ShuttingDown, true);
+                    MirMessageBox.Show(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.ShuttingDown), true);
                     break;
                 case 1:
-                    MirMessageBox.Show("断开连接: 账户重复登录", true);
+                    MirMessageBox.Show(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.DisconnectedAnotherUserLogged), true);
                     break;
                 case 2:
-                    MirMessageBox.Show("断开连接: 数据错误", true);
+                    MirMessageBox.Show(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.DisconnectedPacketError), true);
                     break;
                 case 3:
-                    MirMessageBox.Show("断开连接: 服务器崩溃", true);
+                    MirMessageBox.Show(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.DisconnectedServerCrashed), true);
                     break;
                 case 4:
-                    MirMessageBox.Show("断开连接: 联系管理员", true);
+                    MirMessageBox.Show(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.DisconnectedKickedByAdmin), true);
                     break;
                 case 5:
-                    MirMessageBox.Show("断开连接: 服务器超员", true);
+                    MirMessageBox.Show(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.DisconnectedMaxConnectionsReached), true);
                     break;
             }
 

@@ -112,7 +112,7 @@ namespace Client.MirScenes.Dialogs
             };
             HPButton.Click += (o1, e) =>
             {
-                MirAmountBox amountBox = new MirAmountBox("自动生命药水 (最大:99％)", HPItem.Item.Image, 99);
+                MirAmountBox amountBox = new MirAmountBox(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.EnterValue), 116, 99);
                 amountBox.OKButton.Click += (o, a) => Network.Enqueue(new C.SetAutoPotValue { Stat = Stat.HP, Value = amountBox.Amount });
                 amountBox.Show();
             };
@@ -131,7 +131,7 @@ namespace Client.MirScenes.Dialogs
             };
             MPButton.Click += (o1, e) =>
             {
-                MirAmountBox amountBox = new MirAmountBox("自动法力药水 (最大:99％)", MPItem.Item.Image, 99);
+                MirAmountBox amountBox = new MirAmountBox(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.EnterValue), 116, 99);
                 amountBox.OKButton.Click += (o, a) => Network.Enqueue(new C.SetAutoPotValue { Stat = Stat.MP, Value = amountBox.Amount });
                 amountBox.Show();
             };
@@ -282,7 +282,7 @@ namespace Client.MirScenes.Dialogs
                 Parent = this,
                 PressedIndex = 1928,
                 Sound = SoundList.ButtonA,
-                Hint = GameLanguage.Rotate
+                Hint = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.Rotate)
             };
             RotateButton.Click += (o, e) => Flip();
 
@@ -295,7 +295,7 @@ namespace Client.MirScenes.Dialogs
                 Parent = this,
                 PressedIndex = 1925,
                 Sound = SoundList.ButtonA,
-                Hint = string.Format(GameLanguage.Close, CMain.InputKeys.GetKey(KeybindOptions.Belt))
+                Hint = GameLanguage.ClientTextMap.GetLocalization((ClientTextKeys.CloseKey), CMain.InputKeys.GetKey(KeybindOptions.Belt))
             };
             CloseButton.Click += (o, e) => Hide();
 
@@ -411,7 +411,7 @@ namespace Client.MirScenes.Dialogs
                 Parent = this,
                 Size = new Size(16, 16),
                 Location = new Point(3, 3),
-                Hint = string.Format(GameLanguage.HeroSkills, CMain.InputKeys.GetKey(KeybindOptions.HeroSkills))
+                Hint = GameLanguage.ClientTextMap.GetLocalization((ClientTextKeys.HeroSkills), CMain.InputKeys.GetKey(KeybindOptions.HeroSkills))
             };
             HeroMagicsButton.Click += (o, e) =>
             {
@@ -433,7 +433,7 @@ namespace Client.MirScenes.Dialogs
                 Parent = this,
                 Size = new Size(16, 16),
                 Location = new Point(3, 20),
-                Hint = string.Format(GameLanguage.HeroInventory, CMain.InputKeys.GetKey(KeybindOptions.HeroInventory))
+                Hint = GameLanguage.ClientTextMap.GetLocalization((ClientTextKeys.HeroInventory), CMain.InputKeys.GetKey(KeybindOptions.HeroInventory))
             };
             HeroInventoryButton.Click += (o, e) =>
             {
@@ -449,7 +449,7 @@ namespace Client.MirScenes.Dialogs
                 Parent = this,
                 Size = new Size(16, 16),
                 Location = new Point(3, 37),
-                Hint = string.Format(GameLanguage.HeroCharacter, CMain.InputKeys.GetKey(KeybindOptions.HeroEquipment))
+                Hint = GameLanguage.ClientTextMap.GetLocalization((ClientTextKeys.HeroCharacter), CMain.InputKeys.GetKey(KeybindOptions.HeroEquipment))
             };
             HeroEquipmentButton.Click += (o, e) =>
             {
@@ -862,7 +862,7 @@ namespace Client.MirScenes.Dialogs
                     Library = Libraries.Prguse,
                     Parent = this,
                     Sound = SoundList.ButtonA,
-                    Hint = $"英雄模式: {Enum.GetName(typeof(HeroBehaviour), i)}",
+                    Hint = GameLanguage.ClientTextMap.GetLocalization((ClientTextKeys.HeroBehaviourFormat), Enum.Parse<HeroBehaviour>(i.ToString()).ToLocalizedString()),
                     AllowDisabledMouseOver = true
                 };
                 BehaviourButtons[i].Click += (o, e) =>
@@ -916,7 +916,7 @@ namespace Client.MirScenes.Dialogs
                 Avatars[i] = new HeroManageAvatar() { Parent = this };
                 Avatars[i].Click += (o, e) =>
                 {
-                    MirMessageBox messageBox = new MirMessageBox($"是否将 {Avatars[index].Info.Name} 英雄设为激活状态？", MirMessageBoxButtons.YesNo);
+                    MirMessageBox messageBox = new MirMessageBox(GameLanguage.ClientTextMap.GetLocalization((ClientTextKeys.MakeActiveHero), Avatars[index].Info.Name), MirMessageBoxButtons.YesNo);
                     messageBox.YesButton.Click += (o, e) => Network.Enqueue(new C.ChangeHero { ListIndex = index + 1 });
                     messageBox.Show();
                 };
@@ -984,3 +984,4 @@ namespace Client.MirScenes.Dialogs
         }
     }
 }
+

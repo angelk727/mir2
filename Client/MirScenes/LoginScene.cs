@@ -81,7 +81,7 @@ namespace Client.MirScenes
                 Visible = Settings.UseTestConfig
             };
 
-            _connectBox = new MirMessageBox("正在尝试连接服务器", MirMessageBoxButtons.Cancel);
+            _connectBox = new MirMessageBox(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.AttemptingConnectServer), MirMessageBoxButtons.Cancel);
             _connectBox.CancelButton.Click += (o, e) => Program.Form.Close();
             Shown += (sender, args) =>
                 {
@@ -93,7 +93,7 @@ namespace Client.MirScenes
         public override void Process()
         {
             if (!Network.Connected && _connectBox.Label != null)
-                _connectBox.Label.Text = string.Format(GameLanguage.AttemptingConnect,"\n\n", Network.ConnectAttempt);
+                _connectBox.Label.Text = GameLanguage.ClientTextMap.GetLocalization((ClientTextKeys.AttemptingConnect),"\n\n", Network.ConnectAttempt);
         }
         public override void ProcessPacket(Packet p)
         {
@@ -132,7 +132,7 @@ namespace Client.MirScenes
 
         private  void SendVersion()
         {
-            _connectBox.Label.Text = "正在发送客户端版本";
+            _connectBox.Label.Text = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.SendingClientVersion);
 
             C.ClientVersion p = new C.ClientVersion();
             try
@@ -155,7 +155,7 @@ namespace Client.MirScenes
             switch (p.Result)
             {
                 case 0:
-                    MirMessageBox.Show("版本错误，请更新游戏\n游戏即将关闭", true);
+                    MirMessageBox.Show(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.WrongVersionPleaseUpdateGame), true);
 
                     Network.Disconnect();
                     break;
@@ -181,40 +181,40 @@ namespace Client.MirScenes
             switch (p.Result)
             {
                 case 0:
-                    MirMessageBox.Show("当前已禁用帐户创建");
+                    MirMessageBox.Show(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.AccountCreationDisabled));
                     _account.Dispose();
                     break;
                 case 1:
-                    MirMessageBox.Show("帐户ID不可接受");
+                    MirMessageBox.Show(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.AccountIdNotAcceptable));
                     _account.AccountIDTextBox.SetFocus();
                     break;
                 case 2:
-                    MirMessageBox.Show("密码不可接受");
+                    MirMessageBox.Show(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.PasswordNotAcceptable));
                     _account.Password1TextBox.SetFocus();
                     break;
                 case 3:
-                    MirMessageBox.Show("邮件地址不可接受");
+                    MirMessageBox.Show(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.EmailAddressNotAcceptable));
                     _account.EMailTextBox.SetFocus();
                     break;
                 case 4:
-                    MirMessageBox.Show("用户名不可接受");
+                    MirMessageBox.Show(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.UserNameNotAcceptable));
                     _account.UserNameTextBox.SetFocus();
                     break;
                 case 5:
-                    MirMessageBox.Show("密码找回问题是不能接受");
+                    MirMessageBox.Show(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.SecretQuestionNotAcceptable));
                     _account.QuestionTextBox.SetFocus();
                     break;
                 case 6:
-                    MirMessageBox.Show("密码找回答案是不能接受");
+                    MirMessageBox.Show(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.SecretAnswerNotAcceptable));
                     _account.AnswerTextBox.SetFocus();
                     break;
                 case 7:
-                    MirMessageBox.Show("此ID的帐户已存在");
+                    MirMessageBox.Show(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.AccountIdAlreadyExists));
                     _account.AccountIDTextBox.Text = string.Empty;
                     _account.AccountIDTextBox.SetFocus();
                     break;
                 case 8:
-                    MirMessageBox.Show("帐户创建成功");
+                    MirMessageBox.Show(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.AccountCreatedSuccessfully));
                     _account.Dispose();
                     break;
             }
@@ -226,32 +226,32 @@ namespace Client.MirScenes
             switch (p.Result)
             {
                 case 0:
-                    MirMessageBox.Show("服务器禁用密码更改");
+                    MirMessageBox.Show(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.PasswordChangingDisabled));
                     _password.Dispose();
                     break;
                 case 1:
-                    MirMessageBox.Show("帐户ID不被认可");
+                    MirMessageBox.Show(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.AccountIdNotAcceptable));
                     _password.AccountIDTextBox.SetFocus();
                     break;
                 case 2:
-                    MirMessageBox.Show("密码不被认可");
+                    MirMessageBox.Show(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.CurrentPasswordNotAcceptable));
                     _password.CurrentPasswordTextBox.SetFocus();
                     break;
                 case 3:
-                    MirMessageBox.Show("新密码不被认可");
+                    MirMessageBox.Show(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.NewPasswordNotAcceptable));
                     _password.NewPassword1TextBox.SetFocus();
                     break;
                 case 4:
-                    MirMessageBox.Show(GameLanguage.NoAccountID);
+                    MirMessageBox.Show(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.NoAccountID));
                     _password.AccountIDTextBox.SetFocus();
                     break;
                 case 5:
-                    MirMessageBox.Show(GameLanguage.IncorrectPasswordAccountID);
+                    MirMessageBox.Show(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.IncorrectPasswordAccountID));
                     _password.CurrentPasswordTextBox.SetFocus();
                     _password.CurrentPasswordTextBox.Text = string.Empty;
                     break;
                 case 6:
-                    MirMessageBox.Show("密码已成功更改");
+                    MirMessageBox.Show(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.PasswordChangedSuccessfully));
                     _password.Dispose();
                     break;
             }
@@ -261,7 +261,7 @@ namespace Client.MirScenes
             _password.Dispose();
 
             TimeSpan d = p.ExpiryDate - CMain.Now;
-            MirMessageBox.Show(string.Format("此帐户已被禁用\n\n原因: {0}\n解禁日期: {1}\n持续时间: {2:#,##0} 小时, {3} 分钟, {4} 秒", p.Reason,
+            MirMessageBox.Show(GameLanguage.ClientTextMap.GetLocalization((ClientTextKeys.AccountBannedReasonDuration), p.Reason,
                                              p.ExpiryDate, Math.Floor(d.TotalHours), d.Minutes, d.Seconds ));
         }
         private void Login(S.Login p)
@@ -270,28 +270,28 @@ namespace Client.MirScenes
             switch (p.Result)
             {
                 case 0:
-                    MirMessageBox.Show("当前禁止登录");
+                    MirMessageBox.Show(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.LoginDisabled));
                     _login.Clear();
                     break;
                 case 1:
-                    MirMessageBox.Show("帐户ID不被认可");
+                    MirMessageBox.Show(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.AccountIdNotAcceptable));
                     _login.AccountIDTextBox.SetFocus();
                     break;
                 case 2:
-                    MirMessageBox.Show("密码被认可");
+                    MirMessageBox.Show(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.PasswordNotAcceptable));
                     _login.PasswordTextBox.SetFocus();
                     break;
                 case 3:
-                    MirMessageBox.Show(GameLanguage.NoAccountID);
+                    MirMessageBox.Show(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.NoAccountID));
                     _login.PasswordTextBox.SetFocus();
                     break;
                 case 4:
-                    MirMessageBox.Show(GameLanguage.IncorrectPasswordAccountID);
+                    MirMessageBox.Show(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.IncorrectPasswordAccountID));
                     _login.PasswordTextBox.Text = string.Empty;
                     _login.PasswordTextBox.SetFocus();
                     break;
                 case 5:
-                    MirMessageBox.Show("登录前必须更改帐户密码");                    
+                    MirMessageBox.Show(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.AccountPasswordMustChangeBeforeLogin));                    
                     OpenPasswordChangeDialog(_login.AccountIDTextBox.Text, _login.PasswordTextBox.Text);
                     _login.PasswordTextBox.Text = string.Empty;
                     break;
@@ -302,7 +302,7 @@ namespace Client.MirScenes
             _login.OKButton.Enabled = true;
 
             TimeSpan d = p.ExpiryDate - CMain.Now;
-            MirMessageBox.Show(string.Format("帐户已被禁止\n\n原因: {0}\n解封时间: {1}\n持续时间: {2:#,##0} 小时, {3} 分钟, {4} 秒", p.Reason,
+            MirMessageBox.Show(GameLanguage.ClientTextMap.GetLocalization((ClientTextKeys.AccountBannedReasonDuration), p.Reason,
                                              p.ExpiryDate, Math.Floor(d.TotalHours), d.Minutes, d.Seconds));
         }
         private void Login(S.LoginSuccess p)
@@ -572,7 +572,7 @@ namespace Client.MirScenes
 
                 KeyEscButton = new MirButton
                 {
-                    Text = "Esc",
+                    Text = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.BtnEsc),
                     HoverIndex = 301,
                     Index = 300,
                     Library = Libraries.Title,
@@ -585,7 +585,7 @@ namespace Client.MirScenes
 
                 KeyDelButton = new MirButton
                 {
-                    Text = "Delete",
+                    Text = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.BtnDelete),
                     HoverIndex = 304,
                     Index = 303,
                     Library = Libraries.Title,
@@ -598,7 +598,7 @@ namespace Client.MirScenes
 
                 KeyEnterButton = new MirButton
                 {
-                    Text = "Enter",
+                    Text = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.BtnEnter),
                     HoverIndex = 307,
                     Index = 306,
                     Library = Libraries.Title,
@@ -617,7 +617,7 @@ namespace Client.MirScenes
 
                 KeyRandButton = new MirButton
                 {
-                    Text = "Random",
+                    Text = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.BtnRandom),
                     HoverIndex = 310,
                     Index = 309,
                     Library = Libraries.Title,
@@ -1069,45 +1069,38 @@ namespace Client.MirScenes
             private void AccountIDTextBox_GotFocus(object sender, EventArgs e)
             {
                 Description.Visible = true;
-                Description.Text = " 说明: 账户 ID\n 可用字符: a-z A-Z 0-9.\n 长度: 介于 " +
-                                   Globals.MinAccountIDLength + " 和 " + Globals.MaxAccountIDLength + " 字节";
+                Description.Text = GameLanguage.ClientTextMap.GetLocalization((ClientTextKeys.AccountIdDescription), Globals.MinAccountIDLength, Globals.MaxAccountIDLength);
             }
             private void PasswordTextBox_GotFocus(object sender, EventArgs e)
             {
                 Description.Visible = true;
-                Description.Text = " 说明: 密码\n 可用字符: a-z A-Z 0-9.\n 长度: 介于 " +
-                                   Globals.MinPasswordLength + " 和 " + Globals.MaxPasswordLength + " 字节";
+                Description.Text = GameLanguage.ClientTextMap.GetLocalization((ClientTextKeys.PasswordDescription), Globals.MinPasswordLength, Globals.MaxPasswordLength);
             }
             private void EMailTextBox_GotFocus(object sender, EventArgs e)
             {
                 Description.Visible = true;
-                Description.Text =
-                    " 说明: E-Mail 地址\n 格式: Example@Example.Com.\n 最大长度: 50 字节\n 可选字段";
+                Description.Text = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.EmailAddressDescription);
             }
             private void UserNameTextBox_GotFocus(object sender, EventArgs e)
             {
                 Description.Visible = true;
-                Description.Text =
-                    " 说明: 用户名\n 可用字符: 所有\n 长度: 介于 0 和 20 字节\n 可选字段";
+                Description.Text = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.UserNameDescription);
             }
             private void BirthDateTextBox_GotFocus(object sender, EventArgs e)
             {
                 Description.Visible = true;
-                Description.Text =
-                    string.Format(" 说明: 出生日期\n 格式: {0}.\n 长度: 10 字节\n 可选字段",
+                Description.Text = GameLanguage.ClientTextMap.GetLocalization((ClientTextKeys.BirthDateDescription),
                                   Thread.CurrentThread.CurrentCulture.DateTimeFormat.ShortDatePattern.ToUpper());
             }
             private void QuestionTextBox_GotFocus(object sender, EventArgs e)
             {
                 Description.Visible = true;
-                Description.Text =
-                    " 说明: 密码找回问题\n 可用字符: 所有\n 长度: 介于 0 和 30 字节\n 可选字段";
+                Description.Text = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.SecretQuestionDescription);
             }
             private void AnswerTextBox_GotFocus(object sender, EventArgs e)
             {
                 Description.Visible = true;
-                Description.Text =
-                    " 说明: 密码找回答案\n 可用字符: 所有\n 长度: 介于 0 和 30 字节\n 可选字段";
+                Description.Text = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.SecretAnswerDescription);
             }
 
             private void RefreshConfirmButton()
