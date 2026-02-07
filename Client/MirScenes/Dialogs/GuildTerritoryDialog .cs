@@ -170,11 +170,11 @@ namespace Client.MirScenes.Dialogs
 
             BuyButton = new MirButton
             {
-                Index = 437,
-                HoverIndex = 438,
-                PressedIndex = 439,
+                Index = 554,
+                HoverIndex = 555,
+                PressedIndex = 556,
                 Library = Libraries.Prguse,
-                Location = new Point(292, 208),
+                Location = new Point(365, 208),
                 Sound = SoundList.ButtonA,
                 Parent = this,
                 Hint = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.Purchase),

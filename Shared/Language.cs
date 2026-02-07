@@ -4116,7 +4116,7 @@ public static class GameLanguage
         typeof(BuffType),
         typeof(PoisonType),
         typeof(AwakeType),
-        //typeof(MonsterType),
+        typeof(MonsterType),
         typeof(HeroBehaviour)
     ];
 

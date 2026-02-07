@@ -1172,7 +1172,7 @@
             // 
             // GTExtendPriceBox
             // 
-            GTExtendPriceBox.Location = new Point(57, 42);
+            GTExtendPriceBox.Location = new Point(134, 45);
             GTExtendPriceBox.Name = "GTExtendPriceBox";
             GTExtendPriceBox.Size = new Size(130, 23);
             GTExtendPriceBox.TabIndex = 7;
@@ -1180,7 +1180,7 @@
             // 
             // GTDurationBox
             // 
-            GTDurationBox.Location = new Point(67, 69);
+            GTDurationBox.Location = new Point(134, 74);
             GTDurationBox.Name = "GTDurationBox";
             GTDurationBox.Size = new Size(58, 23);
             GTDurationBox.TabIndex = 6;
@@ -1188,7 +1188,7 @@
             // 
             // GTPriceBox
             // 
-            GTPriceBox.Location = new Point(57, 16);
+            GTPriceBox.Location = new Point(134, 16);
             GTPriceBox.Name = "GTPriceBox";
             GTPriceBox.Size = new Size(131, 23);
             GTPriceBox.TabIndex = 4;
@@ -1197,29 +1197,29 @@
             // label32
             // 
             label32.AutoSize = true;
-            label32.Location = new Point(7, 73);
+            label32.Location = new Point(21, 77);
             label32.Name = "label32";
-            label32.Size = new Size(59, 17);
+            label32.Size = new Size(110, 17);
             label32.TabIndex = 2;
-            label32.Text = "持有时间:";
+            label32.Text = "持续时间(默认7天):";
             // 
             // label31
             // 
             label31.AutoSize = true;
-            label31.Location = new Point(7, 45);
+            label31.Location = new Point(69, 48);
             label31.Name = "label31";
-            label31.Size = new Size(35, 17);
+            label31.Size = new Size(62, 17);
             label31.TabIndex = 1;
-            label31.Text = "总价:";
+            label31.Text = "续费(7天):";
             // 
             // label30
             // 
             label30.AutoSize = true;
-            label30.Location = new Point(7, 20);
+            label30.Location = new Point(45, 20);
             label30.Name = "label30";
-            label30.Size = new Size(35, 17);
+            label30.Size = new Size(86, 17);
             label30.TabIndex = 0;
-            label30.Text = "单价:";
+            label30.Text = "租用费用(7天):";
             // 
             // GuildInfoForm
             // 

@@ -397,6 +397,8 @@ public abstract class Packet
                 return new C.ConfirmItemRental();
             case (short)ClientPacketIds.GuildTerritoryPage:
                 return new C.GuildTerritoryPage();
+            case (short)ClientPacketIds.PurchaseGuildTerritory:
+                return new C.PurchaseGuildTerritory();
             case (short)ClientPacketIds.DeleteItem:
                 return new C.DeleteItem();
             default:
