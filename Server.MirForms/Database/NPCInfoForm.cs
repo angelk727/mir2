@@ -341,27 +341,72 @@ namespace Server
 
         private void ImportButton_Click(object sender, EventArgs e)
         {
-            string Path = string.Empty;
 
-            OpenFileDialog ofd = new OpenFileDialog();
-            ofd.Filter = "CSV File|*.csv";
-            ofd.ShowDialog();
+            using var ofd = new OpenFileDialog { Filter = "CSV File|*.csv" };
+            if (ofd.ShowDialog() != DialogResult.OK || string.IsNullOrWhiteSpace(ofd.FileName)) return;
 
-            if (ofd.FileName == string.Empty) return;
-
-            Path = ofd.FileName;            
-
-            foreach (var m in File.ReadAllLines(Path).Skip(1))
+            try
             {
-                try
-                {
-                    NPCInfo.FromText(m);
-                }
-                catch { }
-            }
+                Envir.NPCInfoList.Clear();
+                Envir.NPCIndex = 0;
+                UpdateInterface();
 
-            UpdateInterface();
-            MessageBox.Show("NPC数据导入完成");
+                var importedNpcs = File.ReadLines(ofd.FileName)
+                                       .Skip(1)
+                                       .Where(line => !string.IsNullOrWhiteSpace(line))
+                                       .Select(line => ParseNPCFromCSV(line))
+                                       .Where(npc => npc != null)
+                                       .ToList();
+
+                foreach (var npc in importedNpcs)
+                {
+                    npc.Index = ++Envir.NPCIndex;
+                    Envir.NPCInfoList.Add(npc);
+                }
+
+                UpdateInterface();
+                RefreshNPCList();
+                MessageBox.Show("NPC数据导入完成");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"导入过程中发生错误: {ex.Message}");
+            }
+        }
+
+        private NPCInfo ParseNPCFromCSV(string line)
+        {
+            try
+            {
+                var data = line.Split(',', StringSplitOptions.RemoveEmptyEntries);
+                if (data.Length < 19) return null;
+
+                return new NPCInfo
+                {
+                    FileName = data[1],
+                    MapIndex = Envir.MapInfoList.FirstOrDefault(m => m.FileName == data[2])?.Index ?? 0,
+                    Location = new Point(int.TryParse(data[3], out var x) ? x : 0,
+                                         int.TryParse(data[4], out var y) ? y : 0),
+                    Name = data[5],
+                    Image = ushort.TryParse(data[6], out var img) ? img : (ushort)0,
+                    Rate = ushort.TryParse(data[7], out var rate) ? rate : (ushort)100,
+                    ShowOnBigMap = bool.TryParse(data[8], out var sb) ? sb : false,
+                    BigMapIcon = int.TryParse(data[9], out var bmi) ? bmi : 0,
+                    CanTeleportTo = bool.TryParse(data[10], out var ct) ? ct : false,
+                    ConquestVisible = bool.TryParse(data[11], out var cv) ? cv : true,
+                    MinLev = short.TryParse(data[12], out var min) ? min : (short)0,
+                    MaxLev = short.TryParse(data[13], out var max) ? max : (short)0,
+                    TimeVisible = bool.TryParse(data[14], out var tv) ? tv : false,
+                    HourStart = byte.TryParse(data[15], out var hs) ? hs : (byte)0,
+                    MinuteStart = byte.TryParse(data[16], out var ms) ? ms : (byte)0,
+                    HourEnd = byte.TryParse(data[17], out var he) ? he : (byte)0,
+                    MinuteEnd = byte.TryParse(data[18], out var me) ? me : (byte)1
+                };
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         private void OpenNButton_Click(object sender, EventArgs e)
