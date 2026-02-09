@@ -1476,7 +1476,8 @@ public enum SpellEffect : byte
     Mon572BLightning,
     Mon573BCobweb,
     Mon580BLightning,
-    Mon580BSpikeTrap
+    Mon580BSpikeTrap,
+    Mon622NSpikes,
 }
 
 

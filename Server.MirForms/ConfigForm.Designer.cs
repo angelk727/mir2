@@ -614,7 +614,7 @@
             WarehousePasswordCheckBox.Name = "WarehousePasswordCheckBox";
             WarehousePasswordCheckBox.Size = new Size(187, 19);
             WarehousePasswordCheckBox.TabIndex = 31;
-            WarehousePasswordCheckBox.Text = "Warehouse Password";
+            WarehousePasswordCheckBox.Text = "仓库密码";
             WarehousePasswordCheckBox.UseVisualStyleBackColor = true;
             // 
             // gbCharacterScreen

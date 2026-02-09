@@ -455,6 +455,8 @@ namespace Server.MirObjects
 
             Match quoteMatch = null;
 
+            try
+            {
             switch (parts[0].ToUpper())
             {
                 case "MOVE":
@@ -1220,6 +1222,16 @@ namespace Server.MirObjects
                     break;
 
                 case "GTSALE":
+                        if (parts.Length < 2)
+                        {
+                            MessageQueue.Enqueue($"NPC脚本加载缺失必要的价格参数: {line}");
+                            return;
+                        }
+                        if (!int.TryParse(parts[1], out int salePrice))
+                        {
+                            MessageQueue.Enqueue($"NPC脚本参数不正确: {line}");
+                            return;
+                        }
                     acts.Add(new NPCActions(ActionType.GTSale, parts[1]));
                     break;
 
@@ -1241,6 +1253,14 @@ namespace Server.MirObjects
                     if (parts.Length < 2) return;
                     acts.Add(new NPCActions(ActionType.GiveGuildExp, parts[1]));
                     break;
+                    default:
+                        MessageQueue.Enqueue($"NPC脚本非法的ACT指令: {line}");
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageQueue.Enqueue($"NPC脚本处理ACT指令异常: {line} => {ex.Message}");
             }
         }
 

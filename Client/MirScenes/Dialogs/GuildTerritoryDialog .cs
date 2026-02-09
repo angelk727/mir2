@@ -96,11 +96,11 @@ namespace Client.MirScenes.Dialogs
             var closeButton = new MirButton
             {
                 Parent = this,
-                Index = 361,
-                PressedIndex = 363,
-                HoverIndex = 362,
-                Library = Libraries.Prguse,
-                Location = new Point(544, 8),
+                Index = 360,
+                PressedIndex = 362,
+                HoverIndex = 361,
+                Library = Libraries.Prguse2,
+                Location = new Point(544, 5),
                 Hint = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.ExitButton)
             };
             closeButton.Click += (o, e) => Hide();
@@ -198,7 +198,7 @@ namespace Client.MirScenes.Dialogs
             {
                 Index = 54,
                 Library = Libraries.Title,
-                Location = new Point(217, 11),
+                Location = new Point(222, 8),
                 Parent = this
             };
 

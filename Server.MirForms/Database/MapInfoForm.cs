@@ -1539,6 +1539,7 @@ namespace Server
         {
             string textOut = string.Empty;
             if (map.NoTeleport) textOut += " NOTELEPORT";
+            if (map.NoReincarnation) textOut += " NOREINCARNATION";
             if (map.NoReconnect) textOut += " NORECONNECT(" + map.NoReconnectMap + ")";
             if (map.NoRandom) textOut += " NORANDOMMOVE";
             if (map.NoEscape) textOut += " NOESCAPE";
@@ -1555,7 +1556,7 @@ namespace Server
             if (map.Fight) textOut += " FIGHT";
             if (map.Fire) textOut += " FIRE(" + map.FireDamage + ")";
             if (map.Lightning) textOut += " LIGHTNING(" + map.LightningDamage + ")";
-            if (map.NoTownTeleport) textOut += " NOTownTeleport";
+            if (map.NoTownTeleport) textOut += " NOTOWNTELEPORT";
             if (map.GT) textOut += " GT(" + map.GTIndex + ")";
             if (map.NoExperience) textOut += " NOEXPERIENCE";
             if (map.NoGroup) textOut += " NOGROUP";

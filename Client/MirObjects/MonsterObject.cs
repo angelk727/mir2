@@ -882,6 +882,9 @@ namespace Client.MirObjects
                             case Monster.Mon601N:
                                 Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon601N], 515 + (int)Direction * 10, 10, Frame.Count * Frame.Interval, this));
                                 break;
+                            case Monster.Mon622N:
+                                Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon622N], 490 + (int)Direction * 10, 10, Frame.Count * Frame.Interval, this) { Blend = true });
+                                break;
                         }
                         break;
                     case MirAction.近距攻击2:
@@ -1173,6 +1176,9 @@ namespace Client.MirObjects
                                 break;
                             case Monster.Mon603B:
                                 Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon603B], 451, 15, 15 * 60, this));
+                                break;
+                            case Monster.Mon622N:
+                                Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon622N], 620, 12, 12 * 120, this) { Blend = true });
                                 break;
                         }
                         break;
@@ -4078,6 +4084,13 @@ namespace Client.MirObjects
                                                 {
                                                     ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.FloatingRock], 234, 10, 1000, ob));
                                                     SoundManager.PlaySound(BaseSound + 6);
+                                                }
+                                                break;
+                                            case Monster.Mon622N:
+                                                ob = MapControl.GetObject(TargetID);
+                                                if (ob != null)
+                                                {
+                                                    ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon622N], 640, 20, 600, ob) { Blend = true, DrawBehind = true });
                                                 }
                                                 break;
                                         }
