@@ -1472,7 +1472,17 @@ namespace Server.MirObjects
                 }
             }
 
+            if (mapChanged && oldMap != null)
+            {
+                CallDefaultNPC(DefaultNPCType.MapLeave, oldMap.Info.FileName);
+            }
+
             if (!base.Teleport(temp, location, effects)) return false;
+
+            if (mapChanged)
+            {
+                CallDefaultNPC(DefaultNPCType.MapEnter, temp.Info.FileName);
+            }
 
             if (!temp.Info.RequiredGroup)
             {
@@ -1508,9 +1518,6 @@ namespace Server.MirObjects
         private void ApplyMapEntryRules(bool mapChanged)
         {
             if (!mapChanged) return;
-
-            // MapEnter NPC hook
-            CallDefaultNPC(DefaultNPCType.MapEnter, CurrentMap.Info.FileName);
 
             // NoGroup: solo-only maps
             if (CurrentMap.Info.NoGroup && GroupMembers != null)
@@ -5952,20 +5959,12 @@ namespace Server.MirObjects
                                 Enqueue(p);
                                 return;
                             }
-                            foreach (DelayedAction ac in ActionList.Where(u => u.Type == DelayedType.NPC))
-                            {
-                                ac.FlaggedToRemove = true;
-                            }
                             break;
                         case 1: //TT
                             if (!Teleport(Envir.GetMap(BindMapIndex), BindLocation))
                             {
                                 Enqueue(p);
                                 return;
-                            }
-                            foreach (DelayedAction ac in ActionList.Where(u => u.Type == DelayedType.NPC))
-                            {
-                                ac.FlaggedToRemove = true;
                             }
                             break;
                         case 2: //RT
@@ -7954,6 +7953,10 @@ namespace Server.MirObjects
                     break;
                 case DefaultNPCType.Client:
                     key = "Client";
+                    break;
+                case DefaultNPCType.MapLeave:
+                    if (value.Length < 1) return;
+                    key = string.Format("MapLeave({0})", value[0]);
                     break;
             }
 

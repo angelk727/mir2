@@ -204,7 +204,8 @@ public enum DefaultNPCType : byte
     OnAcceptQuest,
     OnFinishQuest,
     Daily,
-    Client
+    Client,
+    MapLeave
 }
 
 public enum IntelligentCreatureType : byte
