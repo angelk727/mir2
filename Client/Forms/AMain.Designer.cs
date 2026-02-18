@@ -112,7 +112,7 @@ namespace Launcher
             // Movement_panel
             // 
             this.Movement_panel.BackColor = System.Drawing.Color.Transparent;
-            this.Movement_panel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.Movement_panel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.Movement_panel.Controls.Add(this.Name_label);
             this.Movement_panel.Controls.Add(this.pictureBox1);
             this.Movement_panel.Controls.Add(this.Close_pb);
@@ -155,7 +155,7 @@ namespace Launcher
             // Close_pb
             // 
             this.Close_pb.BackColor = System.Drawing.Color.Transparent;
-            this.Close_pb.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.Close_pb.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.Close_pb.Image = global::Client.Resources.Images.Cross_Base;
             this.Close_pb.Location = new System.Drawing.Point(759, 6);
             this.Close_pb.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
@@ -172,7 +172,7 @@ namespace Launcher
             // Config_pb
             // 
             this.Config_pb.BackColor = System.Drawing.Color.Transparent;
-            this.Config_pb.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.Config_pb.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.Config_pb.Image = global::Client.Resources.Images.Config_Base;
             this.Config_pb.Location = new System.Drawing.Point(735, 6);
             this.Config_pb.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
@@ -264,7 +264,7 @@ namespace Launcher
             // 
             this.ProgTotalEnd_pb.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.ProgTotalEnd_pb.BackColor = System.Drawing.Color.Transparent;
-            this.ProgTotalEnd_pb.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.ProgTotalEnd_pb.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ProgTotalEnd_pb.Image = global::Client.Resources.Images.NEW_Progress_End__Blue_;
             this.ProgTotalEnd_pb.Location = new System.Drawing.Point(609, 510);
             this.ProgTotalEnd_pb.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
@@ -277,7 +277,7 @@ namespace Launcher
             // 
             this.ProgEnd_pb.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.ProgEnd_pb.BackColor = System.Drawing.Color.Transparent;
-            this.ProgEnd_pb.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.ProgEnd_pb.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ProgEnd_pb.Image = global::Client.Resources.Images.NEW_Progress_End__Green_;
             this.ProgEnd_pb.Location = new System.Drawing.Point(610, 492);
             this.ProgEnd_pb.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
@@ -290,7 +290,7 @@ namespace Launcher
             // 
             this.ProgressCurrent_pb.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.ProgressCurrent_pb.BackColor = System.Drawing.Color.Transparent;
-            this.ProgressCurrent_pb.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.ProgressCurrent_pb.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ProgressCurrent_pb.Image = global::Client.Resources.Images.Green_Progress;
             this.ProgressCurrent_pb.Location = new System.Drawing.Point(59, 492);
             this.ProgressCurrent_pb.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
@@ -304,7 +304,7 @@ namespace Launcher
             // 
             this.TotalProg_pb.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.TotalProg_pb.BackColor = System.Drawing.Color.Transparent;
-            this.TotalProg_pb.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.TotalProg_pb.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.TotalProg_pb.Image = global::Client.Resources.Images.Blue_Progress;
             this.TotalProg_pb.Location = new System.Drawing.Point(58, 510);
             this.TotalProg_pb.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
@@ -354,7 +354,7 @@ namespace Launcher
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.BackgroundImage = global::Client.Resources.Images.pfffft;
-            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(801, 554);
             this.Controls.Add(this.Main_browser);
             this.Controls.Add(this.SpeedLabel);
