@@ -410,6 +410,9 @@ namespace Client.MirScenes.Dialogs
                 case BuffType.暗影侵袭:
                     text += "来自陵寝秘空的侵袭\n";
                     break;
+                case BuffType.监禁:
+                    text += "受到监禁的惩罚\n";
+                    break;
                 case BuffType.烈火焚烧:
                     overridestats = true;
                     text += string.Format("每秒持续 {0}生命值\n", buff.Stats[Stat.HP]);
@@ -603,6 +606,8 @@ namespace Client.MirScenes.Dialogs
                     return 63;
                 case BuffType.精力充沛:
                     return 508;
+                case BuffType.监禁:
+                    return 70;
                 case BuffType.时间之殇:
                     return 75;
                 case BuffType.技巧项链:

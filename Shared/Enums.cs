@@ -1556,7 +1556,7 @@ public enum BuffType : byte
     衣钵相传,
     火传穷薪,
     公会特效,
-    Prison,
+    监禁,
     精力充沛,
     技巧项链,
     隐身戒指,
