@@ -24,6 +24,7 @@ namespace Client.MirGraphics
             MiniMap = new MLibrary(Settings.DataPath + "MMap"),
             MapLinkIcon = new MLibrary(Settings.DataPath + "MapLinkIcon"),
             Title = new MLibrary(Settings.DataPath + "Title"),
+            Title_32bit = new MLibrary(Settings.DataPath + "Title_32bit"),
             MagIcon = new MLibrary(Settings.DataPath + "MagIcon"),
             MagIcon2 = new MLibrary(Settings.DataPath + "MagIcon2"),
             Magic = new MLibrary(Settings.DataPath + "Magic"),
@@ -244,6 +245,9 @@ namespace Client.MirGraphics
             Progress++;
 
             Title.Initialize();
+            Progress++;
+
+            Title_32bit.Initialize();
             Progress++;
 
             StateitemEffect.Initialize();

@@ -4565,15 +4565,27 @@ namespace Client.MirScenes.Dialogs
 
             Show();
 
-            Size = new Size(PanelWidth, Math.Min(GroupDialog.GroupList.Count, MaxMembers) * 30);
+            int memberCount = Math.Min(GroupDialog.GroupList.Count, MaxMembers);
+            Size = new Size(PanelWidth, memberCount * 30);
 
             int playerIndex = GroupDialog.GroupList.IndexOf(GameScene.User.Name);
+            if (playerIndex < 0) playerIndex = 0;
 
-            for (int i = 0; i < GroupDialog.GroupList.Count; i++)
+            for (int i = 0; i < memberCount; i++)
             {
                 int memberIndex = (playerIndex + i) % GroupDialog.GroupList.Count;
                 string memberName = GroupDialog.GroupList[memberIndex];
-                PlayerObject player = MapControl.Objects.OfType<PlayerObject>().FirstOrDefault(p => p.Name == memberName);
+
+                PlayerObject player = null;
+
+                foreach (var obj in MapControl.Objects.Values)
+                {
+                    if (obj is PlayerObject p && p.Name == memberName)
+                    {
+                        player = p;
+                        break;
+                    }
+                }
 
                 double healthPercent = player != null ? player.PercentHealth : 0;
 
@@ -4581,16 +4593,17 @@ namespace Client.MirScenes.Dialogs
 
                 playerUI.NameLabel.Text = memberName;
                 playerUI.NameLabel.Visible = true;
+                playerUI.HealthBar.Visible = true;
 
                 if (player == null)
                 {
                     playerUI.NameLabel.ForeColour = Color.OrangeRed;
                     healthPercent = 1;
                     UpdatePlayerHealth(playerUI.HealthBar, healthPercent);                    
-                    playerUI.HealthBar.Visible = true;
                     continue;
                 }
-                else if (healthPercent <= 0)
+
+                if (healthPercent <= 0)
                 {
                     playerUI.NameLabel.ForeColour = Color.Gray;
                 }
@@ -4602,7 +4615,7 @@ namespace Client.MirScenes.Dialogs
                 UpdatePlayerHealth(playerUI.HealthBar, healthPercent);
             }
 
-            for (int i = GroupDialog.GroupList.Count; i < MaxMembers; ++i)
+            for (int i = memberCount; i < MaxMembers; i++)
             {
                 playerUIList[i].NameLabel.Visible = false;
                 playerUIList[i].HealthBar.Visible = false;
@@ -4629,7 +4642,17 @@ namespace Client.MirScenes.Dialogs
             string playerName = playerUI.NameLabel.Text;
             if (string.IsNullOrEmpty(playerName)) return;
 
-            PlayerObject player = MapControl.Objects.OfType<PlayerObject>().FirstOrDefault(p => p.Name == playerName);
+            PlayerObject player = null;
+
+            foreach (var obj in MapControl.Objects.Values)
+            {
+                if (obj is PlayerObject p && p.Name == playerName)
+                {
+                    player = p;
+                    break;
+                }
+            }
+
             if (player == null) return;
 
             double percent = player.PercentHealth / 100f;
