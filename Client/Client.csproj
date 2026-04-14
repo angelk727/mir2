@@ -37,8 +37,8 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="6.0.0" />
-    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3719.77" />
-    <PackageReference Include="NAudio" Version="2.2.1" />
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3912.50" />
+    <PackageReference Include="NAudio" Version="2.3.0" />
   </ItemGroup>
 
   <ItemGroup>

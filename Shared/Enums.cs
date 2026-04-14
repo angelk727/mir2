@@ -1298,6 +1298,7 @@ public enum Spell : ushort
     HeavenlySecrets = 76,
     GreatFireBallRare = 77,
     StormEscapeRare = 78,
+    ThunderBoltRare = 79,
 
     //Taoist
     Healing = 101,

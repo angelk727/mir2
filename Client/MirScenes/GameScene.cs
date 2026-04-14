@@ -12300,6 +12300,7 @@ namespace Client.MirScenes
                 case Spell.ElectricShock:
                 case Spell.Poisoning:
                 case Spell.ThunderBolt:
+                case Spell.ThunderBoltRare:
                 case Spell.FlameDisruptor:
                 case Spell.SoulFireBall:
                 case Spell.TurnUndead:

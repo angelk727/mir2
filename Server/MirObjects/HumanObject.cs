@@ -3590,6 +3590,8 @@ namespace Server.MirObjects
 
             bool cast = true;
             byte level = magic.Level;
+            int chainCount = 0;
+            Point targetLocation = default;
             switch (spell)
             {
                 case Spell.FireBall:
@@ -3629,6 +3631,9 @@ namespace Server.MirObjects
                     break;
                 case Spell.ThunderBolt:
                     ThunderBolt(target, magic);
+                    break;
+                case Spell.ThunderBoltRare:
+                    ThunderBoltRare(target, targetLocation, magic, chainCount);
                     break;
                 case Spell.SoulFireBall:
                     if (!SoulFireball(target, magic, out cast)) targetID = 0;
@@ -4278,6 +4283,126 @@ namespace Server.MirObjects
             DelayedAction action = new DelayedAction(DelayedType.Magic, Envir.Time + 500, magic, damage, target, target.CurrentLocation);
 
             ActionList.Add(action);
+        }
+        private void ThunderBoltRare(MapObject target, Point targetLocation, UserMagic magic, int chainCount = 0)
+        {
+            if (CurrentMap == null) return;
+
+            int range = 5;
+            int extraDamagePercentage = 0;
+            int additionalTriggers = 0;
+            int maxChain = 0;
+
+            switch (magic.Level)
+            {
+                case 0:
+                    range = 5;
+                    maxChain = 0;
+                    break;
+                case 1:
+                    range = 5;
+                    extraDamagePercentage = 15;
+                    maxChain = 0;
+                    break;
+                case 2:
+                    range = 5;
+                    extraDamagePercentage = 15;
+                    additionalTriggers = 1;
+                    maxChain = 1;
+                    break;
+                case 3:
+                    range = 6;
+                    extraDamagePercentage = 30;
+                    additionalTriggers = 1;
+                    maxChain = 1;
+                    break;
+                case 4:
+                    range = 6;
+                    extraDamagePercentage = 50;
+                    additionalTriggers = 2;
+                    maxChain = 2;
+                    break;
+                case 5:
+                    range = 7;
+                    extraDamagePercentage = 50;
+                    additionalTriggers = 2;
+                    maxChain = 2;
+                    break;
+            }
+
+            if (chainCount > maxChain) return;
+            Point center = target != null ? target.CurrentLocation : targetLocation;
+            List<MapObject> targets = new List<MapObject>();
+
+            for (int x = -range; x <= range; x++)
+            {
+                for (int y = -range; y <= range; y++)
+                {
+                    Point p = new Point(center.X + x, center.Y + y);
+
+                    if (!CurrentMap.ValidPoint(p)) continue;
+                    if (!Functions.InRange(p, center, range)) continue;
+
+                    var cell = CurrentMap.GetCell(p);
+                    if (cell?.Objects == null) continue;
+
+                    foreach (var obj in cell.Objects)
+                    {
+                        if (obj == null || obj.Dead) continue;
+                        if (!(obj is PlayerObject) && !(obj is MonsterObject)) continue;
+                        if (!obj.IsAttackTarget(this)) continue;
+
+                        targets.Add(obj);
+                    }
+                }
+            }
+
+            if (targets.Count == 0) return;
+            MapObject current = target;
+
+            if (current == null || current.Dead)
+            {
+                current = targets[Envir.Random.Next(targets.Count)];
+            }
+
+            if (current == null) return;
+
+            Broadcast(new S.ObjectMagic
+            {
+                ObjectID = ObjectID,
+                Direction = Direction,
+                Location = CurrentLocation,
+                Spell = Spell.ThunderBoltRare,
+                TargetID = 0,
+                Target = current.CurrentLocation
+            });
+
+            int damage = magic.GetDamage(GetAttackPower(Stats[Stat.MinMC], Stats[Stat.MaxMC]));
+            damage += damage * extraDamagePercentage / 100;
+
+            if (current.Undead) damage = (int)(damage * 1.5F);
+            DefenceType defence = magic.Level == 5 ? DefenceType.None : DefenceType.MAC;
+
+            if (current.Attacked((HumanObject)this, damage, defence, false) > 0)
+            {
+                LevelMagic(magic);
+            }
+
+            if (additionalTriggers > 0 && Envir.Random.Next(100) < 25)
+            {
+                for (int i = 0; i < additionalTriggers; i++)
+                {
+                    ActionList.Add(new DelayedAction(
+                        DelayedType.Magic,
+                        Envir.Time + 1000,
+                        magic,
+                        damage,
+                        current,
+                        current.CurrentLocation,
+                        chainCount + 1
+                    ));
+                }
+            }
         }
         private void Vampirism(MapObject target, UserMagic magic)
         {
@@ -6355,6 +6480,19 @@ namespace Server.MirObjects
                     if (target.Attacked(this, value, DefenceType.MAC, false) > 0) LevelMagic(magic);
                     break;
 
+                #endregion
+
+                #region ThunderBoltRare
+                case Spell.ThunderBoltRare:
+                    {
+                        value = (int)data[1];
+                        target = (MapObject)data[2];
+                        targetLocation = (Point)data[3];
+                        int chainCount = data.Count > 4 ? (int)data[4] : 0;
+
+                        ThunderBoltRare(target, targetLocation, magic, chainCount);
+                    }
+                    break;
                 #endregion
 
                 #region FireBounce

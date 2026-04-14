@@ -1800,6 +1800,15 @@ namespace Client.MirObjects
 
                             #endregion
 
+                            #region ThunderBoltRare
+
+                            case Spell.ThunderBoltRare:
+                                Effects.Add(new Effect(Libraries.Magic2, 20, 3, Frame.Count * FrameInterval, this));
+                                SoundManager.PlaySound(20000 + (ushort)Spell * 10);
+                                break;
+
+                            #endregion
+
                             #region SoulFireBall
 
                             case Spell.SoulFireBall:
@@ -3209,6 +3218,52 @@ namespace Client.MirObjects
                                         else
                                             ob.Effects.Add(new Effect(Libraries.Magic2, 10, 5, 400, ob));
                                         break;
+
+                                    #endregion
+
+                                    #region ThunderBoltRare
+
+                                    //case Spell.ThunderBoltRare:
+                                    //    {
+                                    //        SoundManager.PlaySound(20000 + (ushort)Spell * 10);
+
+                                    //        int[] effects = { 720, 730, 740 };
+                                    //        //int effectId = effects[Environment.TickCount % effects.Length];
+                                    //        Random rand = new Random();
+                                    //        int effectId = effects[rand.Next(effects.Length)];
+
+                                    //        if (ob == null)
+                                    //            MapControl.Effects.Add(new Effect(Libraries.Magic_32bit, effectId, 5, 400, TargetPoint));
+                                    //        else
+                                    //            ob.Effects.Add(new Effect(Libraries.Magic_32bit, effectId, 5, 400, ob));
+
+                                    //        break;
+                                    //    }
+                                    case Spell.ThunderBoltRare:
+                                        {
+                                            SoundManager.PlaySound(20000 + (ushort)Spell * 10);
+                                            ClientMagic magic = User.GetMagic(Spell.ThunderBoltRare);
+                                            int effectId;
+                                            if (magic != null)
+                                            {
+                                                if (magic.Level <= 1)
+                                                    effectId = 720;
+                                                else if (magic.Level <= 3)
+                                                    effectId = 730;
+                                                else
+                                                    effectId = 740;
+                                            }
+                                            else
+                                            {
+                                                effectId = 720;
+                                            }
+                                            if (ob == null)
+                                                MapControl.Effects.Add(new Effect(Libraries.Magic_32bit, effectId, 5, 400, TargetPoint));
+                                            else
+                                                ob.Effects.Add(new Effect(Libraries.Magic_32bit, effectId, 5, 400, ob));
+
+                                            break;
+                                        }
 
                                     #endregion
 

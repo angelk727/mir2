@@ -1381,7 +1381,7 @@
         private ColumnHeader PetName;
         private ColumnHeader Level;
         private ColumnHeader HP;
-        private ColumnHeader Location;
+        private ColumnHeader Location;//待处理
         private CustomFormControl.ListViewNF PlayerItemInfoListViewNF;
         private ColumnHeader UIDHeader;
         private ColumnHeader LocationHeader;

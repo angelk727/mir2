@@ -3825,6 +3825,9 @@ namespace Client.MirScenes.Dialogs
                 case Spell.StormEscapeRare:
                     SkillButton.Hint = string.Format("雷仙风-秘籍：\n主动技能\n麻痹周围目标\n瞬移到指定位置并恢复生命值\n20秒内使用的一个技能不消耗法力值", Magic.Level, Magic.Level == 0 ? Magic.Level1 : Magic.Level == 1 ? Magic.Level2 : Magic.Level == 2 ? Magic.Level3 : 0, Magic.BaseCost);
                     break;
+                case Spell.ThunderBoltRare:
+                    SkillButton.Hint = string.Format("强击-秘籍：\n主动技能\n使用时会自动对5格范围内的敌人释放1个落雷", Magic.Level, Magic.Level == 0 ? Magic.Level1 : Magic.Level == 1 ? Magic.Level2 : Magic.Level == 2 ? Magic.Level3 : 0, Magic.BaseCost);
+                    break;
                 //Taoist
                 case Spell.SpiritSword:
                     SkillButton.Hint = GameLanguage.ClientTextMap.GetLocalization((ClientTextKeys.SpiritSwordSkillDescription), Magic.Level, Magic.Level == 0 ? Magic.Level1 : Magic.Level == 1 ? Magic.Level2 : Magic.Level == 2 ? Magic.Level3 : 0, Magic.BaseCost);

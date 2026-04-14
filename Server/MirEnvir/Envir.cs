@@ -352,7 +352,7 @@ namespace Server.MirEnvir
             if (!MagicExists(Spell.HeavenlySecrets)) MagicInfoList.Add(new MagicInfo { Name = "天上秘术", Spell = Spell.HeavenlySecrets, Icon = 77, Level1 = 50, Level2 = 63, Level3 = 56, Need1 = 1000, Need2 = 2000, Need3 = 3500, BaseCost = 28, LevelCost = 2, MPowerBase = 1, PowerBase = 1, DelayBase = 600000, DelayReduction = 100000, Range = 0 , MultiplierBase = 1f, MultiplierBonus = 0f});
             if (!MagicExists(Spell.GreatFireBallRare)) MagicInfoList.Add(new MagicInfo { Name = "大火球-秘籍", Spell = Spell.GreatFireBallRare, Icon = 108, Level1 = 55, Level2 = 60, Level3 = 65, Need1 = 17000, Need2 = 22000, Need3 = 27000, BaseCost = 5, LevelCost = 1, MPowerBase = 15, PowerBase = 18, Range = 9 });
             if (!MagicExists(Spell.StormEscapeRare)) MagicInfoList.Add(new MagicInfo { Name = "雷仙风-秘籍", Spell = Spell.StormEscapeRare, Icon = 85, Level1 = 62, Level2 = 64, Level3 = 66, Need1 = 2200, Need2 = 3300, Need3 = 4400, BaseCost = 65, LevelCost = 8, MPowerBase = 30, PowerBase = 10, DelayBase = 300000, DelayReduction = 40000, Range = 9 , MultiplierBase = 3.25f, MultiplierBonus = 0.25f});
-            
+            if (!MagicExists(Spell.ThunderBoltRare)) MagicInfoList.Add(new MagicInfo { Name = "强击-秘籍", Spell = Spell.ThunderBoltRare, Icon = 114, Level1 = 95, Level2 = 97, Level3 = 102, Need1 = 7410, Need2 = 12540, Need3 = 19200, BaseCost = 9, LevelCost = 2, MPowerBase = 8, MPowerBonus = 20, PowerBase = 9, Range = 9 });
             
             //Taoist
             if (!MagicExists(Spell.Healing)) MagicInfoList.Add(new MagicInfo { Name = "治愈术", Spell = Spell.Healing, Icon = 1, Level1 = 7, Level2 = 11, Level3 = 14, Need1 = 150, Need2 = 350, Need3 = 700, BaseCost = 3, LevelCost = 2, MPowerBase = 14, Range = 9 });

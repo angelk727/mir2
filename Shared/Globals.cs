@@ -64,6 +64,7 @@ public static class Globals
         Spell.SoulFireBall,
         Spell.StraightShot,
         Spell.ElementalShot,
+        Spell.ThunderBoltRare,
         Spell.PoisonShot
     };
 }

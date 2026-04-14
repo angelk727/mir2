@@ -14,7 +14,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="WinSCP" Version="6.5.5" />
+    <PackageReference Include="WinSCP" Version="6.5.6" />
   </ItemGroup>
 
 </Project>
