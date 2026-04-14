@@ -5062,6 +5062,10 @@ namespace Client.MirScenes
                         ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon622N], 580, 10, 300, ob) { Blend = false });
                         ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon622N], 600, 10, 300, ob) { Blend = false });
                         break;
+                    case SpellEffect.Mon623NSpikes:
+                        ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon623N], 570, 10, 300, ob) { Blend = false });
+                        ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon623N], 770, 10, 300, ob) { Blend = false });
+                        break;
                 }
 
                 return;

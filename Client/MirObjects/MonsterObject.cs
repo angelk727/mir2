@@ -885,6 +885,9 @@ namespace Client.MirObjects
                             case Monster.Mon622N:
                                 Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon622N], 490 + (int)Direction * 10, 10, Frame.Count * Frame.Interval, this) { Blend = true });
                                 break;
+                            case Monster.Mon623N:
+                                Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon623N], 593 + (int)Direction * 20, 20, Frame.Count * Frame.Interval, this) { Blend = true });
+                                break;
                         }
                         break;
                     case MirAction.近距攻击2:
@@ -8229,6 +8232,20 @@ namespace Client.MirObjects
                         case MirAction.石化状态:
                         case MirAction.坐下动作:
                             Libraries.Monsters[(ushort)Monster.Mon620B].Draw(790, DrawLocation, Color.White, true);
+                            break;
+                    }
+                    break;
+                case Monster.Mon623N:
+                    switch (CurrentAction)
+                    {
+                        case MirAction.近距攻击2:
+                            Libraries.Monsters[(ushort)Monster.Mon623N].DrawBlend((790 + FrameIndex + (int)Direction * 10), DrawLocation, Color.White, true);
+                            Libraries.Monsters[(ushort)Monster.Mon623N].DrawBlend((880 + FrameIndex + (int)Direction * 10), DrawLocation, Color.White, true);
+                            break;
+                        case MirAction.近距攻击3:
+                            Libraries.Monsters[(ushort)Monster.Mon623N].DrawBlend((970 + FrameIndex + (int)Direction * 10), DrawLocation, Color.White, true);
+                            //Libraries.Monsters[(ushort)Monster.Mon623N].DrawBlend((1060 + FrameIndex + (int)Direction * 10), DrawLocation, Color.White, true);
+                            Libraries.Monsters[(ushort)Monster.Mon623N].DrawBlend((1150 + FrameIndex + (int)Direction * 10), DrawLocation, Color.White, true);
                             break;
                     }
                     break;
