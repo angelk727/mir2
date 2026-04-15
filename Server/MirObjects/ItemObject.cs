@@ -390,19 +390,19 @@ namespace Server.MirObjects
         }
         public override bool IsAttackTarget(HumanObject attacker)
         {
-            throw new NotSupportedException();
+            return false;
         }
         public override bool IsAttackTarget(MonsterObject attacker)
         {
-            throw new NotSupportedException();
+            return false;
         }
         public override int Attacked(HumanObject attacker, int damage, DefenceType type = DefenceType.ACAgility, bool damageWeapon = true)
         {
-            throw new NotSupportedException();
+            return 0;
         }
         public override int Attacked(MonsterObject attacker, int damage, DefenceType type = DefenceType.ACAgility)
         {
-            throw new NotSupportedException();
+            return 0;
         }
         public override int Struck(int damage, DefenceType type = DefenceType.ACAgility)
         {
@@ -411,7 +411,6 @@ namespace Server.MirObjects
 
         public override void ApplyPoison(Poison p, MapObject Caster = null, bool NoResist = false, bool ignoreDefence = true)
         {
-            throw new NotSupportedException();
         }
 
         public override Buff AddBuff(BuffType type, MapObject owner, int duration, Stats stats, bool refreshStats = true, bool updateOnly = false, params int[] values)
@@ -441,7 +440,7 @@ namespace Server.MirObjects
 
         public override int Pushed(MapObject pusher, MirDirection dir, int distance)
         {
-            throw new NotSupportedException();
+            return 0;
         }
 
         public override void ReceiveChat(string text, ChatType type)

@@ -2341,78 +2341,99 @@ namespace Server.MirEnvir
                 #region OneWithNature
 
                 case Spell.OneWithNature:
-                    value = (int)data[2];
-                    location = (Point)data[3];
-
-                    bool hasVampBuff = (player.Buffs.Any(ex => ex.Type == BuffType.吸血地闪));
-                    bool hasPoisonBuff = (player.Buffs.Any(ex => ex.Type == BuffType.毒魔闪));
-
-                    for (int y = location.Y - 2; y <= location.Y + 2; y++)
                     {
-                        if (y < 0) continue;
-                        if (y >= Height) break;
+                        value = (int)data[2];
+                        location = (Point)data[3];
 
-                        for (int x = location.X - 2; x <= location.X + 2; x++)
+                        bool hasVampBuff = player.Buffs.Any(ex => ex.Type == BuffType.吸血地闪);
+                        bool hasPoisonBuff = player.Buffs.Any(ex => ex.Type == BuffType.毒魔闪);
+
+                        HashSet<MapObject> pushedSet = new HashSet<MapObject>();
+                        List<(MapObject target, MirDirection dir)> pushList = new();
+
+                        for (int y = location.Y - 2; y <= location.Y + 2; y++)
                         {
-                            if (x < 0) continue;
-                            if (x >= Width) break;
+                            if (y < 0 || y >= Height) continue;
 
-                            cell = GetCell(x, y);
-
-                            if (!cell.Valid || cell.Objects == null) continue;
-
-                            for (int i = 0; i < cell.Objects.Count; i++)
+                            for (int x = location.X - 2; x <= location.X + 2; x++)
                             {
-                                MapObject target = cell.Objects[i];
-                                switch (target.Race)
+                                if (x < 0 || x >= Width) continue;
+
+                                cell = GetCell(x, y);
+
+                                if (!cell.Valid || cell.Objects == null) continue;
+
+                                for (int i = 0; i < cell.Objects.Count; i++)
                                 {
-                                    case ObjectType.Monster:
-                                    case ObjectType.Player:
-                                        //Only targets
-                                        if (!target.IsAttackTarget(player) || target.Dead) break;
+                                    MapObject target = cell.Objects[i];
 
-                                        //knockback
-                                        //int distance = 1 + Math.Max(0, magic.Level - 1) + Envir.Random.Next(2);
-                                        //dir = Functions.DirectionFromPoint(location, target.CurrentLocation);
-                                        //if(target.Level < player.Level)
-                                        //    target.Pushed(player, dir, distance);// <--crashes server somehow?
+                                    if (target == null || target.Dead) continue;
 
-                                        if (target.Attacked(player, value, DefenceType.MAC, false) <= 0) break;
+                                    if (target.Race != ObjectType.Monster && target.Race != ObjectType.Player && target.Race != ObjectType.Hero) continue;
 
-                                        if (hasVampBuff)//Vampire Effect
+                                    if (!target.IsAttackTarget((MapObject)player)) continue;
+
+                                    if (target.Attacked(player, value, DefenceType.MAC, false) <= 0) continue;
+
+                                    if (target.Level < player.Level && !pushedSet.Contains(target))
+                                    {
+                                        pushedSet.Add(target);
+                                        MirDirection pushDir = Functions.DirectionFromPoint(player.CurrentLocation, target.CurrentLocation);
+                                        pushList.Add((target, pushDir));
+                                    }
+
+                                    if (hasVampBuff)
+                                    {
+                                        if (player.VampAmount == 0)
+                                            player.VampTime = Envir.Time + 1000;
+
+                                        player.VampAmount += (ushort)(value * (magic.Level + 1) * 0.25F);
+                                    }
+
+                                    if (hasPoisonBuff)
+                                    {
+                                        target.ApplyPoison(new Poison
                                         {
-                                            if (player.VampAmount == 0) player.VampTime = Envir.Time + 1000;
-                                            player.VampAmount += (ushort)(value * (magic.Level + 1) * 0.25F);
-                                        }
-                                        if (hasPoisonBuff)//Poison Effect
-                                        {
-                                            target.ApplyPoison(new Poison
-                                            {
-                                                Duration = (value * 2) + (magic.Level + 1) * 7,
-                                                Owner = player,
-                                                PType = PoisonType.Green,
-                                                TickSpeed = 2000,
-                                                Value = value / 15 + magic.Level + 1 + Envir.Random.Next(player.Stats[Stat.毒素伤害])
-                                            }, player);
-                                            target.OperateTime = 0;
-                                        }
-                                        train = true;
-                                        break;
+                                            Duration = (value * 2) + (magic.Level + 1) * 7,
+                                            Owner = player,
+                                            PType = PoisonType.Green,
+                                            TickSpeed = 2000,
+                                            Value = value / 15 + magic.Level + 1 + Envir.Random.Next(player.Stats[Stat.毒素伤害])
+                                        }, player);
+
+                                        target.OperateTime = 0;
+                                    }
+
+                                    train = true;
                                 }
                             }
-
                         }
-                    }
 
-                    if (hasVampBuff)
-                    {
-                        //Expire
-                        player.AddBuff(BuffType.吸血地闪, player, Settings.Second * 1, new Stats());
-                    }
-                    if (hasPoisonBuff)
-                    {
-                        //Expire
-                        player.AddBuff(BuffType.毒魔闪, player, Settings.Second * 1, new Stats());
+                        for (int i = 0; i < pushList.Count; i++)
+                        {
+                            MapObject target = pushList[i].target;
+                            if (target == null || target.Dead) continue;
+
+                            MirDirection pushDir =
+                                Functions.DirectionFromPoint(player.CurrentLocation, target.CurrentLocation);
+
+                            int distance =
+                                1 + Math.Max(0, magic.Level - 1) + Envir.Random.Next(2);
+
+                            int maxDistance =
+                                Functions.MaxDistance(player.CurrentLocation, target.CurrentLocation) - 1;
+
+                            if (maxDistance > 0)
+                                distance = Math.Min(distance, maxDistance);
+
+                            target.Pushed(player, pushDir, distance);
+                        }
+
+                        if (hasVampBuff)
+                            player.AddBuff(BuffType.吸血地闪, player, Settings.Second * 1, new Stats());
+
+                        if (hasPoisonBuff)
+                            player.AddBuff(BuffType.毒魔闪, player, Settings.Second * 1, new Stats());
                     }
                     break;
 

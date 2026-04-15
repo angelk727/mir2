@@ -450,7 +450,7 @@ namespace Server.MirObjects
                 case ObjectType.Monster:
                     return IsAttackTarget((MonsterObject)attacker);
                 default:
-                    throw new NotSupportedException();
+                    return false;
             }
         }
 
