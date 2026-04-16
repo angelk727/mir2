@@ -1803,7 +1803,7 @@ namespace Client.MirObjects
                             #region ThunderBoltRare
 
                             case Spell.ThunderBoltRare:
-                                Effects.Add(new Effect(Libraries.Magic2, 20, 3, Frame.Count * FrameInterval, this));
+                                Effects.Add(new Effect(Libraries.Magic2, 20, 3, Frame.Count * FrameInterval, this) { DrawColour = Color.Red });
                                 SoundManager.PlaySound(20000 + (ushort)Spell * 10);
                                 break;
 

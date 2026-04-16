@@ -26,6 +26,7 @@ namespace Client.MirObjects
         public Point DrawOffset = Point.Empty;
         public bool Repeat;
         public long RepeatUntil;
+        public Color DrawColour = Color.White;
 
         public bool DrawBehind = false;
 
@@ -127,9 +128,9 @@ namespace Client.MirObjects
 
 
             if (Blend)
-                Library.DrawBlend(BaseIndex + CurrentFrame, DrawLocation, Color.White, true, Rate);
+                Library.DrawBlend(BaseIndex + CurrentFrame, DrawLocation, DrawColour, true, Rate);
             else
-                Library.Draw(BaseIndex + CurrentFrame, DrawLocation, Color.White, true);
+                Library.Draw(BaseIndex + CurrentFrame, DrawLocation, DrawColour, true);
         }
 
         public void Clear()
@@ -390,7 +391,6 @@ namespace Client.MirObjects
     public class BuffEffect : Effect
     {
         public BuffType BuffType;
-        public Color DrawColour { get; set; } = Color.White;
 
         public BuffEffect(MLibrary library, int baseIndex, int count, int duration, MapObject owner, bool blend, BuffType buffType, Color? drawColour = null)
             : base(library, baseIndex, count, duration, owner, 0)
