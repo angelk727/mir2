@@ -3988,5 +3988,29 @@ namespace Server.MirObjects
                 }
             }
         }
+
+        protected virtual void SinglePullAttack(int damage, DefenceType type = DefenceType.AC, int delay = 500, int pullDistance = 3)
+        {
+            int levelGap = 5;
+            if (Target == null) return;
+            int mobLevel = this.Level;
+            int targetLevel = Target.Level;
+
+            if (targetLevel > mobLevel + levelGap) return;
+            if (Functions.InRange(Target.CurrentLocation, CurrentLocation, 1)) return;
+
+            MirDirection dir = Functions.DirectionFromPoint( Target.CurrentLocation, CurrentLocation );
+            int result = Target.Pushed(this, dir, pullDistance);
+
+            if (damage == 0) return;
+
+            DelayedAction action = new DelayedAction(DelayedType.Damage, Envir.Time + delay, Target, damage, type);
+            ActionList.Add(action);
+
+            if (result > 0)
+            {
+                AttackTime = Envir.Time + AttackSpeed + 300;
+            }
+        }
     }
 }

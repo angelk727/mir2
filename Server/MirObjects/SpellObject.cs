@@ -1,5 +1,6 @@
+using Server.MirDatabase;
+using Server.MirEnvir;
 using System.Drawing;
-﻿using Server.MirEnvir;
 using S = ServerPackets;
 
 
@@ -77,6 +78,36 @@ namespace Server.MirObjects
                 CurrentMap.RemoveObject(this);
                 Despawn();
                 return;
+            }
+
+            if (Spell == Spell.SoulflameSiphon)
+            {
+                if (Caster == null || CurrentMap != Caster.CurrentMap)
+                {
+                    CurrentMap?.RemoveObject(this);
+                    Despawn();
+                    return;
+                }
+
+                if (CurrentLocation == CastLocation)
+                {
+                    SoulflameSiphonEffect();
+                }
+            }
+
+            if (Spell == Spell.SoulflameSiphonRare)
+            {
+                if (Caster == null || CurrentMap != Caster.CurrentMap)
+                {
+                    CurrentMap?.RemoveObject(this);
+                    Despawn();
+                    return;
+                }
+
+                if (CurrentLocation == CastLocation)
+                {
+                    SoulflameSiphonRareEffect();
+                }
             }
 
             if (Spell == Spell.FireWall)
@@ -171,6 +202,24 @@ namespace Server.MirObjects
                                 TickSpeed = TickSpeed,
                                 Value = (Caster.Stats[Stat.MinSC] + Caster.Stats[Stat.MaxSC]) / 2 + BonusDmg
                             }, Caster, false, false);
+                    }
+                    break;
+                case Spell.SoulflameSiphon:
+                    {
+                        if (ob.Race != ObjectType.Player && ob.Race != ObjectType.Monster) return;
+                        if (ob.Dead) return;
+                        if (!ob.IsAttackTarget(Caster)) return;
+
+                        ob.Attacked((HumanObject)Caster, Value, DefenceType.MAC, false);
+                    }
+                    break;
+                case Spell.SoulflameSiphonRare:
+                    {
+                        if (ob.Race != ObjectType.Player && ob.Race != ObjectType.Monster) return;
+                        if (ob.Dead) return;
+                        if (!ob.IsAttackTarget(Caster)) return;
+
+                        ob.Attacked((HumanObject)Caster, Value, DefenceType.MAC, false);
                     }
                     break;
                 case Spell.Blizzard:
@@ -670,6 +719,8 @@ namespace Server.MirObjects
             {
                 case Spell.Healing:
                     return null;
+                case Spell.SoulflameSiphon:
+				case Spell.SoulflameSiphonRare:
                 case Spell.PoisonCloud:
                 case Spell.Blizzard:
                 case Spell.MeteorStrike:
@@ -819,6 +870,140 @@ namespace Server.MirObjects
                             player.Enqueue(p);
                     }
                 }
+            }
+        }
+        private void SoulflameSiphonEffect()
+        {
+            if (Caster == null || CurrentMap == null) return;
+
+            bool result = false;
+            Point center = CastLocation;
+
+            HumanObject human = Caster as HumanObject;
+
+            int casterLevel = Caster.Level;
+
+            for (int y = center.Y - 2; y <= center.Y + 2; y++)
+            {
+                if (y < 0 || y >= CurrentMap.Height) continue;
+
+                for (int x = center.X - 2; x <= center.X + 2; x++)
+                {
+                    if (x < 0 || x >= CurrentMap.Width) continue;
+
+                    Cell cell = CurrentMap.GetCell(x, y);
+                    if (cell?.Objects == null) continue;
+
+                    for (int i = 0; i < cell.Objects.Count; i++)
+                    {
+                        MapObject ob = cell.Objects[i];
+
+                        if (ob == null || ob.Dead) continue;
+
+                        if (ob.Race != ObjectType.Monster)
+                            continue;
+
+                        int diff = ob.Level - casterLevel;
+
+                        if (diff >= 5)
+                            continue;
+
+                        int chance = 100 - (diff * 20);
+                        if (chance < 0) chance = 0;
+
+                        if (Envir.Random.Next(100) >= chance)
+                            continue;
+
+                        int dist = Functions.MaxDistance(ob.CurrentLocation, center);
+                        if (dist <= 1) continue;
+
+                        int pullDist = dist - 1;
+                        MirDirection dir = Functions.DirectionFromPoint(ob.CurrentLocation, center);
+
+                        if (ob.Pushed(Caster, dir, pullDist) == 0)
+                            continue;
+
+                        result = true;
+                    }
+                }
+            }
+
+            if (result && human != null)
+            {
+                var magic = human.GetMagic(Spell);
+                if (magic != null)
+                    human.LevelMagic(magic);
+            }
+        }
+        private void SoulflameSiphonRareEffect()
+        {
+            if (Caster == null || CurrentMap == null) return;
+
+            bool result = false;
+            Point center = CastLocation;
+
+            HumanObject human = Caster as HumanObject;
+            int casterLevel = Caster.Level;
+
+            UserMagic magic = human?.GetMagic(Spell);
+            int magicLevel = magic?.Level ?? 0;
+
+            bool allowPlayer = magicLevel >= 2;
+
+            for (int y = center.Y - 2; y <= center.Y + 2; y++)
+            {
+                if (y < 0 || y >= CurrentMap.Height) continue;
+
+                for (int x = center.X - 2; x <= center.X + 2; x++)
+                {
+                    if (x < 0 || x >= CurrentMap.Width) continue;
+
+                    Cell cell = CurrentMap.GetCell(x, y);
+                    if (cell?.Objects == null) continue;
+
+                    for (int i = 0; i < cell.Objects.Count; i++)
+                    {
+                        MapObject ob = cell.Objects[i];
+                        if (ob == null || ob.Dead) continue;
+
+                        if (ob.Race == ObjectType.Player && !allowPlayer)
+                            continue;
+
+                        if (ob.Race != ObjectType.Monster && ob.Race != ObjectType.Player)
+                            continue;
+
+                        if (!ob.IsAttackTarget(Caster))
+                            continue;
+
+                        int diff = ob.Level - casterLevel;
+
+                        if (diff >= 5)
+                            continue;
+
+                        int chance = 100 - diff * 20;
+                        if (chance < 0) chance = 0;
+
+                        if (Envir.Random.Next(100) >= chance)
+                            continue;
+
+                        int dist = Functions.MaxDistance(ob.CurrentLocation, center);
+                        if (dist <= 1) continue;
+
+                        int pullDist = dist - 1;
+
+                        MirDirection dir = Functions.DirectionFromPoint(ob.CurrentLocation, center);
+
+                        if (ob.Pushed(Caster, dir, pullDist) == 0)
+                            continue;
+
+                        result = true;
+                    }
+                }
+            }
+
+            if (result && human != null)
+            {
+                human.LevelMagic(magic);
             }
         }
     }

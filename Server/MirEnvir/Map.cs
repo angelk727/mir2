@@ -1209,6 +1209,182 @@ namespace Server.MirEnvir
 
                 #endregion
 
+                #region SoulflameSiphon
+
+                case Spell.SoulflameSiphon:
+                    {
+                        value = (int)data[2];
+                        location = (Point)data[3];
+                        byte soulflamesiphondmg = (byte)data[4];
+
+                        int magicLevel = data.Count > 5 ? (int)data[5] : 0;
+
+                        train = true;
+                        bool soulflamesiphonshow = true;
+
+                        int duration;
+
+                        switch (magicLevel)
+                        {
+                            case 0:
+                                duration = 3000;
+                                break;
+                            case 1:
+                                duration = 4000;
+                                break;
+                            case 2:
+                                duration = 5000;
+                                break;
+                            default:
+                                duration = 6000;
+                                break;
+                        }
+
+                        for (int y = location.Y - 1; y <= location.Y + 1; y++)
+                        {
+                            if (y < 0) continue;
+                            if (y >= Height) break;
+
+                            for (int x = location.X - 1; x <= location.X + 1; x++)
+                            {
+                                if (x < 0) continue;
+                                if (x >= Width) break;
+
+                                cell = GetCell(x, y);
+
+                                if (!cell.Valid) continue;
+
+                                bool cast = true;
+
+                                if (cell.Objects != null)
+                                {
+                                    for (int o = 0; o < cell.Objects.Count; o++)
+                                    {
+                                        MapObject target = cell.Objects[o];
+
+                                        if (target.Race != ObjectType.Spell ||
+                                            ((SpellObject)target).Spell != Spell.SoulflameSiphon)
+                                            continue;
+
+                                        cast = false;
+                                        break;
+                                    }
+                                }
+
+                                if (!cast) continue;
+
+                                SpellObject ob = new SpellObject
+                                {
+                                    Spell = Spell.SoulflameSiphon,
+                                    Value = value,
+                                    BonusDmg = soulflamesiphondmg,
+                                    ExpireTime = Envir.Time + duration,
+                                    TickSpeed = 1000,
+                                    Caster = player,
+                                    CurrentLocation = new Point(x, y),
+                                    CastLocation = location,
+                                    Show = soulflamesiphonshow,
+                                    CurrentMap = this,
+                                };
+
+                                soulflamesiphonshow = false;
+
+                                AddObject(ob);
+                                ob.Spawned();
+                            }
+                        }
+                    }
+                    break;
+
+                #endregion
+
+                #region SoulflameSiphonRare
+                    
+                case Spell.SoulflameSiphonRare:
+                    {
+                        value = (int)data[2];
+                        location = (Point)data[3];
+                        byte soulflamesiphondmg = (byte)data[4];
+
+                        int magicLevel = data.Count > 5 ? (int)data[5] : 0;
+
+                        train = true;
+                        bool SoulflameSiphonRareshow = true;
+
+                        int duration;
+                        switch (magicLevel)
+                        {
+                            case 0: duration = 7000;
+                                    break;
+                            case 1: duration = 8000;
+                                    break;
+                            case 2: duration = 10000;
+                                    break;
+                            case 3: duration = 10000;
+                                    break;
+                            case 4: duration = 10000;
+                                    break;
+                            case 5: duration = 10000;
+                                    break;
+                            default: duration = 7000;
+                                     break;
+                        }
+
+                        for (int y = location.Y - 1; y <= location.Y + 1; y++)
+                        {
+                            if (y < 0 || y >= Height) continue;
+
+                            for (int x = location.X - 1; x <= location.X + 1; x++)
+                            {
+                                if (x < 0 || x >= Width) continue;
+
+                                cell = GetCell(x, y);
+                                if (!cell.Valid) continue;
+
+                                bool cast = true;
+
+                                if (cell.Objects != null)
+                                {
+                                    for (int o = 0; o < cell.Objects.Count; o++)
+                                    {
+                                        MapObject target = cell.Objects[o];
+
+                                        if (target.Race != ObjectType.Spell ||
+                                            ((SpellObject)target).Spell != Spell.SoulflameSiphonRare)
+                                            continue;
+
+                                        cast = false;
+                                        break;
+                                    }
+                                }
+
+                                if (!cast) continue;
+
+                                SpellObject ob = new SpellObject
+                                {
+                                    Spell = Spell.SoulflameSiphonRare,
+                                    Value = value,
+                                    BonusDmg = soulflamesiphondmg,
+                                    ExpireTime = Envir.Time + duration,
+                                    TickSpeed = 1000,
+                                    Caster = player,
+                                    CurrentLocation = new Point(x, y),
+                                    CastLocation = location,
+                                    Show = SoulflameSiphonRareshow,
+                                    CurrentMap = this,
+                                };
+
+                                SoulflameSiphonRareshow = false;
+
+                                AddObject(ob);
+                                ob.Spawned();
+                            }
+                        }
+                    }
+                    break;
+
+                #endregion
+
                 #region Lightning
 
                 case Spell.Lightning:
@@ -2961,13 +3137,13 @@ namespace Server.MirEnvir
         {
             if (mapObject == null)
             {
-                ReportCellIssue("Attempted to add a null MapObject to a Cell.");
+                ReportCellIssue("尝试向 Cell 中添加一个空的 MapObject");
                 return;
             }
 
             if (Objects.Contains(mapObject))
             {
-                ReportCellIssue($"Duplicate MapObject add detected for ObjectID {mapObject.ObjectID}.");
+                ReportCellIssue($"检测到重复添加 MapObject，对象ID：{mapObject.ObjectID}");
                 return;
             }
 
@@ -2977,13 +3153,13 @@ namespace Server.MirEnvir
         {
             if (mapObject == null)
             {
-                ReportCellIssue("Attempted to remove a null MapObject from a Cell.");
+                ReportCellIssue("尝试从 Cell 中移除一个空的 MapObject");
                 return;
             }
 
             if (!Objects.Remove(mapObject))
             {
-                ReportCellIssue($"Failed to remove MapObject {mapObject.ObjectID} from Cell collection.");
+                ReportCellIssue($"从 Cell 集合中移除 MapObject 失败，对象ID：{mapObject.ObjectID}");
             }
             // DO NOT set Objects = null; keep the list to avoid re-alloc
         }

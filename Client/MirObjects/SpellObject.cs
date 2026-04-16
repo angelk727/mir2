@@ -55,6 +55,22 @@ namespace Client.MirObjects
                     Light = 3;
                     Blend = true;
                     break;
+                case Spell.SoulflameSiphon:
+                    BodyLibrary = Libraries.Magic_32bit;
+                    DrawFrame = 1590;
+                    FrameInterval = 120;
+                    FrameCount = 12;
+                    Light = 3;
+                    Blend = false;
+                    break;
+                case Spell.SoulflameSiphonRare:
+                    BodyLibrary = Libraries.Magic_32bit;
+                    DrawFrame = 1640;
+                    FrameInterval = 120;
+                    FrameCount = 12;
+                    Light = 3;
+                    Blend = false;
+                    break;
                 case Spell.PoisonCloud:
                     BodyLibrary = Libraries.Magic2;
                     DrawFrame = 1650;

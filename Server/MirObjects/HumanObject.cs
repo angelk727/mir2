@@ -3747,6 +3747,12 @@ namespace Server.MirObjects
                 case Spell.PoisonCloud:
                     PoisonCloud(magic, location, out cast);
                     break;
+                case Spell.SoulflameSiphon:
+                    SoulflameSiphon(magic, location);
+                    break;
+                case Spell.SoulflameSiphonRare:
+                    SoulflameSiphonRare(magic, location);
+                    break;
                 case Spell.Entrapment:
                     Entrapment(target, magic);
                     break;
@@ -4859,7 +4865,80 @@ namespace Server.MirObjects
             CurrentMap.ActionList.Add(action);
             cast = true;
         }
+        private void SoulflameSiphon(UserMagic magic, Point location)
+        {
+            int delay = Functions.MaxDistance(CurrentLocation, location) * 50 + 500;
 
+            HumanObject human = this;
+            int magicLevel = magic?.Level ?? 0;
+
+            int baseDamage = magic.GetDamage(
+                GetAttackPower(Stats[Stat.MinMC], Stats[Stat.MaxMC])
+            );
+
+            float bonus = 1.0f;
+
+            switch (magicLevel)
+            {
+                case 0:
+                    bonus = 1.25f;
+                    break;
+                case 1:
+                    bonus = 1.50f;
+                    break;
+                case 2:
+                    bonus = 2.00f;
+                    break;
+                case 3:
+                default:
+                    bonus = 2.00f;
+                    break;
+            }
+
+            int damage = (int)(baseDamage * bonus);
+
+            byte extra = (byte)magicLevel;
+
+            DelayedAction action = new DelayedAction(DelayedType.Magic, Envir.Time + delay, this, magic, damage, location, extra );
+
+            CurrentMap.ActionList.Add(action);
+        }
+        private void SoulflameSiphonRare(UserMagic magic, Point location)
+        {
+            int delay = Functions.MaxDistance(CurrentLocation, location) * 50 + 500;
+            int baseDamage = magic.GetDamage(GetAttackPower(Stats[Stat.MinMC], Stats[Stat.MaxMC]));
+            int magicLevel = magic?.Level ?? 0;
+
+            float bonus = 1.0f;
+
+            switch (magicLevel)
+            {
+                case 0:
+                    bonus = 1.0f;
+                    break;
+                case 1:
+                    bonus = 1.5f;
+                    break;
+                case 2:
+                    bonus = 1.5f;
+                    break;
+                case 3:
+                    bonus = 1.5f;
+                    break;
+                case 4:
+                    bonus = 1.5f;
+                    break;
+                case 5:
+                    bonus = 1.5f;
+                    break;
+            }
+
+            int damage = (int)(baseDamage * bonus);
+            byte extra = (byte)magicLevel;
+
+            DelayedAction action = new DelayedAction(DelayedType.Magic, Envir.Time + delay, this, magic, damage, location, extra );
+            CurrentMap.ActionList.Add(action);
+        }
         private void MoonMist(UserMagic magic)
         {
             for (int i = 0; i < Buffs.Count; i++)

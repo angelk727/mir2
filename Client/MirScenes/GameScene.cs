@@ -12408,6 +12408,14 @@ namespace Client.MirScenes
                             target = actor.NextMagicObject;
                     }
                     break;
+                case Spell.SoulflameSiphon:
+                case Spell.SoulflameSiphonRare:
+                    if (actor.NextMagicObject != null)
+                    {
+                        if (!actor.NextMagicObject.Dead && actor.NextMagicObject.Race != ObjectType.Item && actor.NextMagicObject.Race != ObjectType.Merchant)
+                            target = actor.NextMagicObject;
+                    }
+                    break;
                 case Spell.PoisonCloud:
                     if (actor.NextMagicObject != null)
                     {

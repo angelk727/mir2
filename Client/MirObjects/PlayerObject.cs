@@ -1932,6 +1932,24 @@ namespace Client.MirObjects
 
                             #endregion
 
+                            #region SoulflameSiphon
+
+                            case Spell.SoulflameSiphon:
+                                Effects.Add(new Effect(Libraries.Magic_32bit, 1580, 4, Frame.Count * FrameInterval, this));
+                                SoundManager.PlaySound(20000 + (ushort)Spell * 10);
+                                break;
+
+                            #endregion
+
+                            #region SoulflameSiphonRare
+
+                            case Spell.SoulflameSiphonRare:
+                                Effects.Add(new Effect(Libraries.Magic_32bit, 1630, 4, Frame.Count * FrameInterval, this));
+                                SoundManager.PlaySound(20000 + (ushort)Spell * 10);
+                                break;
+
+                            #endregion
+
                             #region HealingCircle
 
                             case Spell.HealingCircle:
@@ -3361,7 +3379,22 @@ namespace Client.MirObjects
                                         break;
 
                                     #endregion
+                                      
+                                    #region SoulflameSiphon
 
+                                    case Spell.SoulflameSiphon:
+                                        SoundManager.PlaySound(20000 + (ushort)Spell * 10 + 1);
+                                        break;
+
+                                    #endregion
+
+                                    #region SoulflameSiphonRare
+
+                                    case Spell.SoulflameSiphonRare:
+                                        SoundManager.PlaySound(20000 + (ushort)Spell * 10 + 1);
+                                        break;
+
+                                    #endregion
 
                                     #region HealingCircle
 
