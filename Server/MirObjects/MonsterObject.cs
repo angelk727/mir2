@@ -1442,8 +1442,11 @@ namespace Server.MirObjects
         public void PetRecall()
         {
             if (Master == null || Master.CurrentMap == null) return;
-
             // Prevent pet from warping into NoPets maps (unless exempt e.g. pickup pets)
+            bool isMapChange = CurrentMap != Master.CurrentMap;
+
+            if (isMapChange)
+            {
             if (Master.CurrentMap.Info.NoPets && !IgnoresNoPetRestriction)
             {
                 Master.ReceiveChat(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.CannotFollowIntoMapWaitHere, Name), ChatType.System);
@@ -1469,8 +1472,6 @@ namespace Server.MirObjects
             PMode = PetMode.Both;
 
             // Only teleport if needed
-            if (CurrentMap != Master.CurrentMap)
-            {
                 if (!Teleport(Master.CurrentMap, Master.Back))
                     Teleport(Master.CurrentMap, Master.CurrentLocation);
 
@@ -1479,7 +1480,9 @@ namespace Server.MirObjects
                 {
                     Master.ReceiveChat(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.HasReturnedToYourSide,Name), ChatType.System);
                 }
+                return;
             }
+            if (!Teleport(Master.CurrentMap, Master.Back)) Teleport(Master.CurrentMap, Master.CurrentLocation);
         }
         protected virtual void CompleteAttack(IList<object> data)
         {
