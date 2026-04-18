@@ -173,17 +173,15 @@ namespace Server.MirObjects
                         ob.Attacked(((HumanObject)Caster), Value, DefenceType.MAC, false);
                     }
                     break;
-                case Spell.Healing: //SafeZone
+                case Spell.Healing: // SafeZone
                     {
-                        if (ob.Master == null) return;
+                        if (!(ob.Race == ObjectType.Player || ob.Race == ObjectType.Hero ||
+                              (ob.Race == ObjectType.Monster && ob.Master != null && ob.Master.Race == ObjectType.Player))) return;
+
                         if (ob.Dead || ob.HealAmount != 0 || ob.PercentHealth == 100) return;
 
-                        if (ob.Race == ObjectType.Player || ob.Race == ObjectType.Hero || (ob.Race == ObjectType.Monster && ob.Master.Race == ObjectType.Player))
-                        {
-                            ob.HealAmount += 25;
-                            Broadcast(new S.ObjectEffect { ObjectID = ob.ObjectID, Effect = SpellEffect.Healing });
-                        }
-
+                        ob.HealAmount += 25;
+                        Broadcast(new S.ObjectEffect { ObjectID = ob.ObjectID, Effect = SpellEffect.Healing });
                     }
                     break;
                 case Spell.PoisonCloud:
