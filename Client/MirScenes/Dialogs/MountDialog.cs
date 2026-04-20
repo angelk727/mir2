@@ -16,6 +16,139 @@ namespace Client.MirScenes.Dialogs
 
         public int StartIndex = 0;
 
+        #region 坐骑渲染
+
+        private class MountRenderInfo
+        {
+            public MLibrary Library;
+            public int Index;
+            public Point Location;
+            public bool Animated;
+            public int AnimationCount = 16;
+            public int AnimationDelay = 100;
+        }
+
+        private static readonly Dictionary<int, MountRenderInfo> RenderMap = new()
+        {
+            [0] = new MountRenderInfo
+            {
+                Library = Libraries.Prguse,
+                Index = 1170,
+                Location = new Point(110, 250),
+                Animated = true
+            },
+
+            [1] = new MountRenderInfo
+            {
+                Library = Libraries.Prguse,
+                Index = 1190,
+                Location = new Point(110, 250),
+                Animated = true
+            },
+
+            [2] = new MountRenderInfo
+            {
+                Library = Libraries.Prguse,
+                Index = 1210,
+                Location = new Point(110, 250),
+                Animated = true
+            },
+
+            [3] = new MountRenderInfo
+            {
+                Library = Libraries.Prguse,
+                Index = 1230,
+                Location = new Point(110, 250),
+                Animated = true
+            },
+
+            [4] = new MountRenderInfo
+            {
+                Library = Libraries.Prguse,
+                Index = 1250,
+                Location = new Point(110, 250),
+                Animated = true
+            },
+
+            [5] = new MountRenderInfo
+            {
+                Library = Libraries.Prguse,
+                Index = 1270,
+                Location = new Point(110, 250),
+                Animated = true
+            },
+
+            [6] = new MountRenderInfo
+            {
+                Library = Libraries.Prguse,
+                Index = 1290,
+                Location = new Point(110, 250),
+                Animated = true
+            },
+
+            [7] = new MountRenderInfo
+            {
+                Library = Libraries.Prguse,
+                Index = 1470,
+                Location = new Point(0, 70),
+                Animated = true
+            },
+
+            [8] = new MountRenderInfo
+            {
+                Library = Libraries.Prguse,
+                Index = 1490,
+                Location = new Point(0, 70),
+                Animated = true
+            },
+
+            [9] = new MountRenderInfo
+            {
+                Library = Libraries.Prguse,
+                Index = 1510,
+                Location = new Point(0, 70),
+                Animated = true
+            },
+
+            [10] = new MountRenderInfo
+            {
+                Library = Libraries.Prguse,
+                Index = 1530,
+                Location = new Point(0, 70),
+                Animated = true
+            },
+
+            [11] = new MountRenderInfo
+            {
+                Library = Libraries.Prguse,
+                Index = 1550,
+                Location = new Point(0, 70),
+                Animated = true
+            },
+
+            [12] = new MountRenderInfo
+            {
+                Library = Libraries.Mounts[12],
+                Index = 72,
+                Location = new Point(110, 210),
+                Animated = true,
+                AnimationCount = 8,
+                AnimationDelay = 320
+            },
+
+            [14] = new MountRenderInfo
+            {
+                Library = Libraries.Mounts[14],
+                Index = 62,
+                Location = new Point(100, 210),
+                Animated = true,
+                AnimationCount = 6,
+                AnimationDelay = 240
+            }
+        };
+
+        #endregion
+
         public MountDialog()
         {
             Index = 167;
@@ -203,85 +336,32 @@ namespace Client.MirScenes.Dialogs
 
         private void DrawMountAnimation()
         {
-            if (GameScene.User.MountType < 0)
+            int type = GameScene.User.MountType;
+
+            if (type < 0 || !RenderMap.TryGetValue(type, out var info))
             {
                 MountImage.Index = 0;
                 MountImage.Animated = false;
+                return;
             }
-            else
+
+            MountImage.Library = info.Library;
+            MountImage.Index = info.Index;
+            MountImage.Location = info.Location;
+            MountImage.Animated = info.Animated;
+            MountImage.AnimationCount = info.AnimationCount;
+            MountImage.AnimationDelay = info.AnimationDelay;
+
+            UserItem item = MapObject.User.Equipment[(int)EquipmentSlot.坐骑];
+
+            if (item != null)
             {
-                switch (GameScene.User.MountType)
-                        {
-                            case 0:
-                                if (GameScene.User.MountType == 0)
-                                    MountImage.Index = 1170;
-                                break;
-                            case 1:
-                                if (GameScene.User.MountType == 1)
-                                    MountImage.Index = 1190;
-                                break;
-                            case 2:
-                                if (GameScene.User.MountType == 2)
-                                    MountImage.Index = 1210;
-                                break;
-                            case 3:
-                                if (GameScene.User.MountType == 3)
-                                    MountImage.Index = 1230;
-                                break;
-                            case 4:
-                                if (GameScene.User.MountType == 4)
-                                    MountImage.Index = 1250;
-                                break;
-                            case 5:
-                                if (GameScene.User.MountType == 5)
-                                    MountImage.Index = 1270;
-                                break;
-                            case 6:
-                                if (GameScene.User.MountType == 6)
-                                    MountImage.Index = 1290;
-                                break;
-                            case 7:
-                                if (GameScene.User.MountType == 7)
-                                    MountImage.Index = 1470;
-                                break;
-                            case 8:
-                                if (GameScene.User.MountType == 8)
-                                    MountImage.Index = 1490;
-                                break;
-                            case 9:
-                                if (GameScene.User.MountType == 9)
-                                    MountImage.Index = 1510;
-                                break;
-                            case 10:
-                                if (GameScene.User.MountType == 10)
-                                    MountImage.Index = 1530;
-                                break;
-                            case 11:
-                                if (GameScene.User.MountType == 11)
-                                    MountImage.Index = 1550;
-                                break;
-                            case 12:
-                                if (GameScene.User.MountType == 12)
-                                    MountImage.Index = 1450;
-                                break;
-                            default:
-                                break;
-                        }
-                //MountImage.Index = StartIndex + (GameScene.User.MountType * 20);
-                MountImage.Animated = true;
-
-                UserItem item = MapObject.User.Equipment[(int)EquipmentSlot.坐骑];
-
-                if (item != null)
-                {
-                    MountName.Text = item.FriendlyName;
-                    MountLoyalty.Text = GameLanguage.ClientTextMap.GetLocalization((ClientTextKeys.LoyaltyProgress), item.CurrentDura, item.MaxDura);
-                }
+                MountName.Text = item.FriendlyName;
+                MountLoyalty.Text = GameLanguage.ClientTextMap.GetLocalization((ClientTextKeys.LoyaltyProgress), item.CurrentDura, item.MaxDura );
             }
-
         }
 
-        public bool CanRide()
+        public static bool CanRide()
         {
             if (GameScene.User.MountType < 0 || GameScene.User.MountTime + 500 > CMain.Time) return false;
             if (GameScene.User.CurrentAction != MirAction.站立动作 && GameScene.User.CurrentAction != MirAction.坐骑站立) return false;
@@ -289,7 +369,7 @@ namespace Client.MirScenes.Dialogs
             return true;
         }
 
-        public void Ride()
+        public static void Ride()
         {
             Network.Enqueue(new C.Chat { Message = "@ride" });
         }

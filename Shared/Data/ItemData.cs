@@ -619,10 +619,29 @@ public class UserItem
             switch (Info.Type)
             {
                 case ItemType.坐骑:
-                    if (Info.Shape < 7)
-                        size = 4;
-                    else if (Info.Shape < 13)
-                        size = 5;
+                    switch (Info.Shape)
+                    {
+                        case 0:
+                        case 1:
+                        case 2:
+                        case 3:
+                        case 4:
+                        case 5:
+                        case 6:
+                        case 13:
+                        case 14:
+                            size = 4;
+                            break;
+
+                        case 7:
+                        case 8:
+                        case 9:
+                        case 10:
+                        case 11:
+                        case 12:
+                            size = 5;
+                            break;
+                    }
                     break;
                 case ItemType.武器:
                     if (Info.Shape == 49 || Info.Shape == 50)
