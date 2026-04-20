@@ -3985,16 +3985,12 @@ namespace Server.MirObjects
                             var path = Path.Combine(Settings.EnvirPath, "SetBuffs.txt");
 
                             if (!File.Exists(path))
-                            {
                                 File.Create(path).Dispose();
-                            }
 
                             var lines = File.ReadAllLines(path);
 
-                            if (!Enum.IsDefined(typeof(BuffType), param[0]))
-                            {
+                            if (!Enum.TryParse<BuffType>(param[0], out var type))
                                 return;
-                            }
 
                             int.TryParse(param[1], out int duration);
                             bool.TryParse(param[2], out bool infinite);
@@ -4009,7 +4005,7 @@ namespace Server.MirObjects
                             if (matchedLine != null)
                             {
                                 var statsPart = matchedLine.Substring(matchedLine.IndexOf(';') + 1).Trim(';');
-                                var potionStats = statsPart.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
+                                var potionStats = statsPart.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
 
                                 foreach (var stat in potionStats)
                                 {
@@ -4021,13 +4017,11 @@ namespace Server.MirObjects
 
                                     if (string.IsNullOrWhiteSpace(statValueString)) continue;
 
-                                    if (int.TryParse(statValueString, out var statValue))
+                                    if (int.TryParse(statValueString, out var statValue) &&
+                                        Enum.TryParse(statName, out Stat enumValue))
                                     {
-                                        if (Enum.TryParse(statName, out Stat enumValue))
-                                        {
-                                            buffStats[enumValue] = statValue;
-                                            initialStats[enumValue] = statValue;
-                                        }
+                                        buffStats[enumValue] = statValue;
+                                        initialStats[enumValue] = statValue;
                                     }
                                 }
                             }
@@ -4044,12 +4038,11 @@ namespace Server.MirObjects
 
                                     if (string.IsNullOrWhiteSpace(extraStatValueString)) continue;
 
-                                    if (!int.TryParse(extraStatValueString, out var extraStatValue)) continue;
-
-                                    if (!Enum.TryParse(extraStatName, out Stat extraEnumValue) || !Enum.IsDefined(typeof(Stat), extraEnumValue))
-                                    {
+                                    if (!int.TryParse(extraStatValueString, out var extraStatValue))
                                         continue;
-                                    }
+
+                                    if (!Enum.TryParse(extraStatName, out Stat extraEnumValue))
+                                        continue;
 
                                     if (initialStats.TryGetValue(extraEnumValue, out var initialValue) && initialValue != 0)
                                     {
@@ -4069,16 +4062,15 @@ namespace Server.MirObjects
 
                             if (canAddBuff)
                             {
-                                player.AddBuff((BuffType)(byte)Enum.Parse(typeof(BuffType), param[0], true), player, Settings.Second * duration, buffStats, visible);
+                                player.AddBuff(type, player, Settings.Second * duration, buffStats, visible );
                             }
                         }
                         break;
 
                     case ActionType.RemoveBuff:
                         {
-                            if (!Enum.IsDefined(typeof(BuffType), param[0])) return;
-
-                            BuffType bType = (BuffType)(byte)Enum.Parse(typeof(BuffType), param[0]);
+                            if (!Enum.TryParse<BuffType>(param[0], out var bType))
+                                return;
 
                             player.RemoveBuff(bType);
                         }
@@ -5062,7 +5054,8 @@ namespace Server.MirObjects
                             bool.TryParse(param[3], out bool visible);
                             bool.TryParse(param[4], out bool stackable);
 
-                            monster.AddBuff((BuffType)(byte)Enum.Parse(typeof(BuffType), param[0], true), monster, Settings.Second * tempInt, new Stats(), visible);
+                            BuffType type = (BuffType)Enum.Parse(typeof(BuffType), param[0], true);
+                            monster.AddBuff(type, monster, Settings.Second * tempInt, new Stats(), visible);
                         }
                         break;
 
@@ -5070,7 +5063,7 @@ namespace Server.MirObjects
                         {
                             if (!Enum.IsDefined(typeof(BuffType), param[0])) return;
 
-                            BuffType bType = (BuffType)(byte)Enum.Parse(typeof(BuffType), param[0]);
+                            BuffType bType = (BuffType)Enum.Parse(typeof(BuffType), param[0], true);
 
                             monster.RemoveBuff(bType);
                         }

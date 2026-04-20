@@ -70,7 +70,7 @@ namespace Server.MirDatabase
                 new BuffInfo { Type = BuffType.烈火焚烧, Properties = BuffProperty.Debuff, StackType = BuffStackType.ResetDuration, Visible = true },
                 new BuffInfo { Type = BuffType.Mon579BShield, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration, Visible = true },
                 new BuffInfo { Type = BuffType.Mon580BShield, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration, Visible = true },
-                new BuffInfo { Type = BuffType.万效符爆杀, Properties = BuffProperty.Debuff, StackType = BuffStackType.ResetDuration, Visible = true },
+                new BuffInfo { Type = BuffType.万效符杀, Properties = BuffProperty.Debuff, StackType = BuffStackType.ResetDuration, Visible = true },
                 new BuffInfo { Type = BuffType.Mon615BShield, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration, Visible = true },
 
                 //Special
@@ -183,7 +183,7 @@ namespace Server.MirDatabase
 
         public Buff(BinaryReader reader, int version, int customVersion)
         {
-            var type = (BuffType)reader.ReadByte();
+            var type = (BuffType)reader.ReadUInt16();
 
             Info = Envir.GetBuffInfo(type);
 
@@ -258,7 +258,7 @@ namespace Server.MirDatabase
 
         public void Save(BinaryWriter writer)
         {
-            writer.Write((byte)Type);
+			writer.Write((ushort)Type);
             writer.Write(ObjectID);
             writer.Write(ExpireTime);
 

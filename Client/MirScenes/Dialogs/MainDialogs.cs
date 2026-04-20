@@ -3978,6 +3978,10 @@ namespace Client.MirScenes.Dialogs
                 case Spell.CatTongue:
                     SkillButton.Hint = string.Format("猫舌兰：\n主动技能\n发射猫舌形状的暗器\n击中目标自身有几率异常状态\n技能等级越高技能重置时间越短\n进入异常状态几率越大", Magic.Level, Magic.Level == 0 ? Magic.Level1 : Magic.Level == 1 ? Magic.Level2 : Magic.Level == 2 ? Magic.Level3 : 0, Magic.BaseCost);
                     break;
+                case Spell.CrescentSlashRare:
+                    SkillButton.Hint = string.Format("月华乱舞-秘籍：\n主动技能\n增加了冷却时间\n更广范围释放剑气并收回造成2次伤害\n并使目标陷入眩晕状态5秒\n降低1点精确", Magic.Level, Magic.Level == 0 ? Magic.Level1 : Magic.Level == 1 ? Magic.Level2 : Magic.Level == 2 ? Magic.Level3 : 0, Magic.BaseCost);
+                    break;
+
                 //Archer
                 case Spell.Focus:
                     SkillButton.Hint = GameLanguage.ClientTextMap.GetLocalization((ClientTextKeys.FocusSkillDescription), Magic.Level, Magic.Level == 0 ? Magic.Level1 : Magic.Level == 1 ? Magic.Level2 : Magic.Level == 2 ? Magic.Level3 : 0, Magic.BaseCost);

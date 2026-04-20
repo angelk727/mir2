@@ -406,7 +406,8 @@ namespace Server.MirEnvir
             if (!MagicExists(Spell.CrescentSlash)) MagicInfoList.Add(new MagicInfo { Name = "月华乱舞", Spell = Spell.CrescentSlash, Icon = 71, Level1 = 50, Level2 = 53, Level3 = 56, Need1 = 12000, Need2 = 16000, Need3 = 24000, BaseCost = 19, LevelCost = 3, Range = 0 });
             if (!MagicExists(Spell.MoonMist)) MagicInfoList.Add(new MagicInfo { Name = "月影雾", Spell = Spell.MoonMist, Icon = 83, Level1 = 60, Level2 = 61, Level3 = 62, Need1 = 3650, Need2 = 5950, Need3 = 8800, BaseCost = 30, LevelCost = 5, DelayBase = 180000, DelayReduction = 30000 });
             if (!MagicExists(Spell.CatTongue)) MagicInfoList.Add(new MagicInfo { Name = "猫舌兰", Spell = Spell.CatTongue, Icon = 79, Level1 = 48, Level2 = 51, Level3 = 53, Need1 = 2000, Need2 = 4000, Need3 = 7000, BaseCost = 30, LevelCost = 5, DelayBase = 360000, DelayReduction = 60000 });
-
+            if (!MagicExists(Spell.CrescentSlashRare)) MagicInfoList.Add(new MagicInfo { Name = "月华乱舞-秘籍", Spell = Spell.CrescentSlashRare, Icon = 113, Level1 = 95, Level2 = 97, Level3 = 102, Need1 = 23600, Need2 = 38900, Need3 = 57600, BaseCost = 19, LevelCost = 3, Range = 0 });
+            
             //Archer
             if (!MagicExists(Spell.Focus)) MagicInfoList.Add(new MagicInfo { Name = "必中闪", Spell = Spell.Focus, Icon = 88, Level1 = 7, Level2 = 13, Level3 = 17, Need1 = 270, Need2 = 600, Need3 = 1300, Range = 0 });
             if (!MagicExists(Spell.StraightShot)) MagicInfoList.Add(new MagicInfo { Name = "天日闪", Spell = Spell.StraightShot, Icon = 89, Level1 = 9, Level2 = 12, Level3 = 16, Need1 = 350, Need2 = 750, Need3 = 1400, BaseCost = 3, LevelCost = 2, MPowerBase = 8, PowerBase = 3, Range = 9 });
@@ -3280,7 +3281,8 @@ namespace Server.MirEnvir
                 return info;
             }
 
-            throw new NotImplementedException($"{type} 尚未实施");//待修改
+            Console.WriteLine($"[Warning] 未知的特效类型: {(int)type}");
+            return null;
         }
 
         public void MessageAccount(AccountInfo account, string message, ChatType type)

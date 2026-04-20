@@ -1207,6 +1207,7 @@ namespace Client.MirObjects
                                 }
                                 break;
                             case Spell.CrescentSlash:
+                            case Spell.CrescentSlashRare:
                                 Frames.TryGetValue(MirAction.近距攻击3, out Frame);
                                 if (this == User)
                                 {
@@ -1283,6 +1284,7 @@ namespace Client.MirObjects
                                 {
                                     int sLevel = (byte)action.Params[3];
                                     GetBackStepDistance(sLevel);
+                                    SoundManager.PlaySound(20000 + (ushort)Spell * 10 + (Gender == MirGender.男性 ? 5 : 6));
                                     Frames.TryGetValue(MirAction.弓箭跳跃, out Frame);
                                     CurrentAction = MirAction.弓箭跳跃;
                                     CurrentLocation = Functions.PointMove(CurrentLocation, Functions.ReverseDirection(Direction), JumpDistance);
@@ -1291,6 +1293,7 @@ namespace Client.MirObjects
                                         MapControl.NextAction = CMain.Time + 800;
                                         GameScene.SpellTime = CMain.Time + 2500; //Spell Delay
                                         Network.Enqueue(new C.Magic { ObjectID = GameScene.User.ObjectID, Spell = Spell, Direction = Direction });
+                                        SoundManager.PlaySound(20000 + (ushort)Spell * 10 + 7, false, 800);
                                     }
                                     break;
                                 }
@@ -1731,7 +1734,7 @@ namespace Client.MirObjects
 
                             case Spell.HealingRare:
                                 Effects.Add(new Effect(Libraries.Magic, 200, 10, Frame.Count * FrameInterval, this));
-                                SoundManager.PlaySound(20000 + 61 * 10); // M61-0
+                                SoundManager.PlaySound(20000 + (ushort)Spell * 10);
                                 break;
 
                             #endregion
@@ -1778,7 +1781,7 @@ namespace Client.MirObjects
                                 GreatFireBallRareStopTime = CMain.Time + 4000;
                                 Effects.Add(new Effect(Libraries.Magic3, 4420, 10, 1200, this));
                                 Effects.Add(new Effect(Libraries.Magic3, 4430, 6, Frame.Count * FrameInterval, this) { Start = (CMain.Time + 1200), Repeat = true, RepeatUntil = (GreatFireBallRareStopTime) });
-                                SoundManager.PlaySound(20000 + 34 * 10);
+                                SoundManager.PlaySound(20000 + (ushort)Spell * 10);
                                 break;
 
                             #endregion
@@ -1959,6 +1962,15 @@ namespace Client.MirObjects
 
                             #endregion
 
+                            #region HealingcircleRare
+
+                            case Spell.HealingcircleRare:
+                                Effects.Add(new Effect(Libraries.Magic3, 620, 10, Frame.Count * FrameInterval, this));
+                                SoundManager.PlaySound(20000 + (ushort)Spell * 10);
+                                break;
+
+                            #endregion
+
                             #region MoonMist
 
                             case Spell.MoonMist:
@@ -2042,7 +2054,7 @@ namespace Client.MirObjects
                             #region FlameField
 
                             case Spell.FlameField:
-                                MapControl.Effects.Add(new Effect(Libraries.Magic2, 910, 23, 1800, CurrentLocation));
+                                MapControl.Effects.Add(new Effect(Libraries.Magic2, 910, 23, 3200, CurrentLocation));
                                 SoundManager.PlaySound(20000 + (ushort)Spell * 10);
                                 break;
 
@@ -2166,6 +2178,15 @@ namespace Client.MirObjects
 
                             #endregion
 
+                            #region PetEnhancerRare
+
+                            case Spell.PetEnhancerRare:
+                                Effects.Add(new Effect(Libraries.Magic3, 200, 8, 8 * FrameInterval, this));
+                                SoundManager.PlaySound(20000 + (ushort)Spell * 10);
+                                break;
+
+                            #endregion
+
                             #region Revelation
 
                             case Spell.Revelation:
@@ -2216,7 +2237,7 @@ namespace Client.MirObjects
                             #region LionRoarRare
 
                             case Spell.LionRoarRare:
-                                Effects.Add(new Effect(Libraries.Magic_32bit, 930, 21, 1200, this));
+                                Effects.Add(new Effect(Libraries.Magic_32bit, 930, 21, 1500, this));
                                 SoundManager.PlaySound(20000 + (ushort)Spell * 10);
                                 break;
 
@@ -2336,6 +2357,17 @@ namespace Client.MirObjects
 
                             #endregion
 
+                            #region CrescentSlashRare
+
+                            case Spell.CrescentSlashRare:
+                                Effects.Add(new Effect(Libraries.Magic_32bit, 760 + (int)Direction * 20, 20, 20 * FrameInterval, this));
+                                SoundManager.PlaySound(20000 + (ushort)Spell * 10 + (Gender == MirGender.男性 ? 0 : 1));
+
+                               
+                                break;
+
+                            #endregion
+
                             #region FlashDash
 
                             case Spell.FlashDash:
@@ -2383,15 +2415,6 @@ namespace Client.MirObjects
 
                             #endregion
 
-                            #region HealingcircleRare
-
-                            case Spell.HealingcircleRare:
-                                Effects.Add(new Effect(Libraries.Magic3, 610, 8, Frame.Count * FrameInterval, this));
-                                SoundManager.PlaySound(20000 + (ushort)Spell * 10);
-                                break;
-
-                            #endregion
-
                             #region Reincarnation
 
                             case Spell.Reincarnation:
@@ -2432,7 +2455,7 @@ namespace Client.MirObjects
                             #region OneWithNature
                             case Spell.OneWithNature:
                                 MapControl.Effects.Add(new Effect(Libraries.Magic3, 2710, 8, 1200, CurrentLocation));
-                                SoundManager.PlaySound(20000 + 139 * 10);
+                                SoundManager.PlaySound(20000 + (ushort)Spell * 10);
                                 break;
                             #endregion
 
@@ -2454,15 +2477,6 @@ namespace Client.MirObjects
                                 break;
 
                             #endregion
-                            
-                            #region PetEnhancerRare
-
-                            case Spell.PetEnhancerRare:
-                                Effects.Add(new Effect(Libraries.Magic3, 200, 8, Frame.Count * FrameInterval, this));
-                                break;
-
-                            #endregion
-
                         }
 
 
@@ -3015,14 +3029,14 @@ namespace Client.MirObjects
                                     switch (FrameIndex)
                                     {
                                         case 7:
-                                            SoundManager.PlaySound(20000 + 138 * 10);//M138-0
+                                            SoundManager.PlaySound(20000 + (ushort)Spell * 10);
                                             missile = CreateProjectile(2530, Libraries.Magic3, true, 6, 50, 4);
                                             StanceTime = CMain.Time + StanceDelay;
                                             if (missile.Target != null)
                                             {
                                                 missile.Complete += (o, e) =>
                                                 {
-                                                    SoundManager.PlaySound(20000 + 138 * 10 + 2);//M138-2
+                                                    SoundManager.PlaySound(20000 + (ushort)Spell * 10 + 2);
                                                     MapControl.Effects.Add(new Effect(Libraries.Magic3, 2690, 10, 1000, TargetPoint));
                                                 };
                                             }
@@ -3116,7 +3130,7 @@ namespace Client.MirObjects
                                     #region GreatFireBallRare
 
                                     case Spell.GreatFireBallRare:
-                                        SoundManager.PlaySound(20000 + 34 * 10 + 1);
+                                        SoundManager.PlaySound(20000 + (ushort)Spell * 10 + 1);
                                         missile = CreateProjectile(4430, Libraries.Magic3, true, 6, 30, 4, 0);
                                         missile.SetStart(GreatFireBallRareStopTime);
                                         if (missile.Target != null)
@@ -3127,7 +3141,7 @@ namespace Client.MirObjects
                                                 missile.Target.Effects.Add(new Effect(Libraries.Magic3, 4590, 15, 1000, missile.Target));
                                                 missile.Target.Effects.Add(new Effect(Libraries.Magic3, 4610, 8, 1000, missile.Target) { Start = (CMain.Time + 1000), Repeat = true, RepeatUntil = (1000) });
                                                 missile.Target.Effects.Add(new Effect(Libraries.Magic3, 4620, 5, 1000, missile.Target) { Start = (CMain.Time + 2000), Repeat = false });
-                                                SoundManager.PlaySound(20000 + 34 * 10 + 2);
+                                                SoundManager.PlaySound(20000 + (ushort)Spell * 10 + 2);
                                             };
                                         }
                                         break;
@@ -3149,7 +3163,7 @@ namespace Client.MirObjects
                                     #region HealingRare
 
                                     case Spell.HealingRare:
-                                        SoundManager.PlaySound(20000 + 61 * 10 + 1);// M61-1
+                                        SoundManager.PlaySound(20000 + (ushort)Spell * 10 + 1);
                                         if (ob == null)
                                             MapControl.Effects.Add(new Effect(Libraries.Magic, 370, 10, 800, TargetPoint));
                                         else
@@ -3466,9 +3480,9 @@ namespace Client.MirObjects
                                         SoundManager.PlaySound(20000 + (ushort)Spell * 10);
 
                                         if (ob == null)
-                                            MapControl.Effects.Add(new Effect(Libraries.Magic2, 140, 10, 600, TargetPoint));
+                                            MapControl.Effects.Add(new Effect(Libraries.Magic2, 140, 10, 1500, TargetPoint));
                                         else
-                                            ob.Effects.Add(new Effect(Libraries.Magic2, 140, 10, 600, ob));
+                                            ob.Effects.Add(new Effect(Libraries.Magic2, 140, 10, 1500, ob));
                                         break;
 
                                     #endregion
@@ -3620,7 +3634,7 @@ namespace Client.MirObjects
                                     #region HealingcircleRare
 
                                     case Spell.HealingcircleRare:
-                                        SoundManager.PlaySound(20860);
+                                        SoundManager.PlaySound(20000 + (ushort)Spell * 10 + 1);
                                         missile = CreateProjectile(1160, Libraries.Magic, true, 3, 30, 7);
                                         missile.Explode = true;
 
@@ -3678,7 +3692,7 @@ namespace Client.MirObjects
 
                                         missile.Complete += (o, e) =>
                                         {
-                                            MapControl.Effects.Add(new Effect(Libraries.Magic3, 110, 10, 1200, TargetPoint));
+                                            MapControl.Effects.Add(new Effect(Libraries.Magic3, 110, 10, 1400, TargetPoint));
                                             SoundManager.PlaySound(20000 + (ushort)Spell.Plague * 10 + 3);
                                         };
                                         break;
@@ -3711,16 +3725,13 @@ namespace Client.MirObjects
 
                                     #endregion
 
-                                    #region NapalmShot
+                                    #region CrescentSlashRare
 
-                                    case Spell.NapalmShot:
-
-                                        SoundManager.PlaySound(20000 + (ushort)Spell * 10 + 1);
-                                        MapControl.Effects.Add(new Effect(Libraries.Magic3, 1660, 10, 1000, TargetPoint));
+                                    case Spell.CrescentSlashRare:
+                                        SoundManager.PlaySound(20000 + (ushort)Spell * 10 + 2);
                                         break;
 
                                     #endregion
-
 
                                     #region FireBounce
 
@@ -5410,16 +5421,43 @@ namespace Client.MirObjects
             if (ElementEffect > 0 && !HasElements)
             {
                 HasElements = true;
+                int baseSound = 20000 + 206 * 10;
+
                 if (ElementEffect == 4)
+                {
+                    SoundManager.PlaySound(baseSound + 6);
                     Effects.Add(new ElementsEffect(Libraries.Magic3, 1660, 10, 10 * 100, this, true, 4, ElementOrbMax));
+                    SoundManager.PlaySound(baseSound + 8, true, 500);
+                }
                 else
                 {
+                    int count = 0;
+
                     if (ElementEffect >= 1)
+                    {
+                        SoundManager.PlaySound(baseSound + 5);
                         Effects.Add(new ElementsEffect(Libraries.Magic3, 1630, 10, 10 * 100, this, true, 1, ElementOrbMax));
+                        count++;
+                    }
+
                     if (ElementEffect >= 2)
+                    {
+                        SoundManager.PlaySound(baseSound + 5);
                         Effects.Add(new ElementsEffect(Libraries.Magic3, 1640, 10, 10 * 100, this, true, 2, ElementOrbMax));
-                    if (ElementEffect == 3)
+                        count++;
+                    }
+
+                    if (ElementEffect >= 3)
+                    {
+                        SoundManager.PlaySound(baseSound + 5);
                         Effects.Add(new ElementsEffect(Libraries.Magic3, 1650, 10, 10 * 100, this, true, 3, ElementOrbMax));
+                        count++;
+                    }
+
+                    if (count > 0)
+                    {
+                        SoundManager.PlaySound(baseSound + 7, true);
+                    }
                 }
                 ElementEffect = 0;
             }
@@ -5612,6 +5650,24 @@ namespace Client.MirObjects
                             }
                     }
                     break;
+                case 53:
+                    {
+                        if (TransformType == 53)
+                            switch (CurrentAction)
+                            {
+                                case MirAction.近距攻击1:
+                                    Libraries.Magic_32bit.DrawBlend(2400 + ((int)Direction * 10) + FrameIndex, DrawLocation, Color.White, true, 0.3F);
+                                    break;
+                                case MirAction.远程攻击1:
+                                    Libraries.Magic_32bit.DrawBlend(2490 + ((int)Direction * 10) + FrameIndex, DrawLocation, Color.White, true, 0.3F);
+                                    break;
+                                case MirAction.远程攻击2:
+                                    Libraries.Magic_32bit.DrawBlend(2580 + ((int)Direction * 10) + FrameIndex, DrawLocation, Color.White, true, 0.3F);
+                                    break;
+                            }
+                    }
+                    break;
+
             }
         }
 

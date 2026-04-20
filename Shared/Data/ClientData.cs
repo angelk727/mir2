@@ -594,7 +594,7 @@ public class ClientBuff
     {
         Caster = null;
 
-        Type = (BuffType)reader.ReadByte();
+        Type = (BuffType)reader.ReadUInt16();
         Visible = reader.ReadBoolean();
         ObjectID = reader.ReadUInt32();
         ExpireTime = reader.ReadInt64();
@@ -615,7 +615,7 @@ public class ClientBuff
 
     public void Save(BinaryWriter writer)
     {
-        writer.Write((byte)Type);
+        writer.Write((ushort)Type);
         writer.Write(Visible);
         writer.Write(ObjectID);
         writer.Write(ExpireTime);

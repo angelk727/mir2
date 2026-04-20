@@ -1352,6 +1352,9 @@ public enum Spell : ushort
     CrescentSlash = 165,
     MoonMist = 166,
     CatTongue = 167,
+    CrescentSlashRare = 168,
+    //影华连击 = 169,
+    //影华连击-秘籍 = 170,
 
     //Archer
     Focus = 201,
@@ -1375,6 +1378,9 @@ public enum Spell : ushort
     OneWithNature = 219,
     BindingShot = 220,
     MentalState = 221,
+    //落雷杀 = 222,
+	//气流术-秘籍 = 223,
+    //落雷杀-秘籍 = 224,
 
     //Custom
     Blink = 301,
@@ -1485,8 +1491,7 @@ public enum SpellEffect : byte
     Mon623NSpikes,
 }
 
-
-public enum BuffType : byte
+public enum BuffType : ushort
 {
     None = 0,
 
@@ -1521,8 +1526,15 @@ public enum BuffType : byte
     万效符,
     万效符秘籍,
 
+    //MagicsDebuff
+    月华乱舞秘杀,
+    吸魔炎风杀,
+    万效符杀,
+    吸魔炎风秘杀,
+    万效符秘杀,
+
     //Monster
-    HornedArcherBuff = 50,
+    HornedArcherBuff = 200,
     ColdArcherBuff,
     HornedColdArcherBuff,
     GeneralMeowMeowShield,
@@ -1545,11 +1557,10 @@ public enum BuffType : byte
     防御诅咒,
     Mon579BShield,
     Mon580BShield,
-    万效符爆杀,
     Mon615BShield,
 
     //Special
-    游戏管理 = 100,
+    游戏管理 = 300,
     General,
     获取经验提升,
     物品掉落提升,
@@ -1574,7 +1585,7 @@ public enum BuffType : byte
     共用型绝技,
 
     //Stats
-    攻击力提升 = 200,
+    攻击力提升 = 400,
     魔法力提升,
     道术力提升,
     攻击速度提升,

@@ -7,7 +7,14 @@ namespace Client.MirSounds
     public static class SoundManager
     {
         private static Dictionary<int, string> _indexList => SoundList.Indexes;
-        private static List<KeyValuePair<long, int>> _delayList = new List<KeyValuePair<long, int>>();
+        private class DelaySound
+        {
+            public long Time;
+            public int Index;
+            public bool Loop;
+        }
+        private static List<DelaySound> _delayList = new List<DelaySound>();
+
         private static Dictionary<int, CachedSound> _cachedOneShots = new Dictionary<int, CachedSound>();
 
         private static Dictionary<int, LoopProvider> _loopingSounds = new Dictionary<int, LoopProvider>();
@@ -78,7 +85,12 @@ namespace Client.MirSounds
 
             if (delay > 0)
             {
-                _delayList.Add(new KeyValuePair<long, int>(CMain.Time + delay, index));
+                _delayList.Add(new DelaySound
+                {
+                    Time = CMain.Time + delay,
+                    Index = index,
+                    Loop = loop
+                });
                 return;
             }
 
@@ -107,11 +119,19 @@ namespace Client.MirSounds
             }
             else
             {
-                var sound = LoopProvider.TryCreate(index, _indexList[index], MusicVol, loop);
-                if (sound != null)
+                if (!_loopingSounds.ContainsKey(index))
                 {
-                    _loopingSounds.Add(index, sound);
-                    _loopingSounds[index].Play(Vol);
+                    var sound = LoopProvider.TryCreate(index, _indexList[index], MusicVol, loop);
+
+                    if (sound != null)
+                    {
+                        _loopingSounds.Add(index, sound);
+                        _loopingSounds[index].Play(Vol);
+                    }
+                }
+                else
+                {
+                    _loopingSounds[index].SetVolume(Vol);
                 }
             }
             
@@ -145,13 +165,18 @@ namespace Client.MirSounds
         {
             if (_delayList.Count == 0) return;
 
-            var sounds = _delayList.Where(x => x.Key <= CMain.Time).ToList();
+            long now = CMain.Time;
 
-            foreach (var sound in sounds)
+            for (int i = _delayList.Count - 1; i >= 0; i--)
             {
-                _delayList.Remove(sound);
+                var sound = _delayList[i];
 
-                PlaySound(sound.Value);
+                if (sound.Time <= now)
+                {
+                    _delayList.RemoveAt(i);
+
+                    PlaySound(sound.Index, sound.Loop);
+                }
             }
         }
 

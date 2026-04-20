@@ -554,6 +554,18 @@ namespace Client.MirScenes.Dialogs
                 case BuffType.精神状态:
                     return 59;
 
+                //MagicsDebuff
+                case BuffType.月华乱舞秘杀:
+                    return 187;
+                case BuffType.吸魔炎风杀:
+                    return 192;
+                case BuffType.万效符杀:
+                    return 193;
+                case BuffType.吸魔炎风秘杀:
+                    return 559;
+                case BuffType.万效符秘杀:
+                    return 560;
+
                 //Monster
                 case BuffType.惩戒真言:
                     return 115;
@@ -578,11 +590,10 @@ namespace Client.MirScenes.Dialogs
                 case BuffType.Mon564NSealing:
                     return 61;
                 case BuffType.防御诅咒:
-                    return 67;
-                case BuffType.万效符爆杀:
-                    return 193;
+                    return 67;             
                 case BuffType.烈火焚烧:
                     return 548;
+                
 
                 //Special
                 case BuffType.游戏管理:

@@ -3854,6 +3854,9 @@ namespace Server.MirObjects
                 case Spell.CrescentSlash:
                     CrescentSlash(magic);
                     break;
+                case Spell.CrescentSlashRare:
+                    CrescentSlashRare(magic);
+                    break;
                 case Spell.StraightShot:
                     if (!StraightShot(target, magic)) targetID = 0;
                     break;
@@ -6037,7 +6040,57 @@ namespace Server.MirObjects
                 }
             }
         }
+        private void CrescentSlashRare(UserMagic magic)
+        {
+            int damageBase = GetAttackPower(Stats[Stat.MinDC], Stats[Stat.MaxDC]);
+            if (Envir.Random.Next(0, 100) <= Stats[Stat.准确])
+                damageBase += damageBase;//crit should do something like double dmg, not double max dc dmg!
+            int damageFinal = magic.GetDamage(damageBase);
 
+            MirDirection backDir = Functions.ReverseDirection(Direction);
+            MirDirection preBackDir = Functions.PreviousDir(backDir);
+            MirDirection nextBackDir = Functions.NextDir(backDir);
+
+            for (int i = 0; i < 8; i++)
+            {
+                MirDirection dir = (MirDirection)i;
+                Point hitPoint = Functions.PointMove(CurrentLocation, dir, 1);
+
+                if (dir != backDir && dir != preBackDir && dir != nextBackDir)
+                {
+
+                    if (!CurrentMap.ValidPoint(hitPoint)) continue;
+
+                    Cell cell = CurrentMap.GetCell(hitPoint);
+
+                    if (cell.Objects == null) continue;
+
+
+                    for (int j = 0; j < cell.Objects.Count; j++)
+                    {
+                        MapObject target = cell.Objects[j];
+                        switch (target.Race)
+                        {
+                            case ObjectType.Monster:
+                            case ObjectType.Player:
+                                //Only targets
+                                if (target.IsAttackTarget(this))
+                                {
+                                    
+                                    DelayedAction action = new DelayedAction(DelayedType.Damage, Envir.Time + AttackSpeed, target, damageFinal, DefenceType.AC, true);
+                                    ActionList.Add(action);
+                                    target.ApplyPoison(new Poison { PType = PoisonType.Stun, Duration = magic.Level + 2, TickSpeed = 6000 });
+                                    target.OperateTime = 0;
+                                    DelayedAction action2 = new DelayedAction(DelayedType.Damage, Envir.Time + AttackSpeed + 900, target, damageFinal, DefenceType.AC, true);
+                                    ActionList.Add(action2);
+                                }
+                                break;
+                        }
+                    }
+                    LevelMagic(magic);
+                }
+            }
+        }
         private void FlashDash(UserMagic magic)
         {
             bool success = false;
