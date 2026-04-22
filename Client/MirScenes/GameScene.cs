@@ -640,8 +640,8 @@ namespace Client.MirScenes
                                 Bar.Hide();
                         break;
                     case KeybindOptions.Mount:
-                        if (GameScene.Scene.MountDialog.CanRide())
-                            GameScene.Scene.MountDialog.Ride();
+                        if (MountDialog.CanRide())
+                            MountDialog.Ride();
                         break;
                     case KeybindOptions.Mentor:
                         if (!MentorDialog.Visible) MentorDialog.Show();
