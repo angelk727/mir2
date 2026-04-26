@@ -157,25 +157,99 @@ namespace Client.MirObjects
             SetLibraries();
             SetEffects();
 
-            Stats[Stat.HP] += (Stats[Stat.HP] * Stats[Stat.生命值数率]) / 100;
-            Stats[Stat.MP] += (Stats[Stat.MP] * Stats[Stat.法力值数率]) / 100;
-            Stats[Stat.MaxAC] += (Stats[Stat.MaxAC] * Stats[Stat.强化防御]) / 100;
-            Stats[Stat.MaxMAC] += (Stats[Stat.MaxMAC] * Stats[Stat.强化魔法防御]) / 100;
+            long temp;
 
-            Stats[Stat.MaxDC] += (Stats[Stat.MaxDC] * Stats[Stat.攻击强化]) / 100;
-            Stats[Stat.MaxMC] += (Stats[Stat.MaxMC] * Stats[Stat.魔法攻击强化]) / 100;
-            Stats[Stat.MaxSC] += (Stats[Stat.MaxSC] * Stats[Stat.道术攻击强化]) / 100;
-            Stats[Stat.攻击速度] += (Stats[Stat.攻击速度] * Stats[Stat.攻击速度强化]) / 100;
+            temp = Stats[Stat.HP];
+            if (temp > 0 && Stats[Stat.生命值数率] != 0)
+            {
+                temp += temp * Stats[Stat.生命值数率] / 100;
+                Stats[Stat.HP] = (int)Math.Min(temp, int.MaxValue);
+            }
+
+            temp = Stats[Stat.MP];
+            if (temp > 0 && Stats[Stat.法力值数率] != 0)
+            {
+                temp += temp * Stats[Stat.法力值数率] / 100;
+                Stats[Stat.MP] = (int)Math.Min(temp, int.MaxValue);
+            }
+
+            temp = Stats[Stat.MaxAC];
+            if (temp > 0 && Stats[Stat.强化防御] != 0)
+            {
+                temp += temp * Stats[Stat.强化防御] / 100;
+                Stats[Stat.MaxAC] = (int)Math.Min(temp, int.MaxValue);
+            }
+
+            temp = Stats[Stat.MaxMAC];
+            if (temp > 0 && Stats[Stat.强化魔法防御] != 0)
+            {
+                temp += temp * Stats[Stat.强化魔法防御] / 100;
+                Stats[Stat.MaxMAC] = (int)Math.Min(temp, int.MaxValue);
+            }
+
+            temp = Stats[Stat.MaxDC];
+            if (temp > 0 && Stats[Stat.攻击强化] != 0)
+            {
+                temp += temp * Stats[Stat.攻击强化] / 100;
+                Stats[Stat.MaxDC] = (int)Math.Min(temp, int.MaxValue);
+            }
+
+            temp = Stats[Stat.MaxMC];
+            if (temp > 0 && Stats[Stat.魔法攻击强化] != 0)
+            {
+                temp += temp * Stats[Stat.魔法攻击强化] / 100;
+                Stats[Stat.MaxMC] = (int)Math.Min(temp, int.MaxValue);
+            }
+
+            temp = Stats[Stat.MaxSC];
+            if (temp > 0 && Stats[Stat.道术攻击强化] != 0)
+            {
+                temp += temp * Stats[Stat.道术攻击强化] / 100;
+                Stats[Stat.MaxSC] = (int)Math.Min(temp, int.MaxValue);
+            }
+
+            temp = Stats[Stat.攻击速度];
+            if (temp > 0 && Stats[Stat.攻击速度强化] != 0)
+            {
+                temp += temp * Stats[Stat.攻击速度强化] / 100;
+                Stats[Stat.攻击速度] = (int)Math.Min(temp, int.MaxValue);
+            }
 
             RefreshStatCaps();
 
-            if (this == User && Light < 3) Light = 3;
-            AttackSpeed = 1400 - ((Stats[Stat.攻击速度] * 60) + Math.Min(370, (Level * 14)));
-            if (AttackSpeed < 550) AttackSpeed = 550;
+            if (this == User && Light < 3)
+                Light = 3;
 
-            PercentHealth = (byte)(HP / (float)Stats[Stat.HP] * 100);
+            int speed = Stats[Stat.攻击速度];
+            if (speed < 0) speed = 0;
 
-            GameScene.Scene.Redraw();
+            long attackCalc = 1400 - ((long)speed * 60 + Math.Min(370, Level * 14));
+
+            if (attackCalc < 550)
+                attackCalc = 550;
+            else if (attackCalc > 1400)
+                attackCalc = 1400;
+
+            AttackSpeed = (int)attackCalc;
+
+            if (Stats[Stat.HP] <= 0 || HP <= 0)
+            {
+                PercentHealth = 0;
+            }
+            else
+            {
+                float ratio = HP / (float)Stats[Stat.HP];
+
+                if (ratio < 0) ratio = 0;
+                if (ratio > 1) ratio = 1;
+
+                PercentHealth = (byte)(ratio * 100);
+            }
+
+            if (GameScene.Scene != null)
+            {
+                GameScene.Scene.Redraw();
+            }
         }
 
         private void RefreshLevelStats()
@@ -869,7 +943,7 @@ namespace Client.MirObjects
             base.ProcessFrames();
 
             if (clear) QueuedAction = null;
-            if ((CurrentAction == MirAction.站立动作 || CurrentAction == MirAction.坐骑站立 || CurrentAction == MirAction.站立姿势 || CurrentAction == MirAction.站立姿势2 || CurrentAction == MirAction.冲击失败) && (QueuedAction != null || NextAction != null))
+            if ((CurrentAction == MirAction.站立动作 || CurrentAction == MirAction.坐骑站立 || CurrentAction == MirAction.站立姿势 || CurrentAction == MirAction.施法引导 || CurrentAction == MirAction.冲击失败) && (QueuedAction != null || NextAction != null))
                 SetAction();
         }
 

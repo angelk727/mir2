@@ -852,7 +852,7 @@ public enum MirAction : byte
     右冲动作,
     冲击失败,
     站立姿势,
-    站立姿势2,
+    施法引导,
     近距攻击1,
     近距攻击2,
     近距攻击3,
@@ -863,11 +863,11 @@ public enum MirAction : byte
     远程攻击3,
     特殊攻击,
     被击动作,
-    挖矿展示,
+    展示采集,
     施法动作,
     死亡动作,
     死后尸体,
-    挖后尸骸,
+    尸骸骨架,
     石化苏醒,
     切换LIB,
     石化状态,
@@ -1160,7 +1160,7 @@ public enum SpecialItemMode : short
     Probe = 0x0100,
     Skill = 0x0200,
     NoDuraLoss = 0x0400,
-    Blink = 0x800,
+    Blink = 0x0800,
 }
 
 [Flags]

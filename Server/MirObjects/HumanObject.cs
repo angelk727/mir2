@@ -1757,25 +1757,95 @@ namespace Server.MirObjects
             RefreshGuildBuffs();
 
             //Add any rate percent changes
+            long temp;
 
-            Stats[Stat.HP] += (Stats[Stat.HP] * Stats[Stat.生命值数率]) / 100;
-            Stats[Stat.MP] += (Stats[Stat.MP] * Stats[Stat.法力值数率]) / 100;
-            Stats[Stat.MaxAC] += (Stats[Stat.MaxAC] * Stats[Stat.强化防御]) / 100;
-            Stats[Stat.MaxMAC] += (Stats[Stat.MaxMAC] * Stats[Stat.强化魔法防御]) / 100;
+            temp = Stats[Stat.HP];
+            if (temp > 0 && Stats[Stat.生命值数率] != 0)
+            {
+                temp += temp * Stats[Stat.生命值数率] / 100;
+                Stats[Stat.HP] = (int)Math.Min(temp, int.MaxValue);
+            }
 
-            Stats[Stat.MaxDC] += (Stats[Stat.MaxDC] * Stats[Stat.攻击强化]) / 100;
-            Stats[Stat.MaxMC] += (Stats[Stat.MaxMC] * Stats[Stat.魔法攻击强化]) / 100;
-            Stats[Stat.MaxSC] += (Stats[Stat.MaxSC] * Stats[Stat.道术攻击强化]) / 100;
-            Stats[Stat.攻击速度] += (Stats[Stat.攻击速度] * Stats[Stat.攻击速度强化]) / 100;
+            temp = Stats[Stat.MP];
+            if (temp > 0 && Stats[Stat.法力值数率] != 0)
+            {
+                temp += temp * Stats[Stat.法力值数率] / 100;
+                Stats[Stat.MP] = (int)Math.Min(temp, int.MaxValue);
+            }
+
+            temp = Stats[Stat.MaxAC];
+            if (temp > 0 && Stats[Stat.强化防御] != 0)
+            {
+                temp += temp * Stats[Stat.强化防御] / 100;
+                Stats[Stat.MaxAC] = (int)Math.Min(temp, int.MaxValue);
+            }
+
+            temp = Stats[Stat.MaxMAC];
+            if (temp > 0 && Stats[Stat.强化魔法防御] != 0)
+            {
+                temp += temp * Stats[Stat.强化魔法防御] / 100;
+                Stats[Stat.MaxMAC] = (int)Math.Min(temp, int.MaxValue);
+            }
+
+            temp = Stats[Stat.MaxDC];
+            if (temp > 0 && Stats[Stat.攻击强化] != 0)
+            {
+                temp += temp * Stats[Stat.攻击强化] / 100;
+                Stats[Stat.MaxDC] = (int)Math.Min(temp, int.MaxValue);
+            }
+
+            temp = Stats[Stat.MaxMC];
+            if (temp > 0 && Stats[Stat.魔法攻击强化] != 0)
+            {
+                temp += temp * Stats[Stat.魔法攻击强化] / 100;
+                Stats[Stat.MaxMC] = (int)Math.Min(temp, int.MaxValue);
+            }
+
+            temp = Stats[Stat.MaxSC];
+            if (temp > 0 && Stats[Stat.道术攻击强化] != 0)
+            {
+                temp += temp * Stats[Stat.道术攻击强化] / 100;
+                Stats[Stat.MaxSC] = (int)Math.Min(temp, int.MaxValue);
+            }
+
+            temp = Stats[Stat.攻击速度];
+            if (temp > 0 && Stats[Stat.攻击速度强化] != 0)
+            {
+                temp += temp * Stats[Stat.攻击速度强化] / 100;
+                Stats[Stat.攻击速度] = (int)Math.Min(temp, int.MaxValue);
+            }
 
             RefreshStatCaps();
 
-            if (HP > Stats[Stat.HP]) SetHP(Stats[Stat.HP]);
-            if (MP > Stats[Stat.MP]) SetMP(Stats[Stat.MP]);
+            if (Stats[Stat.HP] <= 0)
+            {
+                SetHP(0);
+            }
+            else if (HP > Stats[Stat.HP])
+            {
+                SetHP(Stats[Stat.HP]);
+            }
 
-            AttackSpeed = 1400 - ((Stats[Stat.攻击速度] * 60) + Math.Min(370, (Level * 14)));
+            if (Stats[Stat.MP] <= 0)
+            {
+                SetMP(0);
+            }
+            else if (MP > Stats[Stat.MP])
+            {
+                SetMP(Stats[Stat.MP]);
+            }
 
-            if (AttackSpeed < 550) AttackSpeed = 550;
+            int speed = Stats[Stat.攻击速度];
+            if (speed < 0) speed = 0;
+
+            long attackCalc = 1400 - ((long)speed * 60 + Math.Min(370, Level * 14));
+
+            if (attackCalc < 550)
+                attackCalc = 550;
+            else if (attackCalc > 1400)
+                attackCalc = 1400;
+
+            AttackSpeed = (int)attackCalc;
         }
         public virtual void RefreshGuildBuffs() { }
 

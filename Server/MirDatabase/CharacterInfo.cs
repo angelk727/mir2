@@ -177,6 +177,9 @@ namespace Server.MirDatabase
                 MP = reader.ReadInt32();
             }
 
+            HP = Math.Max(0, HP);
+            MP = Math.Max(0, MP);
+
             Experience = reader.ReadInt64();
 
             AMode = (AttackMode)reader.ReadByte();

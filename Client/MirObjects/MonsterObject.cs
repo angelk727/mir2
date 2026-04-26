@@ -247,7 +247,7 @@ namespace Client.MirObjects
             }
 
             if (Skeleton)
-                ActionFeed.Add(new QueuedAction { Action = MirAction.挖后尸骸, Direction = Direction, Location = CurrentLocation });
+                ActionFeed.Add(new QueuedAction { Action = MirAction.尸骸骨架, Direction = Direction, Location = CurrentLocation });
             else if (Dead)
                 ActionFeed.Add(new QueuedAction { Action = MirAction.死后尸体, Direction = Direction, Location = CurrentLocation });
 
@@ -650,7 +650,7 @@ namespace Client.MirObjects
                         if (!Frames.TryGetValue(CurrentAction, out Frame))
                             Frames.TryGetValue(MirAction.近距攻击1, out Frame);
                         break;
-                    case MirAction.挖后尸骸:
+                    case MirAction.尸骸骨架:
                         if (!Frames.TryGetValue(CurrentAction, out Frame))
                             Frames.TryGetValue(MirAction.死后尸体, out Frame);
                         break;
@@ -4880,7 +4880,7 @@ namespace Client.MirObjects
 
             if ((CurrentAction == MirAction.站立动作 || CurrentAction == MirAction.坐下动作) && NextAction != null)
                 SetAction();
-            else if (CurrentAction == MirAction.死后尸体 && NextAction != null && (NextAction.Action == MirAction.挖后尸骸 || NextAction.Action == MirAction.复活动作))
+            else if (CurrentAction == MirAction.死后尸体 && NextAction != null && (NextAction.Action == MirAction.尸骸骨架 || NextAction.Action == MirAction.复活动作))
                 SetAction();
         }
 

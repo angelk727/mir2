@@ -3915,13 +3915,13 @@ namespace Client.MirScenes
         private void ObjectHarvest(S.ObjectHarvest p)
         {
             if (MapControl.Objects.TryGetValue(p.ObjectID, out var ob))
-                ob.ActionFeed.Add(new QueuedAction { Action = MirAction.挖矿展示, Direction = ob.Direction, Location = ob.CurrentLocation });
+                ob.ActionFeed.Add(new QueuedAction { Action = MirAction.展示采集, Direction = ob.Direction, Location = ob.CurrentLocation });
         }
 
         private void ObjectHarvested(S.ObjectHarvested p)
         {
             if (MapControl.Objects.TryGetValue(p.ObjectID, out var ob))
-                ob.ActionFeed.Add(new QueuedAction { Action = MirAction.挖后尸骸, Direction = ob.Direction, Location = ob.CurrentLocation });
+                ob.ActionFeed.Add(new QueuedAction { Action = MirAction.尸骸骨架, Direction = ob.Direction, Location = ob.CurrentLocation });
         }
 
         private void ObjectNPC(S.ObjectNPC p)
@@ -12027,7 +12027,7 @@ namespace Client.MirScenes
 
                         if (CMain.Alt && !User.RidingMount)
                         {
-                            User.QueuedAction = new QueuedAction { Action = MirAction.挖矿展示, Direction = direction, Location = User.CurrentLocation };
+                            User.QueuedAction = new QueuedAction { Action = MirAction.展示采集, Direction = direction, Location = User.CurrentLocation };
                             return;
                         }
 

@@ -653,7 +653,7 @@ namespace Client.MirObjects
 
             #region Common
             //Harvest
-            if (CurrentAction == MirAction.挖矿展示 && TransformType < 0)
+            if (CurrentAction == MirAction.展示采集 && TransformType < 0)
             {
                 WeaponLibrary1 = 1 < Libraries.CWeapons.Length ? Libraries.CWeapons[1] : null;
             }
@@ -964,7 +964,7 @@ namespace Client.MirObjects
             {
                 CurrentAction = MirAction.站立动作;
 
-                CurrentAction = (CMain.Time > BlizzardStopTime && CMain.Time > GreatFireBallRareStopTime) ? CurrentAction : MirAction.站立姿势2;
+                CurrentAction = (CMain.Time > BlizzardStopTime && CMain.Time > GreatFireBallRareStopTime) ? CurrentAction : MirAction.施法引导;
                 //CurrentAction = CMain.Time > SlashingBurstTime ? CurrentAction : MirAction.刺客步刺;
 
                 if (RidingMount)
@@ -1259,8 +1259,8 @@ namespace Client.MirObjects
                                 }
                                 break;
                             case Spell.ExplosiveTrap:
-                                Frames.TryGetValue(MirAction.挖矿展示, out Frame);
-                                CurrentAction = MirAction.挖矿展示;
+                                Frames.TryGetValue(MirAction.展示采集, out Frame);
+                                CurrentAction = MirAction.展示采集;
                                 ArcherLayTrap = true;
                                 if (this == User)
                                 {
@@ -1543,7 +1543,7 @@ namespace Client.MirObjects
                                 }
                             }
                             break;                         
-                        case MirAction.挖矿展示:
+                        case MirAction.展示采集:
                             if (ArcherLayTrap)
                             {
                                 ArcherLayTrap = false;
@@ -2658,9 +2658,9 @@ namespace Client.MirObjects
                 case MirAction.站立动作:
                 case MirAction.坐骑站立:
                 case MirAction.冲击失败:
-                case MirAction.挖矿展示:
+                case MirAction.展示采集:
                 case MirAction.站立姿势:
-                case MirAction.站立姿势2:
+                case MirAction.施法引导:
                     if (CMain.Time >= NextMotion)
                     {
                         GameScene.Scene.MapControl.TextureValid = false;
@@ -3893,7 +3893,7 @@ namespace Client.MirObjects
 
             if (this == User) return;
 
-            if ((CurrentAction == MirAction.站立动作 || CurrentAction == MirAction.坐骑站立 || CurrentAction == MirAction.站立姿势 || CurrentAction == MirAction.站立姿势2 || CurrentAction == MirAction.冲击失败) && NextAction != null)
+            if ((CurrentAction == MirAction.站立动作 || CurrentAction == MirAction.坐骑站立 || CurrentAction == MirAction.站立姿势 || CurrentAction == MirAction.施法引导 || CurrentAction == MirAction.冲击失败) && NextAction != null)
                 SetAction();
             //if Revive and dead set action
 
@@ -5536,7 +5536,7 @@ namespace Client.MirObjects
                                 case MirAction.远程攻击3:
                                     Libraries.TransformWeaponEffect[18].DrawBlend(296 + ((int)Direction * 6) + FrameIndex, DrawLocation, Color.White, true, 0.7F);
                                     break;
-                                case MirAction.挖矿展示:
+                                case MirAction.展示采集:
                                     Libraries.TransformWeaponEffect[18].DrawBlend(344 + ((int)Direction * 2) + FrameIndex, DrawLocation, Color.White, true, 0.3F);
                                     break;
                                 case MirAction.被击动作:
@@ -5629,7 +5629,7 @@ namespace Client.MirObjects
                                 case MirAction.远程攻击3:
                                     Libraries.TransformWeaponEffect[45].DrawBlend(296 + ((int)Direction * 6) + FrameIndex, DrawLocation, Color.White, true, 0.7F);
                                     break;
-                                case MirAction.挖矿展示:
+                                case MirAction.展示采集:
                                     Libraries.TransformWeaponEffect[45].DrawBlend(344 + ((int)Direction * 2) + FrameIndex, DrawLocation, Color.White, true, 0.7F);
                                     break;
                                 case MirAction.被击动作:
@@ -5644,7 +5644,7 @@ namespace Client.MirObjects
                                 case MirAction.刺客步刺:
                                     Libraries.TransformWeaponEffect[45].DrawBlend((139 + FrameIndex + (int)Direction * 1) - 5, DrawLocation, Color.White, true, 0.7F);
                                     break;
-                                case MirAction.站立姿势2:
+                                case MirAction.施法引导:
                                     Libraries.TransformWeaponEffect[45].DrawBlend((300 + FrameIndex + ((int)Direction * 1)) - 5, DrawLocation, Color.White, true, 0.7F);
                                     break;
                             }
