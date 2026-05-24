@@ -66,7 +66,8 @@ namespace Client
 
 
             SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.Selectable, true);
-            FormBorderStyle = Settings.FullScreen ? FormBorderStyle.None : FormBorderStyle.FixedDialog; //设置 窗口有边框、有标题栏 FormBorderStyle = Settings.FullScreen || Settings.Borderless ? FormBorderStyle.None : FormBorderStyle.FixedDialog;
+            //FormBorderStyle = Settings.FullScreen || Settings.Borderless ? FormBorderStyle.None : FormBorderStyle.FixedDialog;
+			FormBorderStyle = Settings.FullScreen ? FormBorderStyle.None : FormBorderStyle.FixedDialog; //设置 窗口有边框、有标题栏
 
             Graphics = CreateGraphics();
             Graphics.SmoothingMode = SmoothingMode.AntiAlias;
@@ -344,11 +345,11 @@ namespace Client
 
         private static bool IsDrawTime()
         {
-            const int TargetUpdates = 1000 / 60; // 60 frames per second
+            int targetUpdates = 1000 / Math.Max(1, Settings.MaxFPS);
 
             if (Time >= _drawTime)
             {
-                _drawTime = Time + TargetUpdates;
+                _drawTime = Time + targetUpdates;
                 return true;
             }
             return false;

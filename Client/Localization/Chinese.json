@@ -793,7 +793,7 @@
     "EndDate": "结束日期",
     "Bid": "Δ",
     "Credits": "积分",
-    "MustWearSuitableWeapon": "你必须佩戴合适的武器才能使用此技能",
+    "MustWearSuitableWeapon": "你必须佩戴本职业武器才能使用此技能",
     "CannotCastForSeconds": "你在 {1} 秒内无法施放 {0}。",
     "Hero": "(英雄)",
     "UseThrusting": "使用刺杀剑术。",

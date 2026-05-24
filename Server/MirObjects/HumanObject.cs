@@ -3,7 +3,6 @@ using System.Drawing;
 using Server.MirEnvir;
 using Server.MirNetwork;
 using Server.MirObjects.Monsters;
-using System.Numerics;
 using S = ServerPackets;
 
 namespace Server.MirObjects
@@ -218,6 +217,42 @@ namespace Server.MirObjects
         public bool FastRun = false;
         public bool CanGainExp = true;
         private int _fireWallCastSeq = 0;
+
+        public bool HasWeapon()
+        {
+            var weapon = Info.Equipment[(int)EquipmentSlot.武器];
+            return weapon != null && weapon.CurrentDura > 0 && weapon.Info != null;
+        }
+        public bool HasClassWeapon()
+        {
+            var weapon = Info.Equipment[(int)EquipmentSlot.武器];
+
+            if (weapon == null || weapon.CurrentDura <= 0 || weapon.Info == null)
+                return false;
+
+            var required = weapon.Info.RequiredClass;
+
+            switch (Class)
+            {
+                case MirClass.战士:
+                    return required == RequiredClass.战士;
+
+                case MirClass.法师:
+                    return required == RequiredClass.法师;
+
+                case MirClass.道士:
+                    return required == RequiredClass.道士;
+
+                case MirClass.刺客:
+                    return required == RequiredClass.刺客;
+
+                case MirClass.弓箭:
+                    return required == RequiredClass.弓箭;
+
+                default:
+                    return false;
+            }
+        }
         public override bool Blocking
         {
             get
@@ -3073,15 +3108,32 @@ namespace Server.MirObjects
                     Slaying = false;
                     break;
                 case Spell.DoubleSlash:
-                    magic = GetMagic(spell);
-                    if (magic == null || magic.Info.BaseCost + (magic.Level * magic.Info.LevelCost) > MP)
                     {
-                        spell = Spell.None;
+                        magic = GetMagic(spell);
+                        if (!HasWeapon())
+                        {
+                            spell = Spell.None;
+                            break;
+                        }
+
+                        if (!HasClassWeapon())
+                        {
+                            spell = Spell.None;
+                            break;
+                        }
+
+                        var cost = magic.Info.BaseCost + magic.Level * magic.Info.LevelCost;
+
+                        if (cost > MP)
+                        {
+                            spell = Spell.None;
+                            break;
+                        }
+
+                        level = magic.Level;
+                        ChangeMP(-cost);
                         break;
                     }
-                    level = magic.Level;
-                    ChangeMP(-(magic.Info.BaseCost + magic.Level * magic.Info.LevelCost));
-                    break;
                 case Spell.Thrusting:
                 case Spell.FlamingSword:
                     magic = GetMagic(spell);
@@ -4205,7 +4257,7 @@ namespace Server.MirObjects
                         for (int i = 0; cell.Objects != null && i < cell.Objects.Count; i++)
                         {
                             MapObject ob = cell.Objects[i];
-                            if (ob.Race != ObjectType.Monster && ob.Race != ObjectType.Player) continue;
+                            if (ob.Race != ObjectType.Monster && ob.Race != ObjectType.Player && ob.Race != ObjectType.Hero) continue;
 
                             if (!ob.IsAttackTarget(this) || ob.Level >= Level) continue;
 
@@ -7051,7 +7103,6 @@ namespace Server.MirObjects
                         }
 
                         monster.LastHitTime = Envir.Time + 5000;
-                        monster.EXPOwner = this;
                         monster.EXPOwnerTime = Envir.Time + 5000;
                         monster.Die();
                         LevelMagic(magic);
