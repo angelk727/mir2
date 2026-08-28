@@ -241,6 +241,7 @@
             VersionCheckBox.TabIndex = 3;
             VersionCheckBox.Text = "检查登录器版本";
             VersionCheckBox.UseVisualStyleBackColor = true;
+			VersionCheckBox.CheckedChanged += VersionCheckBox_CheckedChanged;
             // 
             // VPathBrowseButton
             // 

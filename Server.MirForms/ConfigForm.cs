@@ -351,6 +351,11 @@ namespace Server
         {
             ProcessFiles(RequiredClass.弓箭, false);
         }
-        #endregion
-    }
+		#endregion
+
+		private void VersionCheckBox_CheckedChanged(object sender, EventArgs e)
+		{
+			Settings.CheckVersion = VersionCheckBox.Checked;
+		}
+	}
 }

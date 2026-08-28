@@ -23,7 +23,7 @@ public class ItemInfo
     public byte Effect;
 
     public bool NeedIdentify, ShowGroupPickup, GlobalDropNotify;
-    public bool ClassBased;
+    public bool ClassBased;  //重复删除
     public bool LevelBased;
     public bool CanMine;
     public bool CanFastRun;
