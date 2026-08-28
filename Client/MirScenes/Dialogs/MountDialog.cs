@@ -136,9 +136,39 @@ namespace Client.MirScenes.Dialogs
                 AnimationDelay = 320
             },
 
+            [13] = new MountRenderInfo
+            {
+                Library = Libraries.Mounts[13],
+                Index = 62,
+                Location = new Point(110, 210),
+                Animated = true,
+                AnimationCount = 6,
+                AnimationDelay = 320
+            },
+
             [14] = new MountRenderInfo
             {
                 Library = Libraries.Mounts[14],
+                Index = 62,
+                Location = new Point(100, 210),
+                Animated = true,
+                AnimationCount = 6,
+                AnimationDelay = 240
+            },
+
+            [15] = new MountRenderInfo
+            {
+                Library = Libraries.Mounts[15],
+                Index = 62,
+                Location = new Point(100, 210),
+                Animated = true,
+                AnimationCount = 6,
+                AnimationDelay = 240
+            },
+
+            [16] = new MountRenderInfo
+            {
+                Library = Libraries.Mounts[16],
                 Index = 62,
                 Location = new Point(100, 210),
                 Animated = true,

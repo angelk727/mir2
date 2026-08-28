@@ -6,7 +6,6 @@ using Client.MirControls;
 using S = ServerPackets;
 using C = ClientPackets;
 using Client.MirScenes.Dialogs;
-using System.Reflection;
 
 namespace Client.MirObjects
 {
@@ -104,6 +103,9 @@ namespace Client.MirObjects
         public Point FishingPoint;
 
         public LevelEffects LevelEffects;
+        private bool showBody = true;
+        private bool showHead = true;
+        private bool showTransformEffect = true;
 
         public PlayerObject() { }
         public PlayerObject(uint objectID) : base(objectID)
@@ -269,6 +271,21 @@ namespace Client.MirObjects
             bool showMount = true;
             bool showFishing = true;
 
+            if (RidingMount && MountType >= 13 && MountType <= 16)
+            {
+                showBody = false;
+                showHead = false;
+                showTransformEffect = false;
+                Frames = FrameSet.SpecialMount;
+            }
+            else
+            {
+                showBody = true;
+                showHead = true;
+                showTransformEffect = true;
+                Frames = FrameSet.Player;
+            }
+
             if (TransformType > -1)
             {
                 #region Transform
@@ -363,19 +380,19 @@ namespace Client.MirObjects
                 WeaponLibrary1 = null;
                 WeaponLibrary2 = null;
 
-                if (TransformType == 18)
+                if (TransformType == 18 && showTransformEffect)
                 {
                     WingEffect = 19;
                     WingLibrary = WingEffect - 1 < Libraries.TransformEffect.Length ? Libraries.TransformEffect[WingEffect - 1] : null;
                 }
                 else
-                 if (TransformType == 19)
+                 if (TransformType == 19 && showTransformEffect)
                 {
                     WingEffect = 20;
                     WingLibrary = WingEffect - 1 < Libraries.TransformEffect.Length ? Libraries.TransformEffect[WingEffect - 1] : null;
                 }
                 else
-                   if (TransformType == 45)
+                   if (TransformType == 45 && showTransformEffect)
                 {
                     WingEffect = 46;
                     WingLibrary = WingEffect - 1 < Libraries.TransformEffect.Length ? Libraries.TransformEffect[WingEffect - 1] : null;
@@ -3977,7 +3994,67 @@ namespace Client.MirObjects
             int y = CurrentLocation.Y - CurrentLocation.Y % 2;
             if (GameScene.Scene.MapControl.M2CellInfo[x, y].FrontIndex > 199) return; //prevents any move sounds on non mir2 maps atm
             if (GameScene.Scene.MapControl.M2CellInfo[x, y].MiddleIndex > 199) return; //prevents any move sounds on non mir2 maps atm
-            if (GameScene.Scene.MapControl.M2CellInfo[x, y].BackIndex > 199) return; //prevents any move sounds on non mir2 maps atm
+
+            if (RidingMount)
+            {
+                switch (MountType)
+                {
+                    case < 7:
+                        if (CurrentAction == MirAction.跑步动作)
+                        {
+                            SoundManager.PlaySound(10178);
+                        }
+                        else
+                        {
+                            SoundManager.PlaySound(CMain.Random.Next(2) == 0 ? 10176 : 10177);
+                        }
+                        return;
+
+                    case < 12:
+                        if (CurrentAction == MirAction.跑步动作)
+                        {
+                            SoundManager.PlaySound(10178);
+                        }
+                        else
+                        {
+                            SoundManager.PlaySound(CMain.Random.Next(2) == 0 ? 10176 : 10177);
+                        }
+                        return;
+
+                    case 14:
+                        if (CurrentAction == MirAction.跑步动作)
+                        {
+                            SoundManager.PlaySound(10213);
+                        }
+                        else
+                        {
+                            SoundManager.PlaySound(CMain.Random.Next(2) == 0 ? 10211 : 10212);
+                        }
+                        return;
+
+                    case 15:
+                        if (CurrentAction == MirAction.跑步动作)
+                        {
+                            SoundManager.PlaySound(CMain.Random.Next(2) == 0 ? 10223 : 10228);
+                        }
+                        else
+                        {
+                            SoundManager.PlaySound(CMain.Random.Next(2) == 0 ? 10221 : 10227);
+                        }
+                        return;
+
+                    case 16:
+                        if (CurrentAction == MirAction.跑步动作)
+                        {
+                            SoundManager.PlaySound(10233);
+                        }
+                        else
+                        {
+                            SoundManager.PlaySound(10231);
+                        }
+                        return;
+                }
+            }
 
             int moveSound;
 
@@ -3994,13 +4071,13 @@ namespace Client.MirObjects
                 PlayWemadeStepSound(x, y, out moveSound);
             }
 
-            if (RidingMount) moveSound = SoundList.MountWalkL;
-
             if (CurrentAction == MirAction.跑步动作) moveSound += 2;
+
             if (FrameIndex == 4) moveSound++;
 
             SoundManager.PlaySound(moveSound);
         }
+
         private void PlayWemadeStepSound(int x, int y, out int moveSound)
         {
             int index = (GameScene.Scene.MapControl.M2CellInfo[x, y].BackImage & 0x1FFFF) - 1;
@@ -5081,10 +5158,28 @@ namespace Client.MirObjects
         {
             if (RidingMount)
             {
-                if (MountType < 7)
-                    SoundManager.PlaySound(CMain.Random.Next(10179, 10181));
-                else if (MountType < 12)
-                    SoundManager.PlaySound(CMain.Random.Next(10193, 10194));
+                switch (MountType)
+                {
+                    case < 7:
+                        SoundManager.PlaySound(CMain.Random.Next(2) == 0 ? 10179 : 10180);
+                        break;
+
+                    case < 12:
+                        SoundManager.PlaySound(CMain.Random.Next(2) == 0 ? 10193 : 10194);
+                        break;
+
+                    case 14:
+                        SoundManager.PlaySound(10215);
+                        break;
+
+                    case 15:
+                        SoundManager.PlaySound(10225);
+                        break;
+
+                    case 16:
+                        SoundManager.PlaySound(10235);
+                        break;
+                }
 
                 return;
             }
@@ -5169,11 +5264,28 @@ namespace Client.MirObjects
         {
             if (RidingMount)
             {
-                if (MountType < 7)
-                    SoundManager.PlaySound(CMain.Random.Next(10181, 10184));
-                else if (MountType < 12)
-                    SoundManager.PlaySound(CMain.Random.Next(10190, 10193));
+                switch (MountType)
+                {
+                    case < 7:
+                        SoundManager.PlaySound(CMain.Random.Next(10181, 10184));
+                        break;
 
+                    case < 12:
+                        SoundManager.PlaySound(CMain.Random.Next(10190, 10193));
+                        break;
+
+                    case 14:
+                        SoundManager.PlaySound(10216);
+                        break;
+
+                    case 15:
+                        SoundManager.PlaySound(10226);
+                        break;
+
+                    case 16:
+                        SoundManager.PlaySound(10236);
+                        break;
+                }
                 return;
             }
 
@@ -5261,21 +5373,41 @@ namespace Client.MirObjects
         public void PlayMountSound()
         {
             if (RidingMount)
-            {
-                if(MountType < 7)
-                    SoundManager.PlaySound(10218);
-                else if (MountType < 12)
-                    SoundManager.PlaySound(10188);
-            }
-            else
-            {
-                if (MountType < 7)
-                    SoundManager.PlaySound(10219);
-                else if (MountType < 12)
-                    SoundManager.PlaySound(10189);
-            }
-        }
 
+                switch (MountType)
+                {
+                    case < 7:
+                        SoundManager.PlaySound(10196);
+                        break;
+
+                    case < 12:
+                        SoundManager.PlaySound(10188);
+                        break;
+
+                    case 14:
+                        SoundManager.PlaySound(10210);
+                        break;
+
+                    case 15:
+                        SoundManager.PlaySound(10220);
+                        break;
+
+                    case 16:
+                        SoundManager.PlaySound(10230);
+                        break;
+                }
+            else
+                switch (MountType)
+                {
+                    case < 7:
+                        SoundManager.PlaySound(10197);
+                        break;
+
+                    case < 12:
+                        SoundManager.PlaySound(10189);
+                        break;
+                }
+        }
 
         public override void Draw()
         {
@@ -5474,16 +5606,19 @@ namespace Client.MirObjects
             bool oldGrayScale = DXManager.GrayScale;
             Color drawColour = ApplyDrawColour();                     
 
-            if (BodyLibrary != null)
+            if (BodyLibrary != null && showBody)
+            {
                 BodyLibrary.Draw(DrawFrame + ArmourOffSet, DrawLocation, drawColour, true);
+            }
 
             DXManager.SetGrayscale(oldGrayScale);
 
             //BodyLibrary.DrawTinted(DrawFrame + ArmourOffSet, DrawLocation, DrawColour, Color.DarkSeaGreen);
         }
+
         public void DrawHead()
         {
-            if (HairLibrary != null)
+            if (HairLibrary != null && showHead)
                 HairLibrary.Draw(DrawFrame + HairOffSet, DrawLocation, DrawColour, true);
         }
 
@@ -5709,9 +5844,16 @@ namespace Client.MirObjects
         public void DrawMount()
         {
             if (MountType < 0 || !RidingMount) return;
+            if (MountLibrary == null) return;
 
-            if (MountLibrary != null)
+            if (MountType >= 13 && MountType <= 16)
+            {
+                MountLibrary.Draw(DrawFrame + MountOffset, DrawLocation, DrawColour, true);
+            }
+            else
+            {
                 MountLibrary.Draw(DrawFrame - 416 + MountOffset, DrawLocation, DrawColour, true);
+            }
         }
 
         private bool IsVitalEffect(Effect effect)

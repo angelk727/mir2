@@ -3,6 +3,7 @@
     public class FrameSet : Dictionary<MirAction, Frame>
     {
         public static FrameSet Player;
+        public static FrameSet SpecialMount;
         public static FrameSet DefaultNPC, DefaultMonster;
         public static List<FrameSet> DragonStatue, GreatFoxSpirit, HellBomb, Mon380P, Gates;
 
@@ -212,6 +213,17 @@
             Player.Add(MirAction.钓鱼抛竿, new Frame(632, 8, 0, 100));
             Player.Add(MirAction.钓鱼等待, new Frame(696, 6, 0, 120));
             Player.Add(MirAction.钓鱼收线, new Frame(744, 8, 0, 100));
+
+            #endregion
+
+            #region SpecialMount
+
+            SpecialMount = new FrameSet();
+            SpecialMount.Add(MirAction.坐骑站立, new Frame(0, 4, 0, 500, 200, 4, 0, 500));
+            SpecialMount.Add(MirAction.坐骑行走, new Frame(32, 6, 0, 100, 232, 6, 0, 500));
+            SpecialMount.Add(MirAction.坐骑奔跑, new Frame(80, 6, 0, 100, 280, 6, 0, 500));
+            SpecialMount.Add(MirAction.坐骑被击, new Frame(128, 3, 0, 100, 328, 3, 0, 500));
+            SpecialMount.Add(MirAction.坐骑攻击, new Frame(152, 6, 0, 100, 352, 6, 0, 500));
 
             #endregion
         }
