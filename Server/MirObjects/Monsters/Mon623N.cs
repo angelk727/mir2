@@ -3,11 +3,11 @@ using S = ServerPackets;
 
 namespace Server.MirObjects.Monsters
 {
-    public class Mon623N : MonsterObject
+    public class Mon622N : MonsterObject
     {
         protected override bool CanMove { get { return false; } }
         protected override bool CanRegen { get { return false; } }
-        protected internal Mon623N(MonsterInfo info)
+        protected internal Mon622N(MonsterInfo info)
             : base(info)
         {
         }
@@ -84,7 +84,7 @@ namespace Server.MirObjects.Monsters
                 int damage = GetAttackPower(Stats[Stat.MinDC], Stats[Stat.MaxDC]);
                 if (damage == 0) return;
 
-                Broadcast(new S.ObjectEffect { ObjectID = Target.ObjectID, Effect = SpellEffect.Mon623NSpikes });
+                Broadcast(new S.ObjectEffect { ObjectID = Target.ObjectID, Effect = SpellEffect.Mon622NSpikes });
                 DelayedAction action = new(DelayedType.Damage, Envir.Time + 300, Target, damage, DefenceType.ACAgility, false);
                 ActionList.Add(action);
             }

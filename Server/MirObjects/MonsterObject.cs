@@ -492,10 +492,10 @@ namespace Server.MirObjects
                     return new Mon615B(info);
                 case 620:
                     return new Mon620B(info);
+                case 621:
+                    return new Mon621N(info);
                 case 622:
                     return new Mon622N(info);
-                case 623:
-                    return new Mon623N(info);
                 case 900:
                     return new EvilMir(info);
                 case 901:

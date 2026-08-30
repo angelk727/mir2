@@ -558,17 +558,18 @@ namespace Client.MirObjects
                         #endregion
 
                         #region Weapons
+
                         if (HasClassWeapon)
                         {
                             int Index = Weapon - 100;
-
-                            WeaponLibrary1 = Index < Libraries.AWeaponsL.Length ? Libraries.AWeaponsR[Index] : null;
-                            WeaponLibrary2 = Index < Libraries.AWeaponsR.Length ? Libraries.AWeaponsL[Index] : null;
+                            WeaponLibrary1 = Index >= 0 && Index < Libraries.AWeaponsR.Length ? Libraries.AWeaponsR[Index] : null;
+                            WeaponLibrary2 = Index >= 0 && Index < Libraries.AWeaponsL.Length ? Libraries.AWeaponsL[Index] : null;
 
                             if (WeaponEffect >= 100 && WeaponEffect <= 199)
                             {
-                                WeaponEffectLibrary1 = WeaponEffect - 100 < Libraries.AWeaponEffectL.Length ? Libraries.AWeaponEffectR[WeaponEffect - 100] : null;
-                                WeaponEffectLibrary2 = WeaponEffect - 100 < Libraries.AWeaponEffectR.Length ? Libraries.AWeaponEffectL[WeaponEffect - 100] : null;
+                                int EffectIndex = WeaponEffect - 100;
+                                WeaponEffectLibrary1 = EffectIndex < Libraries.AWeaponEffectR.Length ? Libraries.AWeaponEffectR[EffectIndex] : null;
+                                WeaponEffectLibrary2 = EffectIndex < Libraries.AWeaponEffectL.Length ? Libraries.AWeaponEffectL[EffectIndex] : null;
                             }
                             else
                             {
@@ -578,23 +579,22 @@ namespace Client.MirObjects
                         }
                         else
                         {
-							if (Weapon >= 0)
-							{
-								WeaponLibrary1 = Weapon < Libraries.CWeapons.Length ? Libraries.CWeapons[Weapon] : null;
-								if (WeaponEffect > 0)
-									WeaponEffectLibrary1 = WeaponEffect < Libraries.CWeaponEffect.Length ? Libraries.CWeaponEffect[WeaponEffect] : null;
-								else
-									WeaponEffectLibrary1 = null;
-
+                            if (Weapon >= 0)
+                            {
+                                WeaponLibrary1 = Weapon < Libraries.CWeapons.Length ? Libraries.CWeapons[Weapon] : null;
+                                WeaponEffectLibrary1 = WeaponEffect > 0 && WeaponEffect < Libraries.CWeaponEffect.Length ? Libraries.CWeaponEffect[WeaponEffect] : null;
                                 WeaponLibrary2 = null;
+                                WeaponEffectLibrary2 = null;
                             }
-							else
-							{
-								WeaponLibrary1 = null;
-								WeaponEffectLibrary1 = null;
-								WeaponLibrary2 = null;
-							}
-						}
+                            else
+                            {
+                                WeaponLibrary1 = null;
+                                WeaponLibrary2 = null;
+                                WeaponEffectLibrary1 = null;
+                                WeaponEffectLibrary2 = null;
+                            }
+                        }
+
                         #endregion
 
                         #region WingEffects
@@ -3994,6 +3994,7 @@ namespace Client.MirObjects
             int y = CurrentLocation.Y - CurrentLocation.Y % 2;
             if (GameScene.Scene.MapControl.M2CellInfo[x, y].FrontIndex > 199) return; //prevents any move sounds on non mir2 maps atm
             if (GameScene.Scene.MapControl.M2CellInfo[x, y].MiddleIndex > 199) return; //prevents any move sounds on non mir2 maps atm
+            //if (GameScene.Scene.MapControl.M2CellInfo[x, y].BackIndex > 199) return; //prevents any move sounds on non mir2 maps atm
 
             if (RidingMount)
             {

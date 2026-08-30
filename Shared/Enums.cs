@@ -778,9 +778,37 @@ public enum Monster : ushort
     Mon616T = 616,
     Mon617T = 617,
     Mon620B = 620,  //Mon63.wil
+    Mon621N = 621,
     Mon622N = 622,
     Mon623N = 623,
-    Mon624N = 624,
+    Mon624B = 624,  //Mon64.wil
+    Mon625N = 625,
+    Mon626N = 626,
+    Mon627N = 627,
+    Mon628P = 628,  //Mon65.wil
+    Mon629P = 629,
+    Mon630P = 630,
+    Mon631P = 631,
+    Mon632T = 632,
+    Mon633T = 633,
+    Mon634T = 634,
+    Mon635N = 635,
+    Mon636P = 636,
+    Mon637B = 637,  //Mon66.wil
+    Mon638P = 638,  //Mon67.wil
+    Mon639N = 639,
+    Mon640N = 640,
+    Mon641N = 641,
+    Mon642T = 642,
+    Mon643T = 643,
+    Mon644T = 644,
+    Mon645T = 645,
+    Mon646N = 646,
+    Mon647N = 647,
+    Mon648N = 648,
+    Mon649B = 649,  //Mon68.wil
+    Mon650N = 650,
+    Mon651P = 651,
     //B=Boss D=Door N=Normal P=Peculiar S=Stoned T=Tree
 
     //Special
@@ -1487,8 +1515,8 @@ public enum SpellEffect : byte
     Mon573BCobweb,
     Mon580BLightning,
     Mon580BSpikeTrap,
+    Mon621NSpikes,
     Mon622NSpikes,
-    Mon623NSpikes,
 }
 
 public enum BuffType : ushort
