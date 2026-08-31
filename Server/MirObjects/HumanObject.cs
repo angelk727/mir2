@@ -4379,6 +4379,8 @@ namespace Server.MirObjects
             target.OperateTime = 0;
             target.MaxPetLevel = (byte)(1 + magic.Level * 2);
 
+            target.RefreshNameColour();
+
             if (!Settings.PetSave)
             {
                 target.TameTime = Envir.Time + (Settings.Minute * 60);
@@ -5160,7 +5162,7 @@ namespace Server.MirObjects
             for (int x = location.X - 1; x <= location.X + 1; x++)
             {
                 if (x < 0 || x >= CurrentMap.Width) continue;
-                for (int y = location.Y - 1; y < location.Y + 1; y++)
+                for (int y = location.Y - 1; y <= location.Y + 1; y++)
                 {
                     if (y < 0 || y >= CurrentMap.Height) continue;
                     if (!CurrentMap.ValidPoint(x, y)) continue;

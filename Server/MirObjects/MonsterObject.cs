@@ -960,7 +960,7 @@ namespace Server.MirObjects
         {
             if (ShockTime < Envir.Time) BindingShotCenter = false;
 
-            Color colour = NameColour;
+			Color colour = Color.White;
 
             if (Master != null)
             {
