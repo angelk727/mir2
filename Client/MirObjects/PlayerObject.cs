@@ -438,13 +438,13 @@ namespace Client.MirObjects
                         #region Armours
                         if (altAnim)
                         {
-                            BodyLibrary = Armour < Libraries.ARArmours.Length ? Libraries.ARArmours[Armour] : Libraries.ARArmours[0];
-                            HairLibrary = Hair < Libraries.ARHair.Length ? Libraries.ARHair[Hair] : null;
+                            BodyLibrary = Armour >= 0 && Armour < Libraries.ARArmours.Length ? Libraries.ARArmours[Armour] : Libraries.ARArmours[0];
+                            HairLibrary = Hair >= 0 && Hair < Libraries.ARHair.Length ? Libraries.ARHair[Hair] : null;
                         }
                         else
                         {
-                            BodyLibrary = Armour < Libraries.CArmours.Length ? Libraries.CArmours[Armour] : Libraries.CArmours[0];
-                            HairLibrary = Hair < Libraries.CHair.Length ? Libraries.CHair[Hair] : null;
+                            BodyLibrary = Armour >= 0 && Armour < Libraries.CArmours.Length ? Libraries.CArmours[Armour] : Libraries.CArmours[0];
+                            HairLibrary = Hair >= 0 && Hair < Libraries.CHair.Length ? Libraries.CHair[Hair] : null;
                         }
                         #endregion
 
@@ -453,44 +453,32 @@ namespace Client.MirObjects
                         {
                             int Index = Weapon - 200;
 
+                            WeaponLibrary1 = null;
+                            WeaponEffectLibrary1 = null;
                             if (altAnim)
                             {
-                                WeaponLibrary2 = Index < Libraries.ARWeaponsS.Length ? Libraries.ARWeaponsS[Index] : null;
-
-                                if (WeaponEffect > 0)
-                                    WeaponEffectLibrary2 = WeaponEffect < Libraries.ARWeaponsEffectS.Length ? Libraries.ARWeaponsEffectS[WeaponEffect] : null;
-                                else
-                                    WeaponEffectLibrary2 = null;
+                                WeaponLibrary2 = Index >= 0 && Index < Libraries.ARWeaponsS.Length ? Libraries.ARWeaponsS[Index] : null;
+                                WeaponEffectLibrary2 = WeaponEffect > 0 && WeaponEffect < Libraries.ARWeaponsEffectS.Length ? Libraries.ARWeaponsEffectS[WeaponEffect] : null;
                             }
                             else
                             {
-                                WeaponLibrary2 = Index < Libraries.ARWeapons.Length ? Libraries.ARWeapons[Index] : null;
-
-                                if (WeaponEffect > 0)
-                                    WeaponEffectLibrary2 = WeaponEffect < Libraries.ARWeaponsEffect.Length ? Libraries.ARWeaponsEffect[WeaponEffect] : null;
-                                else
-                                    WeaponEffectLibrary2 = null;
+                                WeaponLibrary2 = Index >= 0 && Index < Libraries.ARWeapons.Length ? Libraries.ARWeapons[Index] : null;
+                                WeaponEffectLibrary2 = WeaponEffect > 0 && WeaponEffect < Libraries.ARWeaponsEffect.Length ? Libraries.ARWeaponsEffect[WeaponEffect] : null;
                             }
-
-                            WeaponLibrary1 = null;
                         }
                         else
                         {
+                            WeaponLibrary2 = null;
+                            WeaponEffectLibrary2 = null;
 							if (Weapon >= 0)
 							{
 								WeaponLibrary1 = Weapon < Libraries.CWeapons.Length ? Libraries.CWeapons[Weapon] : null;
-								if (WeaponEffect > 0)
-									WeaponEffectLibrary1 = WeaponEffect < Libraries.CWeaponEffect.Length ? Libraries.CWeaponEffect[WeaponEffect] : null;
-								else
-									WeaponEffectLibrary1 = null;
-
-                                WeaponLibrary2 = null;
+                                WeaponEffectLibrary1 = WeaponEffect > 0 && WeaponEffect < Libraries.CWeaponEffect.Length ? Libraries.CWeaponEffect[WeaponEffect] : null;
                             }
 							else
 							{
 								WeaponLibrary1 = null;
 								WeaponEffectLibrary1 = null;
-								WeaponLibrary2 = null;
 							}
 						}
                         #endregion
@@ -498,10 +486,19 @@ namespace Client.MirObjects
                         #region WingEffects
                         if (WingEffect > 0 && WingEffect < 100)
                         {
+                            int Index = WingEffect - 1;
                             if (altAnim)
-                                WingLibrary = (WingEffect - 1) < Libraries.ARHumEffect.Length ? Libraries.ARHumEffect[WingEffect - 1] : null;
+                            {
+                                WingLibrary = Index >= 0 && Index < Libraries.ARHumEffect.Length ? Libraries.ARHumEffect[Index] : null;
+                            }
                             else
-                                WingLibrary = (WingEffect - 1) < Libraries.CHumEffect.Length ? Libraries.CHumEffect[WingEffect - 1] : null;
+                            {
+                                WingLibrary = Index >= 0 && Index < Libraries.CHumEffect.Length ? Libraries.CHumEffect[Index] : null;
+                            }
+                        }
+                        else
+                        {
+                            WingLibrary = null;
                         }
                         #endregion
 
@@ -638,13 +635,16 @@ namespace Client.MirObjects
 								WeaponEffectLibrary1 = WeaponEffect < Libraries.CWeaponEffect.Length ? Libraries.CWeaponEffect[WeaponEffect] : null;
 							else
 								WeaponEffectLibrary1 = null;
-						}
-						else
-						{
-							WeaponLibrary1 = null;
-							WeaponEffectLibrary1 = null;
-							WeaponLibrary2 = null;
-						}
+                            WeaponLibrary2 = null;
+                            WeaponEffectLibrary2 = null;
+                        }
+                        else
+                        {
+                            WeaponLibrary1 = null;
+                            WeaponEffectLibrary1 = null;
+                            WeaponLibrary2 = null;
+                            WeaponEffectLibrary2 = null;
+                        }
 
 						#endregion
 
@@ -1627,6 +1627,8 @@ namespace Client.MirObjects
                                 SoundManager.PlaySound(20000 + (ushort)Spell * 10 + (Gender == MirGender.男性 ? 0 : 1));
                                 break;
                             case Spell.DoubleSlash:
+                                if (HasClassWeapon || Weapon < 0)
+                                {
                                 FrameInterval = (int)(FrameInterval * 0.46f); //46% Animation Speed
                                 EffectFrameInterval = (int)(EffectFrameInterval * 0.46f);
 
@@ -1635,6 +1637,11 @@ namespace Client.MirObjects
                                 ActionFeed.Insert(0, action);
 
                                 SoundManager.PlaySound(20000 + (ushort)Spell * 10);
+                                }
+                                else
+                                {
+                                    Frames.TryGetValue(CurrentAction, out Frame);
+                                }
                                 break;
                             case Spell.Thrusting:
                                 SoundManager.PlaySound(20000 + (ushort)Spell * 10);
