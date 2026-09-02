@@ -1962,6 +1962,15 @@ namespace Client.MirObjects
                                                 Effect Mon590NEffect = new Effect(Libraries.Monsters[(ushort)Monster.Mon590N], 456, 6, 300, front, CMain.Time);
                                                 MapControl.Effects.Add(Mon590NEffect);
                                                 break;
+                                            case Monster.Mon624B:
+                                                MapObject Mon624Bob1 = MapControl.GetObject(TargetID);
+                                                if (Mon624Bob1 != null)
+                                                    break;
+                                                if (CMain.Random.Next(100) < 30)
+                                                {
+                                                    Mon624Bob1.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon624B], 456, 7, 600, Mon624Bob1));
+                                                }
+                                                break;
                                         }
                                     }
                                     break;
@@ -2208,6 +2217,11 @@ namespace Client.MirObjects
                                             case Monster.Mon603B:
                                                 Effect Mon603BEffect = new Effect(Libraries.Monsters[(ushort)Monster.Mon603B], 432, 7, 300, front, CMain.Time);
                                                 MapControl.Effects.Add(Mon603BEffect);
+                                                break;
+                                            case Monster.Mon624B:
+                                                MapObject Mon624Bob2 = MapControl.GetObject(TargetID);
+                                                if (Mon624Bob2 != null)
+                                                    Mon624Bob2.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon624B], 527, 9, 600, Mon624Bob2));
                                                 break;
                                         }
                                     }
@@ -2495,6 +2509,11 @@ namespace Client.MirObjects
                                             break;
                                         case Monster.CrystalBeast: //499
                                             Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.CrystalBeast], 1229 + (int)Direction * 5, 5, 300, this));
+                                            break;
+                                        case Monster.Mon624B:
+                                            MapObject Mon624Bob3 = MapControl.GetObject(TargetID);
+                                            if (Mon624Bob3 != null)
+                                                Mon624Bob3.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon624B], 639, 8, 600, Mon624Bob3));
                                             break;
                                     }
                                     break;
@@ -3946,7 +3965,24 @@ namespace Client.MirObjects
                                                     };
                                                 }
                                                 break;
+                                            case Monster.Mon624B:
+                                                {
+                                                    ob = MapControl.GetObject(TargetID);
 
+                                                    if (ob == null)
+                                                        break;
+
+                                                    ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon624B], 536, 7, 800, ob));
+
+                                                    if (CMain.Random.Next(100) < 50)
+                                                    {
+                                                        ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon624B], 543, 8, 600, ob));
+
+                                                        if (CMain.Random.Next(100) < 10)
+                                                            ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon624B], 551, 8, 900, ob) { Blend = true });
+                                                    }
+                                                    break;
+                                                }
                                         }
                                         break;
                                     }//end of case 4
@@ -8246,6 +8282,17 @@ namespace Client.MirObjects
                             Libraries.Monsters[(ushort)Monster.Mon622N].DrawBlend((970 + FrameIndex + (int)Direction * 10), DrawLocation, Color.White, true);
                             //Libraries.Monsters[(ushort)Monster.Mon622N].DrawBlend((1060 + FrameIndex + (int)Direction * 10), DrawLocation, Color.White, true);
                             Libraries.Monsters[(ushort)Monster.Mon622N].DrawBlend((1150 + FrameIndex + (int)Direction * 10), DrawLocation, Color.White, true);
+                            break;
+                    }
+                    break;
+                case Monster.Mon624B:
+                    switch (CurrentAction)
+                    {
+                        case MirAction.近距攻击2:
+                            Libraries.Monsters[(ushort)Monster.Mon624B].DrawBlend((463 + FrameIndex + (int)Direction * 8), DrawLocation, Color.White, true);
+                            break;
+                        case MirAction.近距攻击3:
+                            Libraries.Monsters[(ushort)Monster.Mon624B].DrawBlend((559 + FrameIndex + (int)Direction * 10), DrawLocation, Color.White, true);
                             break;
                     }
                     break;
