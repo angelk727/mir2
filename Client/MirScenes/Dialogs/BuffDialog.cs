@@ -319,7 +319,7 @@ namespace Client.MirScenes.Dialogs
                     break;
                 case BuffType.先天气功:
                     overridestats = true;
-                    text += GameLanguage.ClientTextMap.GetLocalization((ClientTextKeys.ChanceGainHpWhenAttacked), buff.Stats[Stat.气功盾恢复数率], buff.Stats[Stat.气功盾恢复生命值]);
+                    text += GameLanguage.ClientTextMap.GetLocalization((ClientTextKeys.ChanceGainHpWhenAttacked), buff.Stats[Stat.气功盾恢复百分比], buff.Stats[Stat.气功盾恢复生命值]);
                     break;
                 case BuffType.烈火身:
                     text += GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.InvisibleToManyMonstersAbleToMove);
@@ -335,18 +335,18 @@ namespace Client.MirScenes.Dialogs
                     break;
                 case BuffType.深延术:
                     overridestats = true;
-                    text += GameLanguage.ClientTextMap.GetLocalization((ClientTextKeys.IncreaseMcAndConsumption), buff.Stats[Stat.MinMC], buff.Stats[Stat.MaxMC], buff.Stats[Stat.法力值消耗数率]);
+                    text += GameLanguage.ClientTextMap.GetLocalization((ClientTextKeys.IncreaseMcAndConsumption), buff.Stats[Stat.MinMC], buff.Stats[Stat.MaxMC], buff.Stats[Stat.法力值消耗百分比]);
                     break;
                 case BuffType.天上秘术:
                     text += GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.DisguisesYourAppearance);
                     break;
                 case BuffType.万效符:
                     text += GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.LearnSkillPointsTwiceAsQuick);
-                    text += string.Format("受到的伤害减少{0}%", buff.Stats[Stat.伤害减免数率] );
+                    text += string.Format("受到的伤害减少{0}%", buff.Stats[Stat.伤害减免] );
                     break;
                 case BuffType.万效符秘籍:
                     overridestats = true;
-                    text += string.Format("受到的伤害减少{0}%", buff.Stats[Stat.伤害减免数率] );
+                    text += string.Format("受到的伤害减少{0}%", buff.Stats[Stat.伤害减免] );
                     break;
                 case BuffType.变形效果:
                     text += "改变外形\n功能：免助跑\n";

@@ -296,6 +296,7 @@ namespace Client.MirObjects
                 case Monster.Mon552N:
                 case Monster.Mon575S:
                 case Monster.Mon620B:
+                case Monster.Mon625N:
                     Stoned = info.Extra;
                     break;
             }
@@ -867,13 +868,13 @@ namespace Client.MirObjects
                             case Monster.SpectralWraith: //530
                                 Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.SpectralWraith], 592, 9, 9 * 180, this) { Blend = true });
                                 break;
-                            case Monster.Mon544S: //544
+                            case Monster.Mon544S:
                                 Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon544S], 544, 8, 8 * Frame.Interval, this) { Blend = true, DrawBehind = true });
                                 break;
-                            case Monster.Mon551N: //551
+                            case Monster.Mon551N:
                                 Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon551N], 370, 10, 10 * 200, this) { Blend = true, DrawBehind = true });
                                 break;
-                            case Monster.Mon554N: //554
+                            case Monster.Mon554N:
                                 Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon554N], 346, 10, 10 * 200, this) { Blend = true });
                                 break;
                             case Monster.Mon593N:
@@ -1627,10 +1628,11 @@ namespace Client.MirObjects
                                 case Monster.FireballScroll:
                                 case Monster.PurpleFaeFlower: //466
                                 case Monster.FeralFlameFurbolg: //522,
-                                case Monster.Mon544S: //544
-                                case Monster.Mon552N: //552
+                                case Monster.Mon544S:
+                                case Monster.Mon552N:
                                 case Monster.Mon575S:
                                 case Monster.Mon620B:
+                                case Monster.Mon625N:
                                     Stoned = false;
                                     break;
                                 case Monster.Shinsu:
@@ -1723,6 +1725,7 @@ namespace Client.MirObjects
                                 case Monster.Mon552N:
                                 case Monster.Mon575S:
                                 case Monster.Mon620B:
+                                case Monster.Mon625N:
                                     Stoned = true;
                                     return;
                             }
@@ -1964,11 +1967,20 @@ namespace Client.MirObjects
                                                 break;
                                             case Monster.Mon624B:
                                                 MapObject Mon624Bob1 = MapControl.GetObject(TargetID);
-                                                if (Mon624Bob1 != null)
+                                                if (Mon624Bob1 == null)
                                                     break;
                                                 if (CMain.Random.Next(100) < 30)
                                                 {
                                                     Mon624Bob1.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon624B], 456, 7, 600, Mon624Bob1));
+                                                }
+                                                break;
+                                            case Monster.Mon625N:
+                                                MapObject Mon625Nob1 = MapControl.GetObject(TargetID);
+                                                if (Mon625Nob1 == null)
+                                                    break;
+                                                if (CMain.Random.Next(100) < 70)
+                                                {
+                                                    Mon625Nob1.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon625N], 529, 6, 600, Mon625Nob1));
                                                 }
                                                 break;
                                         }
@@ -7807,7 +7819,7 @@ namespace Client.MirObjects
                             break;
                     }
                     break;
-                case Monster.Mon541N: //541
+                case Monster.Mon541N:
                     switch (CurrentAction)
                     {
 
@@ -7816,7 +7828,7 @@ namespace Client.MirObjects
                             break;
                     }
                     break;
-                case Monster.Mon544S: //544
+                case Monster.Mon544S:
                     switch (CurrentAction)
                     {
 
@@ -7828,7 +7840,7 @@ namespace Client.MirObjects
                             break;
                     }
                     break;
-                case Monster.Mon545N: //545
+                case Monster.Mon545N:
                     switch (CurrentAction)
                     {
                         case MirAction.站立动作:
@@ -8293,6 +8305,17 @@ namespace Client.MirObjects
                             break;
                         case MirAction.近距攻击3:
                             Libraries.Monsters[(ushort)Monster.Mon624B].DrawBlend((559 + FrameIndex + (int)Direction * 10), DrawLocation, Color.White, true);
+                            break;
+                    }
+                    break;
+                case Monster.Mon625N:
+                    switch (CurrentAction)
+                    {
+                        case MirAction.近距攻击2:
+                            Libraries.Monsters[(ushort)Monster.Mon625N].DrawBlend((535 + FrameIndex + (int)Direction * 10), DrawLocation, Color.White, true);
+                            break;
+                        case MirAction.近距攻击3:
+                            Libraries.Monsters[(ushort)Monster.Mon625N].DrawBlend((615 + FrameIndex + (int)Direction * 10), DrawLocation, Color.White, true);
                             break;
                     }
                     break;

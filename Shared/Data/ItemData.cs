@@ -122,9 +122,9 @@ public class ItemInfo
 
         if (version <= 84)
         {
-            Stats[Stat.背包负重] = reader.ReadByte();
-            Stats[Stat.腕力负重] = reader.ReadByte();
-            Stats[Stat.装备负重] = reader.ReadByte();
+            Stats[Stat.背包重量] = reader.ReadByte();
+            Stats[Stat.腕力] = reader.ReadByte();
+            Stats[Stat.负重] = reader.ReadByte();
         }
 
         Effect = reader.ReadByte();
@@ -137,8 +137,8 @@ public class ItemInfo
             Stats[Stat.生命恢复] = reader.ReadByte();
             Stats[Stat.法力恢复] = reader.ReadByte();
             Stats[Stat.中毒恢复] = reader.ReadByte();
-            Stats[Stat.生命值数率] = reader.ReadByte();
-            Stats[Stat.法力值数率] = reader.ReadByte();
+            Stats[Stat.生命值强化] = reader.ReadByte();
+            Stats[Stat.法力值强化] = reader.ReadByte();
             Stats[Stat.暴击率] = reader.ReadByte();
             Stats[Stat.暴击伤害] = reader.ReadByte();
         }
@@ -158,8 +158,8 @@ public class ItemInfo
 
         if (version <= 84)
         {
-            Stats[Stat.强化防御] = reader.ReadByte();
-            Stats[Stat.强化魔法防御] = reader.ReadByte();
+            Stats[Stat.防御强化] = reader.ReadByte();
+            Stats[Stat.魔法防御强化] = reader.ReadByte();
             Stats[Stat.神圣] = reader.ReadByte();
             Stats[Stat.冰冻伤害] = reader.ReadByte();
             Stats[Stat.毒素伤害] = reader.ReadByte();
@@ -170,7 +170,7 @@ public class ItemInfo
         if (version <= 84)
         {
             Stats[Stat.反弹伤害] = reader.ReadByte();
-            Stats[Stat.吸血数率] = reader.ReadByte();
+            Stats[Stat.生命偷取] = reader.ReadByte();
         }
 
         Unique = (SpecialItemMode)reader.ReadInt16();
@@ -963,9 +963,9 @@ public class Awake
         {
             if (item.Info.Type == ItemType.武器)
             {
-                if (type == AwakeType.物理攻击 ||
-                    type == AwakeType.魔法攻击 ||
-                    type == AwakeType.道术攻击)
+                if (type == AwakeType.攻击 ||
+                    type == AwakeType.魔法 ||
+                    type == AwakeType.道术)
                 {
                     this.Type = type;
                     return true;
@@ -975,7 +975,7 @@ public class Awake
             }
             else if (item.Info.Type == ItemType.头盔)
             {
-                if (type == AwakeType.物理防御 ||
+                if (type == AwakeType.防御 ||
                     type == AwakeType.魔法防御)
                 {
                     this.Type = type;
@@ -1047,10 +1047,10 @@ public class Awake
 
     public int GetAwakeLevelValue(int i) { return listAwake[i]; }
 
-    public byte GetDC() { return (Type == AwakeType.物理攻击 ? GetAwakeValue() : (byte)0); }
-    public byte GetMC() { return (Type == AwakeType.魔法攻击 ? GetAwakeValue() : (byte)0); }
-    public byte GetSC() { return (Type == AwakeType.道术攻击 ? GetAwakeValue() : (byte)0); }
-    public byte GetAC() { return (Type == AwakeType.物理防御 ? GetAwakeValue() : (byte)0); }
+    public byte GetDC() { return (Type == AwakeType.攻击 ? GetAwakeValue() : (byte)0); }
+    public byte GetMC() { return (Type == AwakeType.魔法 ? GetAwakeValue() : (byte)0); }
+    public byte GetSC() { return (Type == AwakeType.道术 ? GetAwakeValue() : (byte)0); }
+    public byte GetAC() { return (Type == AwakeType.防御 ? GetAwakeValue() : (byte)0); }
     public byte GetMAC() { return (Type == AwakeType.魔法防御 ? GetAwakeValue() : (byte)0); }
     public byte GetHPMP() { return (Type == AwakeType.生命法力值 ? GetAwakeValue() : (byte)0); }
 

@@ -160,30 +160,30 @@ namespace Client.MirObjects
             long temp;
 
             temp = Stats[Stat.HP];
-            if (temp > 0 && Stats[Stat.生命值数率] != 0)
+            if (temp > 0 && Stats[Stat.生命值强化] != 0)
             {
-                temp += temp * Stats[Stat.生命值数率] / 100;
+                temp += temp * Stats[Stat.生命值强化] / 100;
                 Stats[Stat.HP] = (int)Math.Min(temp, int.MaxValue);
             }
 
             temp = Stats[Stat.MP];
-            if (temp > 0 && Stats[Stat.法力值数率] != 0)
+            if (temp > 0 && Stats[Stat.法力值强化] != 0)
             {
-                temp += temp * Stats[Stat.法力值数率] / 100;
+                temp += temp * Stats[Stat.法力值强化] / 100;
                 Stats[Stat.MP] = (int)Math.Min(temp, int.MaxValue);
             }
 
             temp = Stats[Stat.MaxAC];
-            if (temp > 0 && Stats[Stat.强化防御] != 0)
+            if (temp > 0 && Stats[Stat.防御强化] != 0)
             {
-                temp += temp * Stats[Stat.强化防御] / 100;
+                temp += temp * Stats[Stat.防御强化] / 100;
                 Stats[Stat.MaxAC] = (int)Math.Min(temp, int.MaxValue);
             }
 
             temp = Stats[Stat.MaxMAC];
-            if (temp > 0 && Stats[Stat.强化魔法防御] != 0)
+            if (temp > 0 && Stats[Stat.魔法防御强化] != 0)
             {
-                temp += temp * Stats[Stat.强化魔法防御] / 100;
+                temp += temp * Stats[Stat.魔法防御强化] / 100;
                 Stats[Stat.MaxMAC] = (int)Math.Min(temp, int.MaxValue);
             }
 
@@ -195,23 +195,23 @@ namespace Client.MirObjects
             }
 
             temp = Stats[Stat.MaxMC];
-            if (temp > 0 && Stats[Stat.魔法攻击强化] != 0)
+            if (temp > 0 && Stats[Stat.魔法强化] != 0)
             {
-                temp += temp * Stats[Stat.魔法攻击强化] / 100;
+                temp += temp * Stats[Stat.魔法强化] / 100;
                 Stats[Stat.MaxMC] = (int)Math.Min(temp, int.MaxValue);
             }
 
             temp = Stats[Stat.MaxSC];
-            if (temp > 0 && Stats[Stat.道术攻击强化] != 0)
+            if (temp > 0 && Stats[Stat.道术强化] != 0)
             {
-                temp += temp * Stats[Stat.道术攻击强化] / 100;
+                temp += temp * Stats[Stat.道术强化] / 100;
                 Stats[Stat.MaxSC] = (int)Math.Min(temp, int.MaxValue);
             }
 
             temp = Stats[Stat.攻击速度];
-            if (temp > 0 && Stats[Stat.攻击速度强化] != 0)
+            if (temp > 0 && Stats[Stat.攻速强化] != 0)
             {
-                temp += temp * Stats[Stat.攻击速度强化] / 100;
+                temp += temp * Stats[Stat.攻速强化] / 100;
                 Stats[Stat.攻击速度] = (int)Math.Min(temp, int.MaxValue);
             }
 
@@ -380,9 +380,9 @@ namespace Client.MirObjects
 
             if (ItemMode.HasFlag(SpecialItemMode.Muscle))
             {
-                Stats[Stat.背包负重] = Stats[Stat.背包负重] * 2;
-                Stats[Stat.装备负重] = Stats[Stat.装备负重] * 2;
-                Stats[Stat.腕力负重] = Stats[Stat.腕力负重] * 2;
+                Stats[Stat.背包重量] = Stats[Stat.背包重量] * 2;
+                Stats[Stat.负重] = Stats[Stat.负重] * 2;
+                Stats[Stat.腕力] = Stats[Stat.腕力] * 2;
             }
         }
 
@@ -455,8 +455,8 @@ namespace Client.MirObjects
 
                 if ((s.Set == ItemSet.幻魔石套) && (s.Type.Contains(ItemType.戒指)) && (s.Type.Contains(ItemType.手镯)))
                 {
-                    Stats[Stat.装备负重] += 5;
-                    Stats[Stat.背包负重] += 20;
+                    Stats[Stat.负重] += 5;
+                    Stats[Stat.背包重量] += 20;
                 }
 
                 if ((s.Set == ItemSet.鏃未套装) && (s.Type.Contains(ItemType.项链)) && (s.Type.Contains(ItemType.手镯)))
@@ -506,7 +506,7 @@ namespace Client.MirObjects
                     }
                     if (s.Type.Contains(ItemType.盔甲) && s.Type.Contains(ItemType.戒指) && s.Type.Contains(ItemType.手镯) && s.Type.Contains(ItemType.项链))
                     {
-                        Stats[Stat.强化防御] += 20;// 如何实现 20%几率降低20%的伤害持续15秒冷却时间120秒
+                        Stats[Stat.防御强化] += 20;// 如何实现 20%几率降低20%的伤害持续15秒冷却时间120秒
                     }
                     if (s.Type.Contains(ItemType.武器) && s.Type.Contains(ItemType.头盔) && s.Type.Contains(ItemType.腰带) && s.Type.Contains(ItemType.靴子))
                     {
@@ -542,7 +542,7 @@ namespace Client.MirObjects
                         break;
                     case ItemSet.赤兰套装:
                         Stats[Stat.准确] += 2;
-                        Stats[Stat.吸血数率] += 10;
+                        Stats[Stat.生命偷取] += 10;
                         break;
                     case ItemSet.密火套装:
                         Stats[Stat.HP] += 50;
@@ -558,7 +558,7 @@ namespace Client.MirObjects
                         break;
                     case ItemSet.五玄套装:
                         //Stats[Stat.HP] += (int)(((double)Stats[Stat.HP] / 100) * 30);
-                        Stats[Stat.生命值数率] += 30;
+                        Stats[Stat.生命值强化] += 30;
                         Stats[Stat.MinAC] += 2;
                         Stats[Stat.MaxAC] += 2;
                         break;
@@ -567,7 +567,7 @@ namespace Client.MirObjects
                         Stats[Stat.MaxDC] += 5;
                         Stats[Stat.攻击速度] += 4;
                         //Stats[Stat.MP] += (int)(((double)Stats[Stat.MP] / 100) * 30);
-                        Stats[Stat.法力值数率] += 30;
+                        Stats[Stat.法力值强化] += 30;
                         break;
                     case ItemSet.白骨套装:
                         Stats[Stat.MaxAC] += 2;
@@ -584,33 +584,33 @@ namespace Client.MirObjects
                     case ItemSet.白金套装:
                         Stats[Stat.MaxDC] += 2;
                         Stats[Stat.MaxAC] += 2;
-                        Stats[Stat.腕力负重] += 1;
-                        Stats[Stat.装备负重] += 2;
+                        Stats[Stat.腕力] += 1;
+                        Stats[Stat.负重] += 2;
                         break;
                     case ItemSet.强白金套:
                         Stats[Stat.MaxDC] += 3;
                         Stats[Stat.HP] += 30;
                         Stats[Stat.攻击速度] += 2;
-                        Stats[Stat.装备负重] += 2;
+                        Stats[Stat.负重] += 2;
                         break;
                     case ItemSet.红玉套装:
                         Stats[Stat.MaxMC] += 2;
                         Stats[Stat.MaxMAC] += 2;
-                        Stats[Stat.腕力负重] += 1;
-                        Stats[Stat.装备负重] += 2;
+                        Stats[Stat.腕力] += 1;
+                        Stats[Stat.负重] += 2;
                         break;
                     case ItemSet.强红玉套:
                         Stats[Stat.MaxMC] += 2;
                         Stats[Stat.MP] += 40;
                         Stats[Stat.敏捷] += 2;
-                        Stats[Stat.装备负重] += 2;
+                        Stats[Stat.负重] += 2;
                         break;
                     case ItemSet.软玉套装:
                         Stats[Stat.MaxSC] += 2;
                         Stats[Stat.MaxAC] += 1;
                         Stats[Stat.MaxMAC] += 1;
-                        Stats[Stat.腕力负重] += 1;
-                        Stats[Stat.装备负重] += 2;
+                        Stats[Stat.腕力] += 1;
+                        Stats[Stat.负重] += 2;
                         break;
                     case ItemSet.强软玉套:
                         Stats[Stat.MaxSC] += 2;
@@ -619,32 +619,32 @@ namespace Client.MirObjects
                         Stats[Stat.HP] += 15;
                         Stats[Stat.MP] += 20;
                         Stats[Stat.敏捷] += 1;
-                        Stats[Stat.装备负重] += 2;
+                        Stats[Stat.负重] += 2;
                         break;
                     case ItemSet.贵人战套:
                         Stats[Stat.MinDC] += 1;
                         Stats[Stat.MaxDC] += 1;
-                        Stats[Stat.背包负重] += 25;
+                        Stats[Stat.背包重量] += 25;
                         break;
                     case ItemSet.贵人法套:
                         Stats[Stat.MinMC] += 1;
                         Stats[Stat.MaxMC] += 1;
-                        Stats[Stat.背包负重] += 17;
+                        Stats[Stat.背包重量] += 17;
                         break;
                     case ItemSet.贵人道套:
                         Stats[Stat.MinSC] += 1;
                         Stats[Stat.MaxSC] += 1;
-                        Stats[Stat.背包负重] += 17;
+                        Stats[Stat.背包重量] += 17;
                         break;
                     case ItemSet.贵人刺套:
                         Stats[Stat.MinDC] += 1;
                         Stats[Stat.MaxDC] += 1;
-                        Stats[Stat.背包负重] += 20;
+                        Stats[Stat.背包重量] += 20;
                         break;
                     case ItemSet.贵人弓套:
                         Stats[Stat.MaxDC] += 1;
                         Stats[Stat.MaxMC] += 1;
-                        Stats[Stat.背包负重] += 20;
+                        Stats[Stat.背包重量] += 20;
                         break;
                     case ItemSet.血龙套装:
                         Stats[Stat.神圣] += 3;
@@ -665,8 +665,8 @@ namespace Client.MirObjects
                         Stats[Stat.MinAC] += 1;
                         Stats[Stat.MaxAC] += 1;
                         Stats[Stat.MaxMAC] += 1;
-                        Stats[Stat.腕力负重] += 1;
-                        Stats[Stat.装备负重] += 2;
+                        Stats[Stat.腕力] += 1;
+                        Stats[Stat.负重] += 2;
                         break;
                     case ItemSet.强青玉套:
                         Stats[Stat.MinDC] += 1;
@@ -695,7 +695,7 @@ namespace Client.MirObjects
                 Stats[Stat.MaxDC] += 3;
                 Stats[Stat.MaxMC] += 3;
                 Stats[Stat.MaxSC] += 3;
-                Stats[Stat.腕力负重] += 20;
+                Stats[Stat.腕力] += 20;
             }
             if (MirSet.Contains(EquipmentSlot.项链) &&
                (MirSet.Contains(EquipmentSlot.左手镯) || MirSet.Contains(EquipmentSlot.右手镯)) &&
@@ -708,9 +708,9 @@ namespace Client.MirObjects
                 Stats[Stat.MinSC] += 2;
                 Stats[Stat.MaxSC] += 6;
                 Stats[Stat.攻击速度] += 2;
-                Stats[Stat.背包负重] += 60;
-                Stats[Stat.装备负重] += 30;
-                Stats[Stat.腕力负重] += 30;
+                Stats[Stat.背包重量] += 60;
+                Stats[Stat.负重] += 30;
+                Stats[Stat.腕力] += 30;
             }
             if (MirSet.Contains(EquipmentSlot.盔甲) &&
                 MirSet.Contains(EquipmentSlot.武器) &&

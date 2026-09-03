@@ -105,13 +105,13 @@ namespace Server.MirObjects.Monsters
 
                             if (Envir.Time >= _BuffTime)
                             {
-                                var hpRate = (Stats[Stat.生命值数率] - 25);
-                                var mpRate = (Stats[Stat.法力值数率] - 25);
+                                var hpRate = (Stats[Stat.生命值强化] - 25);
+                                var mpRate = (Stats[Stat.法力值强化] - 25);
 
                                 var stats = new Stats
                                 {
-                                    [Stat.生命值数率] = hpRate,
-                                    [Stat.法力值数率] = mpRate,
+                                    [Stat.生命值强化] = hpRate,
+                                    [Stat.法力值强化] = mpRate,
                                 };
                                 Target.AddBuff(BuffType.绝对封锁, this, Settings.Second * 300, stats);
                             }

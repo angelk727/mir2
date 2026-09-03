@@ -131,7 +131,7 @@ namespace Server.MirObjects
         {
             get
             {
-                return !Dead && Envir.Time >= ActionTime && (_stepCounter > 0 || FastRun) && (!Sneaking || ActiveSwiftFeet) && CurrentBagWeight <= Stats[Stat.背包负重] && !CurrentPoison.HasFlag(PoisonType.Paralysis) && !CurrentPoison.HasFlag(PoisonType.LRParalysis) && !CurrentPoison.HasFlag(PoisonType.Frozen);
+                return !Dead && Envir.Time >= ActionTime && (_stepCounter > 0 || FastRun) && (!Sneaking || ActiveSwiftFeet) && CurrentBagWeight <= Stats[Stat.背包重量] && !CurrentPoison.HasFlag(PoisonType.Paralysis) && !CurrentPoison.HasFlag(PoisonType.LRParalysis) && !CurrentPoison.HasFlag(PoisonType.Frozen);
             }
         }
         public virtual bool CanAttack
@@ -546,7 +546,7 @@ namespace Server.MirObjects
 
             if (SpecialMode.HasFlag(SpecialItemMode.Skill) && !skill)
             {
-                AddBuff(BuffType.技巧项链, this, 0, new Stats { [Stat.技能熟练度倍率] = 3 }, false);
+                AddBuff(BuffType.技巧项链, this, 0, new Stats { [Stat.技能熟练度收益] = 3 }, false);
             }
 
             if (Info.Mentor != 0 && !mentor)
@@ -558,11 +558,11 @@ namespace Server.MirObjects
                 {
                     if (Info.IsMentor)
                     {
-                        AddBuff(BuffType.火传穷薪, partnerP, 0, new Stats { [Stat.师徒专享伤害数率] = Settings.MentorDamageBoost });
+                        AddBuff(BuffType.火传穷薪, partnerP, 0, new Stats { [Stat.师徒增伤收益] = Settings.MentorDamageBoost });
                     }
                     else
                     {
-                        AddBuff(BuffType.衣钵相传, partnerP, 0, new Stats { [Stat.师徒专享经验数率] = Settings.MentorExpBoost });
+                        AddBuff(BuffType.衣钵相传, partnerP, 0, new Stats { [Stat.师徒经验收益] = Settings.MentorExpBoost });
                     }
                 }
             }
@@ -574,13 +574,13 @@ namespace Server.MirObjects
 
                 if (loverP != null)
                 {
-                    AddBuff(BuffType.心心相映, loverP, 0, new Stats { [Stat.伴侣专享经验数率] = Settings.LoverEXPBonus });
+                    AddBuff(BuffType.心心相映, loverP, 0, new Stats { [Stat.伴侣经验收益] = Settings.LoverEXPBonus });
                 }
             }
 
             if (MyGuild != null && MyGuild.Name == Settings.NewbieGuild && Settings.NewbieGuildBuffEnabled == true)
             {
-                AddBuff(BuffType.新人特效, this, 0, new Stats { [Stat.经验增长数率] = Settings.NewbieGuildExpBuff });
+                AddBuff(BuffType.新人特效, this, 0, new Stats { [Stat.经验收益] = Settings.NewbieGuildExpBuff });
             }
 
             if (refresh)
@@ -900,8 +900,10 @@ namespace Server.MirObjects
         {
             if (HP == amount) return;
 
-            HP = amount <= Stats[Stat.HP] ? amount : Stats[Stat.HP];
-            HP = GMNeverDie ? Stats[Stat.HP] : HP;
+            int maxHP = Stats[Stat.HP];
+
+            HP = amount > maxHP ? maxHP : amount;
+            HP = GMNeverDie ? maxHP : HP;
 
             if (!Dead && HP == 0) Die();
 
@@ -917,8 +919,10 @@ namespace Server.MirObjects
         {
             if (MP == amount) return;
             //was info.MP
-            MP = amount <= Stats[Stat.MP] ? amount : Stats[Stat.MP];
-            MP = GMNeverDie ? Stats[Stat.MP] : MP;
+            int maxMP = Stats[Stat.MP];
+
+            MP = amount > maxMP ? maxMP : amount;
+            MP = GMNeverDie ? maxMP : MP;
 
             // HealthChanged = true;
             SendHealthChanged();
@@ -931,15 +935,15 @@ namespace Server.MirObjects
                 return;
             }
 
-            if (HP + amount > Stats[Stat.HP])
-                amount = Stats[Stat.HP] - HP;
+            long newHP = (long)HP + amount;
+            int maxHP = Stats[Stat.HP];
 
-            if (amount == 0) return;
+            if (newHP > maxHP) newHP = maxHP;
+            else if (newHP < 0) newHP = 0;
+        
+    if (newHP == HP) return;
 
-            HP += amount;
-            HP = GMNeverDie ? Stats[Stat.HP] : HP;
-
-            if (HP < 0) HP = 0;
+            HP = GMNeverDie ? maxHP : (int)newHP;
 
             if (!Dead && HP == 0) Die();
 
@@ -952,15 +956,15 @@ namespace Server.MirObjects
         }
         public void ChangeMP(int amount)
         {
-            if (MP + amount > Stats[Stat.MP])
-                amount = Stats[Stat.MP] - MP;
+            long newMP = (long)MP + amount;
+            int maxMP = Stats[Stat.MP];
 
-            if (amount == 0) return;
+            if (newMP > maxMP) newMP = maxMP;
+            else if (newMP < 0) newMP = 0;
 
-            MP += amount;
-            MP = GMNeverDie ? Stats[Stat.MP] : MP;
+            if (newMP == MP) return;
 
-            if (MP < 0) MP = 0;
+            MP = GMNeverDie ? maxMP : (int)newMP;
 
             // HealthChanged = true;
             SendHealthChanged();
@@ -1795,30 +1799,35 @@ namespace Server.MirObjects
             long temp;
 
             temp = Stats[Stat.HP];
-            if (temp > 0 && Stats[Stat.生命值数率] != 0)
+            if (temp > 0 && Stats[Stat.生命值强化] != 0)
             {
-                temp += temp * Stats[Stat.生命值数率] / 100;
-                Stats[Stat.HP] = (int)Math.Min(temp, int.MaxValue);
+                long rate = Stats[Stat.生命值强化];
+
+                if (rate <= -100L) temp = 1;
+                else if (rate > 0 && temp > (long)int.MaxValue * 100L / (100L + rate)) temp = int.MaxValue;
+                else temp += temp * rate / 100L;
+
+                Stats[Stat.HP] = (int)Math.Clamp(temp, 1L, (long)int.MaxValue);
             }
 
             temp = Stats[Stat.MP];
-            if (temp > 0 && Stats[Stat.法力值数率] != 0)
+            if (temp > 0 && Stats[Stat.法力值强化] != 0)
             {
-                temp += temp * Stats[Stat.法力值数率] / 100;
+                temp += temp * Stats[Stat.法力值强化] / 100;
                 Stats[Stat.MP] = (int)Math.Min(temp, int.MaxValue);
             }
 
             temp = Stats[Stat.MaxAC];
-            if (temp > 0 && Stats[Stat.强化防御] != 0)
+            if (temp > 0 && Stats[Stat.防御强化] != 0)
             {
-                temp += temp * Stats[Stat.强化防御] / 100;
+                temp += temp * Stats[Stat.防御强化] / 100;
                 Stats[Stat.MaxAC] = (int)Math.Min(temp, int.MaxValue);
             }
 
             temp = Stats[Stat.MaxMAC];
-            if (temp > 0 && Stats[Stat.强化魔法防御] != 0)
+            if (temp > 0 && Stats[Stat.魔法防御强化] != 0)
             {
-                temp += temp * Stats[Stat.强化魔法防御] / 100;
+                temp += temp * Stats[Stat.魔法防御强化] / 100;
                 Stats[Stat.MaxMAC] = (int)Math.Min(temp, int.MaxValue);
             }
 
@@ -1830,23 +1839,23 @@ namespace Server.MirObjects
             }
 
             temp = Stats[Stat.MaxMC];
-            if (temp > 0 && Stats[Stat.魔法攻击强化] != 0)
+            if (temp > 0 && Stats[Stat.魔法强化] != 0)
             {
-                temp += temp * Stats[Stat.魔法攻击强化] / 100;
+                temp += temp * Stats[Stat.魔法强化] / 100;
                 Stats[Stat.MaxMC] = (int)Math.Min(temp, int.MaxValue);
             }
 
             temp = Stats[Stat.MaxSC];
-            if (temp > 0 && Stats[Stat.道术攻击强化] != 0)
+            if (temp > 0 && Stats[Stat.道术强化] != 0)
             {
-                temp += temp * Stats[Stat.道术攻击强化] / 100;
+                temp += temp * Stats[Stat.道术强化] / 100;
                 Stats[Stat.MaxSC] = (int)Math.Min(temp, int.MaxValue);
             }
 
             temp = Stats[Stat.攻击速度];
-            if (temp > 0 && Stats[Stat.攻击速度强化] != 0)
+            if (temp > 0 && Stats[Stat.攻速强化] != 0)
             {
-                temp += temp * Stats[Stat.攻击速度强化] / 100;
+                temp += temp * Stats[Stat.攻速强化] / 100;
                 Stats[Stat.攻击速度] = (int)Math.Min(temp, int.MaxValue);
             }
 
@@ -1929,7 +1938,7 @@ namespace Server.MirObjects
 
             FastRun = false;
 
-            Stats[Stat.技能熟练度倍率] = 1;
+            Stats[Stat.技能熟练度收益] = 1;
 
             var skillsToAdd = new List<string>();
             var skillsToRemove = new List<string> { Settings.HealRing, Settings.FireRing, Settings.BlinkSkill };
@@ -2034,9 +2043,9 @@ namespace Server.MirObjects
 
             if (SpecialMode.HasFlag(SpecialItemMode.Muscle))
             {
-                Stats[Stat.背包负重] = Stats[Stat.背包负重] * 2;
-                Stats[Stat.装备负重] = Stats[Stat.装备负重] * 2;
-                Stats[Stat.腕力负重] = Stats[Stat.腕力负重] * 2;
+                Stats[Stat.背包重量] = Stats[Stat.背包重量] * 2;
+                Stats[Stat.负重] = Stats[Stat.负重] * 2;
+                Stats[Stat.腕力] = Stats[Stat.腕力] * 2;
             }
 
             if ((OldLooks_Armour != Looks_Armour) || (OldLooks_Weapon != Looks_Weapon) || (OldLooks_WeaponEffect != Looks_WeaponEffect) || (OldLooks_Wings != Looks_Wings) || (OldLight != Light))
@@ -2085,7 +2094,7 @@ namespace Server.MirObjects
                 {
                     SpecialMode |= RealItem.Unique;
 
-                    if (RealItem.Unique.HasFlag(SpecialItemMode.Skill)) Stats[Stat.技能熟练度倍率] = 3;
+                    if (RealItem.Unique.HasFlag(SpecialItemMode.Skill)) Stats[Stat.技能熟练度收益] = 3;
 
                     if (RealItem.Unique.HasFlag(SpecialItemMode.Flame)) skillsToAdd.Add(Settings.FireRing);
                     if (RealItem.Unique.HasFlag(SpecialItemMode.Healing)) skillsToAdd.Add(Settings.HealRing);
@@ -2120,8 +2129,8 @@ namespace Server.MirObjects
 
                 if ((s.Set == ItemSet.幻魔石套) && (s.Type.Contains(ItemType.戒指)) && (s.Type.Contains(ItemType.手镯)))
                 {
-                    Stats[Stat.装备负重] += 5;
-                    Stats[Stat.背包负重] += 20;
+                    Stats[Stat.负重] += 5;
+                    Stats[Stat.背包重量] += 20;
                 }
 
                 if ((s.Set == ItemSet.鏃未套装) && (s.Type.Contains(ItemType.项链)) && (s.Type.Contains(ItemType.手镯)))
@@ -2171,7 +2180,7 @@ namespace Server.MirObjects
                     }
                     if (s.Type.Contains(ItemType.盔甲) && s.Type.Contains(ItemType.戒指) && s.Type.Contains(ItemType.手镯) && s.Type.Contains(ItemType.项链))
                     {
-                        Stats[Stat.强化防御] += 20;// 如何实现 20%几率降低20%的伤害持续15秒冷却时间120秒
+                        Stats[Stat.防御强化] += 20;// 如何实现 20%几率降低20%的伤害持续15秒冷却时间120秒
                     }
                     if (s.Type.Contains(ItemType.武器) && s.Type.Contains(ItemType.头盔) && s.Type.Contains(ItemType.腰带) && s.Type.Contains(ItemType.靴子))
                     {
@@ -2207,7 +2216,7 @@ namespace Server.MirObjects
                         break;
                     case ItemSet.赤兰套装:
                         Stats[Stat.准确] += 2;
-                        Stats[Stat.吸血数率] += 10;
+                        Stats[Stat.生命偷取] += 10;
                         break;
                     case ItemSet.密火套装:
                         Stats[Stat.HP] += 50;
@@ -2223,7 +2232,7 @@ namespace Server.MirObjects
                         break;
                     case ItemSet.五玄套装:
                         //Stats[Stat.HP] += (int)(((double)Stats[Stat.HP] / 100) * 30);
-                        Stats[Stat.生命值数率] += 30;
+                        Stats[Stat.生命值强化] += 30;
                         Stats[Stat.MinAC] += 2;
                         Stats[Stat.MaxAC] += 2;
                         break;
@@ -2231,7 +2240,7 @@ namespace Server.MirObjects
                         Stats[Stat.MinDC] += 2;
                         Stats[Stat.MaxDC] += 5;
                         Stats[Stat.攻击速度] += 4;
-                        Stats[Stat.法力值数率] += 30;
+                        Stats[Stat.法力值强化] += 30;
                         break;
                     case ItemSet.白骨套装:
                         Stats[Stat.MaxAC] += 2;
@@ -2248,33 +2257,33 @@ namespace Server.MirObjects
                     case ItemSet.白金套装:
                         Stats[Stat.MaxDC] += 2;
                         Stats[Stat.MaxAC] += 2;
-                        Stats[Stat.腕力负重] += 1;
-                        Stats[Stat.装备负重] += 2;
+                        Stats[Stat.腕力] += 1;
+                        Stats[Stat.负重] += 2;
                         break;
                     case ItemSet.强白金套:
                         Stats[Stat.MaxDC] += 3;
                         Stats[Stat.HP] += 30;
                         Stats[Stat.攻击速度] += 2;
-                        Stats[Stat.装备负重] += 2;
+                        Stats[Stat.负重] += 2;
                         break;
                     case ItemSet.红玉套装:
                         Stats[Stat.MaxMC] += 2;
                         Stats[Stat.MaxMAC] += 2;
-                        Stats[Stat.腕力负重] += 1;
-                        Stats[Stat.装备负重] += 2;
+                        Stats[Stat.腕力] += 1;
+                        Stats[Stat.负重] += 2;
                         break;
                     case ItemSet.强红玉套:
                         Stats[Stat.MaxMC] += 2;
                         Stats[Stat.MP] += 40;
                         Stats[Stat.敏捷] += 2;
-                        Stats[Stat.装备负重] += 2;
+                        Stats[Stat.负重] += 2;
                         break;
                     case ItemSet.软玉套装:
                         Stats[Stat.MaxSC] += 2;
                         Stats[Stat.MaxAC] += 1;
                         Stats[Stat.MaxMAC] += 1;
-                        Stats[Stat.腕力负重] += 1;
-                        Stats[Stat.装备负重] += 2;
+                        Stats[Stat.腕力] += 1;
+                        Stats[Stat.负重] += 2;
                         break;
                     case ItemSet.强软玉套:
                         Stats[Stat.MaxSC] += 2;
@@ -2283,32 +2292,32 @@ namespace Server.MirObjects
                         Stats[Stat.HP] += 15;
                         Stats[Stat.MP] += 20;
                         Stats[Stat.敏捷] += 1;
-                        Stats[Stat.装备负重] += 2;
+                        Stats[Stat.负重] += 2;
                         break;
                     case ItemSet.贵人战套:
                         Stats[Stat.MinDC] += 1;
                         Stats[Stat.MaxDC] += 1;
-                        Stats[Stat.背包负重] += 25;
+                        Stats[Stat.背包重量] += 25;
                         break;
                     case ItemSet.贵人法套:
                         Stats[Stat.MinMC] += 1;
                         Stats[Stat.MaxMC] += 1;
-                        Stats[Stat.背包负重] += 17;
+                        Stats[Stat.背包重量] += 17;
                         break;
                     case ItemSet.贵人道套:
                         Stats[Stat.MinSC] += 1;
                         Stats[Stat.MaxSC] += 1;
-                        Stats[Stat.背包负重] += 17;
+                        Stats[Stat.背包重量] += 17;
                         break;
                     case ItemSet.贵人刺套:
                         Stats[Stat.MinDC] += 1;
                         Stats[Stat.MaxDC] += 1;
-                        Stats[Stat.背包负重] += 20;
+                        Stats[Stat.背包重量] += 20;
                         break;
                     case ItemSet.贵人弓套:
                         Stats[Stat.MaxDC] += 1;
                         Stats[Stat.MaxMC] += 1;
-                        Stats[Stat.背包负重] += 20;
+                        Stats[Stat.背包重量] += 20;
                         break;
                     case ItemSet.血龙套装:
                         Stats[Stat.神圣] += 3;
@@ -2329,8 +2338,8 @@ namespace Server.MirObjects
                         Stats[Stat.MinAC] += 1;
                         Stats[Stat.MaxAC] += 1;
                         Stats[Stat.MaxMAC] += 1;
-                        Stats[Stat.腕力负重] += 1;
-                        Stats[Stat.装备负重] += 2;
+                        Stats[Stat.腕力] += 1;
+                        Stats[Stat.负重] += 2;
                         break;
                     case ItemSet.强青玉套:
                         Stats[Stat.MinDC] += 1;
@@ -2358,7 +2367,7 @@ namespace Server.MirObjects
                 Stats[Stat.MaxDC] += 3;
                 Stats[Stat.MaxMC] += 3;
                 Stats[Stat.MaxSC] += 3;
-                Stats[Stat.腕力负重] += 20;
+                Stats[Stat.腕力] += 20;
             }
             if (MirSet.Contains(EquipmentSlot.项链) &&
                (MirSet.Contains(EquipmentSlot.左手镯) || MirSet.Contains(EquipmentSlot.右手镯)) &&
@@ -2371,9 +2380,9 @@ namespace Server.MirObjects
                 Stats[Stat.MinSC] += 2;
                 Stats[Stat.MaxSC] += 6;
                 Stats[Stat.攻击速度] += 2;
-                Stats[Stat.背包负重] += 60;
-                Stats[Stat.装备负重] += 30;
-                Stats[Stat.腕力负重] += 30;
+                Stats[Stat.背包重量] += 60;
+                Stats[Stat.负重] += 30;
+                Stats[Stat.腕力] += 30;
             }
             if (MirSet.Contains(EquipmentSlot.盔甲) &&
                 MirSet.Contains(EquipmentSlot.武器) &&
@@ -2681,7 +2690,7 @@ namespace Server.MirObjects
         }
         public bool Run(MirDirection dir)
         {
-            if (CurrentBagWeight > Stats[Stat.背包负重])
+            if (CurrentBagWeight > Stats[Stat.背包重量])
             {
                 Walk(dir);
             }
@@ -2932,7 +2941,7 @@ namespace Server.MirObjects
                     continue;
                 }
 
-                AddBuff(BuffType.组队加成, member, 0, new Stats { [Stat.HP] = 140, [Stat.物品掉落数率] = 5 });
+                AddBuff(BuffType.组队加成, member, 0, new Stats { [Stat.HP] = 140, [Stat.掉落收益] = 5 });
                 hasValidMember = true;
             }
 
@@ -3561,7 +3570,7 @@ namespace Server.MirObjects
                         }
 
                         //check if we get a payout
-                        if (Envir.Random.Next(100) < (Mine.Mine.DropRate + Stats[Stat.采矿出矿数率]))
+                        if (Envir.Random.Next(100) < (Mine.Mine.DropRate + Stats[Stat.采矿收益]))
                         {
                             GetMinePayout(Mine.Mine);
                         }
@@ -3594,15 +3603,15 @@ namespace Server.MirObjects
             Spell spell = magic.Spell;
             if (spell == Spell.Teleport || spell == Spell.Blink || spell == Spell.StormEscape || spell == Spell.StormEscapeRare)
             {
-                if (Stats[Stat.传送技法力消耗数率] > 0)
+                if (Stats[Stat.传送技能法力值消耗] > 0)
                 {
-                    cost += (cost * Stats[Stat.传送技法力消耗数率]) / 100;
+                    cost += (cost * Stats[Stat.传送技能法力值消耗]) / 100;
                 }
             }
 
-            if (Stats[Stat.法力值消耗数率] > 0)
+            if (Stats[Stat.法力值消耗百分比] > 0)
             {
-                cost += (cost * Stats[Stat.法力值消耗数率]) / 100;
+                cost += (cost * Stats[Stat.法力值消耗百分比]) / 100;
             }
 
             if (spell == Spell.Plague)
@@ -5119,7 +5128,7 @@ namespace Server.MirObjects
 
             var stats = new Stats
             {
-                [Stat.伤害减免数率] = 10
+                [Stat.伤害减免] = 10
             };
 
             AddBuff(BuffType.万效符, this, (Settings.Second * 30) + (magic.Level * 10000), stats, true);
@@ -5148,7 +5157,7 @@ namespace Server.MirObjects
 
             var stats = new Stats
             {
-                [Stat.伤害减免数率] = 20 + (magic.Level + 5)
+                [Stat.伤害减免] = 20 + (magic.Level + 5)
             };
 
             AddBuff(BuffType.万效符秘籍, this, (Settings.Second * 30) + (magic.Level * 10000), stats, true);
@@ -5369,7 +5378,7 @@ namespace Server.MirObjects
 
             var stats = new Stats
             {
-                [Stat.气功盾恢复数率] = (int)Math.Round((1 / (decimal)chance) * 100),
+                [Stat.气功盾恢复百分比] = (int)Math.Round((1 / (decimal)chance) * 100),
                 [Stat.气功盾恢复生命值] = power
             };
 
@@ -6922,7 +6931,7 @@ namespace Server.MirObjects
                     if (!CurrentMap.ValidPoint(location) || Envir.Random.Next(4) >= magic.Level + 1 || !Teleport(CurrentMap, location, false)) return;
                     CurrentMap.Broadcast(new S.ObjectEffect { ObjectID = ObjectID, Effect = SpellEffect.StormEscape }, CurrentLocation);
 
-                    AddBuff(BuffType.时间之殇, this, Settings.Second * 30, new Stats { [Stat.传送技法力消耗数率] = 30 });
+                    AddBuff(BuffType.时间之殇, this, Settings.Second * 30, new Stats { [Stat.传送技能法力值消耗] = 30 });
                     LevelMagic(magic);
                     break;
                 #endregion
@@ -6938,7 +6947,7 @@ namespace Server.MirObjects
                     if (!CurrentMap.ValidPoint(location) || Envir.Random.Next(4) >= magic.Level + 1 || !Teleport(CurrentMap, location, false)) return;
                     CurrentMap.Broadcast(new S.ObjectEffect { ObjectID = ObjectID, Effect = SpellEffect.StormEscapeRare }, CurrentLocation);
 
-                    AddBuff(BuffType.时间之殇, this, Settings.Second * 30, new Stats { [Stat.传送技法力消耗数率] = 30 });
+                    AddBuff(BuffType.时间之殇, this, Settings.Second * 30, new Stats { [Stat.传送技能法力值消耗] = 30 });
                     LevelMagic(magic);
                     break;
                 #endregion
@@ -6954,7 +6963,7 @@ namespace Server.MirObjects
                     if (!MagicTeleport(magic))
                         return;                    
 
-                    AddBuff(BuffType.时间之殇, this, Settings.Second * 30, new Stats { [Stat.传送技法力消耗数率] = 30 });
+                    AddBuff(BuffType.时间之殇, this, Settings.Second * 30, new Stats { [Stat.传送技能法力值消耗] = 30 });
                     LevelMagic(magic);
 
                     break;
@@ -6975,7 +6984,7 @@ namespace Server.MirObjects
                         CurrentMap.Broadcast(new S.ObjectEffect { ObjectID = ObjectID, Effect = SpellEffect.Teleport }, CurrentLocation);
                         LevelMagic(magic);
 
-                        AddBuff(BuffType.时间之殇, this, Settings.Second * 30, new Stats { [Stat.传送技法力消耗数率] = 30 });
+                        AddBuff(BuffType.时间之殇, this, Settings.Second * 30, new Stats { [Stat.传送技能法力值消耗] = 30 });
                     }
                     break;
 
@@ -7055,7 +7064,7 @@ namespace Server.MirObjects
                     {
                         var stats = new Stats
                         {
-                            [Stat.法力值消耗数率] = 17 + magic.Level
+                            [Stat.法力值消耗百分比] = 17 + magic.Level
                         };
 
                         AddBuff(BuffType.天上秘术, this, (Settings.Second * 30) + (magic.Level * 10000), stats, true);
@@ -7082,7 +7091,7 @@ namespace Server.MirObjects
                         if (HasBuff(BuffType.魔法盾, out _)) return;
 
                         LevelMagic(magic);
-                        AddBuff(BuffType.魔法盾, this, Settings.Second * (int)data[1], new Stats { [Stat.伤害减免数率] = (magic.Level + 2) * 10 });
+                        AddBuff(BuffType.魔法盾, this, Settings.Second * (int)data[1], new Stats { [Stat.伤害减免] = (magic.Level + 2) * 10 });
                     }
                     break;
 
@@ -7121,7 +7130,7 @@ namespace Server.MirObjects
                         {
                             [Stat.MinMC] = (int)data[1],
                             [Stat.MaxMC] = (int)data[1],
-                            [Stat.法力值消耗数率] = 6 + magic.Level
+                            [Stat.法力值消耗百分比] = 6 + magic.Level
                         };
 
                         AddBuff(BuffType.深延术, this, Settings.Second * 60, stats, true);
@@ -7349,7 +7358,7 @@ namespace Server.MirObjects
                         ObtainElement(false);
                         LevelMagic(magic);
 
-                        AddBuff(BuffType.金刚术, this, Settings.Second * ((int)data[1] + barrierPower), new Stats { [Stat.伤害减免数率] = (magic.Level + 1) * 10 });
+                        AddBuff(BuffType.金刚术, this, Settings.Second * ((int)data[1] + barrierPower), new Stats { [Stat.伤害减免] = (magic.Level + 1) * 10 });
                         CurrentMap.Broadcast(new S.ObjectEffect { ObjectID = ObjectID, Effect = SpellEffect.ElementalBarrierUp }, CurrentLocation);
                     }
                     break;
@@ -7830,7 +7839,7 @@ namespace Server.MirObjects
                     PlayerObject player = Envir.GetPlayer(mentor.Name);
                     if (player.CurrentMap == CurrentMap && Functions.InRange(player.CurrentLocation, CurrentLocation, Globals.DataRange) && !player.Dead)
                     {
-                        if (Stats[Stat.技能熟练度倍率] == 1)
+                        if (Stats[Stat.技能熟练度收益] == 1)
                         {
                             if (GroupMembers != null && GroupMembers.Contains(player))
                                 exp *= 2;
@@ -7839,7 +7848,7 @@ namespace Server.MirObjects
                 }
             }
 
-            exp *= (byte)Math.Min(byte.MaxValue, Stats[Stat.技能熟练度倍率]);
+            exp *= (byte)Math.Min(byte.MaxValue, Stats[Stat.技能熟练度收益]);
 
             if (Level == ushort.MaxValue) exp = byte.MaxValue;
 
@@ -8042,9 +8051,9 @@ namespace Server.MirObjects
             }
 
             //MagicShield, ElementalBarrier
-            if (Stats[Stat.伤害减免数率] > 0)
+            if (Stats[Stat.伤害减免] > 0)
             {
-                damage -= (damage * Stats[Stat.伤害减免数率]) / 100;
+                damage -= (damage * Stats[Stat.伤害减免]) / 100;
             }
 
             if (armour >= damage)
@@ -8060,9 +8069,9 @@ namespace Server.MirObjects
             }
 
             //EnergyShield
-            if (Stats[Stat.气功盾恢复数率] > 0)
+            if (Stats[Stat.气功盾恢复百分比] > 0)
             {
-                if (Envir.Random.Next(100) < Stats[Stat.气功盾恢复数率])
+                if (Envir.Random.Next(100) < Stats[Stat.气功盾恢复百分比])
                 {
                     if (HP + (Stats[Stat.气功盾恢复生命值]) >= Stats[Stat.HP])
                         SetHP(Stats[Stat.HP]);
@@ -8095,9 +8104,9 @@ namespace Server.MirObjects
                 AddBuff(BuffType.金刚术, this, duration, null);
             }
 
-            if (attacker.Stats[Stat.吸血数率] > 0 && damageWeapon)
+            if (attacker.Stats[Stat.生命偷取] > 0 && damageWeapon)
             {
-                attacker.HpDrain += Math.Max(0, ((float)(damage - armour) / 100) * attacker.Stats[Stat.吸血数率]);
+                attacker.HpDrain += Math.Max(0, ((float)(damage - armour) / 100) * attacker.Stats[Stat.生命偷取]);
                 if (attacker.HpDrain > 2)
                 {
                     int HpGain = (int)Math.Floor(attacker.HpDrain);
@@ -8165,9 +8174,9 @@ namespace Server.MirObjects
             damage = (int)Math.Max(int.MinValue, (Math.Min(int.MaxValue, (decimal)(damage * DamageRate))));
 
             //MagicShield, ElementalBarrier
-            if (Stats[Stat.伤害减免数率] != 0)
+            if (Stats[Stat.伤害减免] != 0)
             {
-                damage -= (damage * Stats[Stat.伤害减免数率]) / 100;
+                damage -= (damage * Stats[Stat.伤害减免]) / 100;
             }
 
             if (armour >= damage)
@@ -8182,9 +8191,9 @@ namespace Server.MirObjects
                 RemoveBuff(BuffType.烈火身);
             }
 
-            if (Stats[Stat.气功盾恢复数率] > 0)
+            if (Stats[Stat.气功盾恢复百分比] > 0)
             {
-                if (Envir.Random.Next(100) < Stats[Stat.气功盾恢复数率])
+                if (Envir.Random.Next(100) < Stats[Stat.气功盾恢复百分比])
                 {
                     if (HP + (Stats[Stat.气功盾恢复生命值]) >= Stats[Stat.HP])
                         SetHP(Stats[Stat.HP]);
@@ -8268,9 +8277,9 @@ namespace Server.MirObjects
             damage = (int)Math.Max(int.MinValue, (Math.Min(int.MaxValue, (decimal)(damage * DamageRate))));
 
             //MagicShield, ElementalBarrier
-            if (Stats[Stat.伤害减免数率] != 0)
+            if (Stats[Stat.伤害减免] != 0)
             {
-                damage -= (damage * Stats[Stat.伤害减免数率]) / 100;
+                damage -= (damage * Stats[Stat.伤害减免]) / 100;
             }
 
             if (armour >= damage) return 0;
@@ -8484,11 +8493,11 @@ namespace Server.MirObjects
             else if (gem.GetTotal(Stat.生命恢复) > 0)
                 return item.AddedStats[Stat.生命恢复];
 
-            else if (gem.GetTotal(Stat.生命值数率) > 0)
-                return item.AddedStats[Stat.生命值数率];
+            else if (gem.GetTotal(Stat.生命值强化) > 0)
+                return item.AddedStats[Stat.生命值强化];
 
-            else if (gem.GetTotal(Stat.法力值数率) > 0)
-                return item.AddedStats[Stat.法力值数率];
+            else if (gem.GetTotal(Stat.法力值强化) > 0)
+                return item.AddedStats[Stat.法力值强化];
 
             else if (gem.GetTotal(Stat.法力恢复) > 0)
                 return item.AddedStats[Stat.法力恢复];
@@ -8724,11 +8733,11 @@ namespace Server.MirObjects
 
             if (item.Info.Type == ItemType.武器 || item.Info.Type == ItemType.照明物)
             {
-                if (item.Weight - (Info.Equipment[slot] != null ? Info.Equipment[slot].Weight : 0) + CurrentHandWeight > Stats[Stat.腕力负重])
+                if (item.Weight - (Info.Equipment[slot] != null ? Info.Equipment[slot].Weight : 0) + CurrentHandWeight > Stats[Stat.腕力])
                     return false;
             }
             else
-                if (item.Weight - (Info.Equipment[slot] != null ? Info.Equipment[slot].Weight : 0) + CurrentWearWeight > Stats[Stat.装备负重])
+                if (item.Weight - (Info.Equipment[slot] != null ? Info.Equipment[slot].Weight : 0) + CurrentWearWeight > Stats[Stat.负重])
                 return false;
 
             if (RidingMount && item.Info.Type != ItemType.照明物)

@@ -1893,7 +1893,7 @@ namespace Client.MirControls
                                     }
                                 }
 
-                                if (GameScene.SelectedCell.Item.Weight + MapObject.Hero.CurrentBagWeight > MapObject.Hero.Stats[Stat.背包负重])
+                                if (GameScene.SelectedCell.Item.Weight + MapObject.Hero.CurrentBagWeight > MapObject.Hero.Stats[Stat.背包重量])
                                 {
                                     GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.TooHeavyToTransfer), ChatType.System);
                                     GameScene.SelectedCell = null;
@@ -2441,7 +2441,7 @@ namespace Client.MirControls
 
             if (i.Info.Type == ItemType.武器 || i.Info.Type == ItemType.照明物)
             {
-                if (i.Weight - (Item != null ? Item.Weight : 0) + actor.CurrentHandWeight > actor.Stats[Stat.腕力负重])
+                if (i.Weight - (Item != null ? Item.Weight : 0) + actor.CurrentHandWeight > actor.Stats[Stat.腕力])
                 {
                     GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.TooHeavyToHold), ChatType.System);
                     return false;
@@ -2449,7 +2449,7 @@ namespace Client.MirControls
             }
             else
             {
-                if (i.Weight - (Item != null ? Item.Weight : 0) + actor.CurrentWearWeight > actor.Stats[Stat.装备负重])
+                if (i.Weight - (Item != null ? Item.Weight : 0) + actor.CurrentWearWeight > actor.Stats[Stat.负重])
                 {
                     GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.ItIsTooHeavyToWear), ChatType.System);
                     return false;

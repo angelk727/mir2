@@ -132,14 +132,14 @@ namespace Server
                 BufftxtMpRegen.Text = SelectedBuff.Stats[Stat.法力恢复].ToString();
                 BufftxtMaxHp.Text = SelectedBuff.Stats[Stat.HP].ToString();
                 BufftxtMaxMp.Text = SelectedBuff.Stats[Stat.MP].ToString();
-                BufftxtMineRate.Text = SelectedBuff.Stats[Stat.采矿出矿数率].ToString();
-                BufftxtGemRate.Text = SelectedBuff.Stats[Stat.宝石成功数率].ToString();
-                BufftxtFishRate.Text = SelectedBuff.Stats[Stat.钓鱼成功数率].ToString();
-                BufftxtExpRate.Text = SelectedBuff.Stats[Stat.经验增长数率].ToString();
-                BufftxtCraftRate.Text = SelectedBuff.Stats[Stat.大师概率数率].ToString();
-                BufftxtSkillRate.Text = SelectedBuff.Stats[Stat.技能熟练度倍率].ToString();
-                BufftxtDropRate.Text = SelectedBuff.Stats[Stat.物品掉落数率].ToString();
-                BufftxtGoldRate.Text = SelectedBuff.Stats[Stat.金币收益数率].ToString();
+                BufftxtMineRate.Text = SelectedBuff.Stats[Stat.采矿收益].ToString();
+                BufftxtGemRate.Text = SelectedBuff.Stats[Stat.宝石收益].ToString();
+                BufftxtFishRate.Text = SelectedBuff.Stats[Stat.钓鱼收益].ToString();
+                BufftxtExpRate.Text = SelectedBuff.Stats[Stat.经验收益].ToString();
+                BufftxtCraftRate.Text = SelectedBuff.Stats[Stat.大师收益].ToString();
+                BufftxtSkillRate.Text = SelectedBuff.Stats[Stat.技能熟练度收益].ToString();
+                BufftxtDropRate.Text = SelectedBuff.Stats[Stat.掉落收益].ToString();
+                BufftxtGoldRate.Text = SelectedBuff.Stats[Stat.金币收益].ToString();
             }
         }
 
@@ -580,7 +580,7 @@ namespace Server
             byte temp = 0;
             if (!IsValid(ref temp, sender)) return;
             ActiveControl.BackColor = SystemColors.Window;
-            SelectedBuff.Stats[Stat.采矿出矿数率] = temp;
+            SelectedBuff.Stats[Stat.采矿收益] = temp;
             GuildsChanged = true;
         }
 
@@ -589,7 +589,7 @@ namespace Server
             byte temp = 0;
             if (!IsValid(ref temp, sender)) return;
             ActiveControl.BackColor = SystemColors.Window;
-            SelectedBuff.Stats[Stat.宝石成功数率] = temp;
+            SelectedBuff.Stats[Stat.宝石收益] = temp;
             GuildsChanged = true;
         }
 
@@ -598,7 +598,7 @@ namespace Server
             byte temp = 0;
             if (!IsValid(ref temp, sender)) return;
             ActiveControl.BackColor = SystemColors.Window;
-            SelectedBuff.Stats[Stat.钓鱼成功数率] = temp;
+            SelectedBuff.Stats[Stat.钓鱼收益] = temp;
             GuildsChanged = true;
         }
 
@@ -607,7 +607,7 @@ namespace Server
             byte temp = 0;
             if (!IsValid(ref temp, sender)) return;
             ActiveControl.BackColor = SystemColors.Window;
-            SelectedBuff.Stats[Stat.经验增长数率] = temp;
+            SelectedBuff.Stats[Stat.经验收益] = temp;
             GuildsChanged = true;
         }
 
@@ -616,7 +616,7 @@ namespace Server
             byte temp = 0;
             if (!IsValid(ref temp, sender)) return;
             ActiveControl.BackColor = SystemColors.Window;
-            SelectedBuff.Stats[Stat.大师概率数率] = temp;
+            SelectedBuff.Stats[Stat.大师收益] = temp;
             GuildsChanged = true;
         }
 
@@ -625,7 +625,7 @@ namespace Server
             byte temp = 0;
             if (!IsValid(ref temp, sender)) return;
             ActiveControl.BackColor = SystemColors.Window;
-            SelectedBuff.Stats[Stat.技能熟练度倍率] = temp;
+            SelectedBuff.Stats[Stat.技能熟练度收益] = temp;
             GuildsChanged = true;
         }
 
@@ -634,7 +634,7 @@ namespace Server
             byte temp = 0;
             if (!IsValid(ref temp, sender)) return;
             ActiveControl.BackColor = SystemColors.Window;
-            SelectedBuff.Stats[Stat.物品掉落数率] = temp;
+            SelectedBuff.Stats[Stat.掉落收益] = temp;
             GuildsChanged = true;
         }
 
@@ -643,7 +643,7 @@ namespace Server
             byte temp = 0;
             if (!IsValid(ref temp, sender)) return;
             ActiveControl.BackColor = SystemColors.Window;
-            SelectedBuff.Stats[Stat.金币收益数率] = temp;
+            SelectedBuff.Stats[Stat.金币收益] = temp;
             GuildsChanged = true;
         }
 

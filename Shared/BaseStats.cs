@@ -15,9 +15,9 @@ public class BaseStats
             case MirClass.战士:
                 Stats.Add(new BaseStat(Stat.HP) { FormulaType = StatFormula.Health, Base = 14, Gain = 4F, GainRate = 4.5F, Max = 0 });
                 Stats.Add(new BaseStat(Stat.MP) { FormulaType = StatFormula.Mana, Base = 11, Gain = 3.5F, GainRate = 0F, Max = 0 });
-                Stats.Add(new BaseStat(Stat.背包负重) { FormulaType = StatFormula.Weight, Base = 50, Gain = 3F, GainRate = 0F, Max = 0 });
-                Stats.Add(new BaseStat(Stat.装备负重) { FormulaType = StatFormula.Weight, Base = 15, Gain = 20F, GainRate = 0F, Max = 0 });
-                Stats.Add(new BaseStat(Stat.腕力负重) { FormulaType = StatFormula.Weight, Base = 12, Gain = 13F, GainRate = 0F, Max = 0 });
+                Stats.Add(new BaseStat(Stat.背包重量) { FormulaType = StatFormula.Weight, Base = 50, Gain = 3F, GainRate = 0F, Max = 0 });
+                Stats.Add(new BaseStat(Stat.负重) { FormulaType = StatFormula.Weight, Base = 15, Gain = 20F, GainRate = 0F, Max = 0 });
+                Stats.Add(new BaseStat(Stat.腕力) { FormulaType = StatFormula.Weight, Base = 12, Gain = 13F, GainRate = 0F, Max = 0 });
                 Stats.Add(new BaseStat(Stat.MinAC) { FormulaType = StatFormula.Stat, Base = 0, Gain = 0, GainRate = 0F, Max = 0 });
                 Stats.Add(new BaseStat(Stat.MaxAC) { FormulaType = StatFormula.Stat, Base = 0, Gain = 7, GainRate = 0F, Max = 0 });
                 Stats.Add(new BaseStat(Stat.MinDC) { FormulaType = StatFormula.Stat, Base = 0, Gain = 5, GainRate = 0F, Max = 0 });
@@ -30,9 +30,9 @@ public class BaseStats
             case MirClass.法师:
                 Stats.Add(new BaseStat(Stat.HP) { FormulaType = StatFormula.Health, Base = 14, Gain = 15F, GainRate =1.8F, Max = 0 });
                 Stats.Add(new BaseStat(Stat.MP) { FormulaType = StatFormula.Mana, Base = 13, Gain = 5F, GainRate = 0F, Max = 0 });
-                Stats.Add(new BaseStat(Stat.背包负重) { FormulaType = StatFormula.Weight, Base = 50, Gain = 5F, GainRate = 0F, Max = 0 });
-                Stats.Add(new BaseStat(Stat.装备负重) { FormulaType = StatFormula.Weight, Base = 15, Gain = 100F, GainRate = 0F, Max = 0 });
-                Stats.Add(new BaseStat(Stat.腕力负重) { FormulaType = StatFormula.Weight, Base = 12, Gain = 90F, GainRate = 0F, Max = 0 });
+                Stats.Add(new BaseStat(Stat.背包重量) { FormulaType = StatFormula.Weight, Base = 50, Gain = 5F, GainRate = 0F, Max = 0 });
+                Stats.Add(new BaseStat(Stat.负重) { FormulaType = StatFormula.Weight, Base = 15, Gain = 100F, GainRate = 0F, Max = 0 });
+                Stats.Add(new BaseStat(Stat.腕力) { FormulaType = StatFormula.Weight, Base = 12, Gain = 90F, GainRate = 0F, Max = 0 });
                 Stats.Add(new BaseStat(Stat.MinDC) { FormulaType = StatFormula.Stat, Base = 0, Gain = 7, GainRate = 0F, Max = 0 });
                 Stats.Add(new BaseStat(Stat.MaxDC) { FormulaType = StatFormula.Stat, Base = 0, Gain = 7, GainRate = 0F, Max = 0 });
                 Stats.Add(new BaseStat(Stat.MinMC) { FormulaType = StatFormula.Stat, Base = 0, Gain = 7, GainRate = 0F, Max = 0 });
@@ -45,9 +45,9 @@ public class BaseStats
             case MirClass.道士:
                 Stats.Add(new BaseStat(Stat.HP) { FormulaType = StatFormula.Health, Base = 14, Gain = 6F, GainRate = 2.5F, Max = 0 });
                 Stats.Add(new BaseStat(Stat.MP) { FormulaType = StatFormula.Mana, Base = 13, Gain = 8F, GainRate = 0F, Max = 0 });
-                Stats.Add(new BaseStat(Stat.背包负重) { FormulaType = StatFormula.Weight, Base = 50, Gain = 4F, GainRate = 0F, Max = 0 });
-                Stats.Add(new BaseStat(Stat.装备负重) { FormulaType = StatFormula.Weight, Base = 15, Gain = 50F, GainRate = 0F, Max = 0 });
-                Stats.Add(new BaseStat(Stat.腕力负重) { FormulaType = StatFormula.Weight, Base = 12, Gain = 42F, GainRate = 0F, Max = 0 });
+                Stats.Add(new BaseStat(Stat.背包重量) { FormulaType = StatFormula.Weight, Base = 50, Gain = 4F, GainRate = 0F, Max = 0 });
+                Stats.Add(new BaseStat(Stat.负重) { FormulaType = StatFormula.Weight, Base = 15, Gain = 50F, GainRate = 0F, Max = 0 });
+                Stats.Add(new BaseStat(Stat.腕力) { FormulaType = StatFormula.Weight, Base = 12, Gain = 42F, GainRate = 0F, Max = 0 });
                 Stats.Add(new BaseStat(Stat.MinMAC) { FormulaType = StatFormula.Stat, Base = 0, Gain = 12, GainRate = 0F, Max = 0 });
                 Stats.Add(new BaseStat(Stat.MaxMAC) { FormulaType = StatFormula.Stat, Base = 0, Gain = 6, GainRate = 0F, Max = 0 });
                 Stats.Add(new BaseStat(Stat.MinDC) { FormulaType = StatFormula.Stat, Base = 0, Gain = 7, GainRate = 0F, Max = 0 });
@@ -62,9 +62,9 @@ public class BaseStats
             case MirClass.刺客:
                 Stats.Add(new BaseStat(Stat.HP) { FormulaType = StatFormula.Health, Base = 14, Gain = 4F, GainRate = 3.25F, Max = 0 });
                 Stats.Add(new BaseStat(Stat.MP) { FormulaType = StatFormula.Mana, Base = 11, Gain = 5F, GainRate = 0F, Max = 0 });
-                Stats.Add(new BaseStat(Stat.背包负重) { FormulaType = StatFormula.Weight, Base = 50, Gain = 3.5F, GainRate = 0F, Max = 0 });
-                Stats.Add(new BaseStat(Stat.装备负重) { FormulaType = StatFormula.Weight, Base = 15, Gain = 33F, GainRate = 0F, Max = 0 });
-                Stats.Add(new BaseStat(Stat.腕力负重) { FormulaType = StatFormula.Weight, Base = 12, Gain = 30F, GainRate = 0F, Max = 0 });
+                Stats.Add(new BaseStat(Stat.背包重量) { FormulaType = StatFormula.Weight, Base = 50, Gain = 3.5F, GainRate = 0F, Max = 0 });
+                Stats.Add(new BaseStat(Stat.负重) { FormulaType = StatFormula.Weight, Base = 15, Gain = 33F, GainRate = 0F, Max = 0 });
+                Stats.Add(new BaseStat(Stat.腕力) { FormulaType = StatFormula.Weight, Base = 12, Gain = 30F, GainRate = 0F, Max = 0 });
                 Stats.Add(new BaseStat(Stat.MinDC) { FormulaType = StatFormula.Stat, Base = 0, Gain = 8, GainRate = 0F, Max = 0 });
                 Stats.Add(new BaseStat(Stat.MaxDC) { FormulaType = StatFormula.Stat, Base = 0, Gain = 8, GainRate = 0F, Max = 0 });
                 Stats.Add(new BaseStat(Stat.敏捷) { FormulaType = StatFormula.Stat, Base = 20, Gain = 0, GainRate = 0F, Max = 0 });
@@ -75,9 +75,9 @@ public class BaseStats
             case MirClass.弓箭:
                 Stats.Add(new BaseStat(Stat.HP) { FormulaType = StatFormula.Health, Base = 14, Gain = 4F, GainRate = 3.25F, Max = 0 });
                 Stats.Add(new BaseStat(Stat.MP) { FormulaType = StatFormula.Mana, Base = 11, Gain = 4F, GainRate = 0F, Max = 0 });
-                Stats.Add(new BaseStat(Stat.背包负重) { FormulaType = StatFormula.Weight, Base = 50, Gain = 4F, GainRate = 0F, Max = 0 });
-                Stats.Add(new BaseStat(Stat.装备负重) { FormulaType = StatFormula.Weight, Base = 15, Gain = 33F, GainRate = 0F, Max = 0 });
-                Stats.Add(new BaseStat(Stat.腕力负重) { FormulaType = StatFormula.Weight, Base = 12, Gain = 30F, GainRate = 0F, Max = 0 });
+                Stats.Add(new BaseStat(Stat.背包重量) { FormulaType = StatFormula.Weight, Base = 50, Gain = 4F, GainRate = 0F, Max = 0 });
+                Stats.Add(new BaseStat(Stat.负重) { FormulaType = StatFormula.Weight, Base = 15, Gain = 33F, GainRate = 0F, Max = 0 });
+                Stats.Add(new BaseStat(Stat.腕力) { FormulaType = StatFormula.Weight, Base = 12, Gain = 30F, GainRate = 0F, Max = 0 });
                 Stats.Add(new BaseStat(Stat.MinDC) { FormulaType = StatFormula.Stat, Base = 0, Gain = 8, GainRate = 0F, Max = 0 });
                 Stats.Add(new BaseStat(Stat.MaxDC) { FormulaType = StatFormula.Stat, Base = 0, Gain = 8, GainRate = 0F, Max = 0 });
                 Stats.Add(new BaseStat(Stat.MinMC) { FormulaType = StatFormula.Stat, Base = 0, Gain = 8, GainRate = 0F, Max = 0 });

@@ -464,7 +464,7 @@ namespace Client.MirScenes.Dialogs
             GoldLabel.Text = GameScene.Gold.ToString("###,###,##0");
             CharacterName.Text = User.Name;
             SpaceLabel.Text = User.Inventory.Count(t => t == null).ToString();
-            WeightLabel.Text = (MapObject.User.Stats[Stat.背包负重] - MapObject.User.CurrentBagWeight).ToString();
+            WeightLabel.Text = (MapObject.User.Stats[Stat.背包重量] - MapObject.User.CurrentBagWeight).ToString();
         }
 
         private void Label_SizeChanged(object sender, EventArgs e)
@@ -476,42 +476,36 @@ namespace Client.MirScenes.Dialogs
 
         private void HealthOrb_BeforeDraw(object sender, EventArgs e)
         {
-            if (Libraries.Prguse == null) return;
+            if (Libraries.Prguse == null || User == null) return;
 
-            int height;
-            if (User != null && User.HP != User.Stats[Stat.HP])
-                height = (int)(80 * User.HP / (float)User.Stats[Stat.HP]);
-            else
-                height = 80;
+            int maxHP = User.Stats[Stat.HP];
+            int hp = User.HP;
+            int height = maxHP > 0 ? (int)(80L * hp / maxHP) : 0;
 
             if (height < 0) height = 0;
-            if (height > 80) height = 80;
+            else if (height > 80) height = 80;
 
-            int orbImage = 4;
+            bool hpOnly = HPOnly;
+            int orbImage = hpOnly ? 6 : 4;
+            int width = hpOnly ? 100 : 50;
+            int centerX = (Settings.ScreenWidth - Size.Width) / 2;
+            int orbY = HealthOrb.DisplayLocation.Y;
 
-            bool hpOnly = false;
-
-            if (HPOnly)
-            {
-                hpOnly = true;
-                orbImage = 6;
-            }
-
-            Rectangle r = new Rectangle(0, 80 - height, hpOnly ? 100 : 50, height);
-            Libraries.Prguse.Draw(orbImage, r, new Point(((Settings.ScreenWidth / 2) - (Size.Width / 2)), HealthOrb.DisplayLocation.Y + 80 - height), Color.White, false);
+            Rectangle r = new Rectangle(0, 80 - height, width, height);
+            Libraries.Prguse.Draw(orbImage, r, new Point(centerX, orbY + 80 - height), Color.White, false);
 
             if (hpOnly) return;
 
-            if (User.MP != User.Stats[Stat.MP])
-                height = (int)(80 * User.MP / (float)User.Stats[Stat.MP]);
-            else
-                height = 80;
+            int maxMP = User.Stats[Stat.MP];
+            int mp = User.MP;
+
+            height = maxMP > 0 ? (int)(80L * mp / maxMP) : 0;
 
             if (height < 0) height = 0;
-            if (height > 80) height = 80;
-            r = new Rectangle(51, 80 - height, 50, height);
+            else if (height > 80) height = 80;
 
-            Libraries.Prguse.Draw(4, r, new Point(((Settings.ScreenWidth / 2) - (Size.Width / 2)) + 51, HealthOrb.DisplayLocation.Y + 80 - height), Color.White, false);
+            r = new Rectangle(51, 80 - height, 50, height);
+            Libraries.Prguse.Draw(4, r, new Point(centerX + 51, orbY + 80 - height), Color.White, false);
         }
 
         private void ExperienceBar_BeforeDraw(object sender, EventArgs e)
@@ -533,7 +527,7 @@ namespace Client.MirScenes.Dialogs
         private void WeightBar_BeforeDraw(object sender, EventArgs e)
         {
             if (WeightBar.Library == null) return;
-            double percent = MapObject.User.CurrentBagWeight / (double)MapObject.User.Stats[Stat.背包负重];
+            double percent = MapObject.User.CurrentBagWeight / (double)MapObject.User.Stats[Stat.背包重量];
             if (percent > 1) percent = 1;
             if (percent <= 0) return;
 

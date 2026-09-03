@@ -399,8 +399,8 @@ namespace Server.MirObjects
                                 if (item.GetTotal(Stat.MaxMAC) > 0)
                                     AddBuff(BuffType.魔法防御提升, this, time * Settings.Minute, new Stats { [Stat.MaxMAC] = item.GetTotal(Stat.MaxMAC) });
 
-                                if (item.GetTotal(Stat.背包负重) > 0)
-                                    AddBuff(BuffType.背包负重提升, this, time * Settings.Minute, new Stats { [Stat.背包负重] = item.GetTotal(Stat.背包负重) });
+                                if (item.GetTotal(Stat.背包重量) > 0)
+                                    AddBuff(BuffType.背包负重提升, this, time * Settings.Minute, new Stats { [Stat.背包重量] = item.GetTotal(Stat.背包重量) });
 
                                 if (item.GetTotal(Stat.准确) > 0)
                                     AddBuff(BuffType.准确命中提升, this, time * Settings.Minute, new Stats { [Stat.准确] = item.GetTotal(Stat.准确) });
@@ -412,27 +412,27 @@ namespace Server.MirObjects
                         case 4: //Exp
                             {
                                 int time = item.Info.Durability;
-                                AddBuff(BuffType.获取经验提升, this, Settings.Minute * time, new Stats { [Stat.经验增长数率] = item.GetTotal(Stat.幸运) });
+                                AddBuff(BuffType.获取经验提升, this, Settings.Minute * time, new Stats { [Stat.经验收益] = item.GetTotal(Stat.幸运) });
                             }
                             break;
                         case 5: //Drop
                             {
                                 int time = item.Info.Durability;
-                                AddBuff(BuffType.物品掉落提升, this, Settings.Minute * time, new Stats { [Stat.物品掉落数率] = item.GetTotal(Stat.幸运) });
+                                AddBuff(BuffType.物品掉落提升, this, Settings.Minute * time, new Stats { [Stat.掉落收益] = item.GetTotal(Stat.幸运) });
                             }
                             break;
                         case 6:
-                            PotHealthAmount = (ushort)Math.Min(ushort.MaxValue, PotHealthAmount + (Stats[Stat.HP] / 100) * (item.Info.Stats[Stat.生命值数率]));
-                            PotManaAmount = (ushort)Math.Min(ushort.MaxValue, PotManaAmount + (Stats[Stat.MP] / 100) * (item.Info.Stats[Stat.法力值数率]));
+                            PotHealthAmount = (ushort)Math.Min(ushort.MaxValue, PotHealthAmount + (Stats[Stat.HP] / 100) * (item.Info.Stats[Stat.生命值强化]));
+                            PotManaAmount = (ushort)Math.Min(ushort.MaxValue, PotManaAmount + (Stats[Stat.MP] / 100) * (item.Info.Stats[Stat.法力值强化]));
                             break;
                         case 7:
-                            ChangeHP((Stats[Stat.HP] / 100) * (item.Info.Stats[Stat.生命值数率]));
-                            ChangeMP((Stats[Stat.MP] / 100) * (item.Info.Stats[Stat.法力值数率]));
+                            ChangeHP((Stats[Stat.HP] / 100) * (item.Info.Stats[Stat.生命值强化]));
+                            ChangeMP((Stats[Stat.MP] / 100) * (item.Info.Stats[Stat.法力值强化]));
                             break;
                         case 8:
                             {
                                 int time = item.Info.Durability;
-                                AddBuff(BuffType.技能经验提升, this, Settings.Minute * time, new Stats { [Stat.技能熟练度倍率] = 2 });
+                                AddBuff(BuffType.技能经验提升, this, Settings.Minute * time, new Stats { [Stat.技能熟练度收益] = 2 });
                             }
                             break;
                     }
@@ -1213,9 +1213,9 @@ namespace Server.MirObjects
 
             if (!CanGainExp) return;
 
-            if (Stats[Stat.经验增长数率] > 0)
+            if (Stats[Stat.经验收益] > 0)
             {
-                amount += (uint)Math.Max(0, (amount * Stats[Stat.经验增长数率]) / 100);
+                amount += (uint)Math.Max(0, (amount * Stats[Stat.经验收益]) / 100);
             }
 
             Experience += amount;

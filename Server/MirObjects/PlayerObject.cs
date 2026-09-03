@@ -864,7 +864,7 @@ namespace Server.MirObjects
                     PlayerObject loverPlayer = Envir.GetPlayer(lover.Name);
                     if (loverPlayer != null && loverPlayer.CurrentMap == CurrentMap && Functions.InRange(loverPlayer.CurrentLocation, CurrentLocation, Globals.DataRange) && !loverPlayer.Dead)
                     {
-                        amount += (uint)Math.Max(0, (amount * Stats[Stat.伴侣专享经验数率]) / 100);
+                        amount += (uint)Math.Max(0, (amount * Stats[Stat.伴侣经验收益]) / 100);
                     }
                 }
             }
@@ -878,14 +878,14 @@ namespace Server.MirObjects
                     if (mentorPlayer != null && mentorPlayer.CurrentMap == CurrentMap && Functions.InRange(mentorPlayer.CurrentLocation, CurrentLocation, Globals.DataRange) && !mentorPlayer.Dead)
                     {
                         if (GroupMembers != null && GroupMembers.Contains(mentorPlayer))
-                            amount += (uint)Math.Max(0, (amount * Stats[Stat.师徒专享经验数率]) / 100);
+                            amount += (uint)Math.Max(0, (amount * Stats[Stat.师徒经验收益]) / 100);
                     }
                 }
             }
 
-            if (Stats[Stat.经验增长数率] > 0)
+            if (Stats[Stat.经验收益] > 0)
             {
-                amount += (uint)Math.Max(0, (amount * Stats[Stat.经验增长数率]) / 100);
+                amount += (uint)Math.Max(0, (amount * Stats[Stat.经验收益]) / 100);
             }
 
             if (Info.Mentor != 0 && !Info.IsMentor)
@@ -1377,7 +1377,7 @@ namespace Server.MirObjects
 
                 if (duration > maxDuration) duration = maxDuration;
 
-                AddBuff(BuffType.精力充沛, this, duration, new Stats { [Stat.经验增长数率] = Settings.RestedExpBonus });
+                AddBuff(BuffType.精力充沛, this, duration, new Stats { [Stat.经验收益] = Settings.RestedExpBonus });
 
                 _restedCounter = 0;
             }
@@ -3723,10 +3723,10 @@ namespace Server.MirObjects
                                 switch (Class)
                                 {
                                     case MirClass.战士:
-                                        AddBuff(BuffType.英雄灵气, this, 0, new Stats { [Stat.HP] = 300, [Stat.物品掉落数率] = 5 });
+                                        AddBuff(BuffType.英雄灵气, this, 0, new Stats { [Stat.HP] = 300, [Stat.掉落收益] = 5 });
                                         break;
                                     case MirClass.法师:
-                                        AddBuff(BuffType.英雄灵气, this, 0, new Stats { [Stat.MP] = 300, [Stat.经验增长数率] = 5 });
+                                        AddBuff(BuffType.英雄灵气, this, 0, new Stats { [Stat.MP] = 300, [Stat.经验收益] = 5 });
                                         break;
                                     case MirClass.道士:
                                         AddBuff(BuffType.英雄灵气, this, 0, new Stats { [Stat.生命恢复] = 2, [Stat.武器增伤] = 3 });
@@ -3735,7 +3735,7 @@ namespace Server.MirObjects
                                         AddBuff(BuffType.英雄灵气, this, 0, new Stats { [Stat.法力恢复] = 2, [Stat.准确] = 3 });
                                         break;
                                     case MirClass.弓箭:
-                                        AddBuff(BuffType.英雄灵气, this, 0, new Stats { [Stat.敏捷] = 2, [Stat.攻击强化] = 2, [Stat.魔法攻击强化] = 1 });
+                                        AddBuff(BuffType.英雄灵气, this, 0, new Stats { [Stat.敏捷] = 2, [Stat.攻击强化] = 2, [Stat.魔法强化] = 1 });
                                         break;
                                     default:
                                         break;
@@ -5810,7 +5810,7 @@ namespace Server.MirObjects
                 return;
             }
 
-            if (temp.Weight + Hero.CurrentBagWeight > Hero.Stats[Stat.背包负重])
+            if (temp.Weight + Hero.CurrentBagWeight > Hero.Stats[Stat.背包重量])
             {
                 ReceiveChat(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.TooHeavyToTransfer), ChatType.System);
                 Enqueue(p);
@@ -5911,8 +5911,8 @@ namespace Server.MirObjects
                                 if (item.GetTotal(Stat.MaxMAC) > 0)
                                     AddBuff(BuffType.魔法防御提升, this, time * Settings.Minute, new Stats { [Stat.MaxMAC] = item.GetTotal(Stat.MaxMAC) });
 
-                                if (item.GetTotal(Stat.背包负重) > 0)
-                                    AddBuff(BuffType.背包负重提升, this, time * Settings.Minute, new Stats { [Stat.背包负重] = item.GetTotal(Stat.背包负重) });
+                                if (item.GetTotal(Stat.背包重量) > 0)
+                                    AddBuff(BuffType.背包负重提升, this, time * Settings.Minute, new Stats { [Stat.背包重量] = item.GetTotal(Stat.背包重量) });
 
                                 if (item.GetTotal(Stat.准确) > 0)
                                     AddBuff(BuffType.准确命中提升, this, time * Settings.Minute, new Stats { [Stat.准确] = item.GetTotal(Stat.准确) });
@@ -5924,27 +5924,27 @@ namespace Server.MirObjects
                         case 4: //Exp
                             {
                                 int time = item.Info.Durability;
-                                AddBuff(BuffType.获取经验提升, this, Settings.Minute * time, new Stats { [Stat.经验增长数率] = item.GetTotal(Stat.幸运) });
+                                AddBuff(BuffType.获取经验提升, this, Settings.Minute * time, new Stats { [Stat.经验收益] = item.GetTotal(Stat.幸运) });
                             }
                             break;
                         case 5: //Drop
                             {
                                 int time = item.Info.Durability;
-                                AddBuff(BuffType.物品掉落提升, this, Settings.Minute * time, new Stats { [Stat.物品掉落数率] = item.GetTotal(Stat.幸运) });
+                                AddBuff(BuffType.物品掉落提升, this, Settings.Minute * time, new Stats { [Stat.掉落收益] = item.GetTotal(Stat.幸运) });
                             }
                             break;
                         case 6:
-                            PotHealthAmount = (ushort)Math.Min(ushort.MaxValue, PotHealthAmount + (Stats[Stat.HP] / 100) * (item.Info.Stats[Stat.生命值数率]));
-                            PotManaAmount = (ushort)Math.Min(ushort.MaxValue, PotManaAmount + (Stats[Stat.MP] / 100) * (item.Info.Stats[Stat.法力值数率]));
+                            PotHealthAmount = (ushort)Math.Min(ushort.MaxValue, PotHealthAmount + (Stats[Stat.HP] / 100) * (item.Info.Stats[Stat.生命值强化]));
+                            PotManaAmount = (ushort)Math.Min(ushort.MaxValue, PotManaAmount + (Stats[Stat.MP] / 100) * (item.Info.Stats[Stat.法力值强化]));
                             break;
                         case 7:
-                            ChangeHP((Stats[Stat.HP] / 100) * (item.Info.Stats[Stat.生命值数率]));
-                            ChangeMP((Stats[Stat.MP] / 100) * (item.Info.Stats[Stat.法力值数率]));
+                            ChangeHP((Stats[Stat.HP] / 100) * (item.Info.Stats[Stat.生命值强化]));
+                            ChangeMP((Stats[Stat.MP] / 100) * (item.Info.Stats[Stat.法力值强化]));
                             break;
                         case 8:
                             {
                                 int time = item.Info.Durability;
-                                AddBuff(BuffType.技能经验提升, this, Settings.Minute * time, new Stats { [Stat.技能熟练度倍率] = 3 });
+                                AddBuff(BuffType.技能经验提升, this, Settings.Minute * time, new Stats { [Stat.技能熟练度收益] = 3 });
                             }
                             break;
                     }
@@ -6288,7 +6288,7 @@ namespace Server.MirObjects
                                 {
                                     var time = item.Info.Durability;
 
-                                    AddBuff(BuffType.包容万斤, this, time * Settings.Minute, new Stats { [Stat.背包负重] = item.GetTotal(Stat.幸运) });
+                                    AddBuff(BuffType.包容万斤, this, time * Settings.Minute, new Stats { [Stat.背包重量] = item.GetTotal(Stat.幸运) });
                                 }
                                 break;
                         }
@@ -6955,7 +6955,7 @@ namespace Server.MirObjects
                         return;
                     }
 
-                    if ((tempTo.GemCount >= tempFrom.Info.Stats[Stat.暴击伤害]) || (GetCurrentStatCount(tempFrom, tempTo) >= tempFrom.Info.Stats[Stat.吸血数率]))
+                    if ((tempTo.GemCount >= tempFrom.Info.Stats[Stat.暴击伤害]) || (GetCurrentStatCount(tempFrom, tempTo) >= tempFrom.Info.Stats[Stat.生命偷取]))
                     {
                         ReceiveChat(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.ItemMaxAddedStats), ChatType.Hint);
                         Enqueue(p);
@@ -7073,7 +7073,7 @@ namespace Server.MirObjects
                         successchance *= (int)tempTo.GemCount;
                     }
 
-                    successchance = successchance >= tempFrom.Info.Stats[Stat.暴击率] ? 0 : (tempFrom.Info.Stats[Stat.暴击率] - successchance) + Stats[Stat.宝石成功数率];
+                    successchance = successchance >= tempFrom.Info.Stats[Stat.暴击率] ? 0 : (tempFrom.Info.Stats[Stat.暴击率] - successchance) + Stats[Stat.宝石收益];
 
                     //check if combine will succeed
                     bool succeeded = Envir.Random.Next(100) < successchance;
@@ -7365,11 +7365,11 @@ namespace Server.MirObjects
 
             // These may be incomplete. Item definitions may be missing?
 
-            else if (gem.GetTotal(Stat.生命值数率) > 0)
-                return Stat.生命值数率;
+            else if (gem.GetTotal(Stat.生命值强化) > 0)
+                return Stat.生命值强化;
 
-            else if (gem.GetTotal(Stat.法力值数率) > 0)
-                return Stat.法力值数率;
+            else if (gem.GetTotal(Stat.法力值强化) > 0)
+                return Stat.法力值强化;
 
             else if (gem.GetTotal(Stat.法力恢复) > 0)
                 return Stat.法力恢复;
@@ -7380,8 +7380,8 @@ namespace Server.MirObjects
             else if (gem.GetTotal(Stat.强度) > 0)
                 return Stat.强度;
 
-            else if (gem.GetTotal(Stat.吸血数率) > 0)
-                return Stat.吸血数率;
+            else if (gem.GetTotal(Stat.生命偷取) > 0)
+                return Stat.生命偷取;
 
             return Stat.Unknown;
         }
@@ -11139,7 +11139,7 @@ namespace Server.MirObjects
 
             if (cast) FishingChance = Settings.FishingSuccessStart + (int)successStat + (FishingChanceCounter != 0 ? Envir.Random.Next(failedAddSuccessMin, failedAddSuccessMax) : 0) + (FishingChanceCounter * Settings.FishingSuccessMultiplier); //10 //10
             if (FishingChanceCounter != 0) DamagedFishingItem(FishingSlot.Finder, 1);
-            FishingChance += Stats[Stat.钓鱼成功数率];
+            FishingChance += Stats[Stat.钓鱼收益];
 
             FishingChance = Math.Min(100, Math.Max(0, FishingChance));
             FishingNibbleChance = Math.Min(100, Math.Max(0, FishingNibbleChance));
@@ -11194,7 +11194,7 @@ namespace Server.MirObjects
 
                         foreach (DropInfo drop in Envir.FishingDrops.Where(x => x.Type == fishingCell.FishingAttribute))
                         {
-                            var reward = drop.AttemptDrop(EXPOwner?.Stats[Stat.物品掉落数率] ?? 0, EXPOwner?.Stats[Stat.金币收益数率] ?? 0);
+                            var reward = drop.AttemptDrop(EXPOwner?.Stats[Stat.掉落收益] ?? 0, EXPOwner?.Stats[Stat.金币收益] ?? 0);
 
                             if (reward != null)
                             {
@@ -12429,14 +12429,14 @@ namespace Server.MirObjects
             switch ((int)dropitem.Info.Effect)
             {
                 case 0://exp low/med/high
-                    dropitem.AddedStats[Stat.经验增长数率] = 5;
-                    if (boxtype > 0) dropitem.AddedStats[Stat.经验增长数率] = 10;
-                    if (boxtype > 1) dropitem.AddedStats[Stat.经验增长数率] = 20;
+                    dropitem.AddedStats[Stat.经验收益] = 5;
+                    if (boxtype > 0) dropitem.AddedStats[Stat.经验收益] = 10;
+                    if (boxtype > 1) dropitem.AddedStats[Stat.经验收益] = 20;
                     break;
                 case 1://drop low/med/high
-                    dropitem.AddedStats[Stat.物品掉落数率] = 10;
-                    if (boxtype > 0) dropitem.AddedStats[Stat.物品掉落数率] = 20;
-                    if (boxtype > 1) dropitem.AddedStats[Stat.物品掉落数率] = 50;
+                    dropitem.AddedStats[Stat.掉落收益] = 10;
+                    if (boxtype > 0) dropitem.AddedStats[Stat.掉落收益] = 20;
+                    if (boxtype > 1) dropitem.AddedStats[Stat.掉落收益] = 50;
                     break;
                 case 2://hp low/med/high
                     dropitem.AddedStats[Stat.HP] = 50;

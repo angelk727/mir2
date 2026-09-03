@@ -498,6 +498,8 @@ namespace Server.MirObjects
                     return new Mon622N(info);
                 case 624:
                     return new Mon624B(info);
+                case 625:
+                    return new Mon625N(info);
                 case 900:
                     return new EvilMir(info);
                 case 901:
@@ -1014,7 +1016,10 @@ namespace Server.MirObjects
         {
             if (HP == amount) return;
 
-            HP = amount <= Stats[Stat.HP] ? amount : Stats[Stat.HP];
+            int maxHP = Stats[Stat.HP];
+
+            HP = amount > maxHP ? maxHP : amount;
+            if (HP < 0) HP = 0;
 
             if (!Dead && HP == 0) Die();
 
@@ -1023,14 +1028,15 @@ namespace Server.MirObjects
         }
         public virtual void ChangeHP(int amount)
         {
-            if (HP + amount > Stats[Stat.HP])
-                amount = Stats[Stat.HP] - HP;
+            long newHP = (long)HP + amount;
+            int maxHP = Stats[Stat.HP];
 
-            if (amount == 0) return;
+            if (newHP > maxHP) newHP = maxHP;
+            else if (newHP < 0) newHP = 0;
 
-            HP += amount;
+            if (newHP == HP) return;
 
-            if (HP < 0) HP = 0;
+            HP = (int)newHP;
 
             if (!Dead && HP == 0) Die();
 
@@ -1128,9 +1134,9 @@ namespace Server.MirObjects
         {
             if (!Dead) return;
 
+            Dead = false;
             SetHP(hp);
 
-            Dead = false;
             ActionTime = Envir.Time + RevivalDelay;
 
             Broadcast(new S.ObjectRevived { ObjectID = ObjectID, Effect = effect });
@@ -1206,8 +1212,8 @@ namespace Server.MirObjects
                 return;
 
             MonsterRarityProfile profile = GetRarityProfile();
-            int ownerItemBonus = EXPOwner?.Stats[Stat.物品掉落数率] ?? 0;
-            int ownerGoldBonus = EXPOwner?.Stats[Stat.金币收益数率] ?? 0;
+            int ownerItemBonus = EXPOwner?.Stats[Stat.掉落收益] ?? 0;
+            int ownerGoldBonus = EXPOwner?.Stats[Stat.金币收益] ?? 0;
             int totalItemBonus = ownerItemBonus + profile.ItemDropBonusPercent;
             int totalGoldBonus = ownerGoldBonus + profile.GoldDropBonusPercent;
 
@@ -2756,9 +2762,9 @@ namespace Server.MirObjects
 
             Broadcast(new S.ObjectStruck { ObjectID = ObjectID, AttackerID = attacker.ObjectID, Direction = Direction, Location = CurrentLocation });
 
-            if (attacker.Stats[Stat.吸血数率] > 0 && damageWeapon)
+            if (attacker.Stats[Stat.生命偷取] > 0 && damageWeapon)
             {
-                attacker.HpDrain += Math.Max(0, ((float)(damage - armour) / 100) * attacker.Stats[Stat.吸血数率]);
+                attacker.HpDrain += Math.Max(0, ((float)(damage - armour) / 100) * attacker.Stats[Stat.生命偷取]);
                 if (attacker.HpDrain > 2)
                 {
                     int hpGain = (int)Math.Floor(attacker.HpDrain);
@@ -2778,7 +2784,7 @@ namespace Server.MirObjects
                     if (player != null && player.CurrentMap == attacker.CurrentMap && Functions.InRange(player.CurrentLocation, attacker.CurrentLocation, Globals.DataRange) && !player.Dead)
                     {
                         if (GroupMembers != null && GroupMembers.Contains(player))
-                            damage += (int)Math.Round((double)(damage * attacker.Stats[Stat.师徒专享伤害数率]) / 100);
+                            damage += (int)Math.Round((double)(damage * attacker.Stats[Stat.师徒增伤收益]) / 100);
                     }
                 }
             }

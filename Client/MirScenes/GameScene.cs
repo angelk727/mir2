@@ -7743,7 +7743,7 @@ namespace Client.MirScenes
 
             #region Hpdrain
 
-            minValue = realItem.Stats[Stat.吸血数率];
+            minValue = realItem.Stats[Stat.生命偷取];
             maxValue = 0;
             addValue = 0;
 
@@ -7768,9 +7768,9 @@ namespace Client.MirScenes
 
             #region Exp Rate
 
-            minValue = realItem.Stats[Stat.经验增长数率];
+            minValue = realItem.Stats[Stat.经验收益];
             maxValue = 0;
-            addValue = (!hideAdded && (!HoverItem.Info.NeedIdentify || HoverItem.Identified)) ? addedStats[Stat.经验增长数率] : 0;
+            addValue = (!hideAdded && (!HoverItem.Info.NeedIdentify || HoverItem.Identified)) ? addedStats[Stat.经验收益] : 0;
 
             if (minValue != 0 || maxValue != 0 || addValue != 0)
             {
@@ -7799,9 +7799,9 @@ namespace Client.MirScenes
 
             #region Drop Rate
 
-            minValue = realItem.Stats[Stat.物品掉落数率];
+            minValue = realItem.Stats[Stat.掉落收益];
             maxValue = 0;
-            addValue = (!hideAdded && (!HoverItem.Info.NeedIdentify || HoverItem.Identified)) ? addedStats[Stat.物品掉落数率] : 0;
+            addValue = (!hideAdded && (!HoverItem.Info.NeedIdentify || HoverItem.Identified)) ? addedStats[Stat.掉落收益] : 0;
 
             if (minValue != 0 || maxValue != 0 || addValue != 0)
             {
@@ -7830,9 +7830,9 @@ namespace Client.MirScenes
 
             #region Gold Rate
 
-            minValue = realItem.Stats[Stat.金币收益数率];
+            minValue = realItem.Stats[Stat.金币收益];
             maxValue = 0;
-            addValue = (!hideAdded && (!HoverItem.Info.NeedIdentify || HoverItem.Identified)) ? addedStats[Stat.金币收益数率] : 0;
+            addValue = (!hideAdded && (!HoverItem.Info.NeedIdentify || HoverItem.Identified)) ? addedStats[Stat.金币收益] : 0;
 
             if (minValue != 0 || maxValue != 0 || addValue != 0)
             {
@@ -8088,7 +8088,7 @@ namespace Client.MirScenes
 
             #region MAXHPRATE
 
-            minValue = realItem.Stats[Stat.生命值数率];
+            minValue = realItem.Stats[Stat.生命值强化];
             maxValue = 0;
             addValue = 0;
 
@@ -8113,7 +8113,7 @@ namespace Client.MirScenes
 
             #region MAXMPRATE
 
-            minValue = realItem.Stats[Stat.法力值数率];
+            minValue = realItem.Stats[Stat.法力值强化];
             maxValue = 0;
             addValue = 0;
 
@@ -8138,7 +8138,7 @@ namespace Client.MirScenes
 
             #region MAXACRATE
 
-            minValue = realItem.Stats[Stat.强化防御];
+            minValue = realItem.Stats[Stat.防御强化];
             maxValue = 0;
             addValue = 0;
 
@@ -8163,7 +8163,7 @@ namespace Client.MirScenes
 
             #region MAXMACRATE
 
-            minValue = realItem.Stats[Stat.强化魔法防御];
+            minValue = realItem.Stats[Stat.魔法防御强化];
             maxValue = 0;
             addValue = 0;
 
@@ -8404,7 +8404,7 @@ namespace Client.MirScenes
 
             #region MAX_MC_RATE
 
-            minValue = realItem.Stats[Stat.魔法攻击强化];
+            minValue = realItem.Stats[Stat.魔法强化];
             maxValue = 0;
             addValue = 0;
 
@@ -8428,7 +8428,7 @@ namespace Client.MirScenes
 
             #region MAX_SC_RATE
 
-            minValue = realItem.Stats[Stat.道术攻击强化];
+            minValue = realItem.Stats[Stat.道术强化];
             maxValue = 0;
             addValue = 0;
 
@@ -8452,7 +8452,7 @@ namespace Client.MirScenes
 
             #region DAMAGE_REDUCTION
 
-            minValue = realItem.Stats[Stat.伤害减免数率];
+            minValue = realItem.Stats[Stat.伤害减免];
             maxValue = 0;
             addValue = 0;
 
@@ -8515,7 +8515,7 @@ namespace Client.MirScenes
 
             #region HANDWEIGHT
 
-            minValue = realItem.Stats[Stat.腕力负重];
+            minValue = realItem.Stats[Stat.腕力];
             maxValue = 0;
             addValue = 0;
 
@@ -8541,7 +8541,7 @@ namespace Client.MirScenes
 
             #region WEARWEIGHT
 
-            minValue = realItem.Stats[Stat.装备负重];
+            minValue = realItem.Stats[Stat.负重];
             maxValue = 0;
             addValue = 0;
 
@@ -8567,7 +8567,7 @@ namespace Client.MirScenes
 
             #region BAGWEIGHT
 
-            minValue = realItem.Stats[Stat.背包负重];
+            minValue = realItem.Stats[Stat.背包重量];
             maxValue = 0;
             addValue = 0;
 
@@ -8707,10 +8707,10 @@ namespace Client.MirScenes
                     Parent = ItemLabel,
                     Text = string.Format("{0}的觉醒 ({1})",HoverItem.Awake.Type switch //待修复
                     {
-                     AwakeType.物理攻击   => GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.BraveryGlyph),
-                     AwakeType.魔法攻击   => GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.MagicGlyph),
-                     AwakeType.道术攻击   => GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.SoulGlyph),
-                     AwakeType.物理防御   => GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.ProtectionGlyph),
+                     AwakeType.攻击   => GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.BraveryGlyph),
+                     AwakeType.魔法   => GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.MagicGlyph),
+                     AwakeType.道术   => GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.SoulGlyph),
+                     AwakeType.防御   => GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.ProtectionGlyph),
                      AwakeType.魔法防御   => GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.EvilSlayerGlyph),
                      AwakeType.生命法力值 => GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.BodyGlyph),
                      _ => GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.SelectUpgradeItem)
@@ -10055,9 +10055,9 @@ namespace Client.MirScenes
 
             Dictionary<ItemSet, List<(ItemType[] Need, string[] Bonus)>> bonusDict = new()
             {
-                [ItemSet.祈祷套装] = new() { (Array.Empty<ItemType>(), new[] { "物理攻击 + 2~5", "攻击速度 + 4", "魔法值数率 + 30", "死亡后不消失" }) },
+                [ItemSet.祈祷套装] = new() { (Array.Empty<ItemType>(), new[] { "攻击 + 2~5", "攻击速度 + 4", "魔法值强化 + 30", "死亡后不消失" }) },
                 [ItemSet.记忆套装] = new() { (Array.Empty<ItemType>(), new[] { "队长可召唤队友" }) },
-                [ItemSet.赤兰套装] = new() { (Array.Empty<ItemType>(), new[] { "准确 + 2", "吸血数率 + 10" }) },
+                [ItemSet.赤兰套装] = new() { (Array.Empty<ItemType>(), new[] { "准确 + 2", "生命偷取 + 10" }) },
                 [ItemSet.密火套装] = new() { (Array.Empty<ItemType>(), new[] { "生命值 + 50", "魔法值 + 50" }) },
                 [ItemSet.破碎套装] = new()
                 {
@@ -10066,59 +10066,59 @@ namespace Client.MirScenes
                 },
                 [ItemSet.幻魔石套] = new()
                 {
-                 (new[] { ItemType.戒指, ItemType.手镯 },new[] { "装备负重 + 5", "背包负重 + 20" }),
-                 (new[] { ItemType.戒指, ItemType.手镯, ItemType.项链 }, new[] { "魔法攻击 + 1~2" })
+                 (new[] { ItemType.戒指, ItemType.手镯 },new[] { "负重 + 5", "背包重量 + 20" }),
+                 (new[] { ItemType.戒指, ItemType.手镯, ItemType.项链 }, new[] { "魔法 + 1~2" })
                 },
                 [ItemSet.灵玉套装] = new()
                 {
                  (new[] { ItemType.戒指, ItemType.手镯 },new[] { "神圣 + 3" }),
                  (new[] { ItemType.戒指, ItemType.手镯, ItemType.项链 }, new[] { "道术攻击 + 1~2"})
                 },
-                [ItemSet.五玄套装] = new() { (Array.Empty<ItemType>(), new[] { "生命值数率 + 30", "物理防御 + 2~2" }) },
+                [ItemSet.五玄套装] = new() { (Array.Empty<ItemType>(), new[] { "生命值强化 + 30", "防御 + 2~2" }) },
                 [ItemSet.世轮套装] = new() { (Array.Empty<ItemType>(), new[] { "生命值 + 50" }) },
                 [ItemSet.绿翠套装] = new() { (Array.Empty<ItemType>(), new[] { "魔法值 + 50" }) },
                 [ItemSet.道护套装] = new() { (Array.Empty<ItemType>(), new[] { "生命值 + 30", "魔法值 + 30" }) },
                 [ItemSet.天龙套装] = new()
                 {
                  (new[] { ItemType.盔甲, ItemType.武器 },new[] { "攻击强化 + 3" }),
-                 (new[] { ItemType.头盔, ItemType.腰带, ItemType.靴子 },new[] { "强化防御 + 3" }),
-                 (new[] { ItemType.戒指, ItemType.手镯, ItemType.项链 }, new[] { "物理攻击 + 2~6", "魔法攻击 + 2~6", "道术攻击 + 2~6", "攻击速度 + 2", "腕力负重 + 30", "装备负重 + 30", "背包负重 + 60"}),
-                 (new[] { ItemType.盔甲, ItemType.武器, ItemType.头盔, ItemType.腰带, ItemType.靴子, ItemType.戒指, ItemType.手镯, ItemType.项链 }, new[] { "幸运 + 2", "生命值 + 100", "物理防御 + 2~6", "魔法防御 + 1~4", "魔法值 + 100", "中毒恢复 + 2"})
+                 (new[] { ItemType.头盔, ItemType.腰带, ItemType.靴子 },new[] { "防御强化 + 3" }),
+                 (new[] { ItemType.戒指, ItemType.手镯, ItemType.项链 }, new[] { "攻击 + 2~6", "魔法 + 2~6", "道术 + 2~6", "攻击速度 + 2", "腕力 + 30", "负重 + 30", "背包重量 + 60"}),
+                 (new[] { ItemType.盔甲, ItemType.武器, ItemType.头盔, ItemType.腰带, ItemType.靴子, ItemType.戒指, ItemType.手镯, ItemType.项链 }, new[] { "幸运 + 2", "生命值 + 100", "防御 + 2~6", "魔法防御 + 1~4", "魔法值 + 100", "中毒恢复 + 2"})
                 },
-                [ItemSet.白骨套装] = new() { (Array.Empty<ItemType>(), new[] { "物理防御 + 0~2", "魔法攻击 + 0~1", "道术攻击 + 0~1" }) },
-                [ItemSet.虫血套装] = new() { (Array.Empty<ItemType>(), new[] { "物理攻击 + 0~1", "魔法攻击 + 0~1", "道术攻击 + 0~1", "魔法躲避 + 1", "毒物躲避 + 1" }) },
-                [ItemSet.白金套装] = new() { (Array.Empty<ItemType>(), new[] { "物理攻击 + 0~2", "物理防御 + 0~2", "腕力负重 + 1", "装备负重 + 2" }) },
-                [ItemSet.强白金套] = new() { (Array.Empty<ItemType>(), new[] { "物理攻击 + 0~3", "攻击速度 + 2", "生命值 + 30", "装备负重 + 2" }) },
-                [ItemSet.红玉套装] = new() { (Array.Empty<ItemType>(), new[] { "魔法攻击 + 0~2", "魔法防御 + 0~2 ", "腕力负重 + 1 ", "装备负重 + 2" }) },
-                [ItemSet.强红玉套] = new() { (Array.Empty<ItemType>(), new[] { "魔法攻击 + 0~2", "生命值 + 40", "敏捷 + 2", "装备负重 + 2" }) },
-                [ItemSet.软玉套装] = new() { (Array.Empty<ItemType>(), new[] { "道术攻击 + 0~2", "物理防御 + 0~1", "魔法防御 + 0~1", "腕力负重 + 1", "装备负重 + 2" }) },
-                [ItemSet.强软玉套] = new() { (Array.Empty<ItemType>(), new[] { "道术攻击 + 0~2", "神圣 + 1", "准确 + 1", "生命值 + 15", "魔法值 + 20", "敏捷 + 1", "装备负重 + 2" }) },
-                [ItemSet.贵人战套] = new() { (Array.Empty<ItemType>(), new[] { "物理攻击 + 1~1", "装备负重 + 25" }) },
-                [ItemSet.贵人法套] = new() { (Array.Empty<ItemType>(), new[] { "魔法攻击 + 1~1", "装备负重 + 17" }) },
-                [ItemSet.贵人道套] = new() { (Array.Empty<ItemType>(), new[] { "道术攻击 + 1~1", "装备负重 + 17" }) },
-                [ItemSet.贵人刺套] = new() { (Array.Empty<ItemType>(), new[] { "物理攻击 + 1~1", "装备负重 + 20" }) },
-                [ItemSet.贵人弓套] = new() { (Array.Empty<ItemType>(), new[] { "物理攻击 + 0~1", "魔法攻击 + 0~1", "装备负重 + 20" }) },
+                [ItemSet.白骨套装] = new() { (Array.Empty<ItemType>(), new[] { "防御 + 0~2", "魔法 + 0~1", "道术 + 0~1" }) },
+                [ItemSet.虫血套装] = new() { (Array.Empty<ItemType>(), new[] { "攻击 + 0~1", "魔法 + 0~1", "道术 + 0~1", "魔法躲避 + 1", "毒物躲避 + 1" }) },
+                [ItemSet.白金套装] = new() { (Array.Empty<ItemType>(), new[] { "攻击 + 0~2", "防御 + 0~2", "腕力 + 1", "负重 + 2" }) },
+                [ItemSet.强白金套] = new() { (Array.Empty<ItemType>(), new[] { "攻击 + 0~3", "攻击速度 + 2", "生命值 + 30", "负重 + 2" }) },
+                [ItemSet.红玉套装] = new() { (Array.Empty<ItemType>(), new[] { "魔法 + 0~2", "魔法防御 + 0~2 ", "腕力 + 1 ", "负重 + 2" }) },
+                [ItemSet.强红玉套] = new() { (Array.Empty<ItemType>(), new[] { "魔法 + 0~2", "生命值 + 40", "敏捷 + 2", "负重 + 2" }) },
+                [ItemSet.软玉套装] = new() { (Array.Empty<ItemType>(), new[] { "道术 + 0~2", "防御 + 0~1", "魔法防御 + 0~1", "腕力 + 1", "负重 + 2" }) },
+                [ItemSet.强软玉套] = new() { (Array.Empty<ItemType>(), new[] { "道术 + 0~2", "神圣 + 1", "准确 + 1", "生命值 + 15", "魔法值 + 20", "敏捷 + 1", "负重 + 2" }) },
+                [ItemSet.贵人战套] = new() { (Array.Empty<ItemType>(), new[] { "攻击 + 1~1", "负重 + 25" }) },
+                [ItemSet.贵人法套] = new() { (Array.Empty<ItemType>(), new[] { "魔法 + 1~1", "负重 + 17" }) },
+                [ItemSet.贵人道套] = new() { (Array.Empty<ItemType>(), new[] { "道术 + 1~1", "负重 + 17" }) },
+                [ItemSet.贵人刺套] = new() { (Array.Empty<ItemType>(), new[] { "攻击 + 1~1", "负重 + 20" }) },
+                [ItemSet.贵人弓套] = new() { (Array.Empty<ItemType>(), new[] { "攻击 + 0~1", "魔法攻击 + 0~1", "负重 + 20" }) },
                 [ItemSet.血龙套装] = new() { (Array.Empty<ItemType>(), new[] { "神圣 + 3" }) },
                 [ItemSet.监视套装] = new() { (Array.Empty<ItemType>(), new[] { "魔法躲避 + 1", "毒物躲避 + 1" }) },
-                [ItemSet.暴压套装] = new() { (Array.Empty<ItemType>(), new[] { "物理防御 + 0~1", "敏捷 + 1" }) },
+                [ItemSet.暴压套装] = new() { (Array.Empty<ItemType>(), new[] { "防御 + 0~1", "敏捷 + 1" }) },
                 [ItemSet.贝玉套装] = new() { (Array.Empty<ItemType>(), new[] { "套装没有效果" }) },
                 [ItemSet.黑术套装] = new() { (Array.Empty<ItemType>(), new[] { "套装没有效果" }) },
-                [ItemSet.青玉套装] = new() { (Array.Empty<ItemType>(), new[] { "物理攻击 + 1~1", "魔法攻击 + 1~1", "物理防御 + 1~1", "魔法防御 + 0~1", "腕力负重 + 1", "装备负重 + 2" }) },
+                [ItemSet.青玉套装] = new() { (Array.Empty<ItemType>(), new[] { "攻击 + 1~1", "魔法 + 1~1", "防御 + 1~1", "魔法防御 + 0~1", "腕力 + 1", "负重 + 2" }) },
                 [ItemSet.鏃未套装] = new()
                 {
                  (new[] { ItemType.项链, ItemType.手镯 },new[] { "生命值 + 25" }),
                  (new[] { ItemType.项链, ItemType.手镯, ItemType.戒指 }, new[] { "魔法值 + 25", "攻击速度 + 2" })
                 },
                 [ItemSet.青宝套装] = new() { (Array.Empty<ItemType>(), new[] { "套装没有效果" }) },
-                [ItemSet.强青玉套] = new() { (Array.Empty<ItemType>(), new[] { "物理攻击 + 1~2", "魔法攻击 + 0~2", "攻击速度 + 1", "准确 + 1", "生命值 + 50" }) },
+                [ItemSet.强青玉套] = new() { (Array.Empty<ItemType>(), new[] { "攻击 + 1~2", "魔法 + 0~2", "攻击速度 + 1", "准确 + 1", "生命值 + 50" }) },
                 [ItemSet.双戒套装] = new()
                 {
-                 (new[] { ItemType.戒指, ItemType.戒指 },new[] { "物理攻击 + 0~5", "魔法攻击 + 0~5", "道术攻击 + 0~5" })
+                 (new[] { ItemType.戒指, ItemType.戒指 },new[] { "攻击 + 0~5", "魔法 + 0~5", "道术 + 0~5" })
                 },
                 [ItemSet.昆仑套装] = new()
                 {
-                 (new[] { ItemType.项链, ItemType.戒指 },new[] { "物理攻击 + 0~8", "魔法攻击 + 0~8", "道术攻击 + 0~8" }),
-                 (new[] { ItemType.项链, ItemType.戒指, ItemType.手镯, ItemType.盔甲 },new[] { "强化防御 + 20%" }),//20%几率降低20%的伤害持续15秒冷却时间120秒
+                 (new[] { ItemType.项链, ItemType.戒指 },new[] { "攻击 + 0~8", "魔法 + 0~8", "道术 + 0~8" }),
+                 (new[] { ItemType.项链, ItemType.戒指, ItemType.手镯, ItemType.盔甲 },new[] { "防御强化 + 20%" }),//20%几率降低20%的伤害持续15秒冷却时间120秒
                  (new[] { ItemType.武器, ItemType.头盔, ItemType.腰带, ItemType.靴子 },new[] { "攻击强化 + 20%" }),//伤害增加20%持续15秒有20%几率攻击冷却时间120秒
                  (new[] { ItemType.武器, ItemType.头盔, ItemType.腰带, ItemType.靴子, ItemType.戒指, ItemType.项链, ItemType.手镯, ItemType.盔甲 },new[] { "暴击率 + 7%", "暴击伤害 + 40%" })//攻击时有7%的几率增加40%的暴击伤害
                 },
@@ -12265,15 +12265,15 @@ namespace Client.MirScenes
 
             if (magic.Spell == Spell.Teleport || magic.Spell == Spell.Blink || magic.Spell == Spell.StormEscape || magic.Spell == Spell.StormEscapeRare)
             {
-                if (actor.Stats[Stat.传送技法力消耗数率] > 0)
+                if (actor.Stats[Stat.传送技能法力值消耗] > 0)
                 {
-                    cost += (cost * actor.Stats[Stat.传送技法力消耗数率]) / 100;
+                    cost += (cost * actor.Stats[Stat.传送技能法力值消耗]) / 100;
                 }
             }
 
-            if (actor.Stats[Stat.法力值消耗数率] > 0)
+            if (actor.Stats[Stat.法力值消耗百分比] > 0)
             {
-                cost += (cost * actor.Stats[Stat.法力值消耗数率]) / 100;
+                cost += (cost * actor.Stats[Stat.法力值消耗百分比]) / 100;
             }
 
             if (cost > actor.MP)
@@ -12629,8 +12629,8 @@ namespace Client.MirScenes
         private bool CanRun(MirDirection dir)
         {
             if (User.InTrapRock) return false;
-            if (User.CurrentBagWeight > User.Stats[Stat.背包负重]) return false;
-            if (User.CurrentWearWeight > User.Stats[Stat.背包负重]) return false;
+            if (User.CurrentBagWeight > User.Stats[Stat.背包重量]) return false;
+            if (User.CurrentWearWeight > User.Stats[Stat.背包重量]) return false;
             if (CanWalk(dir) && EmptyCell(Functions.PointMove(User.CurrentLocation, dir, 2)))
             {
                 if (User.RidingMount || User.Sprint && !User.Sneaking)

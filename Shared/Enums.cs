@@ -109,10 +109,10 @@ public enum GMOptions : byte
 public enum AwakeType : byte
 {
     None = 0,
-    物理攻击,
-    魔法攻击,
-    道术攻击,
-    物理防御,
+    攻击,
+    魔法,
+    道术,
+    防御,
     魔法防御,
     生命法力值,
 }

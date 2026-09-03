@@ -358,9 +358,9 @@ namespace Client.MirScenes.Dialogs
             StatePage.BeforeDraw += (o, e) =>
             {
                 ExpPLabel.Text = string.Format("{0:0.##%}", actor.Experience / (double)actor.MaxExperience);
-                BagWLabel.Text = string.Format("{0}/{1}", actor.CurrentBagWeight, actor.Stats[Stat.背包负重]);
-                WearWLabel.Text = string.Format("{0}/{1}", actor.CurrentWearWeight, actor.Stats[Stat.装备负重]);
-                HandWLabel.Text = string.Format("{0}/{1}", actor.CurrentHandWeight, actor.Stats[Stat.腕力负重]);
+                BagWLabel.Text = string.Format("{0}/{1}", actor.CurrentBagWeight, actor.Stats[Stat.背包重量]);
+                WearWLabel.Text = string.Format("{0}/{1}", actor.CurrentWearWeight, actor.Stats[Stat.负重]);
+                HandWLabel.Text = string.Format("{0}/{1}", actor.CurrentHandWeight, actor.Stats[Stat.腕力]);
                 MagicRLabel.Text = string.Format("+{0}", actor.Stats[Stat.魔法躲避]);
                 PoisonResLabel.Text = string.Format("+{0}", actor.Stats[Stat.毒物躲避]);
                 HealthRLabel.Text = string.Format("+{0}", actor.Stats[Stat.生命恢复]);
@@ -370,7 +370,7 @@ namespace Client.MirScenes.Dialogs
                 FreezeLabel.Text = string.Format("+{0}", actor.Stats[Stat.冰冻伤害]);
                 PoisonAtkLabel.Text = string.Format("+{0}", actor.Stats[Stat.毒素伤害]);
                 ReflectAtkLabel.Text = string.Format("+{0}", actor.Stats[Stat.反弹伤害]);
-                HPDrainRatePercentLabel.Text = string.Format("+ {0}%", actor.Stats[Stat.吸血数率]);
+                HPDrainRatePercentLabel.Text = string.Format("+ {0}%", actor.Stats[Stat.生命偷取]);
             };
 
 

@@ -2292,9 +2292,9 @@ namespace Server.MirEnvir
                                             var stats = new Stats
                                             {
                                                 [Stat.攻击强化] = value2 * -1,
-                                                [Stat.魔法攻击强化] = value2 * -1,
-                                                [Stat.道术攻击强化] = value2 * -1,
-                                                [Stat.攻击速度强化] = target.Race == ObjectType.Player ? value2 * -1 : 0
+                                                [Stat.魔法强化] = value2 * -1,
+                                                [Stat.道术强化] = value2 * -1,
+                                                [Stat.攻速强化] = target.Race == ObjectType.Player ? value2 * -1 : 0
                                             };
 
                                             target.AddBuff(BuffType.诅咒术, player, Settings.Second * value, stats);
@@ -2865,7 +2865,7 @@ namespace Server.MirEnvir
 
                                             var stats4 = new Stats
                                             {
-                                                [Stat.气功盾恢复数率] = (int)Math.Round((1 / (decimal)chance) * 100),
+                                                [Stat.气功盾恢复百分比] = (int)Math.Round((1 / (decimal)chance) * 100),
                                                 [Stat.气功盾恢复生命值] = (int)(player.Stats[Stat.HP] * 0.05)
                                             };
 
@@ -2979,7 +2979,7 @@ namespace Server.MirEnvir
 
                                             var stats4 = new Stats
                                             {
-                                                [Stat.气功盾恢复数率] = (int)Math.Round((1 / (decimal)chance) * 100),
+                                                [Stat.气功盾恢复百分比] = (int)Math.Round((1 / (decimal)chance) * 100),
                                                 [Stat.气功盾恢复生命值] = (int)(player.Stats[Stat.HP] * 0.05)
                                             };
 

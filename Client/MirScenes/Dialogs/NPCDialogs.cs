@@ -2083,10 +2083,10 @@ namespace Client.MirScenes.Dialogs
         private static readonly Dictionary<AwakeType, ClientTextKeys> AwakeTypeTextMap =
             new Dictionary<AwakeType, ClientTextKeys>
             {
-        { AwakeType.物理攻击,   ClientTextKeys.BraveryGlyph },
-        { AwakeType.魔法攻击,   ClientTextKeys.MagicGlyph },
-        { AwakeType.道术攻击,   ClientTextKeys.SoulGlyph },
-        { AwakeType.物理防御,   ClientTextKeys.ProtectionGlyph },
+        { AwakeType.攻击,   ClientTextKeys.BraveryGlyph },
+        { AwakeType.魔法,   ClientTextKeys.MagicGlyph },
+        { AwakeType.道术,   ClientTextKeys.SoulGlyph },
+        { AwakeType.防御,   ClientTextKeys.ProtectionGlyph },
         { AwakeType.魔法防御,   ClientTextKeys.EvilSlayerGlyph },
         { AwakeType.生命法力值, ClientTextKeys.BodyGlyph },
             };
@@ -2659,7 +2659,7 @@ namespace Client.MirScenes.Dialogs
             Recipe = GameScene.RecipeInfoList.SingleOrDefault(x => x.Item.ItemIndex == selectedItem.ItemIndex);
 
             RecipeLabel.Text = Recipe.Item.FriendlyName;
-            PossibilityLabel.Text = (UserObject.User.Stats[Stat.大师概率数率] > 0 ? $"{Math.Min(100, Recipe.Chance + UserObject.User.Stats[Stat.大师概率数率])}% (+{UserObject.User.Stats[Stat.大师概率数率]}%)" : $"{Recipe.Chance}%") + " 成功几率";
+            PossibilityLabel.Text = (UserObject.User.Stats[Stat.大师收益] > 0 ? $"{Math.Min(100, Recipe.Chance + UserObject.User.Stats[Stat.大师收益])}% (+{UserObject.User.Stats[Stat.大师收益]}%)" : $"{Recipe.Chance}%") + " 成功几率";
             GoldLabel.Text = Recipe.Gold.ToString("###,###,##0");
 
             for (int i = 0; i < Slots.Length; i++)

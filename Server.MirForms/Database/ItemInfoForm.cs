@@ -79,7 +79,7 @@ namespace Server
                 label50.Text = "暴击率";
                 label52.Text = "反弹伤害";
                 label51.Text = "暴击伤害";
-                label49.Text = "吸血数率";
+                label49.Text = "生命偷取";
                 BlinkcheckBox.Text = "瞬移技能";
             }
         }
@@ -248,9 +248,9 @@ namespace Server
             ASpeedTextBox.Text = info.Stats[Stat.攻击速度].ToString();
             LuckTextBox.Text = info.Stats[Stat.幸运].ToString();
 
-            WWeightTextBox.Text = info.Stats[Stat.装备负重].ToString();
-            HWeightTextBox.Text = info.Stats[Stat.腕力负重].ToString();
-            BWeightText.Text = info.Stats[Stat.背包负重].ToString();
+            WWeightTextBox.Text = info.Stats[Stat.负重].ToString();
+            HWeightTextBox.Text = info.Stats[Stat.腕力].ToString();
+            BWeightText.Text = info.Stats[Stat.背包重量].ToString();
 
             StartItemCheckBox.Checked = info.StartItem;
             EffectTextBox.Text = info.Effect.ToString();
@@ -261,25 +261,25 @@ namespace Server
             MagicResisttextBox.Text = info.Stats[Stat.魔法躲避].ToString();
             HealthRecoveryTextbox.Text = info.Stats[Stat.生命恢复].ToString();
             StrongTextbox.Text = info.Stats[Stat.强度].ToString();
-            MacRateTextbox.Text = info.Stats[Stat.强化魔法防御].ToString();
-            ACRateTextbox.Text = info.Stats[Stat.强化防御].ToString();
+            MacRateTextbox.Text = info.Stats[Stat.魔法防御强化].ToString();
+            ACRateTextbox.Text = info.Stats[Stat.防御强化].ToString();
             PoisonResisttextBox.Text = info.Stats[Stat.毒物躲避].ToString();
             PoisonAttacktextbox.Text = info.Stats[Stat.毒素伤害].ToString();
             Freezingtextbox.Text = info.Stats[Stat.冰冻伤害].ToString();
             Holytextbox.Text = info.Stats[Stat.神圣].ToString();
-            HPratetextbox.Text = info.Stats[Stat.生命值数率].ToString();
-            MPratetextbox.Text = info.Stats[Stat.法力值数率].ToString();
-            HpDrainRatetextBox.Text = info.Stats[Stat.吸血数率].ToString();
+            HPratetextbox.Text = info.Stats[Stat.生命值强化].ToString();
+            MPratetextbox.Text = info.Stats[Stat.法力值强化].ToString();
+            HpDrainRatetextBox.Text = info.Stats[Stat.生命偷取].ToString();
             CriticalRatetextBox.Text = info.Stats[Stat.暴击率].ToString();
             CriticalDamagetextBox.Text = info.Stats[Stat.暴击伤害].ToString();
             ReflecttextBox.Text = info.Stats[Stat.反弹伤害].ToString();
             MaxDCRatetextBox.Text = info.Stats[Stat.攻击强化].ToString();
-            MaxSCRatetextBox.Text = info.Stats[Stat.道术攻击强化].ToString();
-            MaxMCRatetextBox.Text = info.Stats[Stat.魔法攻击强化].ToString();
-            DamageReductiontextBox.Text = info.Stats[Stat.伤害减免数率].ToString();
-            ExpRatetextBox.Text = info.Stats[Stat.经验增长数率].ToString();
-            DropRatetextBox.Text = info.Stats[Stat.物品掉落数率].ToString();
-            GoldRatetextBox.Text = info.Stats[Stat.金币收益数率].ToString();
+            MaxSCRatetextBox.Text = info.Stats[Stat.道术强化].ToString();
+            MaxMCRatetextBox.Text = info.Stats[Stat.魔法强化].ToString();
+            DamageReductiontextBox.Text = info.Stats[Stat.伤害减免].ToString();
+            ExpRatetextBox.Text = info.Stats[Stat.经验收益].ToString();
+            DropRatetextBox.Text = info.Stats[Stat.掉落收益].ToString();
+            GoldRatetextBox.Text = info.Stats[Stat.金币收益].ToString();
 
 
 
@@ -367,9 +367,9 @@ namespace Server
                 if (ASpeedTextBox.Text != info.Stats[Stat.攻击速度].ToString()) ASpeedTextBox.Text = string.Empty;
                 if (LuckTextBox.Text != info.Stats[Stat.幸运].ToString()) LuckTextBox.Text = string.Empty;
 
-                if (WWeightTextBox.Text != info.Stats[Stat.装备负重].ToString()) WWeightTextBox.Text = string.Empty;
-                if (HWeightTextBox.Text != info.Stats[Stat.腕力负重].ToString()) HWeightTextBox.Text = string.Empty;
-                if (BWeightText.Text != info.Stats[Stat.背包负重].ToString()) BWeightText.Text = string.Empty;
+                if (WWeightTextBox.Text != info.Stats[Stat.负重].ToString()) WWeightTextBox.Text = string.Empty;
+                if (HWeightTextBox.Text != info.Stats[Stat.腕力].ToString()) HWeightTextBox.Text = string.Empty;
+                if (BWeightText.Text != info.Stats[Stat.背包重量].ToString()) BWeightText.Text = string.Empty;
 
                 if (StartItemCheckBox.Checked != info.StartItem) StartItemCheckBox.CheckState = CheckState.Indeterminate;
                 if (EffectTextBox.Text != info.Effect.ToString()) EffectTextBox.Text = string.Empty;
@@ -380,25 +380,25 @@ namespace Server
                 if (MagicResisttextBox.Text != info.Stats[Stat.魔法躲避].ToString()) MagicResisttextBox.Text = string.Empty;
                 if (HealthRecoveryTextbox.Text != info.Stats[Stat.生命恢复].ToString()) HealthRecoveryTextbox.Text = string.Empty;
                 if (StrongTextbox.Text != info.Stats[Stat.强度].ToString()) StrongTextbox.Text = string.Empty;
-                if (MacRateTextbox.Text != info.Stats[Stat.强化魔法防御].ToString()) MacRateTextbox.Text = string.Empty;
-                if (ACRateTextbox.Text != info.Stats[Stat.强化防御].ToString()) ACRateTextbox.Text = string.Empty;
+                if (MacRateTextbox.Text != info.Stats[Stat.魔法防御强化].ToString()) MacRateTextbox.Text = string.Empty;
+                if (ACRateTextbox.Text != info.Stats[Stat.防御强化].ToString()) ACRateTextbox.Text = string.Empty;
                 if (PoisonResisttextBox.Text != info.Stats[Stat.毒物躲避].ToString()) PoisonResisttextBox.Text = string.Empty;
                 if (PoisonAttacktextbox.Text != info.Stats[Stat.毒素伤害].ToString()) PoisonAttacktextbox.Text = string.Empty;
                 if (Freezingtextbox.Text != info.Stats[Stat.冰冻伤害].ToString()) Freezingtextbox.Text = string.Empty;
                 if (Holytextbox.Text != info.Stats[Stat.神圣].ToString()) Holytextbox.Text = string.Empty;
-                if (HPratetextbox.Text != info.Stats[Stat.生命值数率].ToString()) HPratetextbox.Text = string.Empty;
-                if (MPratetextbox.Text != info.Stats[Stat.法力值数率].ToString()) MPratetextbox.Text = string.Empty;
-                if (HpDrainRatetextBox.Text != info.Stats[Stat.吸血数率].ToString()) HpDrainRatetextBox.Text = string.Empty;
+                if (HPratetextbox.Text != info.Stats[Stat.生命值强化].ToString()) HPratetextbox.Text = string.Empty;
+                if (MPratetextbox.Text != info.Stats[Stat.法力值强化].ToString()) MPratetextbox.Text = string.Empty;
+                if (HpDrainRatetextBox.Text != info.Stats[Stat.生命偷取].ToString()) HpDrainRatetextBox.Text = string.Empty;
                 if (CriticalRatetextBox.Text != info.Stats[Stat.暴击率].ToString()) CriticalRatetextBox.Text = string.Empty;
                 if (CriticalDamagetextBox.Text != info.Stats[Stat.暴击伤害].ToString()) CriticalDamagetextBox.Text = string.Empty;
                 if (ReflecttextBox.Text != info.Stats[Stat.反弹伤害].ToString()) ReflecttextBox.Text = string.Empty;
                 if (MaxDCRatetextBox.Text != info.Stats[Stat.攻击强化].ToString()) MaxDCRatetextBox.Text = string.Empty;
-                if (MaxSCRatetextBox.Text != info.Stats[Stat.道术攻击强化].ToString()) MaxSCRatetextBox.Text = string.Empty;
-                if (MaxMCRatetextBox.Text != info.Stats[Stat.魔法攻击强化].ToString()) MaxMCRatetextBox.Text = string.Empty;
-                if (DamageReductiontextBox.Text != info.Stats[Stat.伤害减免数率].ToString()) DamageReductiontextBox.Text = string.Empty;
-                if (ExpRatetextBox.Text != info.Stats[Stat.经验增长数率].ToString()) ExpRatetextBox.Text = string.Empty;
-                if (DropRatetextBox.Text != info.Stats[Stat.物品掉落数率].ToString()) DropRatetextBox.Text = string.Empty;
-                if (GoldRatetextBox.Text != info.Stats[Stat.金币收益数率].ToString()) GoldRatetextBox.Text = string.Empty;
+                if (MaxSCRatetextBox.Text != info.Stats[Stat.道术强化].ToString()) MaxSCRatetextBox.Text = string.Empty;
+                if (MaxMCRatetextBox.Text != info.Stats[Stat.魔法强化].ToString()) MaxMCRatetextBox.Text = string.Empty;
+                if (DamageReductiontextBox.Text != info.Stats[Stat.伤害减免].ToString()) DamageReductiontextBox.Text = string.Empty;
+                if (ExpRatetextBox.Text != info.Stats[Stat.经验收益].ToString()) ExpRatetextBox.Text = string.Empty;
+                if (DropRatetextBox.Text != info.Stats[Stat.掉落收益].ToString()) DropRatetextBox.Text = string.Empty;
+                if (GoldRatetextBox.Text != info.Stats[Stat.金币收益].ToString()) GoldRatetextBox.Text = string.Empty;
                 if (LevelBasedcheckbox.Checked != info.LevelBased) LevelBasedcheckbox.CheckState = CheckState.Indeterminate;
                 if (ClassBasedcheckbox.Checked != info.ClassBased) ClassBasedcheckbox.CheckState = CheckState.Indeterminate;
                 if (Bind_dontstorecheckbox.Checked != info.Bind.HasFlag(BindMode.DontStore)) Bind_dontstorecheckbox.CheckState = CheckState.Indeterminate;
@@ -1010,7 +1010,7 @@ namespace Server
 
 
             for (int i = 0; i < _selectedItemInfos.Count; i++)
-                _selectedItemInfos[i].Stats[Stat.背包负重] = temp;
+                _selectedItemInfos[i].Stats[Stat.背包重量] = temp;
         }
         private void HWeightTextBox_TextChanged(object sender, EventArgs e)
         {
@@ -1028,7 +1028,7 @@ namespace Server
 
 
             for (int i = 0; i < _selectedItemInfos.Count; i++)
-                _selectedItemInfos[i].Stats[Stat.腕力负重] = temp;
+                _selectedItemInfos[i].Stats[Stat.腕力] = temp;
         }
         private void WWeightTextBox_TextChanged(object sender, EventArgs e)
         {
@@ -1046,7 +1046,7 @@ namespace Server
 
 
             for (int i = 0; i < _selectedItemInfos.Count; i++)
-                _selectedItemInfos[i].Stats[Stat.装备负重] = temp;
+                _selectedItemInfos[i].Stats[Stat.负重] = temp;
         }
         private void EffectTextBox_TextChanged(object sender, EventArgs e)
         {
@@ -1180,7 +1180,7 @@ namespace Server
 
 
             for (int i = 0; i < _selectedItemInfos.Count; i++)
-                _selectedItemInfos[i].Stats[Stat.强化防御] = temp;
+                _selectedItemInfos[i].Stats[Stat.防御强化] = temp;
         }
 
         private void MacRateTextbox_TextChanged(object sender, EventArgs e)
@@ -1198,7 +1198,7 @@ namespace Server
 
 
             for (int i = 0; i < _selectedItemInfos.Count; i++)
-                _selectedItemInfos[i].Stats[Stat.强化魔法防御] = temp;
+                _selectedItemInfos[i].Stats[Stat.魔法防御强化] = temp;
         }
 
         private void MagicResisttextBox_TextChanged(object sender, EventArgs e)
@@ -1306,7 +1306,7 @@ namespace Server
 
 
             for (int i = 0; i < _selectedItemInfos.Count; i++)
-                _selectedItemInfos[i].Stats[Stat.生命值数率] = temp;
+                _selectedItemInfos[i].Stats[Stat.生命值强化] = temp;
         }
 
         private void Holytextbox_TextChanged(object sender, EventArgs e)
@@ -1482,7 +1482,7 @@ namespace Server
 
 
             for (int i = 0; i < _selectedItemInfos.Count; i++)
-                _selectedItemInfos[i].Stats[Stat.法力值数率] = temp;
+                _selectedItemInfos[i].Stats[Stat.法力值强化] = temp;
         }
 
         private void HpDrainRatetextBox_TextChanged(object sender, EventArgs e)
@@ -1500,7 +1500,7 @@ namespace Server
 
 
             for (int i = 0; i < _selectedItemInfos.Count; i++)
-                _selectedItemInfos[i].Stats[Stat.吸血数率] = temp;
+                _selectedItemInfos[i].Stats[Stat.生命偷取] = temp;
         }
 
 
@@ -1732,7 +1732,7 @@ namespace Server
 
 
             for (int i = 0; i < _selectedItemInfos.Count; i++)
-                _selectedItemInfos[i].Stats[Stat.道术攻击强化] = temp;
+                _selectedItemInfos[i].Stats[Stat.道术强化] = temp;
         }
 
         private void MaxMCRatetextBox_TextChanged(object sender, EventArgs e)
@@ -1750,7 +1750,7 @@ namespace Server
 
 
             for (int i = 0; i < _selectedItemInfos.Count; i++)
-                _selectedItemInfos[i].Stats[Stat.魔法攻击强化] = temp;
+                _selectedItemInfos[i].Stats[Stat.魔法强化] = temp;
         }
 
         private void DamageReductiontextBox_TextChanged(object sender, EventArgs e)
@@ -1768,7 +1768,7 @@ namespace Server
 
 
             for (int i = 0; i < _selectedItemInfos.Count; i++)
-                _selectedItemInfos[i].Stats[Stat.伤害减免数率] = temp;
+                _selectedItemInfos[i].Stats[Stat.伤害减免] = temp;
         }
 
         private void ExpRatetextBox_TextChanged(object sender, EventArgs e)
@@ -1786,7 +1786,7 @@ namespace Server
 
 
             for (int i = 0; i < _selectedItemInfos.Count; i++)
-                _selectedItemInfos[i].Stats[Stat.经验增长数率] = temp;
+                _selectedItemInfos[i].Stats[Stat.经验收益] = temp;
         }
 
         private void GoldRatetextBox_TextChanged(object sender, EventArgs e)
@@ -1804,7 +1804,7 @@ namespace Server
 
 
             for (int i = 0; i < _selectedItemInfos.Count; i++)
-                _selectedItemInfos[i].Stats[Stat.金币收益数率] = temp;
+                _selectedItemInfos[i].Stats[Stat.金币收益] = temp;
         }
 
         private void DropRatetextBox_TextChanged(object sender, EventArgs e)
@@ -1822,7 +1822,7 @@ namespace Server
 
 
             for (int i = 0; i < _selectedItemInfos.Count; i++)
-                _selectedItemInfos[i].Stats[Stat.物品掉落数率] = temp;
+                _selectedItemInfos[i].Stats[Stat.掉落收益] = temp;
         }
 
         private void Bind_DontSpecialRepaircheckBox_CheckedChanged(object sender, EventArgs e)

@@ -4722,7 +4722,7 @@ namespace Server.MirObjects
 
                             foreach (var drop in drops)
                             {
-                                var reward = drop.AttemptDrop(player?.Stats[Stat.物品掉落数率] ?? 0, player?.Stats[Stat.金币收益数率] ?? 0);
+                                var reward = drop.AttemptDrop(player?.Stats[Stat.掉落收益] ?? 0, player?.Stats[Stat.金币收益] ?? 0);
 
                                 if (reward != null)
                                 {

@@ -238,7 +238,7 @@
             label64.Name = "label64";
             label64.Size = new Size(77, 12);
             label64.TabIndex = 137;
-            label64.Text = "伤害减免数率";
+            label64.Text = "伤害减免收益";
             // 
             // GoldRatetextBox
             // 
@@ -258,7 +258,7 @@
             label63.Name = "label63";
             label63.Size = new Size(80, 17);
             label63.TabIndex = 135;
-            label63.Text = "金币收益数率";
+            label63.Text = "金币掉落收益";
             // 
             // DropRatetextBox
             // 
@@ -278,7 +278,7 @@
             label62.Name = "label62";
             label62.Size = new Size(80, 17);
             label62.TabIndex = 133;
-            label62.Text = "物品掉落数率";
+            label62.Text = "物品掉落收益";
             // 
             // ExpRatetextBox
             // 
@@ -1108,7 +1108,7 @@
             label49.Name = "label49";
             label49.Size = new Size(56, 17);
             label49.TabIndex = 115;
-            label49.Text = "吸血数率";
+            label49.Text = "生命偷取";
             // 
             // ReflecttextBox
             // 
