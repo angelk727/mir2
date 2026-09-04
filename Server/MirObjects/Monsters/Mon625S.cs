@@ -4,11 +4,11 @@ using S = ServerPackets;
 
 namespace Server.MirObjects.Monsters
 {
-    public class Mon625N : MonsterObject
+    public class Mon625S : MonsterObject
     {
         public bool Stoned = true;
 
-        protected internal Mon625N(MonsterInfo info)
+        protected internal Mon625S(MonsterInfo info)
             : base(info)
         {
         }

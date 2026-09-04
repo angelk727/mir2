@@ -346,7 +346,7 @@ namespace Server.MirObjects
                 case 431:
                     return new SnowWolfKing(info);
                 case 432:
-                    return new WaterDragon(info);
+                    return new Mon432P(info); //Effect: 0
                 case 433:
                     return new BlackTortoise(info);
                 case 434:
@@ -499,7 +499,9 @@ namespace Server.MirObjects
                 case 624:
                     return new Mon624B(info);
                 case 625:
-                    return new Mon625N(info);
+                    return new Mon625S(info);
+                case 627:
+                    return new Mon432P(info); //Effect: 1
                 case 900:
                     return new EvilMir(info);
                 case 901:

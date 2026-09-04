@@ -3,9 +3,9 @@ using S = ServerPackets;
 
 namespace Server.MirObjects.Monsters
 {
-    public class WaterDragon : EvilCentipede
+    public class Mon432P : EvilCentipede
     {
-        protected internal WaterDragon(MonsterInfo info)
+        protected internal Mon432P(MonsterInfo info)
             : base(info)
         {
         }
@@ -41,7 +41,7 @@ namespace Server.MirObjects.Monsters
             }
 
             ShockTime = 0;
-            ActionTime = Envir.Time + 300;
+            ActionTime = Envir.Time + 600;
 
             Direction = Functions.DirectionFromPoint(CurrentLocation, Target.CurrentLocation);
             bool ranged = CurrentLocation == Target.CurrentLocation || !Functions.InRange(CurrentLocation, Target.CurrentLocation, 1);
@@ -59,13 +59,13 @@ namespace Server.MirObjects.Monsters
             }
             else
             {
-                AttackTime = Envir.Time + AttackSpeed + 500;
+                AttackTime = Envir.Time + AttackSpeed + 600;
 
                 Broadcast(new S.ObjectRangeAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation, TargetID = Target.ObjectID });
                 int damage = GetAttackPower(Stats[Stat.MinMC], Stats[Stat.MaxMC]);
                 if (damage == 0) return;
 
-                int delay = Functions.MaxDistance(CurrentLocation, Target.CurrentLocation) * 50 + 500; //50 MS per Step
+                int delay = Functions.MaxDistance(CurrentLocation, Target.CurrentLocation) * 50 + 600;
 
                 DelayedAction action = new DelayedAction(DelayedType.RangeDamage, Envir.Time + delay, Target, damage, DefenceType.MACAgility);
                 ActionList.Add(action);
@@ -94,7 +94,15 @@ namespace Server.MirObjects.Monsters
 
             if (finalDamage > 0)
             {
-                PoisonTarget(target, 7, 5, PoisonType.Green, 1000);
+                switch (Info.Effect)
+                {
+                    case 0: //AI: Mon432P Effect: 0
+                        PoisonTarget(target, 7, 5, PoisonType.Green, 1000);
+                        break;
+                    case 1: //AI: Mon627P Effect: 1
+                        PoisonTarget(target, 7, 5, PoisonType.Frozen, 1000);
+                        break;
+                }
             }
         }
     }

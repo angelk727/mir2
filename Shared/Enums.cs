@@ -599,7 +599,7 @@ public enum Monster : ushort
     IcePhantom = 429,
     SnowWolf = 430,  //Mon44.wil
     SnowWolfKing = 431,
-    WaterDragon = 432,
+    Mon432P = 432,
     BlackTortoise = 433,
     Manticore = 434,
     DragonWarrior = 435,
@@ -782,9 +782,9 @@ public enum Monster : ushort
     Mon622N = 622,
     Mon623N = 623,
     Mon624B = 624,  //Mon64.wil
-    Mon625N = 625,
+    Mon625S = 625,
     Mon626N = 626,
-    Mon627N = 627,
+    Mon627P = 627,
     Mon628P = 628,  //Mon65.wil
     Mon629P = 629,
     Mon630P = 630,
