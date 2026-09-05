@@ -297,6 +297,7 @@ namespace Client.MirObjects
                 case Monster.Mon575S:
                 case Monster.Mon620B:
                 case Monster.Mon625S:
+                case Monster.Mon635S:
                     Stoned = info.Extra;
                     break;
             }
@@ -757,12 +758,8 @@ namespace Client.MirObjects
                             case Monster.FurbolgGuard: //473
                                 Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.FurbolgGuard], 414 + (int)Direction * 6, 6, Frame.Count * Frame.Interval, this));
                                 break;
-
-
-
-
                             case Monster.Armadillo:
-                                MapControl.Effects.Add(new Effect(Libraries.Monsters[(ushort)BaseImage], 600, 12, 800, CurrentLocation, CMain.Time + 500));
+                                MapControl.Effects.Add(new Effect(Libraries.Monsters[(ushort)BaseImage], 600, 12, 600, CurrentLocation, CMain.Time + 900));
                                 break;
                         }
                         break;
@@ -1633,6 +1630,7 @@ namespace Client.MirObjects
                                 case Monster.Mon575S:
                                 case Monster.Mon620B:
                                 case Monster.Mon625S:
+                                case Monster.Mon635S:
                                     Stoned = false;
                                     break;
                                 case Monster.Shinsu:
@@ -1726,6 +1724,7 @@ namespace Client.MirObjects
                                 case Monster.Mon575S:
                                 case Monster.Mon620B:
                                 case Monster.Mon625S:
+                                case Monster.Mon635S:
                                     Stoned = true;
                                     return;
                             }
@@ -4007,6 +4006,13 @@ namespace Client.MirObjects
                                                     ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon627P], 546, 10, 1200, ob, CMain.Time + 600, false) { Blend = true });
                                                 }
                                                 break;
+                                             case Monster.Mon635S:
+                                                ob = MapControl.GetObject(TargetID);
+                                                if (ob != null)
+                                                {
+                                                    ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon635S], 655, 33, 900, ob, CMain.Time + 600));
+                                                }
+                                                break;
                                         }
                                         break;
                                     }//end of case 4
@@ -4490,7 +4496,7 @@ namespace Client.MirObjects
                                                     };
                                                 }
                                                 break;
-                                            case Monster.Mon545N: //545
+                                            case Monster.Mon545N:
                                                 ob = MapControl.GetObject(TargetID);
                                                 if (ob != null)
                                                 {
@@ -4545,6 +4551,13 @@ namespace Client.MirObjects
                                                         if (missile.Target.CurrentAction == MirAction.死后尸体) return;
                                                         missile.Target.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon615B], 1225, 10, 300, missile.Target) { Blend = true, DrawBehind = true });
                                                     };
+                                                }
+                                                break;
+                                            case Monster.Mon635S:
+                                                ob = MapControl.GetObject(TargetID);
+                                                if (ob != null)
+                                                {
+                                                    ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon635S], 768, 8, 900, ob, CMain.Time + 600));
                                                 }
                                                 break;
                                         }
@@ -8336,6 +8349,14 @@ namespace Client.MirObjects
                             break;
                     }
                     break;
+                case Monster.Mon626N:
+                    switch (CurrentAction)
+                    {
+                        case MirAction.刺客冲击:
+                            Libraries.Monsters[(ushort)Monster.Mon626N].DrawBlend((494 + FrameIndex + (int)Direction * 10), DrawLocation, Color.White, true);
+                            break;
+                    }
+                    break;
                 case Monster.Mon627P:
                     switch (CurrentAction)
                     {
@@ -8344,6 +8365,20 @@ namespace Client.MirObjects
                             break;
                         case MirAction.远程攻击1:
                             Libraries.Monsters[(ushort)Monster.Mon627P].DrawBlend((466 + FrameIndex + (int)Direction * 10), DrawLocation, Color.White, true);
+                            break;
+                    }
+                    break;
+                case Monster.Mon635S:
+                    switch (CurrentAction)
+                    {
+                        case MirAction.近距攻击1:
+                            Libraries.Monsters[(ushort)Monster.Mon635S].DrawBlend((504 + FrameIndex + (int)Direction * 8), DrawLocation, Color.White, true);
+                            break;
+                        case MirAction.远程攻击1:
+                            Libraries.Monsters[(ushort)Monster.Mon635S].DrawBlend((575 + FrameIndex + (int)Direction * 10), DrawLocation, Color.White, true);
+                            break;
+                        case MirAction.远程攻击2:
+                            Libraries.Monsters[(ushort)Monster.Mon635S].DrawBlend((688 + FrameIndex + (int)Direction * 10), DrawLocation, Color.White, true);
                             break;
                     }
                     break;

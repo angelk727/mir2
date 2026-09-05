@@ -667,7 +667,13 @@ namespace Server.MirEnvir
         {
             return x >= 0 && x < Width && y >= 0 && y < Height && GetCell(x, y).Valid;
         }
+        public bool CanJump(Point location)
+        {
+            if (!ValidPoint(location)) return false;
+            if (!CheckDoorOpen(location)) return false;
 
+            return true;
+        }
         public bool CheckDoorOpen(Point location)
         {
             if (DoorIndex[location.X, location.Y] == null) return true;

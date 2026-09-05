@@ -5034,7 +5034,7 @@ namespace Client.MirScenes
                             if (direction == MirDirection.Up || direction == MirDirection.Down)
                             {
 
-                                ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon580B], 897, 9, 1000, ob));
+                                ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon580B], 897, 9, 1000, ob){ Blend = false });
                                 //{
                                 //    Repeat = p.Time > 0,
                                 //    RepeatUntil = p.Time > 0 ? CMain.Time + p.Time : 0
@@ -5042,7 +5042,7 @@ namespace Client.MirScenes
                             }
                             else if (direction == MirDirection.Left || direction == MirDirection.UpLeft || direction == MirDirection.DownLeft)
                             {
-                                ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon580B], 888, 9, 1000, ob));
+                                ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon580B], 888, 9, 1000, ob){ Blend = false });
                                 //{
                                 //    Repeat = p.Time > 0,
                                 //    RepeatUntil = p.Time > 0 ? CMain.Time + p.Time : 0
@@ -5050,7 +5050,7 @@ namespace Client.MirScenes
                             }
                             else if (direction == MirDirection.Right || direction == MirDirection.UpRight || direction == MirDirection.DownRight)
                             {
-                                ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon580B], 907, 9, 1000, ob));
+                                ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon580B], 907, 9, 1000, ob){ Blend = false });
                                 //{
                                 //    Repeat = p.Time > 0,
                                 //    RepeatUntil = p.Time > 0 ? CMain.Time + p.Time : 0

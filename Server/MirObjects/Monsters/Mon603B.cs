@@ -13,8 +13,9 @@ namespace Server.MirObjects.Monsters
         }
         protected override bool InAttackRange()
         {
-            if (Target.CurrentMap != CurrentMap) return false;
-            return CurrentMap == Target.CurrentMap && Functions.InRange(CurrentLocation, Target.CurrentLocation, Info.ViewRange);
+            if (Target == null || Target.CurrentMap != CurrentMap) return false;
+
+            return Functions.InRange(CurrentLocation, Target.CurrentLocation, Info.ViewRange);
         }
         protected override void Attack()
         {
@@ -67,8 +68,6 @@ namespace Server.MirObjects.Monsters
                             if (damage == 0) return;
 
                             LineAttack(damage, 3, 300, DefenceType.AC);
-                            DelayedAction action = new(DelayedType.Damage, Envir.Time + 300, Target, damage, DefenceType.AC, false);
-                            ActionList.Add(action);
                         }
                         break;
                 }
@@ -80,86 +79,95 @@ namespace Server.MirObjects.Monsters
                 if (damage == 0) return;
 
                 LineAttack(damage, 3, 300, DefenceType.ACAgility);
-                DelayedAction action = new(DelayedType.Damage, Envir.Time + 300, Target, damage, DefenceType.ACAgility, false);
-                ActionList.Add(action);
             }
         }
         private void WhirlPool()
         {
-            List<SpellObject> spellObjects = CurrentMap.GetSpellObjects(Spell.Mon603BWhirlPool, caster: this);
+            const int radius = 3;
 
-            if (spellObjects.Count > 0) return;
+            int damage = GetAttackPower(Stats[Stat.MinMC], Stats[Stat.MaxMC]);
 
-            Point location = Functions.PointMove(CurrentLocation, Direction, 1);
+            if (damage <= 0)
+                return;
 
-            for (int y = location.Y - 3; y <= location.Y + 3; y++)
+            Point center = CurrentLocation;
+
+            for (int y = -radius; y <= radius; y++)
             {
-                if (y < 0 || y >= CurrentMap.Height) continue;
-
-                for (int x = location.X - 3; x <= location.X + 3; x++)
+                for (int x = -radius; x <= radius; x++)
                 {
-                    if (x < 0 || x >= CurrentMap.Width) continue;
+                    if (x == 0 && y == 0)
+                        continue;
 
-                    if (x == CurrentLocation.X && y == CurrentLocation.Y) continue;
+                    Point location = new Point(center.X + x, center.Y + y);
 
-                    var cell = CurrentMap.GetCell(x, y);
-                    if (!cell.Valid) continue;
+                    if (!CurrentMap.ValidPoint(location))
+                        continue;
 
-                    int damage = GetAttackPower(Stats[Stat.MinMC], Stats[Stat.MaxMC]);
-                    var start = 500;
-                    var time = Settings.Second * 5;
+                    var cell = CurrentMap.GetCell(location);
 
-                    SpellObject ob = new()
+                    if (!cell.Valid || cell.Objects == null)
+                        continue;
+
+                    for (int i = 0; i < cell.Objects.Count; i++)
                     {
-                        Spell = Spell.Mon603BWhirlPool,
-                        Value = damage,
-                        ExpireTime = Envir.Time + time + start,
-                        TickSpeed = 3000,
-                        CurrentLocation = new Point(x, y),
-                        CastLocation = location,
-                        Show = location.X == x && location.Y == y,
-                        CurrentMap = CurrentMap,
-                        Caster = this
-                    };
+                        MapObject target = cell.Objects[i];
 
-                    DelayedAction action = new(DelayedType.Spawn, Envir.Time + start, ob);
-                    CurrentMap.ActionList.Add(action);
+                        if (!target.IsAttackTarget(this))
+                            continue;
+
+                        target.Attacked(this, damage, DefenceType.MAC);
+                        break;
+                    }
                 }
             }
         }
         private void SpawnSlaves()
         {
-            int maxSpawnCount = 3;
-            int currentSpawnCount = SlaveList.Count;
-            int spawnCount = Math.Min(maxSpawnCount - currentSpawnCount, maxSpawnCount);
+            const int maxSpawnCount = 3;
+            const int spawnRange = 4;
 
-            if (spawnCount <= 0) return;
+            int spawnCount = maxSpawnCount - SlaveList.Count;
 
-            Random rand = new Random();
+            if (spawnCount <= 0)
+                return;
+
+            int minX = Math.Max(0, CurrentLocation.X - spawnRange);
+            int maxX = Math.Min(CurrentMap.Width - 1, CurrentLocation.X + spawnRange);
+            int minY = Math.Max(0, CurrentLocation.Y - spawnRange);
+            int maxY = Math.Min(CurrentMap.Height - 1, CurrentLocation.Y + spawnRange);
+
             List<Point> validLocations = new List<Point>();
 
-            int minX = Math.Max(0, CurrentLocation.X - 5);
-            int maxX = Math.Min(CurrentMap.Width - 1, CurrentLocation.X + 5);
-            int minY = Math.Max(0, CurrentLocation.Y - 5);
-            int maxY = Math.Min(CurrentMap.Height - 1, CurrentLocation.Y + 5);
-
-            while (validLocations.Count < spawnCount)
+            for (int y = minY; y <= maxY; y++)
             {
-                int x = rand.Next(minX, maxX + 1);
-                int y = rand.Next(minY, maxY + 1);
-                Point newLocation = new Point(x, y);
-
-                if (CurrentMap.GetCell(x, y).Valid && (x != CurrentLocation.X || y != CurrentLocation.Y) &&
-                    !validLocations.Any(loc => loc.X == x && loc.Y == y))
+                for (int x = minX; x <= maxX; x++)
                 {
-                    validLocations.Add(newLocation);
+                    if (x == CurrentLocation.X && y == CurrentLocation.Y)
+                        continue;
+
+                    var cell = CurrentMap.GetCell(x, y);
+
+                    if (!cell.Valid)
+                        continue;
+
+                    validLocations.Add(new Point(x, y));
                 }
             }
 
-            foreach (var location in validLocations)
+            int actualSpawnCount = Math.Min(spawnCount, validLocations.Count);
+
+            for (int i = 0; i < actualSpawnCount; i++)
             {
+                int index = Envir.Random.Next(validLocations.Count);
+                Point location = validLocations[index];
+
+                validLocations.RemoveAt(index);
+
                 MonsterObject mob = GetMonster(Envir.GetMonsterInfo(Settings.Mon603BMob));
-                if (mob == null) continue;
+
+                if (mob == null)
+                    continue;
 
                 mob.Spawn(CurrentMap, location);
                 mob.ActionTime = Envir.Time + 2000;
@@ -172,14 +180,23 @@ namespace Server.MirObjects.Monsters
             int damage = (int)data[1];
             DefenceType defence = (DefenceType)data[2];
 
+            if (CurrentMap == null || !CurrentMap.ValidPoint(location))
+                return;
+
             var cell = CurrentMap.GetCell(location);
-            if (cell.Objects == null) return;
+
+            if (cell.Objects == null)
+                return;
 
             for (int o = 0; o < cell.Objects.Count; o++)
             {
                 MapObject ob = cell.Objects[o];
-                if (ob.Race != ObjectType.Player && ob.Race != ObjectType.Monster) continue;
-                if (!ob.IsAttackTarget(this)) continue;
+
+                if (ob.Race != ObjectType.Player && ob.Race != ObjectType.Monster)
+                    continue;
+
+                if (!ob.IsAttackTarget(this))
+                    continue;
 
                 ob.Attacked(this, damage, defence);
                 break;
@@ -200,7 +217,15 @@ namespace Server.MirObjects.Monsters
 
                 for (int i = 0; i < targets.Count; i++)
                 {
-                    targets[i].Attacked(this, damage, defence);
+                    MapObject targetObject = targets[i];
+
+                    if (targetObject == null || targetObject.CurrentMap != CurrentMap || targetObject.Node == null)
+                        continue;
+
+                    if (!targetObject.IsAttackTarget(this))
+                        continue;
+
+                    targetObject.Attacked(this, damage, defence);
                 }
             }
             else
@@ -227,10 +252,12 @@ namespace Server.MirObjects.Monsters
         }
         public override void Die()
         {
-            foreach (var slave in SlaveList)
+            for (int i = SlaveList.Count - 1; i >= 0; i--)
             {
-                slave.Die();
+                SlaveList[i].Die();
             }
+
+            SlaveList.Clear();
             base.Die();
         }
     }

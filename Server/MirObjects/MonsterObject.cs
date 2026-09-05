@@ -1,10 +1,11 @@
-using System;
-using System.Drawing;
+using ClientPackets;
 ﻿using Server.MirDatabase;
 using Server.MirEnvir;
 using Server.MirObjects.Monsters;
-using System.Diagnostics.Eventing.Reader;
 using Shared;
+using System;
+using System.Diagnostics.Eventing.Reader;
+using System.Drawing;
 using S = ServerPackets;
 
 namespace Server.MirObjects
@@ -223,14 +224,14 @@ namespace Server.MirObjects
                     return new RestlessJar(info);
                 case 341:
                     return new GeneralMeowMeow(info);
-                case 347:
-                    return new Armadillo(info);
-                case 348:
-                    return new ArmadilloElder(info);
-                case 345:
-                    return new TucsonMage(info);
                 case 346:
+                    return new TucsonMage(info);
+                case 347:
                     return new TucsonWarrior(info);
+                case 348:
+                    return new Armadillo(info);
+                case 349:
+                    return new ArmadilloElder(info);
                 case 350:
                     return new TucsonEgg(info); //Effect 0/1
                 case 352:
@@ -500,8 +501,12 @@ namespace Server.MirObjects
                     return new Mon624B(info);
                 case 625:
                     return new Mon625S(info);
+                case 626:
+                    return new Mon626N(info);
                 case 627:
                     return new Mon432P(info); //Effect: 1
+                case 635:
+                    return new Mon635S(info);
                 case 900:
                     return new EvilMir(info);
                 case 901:
@@ -617,7 +622,6 @@ namespace Server.MirObjects
         }
 
         private int hp;
-        private int level;
 
         public override int Health
         {
@@ -629,7 +633,7 @@ namespace Server.MirObjects
         public float CalculateDamageReduction(int spellLevel)
         {
             float baseReduction = 0.25f;
-            switch (level)
+            switch (Info.Level)
             {
                 case 1:
                     baseReduction += 0.03f; // Additional 3%
@@ -655,11 +659,14 @@ namespace Server.MirObjects
 
         public void TakeDamage(int damage, int spellLevel)
         {
-            float damageReduction = CalculateDamageReduction(spellLevel);
-            int reducedDamage = (int)(damage * (1 - damageReduction));
-            SetHealth(hp - reducedDamage);
+            if (damage <= 0 || Health <= 0) return;
 
-            if (Health == 0)
+            float damageReduction = Math.Clamp(CalculateDamageReduction(spellLevel), 0f, 1f);
+            int reducedDamage = Math.Max(1, (int)(damage * (1f - damageReduction)));
+
+            SetHealth(Health - reducedDamage);
+
+            if (Health <= 0)
             {
                 Die();
             }
@@ -3837,9 +3844,10 @@ namespace Server.MirObjects
             }
         }
 
-        protected virtual void HalfmoonAttack(int damage, int delay = 500, DefenceType defenceType = DefenceType.ACAgility)
+        protected virtual bool HalfmoonAttack(int damage, int delay = 500, DefenceType defenceType = DefenceType.ACAgility)
         {
             MirDirection dir = Functions.PreviousDir(Direction);
+            bool attacked = false;
 
             for (int i = 0; i < 4; i++)
             {
@@ -3859,9 +3867,11 @@ namespace Server.MirObjects
 
                     DelayedAction action = new DelayedAction(DelayedType.Damage, Envir.Time + delay, ob, damage, defenceType);
                     ActionList.Add(action);
+                    attacked = true;
                     break;
                 }
             }
+            return attacked;
         }
 
         // Sanjian
@@ -3891,29 +3901,39 @@ namespace Server.MirObjects
                 }
             }
         }
-        protected virtual void JumpBack(int distance)
-        {
-            MirDirection jumpDir = Functions.ReverseDirection(Direction);
 
-            Point location = new Point();
+        protected virtual void JumpBack(int distance, bool random = false)
+        {
+            if (distance < 1 || distance > 5)
+                return;
+
+            if (random && distance > 1)
+                distance = Envir.Random.Next(1, distance + 1);
+
+            MirDirection jumpDir = Functions.ReverseDirection(Direction);
+            Point location = CurrentLocation;
 
             for (int i = 0; i < distance; i++)
             {
-                location = Functions.PointMove(CurrentLocation, jumpDir, 1);
-                if (!CurrentMap.ValidPoint(location)) return;
+                location = Functions.PointMove(location, jumpDir, 1);
+
+                if (!CurrentMap.CanJump(location))
+                    return;
             }
 
+            location = CurrentLocation;
+
             for (int i = 0; i < distance; i++)
             {
-                location = Functions.PointMove(CurrentLocation, jumpDir, 1);
+                Point nextLocation = Functions.PointMove(location, jumpDir, 1);
 
-                CurrentMap.GetCell(CurrentLocation).Remove(this);
+                CurrentMap.GetCell(location).Remove(this);
                 RemoveObjects(jumpDir, 1);
+                location = nextLocation;
                 CurrentLocation = location;
-                CurrentMap.GetCell(CurrentLocation).Add(this);
+                CurrentMap.GetCell(location).Add(this);
                 AddObjects(jumpDir, 1);
             }
-
             Broadcast(new S.ObjectBackStep { ObjectID = ObjectID, Direction = Direction, Location = location, Distance = distance });
         }
 
@@ -4024,6 +4044,85 @@ namespace Server.MirObjects
             {
                 AttackTime = Envir.Time + AttackSpeed + 300;
             }
+        }
+
+        protected virtual bool LineCharge(int distance)
+        {
+            if (CurrentMap == null || Target == null || Target.Dead)
+                return false;
+
+            if (Target.CurrentMap != CurrentMap)
+                return false;
+
+            if (distance <= 1 || distance > Info.ViewRange)
+                return false;
+
+            Point start = CurrentLocation;
+            Point target = Target.CurrentLocation;
+
+            int dx = target.X - start.X;
+            int dy = target.Y - start.Y;
+
+            MirDirection direction;
+
+            if (dx == 0)
+            {
+                if (dy == 0)
+                    return false;
+
+                direction = dy < 0 ? MirDirection.Up : MirDirection.Down;
+            }
+            else if (dy == 0)
+            {
+                direction = dx < 0 ? MirDirection.Left : MirDirection.Right;
+            }
+            else if (Math.Abs(dx) == Math.Abs(dy))
+            {
+                if (dx < 0)
+                    direction = dy < 0 ? MirDirection.UpLeft : MirDirection.DownLeft;
+                else
+                    direction = dy < 0 ? MirDirection.UpRight : MirDirection.DownRight;
+            }
+            else
+            {
+                return false;
+            }
+
+            int targetDistance = Math.Max(Math.Abs(dx), Math.Abs(dy));
+            int chargeDistance = Math.Min(distance, targetDistance - 1);
+
+            if (chargeDistance < 1)
+                return false;
+
+            Point location = start;
+
+            for (int i = 0; i < chargeDistance; i++)
+            {
+                location = Functions.PointMove(location, direction, 1);
+
+                if (!CurrentMap.CanJump(location))
+                    return false;
+            }
+
+            location = start;
+
+            for (int i = 0; i < chargeDistance; i++)
+            {
+                Point nextLocation = Functions.PointMove(location, direction, 1);
+
+                CurrentMap.GetCell(location).Remove(this);
+                RemoveObjects(direction, 1);
+
+                location = nextLocation;
+                CurrentLocation = location;
+
+                CurrentMap.GetCell(location).Add(this);
+                AddObjects(direction, 1);
+            }
+
+            Direction = direction;
+            Broadcast(new S.ObjectDashAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation, Distance = chargeDistance });
+            return true;
         }
     }
 }

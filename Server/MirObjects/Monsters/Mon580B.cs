@@ -19,8 +19,8 @@ namespace Server.MirObjects.Monsters
 
         protected override bool InAttackRange()
         {
-            if (Target.CurrentMap != CurrentMap) return false;
-            return CurrentMap == Target.CurrentMap && Functions.InRange(CurrentLocation, Target.CurrentLocation, Info.ViewRange);
+            if (Target == null || Target.CurrentMap != CurrentMap) return false;
+            return Functions.InRange(CurrentLocation, Target.CurrentLocation, Info.ViewRange);
         }
 
         protected override void Attack()
@@ -65,7 +65,7 @@ namespace Server.MirObjects.Monsters
                     {
                         Target = target;
                         int damage = GetAttackPower(Stats[Stat.MinDC], Stats[Stat.MaxDC]);
-                        if (damage == 0) return;
+                        if (damage == 0) continue;
 
                         PoisonTarget(target, chanceToPoison: 15, poisonDuration: 10, PoisonType.Blindness,
                             poisonTickSpeed: 1000);
@@ -87,7 +87,7 @@ namespace Server.MirObjects.Monsters
                     {
                         Target = target;
                         int damage = GetAttackPower(Stats[Stat.MinDC], Stats[Stat.MaxDC]);
-                        if (damage == 0) return;
+                        if (damage == 0) continue;
 
                         DelayedAction action = new(DelayedType.RangeDamage, Envir.Time + 500, target, damage,
                             DefenceType.ACAgility, false);
@@ -125,7 +125,7 @@ namespace Server.MirObjects.Monsters
                         {
                             Target = target;
                             int damage = GetAttackPower(Stats[Stat.MinMC], Stats[Stat.MaxMC]);
-                            if (damage == 0) return;
+                            if (damage == 0) continue;
 
                             DelayedAction action = new(DelayedType.RangeDamage, Envir.Time + 500, target, damage,
                                 DefenceType.MACAgility, false);

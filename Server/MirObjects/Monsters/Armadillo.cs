@@ -74,7 +74,7 @@ namespace Server.MirObjects.Monsters
             {
                 case 0:
                     {
-                        Retreat();
+                        JumpBack(5,true);
                     }
                     break;
                 case 1:
@@ -112,37 +112,7 @@ namespace Server.MirObjects.Monsters
             }
         }
 
-        protected void Retreat()
-        {
-            MirDirection jumpDir = Functions.ReverseDirection(Direction);
-
-            Point location = new Point();
-
-            for (int i = 0; i < 2; i++)
-            {
-                location = Functions.PointMove(CurrentLocation, jumpDir, 1);
-                if (!CurrentMap.ValidPoint(location)) return;
-            }
-
-            for (int i = 0; i < 2; i++)
-            {
-                location = Functions.PointMove(CurrentLocation, jumpDir, 1);
-
-                CurrentMap.GetCell(CurrentLocation).Remove(this);
-                RemoveObjects(jumpDir, 1);
-                CurrentLocation = location;
-                CurrentMap.GetCell(CurrentLocation).Add(this);
-                AddObjects(jumpDir, 1);
-            }
-
-            Broadcast(new S.ObjectBackStep { ObjectID = ObjectID, Direction = Direction, Location = location, Distance = 2 });
-
-            int damage = Stats[Stat.MaxDC];
-            if (damage == 0) return;
-
-            DelayedAction action = new DelayedAction(DelayedType.RangeDamage, Envir.Time + 900, Target, damage, DefenceType.AC);
-            ActionList.Add(action);
-        }
+        
 
         protected override void CompleteRangeAttack(IList<object> data)
         {

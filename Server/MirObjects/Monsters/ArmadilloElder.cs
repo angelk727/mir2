@@ -30,7 +30,7 @@ namespace Server.MirObjects.Monsters
             {
                 case 0:
                     {
-                        Retreat();
+                        JumpBack(5);
                         _runAway = true;
                     }
                     break;

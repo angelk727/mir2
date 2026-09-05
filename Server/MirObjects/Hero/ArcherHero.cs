@@ -16,17 +16,6 @@ namespace Server.MirObjects
 
         private bool HasRangedSpell => Info.Magics.Select(x => x.Spell).Intersect(Globals.RangedSpells).Any();
 
-        public bool HasWeapon => Info.Equipment[(int)EquipmentSlot.武器] != null && Info.Equipment[(int)EquipmentSlot.武器].CurrentDura > 0;
-
-        public bool HasClassWeapon
-        {
-            get
-            {
-                var classweapon = Info.Equipment[(int)EquipmentSlot.武器];
-                return classweapon != null && classweapon.Info.RequiredClass == RequiredClass.弓箭 && classweapon.CurrentDura > 0;
-            }
-        }
-
         private static Point GetRandomPointAround(int distance, Point center)
         {
             int randomDistance = GetRandomInt(1, distance);
@@ -40,7 +29,7 @@ namespace Server.MirObjects
         {
             if (Target.CurrentMap != CurrentMap) return false;
 
-            if (HasClassWeapon && HasRangedSpell)
+            if (HasClassWeapon() && HasRangedSpell)
                 return TargetDistance <= ViewRange;
 
             return Target.CurrentLocation != CurrentLocation && Functions.InRange(CurrentLocation, Target.CurrentLocation, 1);
@@ -116,7 +105,7 @@ namespace Server.MirObjects
         {
             if (Target == null || !CanAttack) return;
 
-            if (!HasWeapon || (HasWeapon && !HasClassWeapon))
+            if (!HasWeapon() || (HasWeapon() && !HasClassWeapon()))
             {
                 MeleeInAttackRange();
                 return;
@@ -128,7 +117,7 @@ namespace Server.MirObjects
                 return;
             }
 
-            if (HasClassWeapon && TargetDistance < 2)
+            if (HasClassWeapon() && TargetDistance < 2)
             {
                 MoveTo(GetRandomPointAround(6, CurrentLocation));
                 UpdateTimers();
@@ -166,7 +155,7 @@ namespace Server.MirObjects
         {
             if (Target == null || !CanAttack) return;
 
-            if (HasClassWeapon && CanCast && NextMagicSpell == Spell.None)
+            if (HasClassWeapon() && CanCast && NextMagicSpell == Spell.None)
             {
                 Direction = Functions.DirectionFromPoint(CurrentLocation, Target.CurrentLocation);
                 RangeAttack(Direction, Target.CurrentLocation, Target.ObjectID);
@@ -186,7 +175,7 @@ namespace Server.MirObjects
         {
             if (Target == null || !CanAttack) return;
 
-            if (HasClassWeapon && CanCast && NextMagicSpell != Spell.None)
+            if (HasClassWeapon() && CanCast && NextMagicSpell != Spell.None)
             {
                 Magic(NextMagicSpell, NextMagicDirection, NextMagicTargetID, NextMagicLocation);
                 NextMagicSpell = Spell.None;
