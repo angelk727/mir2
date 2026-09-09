@@ -223,7 +223,7 @@ public abstract class Packet
                 return new C.SwitchGroup();
             case (short)ClientPacketIds.AddMember:
                 return new C.AddMember();
-            case (short)ClientPacketIds.DellMember:
+            case (short)ClientPacketIds.DelMember:
                 return new C.DelMember();
             case (short)ClientPacketIds.GroupInvite:
                 return new C.GroupInvite();

@@ -206,37 +206,62 @@ namespace Server.MirObjects.Monsters
 
         private void SpawnSlaves()
         {
-            int maxSpawnCount = 3;
-            int currentSpawnCount = SlaveList.Count;
-            int spawnCount = Math.Min(maxSpawnCount - currentSpawnCount, maxSpawnCount);
+            const int maxSpawnCount = 3;
+            const int spawnRange = 4;
 
-            if (spawnCount <= 0) return;
+            if (CurrentMap == null)
+                return;
 
-            Random rand = new Random();
+            int spawnCount = maxSpawnCount - SlaveList.Count;
+
+            if (spawnCount <= 0)
+                return;
+
+            int minX = Math.Max(0, CurrentLocation.X - spawnRange);
+            int maxX = Math.Min(CurrentMap.Width - 1, CurrentLocation.X + spawnRange);
+            int minY = Math.Max(0, CurrentLocation.Y - spawnRange);
+            int maxY = Math.Min(CurrentMap.Height - 1, CurrentLocation.Y + spawnRange);
+
             List<Point> validLocations = new List<Point>();
 
-            int minX = Math.Max(0, CurrentLocation.X - 5);
-            int maxX = Math.Min(CurrentMap.Width - 1, CurrentLocation.X + 5);
-            int minY = Math.Max(0, CurrentLocation.Y - 5);
-            int maxY = Math.Min(CurrentMap.Height - 1, CurrentLocation.Y + 5);
-
-            while (validLocations.Count < spawnCount)
+            for (int y = minY; y <= maxY; y++)
             {
-                int x = rand.Next(minX, maxX + 1);
-                int y = rand.Next(minY, maxY + 1);
-                Point newLocation = new Point(x, y);
-
-                if (CurrentMap.GetCell(x, y).Valid && (x != CurrentLocation.X || y != CurrentLocation.Y) &&
-                    !validLocations.Any(loc => loc.X == x && loc.Y == y))
+                for (int x = minX; x <= maxX; x++)
                 {
-                    validLocations.Add(newLocation);
+                    if (x == CurrentLocation.X && y == CurrentLocation.Y)
+                        continue;
+
+                    Cell cell = CurrentMap.GetCell(x, y);
+
+                    if (!cell.Valid)
+                        continue;
+
+                    validLocations.Add(new Point(x, y));
                 }
             }
 
-            foreach (var location in validLocations)
+            if (validLocations.Count == 0)
+                return;
+
+            int actualSpawnCount = Math.Min(spawnCount, validLocations.Count);
+
+            for (int i = 0; i < actualSpawnCount; i++)
             {
-                MonsterObject mob = GetMonster(Envir.GetMonsterInfo(Settings.Mon573BMob));
-                if (mob == null) continue;
+                int index = Envir.Random.Next(validLocations.Count);
+                Point location = validLocations[index];
+
+                validLocations[index] = validLocations[validLocations.Count - 1];
+                validLocations.RemoveAt(validLocations.Count - 1);
+
+                MonsterInfo info = Envir.GetMonsterInfo(Settings.Mon573BMob);
+
+                if (info == null)
+                    continue;
+
+                MonsterObject mob = GetMonster(info);
+
+                if (mob == null)
+                    continue;
 
                 mob.Spawn(CurrentMap, location);
                 mob.ActionTime = Envir.Time + 2000;

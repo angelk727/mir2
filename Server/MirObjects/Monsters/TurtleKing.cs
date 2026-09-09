@@ -56,10 +56,9 @@ namespace Server.MirObjects.Monsters
 
             if (!ranged)
             {
-                switch (Envir.Random.Next(5))
+                switch (Envir.Random.Next(3))
                 {
                     case 0:
-                    case 1:
                         {
                             Broadcast(new S.ObjectAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation, Type = 0 });
 
@@ -69,8 +68,7 @@ namespace Server.MirObjects.Monsters
                             LineAttack(damage, 2, 300);
                         }
                         break;
-                    case 2:
-                    case 3:
+                    case 1:
                         {
                             Broadcast(new S.ObjectAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation, Type = 1 });
 
@@ -80,7 +78,7 @@ namespace Server.MirObjects.Monsters
                             LineAttack(damage, 3, 300);
                         }
                         break;
-                    case 4:
+                    case 2:
                         {
                             Broadcast(new S.ObjectRangeAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation, Type = 1 });
 
@@ -122,38 +120,38 @@ namespace Server.MirObjects.Monsters
             }
         }
 
-        protected override void CompleteAttack(IList<object> data)
-        {
-            MapObject target = (MapObject)data[0];
-            int damage = (int)data[1];
-            DefenceType defence = (DefenceType)data[2];
+        //protected override void CompleteAttack(IList<object> data)
+        //{
+        //    MapObject target = (MapObject)data[0];
+        //    int damage = (int)data[1];
+        //    DefenceType defence = (DefenceType)data[2];
 
-            if (target == null || !target.IsAttackTarget(this) || target.CurrentMap != CurrentMap || target.Node == null) return;
+        //    if (target == null || !target.IsAttackTarget(this) || target.CurrentMap != CurrentMap || target.Node == null) return;
 
-            if (target.Attacked(this, damage, defence) <= 0) return;
+        //    if (target.Attacked(this, damage, defence) <= 0) return;
 
-            PoisonTarget(target, 8, 3, PoisonType.Dazed, 1000);
-        }
+        //    PoisonTarget(target, 8, 3, PoisonType.Dazed, 1000);
+        //}
 
-        protected override void CompleteRangeAttack(IList<object> data)
-        {
-            MapObject target = (MapObject)data[0];
-            int damage = (int)data[1];
+        //protected override void CompleteRangeAttack(IList<object> data)
+        //{
+        //    MapObject target = (MapObject)data[0];
+        //    int damage = (int)data[1];
 
-            if (target == null || !target.IsAttackTarget(this) || target.CurrentMap != CurrentMap || target.Node == null) return;
+        //    if (target == null || !target.IsAttackTarget(this) || target.CurrentMap != CurrentMap || target.Node == null) return;
 
-            List<MapObject> targets = FindAllTargets(AttackRange, CurrentLocation);
-            if (targets.Count == 0) return;
+        //    List<MapObject> targets = FindAllTargets(AttackRange, CurrentLocation);
+        //    if (targets.Count == 0) return;
 
-            for (int i = 0; i < targets.Count; i++)
-            {
-                Broadcast(new S.ObjectEffect { ObjectID = Target.ObjectID, Effect = SpellEffect.TurtleKing });
-                if (targets[i].Attacked(this, damage, DefenceType.MAC) <= 0) return;
+        //    for (int i = 0; i < targets.Count; i++)
+        //    {
+        //        Broadcast(new S.ObjectEffect { ObjectID = Target.ObjectID, Effect = SpellEffect.TurtleKing });
+        //        if (targets[i].Attacked(this, damage, DefenceType.MAC) <= 0) return;
 
-                PoisonTarget(targets[i], 5, 15, PoisonType.Slow, 1000);
-                PoisonTarget(targets[i], 5, 5, PoisonType.Paralysis, 1000);
-            }
-        }
+        //        PoisonTarget(targets[i], 5, 15, PoisonType.Slow, 1000);
+        //        PoisonTarget(targets[i], 5, 5, PoisonType.Paralysis, 1000);
+        //    }
+        //}
 
         private void SpawnSlaves()
         {

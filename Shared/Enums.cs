@@ -796,7 +796,7 @@ public enum Monster : ushort
     Mon635S = 635,
     Mon636P = 636,
     Mon637B = 637,  //Mon66.wil
-    Mon638P = 638,  //Mon67.wil
+    Mon638T = 638,  //Mon67.wil
     Mon639N = 639,
     Mon640N = 640,
     Mon641N = 641,
@@ -1461,7 +1461,9 @@ public enum Spell : ushort
     Mon580BRoot = 439,
     Mon603BWhirlPool = 440,
     Mon609NBomb = 441,
-    Mon612NFlame = 442
+    Mon612NFlame = 442,
+    Mon635SIceWhirlwind = 443,
+    Mon637BAreaBall = 444
 }
 
 public enum SpellEffect : byte
@@ -1518,6 +1520,7 @@ public enum SpellEffect : byte
     Mon580BSpikeTrap,
     Mon621NSpikes,
     Mon622NSpikes,
+    Mon637BCobweb,
 }
 
 public enum BuffType : ushort
@@ -2028,7 +2031,7 @@ public enum ClientPacketIds : short
     Magic,
     SwitchGroup,
     AddMember,
-    DellMember,
+    DelMember,
     GroupInvite,
     NewHero,
     SetAutoPotValue,

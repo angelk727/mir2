@@ -1170,7 +1170,7 @@ namespace ClientPackets
     }
     public sealed class DelMember : Packet
     {
-        public override short Index { get { return (short)ClientPacketIds.DellMember; } }
+        public override short Index { get { return (short)ClientPacketIds.DelMember; } }
 
         public string Name = string.Empty;
         protected override void ReadPacket(BinaryReader reader)

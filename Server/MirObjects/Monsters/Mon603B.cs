@@ -19,6 +19,15 @@ namespace Server.MirObjects.Monsters
         }
         protected override void Attack()
         {
+            if (Target == null)
+                return;
+
+            if (Target.Race != ObjectType.Player && Target.Race != ObjectType.Monster && Target.Race != ObjectType.Hero)
+            {
+                Target = null;
+                return;
+            }
+
             if (!Target.IsAttackTarget(this))
             {
                 Target = null;
@@ -113,6 +122,18 @@ namespace Server.MirObjects.Monsters
                     {
                         MapObject target = cell.Objects[i];
 
+                        if (target == null)
+                            continue;
+
+                        if (target.Race != ObjectType.Player && target.Race != ObjectType.Monster && target.Race != ObjectType.Hero)
+                            continue;
+
+                        if (target.Node == null)
+                            continue;
+
+                        if (target.CurrentMap != CurrentMap)
+                            continue;
+
                         if (!target.IsAttackTarget(this))
                             continue;
 
@@ -192,7 +213,7 @@ namespace Server.MirObjects.Monsters
             {
                 MapObject ob = cell.Objects[o];
 
-                if (ob.Race != ObjectType.Player && ob.Race != ObjectType.Monster)
+                if (ob.Race != ObjectType.Player && ob.Race != ObjectType.Monster && ob.Race != ObjectType.Hero)
                     continue;
 
                 if (!ob.IsAttackTarget(this))
@@ -209,7 +230,20 @@ namespace Server.MirObjects.Monsters
             DefenceType defence = (DefenceType)data[2];
             bool aoe = data.Count >= 4 && (bool)data[3];
 
-            if (target == null || !target.IsAttackTarget(this) || target.CurrentMap != CurrentMap || target.Node == null) return;
+            if (target == null)
+                return;
+
+            if (target.Race != ObjectType.Player && target.Race != ObjectType.Monster && target.Race != ObjectType.Hero)
+                return;
+
+            if (target.CurrentMap != CurrentMap)
+                return;
+
+            if (target.Node == null)
+                return;
+
+            if (!target.IsAttackTarget(this))
+                return;
 
             if (aoe)
             {
@@ -219,7 +253,16 @@ namespace Server.MirObjects.Monsters
                 {
                     MapObject targetObject = targets[i];
 
-                    if (targetObject == null || targetObject.CurrentMap != CurrentMap || targetObject.Node == null)
+                    if (targetObject == null)
+                        continue;
+
+                    if (targetObject.Race != ObjectType.Player && targetObject.Race != ObjectType.Monster)
+                        continue;
+
+                    if (targetObject.CurrentMap != CurrentMap)
+                        continue;
+
+                    if (targetObject.Node == null)
                         continue;
 
                     if (!targetObject.IsAttackTarget(this))

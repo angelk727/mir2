@@ -507,6 +507,8 @@ namespace Server.MirObjects
                     return new Mon432P(info); //Effect: 1
                 case 635:
                     return new Mon635S(info);
+                case 637:
+                    return new Mon637B(info);
                 case 900:
                     return new EvilMir(info);
                 case 901:
@@ -4022,28 +4024,60 @@ namespace Server.MirObjects
             }
         }
 
-        protected virtual void SinglePullAttack(int damage, DefenceType type = DefenceType.AC, int delay = 500, int pullDistance = 3)
+        protected virtual bool SinglePullAttack(int damage, DefenceType type = DefenceType.AC, int delay = 500, int pullDistance = 3, bool levelLimit = true)
         {
-            int levelGap = 5;
-            if (Target == null) return;
-            int mobLevel = this.Level;
-            int targetLevel = Target.Level;
+            if (damage <= 0 || Target == null || Target.Dead || CurrentMap == null || Target.CurrentMap != CurrentMap)
+                return false;
 
-            if (targetLevel > mobLevel + levelGap) return;
-            if (Functions.InRange(Target.CurrentLocation, CurrentLocation, 1)) return;
+            int maxDistance = Math.Min(pullDistance, Info.ViewRange);
 
-            MirDirection dir = Functions.DirectionFromPoint( Target.CurrentLocation, CurrentLocation );
-            int result = Target.Pushed(this, dir, pullDistance);
+            if (maxDistance < 2)
+                return false;
 
-            if (damage == 0) return;
+            if (levelLimit && Target.Level > Level + 5)
+                return false;
 
-            DelayedAction action = new DelayedAction(DelayedType.Damage, Envir.Time + delay, Target, damage, type);
-            ActionList.Add(action);
+            Point start = CurrentLocation;
+            Point target = Target.CurrentLocation;
 
-            if (result > 0)
+            int dx = target.X - start.X;
+            int dy = target.Y - start.Y;
+
+            if (dx == 0 && dy == 0)
+                return false;
+
+            int distance = Math.Max(Math.Abs(dx), Math.Abs(dy));
+
+            if (distance < 2 || distance > maxDistance)
+                return false;
+
+            int actualPullDistance = distance - 1;
+
+            MirDirection direction = Functions.DirectionFromPoint(target, start);
+
+            Point destination = Functions.PointMove(target, direction, actualPullDistance);
+
+            if (!CurrentMap.ValidPoint(destination))
+                return false;
+
+            Point location = target;
+
+            for (int i = 1; i <= actualPullDistance; i++)
             {
-                AttackTime = Envir.Time + AttackSpeed + 300;
+                location = Functions.PointMove(location, direction, 1);
+
+                if (!CurrentMap.ValidPoint(location) || !CurrentMap.CanJump(location))
+                    return false;
             }
+
+            if (Target.Pushed(this, direction, actualPullDistance) <= 0)
+                return false;
+
+            AttackTime = Envir.Time + AttackSpeed + 300;
+
+            ActionList.Add(new DelayedAction(DelayedType.Damage, Envir.Time + Math.Max(0, delay), Target, damage, type));
+
+            return true;
         }
 
         protected virtual bool LineCharge(int distance)
@@ -4123,6 +4157,168 @@ namespace Server.MirObjects
             Direction = direction;
             Broadcast(new S.ObjectDashAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation, Distance = chargeDistance });
             return true;
+        }
+        protected virtual bool SpawnSlaves(MonsterInfo info, int maxCount = 0, bool maintainCount = false)
+        {
+            if (info == null || CurrentMap == null || maxCount < 1 || maxCount > 5)
+                return false;
+
+            int currentCount = 0;
+
+            for (int i = SlaveList.Count - 1; i >= 0; i--)
+            {
+                MonsterObject mob = SlaveList[i];
+
+                if (mob == null || mob.Dead || mob.CurrentMap == null)
+                {
+                    SlaveList.RemoveAt(i);
+                    continue;
+                }
+
+                if (mob.Info == info)
+                    currentCount++;
+            }
+
+            int spawnCount;
+
+            if (maintainCount)
+            {
+                spawnCount = maxCount - currentCount;
+
+                if (spawnCount <= 0)
+                    return false;
+            }
+            else
+            {
+                spawnCount = maxCount;
+            }
+
+            int minX = Math.Max(0, CurrentLocation.X - 2);
+            int maxX = Math.Min(CurrentMap.Width - 1, CurrentLocation.X + 2);
+            int minY = Math.Max(0, CurrentLocation.Y - 2);
+            int maxY = Math.Min(CurrentMap.Height - 1, CurrentLocation.Y + 2);
+
+            List<Point> locations = new List<Point>(24);
+
+            for (int y = minY; y <= maxY; y++)
+            {
+                for (int x = minX; x <= maxX; x++)
+                {
+                    if (x == CurrentLocation.X && y == CurrentLocation.Y)
+                        continue;
+
+                    Cell cell = CurrentMap.GetCell(x, y);
+
+                    if (!cell.Valid || cell.Objects != null && cell.Objects.Count > 0)
+                        continue;
+
+                    locations.Add(new Point(x, y));
+                }
+            }
+
+            if (locations.Count == 0)
+                return false;
+
+            int actualCount = Math.Min(spawnCount, locations.Count);
+            int spawnedCount = 0;
+
+            for (int i = 0; i < actualCount; i++)
+            {
+                int index = Envir.Random.Next(locations.Count);
+                Point location = locations[index];
+
+                locations[index] = locations[locations.Count - 1];
+                locations.RemoveAt(locations.Count - 1);
+
+                MonsterObject mob = GetMonster(info);
+
+                if (mob == null)
+                    continue;
+
+                mob.Spawn(CurrentMap, location);
+                SlaveList.Add(mob);
+                spawnedCount++;
+            }
+
+            return spawnedCount > 0;
+        }
+        protected virtual bool TargetAreaAttack(Spell spell, int damage, int areaSize, int delay, int duration, int tickSpeed, DefenceType defenceType)
+        {
+            if (CurrentMap == null || damage <= 0 || delay < 0 || duration <= 0 || tickSpeed <= 0)
+                return false;
+
+            int radius;
+
+            switch (areaSize)
+            {
+                case 1:
+                    radius = 0;
+                    break;
+                case 3:
+                    radius = 1;
+                    break;
+                case 5:
+                    radius = 2;
+                    break;
+                default:
+                    return false;
+            }
+
+            List<MapObject> targets = FindAllTargets(Info.ViewRange, CurrentLocation);
+
+            if (targets == null || targets.Count == 0)
+                return false;
+
+            MapObject target = targets[Envir.Random.Next(targets.Count)];
+
+            if (target == null || target.Dead || target.CurrentMap != CurrentMap)
+                return false;
+
+            Point location = target.CurrentLocation;
+            long time = Envir.Time;
+            long startTime = time + delay;
+            long expireTime = startTime + duration;
+            int count = 0;
+
+            for (int y = location.Y - radius; y <= location.Y + radius; y++)
+            {
+                if (y < 0 || y >= CurrentMap.Height)
+                    continue;
+
+                for (int x = location.X - radius; x <= location.X + radius; x++)
+                {
+                    if (x < 0 || x >= CurrentMap.Width)
+                        continue;
+
+                    if (x == CurrentLocation.X && y == CurrentLocation.Y)
+                        continue;
+
+                    Cell cell = CurrentMap.GetCell(x, y);
+
+                    if (!cell.Valid)
+                        continue;
+
+                    SpellObject ob = new()
+                    {
+                        Spell = spell,
+                        Value = damage,
+                        DefenceType = defenceType,
+                        StartTime = startTime,
+                        ExpireTime = expireTime,
+                        TickSpeed = tickSpeed,
+                        CurrentLocation = new Point(x, y),
+                        CastLocation = location,
+                        Show = x == location.X && y == location.Y,
+                        CurrentMap = CurrentMap,
+                        Caster = this
+                    };
+
+                    CurrentMap.ActionList.Add(new DelayedAction(DelayedType.Spawn, startTime, ob));
+                    count++;
+                }
+            }
+
+            return count > 0;
         }
     }
 }

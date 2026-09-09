@@ -503,6 +503,7 @@ namespace Server.MirEnvir
                 if (GetMonsterInfo(Settings.Mon573BMob, true) == null) return GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.CannotStartServerWithoutMob) + Settings.Mon573BMob;
                 if (GetMonsterInfo(Settings.Mon580BMob, true) == null) return GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.CannotStartServerWithoutMob) + Settings.Mon580BMob;
                 if (GetMonsterInfo(Settings.Mon603BMob, true) == null) return GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.CannotStartServerWithoutMob) + Settings.Mon603BMob;
+                if (GetMonsterInfo(Settings.Mon637BMob, true) == null) return GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.CannotStartServerWithoutMob) + Settings.Mon637BMob;
 
                 if (GetItemInfo(Settings.RefineOreName) == null) return GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.CannotStartServerWithoutItem) + Settings.RefineOreName;
             }

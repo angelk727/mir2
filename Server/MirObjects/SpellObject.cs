@@ -29,6 +29,7 @@ namespace Server.MirObjects
         public long TickTime, StartTime;
         public MapObject Caster;
         public int Value, TickSpeed, BonusDmg, Healingdmg;
+        public DefenceType DefenceType;
         public Spell Spell;
         public Point CastLocation;
         public bool Show, Decoration;
@@ -616,6 +617,18 @@ namespace Server.MirObjects
                         ob.Struck(Value, DefenceType.MAC);
                     }
                     break;
+                case Spell.Mon635SIceWhirlwind:
+                case Spell.Mon637BAreaBall:
+                    {
+                        if (ob.Race != ObjectType.Player && ob.Race != ObjectType.Monster && ob.Race != ObjectType.Hero) return;
+                        if (ob.Dead) return;
+                        if (ob == Caster) return;
+                        if (!ob.IsAttackTarget(Caster)) return;
+                        if (Value == 0) return;
+
+                        ob.Struck(Value, DefenceType);
+                    }
+                    break;
             }
         }
 
@@ -754,6 +767,8 @@ namespace Server.MirObjects
                 case Spell.Mon603BWhirlPool:
                 case Spell.Mon609NBomb:
                 case Spell.Mon612NFlame:
+                case Spell.Mon635SIceWhirlwind:
+                case Spell.Mon637BAreaBall:
                     if (!Show)
                         return null;
 

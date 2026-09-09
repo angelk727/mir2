@@ -174,6 +174,7 @@ namespace Server.MirObjects.Monsters
                             int damage = GetAttackPower(Stats[Stat.MinMC], Stats[Stat.MaxMC]);
                             if (damage <= 0) return;
 
+                            TargetAreaAttack(Spell.Mon635SIceWhirlwind, damage, 3, 500, Settings.Second * 3, 1500, DefenceType.MAC);
                             int delay = Functions.MaxDistance(CurrentLocation, Target.CurrentLocation) * 60 + 1200;
                             DelayedAction action = new(DelayedType.RangeDamage, Envir.Time + delay, Target, damage, DefenceType.MACAgility, false);
                             ActionList.Add(action);

@@ -336,7 +336,7 @@ namespace Client.MirObjects
                     Repeat = false;
                     break;
                 case Spell.YangDragonIcyBurst:
-                    DrawColour = Color.FromArgb(180, 200, 200, 180);
+                    DrawColour = Color.FromArgb(158, 158, 158, 255);
                     BodyLibrary = Libraries.Monsters[(ushort)Monster.ChieftainSword];
                     DrawFrame = 1314;
                     FrameInterval = 200;
@@ -581,6 +581,32 @@ namespace Client.MirObjects
                     Repeat = true;
                     SoundManager.PlaySound(8306);
                     MapControl.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon612N], 487, 3, 600, CurrentLocation) { Blend = true });
+                    break;
+                 case Spell.Mon635SIceWhirlwind:
+                    BodyLibrary = Libraries.Monsters[(ushort)Monster.Mon635S];
+                    DrawColour = Color.FromArgb(180, 255, 200, 180);
+                    LightColour = Color.White;
+                    Light = 3;
+                    DrawFrame = 661;
+                    FrameInterval = 100;
+                    FrameCount = 14;
+                    Blend = true;
+                    Repeat = true;
+                    SoundManager.PlaySound(8306);
+                    MapControl.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon635S], 675, 3, 600, CurrentLocation) { Blend = true });
+                    break;
+                 case Spell.Mon637BAreaBall:
+                    BodyLibrary = Libraries.Monsters[(ushort)Monster.Mon637B];
+                    DrawColour = Color.FromArgb(180, 200, 200, 180);
+                    LightColour = Color.White;
+                    Light = 3;
+                    DrawFrame = 1310;
+                    FrameInterval = 100;
+                    FrameCount = 11;
+                    Blend = true;
+                    Repeat = true;
+                    SoundManager.PlaySound(8306);
+                    MapControl.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon637B], 1326, 7, 600, CurrentLocation) { Blend = false, DrawBehind = true });
                     break;
             }
 
