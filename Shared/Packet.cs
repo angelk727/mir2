@@ -8,45 +8,62 @@ public abstract class Packet
     public virtual bool Compressed => false;
     public abstract short Index { get; }
 
-    public static Packet ReceivePacket(byte[] rawBytes, out byte[] extra)
+    public static Packet ReceivePacket(byte[] buffer, int offset, int count, out int consumed)
     {
-        extra = rawBytes;
+        consumed = 0;
 
-        Packet p;
+        if (buffer == null)
+            throw new ArgumentNullException(nameof(buffer));
 
-        if (rawBytes.Length < 4) return null; //| 2Bytes: Packet Size | 2Bytes: Packet ID |
+        if (offset < 0 || count < 0 || offset > buffer.Length || count > buffer.Length - offset)
+            throw new ArgumentOutOfRangeException();
 
-        var length = BitConverter.ToUInt16(rawBytes, 0);
-        var id = BitConverter.ToInt16(rawBytes, 2);
+        if (count < 4)
+            return null;
 
-        if (length > rawBytes.Length || length < 2) return null;
+        ushort length = BitConverter.ToUInt16(buffer, offset);
+
+        if (length < 4)
+            throw new InvalidDataException("无效的数据包长度");
+
+        if (length > count)
+            return null;
+
+        short id = BitConverter.ToInt16(buffer, offset + 2);
+
+        Packet p = IsServer ? GetClientPacket(id) : GetServerPacket(id);
+
+        if (p == null)
+            throw new InvalidDataException($"未知的数据包 ID: {id}");
+
+        int bodyLength = length - 4;
 
         try
         {
-            p = IsServer ? GetClientPacket(id) : GetServerPacket(id);
-            if (p == null)
+            if (p.Compressed)
             {
-                //prevents server from getting stuck in a 'loop' (only on this connection)
-                //if the incomming data is corrupt/invalid > simply remove all data instead of trying to process it over and over again
-                extra = new byte[0];
-                return null;
+                byte[] compressed = new byte[bodyLength];
+                Buffer.BlockCopy(buffer, offset + 4, compressed, 0, bodyLength);
+
+                using MemoryStream ms = new MemoryStream(p.DecompressPacket(compressed));
+                using BinaryReader reader = new BinaryReader(ms);
+
+                p.ReadPacket(reader);
             }
+            else
+            {
+                using MemoryStream ms = new MemoryStream(buffer, offset + 4, bodyLength, false);
+                using BinaryReader reader = new BinaryReader(ms);
 
-            using var ms = p.Compressed ?
-                new MemoryStream(p.DecompressPacket(rawBytes[4..(length - 4)])) :
-                new MemoryStream(rawBytes, 4, length - 4);
-            using var reader = new BinaryReader(ms);
-
-            p.ReadPacket(reader);
+                p.ReadPacket(reader);
+            }
         }
         catch (Exception e)
         {
             throw new InvalidDataException("数据包解析失败", e);
         }
 
-        extra = new byte[rawBytes.Length - length];
-        Buffer.BlockCopy(rawBytes, length, extra, 0, rawBytes.Length - length);
-
+        consumed = length;
         return p;
     }
 

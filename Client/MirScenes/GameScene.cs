@@ -2158,7 +2158,10 @@ namespace Client.MirScenes
         private void KeepAlive(S.KeepAlive p)
         {
             if (p.Time == 0) return;
-            CMain.PingTime = (CMain.Time - p.Time);
+
+            CMain.PingTime = CMain.Time - p.Time;
+
+            Network.Enqueue(new C.KeepAlive { Time = p.Time });
         }
         private void MapInformation(S.MapInformation p)
         {
