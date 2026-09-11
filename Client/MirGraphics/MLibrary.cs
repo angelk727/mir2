@@ -751,11 +751,19 @@ namespace Client.MirGraphics
                 return;
 
             bool oldBlend = DXManager.Blending;
+            float oldBlendRate = DXManager.BlendingRate;
+            BlendMode oldBlendMode = DXManager.BlendingMode;
+            float oldOpacity = DXManager.Opacity;
+
             DXManager.SetBlend(true, rate);
 
             DXManager.Draw(mi.Image, new Rectangle(0, 0, mi.Width, mi.Height), new Vector3((float)point.X, (float)point.Y, 0.0F), colour);
 
-            DXManager.SetBlend(oldBlend);
+            DXManager.SetBlend(oldBlend, oldBlendRate, oldBlendMode);
+
+            if (!oldBlend)
+                DXManager.RestoreOpacityState(oldOpacity);
+
             mi.CleanTime = CMain.Time + Settings.CleanDelay;
         }
         public void Draw(int index, Rectangle section, Point point, Color colour, bool offSet)

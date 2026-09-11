@@ -350,6 +350,32 @@ namespace Client.MirGraphics
             Opacity = opacity;
             Sprite.Flush();
         }
+
+
+        public static void RestoreOpacityState(float opacity)
+        {
+            Device.SetRenderState(RenderState.AlphaBlendEnable, true);
+            Device.SetRenderState(RenderState.BlendOperation, BlendOperation.Add);
+
+            if (opacity >= 1 || opacity < 0)
+            {
+                Device.SetRenderState(RenderState.SourceBlend, Blend.SourceAlpha);
+                Device.SetRenderState(RenderState.DestinationBlend, Blend.InverseSourceAlpha);
+                Device.SetRenderState(RenderState.SourceBlendAlpha, Blend.One);
+                Device.SetRenderState(RenderState.DestinationBlendAlpha, Blend.InverseSourceAlpha);
+                Device.SetRenderState(RenderState.BlendFactor, Color.FromArgb(255, 255, 255, 255).ToArgb());
+            }
+            else
+            {
+                Device.SetRenderState(RenderState.SourceBlend, Blend.BlendFactor);
+                Device.SetRenderState(RenderState.DestinationBlend, Blend.InverseBlendFactor);
+                Device.SetRenderState(RenderState.SourceBlendAlpha, Blend.SourceAlpha);
+                Device.SetRenderState(RenderState.DestinationBlendAlpha, Blend.InverseSourceAlpha);
+                Device.SetRenderState(RenderState.BlendFactor, Color.FromArgb((byte)(255 * opacity), (byte)(255 * opacity), (byte)(255 * opacity), (byte)(255 * opacity)).ToArgb());
+            }
+        }
+
+
         public static void SetBlend(bool value, float rate = 1F, BlendMode mode = BlendMode.NORMAL)
         {
             if (value == Blending && BlendingRate == rate && BlendingMode == mode) return;
