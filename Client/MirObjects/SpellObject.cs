@@ -428,6 +428,17 @@ namespace Client.MirObjects
                     DrawBehind = true;
                     MapControl.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon550N], 460, 8, 800, CurrentLocation, CMain.Time + 1000) { Blend = true});
                     break;
+                case Spell.Mon244BLGWhirlwind:
+                    BodyLibrary = Libraries.Monsters[(ushort)Monster.Mon244B];
+                    DrawColour = Color.FromArgb(180, 200, 200, 180);
+                    LightColour = Color.White;
+                    Light = 3;
+                    DrawFrame = 922;
+                    FrameInterval = 100;
+                    FrameCount = 12;
+                    Blend = true;
+                    Repeat = true;
+                    break;
                 case Spell.Mon564NWhirlwind:
                     BodyLibrary = Libraries.Monsters[(ushort)Monster.Mon564N];
                     DrawColour = Color.FromArgb(180, 255, 200, 180);

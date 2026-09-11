@@ -3948,6 +3948,7 @@ namespace ServerPackets
         public byte Type;
         public Spell Spell;
         public byte Level;
+        public Point[] Locations;
 
         protected override void ReadPacket(BinaryReader reader)
         {
@@ -3959,6 +3960,18 @@ namespace ServerPackets
             Type = reader.ReadByte();
             Spell = (Spell)reader.ReadUInt16();
             Level = reader.ReadByte();
+
+            byte count = reader.ReadByte();
+
+            if (count > 0)
+            {
+                Locations = new Point[count];
+
+                for (int i = 0; i < count; i++)
+                {
+                    Locations[i] = new Point(reader.ReadInt32(), reader.ReadInt32());
+                }
+            }
         }
 
         protected override void WritePacket(BinaryWriter writer)
@@ -3973,6 +3986,21 @@ namespace ServerPackets
             writer.Write(Type);
             writer.Write((ushort)Spell);
             writer.Write(Level);
+
+            if (Locations == null)
+            {
+                writer.Write((byte)0);
+            }
+            else
+            {
+                writer.Write((byte)Locations.Length);
+
+                for (int i = 0; i < Locations.Length; i++)
+                {
+                    writer.Write(Locations[i].X);
+                    writer.Write(Locations[i].Y);
+                }
+            }
         }
     }
     public sealed class AddBuff : Packet

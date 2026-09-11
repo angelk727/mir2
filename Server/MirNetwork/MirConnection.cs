@@ -181,7 +181,7 @@ namespace Server.MirNetwork
         private long _receiveBytes;
 
         private const long KeepAliveInterval = 10000;
-        private const long ConnectionTimeout = 30000;
+        private const long ConnectionTimeout = 60000;
         private const long DisconnectGracePeriod = 500;
         public readonly long TimeConnected;
         public long TimeDisconnected, TimeOutTime;

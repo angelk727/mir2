@@ -414,7 +414,7 @@ public enum Monster : ushort
     BrownFrogSpider = 241,
     TowerTurtle = 242,
     FinialTurtle = 243,
-    TurtleKing = 244,
+    Mon244B = 244,
     DarkTurtle = 245,
     LightTurtle = 246,
     DarkSwordOma = 247,
@@ -761,7 +761,7 @@ public enum Monster : ushort
     Mon597N = 597,
     Mon598N = 598,
     Mon599N = 599,
-    Mon600N = 600,  //Mon61.wil
+    Mon600P = 600,  //Mon61.wil
     Mon601N = 601,
     Mon602N = 602,
     Mon603B = 603,
@@ -1463,7 +1463,8 @@ public enum Spell : ushort
     Mon609NBomb = 441,
     Mon612NFlame = 442,
     Mon635SIceWhirlwind = 443,
-    Mon637BAreaBall = 444
+    Mon637BAreaBall = 444,
+    Mon244BLGWhirlwind = 445,
 }
 
 public enum SpellEffect : byte
@@ -1495,7 +1496,6 @@ public enum SpellEffect : byte
     AwakeningHit,
     StormEscape,
     StormEscapeRare,
-    TurtleKing,
     Behemoth,
     Stunned,
     IcePillar,
@@ -1520,7 +1520,6 @@ public enum SpellEffect : byte
     Mon580BSpikeTrap,
     Mon621NSpikes,
     Mon622NSpikes,
-    Mon637BCobweb,
 }
 
 public enum BuffType : ushort

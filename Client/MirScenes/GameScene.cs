@@ -4086,9 +4086,9 @@ namespace Client.MirScenes
                             playDefaultSound = false;
                             break;
                         }
-                    case 6: //TurtleKing
+                    case 6:
                         {
-                            effect = new Effect(Libraries.Monsters[(ushort)Monster.TurtleKing], 946, 10, 500, ob.CurrentLocation);
+                            effect = new Effect(Libraries.Monsters[(ushort)Monster.Mon244B], 946, 10, 500, ob.CurrentLocation);
                             break;
                         }
                     case 7: //Mandrill
@@ -4178,9 +4178,9 @@ namespace Client.MirScenes
                             playDefaultSound = false;
                             break;
                         }
-                    case 6: //TurtleKing
+                    case 6:
                         {
-                            ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.TurtleKing], 956, 10, 500, ob));
+                            ob.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon244B], 956, 10, 500, ob));
                             break;
                         }
                     case 7: //Mandrill
@@ -4960,13 +4960,6 @@ namespace Client.MirScenes
                             ob.Effects.Add(new Effect(Libraries.Magic3, 830, 5, 500, ob, CMain.Time + p.DelayTime) { Blend = false });
                         }
                         break;
-                    case SpellEffect.TurtleKing:
-                        {
-                            Effect ef = new Effect(Libraries.Monsters[(ushort)Monster.TurtleKing], CMain.Random.Next(2) == 0 ? 922 : 934, 12, 1200, ob);
-                            ef.Played += (o, e) => SoundManager.PlaySound(20000 + (ushort)Spell.HellFire * 10 + 1);
-                            ob.Effects.Add(ef);
-                        }
-                        break;
                     case SpellEffect.Behemoth:
                         {
                             MapControl.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Behemoth], 845, 10, 1500, ob.CurrentLocation));
@@ -5296,7 +5289,8 @@ namespace Client.MirScenes
             if (MapControl.Objects.TryGetValue(p.ObjectID, out var ob))
             {
                 QueuedAction action = null;
-                if (ob.Race == ObjectType.Player)
+
+                if (ob.Race == ObjectType.Player || ob.Race == ObjectType.Hero)
                 {
                     action = p.Type switch
                     {
@@ -5318,6 +5312,7 @@ namespace Client.MirScenes
                 action.Params.Add(p.Spell);
                 action.Params.Add(new List<uint>());
                 action.Params.Add(p.Level);
+                action.Params.Add(p.Locations);
 
                 ob.ActionFeed.Add(action);
             }

@@ -137,7 +137,7 @@ namespace Server.MirObjects
                 case 243:
                     return new FinialTurtle(info);
                 case 244:
-                    return new TurtleKing(info);
+                    return new Mon244B(info);
                 case 246:
                     return new LightTurtle(info);
                 case 257:
@@ -477,6 +477,8 @@ namespace Server.MirObjects
                     return new Mon590N(info);
                 case 593:
                     return new Mon593N(info);
+                case 600:
+                    return new Mon600P(info);
                 case 601:
                     return new Mon601N(info);
                 case 602:
@@ -4319,6 +4321,113 @@ namespace Server.MirObjects
             }
 
             return count > 0;
+        }
+        protected virtual Point[] MultiPointAreaAttack(int count, bool selfCenter, int range, bool allowRepeat, int effectSize, bool showAll)
+        {
+            if (CurrentMap == null)
+                return Array.Empty<Point>();
+
+            if (count < 1 || count > 7)
+                return Array.Empty<Point>();
+
+            if (range < 1 || range > Info.ViewRange)
+                return Array.Empty<Point>();
+
+            if (effectSize < 0 || effectSize > 2)
+                return Array.Empty<Point>();
+
+            Point center;
+
+            if (selfCenter)
+            {
+                center = CurrentLocation;
+            }
+            else
+            {
+                if (Target == null || Target.Dead || Target.CurrentMap != CurrentMap)
+                    return Array.Empty<Point>();
+
+                center = Target.CurrentLocation;
+            }
+
+            int minX = Math.Max(0, center.X - range);
+            int maxX = Math.Min(CurrentMap.Width - 1, center.X + range);
+            int minY = Math.Max(0, center.Y - range);
+            int maxY = Math.Min(CurrentMap.Height - 1, center.Y + range);
+
+            List<Point> availableLocations = new List<Point>();
+
+            for (int y = minY; y <= maxY; y++)
+            {
+                for (int x = minX; x <= maxX; x++)
+                {
+                    if (x == center.X && y == center.Y)
+                        continue;
+
+                    Cell cell = CurrentMap.GetCell(x, y);
+
+                    if (!cell.Valid)
+                        continue;
+
+                    availableLocations.Add(new Point(x, y));
+                }
+            }
+
+            if (availableLocations.Count == 0)
+                return Array.Empty<Point>();
+
+            if (!allowRepeat && availableLocations.Count < count)
+                return Array.Empty<Point>();
+
+            List<Point> attackLocations = new List<Point>(count);
+
+            for (int i = 0; i < count; i++)
+            {
+                int index = Envir.Random.Next(availableLocations.Count);
+
+                Point location = availableLocations[index];
+
+                attackLocations.Add(location);
+
+                if (!allowRepeat)
+                {
+                    availableLocations[index] = availableLocations[availableLocations.Count - 1];
+                    availableLocations.RemoveAt(availableLocations.Count - 1);
+                }
+            }
+
+            if (!showAll)
+                return attackLocations.ToArray();
+
+            HashSet<Point> damageLocations = new HashSet<Point>();
+
+            for (int i = 0; i < attackLocations.Count; i++)
+            {
+                Point attackLocation = attackLocations[i];
+
+                int minEffectX = Math.Max(0, attackLocation.X - effectSize);
+                int maxEffectX = Math.Min(CurrentMap.Width - 1, attackLocation.X + effectSize);
+                int minEffectY = Math.Max(0, attackLocation.Y - effectSize);
+                int maxEffectY = Math.Min(CurrentMap.Height - 1, attackLocation.Y + effectSize);
+
+                for (int y = minEffectY; y <= maxEffectY; y++)
+                {
+                    for (int x = minEffectX; x <= maxEffectX; x++)
+                    {
+                        if (x == CurrentLocation.X && y == CurrentLocation.Y)
+                            continue;
+
+                        Cell cell = CurrentMap.GetCell(x, y);
+
+                        if (!cell.Valid)
+                            continue;
+
+                        damageLocations.Add(new Point(x, y));
+                    }
+                }
+            }
+
+            return damageLocations.ToArray();
         }
     }
 }

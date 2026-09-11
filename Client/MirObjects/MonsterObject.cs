@@ -686,7 +686,7 @@ namespace Client.MirObjects
                             case Monster.HellBomb1:
                             case Monster.HellBomb2:
                             case Monster.HellBomb3:
-                            case Monster.TurtleKing:
+                            case Monster.Mon244B:
                             case Monster.PoisonHugger: //55
                             case Monster.Hugger: //56
                             case Monster.MutatedHugger: //67
@@ -780,7 +780,12 @@ namespace Client.MirObjects
                         break;
                     case MirAction.跑步动作:
                         PlayRunSound();
-                        GameScene.Scene.Redraw();
+                        switch (BaseImage)
+                        {
+                            case Monster.Mon600P:
+                                MapControl.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon600P], 264, 10, 900, CurrentLocation, CMain.Time + 300) { Blend = true, DrawBehind = true });
+                                break;
+                            }
                         break;
                     case MirAction.近距攻击1:
                         PlayAttackSound();
@@ -1060,8 +1065,8 @@ namespace Client.MirObjects
                             case Monster.DragonStatue: //902
                                 Effects.Add(new Effect(Libraries.Dragon, 310 + ((int)Direction / 3) * 20, 10, 10 * Frame.Interval, this));
                                 break;
-                            case Monster.TurtleKing: //244
-                                Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.TurtleKing], 946, 10, Frame.Count * Frame.Interval, User));
+                            case Monster.Mon244B:
+                                Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon244B], 934, 12, Frame.Count * Frame.Interval, User) { Blend = true , DrawBehind = false });
                                 break;
                             case Monster.HellBolt: //276
                                 Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.HellBolt], 304, 11, 11 * 100, this) { DrawBehind = true });
@@ -1192,15 +1197,19 @@ namespace Client.MirObjects
                             case Monster.Behemoth: //57
                                 Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Behemoth], 825, 10, Frame.Count * Frame.Interval, this) { Blend = true, DrawBehind = true });
                                 break;
-                            case Monster.TurtleKing: //244
-                                byte random = (byte)CMain.Random.Next(4);
-                                for (int i = 0; i <= 4 + random; i++)
-                                {
-                                    Point source = new Point(User.CurrentLocation.X + CMain.Random.Next(-7, 7), User.CurrentLocation.Y + CMain.Random.Next(-7, 7));
+                            case Monster.Mon244B:
+                                Point[] locations = (Point[])action.Params[5];
 
-                                    Effect ef = new Effect(Libraries.Monsters[(ushort)Monster.TurtleKing], CMain.Random.Next(2) == 0 ? 922 : 934, 12, 1200, source, CMain.Time + CMain.Random.Next(600));
-                                    MapControl.Effects.Add(ef);
+                                if (locations != null)
+                                {
+                                    for (int i = 0; i < locations.Length; i++)
+                                    {
+                                        Point source = locations[i];
+                                        Effect ef = new Effect(Libraries.Monsters[(ushort)Monster.Mon244B], CMain.Random.Next(2) == 0 ? 922 : 934, 12, 1200, source, CMain.Time + CMain.Random.Next(600));
+                                        MapControl.Effects.Add(ef);
+                                    }
                                 }
+
                                 SoundManager.PlaySound(20000 + (ushort)Spell.HellFire * 10 + 1);
                                 break;
                             case Monster.SeedingsGeneral:
@@ -1257,8 +1266,8 @@ namespace Client.MirObjects
                         CurrentActionLevel = (byte)action.Params[4];
                         switch (BaseImage)
                         {
-                            case Monster.TurtleKing: //244
-                                Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.TurtleKing], 946, 10, Frame.Count * Frame.Interval, User));
+                            case Monster.Mon244B:
+                                Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon244B], 946, 10, Frame.Count * Frame.Interval, User));
                                 break;
                             case Monster.HoodedSummoner: //481
                                 Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.ShardMaiden], 661 + (int)Direction * 7, 7, 7 * Frame.Interval, this));
@@ -1415,6 +1424,12 @@ namespace Client.MirObjects
                                 break;
                             case Monster.PoisonScroll:
                                 Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.PoisonScroll], 282, 11, 11 * Frame.Interval, this));
+                                break;
+                            case Monster.Mon244B:
+                                Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon244B], 912, 10, 10 * Frame.Interval, this));
+                                break;
+                            case Monster.Mon600P:
+                                Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon600P], 274, 10, 10 * Frame.Interval, this));
                                 break;
                         }
                         PlayDieSound();
@@ -5466,8 +5481,8 @@ namespace Client.MirObjects
                 case Monster.TucsonGeneral:
                     SoundManager.PlaySound(BaseSound + 1);
                     return;
-                case Monster.TurtleKing:
-                    return;
+                //case Monster.Mon244B:
+                    //return;
                 case Monster.KingGuard:
                 case Monster.TreeGuardian:
                 case Monster.DarkCaptain:
@@ -6028,36 +6043,36 @@ namespace Client.MirObjects
                             break;
                     }
                     break;
-                case Monster.TurtleKing: //244
+                case Monster.Mon244B:
                     switch (CurrentAction)
                     {
                         case MirAction.站立动作:
-                            Libraries.Monsters[(ushort)Monster.TurtleKing].DrawBlend(456 + FrameIndex + (int)Direction * 4, DrawLocation, Color.White, true);
+                            Libraries.Monsters[(ushort)Monster.Mon244B].DrawBlend(456 + FrameIndex + (int)Direction * 4, DrawLocation, Color.White, true);
                             break;
                         case MirAction.行走动作:
-                            Libraries.Monsters[(ushort)Monster.TurtleKing].DrawBlend(488 + FrameIndex + (int)Direction * 6, DrawLocation, Color.White, true);
+                            Libraries.Monsters[(ushort)Monster.Mon244B].DrawBlend(488 + FrameIndex + (int)Direction * 6, DrawLocation, Color.White, true);
                             break;
                         case MirAction.近距攻击1:
-                            Libraries.Monsters[(ushort)Monster.TurtleKing].DrawBlend(536 + FrameIndex + (int)Direction * 10, DrawLocation, Color.White, true);
+                            Libraries.Monsters[(ushort)Monster.Mon244B].DrawBlend(536 + FrameIndex + (int)Direction * 10, DrawLocation, Color.White, true);
                             break;
                         case MirAction.被击动作:
-                            Libraries.Monsters[(ushort)Monster.TurtleKing].DrawBlend(616 + FrameIndex + (int)Direction * 2, DrawLocation, Color.White, true);
+                            Libraries.Monsters[(ushort)Monster.Mon244B].DrawBlend(616 + FrameIndex + (int)Direction * 2, DrawLocation, Color.White, true);
                             break;
                         case MirAction.死亡动作:
                         case MirAction.复活动作:
-                            Libraries.Monsters[(ushort)Monster.TurtleKing].DrawBlend(632 + FrameIndex + (int)Direction * 9, DrawLocation, Color.White, true);
+                            Libraries.Monsters[(ushort)Monster.Mon244B].DrawBlend(632 + FrameIndex + (int)Direction * 9, DrawLocation, Color.White, true);
                             break;
                         case MirAction.近距攻击2:
-                            Libraries.Monsters[(ushort)Monster.TurtleKing].DrawBlend(704 + FrameIndex + (int)Direction * 6, DrawLocation, Color.White, true);
+                            Libraries.Monsters[(ushort)Monster.Mon244B].DrawBlend(704 + FrameIndex + (int)Direction * 6, DrawLocation, Color.White, true);
                             break;
                         case MirAction.远程攻击1:
-                            Libraries.Monsters[(ushort)Monster.TurtleKing].DrawBlend(752 + FrameIndex + (int)Direction * 6, DrawLocation, Color.White, true);
+                            Libraries.Monsters[(ushort)Monster.Mon244B].DrawBlend(752 + FrameIndex + (int)Direction * 6, DrawLocation, Color.White, true);
                             break;
                         case MirAction.远程攻击2:
-                            Libraries.Monsters[(ushort)Monster.TurtleKing].DrawBlend(800 + FrameIndex + (int)Direction * 6, DrawLocation, Color.White, true);
+                            Libraries.Monsters[(ushort)Monster.Mon244B].DrawBlend(800 + FrameIndex + (int)Direction * 6, DrawLocation, Color.White, true);
                             break;
                         case MirAction.远程攻击3:
-                            Libraries.Monsters[(ushort)Monster.TurtleKing].DrawBlend(848 + FrameIndex + (int)Direction * 8, DrawLocation, Color.White, true);
+                            Libraries.Monsters[(ushort)Monster.Mon244B].DrawBlend(848 + FrameIndex + (int)Direction * 8, DrawLocation, Color.White, true);
                             break;
                     }
                     break;

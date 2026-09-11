@@ -617,6 +617,7 @@ namespace Server.MirObjects
                         ob.Struck(Value, DefenceType.MAC);
                     }
                     break;
+                case Spell.Mon244BLGWhirlwind:
                 case Spell.Mon635SIceWhirlwind:
                 case Spell.Mon637BAreaBall:
                     {
@@ -755,6 +756,7 @@ namespace Server.MirObjects
                 case Spell.ButcherFlyAxe:
                 case Spell.RiklebitesBlast:
                 case Spell.SwordFormation:
+                case Spell.Mon244BLGWhirlwind:
                 case Spell.Mon564NWhirlwind:
                 case Spell.Mon570BRupture:
                 case Spell.Mon570BLightningCloud:

@@ -25,7 +25,7 @@ namespace Client.MirNetwork
 
         public static long TimeOutTime;
         public static long TimeConnected;
-        public static long RetryTime = CMain.Time + 5000;
+        public static long RetryTime = CMain.Time + 3000;
 
         private static ConcurrentQueue<ReceivedPacket> _receiveList;
         private static ConcurrentQueue<Packet> _sendList;
@@ -43,8 +43,8 @@ namespace Client.MirNetwork
         private static long _lastKeepAliveTime;
 
         private const int KeepAliveInterval = 10000;
-        private const int ConnectionTimeout = 30000;
-        private const int ReconnectDelay = 5000;
+        private const int ConnectionTimeout = 60000;
+        private const int ReconnectDelay = 3000;
 
         private static readonly object _connectionLock = new object();
 
