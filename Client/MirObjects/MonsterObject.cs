@@ -2190,9 +2190,6 @@ namespace Client.MirObjects
                                             case Monster.DeathCrawler: //318                                          
                                                 MapControl.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.DeathCrawler], 376, 9, 9 * Frame.Interval, front, CMain.Time) { Blend = true, DrawBehind = true });
                                                 break;
-                                            case Monster.TucsonMage: //345
-                                                Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.TucsonMage], 296 + (int)Direction * 10, 10, 10 * Frame.Interval, this));
-                                                break;
                                             case Monster.Armadillo:
                                                 Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Armadillo], 504 + (int)Direction * 12, 12, 6 * Frame.Interval, this));
                                                 break;
@@ -6621,17 +6618,22 @@ namespace Client.MirObjects
                         }
                         break;
                     }
-                case Monster.TucsonWarrior: //346
+                case Monster.Mon346N:
+                    switch (CurrentAction)
                     {
+                        case MirAction.近距攻击2:
+                            if (FrameIndex < 7) Libraries.Monsters[(ushort)Monster.Mon346N].DrawBlend((296 + FrameIndex + (int)Direction * 10), DrawLocation, Color.White, true);
+                            break;
+                    }
+                    break;
+                case Monster.TucsonWarrior:
                         switch (CurrentAction)
                         {
-
                             case MirAction.近距攻击1:
                                 Libraries.Monsters[(ushort)Monster.TucsonWarrior].DrawBlend(296 + FrameIndex + (int)Direction * 8, DrawLocation, Color.White, true);
                                 break;
                         }
                         break;
-                    }
                 case Monster.RhinoWarrior: //359
                     switch (CurrentAction)
                     {
@@ -8521,6 +8523,9 @@ namespace Client.MirObjects
                     {
                         case MirAction.近距攻击1:
                             Libraries.Monsters[(ushort)Monster.Mon650N].DrawBlend((296 + FrameIndex + (int)Direction * 7), DrawLocation, Color.White, true);
+                            break;
+                        case MirAction.近距攻击2:
+                            if (FrameIndex < 7) Libraries.Monsters[(ushort)Monster.Mon650N].DrawBlend((352 + FrameIndex + (int)Direction * 9), DrawLocation, Color.White, true);
                             break;
                     }
                     break;

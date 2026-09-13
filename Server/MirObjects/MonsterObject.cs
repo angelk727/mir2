@@ -225,7 +225,7 @@ namespace Server.MirObjects
                 case 341:
                     return new GeneralMeowMeow(info);
                 case 346:
-                    return new TucsonMage(info);
+                    return new Mon346N(info);
                 case 347:
                     return new TucsonWarrior(info);
                 case 348:
@@ -511,6 +511,8 @@ namespace Server.MirObjects
                     return new Mon635S(info);
                 case 637:
                     return new Mon637B(info);
+                case 650:
+                    return new Mon346N(info);
                 case 900:
                     return new EvilMir(info);
                 case 901:

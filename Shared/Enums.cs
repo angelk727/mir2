@@ -516,7 +516,7 @@ public enum Monster : ushort
     Bunny1 = 343,
     Tucson = 344,
     TucsonFighter = 345,
-    TucsonMage = 346,
+    Mon346N = 346,
     TucsonWarrior = 347,
     Armadillo = 348,
     ArmadilloElder = 349,

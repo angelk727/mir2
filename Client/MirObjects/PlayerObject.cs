@@ -111,6 +111,7 @@ namespace Client.MirObjects
         public PlayerObject(uint objectID) : base(objectID)
         {
             Frames = FrameSet.Player;
+            Blend = false;
         }
 
         public void Load(S.ObjectPlayer info)
