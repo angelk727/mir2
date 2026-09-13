@@ -3948,6 +3948,7 @@ namespace ServerPackets
         public byte Type;
         public Spell Spell;
         public byte Level;
+        public uint[] TargetIDs;
         public Point[] Locations;
 
         protected override void ReadPacket(BinaryReader reader)
@@ -3961,13 +3962,25 @@ namespace ServerPackets
             Spell = (Spell)reader.ReadUInt16();
             Level = reader.ReadByte();
 
-            byte count = reader.ReadByte();
+            byte targetCount = reader.ReadByte();
 
-            if (count > 0)
+            if (targetCount > 0)
             {
-                Locations = new Point[count];
+                TargetIDs = new uint[targetCount];
 
-                for (int i = 0; i < count; i++)
+                for (int i = 0; i < targetCount; i++)
+                {
+                    TargetIDs[i] = reader.ReadUInt32();
+                }
+            }
+
+            byte locationCount = reader.ReadByte();
+
+            if (locationCount > 0)
+            {
+                Locations = new Point[locationCount];
+
+                for (int i = 0; i < locationCount; i++)
                 {
                     Locations[i] = new Point(reader.ReadInt32(), reader.ReadInt32());
                 }
@@ -3986,6 +3999,20 @@ namespace ServerPackets
             writer.Write(Type);
             writer.Write((ushort)Spell);
             writer.Write(Level);
+
+            if (TargetIDs == null)
+            {
+                writer.Write((byte)0);
+            }
+            else
+            {
+                writer.Write((byte)TargetIDs.Length);
+
+                for (int i = 0; i < TargetIDs.Length; i++)
+                {
+                    writer.Write(TargetIDs[i]);
+                }
+            }
 
             if (Locations == null)
             {

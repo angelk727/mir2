@@ -596,6 +596,7 @@ namespace Client.MirObjects
                 CurrentAction = action.Action;
                 CurrentLocation = action.Location;
                 Direction = action.Direction;
+                CurrentActionParams = action.Params;
 
                 Point temp;
                 switch (CurrentAction)

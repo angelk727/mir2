@@ -5307,10 +5307,12 @@ namespace Client.MirScenes
                     };
                 }
 
+                List<uint> targetIDs = p.TargetIDs == null ? new List<uint>() : new List<uint>(p.TargetIDs);
+
                 action.Params.Add(p.TargetID);
                 action.Params.Add(p.Target);
                 action.Params.Add(p.Spell);
-                action.Params.Add(new List<uint>());
+                action.Params.Add(targetIDs);
                 action.Params.Add(p.Level);
                 action.Params.Add(p.Locations);
 

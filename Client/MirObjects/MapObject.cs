@@ -102,6 +102,7 @@ namespace Client.MirObjects
         public uint LastTargetObjectId => lastTargetObjectId;
 
         public List<QueuedAction> ActionFeed = new List<QueuedAction>();
+        public List<object> CurrentActionParams;
         public QueuedAction NextAction
         {
             get { return ActionFeed.Count > 0 ? ActionFeed[0] : null; }

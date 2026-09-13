@@ -1520,15 +1520,116 @@ namespace Server.MirObjects
 
         protected virtual void CompleteRangeAttack(IList<object> data)
         {
-            MapObject target = (MapObject)data[0];
-            int damage = (int)data[1];
-            DefenceType defence = (DefenceType)data[2];
+            if (data == null || data.Count < 3)
+                return;
 
-            if (target == null || !target.IsAttackTarget(this) || target.CurrentMap != CurrentMap || target.Node == null) return;
+            if (data[0] is MapObject)
+            {
+                MapObject target = (MapObject)data[0];
+                int damage = (int)data[1];
+                DefenceType defence = (DefenceType)data[2];
 
-            target.Attacked(this, damage, defence);
+                if (target == null || !target.IsAttackTarget(this) || target.CurrentMap != CurrentMap || target.Node == null)
+                    return;
+
+                target.Attacked(this, damage, defence);
+                return;
+            }
+
+            if (data[0] is int && data[1] is DefenceType && data[2] is Point[])
+            {
+                int damage = (int)data[0];
+                DefenceType defence = (DefenceType)data[1];
+                Point[] locations = (Point[])data[2];
+
+                CompleteRangeAttack(locations, damage, defence);
+                return;
+            }
+
+            if (data[0] is uint[] && data[1] is int && data[2] is DefenceType)
+            {
+                uint[] targetIDs = (uint[])data[0];
+                int damage = (int)data[1];
+                DefenceType defence = (DefenceType)data[2];
+
+                CompleteRangeAttack(targetIDs, damage, defence);
+                return;
+            }
         }
+        protected virtual void CompleteRangeAttack(Point[] locations, int damage, DefenceType defence)
+        {
+            if (locations == null || locations.Length == 0 || damage <= 0)
+                return;
 
+            HashSet<MapObject> targets = new HashSet<MapObject>();
+
+            for (int i = 0; i < locations.Length; i++)
+            {
+                Point location = locations[i];
+
+                if (location.X < 0 || location.X >= CurrentMap.Width || location.Y < 0 || location.Y >= CurrentMap.Height)
+                    continue;
+
+                Cell cell = CurrentMap.GetCell(location.X, location.Y);
+
+                if (!cell.Valid)
+                    continue;
+
+                for (int j = 0; j < cell.Objects.Count; j++)
+                {
+                    MapObject target = cell.Objects[j];
+
+                    if (target == null || target == this || target.Dead)
+                        continue;
+
+                    if (target.CurrentMap != CurrentMap || target.Node == null)
+                        continue;
+
+                    if (!target.IsAttackTarget(this))
+                        continue;
+
+                    targets.Add(target);
+                }
+            }
+
+            foreach (MapObject target in targets)
+            {
+                target.Attacked(this, damage, defence);
+            }
+        }
+        protected virtual void CompleteRangeAttack(uint[] targetIDs, int damage, DefenceType defence)
+        {
+            if (targetIDs == null || targetIDs.Length == 0 || damage <= 0)
+                return;
+
+            HashSet<MapObject> targets = new HashSet<MapObject>();
+
+            for (int i = 0; i < targetIDs.Length; i++)
+            {
+                uint targetID = targetIDs[i];
+
+                if (targetID == 0)
+                    continue;
+
+                MapObject target = FindObject(targetID, Globals.DataRange);
+
+                if (target == null || target == this || target.Dead)
+                    continue;
+
+                if (target.CurrentMap != CurrentMap || target.Node == null)
+                    continue;
+
+                if (!target.IsAttackTarget(this))
+                    continue;
+
+                targets.Add(target);
+            }
+
+            foreach (MapObject target in targets)
+            {
+                target.Attacked(this, damage, defence);
+            }
+        }
         protected virtual void CompleteDeath(IList<object> data)
         {
             throw new NotImplementedException();
@@ -4430,6 +4531,81 @@ namespace Server.MirObjects
             }
 
             return damageLocations.ToArray();
+        }
+        protected virtual uint[] FindTargets(bool self, int range = 3, int count = 1)
+        {
+            if (CurrentMap == null)
+                return Array.Empty<uint>();
+
+            if (range != 3 && range != 5 && range != 7)
+                range = 3;
+
+            if (count < 1)
+                count = 1;
+
+            if (count > 5)
+                count = 5;
+
+            MapObject center = self ? this : Target;
+
+            if (center == null || center.Node == null || center.CurrentMap != CurrentMap)
+                return Array.Empty<uint>();
+
+            int half = range / 2;
+
+            HashSet<MapObject> targets = new HashSet<MapObject>();
+
+            for (int y = center.CurrentLocation.Y - half; y <= center.CurrentLocation.Y + half; y++)
+            {
+                if (y < 0 || y >= CurrentMap.Height)
+                    continue;
+
+                for (int x = center.CurrentLocation.X - half; x <= center.CurrentLocation.X + half; x++)
+                {
+                    if (x < 0 || x >= CurrentMap.Width)
+                        continue;
+
+                    Cell cell = CurrentMap.GetCell(x, y);
+
+                    if (!cell.Valid || cell.Objects == null)
+                        continue;
+
+                    for (int i = 0; i < cell.Objects.Count; i++)
+                    {
+                        MapObject target = cell.Objects[i];
+
+                        if (target == null || target == this || target.Dead)
+                            continue;
+
+                        if (target.Node == null || target.CurrentMap != CurrentMap)
+                            continue;
+
+                        if (!target.IsAttackTarget(this))
+                            continue;
+
+                        targets.Add(target);
+                    }
+                }
+            }
+
+            if (targets.Count == 0)
+                return Array.Empty<uint>();
+
+            List<MapObject> list = targets.ToList();
+
+            while (list.Count > count)
+            {
+                list.RemoveAt(Envir.Random.Next(list.Count));
+            }
+
+            uint[] targetIDs = new uint[list.Count];
+
+            for (int i = 0; i < list.Count; i++)
+            {
+                targetIDs[i] = list[i].ObjectID;
+            }
+
+            return targetIDs;
         }
     }
 }
