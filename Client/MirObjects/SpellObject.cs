@@ -243,15 +243,15 @@ namespace Client.MirObjects
                     DrawBehind = true;
                     SoundManager.PlaySound(8343);
                     break;
-                case Spell.TucsonGeneralRock:
-                    MapControl.Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.TucsonGeneral], 552, 20, 2000, CurrentLocation) { Repeat = false, Blend = false });
-                    BodyLibrary = Libraries.Monsters[(ushort)Monster.TucsonGeneral];
-                    DrawFrame = 572;
+                case Spell.Mon354BRock:
+                    BodyLibrary = Libraries.Monsters[(ushort)Monster.Mon354B];
+                    DrawColour = Color.FromArgb(180, 255, 200, 180);
+                    DrawFrame = 745;
                     FrameInterval = 100;
-                    FrameCount = 20;
+                    FrameCount = 17;
                     Light = 1;
                     Blend = true;
-                    Repeat = false;
+                    Repeat = true;
                     break;
                 case Spell.Portal:
                     BodyLibrary = Libraries.Magic2;
@@ -639,7 +639,7 @@ namespace Client.MirObjects
 
                 switch (Spell)
                 {
-                    case Spell.TucsonGeneralRock:
+                    case Spell.Mon354BRock:
                         if (FrameIndex == 10) SoundManager.PlaySound(8305);
                         break;
                     case Spell.HornedSorcererDustTornado:

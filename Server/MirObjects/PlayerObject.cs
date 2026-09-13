@@ -347,11 +347,23 @@ namespace Server.MirObjects
                             break;
                     }
 
-                    Envir.MonsterCount--;
-                    pet.CurrentMap.MonsterCount--;
+                    Map petMap = pet.CurrentMap;
 
-                    pet.CurrentMap.RemoveObject(pet);
-                    pet.Despawn();
+                    if (petMap != null)
+                    {
+                        if (Envir.MonsterCount > 0)
+                            Envir.MonsterCount--;
+
+                        if (petMap.MonsterCount > 0)
+                            petMap.MonsterCount--;
+
+                        petMap.RemoveObject(pet);
+                    }
+
+                    if (pet.Node != null)
+                    {
+                        pet.Despawn();
+                    }
 
                     Pets.RemoveAt(i);
                 }
@@ -1477,7 +1489,7 @@ namespace Server.MirObjects
                 CallDefaultNPC(DefaultNPCType.MapLeave, oldMap.Info.FileName);
             }
 
-            if (!base.Teleport(temp, location, effects)) return false;
+            if (!base.Teleport(temp, location, effects, effectnumber)) return false;
 
             if (mapChanged)
             {
@@ -1530,7 +1542,7 @@ namespace Server.MirObjects
             {
                 bool restrictedPetFound = false;
 
-                foreach (var pet in Pets)
+                foreach (var pet in Pets.ToArray())
                 {
                     if (!PetAffectedByNoPetRule(pet)) continue;
 
@@ -1549,7 +1561,7 @@ namespace Server.MirObjects
 
             else
             {
-                foreach (var pet in Pets)
+                foreach (var pet in Pets.ToArray())
                 {
                     if (!PetAffectedByNoPetRule(pet)) continue;
 

@@ -370,17 +370,6 @@ namespace Server.MirObjects
                         ob.Struck(Value, DefenceType.AC);
                     }
                     break;
-                case Spell.TucsonGeneralRock:
-                    {
-                        if (ob.Race != ObjectType.Player && ob.Race != ObjectType.Monster) return;
-                        if (ob.Dead) return;
-                        if (ob == Caster) return;
-                        if (!ob.IsAttackTarget(Caster)) return;
-
-                        if (Value == 0) return;
-                        ob.Struck(Value, DefenceType.AC);
-                    }
-                    break;
                 case Spell.Portal:
                     {
                         if (ob.Race != ObjectType.Player) return;
@@ -618,6 +607,7 @@ namespace Server.MirObjects
                     }
                     break;
                 case Spell.Mon244BLGWhirlwind:
+                case Spell.Mon354BRock:
                 case Spell.Mon635SIceWhirlwind:
                 case Spell.Mon637BAreaBall:
                     {
@@ -693,32 +683,32 @@ namespace Server.MirObjects
         }
         public override bool IsAttackTarget(HumanObject attacker)
         {
-            throw new NotSupportedException();
+            return false;
         }
         public override bool IsAttackTarget(MonsterObject attacker)
         {
-            throw new NotSupportedException();
+            return false;
         }
         public override int Attacked(HumanObject attacker, int damage, DefenceType type = DefenceType.ACAgility, bool damageWeapon = true)
         {
-            throw new NotSupportedException();
+            return 0;
         }
         public override int Attacked(MonsterObject attacker, int damage, DefenceType type = DefenceType.ACAgility)
         {
-            throw new NotSupportedException();
+            return 0;
         }
 
         public override int Struck(int damage, DefenceType type = DefenceType.ACAgility)
         {
-            throw new NotSupportedException();
+            return 0;
         }
         public override bool IsFriendlyTarget(HumanObject ally)
         {
-            throw new NotSupportedException();
+            return false;
         }
         public override bool IsFriendlyTarget(MonsterObject ally)
         {
-            throw new NotSupportedException();
+            return false;
         }
         public override void ReceiveChat(string text, ChatType type)
         {
@@ -757,6 +747,7 @@ namespace Server.MirObjects
                 case Spell.RiklebitesBlast:
                 case Spell.SwordFormation:
                 case Spell.Mon244BLGWhirlwind:
+                case Spell.Mon354BRock:
                 case Spell.Mon564NWhirlwind:
                 case Spell.Mon570BRupture:
                 case Spell.Mon570BLightningCloud:

@@ -524,7 +524,7 @@ public enum Monster : ushort
     PlaguedTucson = 351,
     SandSnail = 352,
     CannibalTentacles = 353,
-    TucsonGeneral = 354,
+    Mon354B = 354,
     GasToad = 355,
     Mantis = 356,
     SwampWarrior = 357,
@@ -1428,7 +1428,7 @@ public enum Spell : ushort
     DigOutArmadillo = 406,
     FlyingStatueIceTornado = 407, //259
     GeneralMeowMeowThunder = 408, //341
-    TucsonGeneralRock = 409, //354
+    Mon354BRock = 409, //354
     StoneGolemQuake = 410, //362
     EarthGolemPile = 411, //363
     TreeQueenRoot = 412, //365

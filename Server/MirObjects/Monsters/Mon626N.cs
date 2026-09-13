@@ -66,7 +66,7 @@ namespace Server.MirObjects.Monsters
                 int damage = GetAttackPower(Stats[Stat.MinDC], Stats[Stat.MaxDC]);
                 if (damage == 0) return;
 
-                if (!LineCharge(7))
+                if (!LineCharge(7, true))
                     return;
 
                 WideLineAttack(damage, 3, 1200, DefenceType.ACAgility, false, 3);

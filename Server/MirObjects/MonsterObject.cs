@@ -239,7 +239,7 @@ namespace Server.MirObjects
                 case 353:
                     return new CannibalTentacles(info);
                 case 354:
-                    return new TucsonGeneral(info);
+                    return new Mon354B(info);
                 case 355:
                     return new GasToad(info);
                 case 356:
@@ -511,6 +511,8 @@ namespace Server.MirObjects
                     return new Mon635S(info);
                 case 637:
                     return new Mon637B(info);
+                case 649:
+                    return new Mon649B(info);
                 case 650:
                     return new Mon346N(info);
                 case 900:
@@ -1583,6 +1585,9 @@ namespace Server.MirObjects
                         continue;
 
                     if (target.CurrentMap != CurrentMap || target.Node == null)
+                        continue;
+
+                    if (target is SpellObject)
                         continue;
 
                     if (!target.IsAttackTarget(this))
@@ -4185,7 +4190,7 @@ namespace Server.MirObjects
             return true;
         }
 
-        protected virtual bool LineCharge(int distance)
+        protected virtual bool LineCharge(int distance, bool broadcast = false)
         {
             if (CurrentMap == null || Target == null || Target.Dead)
                 return false;
@@ -4260,6 +4265,7 @@ namespace Server.MirObjects
             }
 
             Direction = direction;
+            if (broadcast)
             Broadcast(new S.ObjectDashAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation, Distance = chargeDistance });
             return true;
         }
