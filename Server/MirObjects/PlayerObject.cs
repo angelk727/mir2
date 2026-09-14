@@ -1006,21 +1006,47 @@ namespace Server.MirObjects
         }
         public void CheckRecipeInfo(RecipeInfo info)
         {
+            if (info == null) return;
+
+            if (Connection == null) return;
+            if (Connection.SentRecipeInfo == null) return;
+
             if (Connection.SentRecipeInfo.Contains(info)) return;
+
+            if (info.Item == null || info.Item.Info == null)
+                return;
 
             CheckItemInfo(info.Item.Info);
 
-            foreach (var tool in info.Tools)
+            if (info.Tools != null)
             {
-                CheckItemInfo(tool.Info);
+                foreach (var tool in info.Tools)
+                {
+                    if (tool == null || tool.Info == null)
+                        continue;
+
+                    CheckItemInfo(tool.Info);
+                }
             }
 
-            foreach (var ingredient in info.Ingredients)
+            if (info.Ingredients != null)
             {
-                CheckItemInfo(ingredient.Info);
+                foreach (var ingredient in info.Ingredients)
+                {
+                    if (ingredient == null || ingredient.Info == null)
+                        continue;
+
+                    CheckItemInfo(ingredient.Info);
+                }
             }
 
-            Enqueue(new S.NewRecipeInfo { Info = info.CreateClientRecipeInfo() });
+            var clientInfo = info.CreateClientRecipeInfo();
+
+            if (clientInfo == null)
+                return;
+
+            Enqueue(new S.NewRecipeInfo { Info = clientInfo });
+
             Connection.SentRecipeInfo.Add(info);
         }
         public void CheckMapInfo(MapInfo mapInfo)

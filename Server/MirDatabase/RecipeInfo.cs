@@ -224,6 +224,12 @@ namespace Server.MirDatabase
 
         public ClientRecipeInfo CreateClientRecipeInfo()
         {
+            if (Item == null) return null;
+
+            if (Tools == null) return null;
+
+            if (Ingredients == null) return null;
+
             ClientRecipeInfo clientInfo = new ClientRecipeInfo
             {
                 Gold = Gold,

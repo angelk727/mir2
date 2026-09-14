@@ -11247,7 +11247,7 @@ namespace Client.MirScenes
                     #region Draw shanda's tile animation layer
                     index = M2CellInfo[x, y].TileAnimationImage;
                     animation = M2CellInfo[x, y].TileAnimationFrames;
-                    if ((index > 0) & (animation > 0))
+                    if (index > 0 && animation > 0)
                     {
                         index--;
                         int animationoffset = M2CellInfo[x, y].TileAnimationOffset ^ 0x2000;
@@ -11462,7 +11462,7 @@ namespace Client.MirScenes
                     ob.DrawName();
 
                 ob.DrawChat();
-                //ob.DrawHealth();
+
                 ob.DrawPoison();
                 ob.DrawDamages();
             }
