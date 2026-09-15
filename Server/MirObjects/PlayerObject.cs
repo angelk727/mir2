@@ -1494,14 +1494,19 @@ namespace Server.MirObjects
         }
         public override bool Teleport(Map temp, Point location, bool effects = true, byte effectnumber = 0)
         {
+            if (temp == null || temp.Info == null)
+                return false;
+
             Map oldMap = CurrentMap;
             Point oldLocation = CurrentLocation;
             bool mapChanged = temp != oldMap;
 
             // RequiredGroup PRE-GATE (deny before leaving source) ---
-            if (temp.Info.RequiredGroup && !IsGM)
+            MapInfo targetInfo = temp.Info;
+
+            if (targetInfo.RequiredGroup && !IsGM)
             {
-                int required = Math.Max(2, temp.Info.RequiredGroupSize);
+                int required = Math.Max(2, targetInfo.RequiredGroupSize);
                 int have = GroupMembers?.Count ?? 0;
                 if (have < required)
                 {
@@ -1519,17 +1524,20 @@ namespace Server.MirObjects
 
             if (mapChanged)
             {
-                CallDefaultNPC(DefaultNPCType.MapEnter, temp.Info.FileName);
+                CallDefaultNPC(DefaultNPCType.MapEnter, targetInfo.FileName);
             }
 
-            if (!temp.Info.RequiredGroup)
+            if (!targetInfo.RequiredGroup)
             {
                 LastValidMap = temp;
                 LastValidLocation = location;
             }
 
-            if (TradePartner != null) TradeCancel();
-            if (ItemRentalPartner != null) CancelItemRental();
+            if (TradePartner != null)
+                TradeCancel();
+
+            if (ItemRentalPartner != null)
+                CancelItemRental();
 
             GetObjectsPassive();
             CheckConquest();
@@ -1552,48 +1560,42 @@ namespace Server.MirObjects
 
             return true;
         }
+
         // Run after a successful map change (movement or teleport)
         private void ApplyMapEntryRules(bool mapChanged)
         {
             if (!mapChanged) return;
 
-            // NoGroup: solo-only maps
-            if (CurrentMap.Info.NoGroup && GroupMembers != null)
-            {
-                DisbandGroup(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.GroupingDisabledOnMap));
-            }
-
-            // NoPets: freeze combat pets while allowing pickup creatures to keep working
             if (CurrentMap.Info.NoPets)
             {
                 bool restrictedPetFound = false;
 
-                foreach (var pet in Pets.ToArray())
+                foreach (var pet in Pets)
                 {
-                    if (!PetAffectedByNoPetRule(pet)) continue;
+                    if (!PetAffectedByNoPetRule(pet))
+                        continue;
 
                     pet.Target = null;
                     pet.Frozen = true;
                     pet.PMode = PetMode.None;
 
-                    // small visual nudge
-                    pet.Broadcast(new S.ObjectTurn { Direction = pet.Direction, Location = pet.CurrentLocation });
                     restrictedPetFound = true;
                 }
 
                 if (restrictedPetFound)
+                {
                     ReceiveChat(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.PetsNotAllowedOnMap), ChatType.System);
+                }
             }
-
             else
             {
-                foreach (var pet in Pets.ToArray())
+                foreach (var pet in Pets)
                 {
-                    if (!PetAffectedByNoPetRule(pet)) continue;
+                    if (!PetAffectedByNoPetRule(pet))
+                        continue;
 
                     pet.Frozen = false;
                     pet.PMode = PetMode.Both;
-                    pet.BroadcastInfo();
                 }
             }
 
@@ -1611,8 +1613,7 @@ namespace Server.MirObjects
                 DespawnHero();
                 ReceiveChat(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.HeroesNotAllowedOnMap), ChatType.System);
 
-                if (Hero != null && Envir.Heroes.Contains(Hero))
-                    Envir.Heroes.Remove(Hero);
+                if (Hero != null && Envir.Heroes.Contains(Hero)) Envir.Heroes.Remove(Hero);
             }
 
             // Party UI refresh
@@ -1624,16 +1625,23 @@ namespace Server.MirObjects
             return pet != null && !pet.Dead && !pet.IgnoresNoPetRestriction;
         }
 
-        static readonly ServerPacketIds[] BroadcastObservePackets = new ServerPacketIds[]
+        private static bool IsBroadcastObservePacket(ServerPacketIds packetId)
         {
-            ServerPacketIds.ObjectTurn,
-            ServerPacketIds.ObjectWalk,
-            ServerPacketIds.ObjectRun,
-            ServerPacketIds.ObjectAttack,
-            ServerPacketIds.ObjectRangeAttack,
-            ServerPacketIds.ObjectMagic,
-            ServerPacketIds.ObjectHarvest
-        };
+            switch (packetId)
+            {
+                case ServerPacketIds.ObjectTurn:
+                case ServerPacketIds.ObjectWalk:
+                case ServerPacketIds.ObjectRun:
+                case ServerPacketIds.ObjectAttack:
+                case ServerPacketIds.ObjectRangeAttack:
+                case ServerPacketIds.ObjectMagic:
+                case ServerPacketIds.ObjectHarvest:
+                    return true;
+
+                default:
+                    return false;
+            }
+        }
 
         public override void Broadcast(Packet p)
         {
@@ -1641,10 +1649,9 @@ namespace Server.MirObjects
 
             base.Broadcast(p);
 
-            if (Array.Exists(BroadcastObservePackets, x => x == (ServerPacketIds)p.Index))
+            if (IsBroadcastObservePacket((ServerPacketIds)p.Index))
             {
-                foreach (MirConnection c in Connection.Observers)
-                    c.Enqueue(p);
+                foreach (MirConnection c in Connection.Observers) c.Enqueue(p);
             }
         }
 
@@ -5438,7 +5445,7 @@ namespace Server.MirObjects
 
                 if (i != null)
                 {
-                Report.ItemMoved(array[from], grid, grid, to, from);
+                    Report.ItemMoved(array[from], grid, grid, to, from);
                 }
 
                 p.Success = true;

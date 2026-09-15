@@ -324,7 +324,7 @@
     "YourCharacterDeletedSuccessfully": "您的角色已成功删除。",
     "CannotLoginCharacterSeconds": "您不能登录该角色，还需等待 {0} 秒。",
     "AccountBannedReasonExpiryDuration": "该账号已被封禁。\n\n原因：{0}\n到期时间：{1}\n封禁时长：{2:#,##0} 小时，{3} 分钟，{4} 秒",
-    "StartingGameDisabled": "当前禁止开始游戏。",
+    "StartingGameDisabled": "游戏尚未对普通玩家开放。",
     "YouNotLoggedIn": "您尚未登录。",
     "YourCharacterNotFound": "未找到您的角色。",
     "NoActiveMapOrStartPointFound": "未找到可用地图和/或起始点。",
