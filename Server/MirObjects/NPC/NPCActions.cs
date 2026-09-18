@@ -116,6 +116,7 @@
         GTCancelSale,
         HeroGiveSkill,
         HeroRemoveSkill,
-		GiveGuildExp
+        GiveGuildExp,
+        ControlMechanism
     }
 }

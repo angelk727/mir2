@@ -1009,9 +1009,11 @@ namespace Server.MirObjects
                 case "ENTERMAP":
                     acts.Add(new NPCActions(ActionType.EnterMap));
                     break;
+
                 case "MAKEWEDDINGRING":
                     acts.Add(new NPCActions(ActionType.MakeWeddingRing));
                     break;
+
                 case "FORCEDIVORCE":
                     acts.Add(new NPCActions(ActionType.ForceDivorce));
                     break;
@@ -1066,26 +1068,32 @@ namespace Server.MirObjects
                         acts.Add(new NPCActions(ActionType.SaveValue, fileName, group, key, value));
                     }
                     break;
+
                 case "CONQUESTGUARD":
                     if (parts.Length < 3) return;
                     acts.Add(new NPCActions(ActionType.ConquestGuard, parts[1], parts[2]));
                     break;
+
                 case "CONQUESTGATE":
                     if (parts.Length < 3) return;
                     acts.Add(new NPCActions(ActionType.ConquestGate, parts[1], parts[2]));
                     break;
+
                 case "CONQUESTWALL":
                     if (parts.Length < 3) return;
                     acts.Add(new NPCActions(ActionType.ConquestWall, parts[1], parts[2]));
                     break;
+
                 case "TAKECONQUESTGOLD":
                     if (parts.Length < 2) return;
                     acts.Add(new NPCActions(ActionType.TakeConquestGold, parts[1]));
                     break;
+
                 case "SETCONQUESTRATE":
                     if (parts.Length < 3) return;
                     acts.Add(new NPCActions(ActionType.SetConquestRate, parts[1], parts[2]));
                     break;
+
                 case "STARTCONQUEST":
                     if (parts.Length < 2) return;
                     acts.Add(new NPCActions(ActionType.StartConquest, parts[1]));
@@ -1094,28 +1102,34 @@ namespace Server.MirObjects
                     if (parts.Length < 2) return;
                     acts.Add(new NPCActions(ActionType.ScheduleConquest, parts[1]));
                     break;
+
                 case "OPENGATE":
                     if (parts.Length < 3) return;
                     acts.Add(new NPCActions(ActionType.OpenGate, parts[1], parts[2]));
                     break;
+
                 case "CLOSEGATE":
                     if (parts.Length < 3) return;
                     acts.Add(new NPCActions(ActionType.CloseGate, parts[1], parts[2]));
                     break;
+
                 case "OPENBROWSER":
                     if (parts.Length < 2) return;
                     acts.Add(new NPCActions(ActionType.OpenBrowser, parts[1]));
                     break;
+
                 case "GETRANDOMTEXT":
                     if (parts.Length < 3) return;
                     match = Regex.Match(parts[2], @"[A-Z][0-9]", RegexOptions.IgnoreCase);
                     if (match.Success)
                         acts.Add(new NPCActions(ActionType.GetRandomText, parts[1], parts[2]));
                     break;
+
                 case "PLAYSOUND":
                     if (parts.Length < 2) return;
                     acts.Add(new NPCActions(ActionType.PlaySound, parts[1]));
                     break;
+
                 case "SETTIMER":
                     {
                         if (parts.Length < 4) return;
@@ -1125,6 +1139,7 @@ namespace Server.MirObjects
                         acts.Add(new NPCActions(ActionType.SetTimer, parts[1], parts[2], parts[3], global));
                     }
                     break;
+
                 case "EXPIRETIMER":
                     {
                         if (parts.Length < 2) return;
@@ -1143,11 +1158,13 @@ namespace Server.MirObjects
 
                     acts.Add(new NPCActions(ActionType.UnequipItem, type));
                     break;
+
                 case "ROLLDIE":
                     if (parts.Length < 3) return;
 
                     acts.Add(new NPCActions(ActionType.RollDie, parts[1], parts[2]));
                     break;
+
                 case "ROLLYUT":
                     if (parts.Length < 3) return;
 
@@ -1238,23 +1255,40 @@ namespace Server.MirObjects
                 case "CANCELGTSALE":
                     acts.Add(new NPCActions(ActionType.GTCancelSale));
                     break;
+
                 case "HEROGIVESKILL":
                     if (parts.Length < 3) return;
 
                     spelllevel = parts.Length > 2 ? parts[2] : "0";
                     acts.Add(new NPCActions(ActionType.HeroGiveSkill, parts[1], spelllevel));
                     break;
+
                 case "HEROREMOVESKILL":
                     if (parts.Length < 2) return;
 
                     acts.Add(new NPCActions(ActionType.HeroRemoveSkill, parts[1]));
                     break;
+
                 case "GIVEGUILDEXP":
                     if (parts.Length < 2) return;
                     acts.Add(new NPCActions(ActionType.GiveGuildExp, parts[1]));
                     break;
                     default:
                         MessageQueue.Enqueue($"NPC脚本非法的ACT指令: {line}");
+                        break;
+
+                case "CONTROLMECHANISM":
+                        {
+                            if (parts.Length < 3) return;
+
+                            string mapName = parts[1];
+
+                            if (mapName.Length > 64) return;
+
+                            if (!bool.TryParse(parts[2], out bool ascending)) return;
+
+                            acts.Add(new NPCActions(ActionType.ControlMechanism, mapName, ascending.ToString()));
+                        }
                         break;
                 }
             }
@@ -4702,6 +4736,7 @@ namespace Server.MirObjects
                             player.Enqueue(p);
                         }
                         break;
+
                     case ActionType.RollYut:
                         {
                             bool.TryParse(param[1], out bool autoRoll);
@@ -4714,6 +4749,7 @@ namespace Server.MirObjects
                             player.Enqueue(p);
                         }
                         break;
+
                     case ActionType.Drop:
                         {
                             var path = param[0];
@@ -4758,15 +4794,19 @@ namespace Server.MirObjects
                             }
                         }
                         break;
+
                     case ActionType.ReviveHero:
                         player.ReviveHero();
                         break;
+
                     case ActionType.SealHero:
                         player.SealHero();
                         break;
+
                     case ActionType.DeleteHero:
                         player.DeleteHero();
                         break;
+
                     case ActionType.HeroGiveSkill:
                         {
                             if (player.Hero == null || player.Hero.Info == null) return;
@@ -4789,6 +4829,7 @@ namespace Server.MirObjects
                             player.Hero.SendMagicInfo(magic);
                         }
                         break;
+
                     case ActionType.HeroRemoveSkill:
                         {
                             if (player.Hero == null || player.Hero.Info == null) return;
@@ -4806,6 +4847,7 @@ namespace Server.MirObjects
                             }
                         }
                         break;
+
                     case ActionType.ConquestRepairAll:
                         {
                             if (!player.IsGM)
@@ -4891,9 +4933,21 @@ namespace Server.MirObjects
                         }
                         break;
 
+                    case ActionType.ControlMechanism:
+                        {
+                            if (param.Count < 2) return;
+                            string mapName = param[0];
+
+                            if (string.IsNullOrWhiteSpace(mapName)) return;
+                            if (!bool.TryParse(param[1], out bool ascending)) return;
+
+                            player.SendControlMechanism(mapName, ascending);
+                        }
+                        break;
                 }
             }
         }
+
         private void Act(IList<NPCActions> acts, MonsterObject monster)
         {
             for (var i = 0; i < acts.Count; i++)

@@ -291,7 +291,7 @@
     "PlayerNoLongerOnline": "{0} 已离线。",
     "MapGroupRequirement": "你必须至少拥有 {0} 名成员的队伍才能进入此地图。",
     "GroupingDisabledOnMap": "此地图禁止组队，队伍已自动解散。",
-    "PetsNotAllowedOnMap": "此地图禁止携带宠物，它们将留在这里等待你。",
+    "PetsNotAllowedOnMap": "进入禁止宠物地图，宠物被滞留在原地。",
     "IntelligentCreaturesNotAllowedOnMap": "此地图禁止召唤仆从，你的伙伴已被遣散。",
     "HeroesNotAllowedOnMap": "此地图禁止英雄参战，你的英雄已被收回。",
     "SoloMapCannotInvite": "单人地图中无法邀请他人组队。",

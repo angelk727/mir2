@@ -6884,4 +6884,26 @@ namespace ServerPackets
             Info.Save(writer);
         }
     }
+    public sealed class ControlMechanism : Packet
+    {
+        public override short Index
+        {
+            get { return (short)ServerPacketIds.ControlMechanism; }
+        }
+
+        public string MapName;
+        public bool Ascending;
+
+        protected override void ReadPacket(BinaryReader reader)
+        {
+            MapName = reader.ReadString();
+            Ascending = reader.ReadBoolean();
+        }
+
+        protected override void WritePacket(BinaryWriter writer)
+        {
+            writer.Write(MapName);
+            writer.Write(Ascending);
+        }
+    }
 }

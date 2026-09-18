@@ -983,6 +983,8 @@ public abstract class Packet
                 return new S.SetCompass();
             case (short)ServerPacketIds.GuildTerritoryPage:
                 return new S.GuildTerritoryPage();
+            case (short)ServerPacketIds.ControlMechanism:
+                return new S.ControlMechanism();
             default:
                 return null;
         }

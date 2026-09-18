@@ -14804,5 +14804,13 @@ namespace Server.MirObjects
         {
             Enqueue(new S.NPCGoods { List = goods, Rate = rate, Type = panelType, HideAddedStats = hideAddedStats });
         }
+
+        public void SendControlMechanism(string mapName, bool ascending)
+        {
+            if (string.IsNullOrWhiteSpace(mapName)) return;
+            if (mapName.Length > 64) return;
+
+            Enqueue(new S.ControlMechanism { MapName = mapName, Ascending = ascending });
+        }
     }
 }

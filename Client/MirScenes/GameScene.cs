@@ -1,23 +1,28 @@
 ﻿using Client.MirControls;
 using Client.MirGraphics;
+using Client.MirGraphics.Particles;
 using Client.MirNetwork;
 using Client.MirObjects;
+using Client.MirScenes.Dialogs;
 using Client.MirSounds;
+using Client.Utils;
 using SlimDX;
 using SlimDX.Direct3D9;
-using Font = System.Drawing.Font;
-using S = ServerPackets;
+using System.Text.RegularExpressions;
 using C = ClientPackets;
 using Effect = Client.MirObjects.Effect;
-using Client.MirScenes.Dialogs;
-using Client.Utils;
-using Client.MirGraphics.Particles;
-using System.Text.RegularExpressions;
+using Font = System.Drawing.Font;
+using S = ServerPackets;
 
 namespace Client.MirScenes
 {
     public sealed class GameScene : MirScene
     {
+        private string ControlMechanismMapName = string.Empty;
+        private bool ControlMechanismAscending;
+        private int ControlMechanismFrame;
+        private long ControlMechanismLastTick;
+		
         public static GameScene Scene;
         public static bool Observing;
         public static bool AllowObserve;
@@ -1321,6 +1326,9 @@ namespace Client.MirScenes
             BuffsDialog.Process();
             HeroBuffsDialog?.Process();
 
+            UpdateControlMechanism();
+            MapControl.SetControlMechanism(ControlMechanismMapName, ControlMechanismAscending, ControlMechanismFrame);
+
             MapControl.Process();
             MainDialog.Process();
             InventoryDialog.Process();
@@ -1369,6 +1377,51 @@ namespace Client.MirScenes
                 CharacterDuraPanel.Hide();
         }
 
+        private void UpdateControlMechanism()
+        {
+            if (string.IsNullOrEmpty(ControlMechanismMapName)) return;
+
+            int frameCount = 0;
+
+            if (ControlMechanismMapName.Equals("ControlMechanism", StringComparison.OrdinalIgnoreCase))
+            {
+                frameCount = 8;
+            }
+            else if (ControlMechanismMapName.Equals("DogYoMineLobby", StringComparison.OrdinalIgnoreCase) ||
+                     ControlMechanismMapName.Equals("DogYoMineLobby1", StringComparison.OrdinalIgnoreCase) ||
+                     ControlMechanismMapName.Equals("DogYoMineLobby2", StringComparison.OrdinalIgnoreCase) ||
+                     ControlMechanismMapName.Equals("DogYoMineLobby3", StringComparison.OrdinalIgnoreCase))
+            {
+                if (ControlMechanismAscending)
+                    frameCount = 6;
+                else
+                    frameCount = 8;
+            }
+            else if (ControlMechanismMapName.Equals("DogYoMineLobby4", StringComparison.OrdinalIgnoreCase))
+            {
+                if (ControlMechanismAscending)
+                    frameCount = 6;
+                else
+                    frameCount = 8;
+            }
+            else
+            {
+                return;
+            }
+
+            if (ControlMechanismFrame >= frameCount - 1)
+            {
+                ControlMechanismFrame = frameCount - 1;
+                return;
+            }
+
+            if (CMain.Time - ControlMechanismLastTick < 100)
+                return;
+
+            ControlMechanismLastTick = CMain.Time;
+
+            ControlMechanismFrame++;
+        }
         public override void ProcessPacket(Packet p)
         {
             switch (p.Index)
@@ -2149,12 +2202,28 @@ namespace Client.MirScenes
                 case (short)ServerPacketIds.NewNPCInfo:
                     NewNPCInfo((S.NewNPCInfo)p);
                     break;
+                case (short)ServerPacketIds.ControlMechanism:
+                    ControlMechanism((S.ControlMechanism)p);
+                    break;
                 default:
                     base.ProcessPacket(p);
                     break;
             }
         }
 
+        private void ControlMechanism(S.ControlMechanism p)
+        {
+            if (MapControl == null || MapControl.IsDisposed) return;
+
+            if (string.IsNullOrWhiteSpace(p.MapName)) return;
+
+            if (p.MapName.Length > 64) return;
+
+            ControlMechanismMapName = p.MapName;
+            ControlMechanismAscending = p.Ascending;
+            ControlMechanismFrame = 0;
+        }
+		
         private void KeepAlive(S.KeepAlive p)
         {
             if (p.Time == 0) return;
@@ -2163,6 +2232,7 @@ namespace Client.MirScenes
 
             Network.Enqueue(new C.KeepAlive { Time = p.Time });
         }
+		
         private void MapInformation(S.MapInformation p)
         {
             if (MapControl != null && !MapControl.IsDisposed)
@@ -10695,6 +10765,16 @@ namespace Client.MirScenes
 
     public sealed class MapControl : MirControl
     {
+        private string ControlMechanismMapName = string.Empty;
+        private bool ControlMechanismAscending;
+        private int ControlMechanismFrame;
+        public void SetControlMechanism(string mapName, bool ascending, int frame)
+        {
+            ControlMechanismMapName = mapName;
+            ControlMechanismAscending = ascending;
+            ControlMechanismFrame = frame;
+        }
+		
         public static UserObject User
         {
             get { return MapObject.User; }
@@ -11342,21 +11422,93 @@ namespace Client.MirScenes
                     s = Libraries.MapLibs[fileIndex].GetSize(index);
                     Point offset = Libraries.MapLibs[fileIndex].GetOffSet(index);
 
-                    if (Index == 563 && backIndex == 23175 && index == 7776)//暂时使用后期完善
+                    string cleanFilename = FileName.Replace(Settings.MapPath, "");
+
+                    if (cleanFilename.StartsWith("DogYoMineLobby") && x == 34 && y == 27)
                     {
-                        Libraries.MapLibs[fileIndex].Draw(index + 1109, drawX + (2 * CellWidth), drawY - (17 * CellHeight));
+                        int animationIndex = 8885;
+
+                        if (ControlMechanismMapName.Equals("DogYoMineLobby", StringComparison.OrdinalIgnoreCase))
+                        {
+                            if (ControlMechanismAscending)
+                            {
+                                animationIndex = 8880 + ControlMechanismFrame;
+
+                                if (animationIndex > 8885) animationIndex = 8885;
+                            }
+                            else
+                            {
+                                animationIndex = 8890 + ControlMechanismFrame;
+
+                                if (animationIndex > 8897) animationIndex = 8897;
+                            }
+                        }
+                        Libraries.MapLibs[fileIndex].Draw(animationIndex, drawX + (2 * CellWidth), drawY - (16 * CellHeight));
                     }
-                    if (backIndex == 23081 && index == 7764)
+
+                    if ((cleanFilename.StartsWith("DogYoMineLobby1") || cleanFilename.StartsWith("DogYoMineLobby2")) && x == 36 && y == 28)
                     {
-                        Libraries.MapLibs[fileIndex].Draw(index + 1120, drawX, drawY - (17 * CellHeight));
+                        int animationIndex = 8885;
+
+                        if (ControlMechanismMapName.Equals("DogYoMineLobby1", StringComparison.OrdinalIgnoreCase) || ControlMechanismMapName.Equals("DogYoMineLobby2", StringComparison.OrdinalIgnoreCase))
+                        {
+                            if (ControlMechanismAscending)
+                            {
+                                animationIndex = 8880 + ControlMechanismFrame;
+
+                                if (animationIndex > 8885) animationIndex = 8885;
+                            }
+                            else
+                            {
+                                animationIndex = 8890 + ControlMechanismFrame;
+
+                                if (animationIndex > 8897) animationIndex = 8897;
+                            }
+                        }
+                        Libraries.MapLibs[fileIndex].Draw(animationIndex, drawX, drawY - (17 * CellHeight));
                     }
-                    if (backIndex == 23322 && index == 7623)
+                    if (cleanFilename.StartsWith("DogYoMineLobby3") && x == 37 && y == 31)
                     {
-                        Libraries.MapLibs[fileIndex].Draw(index + 1262, drawX, drawY - (21 * CellHeight));
+                        int animationIndex = 8885;
+
+                        if (ControlMechanismMapName.Equals("DogYoMineLobby3", StringComparison.OrdinalIgnoreCase))
+                        {
+                            if (ControlMechanismAscending)
+                            {
+                                animationIndex = 8880 + ControlMechanismFrame;
+
+                                if (animationIndex > 8885) animationIndex = 8885;
+                            }
+                            else
+                            {
+                                animationIndex = 8890 + ControlMechanismFrame;
+
+                                if (animationIndex > 8897) animationIndex = 8897;
+                            }
+                        }
+                        Libraries.MapLibs[fileIndex].Draw(animationIndex, drawX - CellWidth, drawY - (20 * CellHeight));
                     }
-                    if (backIndex == 18999 && index == 7796)
+                    if (cleanFilename.StartsWith("DogYoMineLobby4") && x == 52 && y == 44)
                     {
-                        Libraries.MapLibs[fileIndex].Draw(index + 1069, new Point(drawX + offset.X + (2 * CellWidth), drawY + offset.Y - (21 * CellHeight)), Color.White, true);
+                        int animationIndex = 8865;
+
+                        if (ControlMechanismMapName.Equals("DogYoMineLobby4", StringComparison.OrdinalIgnoreCase))
+                        {
+                            if (ControlMechanismAscending)
+                            {
+                                animationIndex = 8860 + ControlMechanismFrame;
+
+                                if (animationIndex > 8865) animationIndex = 8865;
+                            }
+                            else
+                            {
+                                animationIndex = 8870 + ControlMechanismFrame;
+
+                                if (animationIndex > 8877) animationIndex = 8877;
+                            }
+                        }
+                        Libraries.MapLibs[fileIndex].Draw(
+                            animationIndex, new Point(drawX + offset.X + (2 * CellWidth), drawY + offset.Y - (21 * CellHeight)), Color.White, true);
                     }
 
                     if (s.Width == CellWidth && s.Height == CellHeight && animation == 0) continue;
@@ -11386,9 +11538,26 @@ namespace Client.MirScenes
                     }
                     else
                     {
-                        if ((fileIndex == 28) && (animation > 0) && (index >= 7610 && index <= 7617))
+                        if (cleanFilename.StartsWith("DogYoMineLift") && x == 10 && y == 7)
                         {
-                            Libraries.MapLibs[fileIndex].Draw(index + 1230, new Point(drawX + offset.X, drawY + offset.Y - CellHeight), Color.White, true);
+                            int animationIndex = 8847;
+
+                            if (ControlMechanismMapName.Equals("DogYoMineLift", StringComparison.OrdinalIgnoreCase))
+                            {
+                                if (ControlMechanismAscending)
+                                {
+                                    animationIndex = 8840 + ControlMechanismFrame;
+
+                                    if (animationIndex > 8847) animationIndex = 8847;
+                                }
+                                else
+                                {
+                                    animationIndex = 8850 + ControlMechanismFrame;
+
+                                    if (animationIndex > 8857) animationIndex = 8857;
+                                }
+                            }
+                            Libraries.MapLibs[28].Draw(animationIndex, new Point(drawX, drawY - CellHeight), Color.White, true);
                         }
                         else if ((fileIndex == 28 || fileIndex == 90) && animation > 0)
                         {

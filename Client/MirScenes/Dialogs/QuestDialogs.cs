@@ -1313,6 +1313,12 @@ namespace Client.MirScenes.Dialogs
                         string linkIdx = match.Groups["idx"].Captures.Count > 0 ? match.Groups["idx"].Captures[0].Value : match.Groups["idx"].Value;
                         string providedName = match.Groups["name"].Success ? match.Groups["name"].Captures[0].Value : null;
                         string displayName = NPCDialog.GetDisplayNameForLink(linkType, linkIdx, providedName);
+                        if (linkType == "ITEM" || linkType == "MONSTER")
+                        {
+                            while (displayName.Length > 0 && char.IsDigit(displayName[displayName.Length - 1]))
+                                displayName = displayName.Substring(0, displayName.Length - 1);
+                        }
+
                         if (string.IsNullOrEmpty(displayName))
                             displayName = $"LINK_{linkIdx}";
 

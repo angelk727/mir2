@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Text.RegularExpressions;
 using Client.MirControls;
 using Client.MirGraphics;
@@ -462,6 +461,13 @@ namespace Client.MirScenes.Dialogs
                         }
 
                         string displayName = GetDisplayNameForLink(linkType, linkIdx, providedName);
+
+                        if (linkType == "ITEM" || linkType == "MONSTER")
+                        {
+                            while (displayName.Length > 0 && char.IsDigit(displayName[displayName.Length - 1]))
+                                displayName = displayName.Substring(0, displayName.Length - 1);
+                        }
+
                         if (string.IsNullOrEmpty(displayName)) displayName = $"LINK_{linkIdx}";
 
                         int matchStart = match.Index - offSet;

@@ -8515,6 +8515,20 @@ namespace Client.MirObjects
                             break;
                     }
                     break;
+                case Monster.Mon630P:
+                    switch (CurrentAction)
+                    {
+                        case MirAction.近距攻击1:
+                            Libraries.Monsters[(ushort)Monster.Mon630P].DrawBlend((396 + FrameIndex + (int)Direction * 10), DrawLocation, Color.White, true);
+                            break;
+                        case MirAction.近距攻击2:
+                            Libraries.Monsters[(ushort)Monster.Mon630P].DrawBlend((476 + FrameIndex + (int)Direction * 10), DrawLocation, Color.White, true);
+                            break;
+                        case MirAction.死亡动作:
+                            Libraries.Monsters[(ushort)Monster.Mon630P].DrawBlend((556 + FrameIndex + (int)Direction * 10), DrawLocation, Color.White, true);
+                            break;
+                    }
+                    break;
                 case Monster.Mon635S:
                     switch (CurrentAction)
                     {
@@ -8564,6 +8578,17 @@ namespace Client.MirObjects
                     {
                         case MirAction.死亡动作:
                             Libraries.Monsters[(ushort)Monster.Mon638T].DrawBlend((168 + FrameIndex + (int)Direction * 10), DrawLocation, Color.White, true);
+                            break;
+                    }
+                    break;
+                case Monster.Mon641S:
+                    switch (CurrentAction)
+                    {
+                        case MirAction.近距攻击1:
+                            Libraries.Monsters[(ushort)Monster.Mon641S].DrawBlend((376 + FrameIndex + (int)Direction * 10), DrawLocation, Color.White, true);
+                            break;
+                        case MirAction.近距攻击2:
+                            Libraries.Monsters[(ushort)Monster.Mon641S].DrawBlend((456 + FrameIndex + (int)Direction * 10), DrawLocation, Color.White, true);
                             break;
                     }
                     break;

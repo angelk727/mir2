@@ -635,7 +635,7 @@
             // StartGameCheckBox
             // 
             StartGameCheckBox.AutoSize = true;
-            StartGameCheckBox.Location = new Point(28, 177);
+            StartGameCheckBox.Location = new Point(6, 49);
             StartGameCheckBox.Margin = new Padding(5, 7, 5, 7);
             StartGameCheckBox.Name = "StartGameCheckBox";
             StartGameCheckBox.Size = new Size(123, 21);
@@ -713,7 +713,7 @@
             // PasswordCheckBox
             // 
             PasswordCheckBox.AutoSize = true;
-            PasswordCheckBox.Location = new Point(28, 53);
+            PasswordCheckBox.Location = new Point(6, 53);
             PasswordCheckBox.Margin = new Padding(5, 7, 5, 7);
             PasswordCheckBox.Name = "PasswordCheckBox";
             PasswordCheckBox.Size = new Size(123, 21);

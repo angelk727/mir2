@@ -799,7 +799,7 @@ public enum Monster : ushort
     Mon638T = 638,  //Mon67.wil
     Mon639N = 639,
     Mon640N = 640,
-    Mon641N = 641,
+    Mon641S = 641,
     Mon642T = 642,
     Mon643T = 643,
     Mon644T = 644,
@@ -1965,6 +1965,7 @@ public enum ServerPacketIds : short
     GuildTerritoryPage,
     StorageUnlockResult,
     StoragePasswordResult,
+    ControlMechanism
 }
 
 public enum ClientPacketIds : short
