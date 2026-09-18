@@ -1383,7 +1383,7 @@ namespace Client.MirScenes
 
             int frameCount = 0;
 
-            if (ControlMechanismMapName.Equals("ControlMechanism", StringComparison.OrdinalIgnoreCase))
+            if (ControlMechanismMapName.Equals("DogYoMineLift", StringComparison.OrdinalIgnoreCase))
             {
                 frameCount = 8;
             }
