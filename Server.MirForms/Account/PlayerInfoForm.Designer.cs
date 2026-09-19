@@ -109,7 +109,7 @@
             PetName = new ColumnHeader();
             Level = new ColumnHeader();
             HP = new ColumnHeader();
-            LocationHeader = new ColumnHeader();
+            Location = new ColumnHeader();
             HeroInfoTab = new TabPage();
             groupBox5 = new GroupBox();
             label10 = new Label();
@@ -930,7 +930,7 @@
             // 
             // PetView
             // 
-            PetView.Columns.AddRange(new ColumnHeader[] { PetName, Level, HP, LocationHeader });
+            PetView.Columns.AddRange(new ColumnHeader[] { PetName, Level, HP, Location });
             PetView.Dock = DockStyle.Fill;
             PetView.GridLines = true;
             PetView.Location = new Point(0, 0);
@@ -955,8 +955,8 @@
             // 
             // Location
             // 
-            LocationHeader.Text = "位置";
-            LocationHeader.Width = 240;
+            Location.Text = "位置";
+            Location.Width = 240;
             // 
             // HeroInfoTab
             // 
@@ -1381,6 +1381,7 @@
         private ColumnHeader PetName;
         private ColumnHeader Level;
         private ColumnHeader HP;
+        private ColumnHeader Location;
         private CustomFormControl.ListViewNF PlayerItemInfoListViewNF;
         private ColumnHeader UIDHeader;
         private ColumnHeader LocationHeader;

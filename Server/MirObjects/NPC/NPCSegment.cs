@@ -1273,11 +1273,7 @@ namespace Server.MirObjects
                     if (parts.Length < 2) return;
                     acts.Add(new NPCActions(ActionType.GiveGuildExp, parts[1]));
                     break;
-                    default:
-                        MessageQueue.Enqueue($"NPC脚本非法的ACT指令: {line}");
-                        break;
-
-                case "CONTROLMECHANISM":
+				case "CONTROLMECHANISM":
                         {
                             if (parts.Length < 3) return;
 
@@ -1290,6 +1286,9 @@ namespace Server.MirObjects
                             acts.Add(new NPCActions(ActionType.ControlMechanism, mapName, ascending.ToString()));
                         }
                         break;
+                default:
+                    MessageQueue.Enqueue($"NPC脚本非法的ACT指令: {line}");
+                    break;
                 }
             }
             catch (Exception ex)
