@@ -27,6 +27,14 @@ namespace Client.MirScenes
 
             Characters = characters;
             SortList();
+            if (Characters.Count > 0)
+            {
+                _selected = 0;
+            }
+            else
+            {
+                _selected = -1;
+            }
 
             KeyPress += SelectScene_KeyPress;
 
@@ -287,8 +295,6 @@ namespace Client.MirScenes
 
         public override void Process()
         {
-
-
         }
         public override void ProcessPacket(Packet p)
         {
@@ -367,14 +373,13 @@ namespace Client.MirScenes
 
             MirMessageBox message = new MirMessageBox(GameLanguage.ClientTextMap.GetLocalization((ClientTextKeys.ConfirmDeleteCharacter), Characters[_selected].Name), MirMessageBoxButtons.YesNo);
             int index = Characters[_selected].Index;
+            string name = Characters[_selected].Name;
 
             message.YesButton.Click += (o1, e1) =>
             {
                 MirInputBox inputBox = new MirInputBox(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.PleaseEnterCharacterName));
                 inputBox.OKButton.Click += (o, e) =>
                 {
-                    string name = Characters[_selected].Name.ToString();
-
                     if (inputBox.InputTextBox.Text == name)
                     {
                         DeleteCharacterButton.Enabled = false;
@@ -411,11 +416,21 @@ namespace Client.MirScenes
             MirMessageBox.Show(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.YourCharacterDeletedSuccessfully));
 
             for (int i = 0; i < Characters.Count; i++)
-                if (Characters[i].Index == p.CharacterIndex)
-                {
-                    Characters.RemoveAt(i);
-                    break;
-                }
+            {
+                if (Characters[i].Index != p.CharacterIndex) continue;
+
+                Characters.RemoveAt(i);
+                break;
+            }
+
+            if (Characters.Count == 0)
+            {
+                _selected = -1;
+            }
+            else if (_selected >= Characters.Count)
+            {
+                _selected = Characters.Count - 1;
+            }
 
             UpdateInterface();
         }
