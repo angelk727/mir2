@@ -51,7 +51,7 @@ namespace LibraryEditor
             }
         }
 
-        private void Form1_DragDrop(object sender, DragEventArgs e)
+        private async void Form1_DragDrop(object sender, DragEventArgs e)
         {
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
 
@@ -62,46 +62,36 @@ namespace LibraryEditor
                 toolStripProgressBar.Maximum = files.Length;
                 toolStripProgressBar.Value = 0;
 
-                new Action(() =>
+                await Task.Run(() =>
                 {
-                    try
+                    ParallelOptions options = new ParallelOptions
                     {
-                        ParallelOptions options = new ParallelOptions { MaxDegreeOfParallelism = 8 };
-                        Parallel.For(0, files.Length, options, i =>
+                        MaxDegreeOfParallelism = 8
+                    };
+
+                    Parallel.For(0, files.Length, options, i =>
+                    {
+                        if (Path.GetExtension(files[i]) == ".wtl")//这是什么格式？
                         {
-                            if (Path.GetExtension(files[i]) == ".wtl")
-                            {
-                                WTLLibrary WTLlib = new WTLLibrary(files[i]);
-                                WTLlib.ToMLibrary();
-                            }
-                            else
-                            {
-                                WeMadeLibrary WILlib = new WeMadeLibrary(files[i]);
-                                WILlib.ToMLibrary();
-                            }
+                            WTLLibrary WTLlib = new WTLLibrary(files[i]);
+                            WTLlib.ToMLibrary();
+                        }
+                        else
+                        {
+                            WeMadeLibrary WILlib = new WeMadeLibrary(files[i]);
+                            WILlib.ToMLibrary();
+                        }
 
-                            Invoke(new Action(() =>
-                            {
-                                toolStripProgressBar.Value++;
-                            }));
+                        Invoke(new Action(() =>
+                        {
+                            toolStripProgressBar.Value++;
+                        }));
+                    });
+                });
 
-                        });
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show(ex.ToString());
-                    }
+                toolStripProgressBar.Value = 0;
 
-                    Invoke(new Action(() =>
-                    {
-                        toolStripProgressBar.Value = 0;
-                    }));
-
-                    MessageBox.Show(
-                        string.Format("已成功转换 {0} {1}",
-                            (files.Length).ToString(),
-                            (files.Length > 1) ? "libraries" : "library"));
-                }).BeginInvoke(null, null);
+                MessageBox.Show(string.Format("已成功转换 {0} {1}", files.Length.ToString(), files.Length > 1 ? "libraries" : "library"));
             }
             else if (Path.GetExtension(files[0]).ToUpper() == ".LIB")
             {
@@ -501,51 +491,47 @@ namespace LibraryEditor
             PreviewListView.VirtualListSize -= removeList.Count;
         }
 
-        private void convertToolStripMenuItem_Click(object sender, EventArgs e)
+        private async void convertToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (OpenWeMadeDialog.ShowDialog() != DialogResult.OK) return;
 
             toolStripProgressBar.Maximum = OpenWeMadeDialog.FileNames.Length;
             toolStripProgressBar.Value = 0;
 
-            try
+            await Task.Run(() =>
             {
-                Task.Factory.StartNew(() =>
+                ParallelOptions options = new ParallelOptions { MaxDegreeOfParallelism = 8 };
+
+                Parallel.For(0, OpenWeMadeDialog.FileNames.Length, options, i =>
                 {
-                    ParallelOptions options = new ParallelOptions { MaxDegreeOfParallelism = 8 };
-                    Parallel.For(0, OpenWeMadeDialog.FileNames.Length, options, i =>
-                            {
-                                var fileName = OpenWeMadeDialog.FileNames[i];
-                                var ext = Path.GetExtension(fileName).ToUpper();
-                                if (ext == ".WTL")
-                                {
-                                    WTLLibrary WTLlib = new WTLLibrary(fileName);
-                                    WTLlib.ToMLibrary();
-                                }
-                                else if (ext == ".LIB")
-                                {
-                                    MLibraryV1 v1Lib = new MLibraryV1(fileName);
-                                    v1Lib.ToMLibrary();
-                                }
-                                else
-                                {
-                                    WeMadeLibrary WILlib = new WeMadeLibrary(fileName);
-                                    WILlib.ToMLibrary();
-                                }
-                                Invoke(new Action(() => { toolStripProgressBar.Value++; }));
-                            });
+                    var fileName = OpenWeMadeDialog.FileNames[i];
+                    var ext = Path.GetExtension(fileName).ToUpper();
+
+                    if (ext == ".WTL")
+                    {
+                        WTLLibrary WTLlib = new WTLLibrary(fileName);
+                        WTLlib.ToMLibrary();
+                    }
+                    else if (ext == ".LIB")
+                    {
+                        MLibraryV1 v1Lib = new MLibraryV1(fileName);
+                        v1Lib.ToMLibrary();
+                    }
+                    else
+                    {
+                        WeMadeLibrary WILlib = new WeMadeLibrary(fileName);
+                        WILlib.ToMLibrary();
+                    }
+
+                    Invoke(new Action(() =>
+                    {
+                        toolStripProgressBar.Value++;
+                    }));
                 });
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
+            });
 
             toolStripProgressBar.Value = 0;
-
-            MessageBox.Show(string.Format("已成功转换 {0} {1}",
-                (OpenWeMadeDialog.FileNames.Length).ToString(),
-                (OpenWeMadeDialog.FileNames.Length > 1) ? "libraries" : "library"));
+            MessageBox.Show(string.Format( "已成功转换 {0} {1}", OpenWeMadeDialog.FileNames.Length.ToString(), OpenWeMadeDialog.FileNames.Length > 1 ? "libraries" : "library"));
         }
 
         private void copyToToolStripMenuItem_Click(object sender, EventArgs e)
@@ -742,7 +728,7 @@ namespace LibraryEditor
                     if ((File.GetAttributes(subdir) &
                          FileAttributes.ReparsePoint) !=
                              FileAttributes.ReparsePoint)
-                        ProcessDir(subdir, recursionLvl + 1, outputDir + " \\" + Path.GetFileName(Path.GetFullPath(subdir).TrimEnd(Path.DirectorySeparatorChar)) + "\\");
+                        ProcessDir(subdir, recursionLvl + 1, outputDir + "\\" + Path.GetFileName(Path.GetFullPath(subdir).TrimEnd(Path.DirectorySeparatorChar)) + "\\");
                 }
             }
         }
@@ -753,8 +739,8 @@ namespace LibraryEditor
             if (_library == null || _library.FileName == null || PreviewListView.SelectedIndices.Count == 0)
                 return;
 
-            string _fileName = Path.GetFileName(OpenLibraryDialog.FileName);
-            string _newName = _fileName.Remove(_fileName.IndexOf('.'));
+            string _fileName = Path.GetFileName(_library.FileName);
+            string _newName = Path.GetFileNameWithoutExtension(_fileName);
             string _folder = Application.StartupPath + "\\Exported\\" + _newName + "\\";
 
             Bitmap blank = new Bitmap(1, 1);
@@ -776,16 +762,19 @@ namespace LibraryEditor
             string fileExtension = (result == DialogResult.Yes) ? ".bmp" : ".png";
             ImageFormat imageFormat = (result == DialogResult.Yes) ? ImageFormat.Bmp : ImageFormat.Png;
 
-            for (int i = _col[0]; i < (_col[0] + _col.Count); i++)
+            for (int i = 0; i < _col.Count; i++)
             {
-                _exportImage = _library.GetMImage(i);
+                int index = _col[i];
+
+                _exportImage = _library.GetMImage(index);
+
                 if (_exportImage.Image == null)
                 {
-                    blank.Save(_folder + i.ToString() + fileExtension, imageFormat);
+                    blank.Save(_folder + index.ToString() + fileExtension, imageFormat);
                 }
                 else
                 {
-                    _exportImage.Image.Save(_folder + i.ToString() + fileExtension, imageFormat);
+                    _exportImage.Image.Save(_folder + index.ToString() + fileExtension, imageFormat);
                 }
 
                 toolStripProgressBar.Value++;
@@ -793,7 +782,7 @@ namespace LibraryEditor
                 if (!Directory.Exists(_folder + "/Placements/"))
                     Directory.CreateDirectory(_folder + "/Placements/");
 
-                File.WriteAllLines(_folder + "/Placements/" + i.ToString() + ".txt", new string[] { _exportImage.X.ToString(), _exportImage.Y.ToString() });
+                File.WriteAllLines(_folder + "/Placements/" + index.ToString() + ".txt", new string[] { _exportImage.X.ToString(), _exportImage.Y.ToString() });
             }
 
             toolStripProgressBar.Value = 0;
@@ -994,6 +983,8 @@ namespace LibraryEditor
             if (keyData == Keys.Up) //Not 100% accurate but works for now.
             {
                 double d = Math.Floor((double)(PreviewListView.Width / 67));
+
+                if (PreviewListView.SelectedIndices.Count == 0) return true;
                 int index = PreviewListView.SelectedIndices[0] - (int)d;
 
                 PreviewListView.SelectedIndices.Clear();
