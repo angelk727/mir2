@@ -229,6 +229,7 @@ public enum IntelligentCreatureType : byte
     猫咪超人 = 15,
     龙宝宝 = 16,
     蛇宝宝 = 17,
+    马宝宝 = 18,
 }
 
 //2 blank mob files
@@ -869,6 +870,7 @@ public enum Monster : ushort
     猫咪超人 = 10015,
     龙宝宝 = 10016,
     蛇宝宝 = 10017,
+    马宝宝 = 10018,
 }
 
 public enum MirAction : byte

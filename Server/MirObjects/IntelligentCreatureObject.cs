@@ -197,6 +197,7 @@ namespace Server.MirObjects
                 switch (PetType)
                 {
                     case IntelligentCreatureType.雪人:
+                    case IntelligentCreatureType.马宝宝:
                         int attackType2 = Envir.Random.Next(0, 2);
                         Broadcast(new S.ObjectAttack { ObjectID = ObjectID, Direction = Direction, Location = CurrentLocation, Type = (byte)attackType2 });
                         break;

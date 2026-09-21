@@ -231,6 +231,7 @@ namespace Client.MirObjects
                 case Monster.猫咪超人:
                 case Monster.龙宝宝:
                 case Monster.蛇宝宝:
+                case Monster.马宝宝:
                     BodyLibrary = Libraries.Pets[((ushort)BaseImage) - 10000];
                     break;
                 case Monster.HellBomb1:
@@ -563,6 +564,7 @@ namespace Client.MirObjects
                 case Monster.猫咪超人:
                 case Monster.龙宝宝:
                 case Monster.蛇宝宝:
+                case Monster.马宝宝:
                     BodyLibrary = Libraries.Pets[((ushort)BaseImage) - 10000];
                     break;
             }
@@ -2172,6 +2174,13 @@ namespace Client.MirObjects
                                                 {
                                                     if (TrackableEffect.GetOwnerEffectID(this.ObjectID, "SnakeMusic") < 0)
                                                         Effects.Add(new TrackableEffect(new Effect(Libraries.Pets[((ushort)BaseImage) - 10000], 288, 10, 1500, this), "SnakeMusic"));
+                                                }
+                                                break;
+                                            case Monster.马宝宝:
+                                                if (FrameIndex == 1)
+                                                {
+                                                    if (TrackableEffect.GetOwnerEffectID(this.ObjectID, "HorseMusic") < 0)
+                                                        Effects.Add(new TrackableEffect(new Effect(Libraries.Pets[((ushort)BaseImage) - 10000], 331, 5, 1500, this), "HorseMusic"){ Blend = false, DrawBehind = true });
                                                 }
                                                 break;
                                             case Monster.CannibalTentacles: //353
@@ -5630,6 +5639,7 @@ namespace Client.MirObjects
                 case Monster.猫咪超人:
                 case Monster.龙宝宝:
                 case Monster.蛇宝宝:
+                case Monster.马宝宝:
                     SoundManager.PlaySound(petSound);
                     break;
             }
@@ -8679,6 +8689,14 @@ namespace Client.MirObjects
                             break;
                     }
                     break;
+                case Monster.马宝宝:
+                    switch (CurrentAction)
+                    {
+                        case MirAction.近距攻击2:
+                            Libraries.Pets[(ushort)Monster.马宝宝 - 10000].DrawBlend((251 + FrameIndex + (int)Direction * 10), DrawLocation, Color.White, true);
+                            break;
+                    }
+                    break;
 
             } //END OF DRAW EFFECTS
         }
@@ -8717,6 +8735,7 @@ namespace Client.MirObjects
                 case Monster.猫咪超人:
                 case Monster.龙宝宝:
                 case Monster.蛇宝宝:
+                case Monster.马宝宝:
                     yOffset = -20;
                     break;
             }
@@ -8795,6 +8814,7 @@ namespace Client.MirObjects
                 case Monster.猫咪超人:
                 case Monster.龙宝宝:
                 case Monster.蛇宝宝:
+                case Monster.马宝宝:
                     yOffset = 20;
                     break;
             }

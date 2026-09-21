@@ -724,6 +724,23 @@ namespace Client.MirScenes.Dialogs
             int selectedCreature = BeforeAfterDraw();
             if (selectedCreature < 0) return;
 
+            switch (GameScene.User.IntelligentCreatures[selectedCreature].PetType)
+            {
+                case IntelligentCreatureType.龙宝宝:
+                    CreatureImage.Library = Libraries.Pets[(ushort)Monster.龙宝宝 - 10000];
+                    break;
+                case IntelligentCreatureType.蛇宝宝:
+                    CreatureImage.Library = Libraries.Pets[(ushort)Monster.蛇宝宝 - 10000];
+                    break;
+                case IntelligentCreatureType.马宝宝:
+                    CreatureImage.Library = Libraries.Pets[(ushort)Monster.马宝宝 - 10000];
+                    break;
+
+                default:
+                    CreatureImage.Library = Libraries.Prguse2;
+                    break;
+            }
+
             var rules = GameScene.User.IntelligentCreatures[selectedCreature].CreatureRules;
 
             var semi = rules.SemiAutoPickupEnabled ? string.Format("{0}x{0} {1}{2}{3}", rules.AutoPickupRange, rules.AutoPickupEnabled ? "自动/" : "", rules.SemiAutoPickupEnabled ? "半自动" : "", rules.MousePickupEnabled ? ", " : "") : "";
@@ -1124,20 +1141,29 @@ namespace Client.MirScenes.Dialogs
                     break;
                 case IntelligentCreatureType.龙宝宝:
                     //Library = Libraries.Pets[(ushort)Monster.龙宝宝 - 10000];
-                    AnimDefaultIdx = 1790;
+                    AnimDefaultIdx = 432;
                     AnimDefaultCount = 6;
                     AnimDefaultDelay = 300;
-                    AnimExIdx = 1800;
+                    AnimExIdx = 438;
                     AnimExCount = 16;
                     AnimExDelay = 300;
                     break;
                 case IntelligentCreatureType.蛇宝宝:
                     //Library = Libraries.Pets[(ushort)Monster.蛇宝宝 - 10000];
-                    AnimDefaultIdx = 1820;
+                    AnimDefaultIdx = 306;
                     AnimDefaultCount = 4;
                     AnimDefaultDelay = 300;
-                    AnimExIdx = 1840;
+                    AnimExIdx = 310;
                     AnimExCount = 8;
+                    AnimExDelay = 300;
+                    break;
+                case IntelligentCreatureType.马宝宝:
+                    //Library = Libraries.Pets[(ushort)Monster.马宝宝 - 10000];
+                    AnimDefaultIdx = 337;
+                    AnimDefaultCount = 4;
+                    AnimDefaultDelay = 300;
+                    AnimExIdx = 341;
+                    AnimExCount = 10;
                     AnimExDelay = 300;
                     break;
                 case IntelligentCreatureType.None:

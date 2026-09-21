@@ -45,6 +45,7 @@ namespace Server.MirDatabase
             new IntelligentCreatureInfo { PetType = IntelligentCreatureType.猫咪超人, Icon = 515, MousePickupEnabled = true, MousePickupRange = 11, AutoPickupEnabled = true, AutoPickupRange = 11, SemiAutoPickupEnabled = true, SemiAutoPickupRange = 11, CanProduceBlackStone = true };
             new IntelligentCreatureInfo { PetType = IntelligentCreatureType.龙宝宝, Icon = 516, MousePickupEnabled = true, MousePickupRange = 11, AutoPickupEnabled = true, AutoPickupRange = 11, SemiAutoPickupEnabled = true, SemiAutoPickupRange = 11, CanProduceBlackStone = true };
             new IntelligentCreatureInfo { PetType = IntelligentCreatureType.蛇宝宝, Icon = 517, MousePickupEnabled = true, MousePickupRange = 11, AutoPickupEnabled = true, AutoPickupRange = 11, SemiAutoPickupEnabled = true, SemiAutoPickupRange = 11, CanProduceBlackStone = true };
+            new IntelligentCreatureInfo { PetType = IntelligentCreatureType.马宝宝, Icon = 518, MousePickupEnabled = true, MousePickupRange = 11, AutoPickupEnabled = true, AutoPickupRange = 11, SemiAutoPickupEnabled = true, SemiAutoPickupRange = 11, CanProduceBlackStone = true };
         }
 
         public IntelligentCreatureInfo()
@@ -164,6 +165,12 @@ namespace Server.MirDatabase
 
         public Packet GetInfo()
         {
+            if (Info == null)
+            {
+                MessageQueue.Instance.Enqueue($"报错信息：使用了非法的灵物类型 [{PetType}] 。");
+                return null;
+            }
+
             return new ServerPackets.NewIntelligentCreature
             {
                 Creature = CreateClientIntelligentCreature()
@@ -172,6 +179,9 @@ namespace Server.MirDatabase
 
         public ClientIntelligentCreature CreateClientIntelligentCreature()
         {
+            if (Info == null)
+                return null;
+
             return new ClientIntelligentCreature
             {
                 PetType = PetType,
