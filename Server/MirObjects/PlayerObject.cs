@@ -1533,11 +1533,8 @@ namespace Server.MirObjects
                 LastValidLocation = location;
             }
 
-            if (TradePartner != null)
-                TradeCancel();
-
-            if (ItemRentalPartner != null)
-                CancelItemRental();
+            if (TradePartner != null) TradeCancel();
+            if (ItemRentalPartner != null) CancelItemRental();
 
             GetObjectsPassive();
             CheckConquest();

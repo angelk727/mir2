@@ -842,10 +842,8 @@ namespace Server.MirObjects
             var spawnPoint = Respawn.WalkableCells[Envir.Random.Next(Respawn.WalkableCells.Count)];
 
             CurrentLocation = spawnPoint;
-
-            respawn.Map.AddObject(this);
-
             CurrentMap = respawn.Map;
+            respawn.Map.AddObject(this);
 
             if (Respawn.Route.Count > 0)
                 Route.AddRange(Respawn.Route);
@@ -1337,7 +1335,9 @@ namespace Server.MirObjects
 
             if (Dead && Envir.Time >= DeadTime)
             {
+                if (Node == null) return;
                 CurrentMap.RemoveObject(this);
+
                 if (Master != null)
                 {
                     Master.Pets.Remove(this);

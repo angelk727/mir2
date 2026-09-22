@@ -227,14 +227,16 @@ namespace Server.MirObjects
                 EXPOwner = null;
             }
 
-            for (int i = 0; i < ActionList.Count; i++)
+            for (int i = ActionList.Count - 1; i >= 0; i--)
             {
                 if (Envir.Time < ActionList[i].Time) continue;
-                Process(ActionList[i]);
+
+                DelayedAction action = ActionList[i];
                 ActionList.RemoveAt(i);
+
+                Process(action);
             }
         }
-
         public virtual void OnSafeZoneChanged()
         {
 
