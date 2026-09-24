@@ -459,6 +459,20 @@ namespace Server.MirObjects
             {
             switch (parts[0].ToUpper())
             {
+                case "VALOROPEN":
+                    acts.Add(new NPCActions(ActionType.ValorOpen));
+                    break;
+                case "VALORREGISTER":
+                    acts.Add(new NPCActions(ActionType.ValorRegister));
+                    break;
+                case "VALORHONOR":
+                    acts.Add(new NPCActions(ActionType.ValorHonor));
+                    break;
+                case "VALORREWARD":
+                    if (parts.Length < 2) return;
+                    acts.Add(new NPCActions(ActionType.ValorReward, parts[1]));
+                    break;
+
                 case "MOVE":
                     if (parts.Length < 2) return;
 
@@ -3167,6 +3181,19 @@ namespace Server.MirObjects
 
                 switch (act.Type)
                 {
+                    case ActionType.ValorOpen:
+                        Envir.Valor.Open(player);
+                        break;
+                    case ActionType.ValorRegister:
+                        Envir.Valor.Register(player);
+                        break;
+                    case ActionType.ValorHonor:
+                        Envir.Valor.ShowHonor(player);
+                        break;
+                    case ActionType.ValorReward:
+                        if (param.Count > 0 && int.TryParse(param[0], out int valorRewardIndex))
+                            Envir.Valor.Exchange(player, valorRewardIndex);
+                        break;
                     case ActionType.Move:
                         {
                             Map targetmap = Envir.GetMapByNameAndInstance(param[0]);

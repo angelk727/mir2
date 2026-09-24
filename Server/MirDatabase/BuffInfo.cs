@@ -45,6 +45,7 @@ namespace Server.MirDatabase
                 new BuffInfo { Type = BuffType.金刚术, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration },
                 new BuffInfo { Type = BuffType.万效符, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration, Visible = true },
                 new BuffInfo { Type = BuffType.万效符秘籍, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration, Visible = true },
+				new BuffInfo { Type = BuffType.Valor, Properties = BuffProperty.RemoveOnDeath | BuffProperty.RemoveOnExit, StackType = BuffStackType.ResetStatAndDuration, Visible = true },
 
                 //Monsters
                 new BuffInfo { Type = BuffType.HornedArcherBuff, Properties = BuffProperty.None, StackType = BuffStackType.ResetDuration, Visible = true },

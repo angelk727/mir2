@@ -10,6 +10,8 @@ namespace Client.MirControls
 
         public MirLabel NameLabel, PriceLabel, CountLabel;
         public bool UsePearls = false;
+        public bool UseHonor;
+        public int HonorUnitPrice;
         public bool Recipe = false;
 
         public bool MultipleAvailable = false;
@@ -70,7 +72,11 @@ namespace Client.MirControls
 
             NewIcon.Visible = !Item.IsShopItem || MultipleAvailable;
 
-            if (UsePearls)
+            if (UseHonor)
+            {
+                PriceLabel.Text = $"价格：{(long)HonorUnitPrice * Item.Count:N0} 荣誉";
+            }
+            else if (UsePearls)
             {
                 PriceLabel.Text = GameLanguage.ClientTextMap.GetLocalization((ClientTextKeys.PricePearl), (uint)(Item.Price() * GameScene.NPCRate), Item.Price() > 1 ? "s" : "");
             }

@@ -154,6 +154,7 @@ namespace Client.MirScenes
         public NoticeDialog NoticeDialog;
 
         public TimerDialog TimerControl;
+        public ValorStatusDialog ValorStatusControl;
         public CompassDialog CompassControl;
         public RollDialog RollControl;
 
@@ -407,6 +408,7 @@ namespace Client.MirScenes
             KeyboardLayoutDialog = new KeyboardLayoutDialog { Parent = this, Visible = false };
 
             TimerControl = new TimerDialog { Parent = this, Visible = false };
+            ValorStatusControl = new ValorStatusDialog { Parent = this, Visible = false };
             CompassControl = new CompassDialog { Parent = this, Visible = false };
             RollControl = new RollDialog { Parent = this, Visible = false };
 
@@ -524,6 +526,7 @@ namespace Client.MirScenes
                 return;
             }
 
+            if (e.KeyCode == Keys.Escape) ValorStatusControl?.CloseBoard();
             foreach (KeyBind KeyCheck in CMain.InputKeys.Keylist)
             {
                 if (KeyCheck.Key == Keys.None)
@@ -681,6 +684,7 @@ namespace Client.MirScenes
                         return;
 
                     case KeybindOptions.Closeall:
+                        ValorStatusControl?.CloseBoard();
                         InventoryDialog.Hide();
                         CharacterDialog.Hide();
                         OptionDialog.Hide();
@@ -1304,6 +1308,8 @@ namespace Client.MirScenes
             }
 
             if (!User.Dead) ShowReviveMessage = false;
+
+            if (ValorStatusControl.Active) ShowReviveMessage = false;
 
             if (ShowReviveMessage && CMain.Time > User.DeadTime && User.CurrentAction == MirAction.死后尸体)
             {
@@ -2112,6 +2118,9 @@ namespace Client.MirScenes
                 case (short)ServerPacketIds.NPCPearlGoods:
                     NPCPearlGoods((S.NPCPearlGoods)p);
                     break;
+                case (short)ServerPacketIds.NPCHonorGoods:
+                    NPCHonorGoods((S.NPCHonorGoods)p);
+                    break;
                 case (short)ServerPacketIds.FriendUpdate:
                     FriendUpdate((S.FriendUpdate)p);
                     break;
@@ -2198,6 +2207,9 @@ namespace Client.MirScenes
                     break;
                 case (short)ServerPacketIds.NewMonsterInfo:
                     NewMonsterInfo((S.NewMonsterInfo)p);
+                    break;
+                case (short)ServerPacketIds.ValorStatus:
+                    ValorStatusControl.UpdateStatus((S.ValorStatus)p);
                     break;
                 case (short)ServerPacketIds.NewNPCInfo:
                     NewNPCInfo((S.NewNPCInfo)p);
@@ -3324,6 +3336,9 @@ namespace Client.MirScenes
 
             switch (p.Mode)
             {
+                case AttackMode.Valor:
+                    ChatDialog.ReceiveChat("战场攻击模式：只能攻击敌方队伍。", ChatType.Hint);
+                    break;
                 case AttackMode.Peace:
                     ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.AttackMode_Peace), ChatType.Hint);
                     break;
@@ -4337,16 +4352,19 @@ namespace Client.MirScenes
             {
                 case PanelType.Buy:
                     NPCGoodsDialog.UsePearls = false;
+                    NPCGoodsDialog.UseHonor = false;
                     NPCGoodsDialog.NewGoods(p.List);
                     NPCGoodsDialog.Show();
                     break;
                 case PanelType.BuySub:
                     NPCSubGoodsDialog.UsePearls = false;
+                    NPCSubGoodsDialog.UseHonor = false;
                     NPCSubGoodsDialog.NewGoods(p.List);
                     NPCSubGoodsDialog.Show();
                     break;
                 case PanelType.Craft:
                     NPCCraftGoodsDialog.UsePearls = false;
+                    NPCCraftGoodsDialog.UseHonor = false;
                     NPCCraftGoodsDialog.NewGoods(p.List);
                     NPCCraftGoodsDialog.Show();
                     CraftDialog.Show();
@@ -4366,7 +4384,21 @@ namespace Client.MirScenes
             if (!NPCDialog.Visible) return;
 
             NPCGoodsDialog.UsePearls = true;
+            NPCGoodsDialog.UseHonor = false;
             NPCGoodsDialog.NewGoods(p.List);
+            NPCGoodsDialog.Show();
+        }
+
+        private void NPCHonorGoods(S.NPCHonorGoods p)
+        {
+            NPCGoodsDialog.UpdateHonorBalance(p.Balance);
+            if (p.BalanceOnly || !NPCDialog.Visible) return;
+
+            foreach (var item in p.List) item.Info = GetItemInfo(item.ItemIndex);
+            NPCRate = 1;
+            NPCPanelType = PanelType.Buy;
+            HideAddedStoreStats = false;
+            NPCGoodsDialog.NewHonorGoods(p.List, p.Prices, p.Balance);
             NPCGoodsDialog.Show();
         }
 
@@ -6837,6 +6869,7 @@ namespace Client.MirScenes
 
         private void RequestReincarnation()
         {
+            if (ValorStatusControl.Active) return;
             if (CMain.Time > User.DeadTime && User.CurrentAction == MirAction.死后尸体)
             {
                 MirMessageBox messageBox = new MirMessageBox(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.WouldYouLikeToBeRevived), MirMessageBoxButtons.YesNo);

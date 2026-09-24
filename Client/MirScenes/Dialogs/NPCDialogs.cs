@@ -1058,6 +1058,10 @@ namespace Client.MirScenes.Dialogs
     {
         public PanelType PType;
         public bool UsePearls;
+        public bool UseHonor;
+        public int HonorBalance;
+        public readonly Dictionary<ulong, int> HonorPrices = new Dictionary<ulong, int>();
+        public MirLabel HonorBalanceLabel;
 
         public int StartIndex;
         public UserItem SelectedItem;
@@ -1145,6 +1149,16 @@ namespace Client.MirScenes.Dialogs
                 Location = new Point(20, 9),
             };
 
+            HonorBalanceLabel = new MirLabel
+            {
+                Parent = this,
+                Location = new Point(95, 10),
+                AutoSize = true,
+                ForeColour = Color.Gold,
+                NotControl = true,
+                Visible = false
+            };
+
             if (PType == PanelType.Craft)
             {
                 BuyLabel.Index = 12;
@@ -1206,7 +1220,7 @@ namespace Client.MirScenes.Dialogs
         {
             if (SelectedItem == null) return false;
 
-            if (PType == PanelType.Buy && !UsePearls)
+            if (PType == PanelType.Buy && !UsePearls && !UseHonor)
             {
                 var list = Goods.Where(x => x.Info.Index == SelectedItem.Info.Index).ToList();
 
@@ -1237,7 +1251,22 @@ namespace Client.MirScenes.Dialogs
 
                 SelectedItem.Count = maxQuantity;
 
-                if (UsePearls)
+                if (UseHonor)
+                {
+                    if (!HonorPrices.TryGetValue(SelectedItem.UniqueID, out int unitPrice) || unitPrice <= 0)
+                    {
+                        SelectedItem.Count = tempCount;
+                        return;
+                    }
+                    maxQuantity = (ushort)Math.Min(maxQuantity, HonorBalance / unitPrice);
+                    if (maxQuantity == 0)
+                    {
+                        SelectedItem.Count = tempCount;
+                        GameScene.Scene.ChatDialog.ReceiveChat("荣誉值不足。", ChatType.System);
+                        return;
+                    }
+                }
+                else if (UsePearls)
                 {
                     if (SelectedItem.Price() > GameScene.User.PearlCount)
                     {
@@ -1293,7 +1322,15 @@ namespace Client.MirScenes.Dialogs
             }
             else
             {
-                if (SelectedItem.Info.Price > GameScene.Gold)
+                if (UseHonor)
+                {
+                    if (!HonorPrices.TryGetValue(SelectedItem.UniqueID, out int unitPrice) || unitPrice > HonorBalance)
+                    {
+                        GameScene.Scene.ChatDialog.ReceiveChat("你的荣誉值不足。", ChatType.System);
+                        return;
+                    }
+                }
+                else if (SelectedItem.Info.Price > GameScene.Gold)
                 {
                     GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.LowGold), ChatType.System);
                     return;
@@ -1348,13 +1385,17 @@ namespace Client.MirScenes.Dialogs
                 }
                 Cells[i].Visible = true;
 
-                var matchingGoods = Goods.Where(x => x.Info.Index == Cells[i].Item.Info.Index);
+                var matchingGoods = Goods.Where(x => x.Info.Index == DisplayGoods[i + StartIndex].Info.Index);
 
                 Cells[i].Item = DisplayGoods[i + StartIndex];
                 Cells[i].MultipleAvailable = matchingGoods.Count() > 1 && matchingGoods.Any(x => x.IsShopItem == false);
                 Cells[i].Border = SelectedItem != null && Cells[i].Item == SelectedItem;
                 Cells[i].UsePearls = UsePearls;
+                Cells[i].UseHonor = UseHonor;
+                Cells[i].HonorUnitPrice = UseHonor && HonorPrices.TryGetValue(Cells[i].Item.UniqueID, out int price)
+                    ? price : 0;
             }
+            HonorBalanceLabel.Visible = UseHonor;
         }
 
         private void PositionBar_OnMoving(object sender, MouseEventArgs e)
@@ -1382,6 +1423,25 @@ namespace Client.MirScenes.Dialogs
             AddGoods(list);
         }
 
+        public void NewHonorGoods(IList<UserItem> list, IList<int> prices, int balance)
+        {
+            UseHonor = true;
+            UsePearls = false;
+            HonorPrices.Clear();
+            for (int i = 0; i < list.Count && i < prices.Count; i++)
+                HonorPrices[list[i].UniqueID] = prices[i];
+            StartIndex = 0;
+            SelectedItem = null;
+            UpdateHonorBalance(balance);
+            NewGoods(list);
+        }
+
+        public void UpdateHonorBalance(int balance)
+        {
+            HonorBalance = balance;
+            HonorBalanceLabel.Text = $"荣誉值: {balance:N0}";
+        }
+
         public void AddGoods(IEnumerable<UserItem> list)
         {
             if (PType == PanelType.BuySub)
@@ -1395,7 +1455,7 @@ namespace Client.MirScenes.Dialogs
             foreach (UserItem item in list)
             {
                 //Normal shops just want to show one of each item type
-                if (PType == PanelType.Buy && !UsePearls)
+                if (PType == PanelType.Buy && !UsePearls && !UseHonor)
                 {
                     Goods.Add(item);
 

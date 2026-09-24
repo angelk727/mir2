@@ -2569,9 +2569,15 @@ namespace Server.MirNetwork
 
         private void ChangeAMode(C.ChangeAMode p)
         {
-            if (Stage != GameStage.Game)
-                return;
+            if (Stage != GameStage.Game) return;
 
+            if (Envir.Valor.IsParticipant(Player))
+            {
+                Player.ReceiveChat("勇气期间无法使用战场攻击模式。", ChatType.System);
+                Enqueue(new S.ChangeAMode { Mode = AttackMode.Valor });
+                return;
+            }
+            if (p.Mode == AttackMode.Valor || !Enum.IsDefined(typeof(AttackMode), p.Mode)) return;
             Player.AMode = p.Mode;
 
             Enqueue(new S.ChangeAMode

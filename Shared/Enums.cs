@@ -1124,7 +1124,8 @@ public enum AttackMode : byte
     Guild = 2,
     EnemyGuild = 3,
     RedBrown = 4,
-    All = 5
+    All = 5,
+    Valor = 6
 }
 
 public enum PetMode : byte
@@ -1649,6 +1650,7 @@ public enum BuffType : ushort
     古代宗师祝福,
     黄金宗师祝福,
     破天的核心,
+    Valor,
 }
 
 [Flags]
@@ -1967,7 +1969,9 @@ public enum ServerPacketIds : short
     GuildTerritoryPage,
     StorageUnlockResult,
     StoragePasswordResult,
-    ControlMechanism
+    ControlMechanism,
+    ValorStatus,
+    NPCHonorGoods,
 }
 
 public enum ClientPacketIds : short

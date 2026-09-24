@@ -491,6 +491,8 @@ public abstract class Packet
                 return new S.ObjectWalk();
             case (short)ServerPacketIds.ObjectRun:
                 return new S.ObjectRun();
+            case (short)ServerPacketIds.ValorStatus:
+                return new S.ValorStatus();
             case (short)ServerPacketIds.Chat:
                 return new S.Chat();
             case (short)ServerPacketIds.ObjectChat:
@@ -923,6 +925,8 @@ public abstract class Packet
                 return new S.IntelligentCreaturePickup();
             case (short)ServerPacketIds.NPCPearlGoods:
                 return new S.NPCPearlGoods();
+            case (short)ServerPacketIds.NPCHonorGoods:
+                return new S.NPCHonorGoods();
             case (short)ServerPacketIds.FriendUpdate:
                 return new S.FriendUpdate();
             case (short)ServerPacketIds.LoverUpdate:

@@ -6906,4 +6906,185 @@ namespace ServerPackets
             writer.Write(Ascending);
         }
     }
+    public sealed class NPCHonorGoods : Packet
+    {
+        public override short Index => (short)ServerPacketIds.NPCHonorGoods;
+        public bool BalanceOnly;
+        public int Balance;
+        public List<UserItem> List = new List<UserItem>();
+        // HonorCost is a per-item cost, separate from ItemInfo.Price.
+        public List<int> Prices = new List<int>();
+
+        protected override void ReadPacket(BinaryReader reader)
+        {
+            BalanceOnly = reader.ReadBoolean();
+            Balance = reader.ReadInt32();
+            int count = reader.ReadInt32();
+            if (count < 0 || count > 1000) throw new InvalidDataException("荣誉商店物品数量错误");
+            for (int i = 0; i < count; i++)
+            {
+                List.Add(new UserItem(reader));
+                Prices.Add(reader.ReadInt32());
+            }
+        }
+
+        protected override void WritePacket(BinaryWriter writer)
+        {
+            if (List.Count != Prices.Count || List.Count > 1000)
+                throw new InvalidDataException("荣誉商店价格错误");
+            writer.Write(BalanceOnly);
+            writer.Write(Balance);
+            writer.Write(List.Count);
+            for (int i = 0; i < List.Count; i++)
+            {
+                List[i].Save(writer);
+                writer.Write(Prices[i]);
+            }
+        }
+    }
+	public sealed class ValorRow
+    {
+        public string Name = "";
+        public ushort Level;
+        public byte Team;
+
+        public int Personal;
+        public int Kills;
+        public int Deaths;
+        public int Bonus;
+        public int Honor;
+    }
+
+    public sealed class ValorStatus : Packet
+    {
+        public override short Index => (short)ServerPacketIds.ValorStatus;
+
+        public bool Active;
+
+        public int RedScore;
+        public int BlueScore;
+        public int Seconds;
+
+        public int RedMonsters;
+        public int BlueMonsters;
+
+        public byte Winner;
+
+        public int SunDamage;
+        public int SunHealth;
+
+        public int MoonDamage;
+        public int MoonHealth;
+
+        public int LightningDamage;
+        public int LightningHealth;
+
+        public byte SunAttacker;
+        public byte MoonAttacker;
+        public byte LightningAttacker;
+
+        public List<ValorRow> Rows = new();
+        
+        public int BlueMonsterState;
+        public int RedMonsterState;
+
+        protected override void ReadPacket(BinaryReader reader)
+        {
+            Active = reader.ReadBoolean();
+
+            RedScore = reader.ReadInt32();
+            BlueScore = reader.ReadInt32();
+            Seconds = reader.ReadInt32();
+
+            RedMonsters = reader.ReadInt32();
+            BlueMonsters = reader.ReadInt32();
+
+            BlueMonsterState = reader.ReadInt32();
+            RedMonsterState = reader.ReadInt32();
+
+            Winner = reader.ReadByte();
+
+            SunDamage = reader.ReadInt32();
+            SunHealth = reader.ReadInt32();
+
+            MoonDamage = reader.ReadInt32();
+            MoonHealth = reader.ReadInt32();
+
+            LightningDamage = reader.ReadInt32();
+            LightningHealth = reader.ReadInt32();
+
+            SunAttacker = reader.ReadByte();
+            MoonAttacker = reader.ReadByte();
+            LightningAttacker = reader.ReadByte();
+
+            int count = reader.ReadInt32();
+
+            if (count < 0 || count > 100)
+                throw new InvalidDataException("无效的 Valor 数据行数。");
+
+            Rows.Clear();
+
+            for (int i = 0; i < count; i++)
+            {
+                Rows.Add(new ValorRow
+                {
+                    Name = reader.ReadString(),
+                    Level = reader.ReadUInt16(),
+                    Team = reader.ReadByte(),
+                    Personal = reader.ReadInt32(),
+                    Kills = reader.ReadInt32(),
+                    Deaths = reader.ReadInt32(),
+                    Bonus = reader.ReadInt32(),
+                    Honor = reader.ReadInt32()
+                });
+            }
+        }
+
+        protected override void WritePacket(BinaryWriter writer)
+        {
+            writer.Write(Active);
+
+            writer.Write(RedScore);
+            writer.Write(BlueScore);
+            writer.Write(Seconds);
+
+            writer.Write(RedMonsters);
+            writer.Write(BlueMonsters);
+
+            writer.Write(BlueMonsterState);
+            writer.Write(RedMonsterState);
+
+            writer.Write(Winner);
+
+            writer.Write(SunDamage);
+            writer.Write(SunHealth);
+
+            writer.Write(MoonDamage);
+            writer.Write(MoonHealth);
+
+            writer.Write(LightningDamage);
+            writer.Write(LightningHealth);
+
+            writer.Write(SunAttacker);
+            writer.Write(MoonAttacker);
+            writer.Write(LightningAttacker);
+
+            if (Rows.Count > 100)
+                throw new InvalidDataException("过多的 Valor 行数。");
+
+            writer.Write(Rows.Count);
+
+            foreach (var row in Rows)
+            {
+                writer.Write(row.Name);
+                writer.Write(row.Level);
+                writer.Write(row.Team);
+                writer.Write(row.Personal);
+                writer.Write(row.Kills);
+                writer.Write(row.Deaths);
+                writer.Write(row.Bonus);
+                writer.Write(row.Honor);
+            }
+        }
+    }
 }

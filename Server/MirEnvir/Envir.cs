@@ -53,7 +53,7 @@ namespace Server.MirEnvir
         public static object LoadLock = new object();
 
         public const int MinVersion = 60;
-        public const int Version = 117;
+        public const int Version = 118;
         public const int CustomVersion = 0;
         public static readonly string DatabasePath = Path.Combine(".", "Server.MirDB");
         public static readonly string AccountPath = Path.Combine(".", "Server.MirADB");
@@ -146,6 +146,7 @@ namespace Server.MirEnvir
         public List<NPCObject> NPCs = new List<NPCObject>();
         public List<GuildObject> Guilds = new List<GuildObject>();
         public List<ConquestObject> Conquests = new List<ConquestObject>();
+        public ValorBattlefieldSystem Valor = new ValorBattlefieldSystem();
         public List<HeroObject> Heroes = new List<HeroObject>();
 
         public LightSetting Lights;
@@ -869,6 +870,8 @@ namespace Server.MirEnvir
                     Conquests[i].Process();
                 }
             }
+
+            Valor.Process();
 
             if (Time >= rentalItemsTime)
             {

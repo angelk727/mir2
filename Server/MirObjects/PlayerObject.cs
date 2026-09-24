@@ -266,6 +266,7 @@ namespace Server.MirObjects
         public void StopGame(byte reason)
         {
             if (Node == null) return;
+            Envir.Valor.Leave(this);
 
             if (CurrentMap != null && CurrentMap.ValidPoint(CurrentLocation))
             {
@@ -608,27 +609,31 @@ namespace Server.MirObjects
                 }
             }
 
+            bool valorDeath = Envir.Valor.IsParticipant(this);
             if (LastHitter != null && LastHitter.Race == ObjectType.Player)
             {
-                PlayerObject hitter = (PlayerObject)LastHitter;
-
-                if (AtWar(hitter) || WarZone)
+                if (!valorDeath)
                 {
-                    hitter.ReceiveChat(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.ProtectedByLaw), ChatType.System);
-                }
-                else if (Envir.Time > BrownTime && PKPoints < 200)
-                {
-                    UserItem weapon = hitter.Info.Equipment[(byte)EquipmentSlot.武器];
+                    PlayerObject hitter = (PlayerObject)LastHitter;
 
-                    hitter.PKPoints = Math.Min(int.MaxValue, LastHitter.PKPoints + 100);
-                    hitter.ReceiveChat(GameLanguage.ServerTextMap.GetLocalization((ServerTextKeys.MurderPlayer), Name), ChatType.System);
-                    ReceiveChat(GameLanguage.ServerTextMap.GetLocalization((ServerTextKeys.MurderedByPlayer), LastHitter.Name), ChatType.System);
-
-                    if (weapon != null && weapon.AddedStats[Stat.幸运] > (Settings.MaxLuck * -1) && Envir.Random.Next(4) == 0)
+                    if (AtWar(hitter) || WarZone)
                     {
-                        weapon.AddedStats[Stat.幸运]--;
-                        hitter.ReceiveChat(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.WeaponHasBeenCursed), ChatType.System);
-                        hitter.Enqueue(new S.RefreshItem { Item = weapon });
+                        hitter.ReceiveChat(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.ProtectedByLaw), ChatType.System);
+                    }
+                    else if (Envir.Time > BrownTime && PKPoints < 200)
+                    {
+                        UserItem weapon = hitter.Info.Equipment[(byte)EquipmentSlot.武器];
+
+                        hitter.PKPoints = Math.Min(int.MaxValue, LastHitter.PKPoints + 100);
+                        hitter.ReceiveChat(GameLanguage.ServerTextMap.GetLocalization((ServerTextKeys.MurderPlayer), Name), ChatType.System);
+                        ReceiveChat(GameLanguage.ServerTextMap.GetLocalization((ServerTextKeys.MurderedByPlayer), LastHitter.Name), ChatType.System);
+
+                        if (weapon != null && weapon.AddedStats[Stat.幸运] > (Settings.MaxLuck * -1) && Envir.Random.Next(4) == 0)
+                        {
+                            weapon.AddedStats[Stat.幸运]--;
+                            hitter.ReceiveChat(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.WeaponHasBeenCursed), ChatType.System);
+                            hitter.Enqueue(new S.RefreshItem { Item = weapon });
+                        }
                     }
                 }
             }
@@ -652,10 +657,17 @@ namespace Server.MirObjects
             RemoveBuff(BuffType.魔法盾);
             RemoveBuff(BuffType.金刚术);
 
-            if (PKPoints > 200)
-                RedDeathDrop(LastHitter);
-            else if (!InSafeZone)
-                DeathDrop(LastHitter);
+            if (valorDeath)
+            {
+                Envir.Valor.OnPlayerDeath(this);
+            }
+            else
+            {
+                if (PKPoints > 200)
+                    RedDeathDrop(LastHitter);
+                else if (!InSafeZone)
+                    DeathDrop(LastHitter);
+            }
 
             HP = 0;
             Dead = true;
@@ -1106,12 +1118,21 @@ namespace Server.MirObjects
         }
         protected override void SetBindSafeZone(SafeZoneInfo szi)
         {
+            if (Envir.Valor.IsMap(CurrentMap)) return;
             BindLocation = szi.Location;
             BindMapIndex = CurrentMapIndex;
         }
         public void StartGame()
         {
             Map temp = Envir.GetMap(CurrentMapIndex);
+            bool reconnectingFromValor = AMode == AttackMode.Valor;
+            if (reconnectingFromValor) AMode = AttackMode.Peace;
+            if (reconnectingFromValor || Envir.Valor.IsMap(temp))
+            {
+                temp = Envir.GetMap(BindMapIndex);
+                CurrentMapIndex = BindMapIndex;
+                CurrentLocation = BindLocation;
+            }
 
             if (temp != null && temp.Info.NoReconnect)
             {
@@ -1497,6 +1518,9 @@ namespace Server.MirObjects
             if (temp == null || temp.Info == null)
                 return false;
 
+            if (!Envir.Valor.CanEnter(this, temp))
+                return false;
+
             Map oldMap = CurrentMap;
             Point oldLocation = CurrentLocation;
             bool mapChanged = temp != oldMap;
@@ -1544,6 +1568,7 @@ namespace Server.MirObjects
 
             if (mapChanged)
             {
+                Envir.Valor.OnMapChanged(this);
                 ApplyMapEntryRules(mapChanged);
             }
 
@@ -1563,6 +1588,16 @@ namespace Server.MirObjects
         {
             if (!mapChanged) return;
 
+            // MapEnter NPC hook
+            CallDefaultNPC(DefaultNPCType.MapEnter, CurrentMap.Info.FileName);
+
+            // NoGroup: solo-only maps
+            if (CurrentMap.Info.NoGroup && GroupMembers != null)
+            {
+                DisbandGroup(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.GroupingDisabledOnMap));
+            }
+
+            // NoPets: freeze combat pets while allowing pickup creatures to keep working
             if (CurrentMap.Info.NoPets)
             {
                 bool restrictedPetFound = false;
@@ -1576,14 +1611,15 @@ namespace Server.MirObjects
                     pet.Frozen = true;
                     pet.PMode = PetMode.None;
 
+                    // small visual nudge
+                    pet.Broadcast(new S.ObjectTurn { Direction = pet.Direction, Location = pet.CurrentLocation });
                     restrictedPetFound = true;
                 }
 
                 if (restrictedPetFound)
-                {
                     ReceiveChat(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.PetsNotAllowedOnMap), ChatType.System);
-                }
             }
+
             else
             {
                 foreach (var pet in Pets)
@@ -1593,6 +1629,7 @@ namespace Server.MirObjects
 
                     pet.Frozen = false;
                     pet.PMode = PetMode.Both;
+                    pet.BroadcastInfo();
                 }
             }
 
@@ -1610,7 +1647,8 @@ namespace Server.MirObjects
                 DespawnHero();
                 ReceiveChat(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.HeroesNotAllowedOnMap), ChatType.System);
 
-                if (Hero != null && Envir.Heroes.Contains(Hero)) Envir.Heroes.Remove(Hero);
+                if (Hero != null && Envir.Heroes.Contains(Hero))
+                    Envir.Heroes.Remove(Hero);
             }
 
             // Party UI refresh
@@ -1907,6 +1945,7 @@ namespace Server.MirObjects
 
             if (human is PlayerObject player)
             {
+                if (Envir.Valor.TryGetNameColour(player, out Color valorColour)) return valorColour;
                 if (player.PKPoints >= 200)
                     return Color.Red;
 
@@ -2021,6 +2060,17 @@ namespace Server.MirObjects
                 parts = message.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
                 if (parts.Length == 0) return;
+
+                if (parts[0].Equals("ValorStart", StringComparison.OrdinalIgnoreCase))
+                {
+                    if (IsGM) Envir.Valor.Open(this, true);
+                    else ReceiveChat("此命令需要 GM 权限。", ChatType.System);
+                    return;
+                }
+                if (parts[0].Equals("ValorLeave", StringComparison.OrdinalIgnoreCase))
+                { Envir.Valor.Leave(this); return; }
+                if (parts[0].Equals("ValorHonor", StringComparison.OrdinalIgnoreCase))
+                { Envir.Valor.ShowHonor(this); return; }
 
                 PlayerObject player = Envir.GetPlayer(parts[0]);
 
@@ -4239,8 +4289,11 @@ namespace Server.MirObjects
 
                 p = new S.ObjectChat { ObjectID = ObjectID, Text = message, Type = ChatType.Normal };
 
-                Enqueue(p);
-                Broadcast(p);
+                if (!Envir.Valor.RouteNormalChat(this, p))
+                {
+                    Enqueue(p);
+                    Broadcast(p);
+                }
             }
         }
         private string ProcessChatItems(string text, List<PlayerObject> recipients, List<ChatItem> chatItems)
@@ -4730,6 +4783,9 @@ namespace Server.MirObjects
             if (Dead || InSafeZone || attacker.InSafeZone || attacker == this || GMGameMaster) return false;
             if (CurrentMap.Info.NoFight) return false;
 
+            if (Envir.Valor.TryGetRelationship(this, attacker as PlayerObject, out bool valorAttack))
+                return valorAttack;
+
             switch (attacker.AMode)
             {
                 case AttackMode.All:
@@ -4755,6 +4811,10 @@ namespace Server.MirObjects
             if (attacker.Info.AI == 980 || attacker.Info.AI == 981 || attacker.Info.AI == 982) return PKPoints >= 200;
             if (attacker.Master == null) return true;
             if (InSafeZone || attacker.InSafeZone || attacker.Master.InSafeZone) return false;
+
+            PlayerObject valorPetOwner = attacker.Master as PlayerObject;
+            if (attacker.Master is HeroObject valorHero) valorPetOwner = valorHero.Owner;
+            if (Envir.Valor.TryGetRelationship(this, valorPetOwner, out bool valorPetAttack)) return valorPetAttack;
 
             if (LastHitter != attacker.Master && attacker.Master.LastHitter != this)
             {
@@ -4794,6 +4854,9 @@ namespace Server.MirObjects
         {
             if (ally == this) return true;
             if (ally == Hero) return true;
+            var valorAlly = ally is HeroObject hero ? hero.Owner : ally as PlayerObject;
+            if (Envir.Valor.TryGetRelationship(this, valorAlly, out bool hostile))
+                return Envir.Valor.IsParticipant(this) && Envir.Valor.IsParticipant(valorAlly) && !hostile;
 
             switch (ally.AMode)
             {
@@ -8074,6 +8137,7 @@ namespace Server.MirObjects
                 String.Equals(NPCPage.Key, NPCScript.BuyBackKey, StringComparison.CurrentCultureIgnoreCase) ||
                 String.Equals(NPCPage.Key, NPCScript.BuyUsedKey, StringComparison.CurrentCultureIgnoreCase) ||
                 String.Equals(NPCPage.Key, NPCScript.PearlBuyKey, StringComparison.CurrentCultureIgnoreCase) ||
+                String.Equals(NPCPage.Key, NPCScript.HonorBuyKey, StringComparison.CurrentCultureIgnoreCase) ||
                 String.Equals(NPCPage.Key, NPCScript.BuyNewKey, StringComparison.CurrentCultureIgnoreCase) ||
                 String.Equals(NPCPage.Key, NPCScript.BuySellNewKey, StringComparison.CurrentCultureIgnoreCase))) return;
 
@@ -10451,6 +10515,7 @@ namespace Server.MirObjects
 
         public override bool AtWar(HumanObject attacker)
         {
+            if (Envir.Valor.IsParticipant(this)) return true;
             if (CurrentMap.Info.Fight) return true;
 
             if (MyGuild == null) return false;

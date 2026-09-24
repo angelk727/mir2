@@ -117,6 +117,10 @@
         HeroGiveSkill,
         HeroRemoveSkill,
         GiveGuildExp,
-        ControlMechanism
+        ControlMechanism,
+        ValorOpen,
+        ValorRegister,
+        ValorHonor,
+        ValorReward,
     }
 }

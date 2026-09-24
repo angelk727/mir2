@@ -66,6 +66,7 @@ namespace Server.MirObjects
             DowngradeKey = "[@DOWNGRADE]",
             ResetKey = "[@RESET]",
             PearlBuyKey = "[@PEARLBUY]",
+            HonorBuyKey = "[@HONORBUY]",
             BuyUsedKey = "[@BUYUSED]",
             BuyNewKey = "[@BUYNEW]",
             BuySellNewKey = "[@BUYSELLNEW]",
@@ -1114,6 +1115,28 @@ namespace Server.MirObjects
 
                     player.Enqueue(new S.NPCPearlGoods { List = Goods, Rate = PriceRate(player), Type = PanelType.Buy });
                     break;
+                case HonorBuyKey:
+                    try
+                    {
+                        var rewards = ValorSettings.Load().Rewards;
+                        var packet = new S.NPCHonorGoods { Balance = Envir.Valor.GetHonor(player) };
+                        foreach (var goods in Goods)
+                        {
+                            var reward = rewards.FirstOrDefault(r => string.Equals(r.Item, goods.Info.Name,
+                                StringComparison.OrdinalIgnoreCase));
+                            if (reward == null) continue;
+                            player.CheckItem(goods);
+                            packet.List.Add(goods);
+                            packet.Prices.Add(reward.HonorCost);
+                        }
+                        player.Enqueue(packet);
+                    }
+                    catch (Exception ex)
+                    {
+                        player.ReceiveChat("荣誉商店暂不可用: " + ex.Message, ChatType.System);
+                        MessageQueue.Enqueue("荣誉商店停业: " + ex);
+                    }
+                    break;
                 case HeroCreateKey:
                     if (player.Info.Level < Settings.Hero_RequiredLevel)
                     {
@@ -1144,6 +1167,12 @@ namespace Server.MirObjects
                 if (Goods[i].UniqueID != index) continue;
                 goods = Goods[i];
                 break;
+            }
+
+            if (string.Equals(player.NPCPage?.Key, HonorBuyKey, StringComparison.OrdinalIgnoreCase))
+            {
+                if (goods != null) Envir.Valor.BuyShopReward(player, goods.Info, count);
+                return;
             }
 
             bool isUsed = false;

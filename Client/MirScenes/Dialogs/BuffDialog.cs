@@ -280,6 +280,12 @@ namespace Client.MirScenes.Dialogs
         public string BuffString(ClientBuff buff)
         {
             string text = RegexFunctions.SeperateCamelCase(buff.Type.ToString()) + "\n";
+
+            if (buff.Type == BuffType.Valor) text = "战场特效\n";
+
+            else
+                text = RegexFunctions.SeperateCamelCase(buff.Type.ToLocalizedString()) + "\n"; 
+            
             bool overridestats = false;
 
             switch (buff.Type)
@@ -495,6 +501,7 @@ namespace Client.MirScenes.Dialogs
 
         private int BuffImage(BuffType type)
         {
+            if (type == BuffType.Valor) return 249;
             switch (type)
             {
                 //Skills

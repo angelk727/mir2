@@ -952,6 +952,8 @@ namespace Server.MirObjects
         }
         public void PoisonDamage(int amount, MapObject Attacker)
         {
+            if (amount < 0 && this is PlayerObject valorPlayer && Envir.Valor.IsParticipant(valorPlayer))
+                LastHitter = Attacker;
             ChangeHP(amount);
         }
         public void ChangeMP(int amount)
