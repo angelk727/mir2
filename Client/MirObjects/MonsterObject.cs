@@ -128,15 +128,15 @@ namespace Client.MirObjects
 
                     Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon416P], 2, 8, 3000, this) { Blend = true, Repeat = true });
                     break;
-                case Monster.418P:
+                case Monster.Mon418P:
                     foreach (var effect in Effects)
                     {
-                        if (effect.Library == Libraries.Monsters[(ushort)Monster.418P])
+                        if (effect.Library == Libraries.Monsters[(ushort)Monster.Mon418P])
                             effect.Repeat = false;
                     }
                     Effects.Clear();
 
-                    Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.418P], 2, 8, 3000, this) { Blend = true, Repeat = true });
+                    Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon418P], 2, 8, 3000, this) { Blend = true, Repeat = true });
                     break;
             }
 
@@ -8887,16 +8887,16 @@ namespace Client.MirObjects
                     }
                     break;
 
-                case Monster.418P:
+                case Monster.Mon418P:
                     if (colour.ToArgb() == Color.Blue.ToArgb())
                     {
                         Effects.Clear();
-                        Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.418P], 10, 8, 3000, this) { Blend = true, Repeat = true });
+                        Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon418P], 10, 8, 3000, this) { Blend = true, Repeat = true });
                     }
                     else if (colour.ToArgb() == Color.Red.ToArgb())
                     {
                         Effects.Clear();
-                        Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.418P], 18, 8, 3000, this) { Blend = true, Repeat = true });
+                        Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon418P], 18, 8, 3000, this) { Blend = true, Repeat = true });
                     }
                     break;
             }
