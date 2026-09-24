@@ -1,8 +1,8 @@
+using Client.MirControls;
 using Client.MirGraphics;
 using Client.MirScenes;
 using Client.MirSounds;
 using S = ServerPackets;
-using Client.MirControls;
 
 namespace Client.MirObjects
 {
@@ -105,6 +105,40 @@ namespace Client.MirObjects
                 Name = $"{Rarity.ToLocalizedString()}_{Name}";
             }
             Buffs = info.Buffs;
+
+            switch (BaseImage)
+            {
+                case Monster.Mon415P:
+                    foreach (var effect in Effects)
+                    {
+                        if (effect.Library == Libraries.Monsters[(ushort)Monster.Mon415P])
+                            effect.Repeat = false;
+                    }
+                    Effects.Clear();
+
+                    Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon415P], 2, 8, 3000, this) { Blend = true, Repeat = true });
+                    break;
+                case Monster.Mon416P:
+                    foreach (var effect in Effects)
+                    {
+                        if (effect.Library == Libraries.Monsters[(ushort)Monster.Mon416P])
+                            effect.Repeat = false;
+                    }
+                    Effects.Clear();
+
+                    Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon416P], 2, 8, 3000, this) { Blend = true, Repeat = true });
+                    break;
+                case Monster.418P:
+                    foreach (var effect in Effects)
+                    {
+                        if (effect.Library == Libraries.Monsters[(ushort)Monster.418P])
+                            effect.Repeat = false;
+                    }
+                    Effects.Clear();
+
+                    Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.418P], 2, 8, 3000, this) { Blend = true, Repeat = true });
+                    break;
+            }
 
             if (Stage != info.ExtraByte)
             {
@@ -8822,6 +8856,50 @@ namespace Client.MirObjects
             ChatLabel.ForeColour = Dead ? Color.Gray : Color.White;
             ChatLabel.Location = new Point(DisplayRectangle.X + (48 - ChatLabel.Size.Width) / 2, DisplayRectangle.Y - (60 + ChatLabel.Size.Height) - (Dead ? 35 : 0) + yOffset);
             ChatLabel.Draw();
+        }
+        public void UpdateColourEffect(Color colour)
+        {
+            switch (BaseImage)
+            {
+                case Monster.Mon415P:
+                    if (colour.ToArgb() == Color.Blue.ToArgb())
+                    {
+                        Effects.Clear();
+                        Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon415P], 10, 8, 3000, this) { Blend = true, Repeat = true });
+                    }
+                    else if (colour.ToArgb() == Color.Red.ToArgb())
+                    {
+                        Effects.Clear();
+                        Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon415P], 18, 8, 3000, this) { Blend = true, Repeat = true });
+                    }
+                    break;
+
+                case Monster.Mon416P:
+                    if (colour.ToArgb() == Color.Blue.ToArgb())
+                    {
+                        Effects.Clear();
+                        Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon416P], 10, 8, 3000, this) { Blend = true, Repeat = true });
+                    }
+                    else if (colour.ToArgb() == Color.Red.ToArgb())
+                    {
+                        Effects.Clear();
+                        Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.Mon416P], 18, 8, 3000, this) { Blend = true, Repeat = true });
+                    }
+                    break;
+
+                case Monster.418P:
+                    if (colour.ToArgb() == Color.Blue.ToArgb())
+                    {
+                        Effects.Clear();
+                        Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.418P], 10, 8, 3000, this) { Blend = true, Repeat = true });
+                    }
+                    else if (colour.ToArgb() == Color.Red.ToArgb())
+                    {
+                        Effects.Clear();
+                        Effects.Add(new Effect(Libraries.Monsters[(ushort)Monster.418P], 18, 8, 3000, this) { Blend = true, Repeat = true });
+                    }
+                    break;
+            }
         }
     }
 }

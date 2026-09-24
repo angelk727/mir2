@@ -584,10 +584,10 @@ public enum Monster : ushort
     Bear = 412,
     Leopard = 413,
     ChieftainSword = 414,
-    MoonStone = 415,
-    SunStone = 416,
+    Mon415P = 415, //MoonStone
+    Mon416P = 416, //SunStone
     ChieftainArcher = 417,
-    LightningStone = 418,
+    Mon418P = 418, //LightningStone
     StoningSpider = 419,
     VampireSpider = 420,  //Mon43.wil
     SpittingToad = 421,
