@@ -1657,10 +1657,11 @@ public enum BuffType : ushort
 public enum BuffProperty : byte
 {
     None = 0,
-    RemoveOnDeath = 1,
-    RemoveOnExit = 2,
-    Debuff = 4,
-    PauseInSafeZone = 8
+    RemoveOnDeath = 1 << 0,
+    RemoveOnExit = 1 << 1,
+    Debuff = 1 << 2,
+    PauseInSafeZone = 1 << 3,
+    RemoveOnMapChange = 1 << 4
 }
 
 public enum BuffStackType : byte

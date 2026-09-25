@@ -167,7 +167,8 @@ namespace Server.MirObjects
         public virtual PetMode PMode { get; set; }
 
         private bool _inSafeZone;
-        public bool InSafeZone {
+        public bool InSafeZone
+        {
             get { return _inSafeZone; }
             set
             {
@@ -820,6 +821,15 @@ namespace Server.MirObjects
         public virtual bool Teleport(Map temp, Point location, bool effects = true, byte effectnumber = 0)
         {
             if (temp == null || !temp.ValidPoint(location)) return false;
+
+            if (CurrentMap != temp)
+            {
+                for (int i = Buffs.Count - 1; i >= 0; i--)
+                {
+                    if (Buffs[i].Properties.HasFlag(BuffProperty.RemoveOnMapChange))
+                        RemoveBuff(Buffs[i].Type);
+                }
+            }
 
             CurrentMap.RemoveObject(this);
             if (effects) Broadcast(new S.ObjectTeleportOut {ObjectID = ObjectID, Type = effectnumber});
