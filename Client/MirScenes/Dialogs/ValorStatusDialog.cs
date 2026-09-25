@@ -47,7 +47,7 @@ namespace Client.MirScenes.Dialogs
                 Parent = _hud,
                 Library = Libraries.Prguse2,
                 Index = 972,
-                Location = new Point(130, 11),
+                Location = new Point(120, 12),
                 Size = new Size(82, 22),
                 AutoSize = false,
                 FillFromRight = true
