@@ -515,7 +515,7 @@ namespace Server.MirDatabase
 
             if (itemDropRatePercentOffset > 0)
             {
-                rate -= (rate * itemDropRatePercentOffset) / 100;
+                rate = (int)(rate / (1D + itemDropRatePercentOffset / 100D));
             }
 
             if (rate < 1) rate = 1;
@@ -536,11 +536,12 @@ namespace Server.MirDatabase
                 if (goldDropRatePercentOffset > 0)
                 {
                     lowerGoldRange += (lowerGoldRange * goldDropRatePercentOffset) / 100;
+                    upperGoldRange += (upperGoldRange * goldDropRatePercentOffset) / 100;
                 }
 
                 if (lowerGoldRange > upperGoldRange) lowerGoldRange = upperGoldRange;
 
-                gold = (uint)Envir.Random.Next(lowerGoldRange, upperGoldRange);
+                gold = (uint)Envir.Random.Next(lowerGoldRange, upperGoldRange + 1);
             }
             else if (Item != null)
             {
