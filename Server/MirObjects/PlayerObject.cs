@@ -827,7 +827,11 @@ namespace Server.MirObjects
             int expPoint;
             uint originalAmount = amount;
 
-            expPoint = ReduceExp(amount, targetLevel);
+            if (HasBuff(BuffType.经验收益固定))
+                expPoint = (int)amount;
+            else
+                expPoint = ReduceExp(amount, targetLevel);
+
             expPoint = (int)(expPoint * Settings.ExpRate);
 
             //party
@@ -841,22 +845,27 @@ namespace Server.MirObjects
                 {
                     PlayerObject player = GroupMembers[i];
 
-                    if (Functions.InRange(player.CurrentLocation, CurrentLocation, Globals.DataRange))
+                    if (player.CurrentMap == CurrentMap && Functions.InRange(player.CurrentLocation, CurrentLocation, Globals.DataRange) && !player.Dead)
                     {
                         sumLevel += player.Level;
                         nearCount++;
                     }
                 }
 
-                if (nearCount > partyExpRate.Length) nearCount = partyExpRate.Length;
-
-                for (int i = 0; i < GroupMembers.Count; i++)
+                if (nearCount > 0)
                 {
-                    PlayerObject player = GroupMembers[i];
-                    if (player.CurrentMap == CurrentMap &&
-                        Functions.InRange(player.CurrentLocation, CurrentLocation, Globals.DataRange) && !player.Dead)
+                    if (nearCount > partyExpRate.Length) nearCount = partyExpRate.Length;
+
+                    for (int i = 0; i < GroupMembers.Count; i++)
                     {
-                        player.GainExp((uint)((float)expPoint * partyExpRate[nearCount - 1] * (float)player.Level / (float)sumLevel));
+                        PlayerObject player = GroupMembers[i];
+
+                        if (player.CurrentMap == CurrentMap &&
+                            Functions.InRange(player.CurrentLocation, CurrentLocation, Globals.DataRange) &&
+                            !player.Dead)
+                        {
+                            player.GainExp((uint)((float)expPoint * partyExpRate[nearCount - 1] * (float)player.Level / (float)sumLevel));
+                        }
                     }
                 }
             }
@@ -867,7 +876,11 @@ namespace Server.MirObjects
 
             if (HeroSpawned && !Hero.Dead)
             {
-                expPoint = Hero.ReduceExp(amount, targetLevel);
+                if (HasBuff(BuffType.经验收益固定))
+                    expPoint = (int)amount;
+                else
+                    expPoint = Hero.ReduceExp(amount, targetLevel);
+
                 expPoint = (int)(expPoint * Settings.ExpRate);
                 Hero.GainExp((uint)expPoint);
             }
@@ -952,7 +965,7 @@ namespace Server.MirObjects
             LevelUp();
 
             if (IsGM) return;
-            if ((LastRankUpdate + 3600 * 1000) > Envir.Time)
+            if ((LastRankUpdate + 3600 * 1000) < Envir.Time)
             {
                 LastRankUpdate = Envir.Time;
                 Envir.CheckRankUpdate(Info);

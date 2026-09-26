@@ -1597,6 +1597,7 @@ public enum BuffType : ushort
     游戏管理 = 300,
     General,
     获取经验提升,
+    经验收益固定,
     物品掉落提升,
     金币辉煌,
     背包负重提升,
