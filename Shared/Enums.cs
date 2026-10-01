@@ -1692,6 +1692,8 @@ public enum BuffType : ushort
     龙的特效,
     龍之祝福,
     白龙祝福,
+    天龙防御,
+    天龙攻击,
 
     // Battlefield
     荣誉战场 = 1000,

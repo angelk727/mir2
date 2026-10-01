@@ -10213,10 +10213,10 @@ namespace Client.MirScenes
                 [ItemSet.道护套装] = new() { (Array.Empty<ItemType>(), new[] { "生命值 + 30", "魔法值 + 30" }) },
                 [ItemSet.天龙套装] = new()
                 {
-                 (new[] { ItemType.盔甲, ItemType.武器 },new[] { "攻击强化 + 3" }),
-                 (new[] { ItemType.头盔, ItemType.腰带, ItemType.靴子 },new[] { "防御强化 + 3" }),
-                 (new[] { ItemType.戒指, ItemType.手镯, ItemType.项链 }, new[] { "攻击 + 2~6", "魔法 + 2~6", "道术 + 2~6", "攻击速度 + 2", "腕力 + 30", "负重 + 30", "背包重量 + 60"}),
-                 (new[] { ItemType.盔甲, ItemType.武器, ItemType.头盔, ItemType.腰带, ItemType.靴子, ItemType.戒指, ItemType.手镯, ItemType.项链 }, new[] { "幸运 + 2", "生命值 + 100", "防御 + 2~6", "魔法防御 + 1~4", "魔法值 + 100", "中毒恢复 + 2"})
+                 (new[] { ItemType.武器, ItemType.盔甲 }, new[] { "冷却60秒-攻击时30%概率触发额外伤害", "额外伤害提升30%持续15秒" }),
+                 (new[] { ItemType.头盔, ItemType.腰带, ItemType.靴子 }, new[] { "冷却60秒-防御时25%概率触发减伤", "伤害减免提升30%持续15秒" }),
+                 (new[] { ItemType.戒指, ItemType.手镯, ItemType.项链 }, new[] { "攻击、魔法、道术 + 2~6；攻击速度 + 2", "腕力、负重 + 30；背包重量 + 60" }),
+                 (new[] { ItemType.盔甲, ItemType.武器, ItemType.头盔, ItemType.腰带, ItemType.靴子, ItemType.戒指, ItemType.手镯, ItemType.项链 }, new[] { "幸运 + 2；生命值 + 100；防御 + 2~6", "魔法防御 + 1~4；魔法值 + 100；中毒恢复 + 2" })
                 },
                 [ItemSet.白骨套装] = new() { (Array.Empty<ItemType>(), new[] { "防御 + 0~2", "魔法 + 0~1", "道术 + 0~1" }) },
                 [ItemSet.虫血套装] = new() { (Array.Empty<ItemType>(), new[] { "攻击 + 0~1", "魔法 + 0~1", "道术 + 0~1", "魔法躲避 + 1", "毒物躲避 + 1" }) },
@@ -10251,22 +10251,22 @@ namespace Client.MirScenes
                 [ItemSet.昆仑宝物套装] = new()
                 {
                  (new[] { ItemType.项链, ItemType.戒指 },new[] { "攻击 + 0~5", "魔法 + 0~5", "道术 + 0~5" }),
-                 (new[] { ItemType.项链, ItemType.戒指, ItemType.手镯, ItemType.盔甲 },new[] { "防御时有几率触发", "15%伤害减免持续10秒", "冷却时间120秒" }),
-                 (new[] { ItemType.武器, ItemType.头盔, ItemType.腰带, ItemType.靴子 },new[] { "攻击时有几率触发", "15%额外伤害持续10秒", "冷却时间120秒" }),
+                 (new[] { ItemType.项链, ItemType.戒指, ItemType.手镯, ItemType.盔甲 },new[] { "防御时有概率触发", "15%伤害减免持续10秒", "冷却时间120秒" }),
+                 (new[] { ItemType.武器, ItemType.头盔, ItemType.腰带, ItemType.靴子 },new[] { "攻击时有概率触发", "15%额外伤害持续10秒", "冷却时间120秒" }),
                  (new[] { ItemType.武器, ItemType.头盔, ItemType.腰带, ItemType.靴子, ItemType.戒指, ItemType.项链, ItemType.手镯, ItemType.盔甲 },new[] { "暴击率 + 3%", "暴击伤害 + 30%" })
                 },
                 [ItemSet.昆仑圣物套装] = new()
                 {
                  (new[] { ItemType.项链, ItemType.戒指 },new[] { "攻击 + 0~8", "魔法 + 0~8", "道术 + 0~8" }),
-                 (new[] { ItemType.项链, ItemType.戒指, ItemType.手镯, ItemType.盔甲 },new[] { "防御时有几率触发", "20%伤害减免持续15秒", "冷却时间120秒" }),
-                 (new[] { ItemType.武器, ItemType.头盔, ItemType.腰带, ItemType.靴子 },new[] { "攻击时有几率触发", "20%额外伤害持续15秒", "冷却时间120秒" }),
+                 (new[] { ItemType.项链, ItemType.戒指, ItemType.手镯, ItemType.盔甲 },new[] { "防御时有概率触发", "20%伤害减免持续15秒", "冷却时间120秒" }),
+                 (new[] { ItemType.武器, ItemType.头盔, ItemType.腰带, ItemType.靴子 },new[] { "攻击时有概率触发", "20%额外伤害持续15秒", "冷却时间120秒" }),
                  (new[] { ItemType.武器, ItemType.头盔, ItemType.腰带, ItemType.靴子, ItemType.戒指, ItemType.项链, ItemType.手镯, ItemType.盔甲 },new[] { "暴击率 + 7%", "暴击伤害 + 40%" })
                 },
                 [ItemSet.昆仑神物套装] = new()
                 {
                  (new[] { ItemType.项链, ItemType.戒指 },new[] { "攻击 + 0~11", "魔法 + 0~11", "道术 + 0~11" }),
-                 (new[] { ItemType.项链, ItemType.戒指, ItemType.手镯, ItemType.盔甲 },new[] { "防御时有几率触发", "25%伤害减免持续20秒", "冷却时间120秒" }),
-                 (new[] { ItemType.武器, ItemType.头盔, ItemType.腰带, ItemType.靴子 },new[] { "攻击时有几率触发", "25%额外伤害持续20秒", "冷却时间120秒" }),
+                 (new[] { ItemType.项链, ItemType.戒指, ItemType.手镯, ItemType.盔甲 },new[] { "防御时有概率触发", "25%伤害减免持续20秒", "冷却时间120秒" }),
+                 (new[] { ItemType.武器, ItemType.头盔, ItemType.腰带, ItemType.靴子 },new[] { "攻击时有概率触发", "25%额外伤害持续20秒", "冷却时间120秒" }),
                  (new[] { ItemType.武器, ItemType.头盔, ItemType.腰带, ItemType.靴子, ItemType.戒指, ItemType.项链, ItemType.手镯, ItemType.盔甲 },new[] { "暴击率 + 11%", "暴击伤害 + 50%"})
                 },
             };

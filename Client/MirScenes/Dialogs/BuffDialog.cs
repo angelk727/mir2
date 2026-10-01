@@ -722,6 +722,10 @@ namespace Client.MirScenes.Dialogs
                     return 201;
                 case BuffType.破天的核心:
                     return 206;
+                case BuffType.天龙防御:
+                    return 93;
+                case BuffType.天龙攻击:
+                    return 94;
                 case BuffType.荣誉战场:
                     return 20088;
 

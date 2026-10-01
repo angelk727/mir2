@@ -735,6 +735,18 @@ namespace Server.MirDatabase
                     StackType = BuffStackType.AttrStackStatAndDuration,
                     Visible = true
                 },
+                new BuffInfo
+                {
+                    Type = BuffType.天龙防御,
+                    StackType = BuffStackType.ResetStatAndDuration,
+                    Visible = true
+                },
+                new BuffInfo
+                {
+                    Type = BuffType.天龙攻击,
+                    StackType = BuffStackType.ResetStatAndDuration,
+                    Visible = true
+                },
 
                 // Battlefield
                 new BuffInfo

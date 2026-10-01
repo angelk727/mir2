@@ -2844,6 +2844,12 @@ namespace Server.MirObjects
                 return 0;
             }
 
+            if (attacker.HasTianlongAttackSet && Envir.Time >= attacker.TianlongAttackCooldown && Envir.Random.Next(100) < 30)
+            {
+                attacker.AddBuff(BuffType.天龙攻击, attacker, 15000, new Stats { [Stat.额外伤害] = 30 });
+                attacker.TianlongAttackCooldown = Envir.Time + 60000;
+            }
+
             if (attacker.HasKunlunRareAttackSet && Envir.Time >= attacker.KunlunRareAttackCooldown && Envir.Random.Next(100) < 30)
             {
                 attacker.AddBuff(BuffType.昆仑攻击, attacker, 10000, new Stats { [Stat.额外伤害] = 15 });

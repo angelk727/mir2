@@ -23,7 +23,8 @@ public class BaseStats
                 Stats.Add(new BaseStat(Stat.MinDC) { FormulaType = StatFormula.Stat, Base = 0, Gain = 5, GainRate = 0F, Max = 0 });
                 Stats.Add(new BaseStat(Stat.MaxDC) { FormulaType = StatFormula.Stat, Base = 0, Gain = 5, GainRate = 0F, Max = 0 });
                 Stats.Add(new BaseStat(Stat.敏捷) { FormulaType = StatFormula.Stat, Base = 15, Gain = 0, GainRate = 0F, Max = 0 });
-                Stats.Add(new BaseStat(Stat.准确) { FormulaType = StatFormula.Stat, Base = 5, Gain = 0, GainRate = 0F, Max = 0 });
+                Stats.Add(new BaseStat(Stat.准确) { FormulaType = StatFormula.Stat, Base = 20, Gain = 5, GainRate = 0F, Max = 0 });
+                Stats.Add(new BaseStat(Stat.暴击率) { FormulaType = StatFormula.Stat, Base = 25, Gain = 0, GainRate = 0F, Max = 0 });
                 break;
             #endregion
             #region 法师
@@ -38,7 +39,8 @@ public class BaseStats
                 Stats.Add(new BaseStat(Stat.MinMC) { FormulaType = StatFormula.Stat, Base = 0, Gain = 7, GainRate = 0F, Max = 0 });
                 Stats.Add(new BaseStat(Stat.MaxMC) { FormulaType = StatFormula.Stat, Base = 0, Gain = 7, GainRate = 0F, Max = 0 });
                 Stats.Add(new BaseStat(Stat.敏捷) { FormulaType = StatFormula.Stat, Base = 15, Gain = 0, GainRate = 0F, Max = 0 });
-                Stats.Add(new BaseStat(Stat.准确) { FormulaType = StatFormula.Stat, Base = 5, Gain = 0, GainRate = 0F, Max = 0 });
+                Stats.Add(new BaseStat(Stat.准确) { FormulaType = StatFormula.Stat, Base = 5, Gain = 7, GainRate = 0F, Max = 0 });
+                Stats.Add(new BaseStat(Stat.暴击率) { FormulaType = StatFormula.Stat, Base = 25, Gain = 0, GainRate = 0F, Max = 0 });
                 break;
             #endregion
             #region 道士
@@ -55,7 +57,8 @@ public class BaseStats
                 Stats.Add(new BaseStat(Stat.MinSC) { FormulaType = StatFormula.Stat, Base = 0, Gain = 7, GainRate = 0F, Max = 0 });
                 Stats.Add(new BaseStat(Stat.MaxSC) { FormulaType = StatFormula.Stat, Base = 0, Gain = 7, GainRate = 0F, Max = 0 });
                 Stats.Add(new BaseStat(Stat.敏捷) { FormulaType = StatFormula.Stat, Base = 18, Gain = 0, GainRate = 0F, Max = 0 });
-                Stats.Add(new BaseStat(Stat.准确) { FormulaType = StatFormula.Stat, Base = 5, Gain = 0, GainRate = 0F, Max = 0 });
+                Stats.Add(new BaseStat(Stat.准确) { FormulaType = StatFormula.Stat, Base = 10, Gain = 7, GainRate = 0F, Max = 0 });
+                Stats.Add(new BaseStat(Stat.暴击率) { FormulaType = StatFormula.Stat, Base = 25, Gain = 0, GainRate = 0F, Max = 0 });
                 break;
             #endregion
             #region 刺客
@@ -68,7 +71,8 @@ public class BaseStats
                 Stats.Add(new BaseStat(Stat.MinDC) { FormulaType = StatFormula.Stat, Base = 0, Gain = 8, GainRate = 0F, Max = 0 });
                 Stats.Add(new BaseStat(Stat.MaxDC) { FormulaType = StatFormula.Stat, Base = 0, Gain = 8, GainRate = 0F, Max = 0 });
                 Stats.Add(new BaseStat(Stat.敏捷) { FormulaType = StatFormula.Stat, Base = 20, Gain = 0, GainRate = 0F, Max = 0 });
-                Stats.Add(new BaseStat(Stat.准确) { FormulaType = StatFormula.Stat, Base = 5, Gain = 0, GainRate = 0F, Max = 0 });
+                Stats.Add(new BaseStat(Stat.准确) { FormulaType = StatFormula.Stat, Base = 10, Gain = 7, GainRate = 0F, Max = 0 });
+                Stats.Add(new BaseStat(Stat.暴击率) { FormulaType = StatFormula.Stat, Base = 25, Gain = 0, GainRate = 0F, Max = 0 });
                 break;
             #endregion
             #region 弓箭
@@ -83,15 +87,16 @@ public class BaseStats
                 Stats.Add(new BaseStat(Stat.MinMC) { FormulaType = StatFormula.Stat, Base = 0, Gain = 8, GainRate = 0F, Max = 0 });
                 Stats.Add(new BaseStat(Stat.MaxMC) { FormulaType = StatFormula.Stat, Base = 0, Gain = 8, GainRate = 0F, Max = 0 });
                 Stats.Add(new BaseStat(Stat.敏捷) { FormulaType = StatFormula.Stat, Base = 15, Gain = 0, GainRate = 0F, Max = 0 });
-                Stats.Add(new BaseStat(Stat.准确) { FormulaType = StatFormula.Stat, Base = 8, Gain = 0, GainRate = 0F, Max = 0 });
+                Stats.Add(new BaseStat(Stat.准确) { FormulaType = StatFormula.Stat, Base = 15, Gain = 7, GainRate = 0F, Max = 0 });
+                Stats.Add(new BaseStat(Stat.暴击率) { FormulaType = StatFormula.Stat, Base = 25, Gain = 0, GainRate = 0F, Max = 0 });
                 break;
                 #endregion
         }
 
         Caps[Stat.魔法躲避] = 2;
         Caps[Stat.毒物躲避] = 6;
-        Caps[Stat.暴击率] = 75;
-        Caps[Stat.暴击伤害] = 100;
+        Caps[Stat.暴击率] = 100;
+        Caps[Stat.暴击伤害] = 300;
         Caps[Stat.冰冻伤害] = 6;
         Caps[Stat.毒素伤害] = 6;
         Caps[Stat.生命恢复] = 8;

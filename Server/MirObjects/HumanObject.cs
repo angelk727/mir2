@@ -254,11 +254,11 @@ namespace Server.MirObjects
             }
         }
 
-        private long KunlunRareDefenseCooldown, KunlunLegendaryDefenseCooldown, KunlunMythicalDefenseCooldown;
-        private bool HasKunlunRareDefenseSet, HasKunlunLegendaryDefenseSet, HasKunlunMythicalDefenseSet;
+        private long TianlongDefenseCooldown, KunlunRareDefenseCooldown, KunlunLegendaryDefenseCooldown, KunlunMythicalDefenseCooldown;
+        private bool HasTianlongDefenseSet, HasKunlunRareDefenseSet, HasKunlunLegendaryDefenseSet, HasKunlunMythicalDefenseSet;
 
-        public long KunlunRareAttackCooldown, KunlunLegendaryAttackCooldown, KunlunMythicalAttackCooldown;
-        public bool HasKunlunRareAttackSet, HasKunlunLegendaryAttackSet, HasKunlunMythicalAttackSet;
+        public long TianlongAttackCooldown, KunlunRareAttackCooldown, KunlunLegendaryAttackCooldown, KunlunMythicalAttackCooldown;
+        public bool HasTianlongAttackSet, HasKunlunRareAttackSet, HasKunlunLegendaryAttackSet, HasKunlunMythicalAttackSet;
 
         private bool HasKunlunRareCritSet, HasKunlunLegendaryCritSet, HasKunlunMythicalCritSet;
         public override bool Blocking
@@ -1788,10 +1788,12 @@ namespace Server.MirObjects
         #region Refresh Stats
         public void RefreshStats()
         {
+            HasTianlongDefenseSet = false;
             HasKunlunRareDefenseSet = false;
             HasKunlunLegendaryDefenseSet = false;
             HasKunlunMythicalDefenseSet = false;
 
+            HasTianlongAttackSet = false;
             HasKunlunRareAttackSet = false;
             HasKunlunLegendaryAttackSet = false;
             HasKunlunMythicalAttackSet = false;
@@ -2468,14 +2470,11 @@ namespace Server.MirObjects
         {
             if (MirSet.Contains(EquipmentSlot.武器) && MirSet.Contains(EquipmentSlot.盔甲))
             {
-                Stats[Stat.武器增伤] += 15;
+                HasTianlongAttackSet = true;
             }
             if (MirSet.Contains(EquipmentSlot.头盔) && MirSet.Contains(EquipmentSlot.靴子) && MirSet.Contains(EquipmentSlot.腰带))
             {
-                Stats[Stat.MaxDC] += 3;
-                Stats[Stat.MaxMC] += 3;
-                Stats[Stat.MaxSC] += 3;
-                Stats[Stat.腕力] += 20;
+                HasTianlongDefenseSet = true;
             }
             if (MirSet.Contains(EquipmentSlot.项链) &&
                (MirSet.Contains(EquipmentSlot.左手镯) || MirSet.Contains(EquipmentSlot.右手镯)) &&
@@ -8133,6 +8132,12 @@ namespace Server.MirObjects
                 heroAttacker.Target = this;
             }
 
+            if (HasTianlongDefenseSet && Envir.Time >= TianlongDefenseCooldown && Envir.Random.Next(100) < 25)
+            {
+                AddBuff(BuffType.天龙防御, this, 15000, new Stats { [Stat.伤害减免] = 30 });
+                TianlongDefenseCooldown = Envir.Time + 60000;
+            }
+
             if (HasKunlunRareDefenseSet && Envir.Time >= KunlunRareDefenseCooldown && Envir.Random.Next(100) < 30)
             {
                 AddBuff(BuffType.昆仑防御, this, 10000, new Stats { [Stat.伤害减免] = 15 });
@@ -8186,6 +8191,12 @@ namespace Server.MirObjects
             {
                 BroadcastDamageIndicator(DamageType.Miss);
                 return 0;
+            }
+
+            if (attacker.HasTianlongAttackSet && Envir.Time >= attacker.TianlongAttackCooldown && Envir.Random.Next(100) < 30)
+            {
+                attacker.AddBuff(BuffType.天龙攻击, attacker, 15000, new Stats { [Stat.额外伤害] = 30 });
+                attacker.TianlongAttackCooldown = Envir.Time + 60000;
             }
 
             if (attacker.HasKunlunRareAttackSet && Envir.Time >= attacker.KunlunRareAttackCooldown && Envir.Random.Next(100) < 30)
@@ -8307,6 +8318,12 @@ namespace Server.MirObjects
             if (!hit)
             {
                 return 0;
+            }
+
+            if (HasTianlongDefenseSet && Envir.Time >= TianlongDefenseCooldown && Envir.Random.Next(100) < 25)
+            {
+                AddBuff(BuffType.天龙防御, this, 15000, new Stats { [Stat.伤害减免] = 30 });
+                TianlongDefenseCooldown = Envir.Time + 60000;
             }
 
             if (HasKunlunRareDefenseSet && Envir.Time >= KunlunRareDefenseCooldown && Envir.Random.Next(100) < 30)
