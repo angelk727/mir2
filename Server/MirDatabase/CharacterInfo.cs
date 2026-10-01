@@ -496,7 +496,45 @@ namespace Server.MirDatabase
                 CurrentQuests[i].Save(writer);
             }
 
+            for (int i = Buffs.Count - 1; i >= 0; i--)
+            {
+                if (Buffs[i] == null)
+                {
+                    MessageQueue.Instance.Enqueue($"发现空Buff，已自动删除：角色={Name}，ObjectID={Index}");
+                    Buffs.RemoveAt(i);
+                    continue;
+                }
+
+                if (Buffs[i].Info == null)
+                {
+                    MessageQueue.Instance.Enqueue($"发现异常Buff，BuffInfo为空，已自动删除：角色={Name}，ObjectID={Index}");
+                    Buffs.RemoveAt(i);
+                    continue;
+                }
+
+                if (Buffs[i].Stats == null)
+                {
+                    MessageQueue.Instance.Enqueue($"发现异常Buff，属性数据为空，已自动删除：角色={Name}，类型={Buffs[i].Type}，ObjectID={Index}");
+                    Buffs.RemoveAt(i);
+                    continue;
+                }
+
+                if (Buffs[i].Data == null)
+                {
+                    MessageQueue.Instance.Enqueue($"发现异常Buff，附加数据为空，已自动删除：角色={Name}，类型={Buffs[i].Type}，ObjectID={Index}");
+                    Buffs.RemoveAt(i);
+                    continue;
+                }
+
+                if (Buffs[i].Values == null)
+                {
+                    MessageQueue.Instance.Enqueue($"发现异常Buff，数值数据为空，已自动删除：角色={Name}，类型={Buffs[i].Type}，ObjectID={Index}");
+                    Buffs.RemoveAt(i);
+                }
+            }
+
             writer.Write(Buffs.Count);
+
             for (int i = 0; i < Buffs.Count; i++)
             {
                 Buffs[i].Save(writer);

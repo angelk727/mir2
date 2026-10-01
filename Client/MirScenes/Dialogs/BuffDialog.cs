@@ -21,8 +21,12 @@ namespace Client.MirScenes.Dialogs
             get { return GetExpandedParameter(); }
             set { SetExpandedParameter(value); }
         }
+        private bool IsLocalVisible(ClientBuff buff)
+        {
+            return buff.Type == BuffType.游戏管理;
+        }
 
-    protected const long FadeDelay = 55;
+        protected const long FadeDelay = 55;
         protected const float FadeRate = 0.2f;
 
         public BuffDialog()
@@ -98,7 +102,7 @@ namespace Client.MirScenes.Dialogs
             {
                 Library = buffLibrary,
                 Parent = this,
-                Visible = true,
+                Visible = buff.Visible || IsLocalVisible(buff),
                 Sort = false,
                 Index = buffImage
             };
@@ -158,7 +162,9 @@ namespace Client.MirScenes.Dialogs
                 image.Index = buffImage;
                 image.Library = buffLibrary;
 
-                if (ExpandedBuffWindow || !ExpandedBuffWindow && i == 0)
+                bool visible = buff.Visible || IsLocalVisible(buff);
+
+                if (visible && (ExpandedBuffWindow || !ExpandedBuffWindow && i == 0))
                 {
                     image.Visible = true;
                     image.Opacity = 1f;
@@ -280,11 +286,6 @@ namespace Client.MirScenes.Dialogs
         public string BuffString(ClientBuff buff)
         {
             string text = RegexFunctions.SeperateCamelCase(buff.Type.ToString()) + "\n";
-
-            if (buff.Type == BuffType.Valor) text = "战场特效\n";
-
-            else
-                text = RegexFunctions.SeperateCamelCase(buff.Type.ToLocalizedString()) + "\n"; 
             
             bool overridestats = false;
 
@@ -357,16 +358,16 @@ namespace Client.MirScenes.Dialogs
                 case BuffType.变形效果:
                     text += "改变外形\n功能：免助跑\n";
                     break;
-                case BuffType.衣钵相传:
+                case BuffType.师徒经验提升:
                     text += "拜师后经验加成\n";
                     break;
-                case BuffType.火传穷薪:
+                case BuffType.师徒增伤提升:
                     text += "收徒后伤害加成\n";
                     break;
                 case BuffType.公会特效:
                     text += GameScene.Scene.GuildDialog.ActiveStats;
                     break;
-                case BuffType.新人特效:
+                case BuffType.公会成员:
                     text += GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.ReducesVisibility);
                     break;
                 case BuffType.失明状态:
@@ -423,6 +424,12 @@ namespace Client.MirScenes.Dialogs
                     overridestats = true;
                     text += string.Format("每秒持续 {0}生命值\n", buff.Stats[Stat.HP]);
                     break;
+                case BuffType.荣誉战场:
+                    text += string.Format("战场特效\n");
+                    break;
+                case BuffType.经验收益固定:
+                    text += string.Format("真视效果期间\n经验获取不受等级限制\n");
+                    break;
             }
 
             if (!overridestats)
@@ -432,16 +439,11 @@ namespace Client.MirScenes.Dialogs
                     var c = val.Value < 0 ? GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.Decreases) : GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.Increases);
                     var key = val.Key.ToString();
 
-                    var strKey = RegexFunctions.SeperateCamelCase(key.Replace("速率", "").Replace("倍率", "").Replace("数率", ""));
+                    var strKey = RegexFunctions.SeperateCamelCase(key);
 
-                    var sign = "";
+                    var sign = GetStatSign(val.Key);
 
-                    if (key.Contains("数率"))
-                        sign = "%";
-                    else if (key.Contains("倍率"))
-                        sign = "倍";
-
-                    var txt = GameLanguage.ClientTextMap.GetLocalization((ClientTextKeys.BuffEffect), c, strKey, val.Value, sign);
+                    var txt = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.BuffEffect, c, strKey, val.Value, sign);
 
                     text += txt;
                 }
@@ -464,7 +466,6 @@ namespace Client.MirScenes.Dialogs
 
             return text;
         }
-
         private string CombinedBuffText()
         {
             string text = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.ActiveBuffs);
@@ -482,26 +483,61 @@ namespace Client.MirScenes.Dialogs
                 var c = val.Value < 0 ? GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.Decreases) : GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.Increases);
                 var key = val.Key.ToString();
 
-                var strKey = RegexFunctions.SeperateCamelCase(key.Replace("速率", "").Replace("倍率", "").Replace("数率", ""));
+                var strKey = RegexFunctions.SeperateCamelCase(key);
 
-                var sign = "";
+                var sign = GetStatSign(val.Key);
 
-                if (key.Contains("数率"))
-                    sign = "%";
-                else if (key.Contains("倍率"))
-                    sign = "倍";
-
-                var txt = GameLanguage.ClientTextMap.GetLocalization((ClientTextKeys.BuffEffect), c, strKey, val.Value, sign);;
+                var txt = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.BuffEffect, c, strKey, val.Value, sign);
 
                 text += txt;
             }
 
             return text;
         }
+        private string GetStatSign(Stat stat)
+        {
+            switch (stat)
+            {
+                case Stat.暴击率:
+                case Stat.暴击伤害:
+                case Stat.额外伤害:
 
+                case Stat.防御强化:
+                case Stat.魔法防御强化:
+                case Stat.攻击强化:
+                case Stat.魔法强化:
+                case Stat.道术强化:
+                case Stat.攻速强化:
+                case Stat.生命值强化:
+                case Stat.法力值强化:
+                case Stat.生命偷取:
+
+                case Stat.掉落收益:
+                case Stat.经验收益:
+                case Stat.金币收益:
+                case Stat.采矿收益:
+                case Stat.宝石收益:
+                case Stat.钓鱼收益:
+                case Stat.大师收益:
+                case Stat.技能熟练度收益:
+
+                case Stat.伴侣经验收益:
+                case Stat.师徒增伤收益:
+                case Stat.师徒经验收益:
+                case Stat.伤害减免:
+
+                case Stat.气功盾恢复百分比:
+                case Stat.法力值消耗百分比:
+                case Stat.传送技能法力值消耗:
+
+                    return "%";
+
+                default:
+                    return "";
+            }
+        }
         private int BuffImage(BuffType type)
         {
-            if (type == BuffType.Valor) return 249;
             switch (type)
             {
                 //Skills
@@ -609,16 +645,14 @@ namespace Client.MirScenes.Dialogs
                     return 20122;
                 case BuffType.隐身戒指:
                     return 24;
-                case BuffType.金币辉煌:
+                case BuffType.金币收益提升:
                     return 10907;
-                case BuffType.包容万斤:
-                    return 10872;
                 case BuffType.变形效果:
                     return 10890;
-                case BuffType.火传穷薪:
-                case BuffType.衣钵相传:
+                case BuffType.师徒增伤提升:
+                case BuffType.师徒经验提升:
                     return 80;
-                case BuffType.心心相映:
+                case BuffType.伴侣经验提升:
                     return 179;
                 case BuffType.公会特效:
                     return 63;
@@ -630,17 +664,19 @@ namespace Client.MirScenes.Dialogs
                     return 75;
                 case BuffType.技巧项链:
                     return 60;
-                case BuffType.新人特效:
-                    return 10903;
+                case BuffType.公会成员:
+                    return 10899;
                 case BuffType.安息之气:
-                    return 334;
+                    return 3;
                 case BuffType.远古气息:
-                    return 334;
+                    return 4;
                 case BuffType.华丽雨光:
                     return 30;
                 case BuffType.龙之特效:
                     return 31;
                 case BuffType.龙的特效:
+                    return 229;
+                case BuffType.白龙祝福:
                     return 32;
                 case BuffType.奇异药水:
                     return 510;
@@ -678,25 +714,48 @@ namespace Client.MirScenes.Dialogs
                     return 545;
                 case BuffType.摩鲁的黄色药剂:
                     return 546;
+                case BuffType.昆仑防御:
+                    return 199;
+                case BuffType.昆仑攻击:
+                    return 200;
+                case BuffType.昆仑暴击:
+                    return 201;
                 case BuffType.破天的核心:
                     return 206;
+                case BuffType.荣誉战场:
+                    return 20088;
 
                 //Stats
                 case BuffType.攻击力提升:
+                    return 10862;
                 case BuffType.魔法力提升:
+                    return 10863;
                 case BuffType.道术力提升:
+                    return 10864;
                 case BuffType.攻击速度提升:
+                    return 10865;
                 case BuffType.生命值提升:
-                case BuffType.法力值提升:
+                    return 10866;
                 case BuffType.防御提升:
+                    return 10868;
                 case BuffType.魔法防御提升:
-                case BuffType.背包负重提升:
-                case BuffType.准确命中提升:
-                case BuffType.敏捷躲避提升:
-                case BuffType.获取经验提升:
+                    return 10869;
+                case BuffType.法力值提升:
+                    return 10870;
+                case BuffType.背包重量提升:
+                    return 10872;
                 case BuffType.物品掉落提升:
-                case BuffType.技能经验提升:
-                    return 10893;
+                    return 10873;
+                case BuffType.技能熟练提升:
+                    return 10875;
+                case BuffType.准确提升:
+                    return 10880;
+                case BuffType.敏捷提升:
+                    return 10881;
+                case BuffType.经验收益提升:
+                    return 334;
+                case BuffType.经验收益固定:
+                    return 10861;
                 default:
                     return 0;
             }

@@ -881,6 +881,7 @@
     "CriticalChancePlus": "Critical Chance: + {0}",
     "FlexibilityPlus": "Flexibility: + {0}",
     "CriticalDamagePlus": "Critical Damage: + {0}",
+    "ExtraDamagePlus": "Extra Damage: + {0}",
     "ReflectChance": "Reflect chance: {0}",
     "HPDrainRate": "HP Drain Rate: {0}%",
     "ExpRate": "Exp Rate: {0}{1}%",

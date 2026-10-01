@@ -2,7 +2,6 @@ using System.Drawing;
 ﻿using Server.MirDatabase;
 using Server.MirEnvir;
 using System.Globalization;
-using System.Numerics;
 using System.Text.RegularExpressions;
 using S = ServerPackets;
 using Timer = Server.MirEnvir.Timer;
@@ -4155,7 +4154,7 @@ namespace Server.MirObjects
 
                             if (player.MyGuildRank == null) return;
 
-                            if (player.MyGuild.Name == Settings.NewbieGuild) player.RemoveBuff(BuffType.新人特效);
+                            if (player.MyGuild.Name == Settings.NewbieGuild) player.RemoveBuff(BuffType.公会成员);
                             if (player.HasBuff(BuffType.公会特效)) player.RemoveBuff(BuffType.公会特效);
 
                             player.MyGuild.DeleteMember(player, player.Name);

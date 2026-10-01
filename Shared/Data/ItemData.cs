@@ -23,7 +23,7 @@ public class ItemInfo
     public byte Effect;
 
     public bool NeedIdentify, ShowGroupPickup, GlobalDropNotify;
-    public bool ClassBased;  //重复删除
+    public bool ClassBased;
     public bool LevelBased;
     public bool CanMine;
     public bool CanFastRun;
@@ -1185,7 +1185,9 @@ public class ItemSets
                 case ItemSet.青玉套装:
                     return 5;
                 case ItemSet.天龙套装:
-                case ItemSet.昆仑套装:
+                case ItemSet.昆仑宝物套装:
+                case ItemSet.昆仑圣物套装:
+                case ItemSet.昆仑神物套装:
                     return 8;
                 default:
                     return 0;
@@ -1215,6 +1217,7 @@ public class RandomItemStat
     public byte AttackSpeedChance, AttackSpeedStatChance, AttackSpeedMaxStat, LuckChance, LuckStatChance, LuckMaxStat;
     public byte CurseChance;
     public byte SlotChance, SlotStatChance, SlotMaxStat;
+    public byte ExtraDamageChance, ExtraDamageMaxStat, ExtraDamageStatChance;
 
     public RandomItemStat(ItemType Type = ItemType.技能书)
     {
@@ -1277,6 +1280,10 @@ public class RandomItemStat
         AccuracyChance = 30;
         AccuracyStatChance = 20;
         AccuracyMaxStat = 2;
+
+        ExtraDamageChance = 30;
+        ExtraDamageStatChance = 20;
+        ExtraDamageMaxStat = 5;
 
         SlotChance = 0;
         SlotStatChance = 0;

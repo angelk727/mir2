@@ -690,5 +690,10 @@ namespace Server
             }
         }
         #endregion
+
+        private void setBuffsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new SetBuffsInfoForm().ShowDialog();
+        }
     }
 }

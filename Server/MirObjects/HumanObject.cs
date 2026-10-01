@@ -253,6 +253,14 @@ namespace Server.MirObjects
                     return false;
             }
         }
+
+        private long KunlunRareDefenseCooldown, KunlunLegendaryDefenseCooldown, KunlunMythicalDefenseCooldown;
+        private bool HasKunlunRareDefenseSet, HasKunlunLegendaryDefenseSet, HasKunlunMythicalDefenseSet;
+
+        public long KunlunRareAttackCooldown, KunlunLegendaryAttackCooldown, KunlunMythicalAttackCooldown;
+        public bool HasKunlunRareAttackSet, HasKunlunLegendaryAttackSet, HasKunlunMythicalAttackSet;
+
+        private bool HasKunlunRareCritSet, HasKunlunLegendaryCritSet, HasKunlunMythicalCritSet;
         public override bool Blocking
         {
             get
@@ -460,12 +468,12 @@ namespace Server.MirObjects
                         gm = true;
                         if (!IsGM) buff.FlagForRemoval = true;
                         break;
-                    case BuffType.火传穷薪:
-                    case BuffType.衣钵相传:
+                    case BuffType.师徒增伤提升:
+                    case BuffType.师徒经验提升:
                         mentor = true;
                         if (Info.Mentor == 0) buff.FlagForRemoval = true;
                         break;
-                    case BuffType.心心相映:
+                    case BuffType.伴侣经验提升:
                         lover = true;
                         if (Info.Married == 0) buff.FlagForRemoval = true;
                         break;
@@ -558,11 +566,11 @@ namespace Server.MirObjects
                 {
                     if (Info.IsMentor)
                     {
-                        AddBuff(BuffType.火传穷薪, partnerP, 0, new Stats { [Stat.师徒增伤收益] = Settings.MentorDamageBoost });
+                        AddBuff(BuffType.师徒增伤提升, partnerP, 0, new Stats { [Stat.师徒增伤收益] = Settings.MentorDamageBoost });
                     }
                     else
                     {
-                        AddBuff(BuffType.衣钵相传, partnerP, 0, new Stats { [Stat.师徒经验收益] = Settings.MentorExpBoost });
+                        AddBuff(BuffType.师徒经验提升, partnerP, 0, new Stats { [Stat.师徒经验收益] = Settings.MentorExpBoost });
                     }
                 }
             }
@@ -574,13 +582,13 @@ namespace Server.MirObjects
 
                 if (loverP != null)
                 {
-                    AddBuff(BuffType.心心相映, loverP, 0, new Stats { [Stat.伴侣经验收益] = Settings.LoverEXPBonus });
+                    AddBuff(BuffType.伴侣经验提升, loverP, 0, new Stats { [Stat.伴侣经验收益] = Settings.LoverEXPBonus });
                 }
             }
 
             if (MyGuild != null && MyGuild.Name == Settings.NewbieGuild && Settings.NewbieGuildBuffEnabled == true)
             {
-                AddBuff(BuffType.新人特效, this, 0, new Stats { [Stat.经验收益] = Settings.NewbieGuildExpBuff });
+                AddBuff(BuffType.公会成员, this, 0, new Stats { [Stat.经验收益] = Settings.NewbieGuildExpBuff });
             }
 
             if (refresh)
@@ -1780,6 +1788,18 @@ namespace Server.MirObjects
         #region Refresh Stats
         public void RefreshStats()
         {
+            HasKunlunRareDefenseSet = false;
+            HasKunlunLegendaryDefenseSet = false;
+            HasKunlunMythicalDefenseSet = false;
+
+            HasKunlunRareAttackSet = false;
+            HasKunlunLegendaryAttackSet = false;
+            HasKunlunMythicalAttackSet = false;
+
+            HasKunlunRareCritSet = false;
+            HasKunlunLegendaryCritSet = false;
+            HasKunlunMythicalCritSet = false;
+
             if (HasUpdatedBaseStats == false)
             {
                 SendBaseStats();                
@@ -1792,6 +1812,36 @@ namespace Server.MirObjects
             RefreshBagWeight();
             RefreshEquipmentStats();
             RefreshItemSetStats();
+
+            Stats critStats = null;
+            if (HasKunlunMythicalCritSet)
+            {
+                critStats = new Stats { [Stat.暴击率] = 11, [Stat.暴击伤害] = 50 };
+            }
+            else if (HasKunlunLegendaryCritSet)
+            {
+                critStats = new Stats { [Stat.暴击率] = 7, [Stat.暴击伤害] = 40 };
+            }
+            else if (HasKunlunRareCritSet)
+            {
+                critStats = new Stats { [Stat.暴击率] = 3, [Stat.暴击伤害] = 30 };
+            }
+            if (critStats != null)
+            {
+                if (HasBuff(BuffType.昆仑暴击, out Buff buff))
+                {
+                    buff.Stats = critStats;
+                }
+                else
+                {
+                    AddBuff(BuffType.昆仑暴击, this, 0, critStats, false);
+                }
+            }
+            else
+            {
+                RemoveBuff(BuffType.昆仑暴击);
+            }
+
             RefreshMirSetStats();
             RefreshSkills();
             RefreshBuffs();
@@ -2167,26 +2217,25 @@ namespace Server.MirObjects
                             Stats[Stat.MaxDC] += 5;
                             Stats[Stat.MaxMC] += 5;
                             Stats[Stat.MaxSC] += 5;
-                            return;
                         }
                     }
                 }
 
-                if (s.Set == ItemSet.昆仑套装)
+                if (s.Set == ItemSet.昆仑宝物套装)
                 {
                     if (s.Type.Contains(ItemType.戒指) && s.Type.Contains(ItemType.项链))
                     {
-                        Stats[Stat.MaxDC] += 8;
-                        Stats[Stat.MaxMC] += 8;
-                        Stats[Stat.MaxSC] += 8;
+                        Stats[Stat.MaxDC] += 5;
+                        Stats[Stat.MaxMC] += 5;
+                        Stats[Stat.MaxSC] += 5;
                     }
                     if (s.Type.Contains(ItemType.盔甲) && s.Type.Contains(ItemType.戒指) && s.Type.Contains(ItemType.手镯) && s.Type.Contains(ItemType.项链))
                     {
-                        Stats[Stat.防御强化] += 20;// 如何实现 20%几率降低20%的伤害持续15秒冷却时间120秒
+                        HasKunlunRareDefenseSet = true;
                     }
                     if (s.Type.Contains(ItemType.武器) && s.Type.Contains(ItemType.头盔) && s.Type.Contains(ItemType.腰带) && s.Type.Contains(ItemType.靴子))
                     {
-                        Stats[Stat.攻击强化] += 20;// 如何实现 伤害增加20%持续15秒有20%几率攻击冷却时间120秒
+                        HasKunlunRareAttackSet = true;
                     }
                     if (s.Type.Contains(ItemType.盔甲) &&
                         s.Type.Contains(ItemType.武器) &&
@@ -2197,8 +2246,65 @@ namespace Server.MirObjects
                         s.Type.Contains(ItemType.手镯) &&
                         s.Type.Contains(ItemType.戒指))
                     {
-                        Stats[Stat.暴击率] += 7;
-                        Stats[Stat.暴击伤害] += 40; //这里如何实现 攻击时有7%的几率增加40%的暴击伤害
+                        HasKunlunRareCritSet = true;
+                    }
+                }
+
+                if (s.Set == ItemSet.昆仑圣物套装)
+                {
+                    if (s.Type.Contains(ItemType.戒指) && s.Type.Contains(ItemType.项链))
+                    {
+                        Stats[Stat.MaxDC] += 8;
+                        Stats[Stat.MaxMC] += 8;
+                        Stats[Stat.MaxSC] += 8;
+                    }
+                    if (s.Type.Contains(ItemType.盔甲) && s.Type.Contains(ItemType.戒指) && s.Type.Contains(ItemType.手镯) && s.Type.Contains(ItemType.项链))
+                    {
+                        HasKunlunLegendaryDefenseSet = true;
+                    }
+                    if (s.Type.Contains(ItemType.武器) && s.Type.Contains(ItemType.头盔) && s.Type.Contains(ItemType.腰带) && s.Type.Contains(ItemType.靴子))
+                    {
+                        HasKunlunLegendaryAttackSet = true;
+                    }
+                    if (s.Type.Contains(ItemType.盔甲) &&
+                        s.Type.Contains(ItemType.武器) &&
+                        s.Type.Contains(ItemType.头盔) &&
+                        s.Type.Contains(ItemType.靴子) &&
+                        s.Type.Contains(ItemType.腰带) &&
+                        s.Type.Contains(ItemType.项链) &&
+                        s.Type.Contains(ItemType.手镯) &&
+                        s.Type.Contains(ItemType.戒指))
+                    {
+                        HasKunlunLegendaryCritSet = true;
+                    }
+                }
+
+                if (s.Set == ItemSet.昆仑神物套装)
+                {
+                    if (s.Type.Contains(ItemType.戒指) && s.Type.Contains(ItemType.项链))
+                    {
+                        Stats[Stat.MaxDC] += 11;
+                        Stats[Stat.MaxMC] += 11;
+                        Stats[Stat.MaxSC] += 11;
+                    }
+                    if (s.Type.Contains(ItemType.盔甲) && s.Type.Contains(ItemType.戒指) && s.Type.Contains(ItemType.手镯) && s.Type.Contains(ItemType.项链))
+                    {
+                        HasKunlunMythicalDefenseSet = true;
+                    }
+                    if (s.Type.Contains(ItemType.武器) && s.Type.Contains(ItemType.头盔) && s.Type.Contains(ItemType.腰带) && s.Type.Contains(ItemType.靴子))
+                    {
+                        HasKunlunMythicalAttackSet = true;
+                    }
+                    if (s.Type.Contains(ItemType.盔甲) &&
+                        s.Type.Contains(ItemType.武器) &&
+                        s.Type.Contains(ItemType.头盔) &&
+                        s.Type.Contains(ItemType.靴子) &&
+                        s.Type.Contains(ItemType.腰带) &&
+                        s.Type.Contains(ItemType.项链) &&
+                        s.Type.Contains(ItemType.手镯) &&
+                        s.Type.Contains(ItemType.戒指))
+                    {
+                        HasKunlunMythicalCritSet = true;
                     }
                 }
 
@@ -7835,7 +7941,7 @@ namespace Server.MirObjects
 
             if (Settings.MentorSkillBoost && Info.Mentor != 0 && Info.IsMentor)
             {
-                if (HasBuff(BuffType.衣钵相传, out _))
+                if (HasBuff(BuffType.师徒经验提升, out _))
                 {
                     CharacterInfo mentor = Envir.GetCharacterInfo(Info.Mentor);
                     PlayerObject player = Envir.GetPlayer(mentor.Name);
@@ -8027,6 +8133,24 @@ namespace Server.MirObjects
                 heroAttacker.Target = this;
             }
 
+            if (HasKunlunRareDefenseSet && Envir.Time >= KunlunRareDefenseCooldown && Envir.Random.Next(100) < 30)
+            {
+                AddBuff(BuffType.昆仑防御, this, 10000, new Stats { [Stat.伤害减免] = 15 });
+                KunlunRareDefenseCooldown = Envir.Time + 120000;
+            }
+
+            if (HasKunlunLegendaryDefenseSet && Envir.Time >= KunlunLegendaryDefenseCooldown && Envir.Random.Next(100) < 40)
+            {
+                AddBuff(BuffType.昆仑防御, this, 15000, new Stats { [Stat.伤害减免] = 20 });
+                KunlunLegendaryDefenseCooldown = Envir.Time + 120000;
+            }
+
+            if (HasKunlunMythicalDefenseSet && Envir.Time >= KunlunMythicalDefenseCooldown && Envir.Random.Next(100) < 50)
+            {
+                AddBuff(BuffType.昆仑防御, this, 20000, new Stats { [Stat.伤害减免] = 25 });
+                KunlunMythicalDefenseCooldown = Envir.Time + 120000;
+            }
+
             var armour = GetArmour(type, attacker, out bool hit);
 
             if (!hit)
@@ -8062,6 +8186,24 @@ namespace Server.MirObjects
             {
                 BroadcastDamageIndicator(DamageType.Miss);
                 return 0;
+            }
+
+            if (attacker.HasKunlunRareAttackSet && Envir.Time >= attacker.KunlunRareAttackCooldown && Envir.Random.Next(100) < 30)
+            {
+                attacker.AddBuff(BuffType.昆仑攻击, attacker, 10000, new Stats { [Stat.额外伤害] = 15 });
+                attacker.KunlunRareAttackCooldown = Envir.Time + 120000;
+            }
+
+            if (attacker.HasKunlunLegendaryAttackSet && Envir.Time >= attacker.KunlunLegendaryAttackCooldown && Envir.Random.Next(100) < 40)
+            {
+                attacker.AddBuff(BuffType.昆仑攻击, attacker, 15000, new Stats { [Stat.额外伤害] = 20 });
+                attacker.KunlunLegendaryAttackCooldown = Envir.Time + 120000;
+            }
+
+            if (attacker.HasKunlunMythicalAttackSet && Envir.Time >= attacker.KunlunMythicalAttackCooldown && Envir.Random.Next(100) < 50)
+            {
+                attacker.AddBuff(BuffType.昆仑攻击, attacker, 20000, new Stats { [Stat.额外伤害] = 25 });
+                attacker.KunlunMythicalAttackCooldown = Envir.Time + 120000;
             }
 
             if (Hidden)
@@ -8148,10 +8290,15 @@ namespace Server.MirObjects
             Enqueue(new S.Struck { AttackerID = attacker.ObjectID });
             Broadcast(new S.ObjectStruck { ObjectID = ObjectID, AttackerID = attacker.ObjectID, Direction = Direction, Location = CurrentLocation });
 
-            BroadcastDamageIndicator(DamageType.Hit, armour - damage);
+            int finalDamage = damage - armour;
 
-            ChangeHP(armour - damage);
-            return damage - armour;
+            if (finalDamage > 0 && attacker.Stats[Stat.额外伤害] > 0)
+                finalDamage += (int)(finalDamage * attacker.Stats[Stat.额外伤害] / 100.0);
+
+            BroadcastDamageIndicator(DamageType.Hit, -finalDamage);
+
+            ChangeHP(-finalDamage);
+            return finalDamage;
         }
         public override int Attacked(MonsterObject attacker, int damage, DefenceType type = DefenceType.ACAgility)
         {
@@ -8160,6 +8307,24 @@ namespace Server.MirObjects
             if (!hit)
             {
                 return 0;
+            }
+
+            if (HasKunlunRareDefenseSet && Envir.Time >= KunlunRareDefenseCooldown && Envir.Random.Next(100) < 30)
+            {
+                AddBuff(BuffType.昆仑防御, this, 10000, new Stats { [Stat.伤害减免] = 15 });
+                KunlunRareDefenseCooldown = Envir.Time + 120000;
+            }
+
+            if (HasKunlunLegendaryDefenseSet && Envir.Time >= KunlunLegendaryDefenseCooldown && Envir.Random.Next(100) < 40)
+            {
+                AddBuff(BuffType.昆仑防御, this, 15000, new Stats { [Stat.伤害减免] = 20 });
+                KunlunLegendaryDefenseCooldown = Envir.Time + 120000;
+            }
+
+            if (HasKunlunMythicalDefenseSet && Envir.Time >= KunlunMythicalDefenseCooldown && Envir.Random.Next(100) < 50)
+            {
+                AddBuff(BuffType.昆仑防御, this, 20000, new Stats { [Stat.伤害减免] = 25 });
+                KunlunMythicalDefenseCooldown = Envir.Time + 120000;
             }
 
             if (Envir.Random.Next(100) < Stats[Stat.反弹伤害])
@@ -8242,10 +8407,15 @@ namespace Server.MirObjects
                 StruckTime = Envir.Time + 500;
             }
 
-            BroadcastDamageIndicator(DamageType.Hit, armour - damage);
+            int finalDamage = damage - armour;
 
-            ChangeHP(armour - damage);
-            return damage - armour;
+            if (finalDamage > 0 && attacker.Stats[Stat.额外伤害] > 0)
+                finalDamage += (int)(finalDamage * attacker.Stats[Stat.额外伤害] / 100.0);
+
+            BroadcastDamageIndicator(DamageType.Hit, -finalDamage);
+
+            ChangeHP(-finalDamage);
+            return finalDamage;
         }
         public override int Struck(int damage, DefenceType type = DefenceType.ACAgility)
         {
@@ -9611,6 +9781,43 @@ namespace Server.MirObjects
                 ReceiveChat(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.YouDoNotHaveMountEquiped), ChatType.System);
             }
         }
+        #endregion
+
+        #region Timer Management
+
+        public Server.MirEnvir.Timer GetTimer(string key)
+        {
+            var timerKey = Name + "-" + key;
+
+            if (Envir.Timers.ContainsKey(timerKey))
+                return Envir.Timers[timerKey];
+
+            return null;
+        }
+
+        public void SetTimer(string key, int seconds, byte type = 0)
+        {
+            if (seconds < 0) seconds = 0;
+
+            var timerKey = Name + "-" + key;
+
+            Server.MirEnvir.Timer t = new Server.MirEnvir.Timer(timerKey, seconds, type);
+
+            Envir.Timers[timerKey] = t;
+
+            Enqueue(new S.SetTimer { Key = t.Key, Seconds = t.Seconds, Type = t.Type });
+        }
+
+        public void ExpireTimer(string key)
+        {
+            var timerKey = Name + "-" + key;
+
+            if (Envir.Timers.ContainsKey(timerKey))
+                Envir.Timers.Remove(timerKey);
+
+            Enqueue(new S.ExpireTimer { Key = timerKey });
+        }
+
         #endregion
     }
 }

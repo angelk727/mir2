@@ -7824,6 +7824,31 @@ namespace Client.MirScenes
 
             #endregion
 
+            #region EXTRADAMAGE
+
+            minValue = realItem.Stats[Stat.额外伤害];
+            maxValue = 0;
+            addValue = (!hideAdded && (!HoverItem.Info.NeedIdentify || HoverItem.Identified)) ? addedStats[Stat.额外伤害] : 0;
+
+            if ((minValue > 0 || maxValue > 0 || addValue > 0) && (realItem.Type != ItemType.宝玉神珠))
+            {
+                count++;
+                MirLabel EXTRADAMAGELabel = new MirLabel
+                {
+                    AutoSize = true,
+                    ForeColour = addValue > 0 ? Color.Cyan : Color.White,
+                    Location = new Point(4, ItemLabel.DisplayRectangle.Bottom),
+                    OutLine = true,
+                    Parent = ItemLabel,
+                    Text = GameLanguage.ClientTextMap.GetLocalization((ClientTextKeys.ExtraDamagePlus), minValue + addValue) + (addValue > 0 ? $" (+{addValue})" : string.Empty)
+                };
+
+                ItemLabel.Size = new Size(Math.Max(ItemLabel.Size.Width, EXTRADAMAGELabel.DisplayRectangle.Right + 4),
+                    Math.Max(ItemLabel.Size.Height, EXTRADAMAGELabel.DisplayRectangle.Bottom));
+            }
+
+            #endregion
+
             #region Reflect
 
             minValue = realItem.Stats[Stat.反弹伤害];
@@ -10223,12 +10248,26 @@ namespace Client.MirScenes
                 {
                  (new[] { ItemType.戒指, ItemType.戒指 },new[] { "攻击 + 0~5", "魔法 + 0~5", "道术 + 0~5" })
                 },
-                [ItemSet.昆仑套装] = new()
+                [ItemSet.昆仑宝物套装] = new()
+                {
+                 (new[] { ItemType.项链, ItemType.戒指 },new[] { "攻击 + 0~5", "魔法 + 0~5", "道术 + 0~5" }),
+                 (new[] { ItemType.项链, ItemType.戒指, ItemType.手镯, ItemType.盔甲 },new[] { "防御时有几率触发", "15%伤害减免持续10秒", "冷却时间120秒" }),
+                 (new[] { ItemType.武器, ItemType.头盔, ItemType.腰带, ItemType.靴子 },new[] { "攻击时有几率触发", "15%额外伤害持续10秒", "冷却时间120秒" }),
+                 (new[] { ItemType.武器, ItemType.头盔, ItemType.腰带, ItemType.靴子, ItemType.戒指, ItemType.项链, ItemType.手镯, ItemType.盔甲 },new[] { "暴击率 + 3%", "暴击伤害 + 30%" })
+                },
+                [ItemSet.昆仑圣物套装] = new()
                 {
                  (new[] { ItemType.项链, ItemType.戒指 },new[] { "攻击 + 0~8", "魔法 + 0~8", "道术 + 0~8" }),
-                 (new[] { ItemType.项链, ItemType.戒指, ItemType.手镯, ItemType.盔甲 },new[] { "防御强化 + 20%" }),//20%几率降低20%的伤害持续15秒冷却时间120秒
-                 (new[] { ItemType.武器, ItemType.头盔, ItemType.腰带, ItemType.靴子 },new[] { "攻击强化 + 20%" }),//伤害增加20%持续15秒有20%几率攻击冷却时间120秒
-                 (new[] { ItemType.武器, ItemType.头盔, ItemType.腰带, ItemType.靴子, ItemType.戒指, ItemType.项链, ItemType.手镯, ItemType.盔甲 },new[] { "暴击率 + 7%", "暴击伤害 + 40%" })//攻击时有7%的几率增加40%的暴击伤害
+                 (new[] { ItemType.项链, ItemType.戒指, ItemType.手镯, ItemType.盔甲 },new[] { "防御时有几率触发", "20%伤害减免持续15秒", "冷却时间120秒" }),
+                 (new[] { ItemType.武器, ItemType.头盔, ItemType.腰带, ItemType.靴子 },new[] { "攻击时有几率触发", "20%额外伤害持续15秒", "冷却时间120秒" }),
+                 (new[] { ItemType.武器, ItemType.头盔, ItemType.腰带, ItemType.靴子, ItemType.戒指, ItemType.项链, ItemType.手镯, ItemType.盔甲 },new[] { "暴击率 + 7%", "暴击伤害 + 40%" })
+                },
+                [ItemSet.昆仑神物套装] = new()
+                {
+                 (new[] { ItemType.项链, ItemType.戒指 },new[] { "攻击 + 0~11", "魔法 + 0~11", "道术 + 0~11" }),
+                 (new[] { ItemType.项链, ItemType.戒指, ItemType.手镯, ItemType.盔甲 },new[] { "防御时有几率触发", "25%伤害减免持续20秒", "冷却时间120秒" }),
+                 (new[] { ItemType.武器, ItemType.头盔, ItemType.腰带, ItemType.靴子 },new[] { "攻击时有几率触发", "25%额外伤害持续20秒", "冷却时间120秒" }),
+                 (new[] { ItemType.武器, ItemType.头盔, ItemType.腰带, ItemType.靴子, ItemType.戒指, ItemType.项链, ItemType.手镯, ItemType.盔甲 },new[] { "暴击率 + 11%", "暴击伤害 + 50%"})
                 },
             };
 

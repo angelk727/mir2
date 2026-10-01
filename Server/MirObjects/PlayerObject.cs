@@ -5,7 +5,6 @@ using Server.MirEnvir;
 using Server.MirNetwork;
 using S = ServerPackets;
 using System.Text.RegularExpressions;
-using Timer = Server.MirEnvir.Timer;
 
 namespace Server.MirObjects
 {
@@ -820,6 +819,7 @@ namespace Server.MirObjects
 
             RefreshStats();
         }
+
         public override void WinExp(uint amount, uint targetLevel = 0)
         {
             if (CurrentMap?.Info?.NoExperience == true) return;
@@ -885,6 +885,7 @@ namespace Server.MirObjects
                 Hero.GainExp((uint)expPoint);
             }
         }
+
         public override void GainExp(uint amount)
         {
             if (!CanGainExp) return;
@@ -895,7 +896,7 @@ namespace Server.MirObjects
 
             if (Info.Married != 0)
             {
-                if (HasBuff(BuffType.心心相映, out Buff buff))
+                if (HasBuff(BuffType.伴侣经验提升, out Buff buff))
                 {
                     CharacterInfo lover = Envir.GetCharacterInfo(Info.Married);
                     PlayerObject loverPlayer = Envir.GetPlayer(lover.Name);
@@ -908,7 +909,7 @@ namespace Server.MirObjects
 
             if (Info.Mentor != 0 && !Info.IsMentor)
             {
-                if (HasBuff(BuffType.衣钵相传, out _))
+                if (HasBuff(BuffType.师徒经验提升, out _))
                 {
                     CharacterInfo mentor = Envir.GetCharacterInfo(Info.Mentor);
                     PlayerObject mentorPlayer = Envir.GetPlayer(mentor.Name);
@@ -1596,75 +1597,70 @@ namespace Server.MirObjects
             return true;
         }
 
-        // Run after a successful map change (movement or teleport)
         private void ApplyMapEntryRules(bool mapChanged)
         {
-            if (!mapChanged) return;
+            if (!mapChanged || CurrentMap == null || CurrentMap.Info == null)
+                return;
 
-            // MapEnter NPC hook
-            CallDefaultNPC(DefaultNPCType.MapEnter, CurrentMap.Info.FileName);
+            MapInfo mapInfo = CurrentMap.Info;
 
-            // NoGroup: solo-only maps
-            if (CurrentMap.Info.NoGroup && GroupMembers != null)
+            CallDefaultNPC(DefaultNPCType.MapEnter, mapInfo.FileName);
+
+            if (mapInfo.NoGroup && GroupMembers != null)
             {
                 DisbandGroup(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.GroupingDisabledOnMap));
             }
 
-            // NoPets: freeze combat pets while allowing pickup creatures to keep working
-            if (CurrentMap.Info.NoPets)
+            bool restrictedPetFound = false;
+
+            foreach (var pet in Pets)
             {
-                bool restrictedPetFound = false;
+                if (!PetAffectedByNoPetRule(pet))
+                    continue;
 
-                foreach (var pet in Pets)
+                if (mapInfo.NoPets)
                 {
-                    if (!PetAffectedByNoPetRule(pet))
-                        continue;
-
                     pet.Target = null;
                     pet.Frozen = true;
                     pet.PMode = PetMode.None;
 
-                    // small visual nudge
                     pet.Broadcast(new S.ObjectTurn { Direction = pet.Direction, Location = pet.CurrentLocation });
+
                     restrictedPetFound = true;
                 }
-
-                if (restrictedPetFound)
-                    ReceiveChat(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.PetsNotAllowedOnMap), ChatType.System);
-            }
-
-            else
-            {
-                foreach (var pet in Pets)
+                else
                 {
-                    if (!PetAffectedByNoPetRule(pet))
-                        continue;
-
                     pet.Frozen = false;
                     pet.PMode = PetMode.Both;
-                    pet.BroadcastInfo();
                 }
             }
 
-            // NoIntelligentCreatures: unsummon pickup pets
-            if (CurrentMap.Info.NoIntelligentCreatures && CreatureSummoned && SummonedCreatureType != IntelligentCreatureType.None)
+            if (mapInfo.NoPets && restrictedPetFound)
+            {
+                ReceiveChat(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.PetsNotAllowedOnMap), ChatType.System);
+            }
+
+            if (mapInfo.NoIntelligentCreatures && CreatureSummoned && SummonedCreatureType != IntelligentCreatureType.None)
             {
                 IntelligentCreatureType dismissedType = SummonedCreatureType;
+
                 UnSummonIntelligentCreature(dismissedType);
+
                 ReceiveChat(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.IntelligentCreaturesNotAllowedOnMap), ChatType.System);
             }
 
-            // NoHero: despawn on entry
-            if (CurrentMap.Info.NoHero && Hero != null)
+            if (mapInfo.NoHero && Hero != null)
             {
+                HeroObject hero = Hero;
+
                 DespawnHero();
+
                 ReceiveChat(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.HeroesNotAllowedOnMap), ChatType.System);
 
-                if (Hero != null && Envir.Heroes.Contains(Hero))
-                    Envir.Heroes.Remove(Hero);
+                if (hero != null && Envir.Heroes.Contains(hero))
+                    Envir.Heroes.Remove(hero);
             }
 
-            // Party UI refresh
             GroupMemberMapNameChanged();
         }
 
@@ -2525,11 +2521,19 @@ namespace Server.MirObjects
                             MessageQueue.Enqueue(GameLanguage.ServerTextMap.GetLocalization((ServerTextKeys.PlayerAttemptCreateItem), Name, iInfo.FriendlyName, tempCount));
                         }
                         break;
+
                     case "CLEARBUFFS":
-                        foreach (var buff in Buffs)
+                        for (int i = Buffs.Count - 1; i >= 0; i--)
                         {
-                            buff.FlagForRemoval = true;
-                            buff.ExpireTime = 0;
+                            if (Buffs[i] == null)
+                            {
+                                MessageQueue.Instance.Enqueue($"发现空Buff，已自动删除：ObjectID={ObjectID}");
+                                Buffs.RemoveAt(i);
+                                continue;
+                            }
+
+                            Buffs[i].FlagForRemoval = true;
+                            Buffs[i].ExpireTime = 0;
                         }
                         break;
 
@@ -3379,7 +3383,7 @@ namespace Server.MirObjects
                             ReceiveChat(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.CannotLeaveGuildAtWar), ChatType.System);
                             return;
                         }
-                        if (MyGuild.Name == Settings.NewbieGuild && Settings.NewbieGuildBuffEnabled == true) RemoveBuff(BuffType.新人特效);
+                        if (MyGuild.Name == Settings.NewbieGuild && Settings.NewbieGuildBuffEnabled == true) RemoveBuff(BuffType.公会成员);
                         if (HasBuff(BuffType.公会特效)) RemoveBuff(BuffType.公会特效);
                         MyGuild.DeleteMember(this, Name);
                         break;
@@ -6030,19 +6034,19 @@ namespace Server.MirObjects
                                     AddBuff(BuffType.魔法防御提升, this, time * Settings.Minute, new Stats { [Stat.MaxMAC] = item.GetTotal(Stat.MaxMAC) });
 
                                 if (item.GetTotal(Stat.背包重量) > 0)
-                                    AddBuff(BuffType.背包负重提升, this, time * Settings.Minute, new Stats { [Stat.背包重量] = item.GetTotal(Stat.背包重量) });
+                                    AddBuff(BuffType.背包重量提升, this, time * Settings.Minute, new Stats { [Stat.背包重量] = item.GetTotal(Stat.背包重量) });
 
                                 if (item.GetTotal(Stat.准确) > 0)
-                                    AddBuff(BuffType.准确命中提升, this, time * Settings.Minute, new Stats { [Stat.准确] = item.GetTotal(Stat.准确) });
+                                    AddBuff(BuffType.准确提升, this, time * Settings.Minute, new Stats { [Stat.准确] = item.GetTotal(Stat.准确) });
 
                                 if (item.GetTotal(Stat.敏捷) > 0)
-                                    AddBuff(BuffType.敏捷躲避提升, this, time * Settings.Minute, new Stats { [Stat.敏捷] = item.GetTotal(Stat.敏捷) });
+                                    AddBuff(BuffType.敏捷提升, this, time * Settings.Minute, new Stats { [Stat.敏捷] = item.GetTotal(Stat.敏捷) });
                             }
                             break;
                         case 4: //Exp
                             {
                                 int time = item.Info.Durability;
-                                AddBuff(BuffType.获取经验提升, this, Settings.Minute * time, new Stats { [Stat.经验收益] = item.GetTotal(Stat.幸运) });
+                                AddBuff(BuffType.经验收益提升, this, Settings.Minute * time, new Stats { [Stat.经验收益] = item.GetTotal(Stat.幸运) });
                             }
                             break;
                         case 5: //Drop
@@ -6062,7 +6066,7 @@ namespace Server.MirObjects
                         case 8:
                             {
                                 int time = item.Info.Durability;
-                                AddBuff(BuffType.技能经验提升, this, Settings.Minute * time, new Stats { [Stat.技能熟练度收益] = 3 });
+                                AddBuff(BuffType.技能熟练提升, this, Settings.Minute * time, new Stats { [Stat.技能熟练度收益] = 3 });
                             }
                             break;
                     }
@@ -6406,7 +6410,7 @@ namespace Server.MirObjects
                                 {
                                     var time = item.Info.Durability;
 
-                                    AddBuff(BuffType.包容万斤, this, time * Settings.Minute, new Stats { [Stat.背包重量] = item.GetTotal(Stat.幸运) });
+                                    AddBuff(BuffType.背包重量提升, this, time * Settings.Minute, new Stats { [Stat.背包重量] = item.GetTotal(Stat.幸运) });
                                 }
                                 break;
                         }
@@ -12585,7 +12589,7 @@ namespace Server.MirObjects
                     break;
             }
 
-            return dropitem;
+            return dropitem;//待修复问题
         }
 
         private IntelligentCreatureObject GetCreatureByName(string creatureName)
@@ -14652,40 +14656,6 @@ namespace Server.MirObjects
 
         #endregion
 
-        public Server.MirEnvir.Timer GetTimer(string key)
-        {
-            var timerKey = Name + "-" + key;
-
-            if (Envir.Timers.ContainsKey(timerKey))
-            {
-                return Envir.Timers[timerKey];
-            }
-
-            return null;
-        }
-        public void SetTimer(string key, int seconds, byte type = 0)
-        {
-            if (seconds < 0) seconds = 0;
-
-            var timerKey = Name + "-" + key;
-
-            Timer t = new Timer(timerKey, seconds, type);
-
-            Envir.Timers[timerKey] = t;
-
-            Enqueue(new S.SetTimer { Key = t.Key, Seconds = t.Seconds, Type = t.Type });
-        }
-        public void ExpireTimer(string key)
-        {
-            var timerKey = Name + "-" + key;
-
-            if (Envir.Timers.ContainsKey(timerKey))
-            {
-                Envir.Timers.Remove(timerKey);
-            }
-
-            Enqueue(new S.ExpireTimer { Key = timerKey });
-        }
         public void SetCompass(Point location)
         {
             Enqueue(new S.SetCompass { Location = location });

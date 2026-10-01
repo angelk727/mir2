@@ -883,6 +883,7 @@
     "CriticalChancePlus": "暴击几率: + {0}",
     "FlexibilityPlus": "灵活度: + {0}",
     "CriticalDamagePlus": "暴击伤害: + {0}",
+    "ExtraDamagePlus": "额外伤害: + {0}",
     "ReflectChance": "伤害反弹: {0}",
     "HPDrainRate": "生命偷取: {0}%",
     "ExpRate": "经验收益: {0}{1}%",

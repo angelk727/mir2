@@ -12,7 +12,7 @@ namespace Client.MirScenes.Dialogs
 
         public MirLabel NameLabel, GuildLabel, LoverLabel;
         public MirLabel ACLabel, MACLabel, DCLabel, MCLabel, SCLabel, HealthLabel, ManaLabel;
-        public MirLabel CritRLabel, CritDLabel, LuckLabel, AttkSpdLabel, AccLabel, AgilLabel;
+        public MirLabel CritRLabel, CritDLabel, LuckLabel, AttkSpdLabel, AccLabel, AgilLabel, ExtraDamageLabel;
         public MirLabel ExpPLabel, BagWLabel, WearWLabel, HandWLabel, MagicRLabel, PoisonRecLabel, HealthRLabel, ManaRLabel, PoisonResLabel, HolyTLabel, FreezeLabel, PoisonAtkLabel, ReflectAtkLabel, HPDrainRatePercentLabel;
         public MirLabel HeadingLabel, StatLabel;
         public MirButton NextButton, BackButton;
@@ -345,6 +345,7 @@ namespace Client.MirScenes.Dialogs
                 AccLabel.Text = string.Format("+{0}", actor.Stats[Stat.准确]);
                 AgilLabel.Text = string.Format("+{0}", actor.Stats[Stat.敏捷]);
                 LuckLabel.Text = string.Format("{0}", actor.Stats[Stat.幸运]);
+                //ExtraDamageLabel.Text = string.Format("{0}%", actor.Stats[Stat.额外伤害]);
             };
 
             StatePage = new MirImageControl
@@ -691,6 +692,13 @@ namespace Client.MirScenes.Dialogs
                 Location = new Point(126, 236),
                 NotControl = true
             };
+            //ExtraDamageLabel = new MirLabel
+            //{
+            //    AutoSize = true,
+            //    Parent = StatusPage,
+            //    Location = new Point(126, 254),
+            //    NotControl = true
+            //};
             // STATS II 
             ExpPLabel = new MirLabel
             {

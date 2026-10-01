@@ -1,10 +1,6 @@
-using ClientPackets;
-﻿using Server.MirDatabase;
+using Server.MirDatabase;
 using Server.MirEnvir;
 using Server.MirObjects.Monsters;
-using Shared;
-using System;
-using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
 using S = ServerPackets;
 
@@ -2848,10 +2844,32 @@ namespace Server.MirObjects
                 return 0;
             }
 
+            if (attacker.HasKunlunRareAttackSet && Envir.Time >= attacker.KunlunRareAttackCooldown && Envir.Random.Next(100) < 30)
+            {
+                attacker.AddBuff(BuffType.昆仑攻击, attacker, 10000, new Stats { [Stat.额外伤害] = 15 });
+                attacker.KunlunRareAttackCooldown = Envir.Time + 120000;
+            }
+
+            if (attacker.HasKunlunLegendaryAttackSet && Envir.Time >= attacker.KunlunLegendaryAttackCooldown && Envir.Random.Next(100) < 40)
+            {
+                attacker.AddBuff(BuffType.昆仑攻击, attacker, 15000, new Stats { [Stat.额外伤害] = 20 });
+                attacker.KunlunLegendaryAttackCooldown = Envir.Time + 120000;
+            }
+
+            if (attacker.HasKunlunMythicalAttackSet && Envir.Time >= attacker.KunlunMythicalAttackCooldown && Envir.Random.Next(100) < 50)
+            {
+                attacker.AddBuff(BuffType.昆仑攻击, attacker, 20000, new Stats { [Stat.额外伤害] = 25 });
+                attacker.KunlunMythicalAttackCooldown = Envir.Time + 120000;
+            }
+
             if (Envir.Random.Next(100) < (attacker.Stats[Stat.暴击率] * Settings.CriticalRateWeight))
             {
                 Broadcast(new S.ObjectEffect { ObjectID = ObjectID, Effect = SpellEffect.Critical });
-                damage = Math.Min(int.MaxValue, damage + (int)Math.Floor(damage * (attacker.Stats[Stat.暴击伤害] / (double)Settings.CriticalDamageWeight * 10)));
+
+                double critMultiplier = attacker.Stats[Stat.暴击伤害] * Settings.CriticalDamageWeight / 1000.0;
+                critMultiplier = Math.Max(1.0, critMultiplier);
+
+                damage = Math.Min(int.MaxValue, (int)Math.Floor(damage * critMultiplier));
                 BroadcastDamageIndicator(DamageType.Critical);
             }
 
@@ -2910,7 +2928,7 @@ namespace Server.MirObjects
 
             if (attacker.Info.Mentor != 0 && attacker.Info.IsMentor)
             {
-                if (attacker.HasBuff(BuffType.火传穷薪, out _))
+                if (attacker.HasBuff(BuffType.师徒增伤提升, out _))
                 {
                     CharacterInfo mentee = Envir.GetCharacterInfo(attacker.Info.Mentor);
                     PlayerObject player = Envir.GetPlayer(mentee.Name);
@@ -2934,11 +2952,15 @@ namespace Server.MirObjects
                 if (IsAttackTarget(ob) && (ob.Target == null)) ob.Target = this;
             }
 
-            BroadcastDamageIndicator(DamageType.Hit, armour - damage);
+            int finalDamage = damage - armour;
+
+            if (finalDamage > 0 && attacker.Stats[Stat.额外伤害] > 0) finalDamage += (int)(finalDamage * attacker.Stats[Stat.额外伤害] / 100.0);
+
+            BroadcastDamageIndicator(DamageType.Hit, -finalDamage);
 
             Envir.Valor.RecordDamage(this, attacker);
-            ChangeHP(armour - damage);
-            return damage - armour;
+            ChangeHP(-finalDamage);
+            return finalDamage;
         }
 
         public override int Attacked(MonsterObject attacker, int damage, DefenceType type = DefenceType.ACAgility)

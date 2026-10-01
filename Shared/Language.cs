@@ -900,6 +900,7 @@ public enum ClientTextKeys
     CriticalChancePlus,
     FlexibilityPlus,
     CriticalDamagePlus,
+    ExtraDamagePlus,
     ReflectChance,
     HPDrainRate,
     ExpRate,

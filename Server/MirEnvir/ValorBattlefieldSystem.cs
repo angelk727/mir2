@@ -421,7 +421,7 @@ namespace Server.MirEnvir
 
                         AwardPersonal(ally, 15);
 
-                        ally.AddBuff(BuffType.Valor, ally, _settings.BufferDurationSeconds * 1000, new Stats
+                        ally.AddBuff(BuffType.荣誉战场, ally, _settings.BufferDurationSeconds * 1000, new Stats
                         {
                             [Stat.MinDC] = _settings.BufferAttackBonus,
                             [Stat.MaxDC] = _settings.BufferAttackBonus,
@@ -831,7 +831,7 @@ namespace Server.MirEnvir
             player.AMode = member.PreviousMode;
             player.BrownTime = member.PreviousBrownTime;
 
-            player.RemoveBuff(BuffType.Valor);
+            player.RemoveBuff(BuffType.荣誉战场);
             player.ExpireTimer("ValorRegistration");
 
             player.Enqueue(new S.ChangeAMode

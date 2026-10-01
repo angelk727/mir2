@@ -417,7 +417,7 @@ namespace Server.MirObjects
             for (int i = CurrentMap.Players.Count - 1; i >= 0; i--)
             {
                 PlayerObject player = CurrentMap.Players[i];
-                if (player == this) continue;
+                if (player == null || player == this) continue;
 
                 if (Functions.InRange(CurrentLocation, player.CurrentLocation, Globals.DataRange))
                     player.Enqueue(p);
@@ -576,14 +576,19 @@ namespace Server.MirObjects
         {
             if (!HasBuff(type, out Buff buff))
             {
-                buff = new Buff(type)
+                buff = new Buff(type);
+
+                if (buff.Info == null)
                 {
-                    Caster = owner,
-                    ObjectID = ObjectID,
-                    ExpireTime = duration,
-                    LastTime = Envir.Time,
-                    Stats = stats
-                };
+                    MessageQueue.Instance.Enqueue($"发现异常Buff，BuffInfo为空，无法添加：Type={type}，ObjectID={ObjectID}");
+                    return null;
+                }
+
+                buff.Caster = owner;
+                buff.ObjectID = ObjectID;
+                buff.ExpireTime = duration;
+                buff.LastTime = Envir.Time;
+                buff.Stats = stats;
 
                 Buffs.Add(buff);
             }
@@ -706,8 +711,22 @@ namespace Server.MirObjects
 
         public virtual void RemoveBuff(BuffType b)
         {
-            for (int i = 0; i < Buffs.Count; i++)
+            for (int i = Buffs.Count - 1; i >= 0; i--)
             {
+                if (Buffs[i] == null)
+                {
+                    MessageQueue.Instance.Enqueue($"发现空Buff，已自动删除：ObjectID={ObjectID}");
+                    Buffs.RemoveAt(i);
+                    continue;
+                }
+
+                if (Buffs[i].Info == null)
+                {
+                    MessageQueue.Instance.Enqueue($"发现异常Buff，BuffInfo为空，已自动删除：ObjectID={ObjectID}");
+                    Buffs.RemoveAt(i);
+                    continue;
+                }
+
                 if (Buffs[i].Type != b) continue;
 
                 Buffs[i].FlagForRemoval = true;
@@ -735,8 +754,22 @@ namespace Server.MirObjects
         }
         public bool HasBuff(BuffType type)
         {
-            for (int i = 0; i < Buffs.Count; i++)
+            for (int i = Buffs.Count - 1; i >= 0; i--)
             {
+                if (Buffs[i] == null)
+                {
+                    MessageQueue.Instance.Enqueue($"发现空Buff，已自动删除：ObjectID={ObjectID}");
+                    Buffs.RemoveAt(i);
+                    continue;
+                }
+
+                if (Buffs[i].Info == null)
+                {
+                    MessageQueue.Instance.Enqueue($"发现异常Buff，BuffInfo为空，已自动删除：ObjectID={ObjectID}");
+                    Buffs.RemoveAt(i);
+                    continue;
+                }
+
                 if (Buffs[i].Type != type) continue;
                 return true;
             }
@@ -744,8 +777,22 @@ namespace Server.MirObjects
         }
         public bool HasBuff(BuffType type, out Buff buff)
         {
-            for (int i = 0; i < Buffs.Count; i++)
+            for (int i = Buffs.Count - 1; i >= 0; i--)
             {
+                if (Buffs[i] == null)
+                {
+                    MessageQueue.Instance.Enqueue($"发现空Buff，已自动删除：ObjectID={ObjectID}");
+                    Buffs.RemoveAt(i);
+                    continue;
+                }
+
+                if (Buffs[i].Info == null)
+                {
+                    MessageQueue.Instance.Enqueue($"发现异常Buff，BuffInfo为空，已自动删除：ObjectID={ObjectID}");
+                    Buffs.RemoveAt(i);
+                    continue;
+                }
+
                 if (Buffs[i].Type != type) continue;
 
                 buff = Buffs[i];
@@ -758,6 +805,23 @@ namespace Server.MirObjects
 
         public bool HasAnyBuffs(BuffType exceptBuff, params BuffType[] types)
         {
+            for (int i = Buffs.Count - 1; i >= 0; i--)
+            {
+                if (Buffs[i] == null)
+                {
+                    MessageQueue.Instance.Enqueue($"发现空Buff，已自动删除：ObjectID={ObjectID}");
+                    Buffs.RemoveAt(i);
+                    continue;
+                }
+
+                if (Buffs[i].Info == null)
+                {
+                    MessageQueue.Instance.Enqueue($"发现异常Buff，BuffInfo为空，已自动删除：ObjectID={ObjectID}");
+                    Buffs.RemoveAt(i);
+                    continue;
+                }
+            }
+
             return Buffs.Select(x => x.Type).Except(new List<BuffType> { exceptBuff }).Intersect(types).Any();
         }
 

@@ -400,19 +400,19 @@ namespace Server.MirObjects
                                     AddBuff(BuffType.魔法防御提升, this, time * Settings.Minute, new Stats { [Stat.MaxMAC] = item.GetTotal(Stat.MaxMAC) });
 
                                 if (item.GetTotal(Stat.背包重量) > 0)
-                                    AddBuff(BuffType.背包负重提升, this, time * Settings.Minute, new Stats { [Stat.背包重量] = item.GetTotal(Stat.背包重量) });
+                                    AddBuff(BuffType.背包重量提升, this, time * Settings.Minute, new Stats { [Stat.背包重量] = item.GetTotal(Stat.背包重量) });
 
                                 if (item.GetTotal(Stat.准确) > 0)
-                                    AddBuff(BuffType.准确命中提升, this, time * Settings.Minute, new Stats { [Stat.准确] = item.GetTotal(Stat.准确) });
+                                    AddBuff(BuffType.准确提升, this, time * Settings.Minute, new Stats { [Stat.准确] = item.GetTotal(Stat.准确) });
 
                                 if (item.GetTotal(Stat.敏捷) > 0)
-                                    AddBuff(BuffType.敏捷躲避提升, this, time * Settings.Minute, new Stats { [Stat.敏捷] = item.GetTotal(Stat.敏捷) });
+                                    AddBuff(BuffType.敏捷提升, this, time * Settings.Minute, new Stats { [Stat.敏捷] = item.GetTotal(Stat.敏捷) });
                             }
                             break;
                         case 4: //Exp
                             {
                                 int time = item.Info.Durability;
-                                AddBuff(BuffType.获取经验提升, this, Settings.Minute * time, new Stats { [Stat.经验收益] = item.GetTotal(Stat.幸运) });
+                                AddBuff(BuffType.经验收益提升, this, Settings.Minute * time, new Stats { [Stat.经验收益] = item.GetTotal(Stat.幸运) });
                             }
                             break;
                         case 5: //Drop
@@ -432,7 +432,7 @@ namespace Server.MirObjects
                         case 8:
                             {
                                 int time = item.Info.Durability;
-                                AddBuff(BuffType.技能经验提升, this, Settings.Minute * time, new Stats { [Stat.技能熟练度收益] = 2 });
+                                AddBuff(BuffType.技能熟练提升, this, Settings.Minute * time, new Stats { [Stat.技能熟练度收益] = 2 });
                             }
                             break;
                     }

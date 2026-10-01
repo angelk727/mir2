@@ -97,6 +97,7 @@ public class BaseStats
         Caps[Stat.生命恢复] = 8;
         Caps[Stat.法力恢复] = 8;
         Caps[Stat.中毒恢复] = 6;
+        Caps[Stat.额外伤害] = 300;
     }
 
     public BaseStats(BinaryReader reader)
