@@ -20,33 +20,34 @@ namespace Server.MirEnvir
 
         public static ValorSettings Load()
         {
-            const string path = "ValorSettings.json";
+            string path = Path.Combine(Settings.EnvirPath, "ValorSettings.json");
             ValorSettings settings;
 
             if (File.Exists(path))
             {
-                settings = JsonSerializer.Deserialize<ValorSettings>(
-                    File.ReadAllText(path),
-                    new JsonSerializerOptions
-                    {
-                        AllowTrailingCommas = true
-                    });
+                try
+                {
+                    settings = JsonSerializer.Deserialize<ValorSettings>(File.ReadAllText(path), new JsonSerializerOptions { AllowTrailingCommas = true });
+                }
+                catch (JsonException ex)
+                {
+                    MessageQueue.Instance.Enqueue($"ValorSettings.json 配置读取失败: {ex.Message}");
+                    return new ValorSettings();
+                }
             }
             else
             {
                 settings = new ValorSettings();
-
-                File.WriteAllText(
-                    path,
-                    JsonSerializer.Serialize(
-                        settings,
-                        new JsonSerializerOptions
-                        {
-                            WriteIndented = true
-                        }));
+                File.WriteAllText(path, JsonSerializer.Serialize(settings, new JsonSerializerOptions { WriteIndented = true }));
             }
 
-            if (settings == null || string.IsNullOrWhiteSpace(settings.MapFileName)
+            if (settings == null)
+            {
+                MessageQueue.Instance.Enqueue("ValorSettings.json 配置为空，使用默认配置。");
+                return new ValorSettings();
+            }
+
+            if (string.IsNullOrWhiteSpace(settings.MapFileName)
                 || settings.MaximumPlayers < 2 || settings.MaximumPlayers > 100
                 || settings.ScoreIntervalSeconds < 1 || settings.ScoreIntervalSeconds > 60
                 || settings.PersonalPointsPerTick < 0 || settings.PersonalPointsPerTick > 100
@@ -57,14 +58,17 @@ namespace Server.MirEnvir
                 || settings.BufferRadius < 1 || settings.BufferRadius > 30
                 || settings.BufferAttackBonus < 0 || settings.BufferAttackBonus > 1000
                 || settings.BufferDefenceBonus < 0 || settings.BufferDefenceBonus > 1000
-                || settings.Rewards == null || settings.Rewards.Any(r => r == null
+                || settings.Rewards == null
+                || settings.Rewards.Any(r => r == null
                     || string.IsNullOrWhiteSpace(r.Item)
                     || r.HonorCost < 1
                     || r.HonorCost > 200000))
-                throw new InvalidDataException("无效的 ValorSettings.json 配置值。");
+            {
+                MessageQueue.Instance.Enqueue("ValorSettings.json 存在无效配置，使用默认配置。");
+                return new ValorSettings();
+            }
 
             settings.MapFileName = Path.GetFileNameWithoutExtension(settings.MapFileName);
-
             return settings;
         }
     }

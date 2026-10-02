@@ -1,9 +1,6 @@
 ﻿using Server.MirDatabase;
-using Server.MirEnvir;
 using Server.MirObjects;
 using System.Diagnostics;
-using System.Drawing.Text;
-using System.Numerics;
 
 namespace Server
 {
@@ -283,10 +280,46 @@ namespace Server
             string tempCredit = GameGoldTextBox.Text.Replace(",", "");
 
             info.Name = NameTextBox.Text;
-            info.Level = Convert.ToByte(LevelTextBox.Text);
-            info.PKPoints = Convert.ToInt32(PKPointsTextBox.Text);
-            info.AccountInfo.Gold = Convert.ToUInt32(tempGold);
-            info.AccountInfo.Credit = Convert.ToUInt32(tempCredit);
+
+            if (byte.TryParse(LevelTextBox.Text, out byte level))
+            {
+                info.Level = level;
+            }
+            else
+            {
+                MessageBox.Show("等级输入错误");
+                return;
+            }
+
+            if (int.TryParse(PKPointsTextBox.Text, out int pkPoints))
+            {
+                info.PKPoints = pkPoints;
+            }
+            else
+            {
+                MessageBox.Show("PK点输入错误");
+                return;
+            }
+
+            if (uint.TryParse(tempGold, out uint gold))
+            {
+                info.AccountInfo.Gold = gold;
+            }
+            else
+            {
+                MessageBox.Show("金币输入错误");
+                return;
+            }
+
+            if (uint.TryParse(tempCredit, out uint credit))
+            {
+                info.AccountInfo.Credit = credit;
+            }
+            else
+            {
+                MessageBox.Show("信用币输入错误");
+                return;
+            }
 
             UpdateTabs();
         }
@@ -599,52 +632,75 @@ namespace Server
         #endregion
 
         #region Hero List
+        private static void ShowError(string text)
+        {
+            MessageBox.Show(text, "数据错误", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        }
         private void UpdateHeroInfo()
         {
-            if (Character?.Player != null && Character.Player.Hero != null)
+            if (Character?.Player?.Hero != null)
+            {
+                HeroObject hero = Character.Player.Hero;
+
+                HeroNameTextBox.Text = hero.Name;
+                HeroLevelTextBox.Text = hero.Level.ToString();
+                HeroClassTextBox.Text = $"{hero.Class}";
+
+                if (hero.CurrentMap?.Info != null)
                 {
-                HeroNameTextBox.Text = Character.Player.Hero.Name;
-                HeroLevelTextBox.Text = Character.Player.Hero.Level.ToString();
-                HeroClassTextBox.Text = $"{Character.Player.Hero.Class}";
+                    HeroCurrentMapLabel.Text = $"{hero.CurrentMap.Info.Title} / {hero.CurrentMap.Info.FileName}";
+                    HeroCurrentXY.Text = $"X:{hero.CurrentLocation.X} Y:{hero.CurrentLocation.Y}";
+                }
+                else
+                {
+                    HeroCurrentMapLabel.Text = "离线";
+                    HeroCurrentXY.Text = "离线";
+                }
 
-                HeroCurrentMapLabel.Text = $"{Character.Player.Hero.CurrentMap.Info.Title} / {Character.Player.Hero.CurrentMap.Info.FileName}";
-                HeroCurrentXY.Text = $"X:{Character.Player.Hero.CurrentLocation.X}: Y:{Character.Player.Hero.CurrentLocation.Y}";
+                if (hero.MaxExperience > 0)
+                {
+                    HeroExpTextBox.Text = $"{hero.Experience / (double)hero.MaxExperience:#0.##%}";
+                }
+                else
+                {
+                    HeroExpTextBox.Text = "0%";
+                }
 
-                HeroExpTextBox.Text = $"{string.Format("{0:#0.##%}", Character.Player.Hero.Experience / (double)Character.Player.Hero.MaxExperience)}";
-                HeroACBox.Text = $"{Character.Player.Hero.Stats[Stat.MinAC]}-{Character.Player.Hero.Stats[Stat.MaxAC]}";
-                HeroAMCBox.Text = $"{Character.Player.Hero.Stats[Stat.MinMAC]}-{Character.Player.Hero.Stats[Stat.MaxMAC]}";
-                HeroDCBox.Text = $"{Character.Player.Hero.Stats[Stat.MinDC]}-{Character.Player.Hero.Stats[Stat.MaxDC]}";
-                HeroMCBox.Text = $"{Character.Player.Hero.Stats[Stat.MinMC]}-{Character.Player.Hero.Stats[Stat.MaxMC]}";
-                HeroSCBox.Text = $"{Character.Player.Hero.Stats[Stat.MinSC]}-{Character.Player.Hero.Stats[Stat.MaxSC]}";
-                HeroACCBox.Text = $"{Character.Player.Hero.Stats[Stat.准确]}";
-                HeroAGILBox.Text = $"{Character.Player.Hero.Stats[Stat.敏捷]}";
-                HeroATKSPDBox.Text = $"{Character.Player.Hero.Stats[Stat.攻击速度]}";
+                HeroACBox.Text = $"{hero.Stats[Stat.MinAC]}-{hero.Stats[Stat.MaxAC]}";
+                HeroAMCBox.Text = $"{hero.Stats[Stat.MinMAC]}-{hero.Stats[Stat.MaxMAC]}";
+                HeroDCBox.Text = $"{hero.Stats[Stat.MinDC]}-{hero.Stats[Stat.MaxDC]}";
+                HeroMCBox.Text = $"{hero.Stats[Stat.MinMC]}-{hero.Stats[Stat.MaxMC]}";
+                HeroSCBox.Text = $"{hero.Stats[Stat.MinSC]}-{hero.Stats[Stat.MaxSC]}";
+
+                HeroACCBox.Text = $"{hero.Stats[Stat.准确]}";
+                HeroAGILBox.Text = $"{hero.Stats[Stat.敏捷]}";
+                HeroATKSPDBox.Text = $"{hero.Stats[Stat.攻击速度]}";
 
                 UpdateHeroMagic();
                 UpdateHeroItems();
             }
             else
             {
-                HeroCurrentMapLabel.Text = "OFFLINE";
-                HeroCurrentXY.Text = "OFFLINE";
+                HeroCurrentMapLabel.Text = "离线";
+                HeroCurrentXY.Text = "离线";
             }
         }
+
         private void UpdateHeroMagic()
         {
             HeroMagicList.Items.Clear();
 
-            if (Character == null || Character.Heroes == null) return;
+            if (Character?.Heroes == null) return;
+
 
             foreach (HeroInfo hero in Character.Heroes)
             {
-                if (hero == null) continue;
-
+                if (hero?.Magics == null) continue;
                 foreach (UserMagic magic in hero.Magics)
                 {
-                    if (magic == null) continue;
+                    if (magic?.Info == null) continue;
 
                     ListViewItem listItem = new ListViewItem(magic.Info.Name.ToString()) { Tag = this };
-
                     listItem.SubItems.Add(magic.Level.ToString());
 
                     switch (magic.Level)
@@ -658,27 +714,25 @@ namespace Server
                         case 2:
                             listItem.SubItems.Add($"{magic.Experience}/{magic.Info.Need3}");
                             break;
-                        case 3:
+                        default:
                             listItem.SubItems.Add("-");
                             break;
                     }
 
                     if (magic.Key > 8)
                     {
-                        var key = magic.Key % 8;
-                        listItem.SubItems.Add(string.Format("CTRL+F{0}", key != 0 ? key : 8));
+                        int key = magic.Key % 8;
+                        listItem.SubItems.Add( $"CTRL+F{(key != 0 ? key : 8)}");
                     }
                     else if (magic.Key > 0)
                     {
-                        listItem.SubItems.Add(string.Format("F{0}", magic.Key));
+                        listItem.SubItems.Add($"F{magic.Key}");
                     }
                     else
                     {
-                        listItem.SubItems.Add("No Key");
+                        listItem.SubItems.Add("无快捷键");
                     }
-
                     listItem.SubItems.Add(magic.Key.ToString());
-
                     HeroMagicList.Items.Add(listItem);
                 }
             }
@@ -687,75 +741,93 @@ namespace Server
         {
             HeroItemInfoListViewNF.Items.Clear();
 
-            if (Character == null || Character.Heroes == null) return;
+            if (Character?.Heroes == null) return;
 
             HeroInfo selectedHero = Character.Heroes.FirstOrDefault();
+
             if (selectedHero == null) return;
 
-            for (int i = 0; i < selectedHero.Inventory.Length; i++)
+            if (selectedHero.Inventory != null)
             {
-                UserItem inventoryItem = selectedHero.Inventory[i];
-
-                if (inventoryItem == null) continue;
-
-                ListViewItem inventoryItemListItem = new ListViewItem($"{inventoryItem.UniqueID}");
-
-                if (i < 6)
+                for (int i = 0; i < selectedHero.Inventory.Length; i++)
                 {
-                    inventoryItemListItem.SubItems.Add($"Belt | Slot: [{i + 1}]");
-                }
-                else if (i >= 6 && i < 46)
-                {
-                    inventoryItemListItem.SubItems.Add($"Inventory Bag I | Slot: [{i - 5}]");
-                }
-                else
-                {
-                    inventoryItemListItem.SubItems.Add($"Inventory Bag II | Slot: [{i - 45}]");
-                }
+                    UserItem inventoryItem = selectedHero.Inventory[i];
 
-                inventoryItemListItem.SubItems.Add($"{inventoryItem.FriendlyName}");
-                inventoryItemListItem.SubItems.Add($"{inventoryItem.Count}/{inventoryItem.Info.StackSize}");
-                inventoryItemListItem.SubItems.Add($"{inventoryItem.CurrentDura}/{inventoryItem.MaxDura}");
+                    if (inventoryItem?.Info == null) continue;
 
-                HeroItemInfoListViewNF.Items.Add(inventoryItemListItem);
+                    ListViewItem item = new ListViewItem($"{inventoryItem.UniqueID}");
+
+                    if (i < 6)
+                    {
+                        item.SubItems.Add($"腰带 | 格子: [{i + 1}]");
+                    }
+                    else if (i < 46)
+                    {
+                        item.SubItems.Add($"背包一 | 格子: [{i - 5}]");
+                    }
+                    else
+                    {
+                        item.SubItems.Add($"背包二 | 格子: [{i - 45}]");
+                    }
+
+
+                    item.SubItems.Add(inventoryItem.FriendlyName);
+                    item.SubItems.Add($"{inventoryItem.Count}/{inventoryItem.Info.StackSize}");
+                    item.SubItems.Add($"{inventoryItem.CurrentDura}/{inventoryItem.MaxDura}");
+
+                    HeroItemInfoListViewNF.Items.Add(item);
+                }
             }
 
-            for (int i = 0; i < selectedHero.Equipment.Length; i++)
+            if (selectedHero.Equipment != null)
             {
-                UserItem equipItem = selectedHero.Equipment[i];
+                for (int i = 0; i < selectedHero.Equipment.Length; i++)
+                {
+                    UserItem equipItem = selectedHero.Equipment[i];
 
-                if (equipItem == null) continue;
+                    if (equipItem?.Info == null) continue;
 
-                ListViewItem equipItemListItem = new ListViewItem($"{equipItem.UniqueID}");
+                    ListViewItem item = new ListViewItem($"{equipItem.UniqueID}");
 
-                equipItemListItem.SubItems.Add($"Equipment | Slot: [{i + 1}]");
+                    item.SubItems.Add($"装备 | 格子: [{i + 1}]");
+                    item.SubItems.Add(equipItem.FriendlyName);
+                    item.SubItems.Add($"{equipItem.Count}/{equipItem.Info.StackSize}");
+                    item.SubItems.Add($"{equipItem.CurrentDura}/{equipItem.MaxDura}");
 
-                equipItemListItem.SubItems.Add($"{equipItem.FriendlyName}");
-                equipItemListItem.SubItems.Add($"{equipItem.Count}/{equipItem.Info.StackSize}");
-                equipItemListItem.SubItems.Add($"{equipItem.CurrentDura}/{equipItem.MaxDura}");
-
-                HeroItemInfoListViewNF.Items.Add(equipItemListItem);
+                    HeroItemInfoListViewNF.Items.Add(item);
+                }
             }
         }
+
         private void HeroUpdateButton_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Are you sure you want to Update?", "Update.", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning) != DialogResult.Yes) return;
-
+            if (MessageBox.Show("确定要保存英雄修改吗？", "保存确认", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning) != DialogResult.Yes) return;
             HeroSaveChanges();
         }
+
         private void HeroSaveChanges()
         {
-            if (Character == null || Character.Heroes == null) return;
+            if (Character?.Heroes == null) return;
 
             HeroInfo selectedHero = Character.Heroes.FirstOrDefault();
+
             if (selectedHero == null) return;
 
+            if (string.IsNullOrWhiteSpace(HeroNameTextBox.Text))
+            {
+                ShowError("英雄名称不能为空"); return;
+            }
+
+            if (!byte.TryParse(HeroLevelTextBox.Text, out byte level))
+            {
+                ShowError("英雄等级输入错误，请检查后重新输入"); return;
+            }
+
             selectedHero.Name = HeroNameTextBox.Text;
-            selectedHero.Level = Convert.ToByte(HeroLevelTextBox.Text);
+            selectedHero.Level = level;
 
             UpdateTabs();
         }
-
         #endregion
     }
 }

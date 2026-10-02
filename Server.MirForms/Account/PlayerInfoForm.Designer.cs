@@ -763,7 +763,7 @@
             ActiveFlagsCheckBox.AutoSize = true;
             ActiveFlagsCheckBox.Location = new Point(196, 27);
             ActiveFlagsCheckBox.Name = "ActiveFlagsCheckBox";
-            ActiveFlagsCheckBox.Size = new Size(117, 19);
+            ActiveFlagsCheckBox.Size = new Size(124, 21);
             ActiveFlagsCheckBox.TabIndex = 50;
             ActiveFlagsCheckBox.Text = "Show Active only";
             ActiveFlagsCheckBox.UseVisualStyleBackColor = true;
@@ -788,7 +788,7 @@
             // 
             // columnHeader6
             // 
-            columnHeader6.Text = "Status";
+            columnHeader6.Text = "状态";
             columnHeader6.Width = 85;
             // 
             // QuestInfoTab
@@ -963,10 +963,10 @@
             HeroInfoTab.Controls.Add(groupBox5);
             HeroInfoTab.Controls.Add(HeroItemInfoListViewNF);
             HeroInfoTab.Controls.Add(HeroMagicList);
-            HeroInfoTab.Location = new Point(4, 24);
+            HeroInfoTab.Location = new Point(4, 26);
             HeroInfoTab.Name = "HeroInfoTab";
             HeroInfoTab.Padding = new Padding(3);
-            HeroInfoTab.Size = new Size(779, 443);
+            HeroInfoTab.Size = new Size(685, 497);
             HeroInfoTab.TabIndex = 5;
             HeroInfoTab.Text = "英雄信息";
             HeroInfoTab.UseVisualStyleBackColor = true;
@@ -999,20 +999,20 @@
             groupBox5.Margin = new Padding(4, 3, 4, 3);
             groupBox5.Name = "groupBox5";
             groupBox5.Padding = new Padding(4, 3, 4, 3);
-            groupBox5.Size = new Size(341, 311);
+            groupBox5.Size = new Size(341, 436);
             groupBox5.TabIndex = 26;
             groupBox5.TabStop = false;
-            groupBox5.Text = "Hero Info";
+            groupBox5.Text = "英雄信息";
             // 
             // label10
             // 
             label10.AutoSize = true;
-            label10.Location = new Point(10, 116);
+            label10.Location = new Point(22, 120);
             label10.Margin = new Padding(4, 0, 4, 0);
             label10.Name = "label10";
-            label10.Size = new Size(43, 15);
+            label10.Size = new Size(43, 17);
             label10.TabIndex = 37;
-            label10.Text = "Class : ";
+            label10.Text = "职业 : ";
             // 
             // HeroClassTextBox
             // 
@@ -1026,22 +1026,22 @@
             // HeroCurrentXY
             // 
             HeroCurrentXY.AutoSize = true;
-            HeroCurrentXY.Location = new Point(127, 288);
+            HeroCurrentXY.Location = new Point(87, 398);
             HeroCurrentXY.Margin = new Padding(4, 0, 4, 0);
             HeroCurrentXY.Name = "HeroCurrentXY";
-            HeroCurrentXY.Size = new Size(29, 15);
+            HeroCurrentXY.Size = new Size(32, 17);
             HeroCurrentXY.TabIndex = 35;
             HeroCurrentXY.Text = "$x/y";
             // 
             // label11
             // 
             label11.AutoSize = true;
-            label11.Location = new Point(7, 288);
+            label11.Location = new Point(25, 398);
             label11.Margin = new Padding(4, 0, 4, 0);
             label11.Name = "label11";
-            label11.Size = new Size(105, 15);
+            label11.Size = new Size(68, 17);
             label11.TabIndex = 36;
-            label11.Text = "Current Location : ";
+            label11.Text = "当前位置：";
             // 
             // HeroUpdateButton
             // 
@@ -1050,34 +1050,34 @@
             HeroUpdateButton.Name = "HeroUpdateButton";
             HeroUpdateButton.Size = new Size(88, 27);
             HeroUpdateButton.TabIndex = 7;
-            HeroUpdateButton.Text = "Update";
+            HeroUpdateButton.Text = "更新";
             HeroUpdateButton.UseVisualStyleBackColor = true;
             HeroUpdateButton.Click += HeroUpdateButton_Click;
             // 
             // HeroCurrentMapLabel
             // 
             HeroCurrentMapLabel.AutoSize = true;
-            HeroCurrentMapLabel.Location = new Point(127, 269);
+            HeroCurrentMapLabel.Location = new Point(87, 364);
             HeroCurrentMapLabel.Margin = new Padding(4, 0, 4, 0);
             HeroCurrentMapLabel.Name = "HeroCurrentMapLabel";
-            HeroCurrentMapLabel.Size = new Size(37, 15);
+            HeroCurrentMapLabel.Size = new Size(41, 17);
             HeroCurrentMapLabel.TabIndex = 33;
             HeroCurrentMapLabel.Text = "$map";
             // 
             // label26
             // 
             label26.AutoSize = true;
-            label26.Location = new Point(7, 269);
+            label26.Location = new Point(26, 364);
             label26.Margin = new Padding(4, 0, 4, 0);
             label26.Name = "label26";
-            label26.Size = new Size(83, 15);
+            label26.Size = new Size(63, 17);
             label26.TabIndex = 34;
-            label26.Text = "Current Map : ";
+            label26.Text = "当前地图: ";
             // 
             // HeroATKSPDBox
             // 
             HeroATKSPDBox.Enabled = false;
-            HeroATKSPDBox.Location = new Point(261, 229);
+            HeroATKSPDBox.Location = new Point(260, 255);
             HeroATKSPDBox.Margin = new Padding(4, 3, 4, 3);
             HeroATKSPDBox.Name = "HeroATKSPDBox";
             HeroATKSPDBox.ReadOnly = true;
@@ -1087,7 +1087,7 @@
             // HeroAGILBox
             // 
             HeroAGILBox.Enabled = false;
-            HeroAGILBox.Location = new Point(261, 200);
+            HeroAGILBox.Location = new Point(260, 224);
             HeroAGILBox.Margin = new Padding(4, 3, 4, 3);
             HeroAGILBox.Name = "HeroAGILBox";
             HeroAGILBox.ReadOnly = true;
@@ -1097,7 +1097,7 @@
             // HeroACCBox
             // 
             HeroACCBox.Enabled = false;
-            HeroACCBox.Location = new Point(261, 168);
+            HeroACCBox.Location = new Point(260, 191);
             HeroACCBox.Margin = new Padding(4, 3, 4, 3);
             HeroACCBox.Name = "HeroACCBox";
             HeroACCBox.ReadOnly = true;
@@ -1107,7 +1107,7 @@
             // HeroSCBox
             // 
             HeroSCBox.Enabled = false;
-            HeroSCBox.Location = new Point(261, 139);
+            HeroSCBox.Location = new Point(261, 155);
             HeroSCBox.Margin = new Padding(4, 3, 4, 3);
             HeroSCBox.Name = "HeroSCBox";
             HeroSCBox.ReadOnly = true;
@@ -1117,7 +1117,7 @@
             // HeroMCBox
             // 
             HeroMCBox.Enabled = false;
-            HeroMCBox.Location = new Point(261, 110);
+            HeroMCBox.Location = new Point(260, 122);
             HeroMCBox.Margin = new Padding(4, 3, 4, 3);
             HeroMCBox.Name = "HeroMCBox";
             HeroMCBox.ReadOnly = true;
@@ -1127,7 +1127,7 @@
             // HeroDCBox
             // 
             HeroDCBox.Enabled = false;
-            HeroDCBox.Location = new Point(261, 81);
+            HeroDCBox.Location = new Point(260, 88);
             HeroDCBox.Margin = new Padding(4, 3, 4, 3);
             HeroDCBox.Name = "HeroDCBox";
             HeroDCBox.ReadOnly = true;
@@ -1137,7 +1137,7 @@
             // HeroAMCBox
             // 
             HeroAMCBox.Enabled = false;
-            HeroAMCBox.Location = new Point(261, 49);
+            HeroAMCBox.Location = new Point(260, 54);
             HeroAMCBox.Margin = new Padding(4, 3, 4, 3);
             HeroAMCBox.Name = "HeroAMCBox";
             HeroAMCBox.ReadOnly = true;
@@ -1157,22 +1157,22 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(198, 23);
+            label4.Location = new Point(195, 23);
             label4.Margin = new Padding(4, 0, 4, 0);
             label4.Name = "label4";
-            label4.Size = new Size(58, 225);
+            label4.Size = new Size(63, 255);
             label4.TabIndex = 25;
             label4.Text = "物理防御 :\r\n\r\n魔法防御 :\r\n\r\n物理攻击 :\r\n\r\n魔法攻击 :\r\n\r\n道术攻击 :\r\n\r\n准确 :\r\n\r\n敏捷 :\r\n\r\n攻击速度 :";
             // 
             // label14
             // 
             label14.AutoSize = true;
-            label14.Location = new Point(10, 87);
+            label14.Location = new Point(10, 91);
             label14.Margin = new Padding(4, 0, 4, 0);
             label14.Name = "label14";
-            label14.Size = new Size(36, 15);
+            label14.Size = new Size(55, 17);
             label14.TabIndex = 16;
-            label14.Text = "EXP : ";
+            label14.Text = "经验值 : ";
             // 
             // HeroExpTextBox
             // 
@@ -1186,22 +1186,22 @@
             // label16
             // 
             label16.AutoSize = true;
-            label16.Location = new Point(10, 26);
+            label16.Location = new Point(20, 26);
             label16.Margin = new Padding(4, 0, 4, 0);
             label16.Name = "label16";
-            label16.Size = new Size(48, 15);
+            label16.Size = new Size(43, 17);
             label16.TabIndex = 1;
-            label16.Text = "Name : ";
+            label16.Text = "名称 : ";
             // 
             // label17
             // 
             label17.AutoSize = true;
-            label17.Location = new Point(10, 58);
+            label17.Location = new Point(21, 58);
             label17.Margin = new Padding(4, 0, 4, 0);
             label17.Name = "label17";
-            label17.Size = new Size(43, 15);
+            label17.Size = new Size(43, 17);
             label17.TabIndex = 3;
-            label17.Text = "Level : ";
+            label17.Text = "等级 : ";
             // 
             // HeroNameTextBox
             // 
@@ -1225,34 +1225,34 @@
             HeroItemInfoListViewNF.GridLines = true;
             HeroItemInfoListViewNF.Location = new Point(348, 179);
             HeroItemInfoListViewNF.Name = "HeroItemInfoListViewNF";
-            HeroItemInfoListViewNF.Size = new Size(428, 258);
+            HeroItemInfoListViewNF.Size = new Size(341, 258);
             HeroItemInfoListViewNF.TabIndex = 52;
             HeroItemInfoListViewNF.UseCompatibleStateImageBehavior = false;
             HeroItemInfoListViewNF.View = View.Details;
             // 
             // columnHeader1
             // 
-            columnHeader1.Text = "UID";
+            columnHeader1.Text = "编号";
             columnHeader1.Width = 100;
             // 
             // columnHeader2
             // 
-            columnHeader2.Text = "Location";
+            columnHeader2.Text = "位置";
             columnHeader2.Width = 150;
             // 
             // columnHeader3
             // 
-            columnHeader3.Text = "Name";
+            columnHeader3.Text = "物品名称";
             columnHeader3.Width = 150;
             // 
             // columnHeader4
             // 
-            columnHeader4.Text = "Count";
+            columnHeader4.Text = "数量";
             columnHeader4.Width = 80;
             // 
             // columnHeader13
             // 
-            columnHeader13.Text = "Durability";
+            columnHeader13.Text = "持久度";
             columnHeader13.Width = 90;
             // 
             // HeroMagicList
@@ -1261,36 +1261,36 @@
             HeroMagicList.GridLines = true;
             HeroMagicList.Location = new Point(348, 9);
             HeroMagicList.Name = "HeroMagicList";
-            HeroMagicList.Size = new Size(428, 166);
+            HeroMagicList.Size = new Size(341, 166);
             HeroMagicList.TabIndex = 51;
             HeroMagicList.UseCompatibleStateImageBehavior = false;
             HeroMagicList.View = View.Details;
             // 
             // columnHeader9
             // 
-            columnHeader9.Text = "Spell Name";
+            columnHeader9.Text = "技能名称";
             columnHeader9.Width = 150;
             // 
             // columnHeader10
             // 
-            columnHeader10.Text = "Level";
+            columnHeader10.Text = "等级";
             columnHeader10.Width = 50;
             // 
             // columnHeader11
             // 
-            columnHeader11.Text = "Experience";
+            columnHeader11.Text = "经验";
             columnHeader11.Width = 100;
             // 
             // columnHeader12
             // 
-            columnHeader12.Text = "Key";
+            columnHeader12.Text = "键位";
             columnHeader12.Width = 80;
             // 
             // PlayerInfoForm
             // 
             AutoScaleDimensions = new SizeF(7F, 17F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(692, 534);
+            ClientSize = new Size(701, 527);
             Controls.Add(tabControl1);
             Margin = new Padding(4, 3, 4, 3);
             Name = "PlayerInfoForm";
