@@ -589,6 +589,24 @@ namespace Client.MirScenes.Dialogs
                 Location = new Point(204, 63), //(205, 63)
             };
 
+            Grid[(int)EquipmentSlot.绝技盒1] = new MirItemCell
+            {
+                ItemSlot = (int)EquipmentSlot.绝技盒1,
+                GridType = MirGridType.Equipment,
+                Parent = GameScene.Scene.StuntDialog,
+                Size = new Size(34, 30),
+                Location = new Point(81, 271),
+            };
+
+            Grid[(int)EquipmentSlot.绝技盒2] = new MirItemCell
+            {
+                ItemSlot = (int)EquipmentSlot.绝技盒2,
+                GridType = MirGridType.Equipment,
+                Parent = GameScene.Scene.StuntDialog,
+                Size = new Size(34, 30),
+                Location = new Point(130, 271),
+            };
+
             // STATS I
             HealthLabel = new MirLabel
             {

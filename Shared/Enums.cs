@@ -1078,7 +1078,9 @@ public enum MirGridType : byte
     HeroEquipment = 21,
     HeroInventory = 22,
     HeroHPItem = 23,
-    HeroMPItem = 24
+    HeroMPItem = 24,
+    Stunt = 25,
+    StuntExtractItem = 26,
 }
 
 public enum EquipmentSlot : byte
@@ -1096,7 +1098,17 @@ public enum EquipmentSlot : byte
     腰带 = 10,
     靴子 = 11,
     守护石 = 12,
-    坐骑 = 13
+    坐骑 = 13,
+    绝技盒1 = 14,
+    绝技盒2 = 15,
+}
+public enum StuntSlot : byte
+{
+    StuntDestroy = 0,
+    StuntGuard = 1,
+    StuntMedicine = 2,
+    StuntAll = 3,
+    StuntExtend = 4
 }
 
 public enum MountSlot : byte
@@ -2019,6 +2031,7 @@ public enum ServerPacketIds : short
     ControlMechanism,
     ValorStatus,
     NPCHonorGoods,
+	StuntUpdate
 }
 
 public enum ClientPacketIds : short
@@ -2183,6 +2196,11 @@ public enum ClientPacketIds : short
     UnlockStorage,
     SetStoragePassword,
     RemoveStoragePassword,
+	StuntBox,
+    DisassembleStuntItems,
+    GetStuntlucky,
+    RepairStuntItems,
+    LotteryStuntItems
 }
 
 public enum ConquestType : byte

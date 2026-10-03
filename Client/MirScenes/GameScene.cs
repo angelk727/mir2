@@ -88,6 +88,9 @@ namespace Client.MirScenes
         public NPCAwakeDialog NPCAwakeDialog;
         public HelpDialog HelpDialog;
         public MountDialog MountDialog;
+        public StuntDialog StuntDialog;
+        public StuntObtainDialog StuntObtainDialog;
+        public StuntlotteryDialog StuntlotteryDialog;
         public FishingDialog FishingDialog;
         public FishingStatusDialog FishingStatusDialog;
         public RefineDialog RefineDialog;
@@ -323,6 +326,9 @@ namespace Client.MirScenes
             KeyboardLayoutDialog = new KeyboardLayoutDialog { Parent = this, Visible = false };
             NoticeDialog = new NoticeDialog { Parent = this, Visible = false };
 
+            StuntDialog = new StuntDialog { Parent = this, Visible = false };
+            StuntObtainDialog = new StuntObtainDialog { Parent = this, Visible = false };
+            StuntlotteryDialog = new StuntlotteryDialog { Parent = this, Visible = false };
             MountDialog = new MountDialog { Parent = this, Visible = false };
             FishingDialog = new FishingDialog { Parent = this, Visible = false };
             FishingStatusDialog = new FishingStatusDialog { Parent = this, Visible = false };
@@ -2217,6 +2223,9 @@ namespace Client.MirScenes
                 case (short)ServerPacketIds.ControlMechanism:
                     ControlMechanism((S.ControlMechanism)p);
                     break;
+				case (short)ServerPacketIds.StuntUpdate:
+                    StuntUpdate((S.StuntUpdate)p);
+                    break;
                 default:
                     base.ProcessPacket(p);
                     break;
@@ -2587,6 +2596,9 @@ namespace Client.MirScenes
                 case MirGridType.Fishing:
                     toCell = FishingDialog.Grid[p.To];
                     break;
+				case MirGridType.Stunt:
+                    toCell = StuntDialog.Grid[p.To];
+                    break;
                 default:
                     return;
             }
@@ -2783,8 +2795,21 @@ namespace Client.MirScenes
             fromCell.Locked = false;
 
             if (!p.Success) return;
-            toCell.Item = fromCell.Item;
+
+            UserItem removedItem = fromCell.Item;
+
+            toCell.Item = removedItem;
             fromCell.Item = null;
+
+            if (removedItem != null && removedItem.Info.IsStuntBox)
+            {
+                CharacterDialog.Grid[(int)EquipmentSlot.绝技盒1].Item = null;
+                CharacterDialog.Grid[(int)EquipmentSlot.绝技盒2].Item = null;
+
+                GameScene.Scene.StuntDialog.ClearStuntExtractItems();
+                StuntDialog.Hide();
+            }
+
             CharacterDuraPanel.GetCharacterDura();
             if (p.Grid == MirGridType.HeroInventory)
                 Hero.RefreshStats();
@@ -2801,6 +2826,9 @@ namespace Client.MirScenes
             {
                 case MirGridType.Socket:
                     fromCell = SocketDialog.GetCell(p.UniqueID);
+                    break;
+                case MirGridType.Stunt:
+                    fromCell = StuntDialog.GetCell(p.UniqueID);
                     break;
                 case MirGridType.Mount:
                     fromCell = MountDialog.GetCell(p.UniqueID);
@@ -3153,6 +3181,58 @@ namespace Client.MirScenes
             Redraw();
         }
 
+        private void StuntUpdate(S.StuntUpdate p)
+        {
+            if (MapControl.Objects.TryGetValue((uint)p.ObjectID, out MapObject obj))
+            {
+                PlayerObject player = obj as PlayerObject;
+
+                if (player != null)
+                {
+                    player.StuntUpdate(p);
+                }
+            }
+
+            if (p.ObjectID != User.ObjectID) return;
+
+            if (GameScene.User.StuntType != 5)
+            {
+                GameScene.Scene.StuntDialog.ClearStuntExtractItems();
+                GameScene.Scene.StuntDialog.Hide();
+            }
+            else
+            {
+                User.StuntPoints = p.StuntPoints;
+
+                GameScene.Scene.StuntDialog.StuntPointsText.Text = GameScene.User.StuntPoints.ToString("###,###,##0");
+                GameScene.Scene.StuntObtainDialog.StuntPointsText.Text = $"{User.StuntPoints:###,###,##0} (-3,000)";
+
+                User.Stuntlucky = p.Stuntlucky;
+
+                StuntDialogService.UpdateStuntBoostStatus(GameScene.User.Stuntlucky);
+
+                if (p.StuntAllUnlocked)
+                {
+                    GameScene.Scene.StuntDialog.Grid[(int)StuntSlot.StuntAll].Visible = true;
+                    GameScene.Scene.StuntDialog.Grid[(int)StuntSlot.StuntAll].Enabled = true;
+
+                    if (GameScene.Scene.StuntDialog.StuntGridBarLockButton != null)
+                        GameScene.Scene.StuntDialog.StuntGridBarLockButton.Visible = false;
+                }
+                else
+                {
+                    GameScene.Scene.StuntDialog.Grid[(int)StuntSlot.StuntAll].Visible = false;
+                    GameScene.Scene.StuntDialog.Grid[(int)StuntSlot.StuntAll].Enabled = false;
+                    GameScene.Scene.StuntDialog.Grid[(int)StuntSlot.StuntAll].Item = null;
+
+                    if (GameScene.Scene.StuntDialog.StuntGridBarLockButton != null)
+                        GameScene.Scene.StuntDialog.StuntGridBarLockButton.Visible = true;
+                }
+            }
+
+            User.RefreshStats();
+            GameScene.Scene.Redraw();
+        }
         private void TransformUpdate(S.TransformUpdate p)
         {
             if (MapControl.Objects.TryGetValue(p.ObjectID, out MapObject ob))
@@ -7328,6 +7408,18 @@ namespace Client.MirScenes
                 case ItemType.封印:
                     baseText = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.ItemTypeSealedHero);
                     break;
+                case ItemType.攻击型绝技:
+                    //baseText = GameLanguage.ItemTypeStuntDestroy.GetLocalization(ClientTextKeys.ItemTypeStunt);//还未完全添加语言
+                    break;
+                case ItemType.防御型绝技:
+                    //baseText = GameLanguage.ItemTypeStuntGuard.GetLocalization(ClientTextKeys.ItemTypeStunt);//还未完全添加语言
+                    break;
+                case ItemType.技能型绝技:
+                    //baseText = GameLanguage.ItemTypeStuntMedicine.GetLocalization(ClientTextKeys.ItemTypeStunt);//还未完全添加语言
+                    break;
+                case ItemType.绝技材料:
+                    //    baseText = GameLanguage.ItemTypeStuntExtend.GetLocalization(ClientTextKeys.ItemTypeStunt);//还未完全添加语言
+                    break;
             }
 
             if (HoverItem.WeddingRing != -1)
@@ -8946,7 +9038,7 @@ namespace Client.MirScenes
                 MirLabel SOCKETLabel = new MirLabel
                 {
                     AutoSize = true,
-                    ForeColour = (count > realItem.Slots && !realItem.IsFishingRod && realItem.Type != ItemType.坐骑) ? Color.Cyan : Color.White,
+                    ForeColour = (count > realItem.Slots && !realItem.IsFishingRod && realItem.Type != ItemType.坐骑 && !realItem.IsStuntBox) ? Color.Cyan : Color.White,
                     Location = new Point(4, ItemLabel.DisplayRectangle.Bottom),
                     OutLine = true,
                     Parent = ItemLabel,
@@ -9743,6 +9835,24 @@ namespace Client.MirScenes
                         OutLine = true,
                         Parent = ItemLabel,
                         Text = GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.AfterCandle)
+                    };
+
+                    ItemLabel.Size = new Size(Math.Max(ItemLabel.Size.Width, Gemtorch.DisplayRectangle.Right + 4),
+                        Math.Max(ItemLabel.Size.Height, Gemtorch.DisplayRectangle.Bottom));
+                }
+                #endregion
+                #region Stunt text
+                count++;
+                if (HoverItem.Info.Unique.HasFlag(SpecialItemMode.NoDuraLoss))
+                {
+                    MirLabel Gemtorch = new MirLabel
+                    {
+                        AutoSize = true,
+                        ForeColour = Color.White,
+                        Location = new Point(4, ItemLabel.DisplayRectangle.Bottom),
+                        OutLine = true,
+                        Parent = ItemLabel,
+                        Text = "-绝技盒"
                     };
 
                     ItemLabel.Size = new Size(Math.Max(ItemLabel.Size.Width, Gemtorch.DisplayRectangle.Right + 4),

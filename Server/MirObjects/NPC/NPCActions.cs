@@ -122,5 +122,8 @@
         ValorRegister,
         ValorHonor,
         ValorReward,
+		GiveStuntPoints,
+        TakeStuntPoints,
+        UnlockStuntAll,
     }
 }

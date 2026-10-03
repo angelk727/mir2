@@ -12,6 +12,13 @@ namespace Server.MirNetwork
 {
     public enum GameStage { None, Login, Select, Game, Observer, Disconnected }
 
+    public class MirConnectionLog
+    {
+        public string IPAddress = "";
+        public List<long> AccountsMade = new List<long>();
+        public List<long> CharactersMade = new List<long>();
+    }
+
     public class MirConnection
     {
         protected static Envir Envir
@@ -1479,6 +1486,26 @@ namespace Server.MirNetwork
 
                 case (short)ClientPacketIds.DeleteItem:
                     DeleteItem((C.DeleteItem)p);
+                    break;
+
+                case (short)ClientPacketIds.StuntBox:
+                    StuntBox();
+                    break;
+
+                case (short)ClientPacketIds.DisassembleStuntItems:
+                    DisassembleStuntItems((C.DisassembleStuntItems)p);
+                    break;
+
+                case (short)ClientPacketIds.LotteryStuntItems:
+                    LotteryStuntItems((C.LotteryStuntItems)p);
+                    break;
+
+                case (short)ClientPacketIds.GetStuntlucky:
+                    GetStuntlucky();
+                    break;
+
+                case (short)ClientPacketIds.RepairStuntItems:
+                    RepairStuntItems((C.RepairStuntItems)p);
                     break;
 
                 default:
@@ -3796,12 +3823,40 @@ namespace Server.MirNetwork
                 p.UniqueID,
                 p.Count);
         }
-    }
 
-    public class MirConnectionLog
-    {
-        public string IPAddress = "";
-        public List<long> AccountsMade = new List<long>();
-        public List<long> CharactersMade = new List<long>();
+        private void GetStuntlucky()
+        {
+            if (Stage != GameStage.Game)
+                return;
+
+            Player.GetStuntlucky();
+        }
+
+        private void StuntBox()
+        {
+            if (Stage != GameStage.Game)
+                return;
+
+            Player.StuntBox();
+        }
+        private void RepairStuntItems(C.RepairStuntItems p)
+        {
+            if (Stage != GameStage.Game) return;
+
+            Player.RepairStuntItems();
+        }
+        private void DisassembleStuntItems(C.DisassembleStuntItems p)
+        {
+            if (Stage != GameStage.Game) return;
+
+            Player.DisassembleStuntItems(p.UniqueID);
+        }
+
+        private void LotteryStuntItems(C.LotteryStuntItems p)
+        {
+            if (Stage != GameStage.Game) return;
+
+            Player.LotteryStuntItems();
+        }
     }
 }

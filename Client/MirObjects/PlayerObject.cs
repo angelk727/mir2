@@ -27,7 +27,7 @@ namespace Client.MirObjects
         public ushort Level;
 
         public MLibrary WeaponLibrary1, WeaponEffectLibrary1, WeaponLibrary2, WeaponEffectLibrary2, HairLibrary, WingLibrary, MountLibrary;
-        public int Armour, Weapon, WeaponEffect, ArmourOffSet, HairOffSet, WeaponOffSet, WingOffset, MountOffset;
+        public int Armour, Weapon, WeaponEffect, ArmourOffSet, HairOffSet, WeaponOffSet, WingOffset, MountOffset, Amulet;
 
         public int DieSound, FlinchSound, AttackSound;
 
@@ -58,6 +58,14 @@ namespace Client.MirObjects
             get
             {
                 return Globals.FishingRodShapes.Contains(Weapon);
+            }
+        }
+
+        public bool HasStuntBox
+        {
+            get
+            {
+                return Globals.StuntBoxShapes.Contains(Amulet);
             }
         }
 
@@ -95,7 +103,7 @@ namespace Client.MirObjects
         public long StanceTime, MountTime, FishingTime;
         public long BlizzardStopTime, ReincarnationStopTime, SlashingBurstTime, GreatFireBallRareStopTime, DimensionalSwordTime;
 
-        public short MountType = -1, TransformType = -1;
+        public short StuntType = -1, MountType = -1, TransformType = -1;
 
         public string GuildName;
         public string GuildRankName;
@@ -146,6 +154,8 @@ namespace Client.MirObjects
 
             MountType = info.MountType;
             RidingMount = info.RidingMount;
+            
+            StuntType = info.StuntType;
 
             Fishing = info.Fishing;
 
@@ -220,6 +230,19 @@ namespace Client.MirObjects
 
             PlayMountSound();
         }
+
+        public void StuntUpdate(S.StuntUpdate p)
+        {
+            if (StuntType < 0)
+            {
+                GameScene.Scene.StuntDialog.ClearStuntExtractItems();
+                GameScene.Scene.StuntDialog.Hide();
+            }
+
+            SetLibraries();
+            SetEffects();
+        }
+
 
         public void FishingUpdate(S.FishingUpdate p)
         {

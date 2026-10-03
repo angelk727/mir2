@@ -59,6 +59,7 @@ namespace Server
         public static string BlackstoneDropFilename = "00Blackstone";
 
         public static string Language = "Chinese"; //设置 默认English/Chinese
+        public static string LotteryStuntDropsFilename = "00LotteryStunt";
 
         //Network
         public static string IPAddress = "127.0.0.1";

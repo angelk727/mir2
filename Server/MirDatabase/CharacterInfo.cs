@@ -73,7 +73,7 @@ namespace Server.MirDatabase
         public byte MentalState;
         public byte MentalStateLvl;
 
-        public UserItem[] Inventory = new UserItem[46], Equipment = new UserItem[14], Trade = new UserItem[10], QuestInventory = new UserItem[40], Refine = new UserItem[16];
+        public UserItem[] Inventory = new UserItem[46], Equipment = new UserItem[16], Trade = new UserItem[10], QuestInventory = new UserItem[40], Refine = new UserItem[16];
         public List<ItemRentalInformation> RentedItems = new List<ItemRentalInformation>();
         public List<ItemRentalInformation> RentedItemsToRemove = new List<ItemRentalInformation>();
         public bool HasRentedItem;
@@ -97,6 +97,9 @@ namespace Server.MirDatabase
         public AccountInfo AccountInfo;
         public PlayerObject Player;
         public MountInfo Mount;
+        public StuntInfo Stunt;
+        public int StuntPoints;
+        public bool Stuntlucky;
 
         public Dictionary<int, int> GSpurchases = new Dictionary<int, int>();
         public int[] Rank = new int[2];//dont save this in db!(and dont send it to clients :p)
@@ -309,6 +312,7 @@ namespace Server.MirDatabase
             }
 
             PearlCount = reader.ReadInt32();
+            StuntPoints = reader.ReadInt32();
 
             count = reader.ReadInt32();
             for (int i = 0; i < count; i++)
@@ -553,6 +557,7 @@ namespace Server.MirDatabase
             }
 
             writer.Write(PearlCount);
+            writer.Write(StuntPoints);
 
             writer.Write(CompletedQuests.Count);
             for (int i = 0; i < CompletedQuests.Count; i++)
@@ -748,6 +753,27 @@ namespace Server.MirDatabase
 
 
         public MountInfo(HumanObject ob)
+        {
+            Player = ob;
+        }
+    }
+
+    public class StuntInfo
+    {
+        public HumanObject Player;
+        public short StuntType = -1;
+
+        public bool HasStuntBox
+        {
+            get { return Player.Info.Equipment[(int)EquipmentSlot.护身符] != null; }
+        }
+
+        public UserItem[] Slots
+        {
+            get { return Player.Info.Equipment[(int)EquipmentSlot.护身符].Slots; }
+        }
+
+        public StuntInfo(HumanObject ob)
         {
             Player = ob;
         }

@@ -398,7 +398,7 @@ namespace Client.MirScenes.Dialogs
                 case BuffType.英雄灵气:
                     text += "英雄在线加成\n";
                     break;
-                case BuffType.攻击型绝技://新添加 功能--绝技盒BUFF相关
+                case BuffType.攻击型绝技:
                 case BuffType.防御型绝技:
                 case BuffType.技能型绝技:
                 case BuffType.共用型绝技:

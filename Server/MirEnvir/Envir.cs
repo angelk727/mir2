@@ -165,6 +165,7 @@ namespace Server.MirEnvir
 
         public List<DropInfo> FishingDrops = new List<DropInfo>();
         public List<DropInfo> AwakeningDrops = new List<DropInfo>();
+        public List<DropInfo> LotteryStuntDrops = new List<DropInfo>();
 
         public List<DropInfo> StrongboxDrops = new List<DropInfo>();
         public List<DropInfo> BlackstoneDrops = new List<DropInfo>();
@@ -3962,6 +3963,9 @@ namespace Server.MirEnvir
 
             BlackstoneDrops.Clear();
             DropInfo.Load(BlackstoneDrops, "灵物石功能", Path.Combine(Settings.DropPath, Settings.BlackstoneDropFilename + ".txt"));
+
+            LotteryStuntDrops.Clear();
+            DropInfo.Load(LotteryStuntDrops, "抽取绝技功能", Path.Combine(Settings.DropPath, Settings.LotteryStuntDropsFilename + ".txt"));
 
             MessageQueue.Enqueue(GameLanguage.ServerTextMap.GetLocalization(ServerTextKeys.DropsLoaded));
         }

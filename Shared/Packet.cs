@@ -418,6 +418,16 @@ public abstract class Packet
                 return new C.PurchaseGuildTerritory();
             case (short)ClientPacketIds.DeleteItem:
                 return new C.DeleteItem();
+			case (short)ClientPacketIds.StuntBox:
+                return new C.StuntBox();
+            case (short)ClientPacketIds.DisassembleStuntItems:
+                return new C.DisassembleStuntItems();
+            case (short)ClientPacketIds.LotteryStuntItems:
+                return new C.LotteryStuntItems();
+            case (short)ClientPacketIds.GetStuntlucky:
+                return new C.GetStuntlucky();
+            case (short)ClientPacketIds.RepairStuntItems:
+                return new C.RepairStuntItems();
             default:
                 return null;
         }
@@ -989,6 +999,8 @@ public abstract class Packet
                 return new S.GuildTerritoryPage();
             case (short)ServerPacketIds.ControlMechanism:
                 return new S.ControlMechanism();
+			case (short)ServerPacketIds.StuntUpdate:
+                return new S.StuntUpdate();
             default:
                 return null;
         }

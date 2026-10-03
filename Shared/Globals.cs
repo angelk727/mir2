@@ -49,6 +49,8 @@ public static class Globals
 
     public static int[] FishingRodShapes = new int[] { 49, 50 };
 
+    public static int[] StuntBoxShapes = new int[] { 5, 6 };
+
     public static Spell[] RangedSpells = new Spell[]
     {
         Spell.FireBall,

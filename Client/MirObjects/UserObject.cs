@@ -34,7 +34,7 @@ namespace Client.MirObjects
 
         public virtual BuffDialog GetBuffDialog => GameScene.Scene.BuffsDialog;
 
-        public UserItem[] Inventory = new UserItem[46], Equipment = new UserItem[14], Trade = new UserItem[10], QuestInventory = new UserItem[40];
+        public UserItem[] Inventory = new UserItem[46], Equipment = new UserItem[16], Trade = new UserItem[10], QuestInventory = new UserItem[40];
         public int BeltIdx = 6, HeroBeltIdx = 2;
         public bool HasExpandedStorage = false;
         public bool HasStoragePassword = false;
@@ -62,6 +62,8 @@ namespace Client.MirObjects
         public MirDirection NextMagicDirection;
         public QueuedAction QueuedAction;
 
+        public int StuntPoints;
+        public bool Stuntlucky;
         public UserObject() { }
         public UserObject(uint objectID) : base(objectID)
         {
@@ -283,6 +285,7 @@ namespace Client.MirObjects
             Armour = 0;
             WingEffect = 0;
             MountType = -1;
+            StuntType = -1;
 
             CurrentWearWeight = 0;
             CurrentHandWeight = 0;
@@ -323,7 +326,12 @@ namespace Client.MirObjects
                     MountType = realItem.Shape;
                 }
 
-                if (temp.Info.IsFishingRod) continue;
+                if (realItem.Type == ItemType.护身符 && temp.Info.IsStuntBox)
+                {
+                    StuntType = realItem.Shape;
+                }
+
+                if (temp.Info.IsFishingRod || (temp.Info.IsStuntBox)) continue;
 
                 Stats.Add(realItem.Stats);
                 Stats.Add(temp.AddedStats);
@@ -392,6 +400,11 @@ namespace Client.MirObjects
             if (equipItem == null) return;
 
             if (equipItem.Info.Type == ItemType.武器 && equipItem.Info.IsFishingRod)
+            {
+                return;
+            }
+
+            if (equipItem.Info.Type == ItemType.护身符 && equipItem.Info.IsStuntBox)
             {
                 return;
             }

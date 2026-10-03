@@ -49,6 +49,11 @@ public class ItemInfo
         get { return Globals.FishingRodShapes.Contains(Shape); }
     }
 
+    public bool IsStuntBox
+    {
+        get { return Globals.StuntBoxShapes.Contains(Shape); }
+    }
+
     public string FriendlyName
     {
         get
@@ -648,6 +653,10 @@ public class UserItem
                 case ItemType.武器:
                     if (Info.Shape == 49 || Info.Shape == 50)
                         size = 5;
+                    break;
+                case ItemType.护身符:
+                    if (Info.Shape == 5)
+                        size = 4;
                     break;
             }
         }

@@ -2702,4 +2702,75 @@ namespace ClientPackets
             writer.Write(HeroInventory);
         }
     }
+
+    public sealed class StuntBox : Packet
+    {
+        public override short Index { get { return (short)ClientPacketIds.StuntBox; } }
+
+        protected override void ReadPacket(BinaryReader reader)
+        { }
+
+        protected override void WritePacket(BinaryWriter writer)
+        { }
+    }
+
+    public sealed class DisassembleStuntItems : Packet
+    {
+        public override short Index { get { return (short)ClientPacketIds.DisassembleStuntItems; } }
+
+        public ulong UniqueID;
+
+        protected override void ReadPacket(BinaryReader reader)
+        {
+            UniqueID = reader.ReadUInt64();
+        }
+        protected override void WritePacket(BinaryWriter writer)
+        {
+            writer.Write(UniqueID);
+        }
+    }
+
+    public sealed class LotteryStuntItems : Packet
+    {
+        public override short Index { get { return (short)ClientPacketIds.LotteryStuntItems; } }
+
+        public ulong UniqueID;
+
+        protected override void ReadPacket(BinaryReader reader)
+        {
+            UniqueID = reader.ReadUInt64();
+        }
+
+        protected override void WritePacket(BinaryWriter writer)
+        {
+            writer.Write(UniqueID);
+        }
+    }
+
+    public sealed class GetStuntlucky : Packet
+    {
+        public override short Index { get { return (short)ClientPacketIds.GetStuntlucky; } }
+
+        protected override void ReadPacket(BinaryReader reader)
+        { }
+
+        protected override void WritePacket(BinaryWriter writer)
+        { }
+    }
+
+    public sealed class RepairStuntItems : Packet
+    {
+        public override short Index
+        {
+            get { return (short)ClientPacketIds.RepairStuntItems; }
+        }
+
+        protected override void ReadPacket(BinaryReader reader)
+        {
+        }
+
+        protected override void WritePacket(BinaryWriter writer)
+        {
+        }
+    }
 }

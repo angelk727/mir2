@@ -531,6 +531,17 @@ namespace Server.MirObjects
                     acts.Add(new NPCActions(ActionType.TakePearls, parts[1]));
                     break;
 
+                    case "GIVESTUNTPOINTS":
+                        if (parts.Length < 2) return;
+
+                        acts.Add(new NPCActions(ActionType.GiveStuntPoints, parts[1]));
+                        break;
+
+                    case "TAKESTUNTPOINTS":
+                        if (parts.Length < 2) return;
+
+                        acts.Add(new NPCActions(ActionType.TakeStuntPoints, parts[1]));
+                        break;
                 case "GIVEITEM":
                     if (parts.Length < 2) return;
 
@@ -1286,7 +1297,12 @@ namespace Server.MirObjects
                     if (parts.Length < 2) return;
                     acts.Add(new NPCActions(ActionType.GiveGuildExp, parts[1]));
                     break;
-				case "CONTROLMECHANISM":
+                    case "UNLOCKSTUNTALL":
+                        if (parts.Length < 2) return;
+
+                        acts.Add(new NPCActions(ActionType.UnlockStuntAll, parts[1]));
+                        break;
+                    case "CONTROLMECHANISM":
                         {
                             if (parts.Length < 3) return;
 
@@ -3426,6 +3442,29 @@ namespace Server.MirObjects
                         }
                         break;
 
+                    case ActionType.GiveStuntPoints:
+                        {
+                            if (!uint.TryParse(param[0], out uint stuntPoints)) return;
+
+                            if (stuntPoints + player.Info.StuntPoints >= int.MaxValue)
+                                stuntPoints = (uint)(int.MaxValue - player.Info.StuntPoints);
+
+                            player.AddStuntPoints((int)stuntPoints);
+                        }
+                        break;
+
+                    case ActionType.TakeStuntPoints:
+                        {
+                            if (!uint.TryParse(param[0], out uint stuntPoints)) return;
+
+                            if (stuntPoints >= player.Info.StuntPoints)
+                                stuntPoints = (uint)player.Info.StuntPoints;
+
+                            player.RemoveStuntPoints((int)stuntPoints);
+
+                        }
+                        break;
+
                     case ActionType.GivePearls:
                         {
                             if (!uint.TryParse(param[0], out uint pearls)) return;
@@ -4967,6 +5006,15 @@ namespace Server.MirObjects
                             if (!bool.TryParse(param[1], out bool ascending)) return;
 
                             player.SendControlMechanism(mapName, ascending);
+                        }
+                        break;
+                    case ActionType.UnlockStuntAll:
+                        {
+                            if (!int.TryParse(param[0], out int tempInt)) return;
+                            if (tempInt <= 0) return;
+
+                            player.StuntAllUnlockTime = Envir.Time + tempInt * 60 * 1000;
+                            player.RefreshStuntInfo();
                         }
                         break;
                 }

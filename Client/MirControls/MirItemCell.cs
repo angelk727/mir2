@@ -79,6 +79,10 @@ namespace Client.MirControls
                         return GameScene.User.Trade;
                     case MirGridType.GuestTrade:
                         return GuestTradeDialog.GuestItems;
+                    case MirGridType.Stunt:
+                        return MapObject.User.Equipment[(int)EquipmentSlot.护身符].Slots;
+                    case MirGridType.StuntExtractItem:
+                        return StuntDialog.Items;
                     case MirGridType.Mount:
                         return MapObject.User.Equipment[(int)EquipmentSlot.坐骑].Slots;
                     case MirGridType.Fishing:
@@ -113,7 +117,7 @@ namespace Client.MirControls
 
         public override bool Border
         {
-            get { return (GameScene.SelectedCell == this || MouseControl == this || Locked) && !(GridType == MirGridType.DropPanel || GridType == MirGridType.Craft); }
+            get { return Item != null && (GameScene.SelectedCell == this || MouseControl == this || Locked) && !(GridType == MirGridType.DropPanel || GridType == MirGridType.Craft); }
         }
 
         private bool _locked;
@@ -341,11 +345,34 @@ namespace Client.MirControls
 
         public void OpenItem()
         {
-            if ((GridType != MirGridType.Equipment && GridType != MirGridType.Inventory) || Item == null || GameScene.SelectedCell == this) return;
+            if ((GridType != MirGridType.Equipment && GridType != MirGridType.Inventory) || Item == null || GameScene.SelectedCell == this)
+                return;
 
-            GameScene.Scene.SocketDialog.Show(GridType, Item);
+            switch (Item.Info.Type)
+            {
+                case ItemType.护身符:
+                    if (GridType == MirGridType.Inventory) return;
+
+                    if (Item.Info.IsStuntBox && (GameScene.Scene.CharacterDialog.Grid[(byte)EquipmentSlot.护身符].Item.Info.Shape == 5))
+                    {
+                        if (GameScene.Scene.StuntDialog.Visible)
+                        {
+                            GameScene.Scene.StuntDialog.ClearStuntExtractItems();
+                            GameScene.Scene.StuntDialog.Hide();
+                            GameScene.Scene.ChatDialog.ReceiveChat("绝技盒关闭", ChatType.System);
+                        }
+                        else
+                        {
+                            GameScene.Scene.StuntDialog.Show();
+                            GameScene.Scene.ChatDialog.ReceiveChat("绝技盒打开", ChatType.System);
+                        }
+                    }
+                    break;
+                default:
+                    GameScene.Scene.SocketDialog.Show(GridType, Item);
+                    break;
+            }
         }
-
         private bool HeroGridType => GridType == MirGridType.HeroInventory || GridType == MirGridType.HeroEquipment;
 
         public void UseItem()
@@ -361,7 +388,7 @@ namespace Client.MirControls
                 return;
             }
 
-            if (GridType == MirGridType.Equipment || GridType == MirGridType.Mount || GridType == MirGridType.Fishing || GridType == MirGridType.Socket)
+            if (GridType == MirGridType.Equipment || GridType == MirGridType.Mount || GridType == MirGridType.Fishing || GridType == MirGridType.Stunt || GridType == MirGridType.Socket)
             {
                 RemoveItem();
                 return;
@@ -455,14 +482,38 @@ namespace Client.MirControls
                     }
                     break;
                 case ItemType.护身符:
-                    //if (Item.Info.Shape == 0) return;
-
-                    if (dialog.Grid[(int)EquipmentSlot.护身符].Item != null && Item.Info.Type == ItemType.护身符)
+                    if (Item.Info.Type == ItemType.护身符)
                     {
+                        if (dialog.Grid[(int)EquipmentSlot.护身符].Item != null &&
+                            dialog.Grid[(int)EquipmentSlot.护身符].Item.Info.Type == ItemType.护身符 &&
+                            dialog.Grid[(int)EquipmentSlot.护身符].Item.Info.IsStuntBox)
+                        {
+                            if (Item.Info.Shape == 5 || Item.Info.Shape == 6)
+                            {
+                                return;
+                            }
+                            if (dialog.Grid[(int)EquipmentSlot.绝技盒1].CanWearItem(actor, Item) && (dialog.Grid[(int)EquipmentSlot.绝技盒1].Item == null))
+                            {
+                                Network.Enqueue(new C.EquipItem { Grid = GridType, UniqueID = Item.UniqueID, To = (int)EquipmentSlot.绝技盒1 });
+                                dialog.Grid[(int)EquipmentSlot.绝技盒1].Locked = true;
+                                Locked = true;
+                                return;
+                            }
+                            else if (dialog.Grid[(int)EquipmentSlot.绝技盒2].CanWearItem(actor, Item))
+                            {
+                                Network.Enqueue(new C.EquipItem { Grid = GridType, UniqueID = Item.UniqueID, To = (int)EquipmentSlot.绝技盒2 });
+                                dialog.Grid[(int)EquipmentSlot.绝技盒2].Locked = true;
+                                Locked = true;
+                                return;
+                            }
+                            return;
+                        }
+
+                        if (dialog.Grid[(int)EquipmentSlot.护身符].Item != null)
+                        {
                         if (dialog.Grid[(int)EquipmentSlot.护身符].Item.Info == Item.Info && dialog.Grid[(int)EquipmentSlot.护身符].Item.Count < dialog.Grid[(int)EquipmentSlot.护身符].Item.Info.StackSize)
                         {
                             Network.Enqueue(new C.MergeItem { GridFrom = GridType, GridTo = GridType == MirGridType.HeroInventory ? MirGridType.HeroEquipment : MirGridType.Equipment, IDFrom = Item.UniqueID, IDTo = dialog.Grid[(int)EquipmentSlot.护身符].Item.UniqueID });
-                            //Network.Enqueue(new C.MergeItem { GridFrom = GridType, GridTo = MirGridType.Equipment, IDFrom = Item.UniqueID, IDTo = dialog.Grid[(int)EquipmentSlot.护身符].Item.UniqueID });
 
                             Locked = true;
                             return;
@@ -474,6 +525,7 @@ namespace Client.MirControls
                         Network.Enqueue(new C.EquipItem { Grid = GridType, UniqueID = Item.UniqueID, To = (int)EquipmentSlot.护身符 });
                         dialog.Grid[(int)EquipmentSlot.护身符].Locked = true;
                         Locked = true;
+                        }
                     }
                     break;
                 case ItemType.腰带:
@@ -598,6 +650,9 @@ namespace Client.MirControls
                 case ItemType.探鱼器:
                 case ItemType.摇轮:
                 case ItemType.镶嵌宝石:
+                case ItemType.攻击型绝技:
+                case ItemType.防御型绝技:
+                case ItemType.技能型绝技:
                     UseSlotItem();
                     break;
             }
@@ -607,6 +662,7 @@ namespace Client.MirControls
         }
         public void UseSlotItem()
         {
+            StuntDialog stuntDialog;
             MountDialog mountDialog;
             FishingDialog fishingDialog;
 
@@ -615,7 +671,7 @@ namespace Client.MirControls
             switch (Item.Info.Type)
             {
                 case ItemType.镶嵌宝石:
-                    if (GameScene.SelectedItem != null && !GameScene.SelectedItem.Info.IsFishingRod && GameScene.SelectedItem.Info.Type != ItemType.坐骑)
+                    if (GameScene.SelectedItem != null && !GameScene.SelectedItem.Info.IsFishingRod && GameScene.SelectedItem.Info.Type != ItemType.坐骑 && !GameScene.SelectedItem.Info.IsStuntBox)
                     {
                         switch (Item.Info.Shape)
                         {
@@ -760,6 +816,96 @@ namespace Client.MirControls
                         Locked = true;
                     }
                     break;
+                case ItemType.攻击型绝技:
+                    stuntDialog = GameScene.Scene.StuntDialog;
+                    {
+                        if (stuntDialog.Grid[(int)StuntSlot.StuntDestroy].CanWearItem(GameScene.User, Item))
+                        {
+                            var toItem = MapObject.User.Equipment[(byte)EquipmentSlot.护身符];
+                            Network.Enqueue(new C.EquipSlotItem { Grid = GridType, UniqueID = Item.UniqueID, To = (int)StuntSlot.StuntDestroy, GridTo = MirGridType.Stunt, ToUniqueID = toItem.UniqueID });
+                            stuntDialog.Grid[(int)StuntSlot.StuntDestroy].Locked = true;
+                            Locked = true;
+                        }
+                        var allSlot = stuntDialog.Grid[(int)StuntSlot.StuntAll];
+                        if (allSlot != null && allSlot.Visible && allSlot.Enabled)
+                        {
+                            if (allSlot.CanWearItem(GameScene.User, Item))
+                            {
+                                var toItem = MapObject.User.Equipment[(byte)EquipmentSlot.护身符];
+                                Network.Enqueue(new C.EquipSlotItem
+                                {
+                                    Grid = GridType,
+                                    UniqueID = Item.UniqueID,
+                                    To = (int)StuntSlot.StuntAll,
+                                    GridTo = MirGridType.Stunt,
+                                    ToUniqueID = toItem.UniqueID
+                                });
+                                allSlot.Locked = true;
+                                Locked = true;
+                            }
+                        }
+                    }
+                    break;
+                case ItemType.防御型绝技:
+                    stuntDialog = GameScene.Scene.StuntDialog;
+                    {
+                        if (stuntDialog.Grid[(int)StuntSlot.StuntGuard].CanWearItem(GameScene.User, Item))
+                        {
+                            var toItem = MapObject.User.Equipment[(byte)EquipmentSlot.护身符];
+                            Network.Enqueue(new C.EquipSlotItem { Grid = GridType, UniqueID = Item.UniqueID, To = (int)StuntSlot.StuntGuard, GridTo = MirGridType.Stunt, ToUniqueID = toItem.UniqueID });
+                            stuntDialog.Grid[(int)StuntSlot.StuntGuard].Locked = true;
+                            Locked = true;
+                        }
+                        var allSlot = stuntDialog.Grid[(int)StuntSlot.StuntAll];
+                        if (allSlot != null && allSlot.Visible && allSlot.Enabled)
+                        {
+                            if (allSlot.CanWearItem(GameScene.User, Item))
+                            {
+                                var toItem = MapObject.User.Equipment[(byte)EquipmentSlot.护身符];
+                                Network.Enqueue(new C.EquipSlotItem
+                                {
+                                    Grid = GridType,
+                                    UniqueID = Item.UniqueID,
+                                    To = (int)StuntSlot.StuntAll,
+                                    GridTo = MirGridType.Stunt,
+                                    ToUniqueID = toItem.UniqueID
+                                });
+                                allSlot.Locked = true;
+                                Locked = true;
+                            }
+                        }
+                    }
+                    break;
+                case ItemType.技能型绝技:
+                    stuntDialog = GameScene.Scene.StuntDialog;
+                    {
+                        if (stuntDialog.Grid[(int)StuntSlot.StuntMedicine].CanWearItem(GameScene.User, Item))
+                        {
+                            var toItem = MapObject.User.Equipment[(byte)EquipmentSlot.护身符];
+                            Network.Enqueue(new C.EquipSlotItem { Grid = GridType, UniqueID = Item.UniqueID, To = (int)StuntSlot.StuntMedicine, GridTo = MirGridType.Stunt, ToUniqueID = toItem.UniqueID });
+                            stuntDialog.Grid[(int)StuntSlot.StuntMedicine].Locked = true;
+                            Locked = true;
+                        }
+                        var allSlot = stuntDialog.Grid[(int)StuntSlot.StuntAll];
+                        if (allSlot != null && allSlot.Visible && allSlot.Enabled)
+                        {
+                            if (allSlot.CanWearItem(GameScene.User, Item))
+                            {
+                                var toItem = MapObject.User.Equipment[(byte)EquipmentSlot.护身符];
+                                Network.Enqueue(new C.EquipSlotItem
+                                {
+                                    Grid = GridType,
+                                    UniqueID = Item.UniqueID,
+                                    To = (int)StuntSlot.StuntAll,
+                                    GridTo = MirGridType.Stunt,
+                                    ToUniqueID = toItem.UniqueID
+                                });
+                                allSlot.Locked = true;
+                                Locked = true;
+                            }
+                        }
+                    }
+                    break;
             }
         }
 
@@ -831,6 +977,12 @@ namespace Client.MirControls
                         if (GameScene.Scene.CharacterDialog.Grid[(byte)EquipmentSlot.坐骑].Item == null) return;
 
                         fromID = GameScene.Scene.CharacterDialog.Grid[(byte)EquipmentSlot.坐骑].Item.UniqueID;
+                    }
+                    else if (GridType == MirGridType.Stunt)
+                    {
+                        if (GameScene.Scene.CharacterDialog.Grid[(byte)EquipmentSlot.护身符].Item == null) return;
+
+                        fromID = GameScene.Scene.CharacterDialog.Grid[(byte)EquipmentSlot.护身符].Item.UniqueID;
                     }
                     else
                     {
@@ -1150,6 +1302,19 @@ namespace Client.MirControls
 
                                 if (GameScene.SelectedCell.ItemSlot == 0)
                                     GameScene.Scene.NPCAwakeDialog.ItemCell_Click();
+                                GameScene.SelectedCell = null;
+                                break;
+                            #endregion
+                            #region From StuntExtractItem
+                            case MirGridType.StuntExtractItem://From StuntExtractItem
+                                Network.Enqueue(new C.MoveItem
+                                {
+                                    Grid = GridType,
+                                    From = StuntDialog.ItemsIdx[GameScene.SelectedCell.ItemSlot],
+                                    To = StuntDialog.ItemsIdx[GameScene.SelectedCell.ItemSlot]
+                                });
+                                GameScene.SelectedCell.Locked = false;
+                                GameScene.SelectedCell.Item = null;
                                 GameScene.SelectedCell = null;
                                 break;
                             #endregion
@@ -1760,6 +1925,55 @@ namespace Client.MirControls
                         }
                         return;
                     #endregion
+                    #region To StuntExtract
+
+                    case MirGridType.StuntExtractItem:
+                        {
+                            if (_itemSlot < 0 || _itemSlot > 11)
+                            {
+                                break;
+                            }
+
+                            switch (_itemSlot)
+                            {
+                                case 0:
+                                case 1:
+                                case 2:
+                                case 3:
+                                case 4:
+                                case 5:
+                                case 6:
+                                case 7:
+                                case 8:
+                                case 9:
+                                case 10:
+                                case 11:
+                                    {
+                                        if (GameScene.SelectedCell.GridType == MirGridType.Inventory && Item == null)
+                                        {
+                                            var item = GameScene.SelectedCell.Item;
+                                            if (item != null &&
+                                                (item.Info.Type == ItemType.攻击型绝技 ||
+                                                 item.Info.Type == ItemType.防御型绝技 ||
+                                                 item.Info.Type == ItemType.技能型绝技 ||
+                                                 item.Info.Type == ItemType.绝技材料))
+                                            {
+                                                Item = item;
+                                                GameScene.SelectedCell.Locked = true;
+                                                StuntDialog.ItemsIdx[_itemSlot] = GameScene.SelectedCell._itemSlot;
+                                            }
+                                        }
+                                    }
+                                    break;
+
+                                default:
+                                    break;
+                            }
+
+                            GameScene.SelectedCell = null;
+                        }
+                        break;
+                    #endregion
                     #region To Mail
                     case MirGridType.Mail: //To Mail
                         if (GameScene.SelectedCell.GridType == MirGridType.Inventory)
@@ -2099,6 +2313,10 @@ namespace Client.MirControls
                     return type == ItemType.守护石;
                 case EquipmentSlot.坐骑:
                     return type == ItemType.坐骑;
+                case EquipmentSlot.绝技盒1:               
+                    return type == ItemType.护身符;
+                case EquipmentSlot.绝技盒2:      
+                    return type == ItemType.护身符;
                 default:
                     return false;
             }
@@ -2278,6 +2496,15 @@ namespace Client.MirControls
                     if (actor.Equipment[(int)EquipmentSlot.武器] == null || !actor.Equipment[(int)EquipmentSlot.武器].Info.IsFishingRod)
                     {
                         GameScene.Scene.ChatDialog.ReceiveChat(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.YouDoNotHaveFishingRodEquipped), ChatType.System);
+                        return false;
+                    }
+                    break;
+                case ItemType.攻击型绝技:
+                case ItemType.防御型绝技:
+                case ItemType.技能型绝技:
+                    if (actor.Equipment[(int)EquipmentSlot.护身符] == null || !actor.Equipment[(int)EquipmentSlot.护身符].Info.IsStuntBox)
+                    {
+                        GameScene.Scene.ChatDialog.ReceiveChat("在绝技盒中使用", ChatType.System);
                         return false;
                     }
                     break;
@@ -2477,8 +2704,17 @@ namespace Client.MirControls
                         return false;
                     }
                     break;
+                case ItemType.攻击型绝技:
+                case ItemType.防御型绝技:
+                case ItemType.技能型绝技:
+                    if (actor.StuntType != 5)
+                    {
+                        GameScene.Scene.ChatDialog.ReceiveChat("没有装备绝技盒", ChatType.System);
+                        return false;
+                    }
+                    break;
                 case ItemType.镶嵌宝石:
-                    if (GameScene.SelectedItem == null || GameScene.SelectedItem.Info.Type == ItemType.坐骑 || (GameScene.SelectedItem.Info.Type == ItemType.武器 && GameScene.SelectedItem.Info.IsFishingRod))
+                    if (GameScene.SelectedItem == null || (GameScene.SelectedItem.Info.Type == ItemType.护身符 && GameScene.SelectedItem.Info.IsStuntBox) || GameScene.SelectedItem.Info.Type == ItemType.坐骑 || (GameScene.SelectedItem.Info.Type == ItemType.武器 && GameScene.SelectedItem.Info.IsFishingRod))
                     {
                         return false;
                     }

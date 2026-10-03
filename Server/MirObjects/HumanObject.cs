@@ -112,6 +112,11 @@ namespace Server.MirObjects
             get { return Info.Mount; }
         }        
 
+        public StuntInfo Stunt
+        {
+            get { return Info.Stunt; }
+        }
+
         public Reporting Report;
         public virtual bool CanMove
         {
@@ -1310,6 +1315,15 @@ namespace Server.MirObjects
                         return false;
                     }
                     break;
+                case ItemType.攻击型绝技:
+                case ItemType.防御型绝技:
+                case ItemType.技能型绝技:
+                    if (Info.Equipment[(int)EquipmentSlot.护身符] == null || !Info.Equipment[(int)EquipmentSlot.护身符].Info.IsStuntBox)
+                    {
+                        ReceiveChat("打开绝技盒后才能使用该物品", ChatType.System);
+                        return false;
+                    }
+                    break;
                 case ItemType.鱼钩:
                 case ItemType.鱼漂:
                 case ItemType.鱼饵:
@@ -1848,6 +1862,7 @@ namespace Server.MirObjects
             RefreshSkills();
             RefreshBuffs();
             RefreshGuildBuffs();
+            RefreshStuntInfo();
 
             //Add any rate percent changes
             long temp;
@@ -1947,6 +1962,8 @@ namespace Server.MirObjects
         }
         public virtual void RefreshGuildBuffs() { }
 
+        public virtual void RefreshStuntInfo() { }
+
         public virtual void RefreshMaxExperience() { }
         protected virtual void RefreshLevelStats()
         {
@@ -2031,7 +2048,12 @@ namespace Server.MirObjects
                     //RealItem.Effect;
                 }
 
-                if (temp.Info.IsFishingRod) continue;
+                if (realItem.Type == ItemType.护身符 && temp.Info.IsStuntBox)
+                {
+                    Stunt.StuntType = realItem.Shape;
+                }
+
+                if (temp.Info.IsFishingRod || (temp.Info.IsStuntBox)) continue;
 
                 Stats.Add(realItem.Stats);
                 Stats.Add(temp.AddedStats);
@@ -2122,6 +2144,11 @@ namespace Server.MirObjects
             }
 
             if (equipItem.Info.Type == ItemType.坐骑 && !RidingMount)
+            {
+                return;
+            }
+
+            if (equipItem.Info.Type == ItemType.护身符 && !equipItem.Info.IsStuntBox)
             {
                 return;
             }
@@ -8811,9 +8838,18 @@ namespace Server.MirObjects
                         return false;
                     break;
                 case EquipmentSlot.护身符:
-                    if (item.Info.Type != ItemType.护身符)// || item.Info.Shape == 0
+                    if (item.Info.Type != ItemType.护身符)
                         return false;
-                    break;
+
+                    if (item.Info.Shape == 5)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        //InvalidateStuntBoxes();
+                        return true;
+                    }
                 case EquipmentSlot.靴子:
                     if (item.Info.Type != ItemType.靴子)
                         return false;
@@ -8828,6 +8864,11 @@ namespace Server.MirObjects
                     break;
                 case EquipmentSlot.坐骑:
                     if (item.Info.Type != ItemType.坐骑)
+                        return false;
+                    break;
+                case EquipmentSlot.绝技盒1:
+                case EquipmentSlot.绝技盒2:
+                    if (item.Info.Type != ItemType.护身符 || item.Info.Shape == 5 || item.Info.Shape == 6)
                         return false;
                     break;
                 default:
@@ -8935,6 +8976,51 @@ namespace Server.MirObjects
             }
 
             return true;
+        }
+
+        public void InvalidateStuntBoxes()
+        {
+            UserItem stuntBox1Item = Info.Equipment[(int)EquipmentSlot.绝技盒1];
+
+            if (stuntBox1Item != null)
+            {
+                Info.Equipment[(int)EquipmentSlot.绝技盒1] = null;
+
+                if (CanGainItem(stuntBox1Item))
+                {
+                    GainItem(stuntBox1Item);
+                    Report.ItemChanged(stuntBox1Item, stuntBox1Item.Count, 2);
+                }
+                else
+                {
+                    Enqueue(new S.DeleteItem
+                    {
+                        UniqueID = stuntBox1Item.UniqueID,
+                        Count = stuntBox1Item.Count
+                    });
+                }
+            }
+
+            UserItem stuntBox2Item = Info.Equipment[(int)EquipmentSlot.绝技盒2];
+
+            if (stuntBox2Item != null)
+            {
+                Info.Equipment[(int)EquipmentSlot.绝技盒2] = null;
+
+                if (CanGainItem(stuntBox2Item))
+                {
+                    GainItem(stuntBox2Item);
+                    Report.ItemChanged(stuntBox2Item, stuntBox2Item.Count, 2);
+                }
+                else
+                {
+                    Enqueue(new S.DeleteItem
+                    {
+                        UniqueID = stuntBox2Item.UniqueID,
+                        Count = stuntBox2Item.Count
+                    });
+                }
+            }
         }
         public void GainItem(UserItem item)
         {
