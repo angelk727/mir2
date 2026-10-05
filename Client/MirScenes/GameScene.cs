@@ -3183,7 +3183,7 @@ namespace Client.MirScenes
 
         private void StuntUpdate(S.StuntUpdate p)
         {
-            if (MapControl.Objects.TryGetValue((uint)p.ObjectID, out MapObject obj))
+            if (MapControl.Objects.TryGetValue(p.ObjectID, out MapObject obj))
             {
                 PlayerObject player = obj as PlayerObject;
 

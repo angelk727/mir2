@@ -98,8 +98,7 @@ namespace Server.MirDatabase
         public PlayerObject Player;
         public MountInfo Mount;
         public StuntInfo Stunt;
-        public int StuntPoints;
-        public bool Stuntlucky;
+        public long StuntPoints, StuntAllUnlockTime;
 
         public Dictionary<int, int> GSpurchases = new Dictionary<int, int>();
         public int[] Rank = new int[2];//dont save this in db!(and dont send it to clients :p)
@@ -274,7 +273,7 @@ namespace Server.MirDatabase
 
                 if (quest == null || quest.Info == null || quest.IsOrphan)
                 {
-                    Console.WriteLine($"[Load] Skipped orphan QuestProgress (Index={quest?.Index}) for character: {Name}");
+                    MessageQueue.Instance.Enqueue($"[加载] 跳过无效的任务进度（Index={quest?.Index}），角色：{Name}"); 
                     continue;
                 }
                 if (Envir.BindQuest(quest))
@@ -312,7 +311,8 @@ namespace Server.MirDatabase
             }
 
             PearlCount = reader.ReadInt32();
-            StuntPoints = reader.ReadInt32();
+            StuntPoints = reader.ReadInt64();
+            StuntAllUnlockTime = reader.ReadInt64();
 
             count = reader.ReadInt32();
             for (int i = 0; i < count; i++)
@@ -558,6 +558,7 @@ namespace Server.MirDatabase
 
             writer.Write(PearlCount);
             writer.Write(StuntPoints);
+            writer.Write(StuntAllUnlockTime);
 
             writer.Write(CompletedQuests.Count);
             for (int i = 0; i < CompletedQuests.Count; i++)

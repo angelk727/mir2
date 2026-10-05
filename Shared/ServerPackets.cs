@@ -7100,19 +7100,21 @@ namespace ServerPackets
     {
         public override short Index { get { return (short)ServerPacketIds.StuntUpdate; } }
 
-        public long ObjectID;
+        public uint ObjectID;
         public short StuntType;
-        public int StuntPoints;
+        public long StuntPoints;
         public bool Stuntlucky;
         public bool StuntAllUnlocked;
+        public long StuntAllUnlockTime;
 
         protected override void ReadPacket(BinaryReader reader)
         {
-            ObjectID = reader.ReadInt64();
+            ObjectID = reader.ReadUInt32();
             StuntType = reader.ReadInt16();
-            StuntPoints = reader.ReadInt32();
+            StuntPoints = reader.ReadInt64();
             Stuntlucky = reader.ReadBoolean();
             StuntAllUnlocked = reader.ReadBoolean();
+            StuntAllUnlockTime = reader.ReadInt64();
         }
 
         protected override void WritePacket(BinaryWriter writer)
@@ -7122,6 +7124,7 @@ namespace ServerPackets
             writer.Write(StuntPoints);
             writer.Write(Stuntlucky);
             writer.Write(StuntAllUnlocked);
+            writer.Write(StuntAllUnlockTime);
         }
     }
 }

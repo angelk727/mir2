@@ -19,13 +19,6 @@ namespace Client.MirScenes.Dialogs
         public static UserItem[] Items = new UserItem[12];
         public static int[] ItemsIdx = new int[12];
 
-        public int StuntPoints;
-
-        private Timer _reEnableTimer;
-
-        private MirGridType GridType;
-
-
         public StuntDialog()
         {
             {
@@ -121,8 +114,7 @@ namespace Client.MirScenes.Dialogs
 
                             if (inventoryIndex >= 0 && inventoryIndex < GameScene.User.Inventory.Length)
                             {
-                                if (inventoryIndex < GameScene.User.BeltIdx)
-                                    GameScene.Scene.BeltDialog.Grid[inventoryIndex].Locked = false;
+                                if (inventoryIndex < GameScene.User.BeltIdx) GameScene.Scene.BeltDialog.Grid[inventoryIndex].Locked = false;
                                 else
                                     GameScene.Scene.InventoryDialog.Grid[inventoryIndex - GameScene.User.BeltIdx].Locked = false;
                             }
@@ -264,18 +256,6 @@ namespace Client.MirScenes.Dialogs
             if (!Visible) return;
             Visible = false;
         }
-        public void RefreshDialog()//暂未使用
-        {
-            UserItem StuntItem = GameScene.User.Equipment[(int)EquipmentSlot.护身符];
-            UserItem[] StuntSlots = null;
-
-            if (StuntItem != null)
-            {
-                StuntSlots = StuntItem.Slots;
-            }
-
-            if (StuntSlots == null) return;
-        }
 
         public MirItemCell GetCell(ulong id)
         {
@@ -312,10 +292,9 @@ namespace Client.MirScenes.Dialogs
     public sealed class StuntObtainDialog : MirImageControl
     {
         public MirLabel TitleStuntObtainLabel, StuntPointsText;
-        public MirImageControl StuntObtainPage, StuntObtainCountPage;
+        public MirImageControl StuntObtainCountPage;
         public MirButton CloseButton, StuntRaffleButton;
         public MirAnimatedControl StuntObtainDisplay, StuntRaffleDisplay;
-        public int StuntPoints;
         public StuntObtainDialog()
         {
             Index = 1182;
@@ -515,12 +494,6 @@ namespace Client.MirScenes.Dialogs
         public static void RequestLottery()
         {
             Network.Enqueue(new C.LotteryStuntItems());
-        }
-
-        public static void UpdateStuntPoints()
-
-        {
-            Network.Enqueue(new C.StuntBox());
         }
 
         public static void UpdateStuntBoostStatus(bool isBoostActive)

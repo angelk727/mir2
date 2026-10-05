@@ -19,7 +19,6 @@ namespace Server.MirObjects
         public long LastRecallTime, LastTeleportTime, LastProbeTime;
         public long NextMailTime;
         public long MenteeEXP;
-        public long StuntAllUnlockTime;
         public bool WarZone = false;
 
         public int CurrentHeroIndex;
@@ -112,6 +111,7 @@ namespace Server.MirObjects
         public const long TurnDelay = 350, HarvestDelay = 350, FishingCastDelay = 750, FishingDelay = 200, MovementDelay = 2000;
         public long ChatTime, ShoutTime, FishingTime, FishingFoundTime, CreatureTimeLeftTicker, RestedTime, MovementTime;
 
+        private long StuntAllUnlockLastTime;
         public byte ChatTick;
 
         public bool SendIntelligentCreatureUpdates = false;
@@ -183,15 +183,10 @@ namespace Server.MirObjects
         public uint ItemRentalPeriodLength = 0;
         public bool ItemRentalFeeLocked = false;
         public bool ItemRentalItemLocked = false;
-
-        public uint StuntPoints;
         public bool Stuntlucky = false;
-
         private long LastRankUpdate = Envir.Time;
-
         private Map LastValidMap;
         private Point LastValidLocation;
-        private int StuntLotteryCount;
 
         public List<QuestProgressInfo> CurrentQuests
         {
@@ -3303,11 +3298,13 @@ namespace Server.MirObjects
 
                         player = this;
 
+                        long stuntPoints;
+
                         if (parts.Length > 2)
                         {
                             if (!IsGM) return;
 
-                            if (!uint.TryParse(parts[2], out count)) return;
+                            if (!long.TryParse(parts[2], out stuntPoints)) return;
                             player = Envir.GetPlayer(parts[1]);
 
                             if (player == null)
@@ -3316,16 +3313,18 @@ namespace Server.MirObjects
                                 return;
                             }
                         }
-                        else if (!uint.TryParse(parts[1], out count)) return;
+                        else if (!long.TryParse(parts[1], out stuntPoints)) return;
 
-                        if (count + player.Info.StuntPoints >= int.MaxValue)
-                            count = (uint)(int.MaxValue - player.Info.StuntPoints);
+                        if (stuntPoints < 0) return;
 
-                        player.AddStuntPoints((int)count);
+                        if (stuntPoints > long.MaxValue - player.Info.StuntPoints)
+                            stuntPoints = long.MaxValue - player.Info.StuntPoints;
 
-                        string stuntPointsMsg = count == 1
+                        player.AddStuntPoints(stuntPoints);
+
+                        string stuntPointsMsg = stuntPoints == 1
                             ? $"游戏管理员:{Name} 给予玩家:{player.Name} 一点 绝技点"
-                            : $"游戏管理员:{Name} 给予玩家:{player.Name} {count} 点 绝技点";
+                            : $"游戏管理员:{Name} 给予玩家:{player.Name} {stuntPoints} 点 绝技点";
 
                         MessageQueue.Enqueue(stuntPointsMsg);
                         Helpers.ChatSystem.SystemMessage(chatMessage: stuntPointsMsg);
@@ -5071,7 +5070,7 @@ namespace Server.MirObjects
 
             if (gridTo == MirGridType.Stunt && to == (int)StuntSlot.StuntAll)
             {
-                if (StuntAllUnlockTime <= Envir.Time)
+                if (Info.StuntAllUnlockTime <= 0)
                 {
                     Enqueue(p);
                     return;
@@ -14809,7 +14808,7 @@ namespace Server.MirObjects
             {
                 UserItem all = box.Slots[(int)StuntSlot.StuntAll];
 
-                if (StuntAllUnlockTime > Envir.Time)
+                if (Info.StuntAllUnlockTime > 0)
                 {
                     ApplyBuffForSlot(all, BuffType.共用型绝技);
 
@@ -14919,67 +14918,65 @@ namespace Server.MirObjects
                         return;
                     }
 
-                    int gradeMultiplier = (int)item.Info.Grade + 10;
+                    long gradeMultiplier = (long)item.Info.Grade + 10;
+                    long stuntPoints = (long)item.Count * 10 * gradeMultiplier;
 
-                    int stuntPoints = item.Count * 10 * gradeMultiplier;
-
-                    Info.StuntPoints += stuntPoints;
+                    if (stuntPoints > 0)
+                    {
+                        if (stuntPoints > long.MaxValue - Info.StuntPoints)
+                            Info.StuntPoints = long.MaxValue;
+                        else
+                            Info.StuntPoints += stuntPoints;
+                    }
 
                     Enqueue(new S.DeleteItem { UniqueID = item.UniqueID, Count = item.Count });
                     Info.Inventory[i] = null;
-                    Enqueue(new S.StuntUpdate { ObjectID = ObjectID, StuntPoints = Info.StuntPoints, Stuntlucky = Stuntlucky });
+                    Enqueue(GetStuntInfo());
 
                     ReceiveChat($"{item.FriendlyName} 已成功分解，获得 {stuntPoints} 绝技点", ChatType.System);
                     break;
                 }
             }
         }
-
         private void ProcessStuntAllUnlock()
         {
-            if (StuntAllUnlockTime <= 0)
-                return;
+            if (Info.StuntAllUnlockTime > 0)
+            {
+                long elapsed = (Envir.Time - StuntAllUnlockLastTime) / Settings.Second;
+                if (elapsed > 0)
+                {
+                    Info.StuntAllUnlockTime -= elapsed;
+                    StuntAllUnlockLastTime += elapsed * Settings.Second;
 
-            if (Envir.Time < StuntAllUnlockTime)
-                return;
+                    if (Info.StuntAllUnlockTime <= 0) Info.StuntAllUnlockTime = 0;
+                }
+
+                if (Info.StuntAllUnlockTime > 0) return;
+            }
 
             RemoveBuff(BuffType.共用型绝技);
 
-            if (Info.Equipment == null || (int)EquipmentSlot.护身符 >= Info.Equipment.Length)
-                return;
+            if (Info.Equipment == null) return;
 
             UserItem box = Info.Equipment[(int)EquipmentSlot.护身符];
 
-            if (box == null || !box.Info.IsStuntBox || box.Slots == null)
-                return;
-
-            if ((int)StuntSlot.StuntAll >= box.Slots.Length)
-                return;
+            if (box == null || box.Info == null || !box.Info.IsStuntBox || box.Slots == null) return;
 
             UserItem item = box.Slots[(int)StuntSlot.StuntAll];
 
-            if (item == null)
-            {
-                StuntAllUnlockTime = 0;
-                return;
-            }
-
-            if (!CanGainItem(item))
-                return;
+            if (item == null || item.Info == null) return;
+            if (!CanGainItem(item)) return;
 
             GainItem(item);
-
             box.Slots[(int)StuntSlot.StuntAll] = null;
-
-            StuntAllUnlockTime = 0;
-
-            Enqueue(GetStuntInfo());
+            RefreshStuntInfo();
         }
+
         public void GetStuntlucky()
         {
             int lotteryNumber = Envir.Random.Next(1, 11);
 
-            if (lotteryNumber == 7)
+            if (lotteryNumber % 2 != 0)
             {
                 Stuntlucky = true;
 
@@ -15029,13 +15026,7 @@ namespace Server.MirObjects
             }
 
             GetStuntlucky();
-
-            Enqueue(new S.StuntUpdate
-            {
-                ObjectID = ObjectID,
-                StuntPoints = Info.StuntPoints,
-                Stuntlucky = Stuntlucky
-            });
+            Enqueue(GetStuntInfo());
 
             if (dropList.Count == 0)
             {
@@ -15093,7 +15084,7 @@ namespace Server.MirObjects
                 if (item.CurrentDura >= item.MaxDura) continue;
 
                 int needDura = item.MaxDura - item.CurrentDura;
-                int needPoints = (needDura / 1000) * 100;
+                long needPoints = needDura * 1L;
 
                 if (Info.StuntPoints < needPoints)
                 {
@@ -15113,30 +15104,30 @@ namespace Server.MirObjects
                     CurrentDura = item.CurrentDura
                 });
             }
-            Enqueue(new S.StuntUpdate
-            {
-                ObjectID = ObjectID,
-                StuntPoints = Info.StuntPoints,
-                Stuntlucky = Stuntlucky
-            });
 
-            ReceiveChat("绝技物品修复成功！", ChatType.System);
+            Enqueue(GetStuntInfo());
+            ReceiveChat("绝技物品修复完成！", ChatType.System);
         }
-        public void AddStuntPoints(int stuntPoints)
+
+        public void AddStuntPoints(long stuntPoints)
         {
             if (stuntPoints > 0)
             {
-                Info.StuntPoints += stuntPoints;
-                if (Info.StuntPoints > int.MaxValue) Info.StuntPoints = int.MaxValue;
+                if (Info.StuntPoints > long.MaxValue - stuntPoints)
+                    Info.StuntPoints = long.MaxValue;
+                else
+                    Info.StuntPoints += stuntPoints;
             }
         }
 
-        public void RemoveStuntPoints(int stuntPoints)
+        public void RemoveStuntPoints(long stuntPoints)
         {
             if (stuntPoints > 0)
             {
-                Info.StuntPoints -= stuntPoints;
-                if (Info.StuntPoints < 0) Info.StuntPoints = 0;
+                if (stuntPoints >= Info.StuntPoints)
+                    Info.StuntPoints = 0;
+                else
+                    Info.StuntPoints -= stuntPoints;
             }
         }
 
@@ -15146,7 +15137,6 @@ namespace Server.MirObjects
             if (!Info.Equipment[(int)EquipmentSlot.护身符].Info.IsStuntBox) return;
             if (Stunt.StuntType != 5) return;
 
-            //StuntBox();
             Enqueue(GetStuntInfo());
             Broadcast(GetStuntInfo());
         }
@@ -15159,7 +15149,8 @@ namespace Server.MirObjects
                 StuntType = Stunt.StuntType,
                 StuntPoints = Info.StuntPoints,
                 Stuntlucky = Stuntlucky,
-                StuntAllUnlocked = StuntAllUnlockTime > Envir.Time
+                StuntAllUnlockTime = Info.StuntAllUnlockTime,
+                StuntAllUnlocked = Info.StuntAllUnlockTime > 0
             };
         }
 

@@ -62,7 +62,8 @@ namespace Client.MirObjects
         public MirDirection NextMagicDirection;
         public QueuedAction QueuedAction;
 
-        public int StuntPoints;
+        public long StuntPoints;
+        public long StuntAllUnlockTime;
         public bool Stuntlucky;
         public UserObject() { }
         public UserObject(uint objectID) : base(objectID)

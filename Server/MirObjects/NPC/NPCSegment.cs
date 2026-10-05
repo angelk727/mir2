@@ -3444,24 +3444,31 @@ namespace Server.MirObjects
 
                     case ActionType.GiveStuntPoints:
                         {
-                            if (!uint.TryParse(param[0], out uint stuntPoints)) return;
+                            if (!long.TryParse(param[0], out long stuntPoints)) return;
 
-                            if (stuntPoints + player.Info.StuntPoints >= int.MaxValue)
-                                stuntPoints = (uint)(int.MaxValue - player.Info.StuntPoints);
+                            if (stuntPoints < 0) return;
 
-                            player.AddStuntPoints((int)stuntPoints);
+                            if (stuntPoints > long.MaxValue - player.Info.StuntPoints)
+                                stuntPoints = long.MaxValue - player.Info.StuntPoints;
+
+                            if (stuntPoints <= 0) return;
+
+                            player.AddStuntPoints(stuntPoints);
                         }
                         break;
 
                     case ActionType.TakeStuntPoints:
                         {
-                            if (!uint.TryParse(param[0], out uint stuntPoints)) return;
+                            if (!long.TryParse(param[0], out long stuntPoints)) return;
 
-                            if (stuntPoints >= player.Info.StuntPoints)
-                                stuntPoints = (uint)player.Info.StuntPoints;
+                            if (stuntPoints < 0) return;
 
-                            player.RemoveStuntPoints((int)stuntPoints);
+                            if (stuntPoints > player.Info.StuntPoints)
+                                stuntPoints = player.Info.StuntPoints;
 
+                            if (stuntPoints <= 0) return;
+
+                            player.RemoveStuntPoints(stuntPoints);
                         }
                         break;
 
@@ -5010,10 +5017,14 @@ namespace Server.MirObjects
                         break;
                     case ActionType.UnlockStuntAll:
                         {
-                            if (!int.TryParse(param[0], out int tempInt)) return;
-                            if (tempInt <= 0) return;
+                            if (!long.TryParse(param[0], out long unlockTime))
+                                return;
 
-                            player.StuntAllUnlockTime = Envir.Time + tempInt * 60 * 1000;
+                            if (unlockTime <= 0)
+                                return;
+
+                            player.Info.StuntAllUnlockTime += unlockTime;
+
                             player.RefreshStuntInfo();
                         }
                         break;
