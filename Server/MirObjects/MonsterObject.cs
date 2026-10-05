@@ -3027,12 +3027,17 @@ namespace Server.MirObjects
             }
 
             Broadcast(new S.ObjectStruck { ObjectID = ObjectID, AttackerID = attacker.ObjectID, Direction = Direction, Location = CurrentLocation });
+            
+            int finalDamage = damage - armour;
 
-            BroadcastDamageIndicator(DamageType.Hit, armour - damage);
+            if (finalDamage > 0 && attacker.Stats[Stat.额外伤害] > 0)
+                finalDamage += (int)(finalDamage * attacker.Stats[Stat.额外伤害] / 100.0);
+
+            BroadcastDamageIndicator(DamageType.Hit, -finalDamage);
 
             Envir.Valor.RecordDamage(this, attacker);
-            ChangeHP(armour - damage);
-            return damage - armour;
+            ChangeHP(-finalDamage);
+            return finalDamage;
         }
 
         public override int Struck(int damage, DefenceType type = DefenceType.ACAgility)

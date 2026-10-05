@@ -442,9 +442,9 @@ namespace Client.MirObjects
 
         private void RefreshItemSetStats()
         {
-            bool hasSmashSetBonus = false;     // Flag for Smash set AttackSpeed bonus
-            bool hasPuritySetBonus = false;    // Flag for Purity set Holy bonus
-            bool hasHwanDevilSetBonus = false; // Flag for HwanDevil set Weight bonuses
+            //bool hasSmashSetBonus = false;     // Flag for Smash set AttackSpeed bonus
+            //bool hasPuritySetBonus = false;    // Flag for Purity set Holy bonus
+            //bool hasHwanDevilSetBonus = false; // Flag for HwanDevil set Weight bonuses
 
             foreach (var s in ItemSets)
             {
