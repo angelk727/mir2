@@ -145,7 +145,7 @@ namespace Client.MirNetwork
             catch (SocketException ex)
             {
                 if (Settings.LogErrors)
-                    CMain.SaveError(ex.ToString());
+                    CMain.SaveError($"连接失败：{Settings.IPAddress}:{Settings.Port}，错误代码：{ex.SocketErrorCode}，{ex.Message}");
 
                 HandleConnectFailure(client, generation);
             }

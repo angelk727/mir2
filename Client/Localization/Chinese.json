@@ -106,6 +106,7 @@
     "InvalidItemIndex": "无效的物品索引",
     "InvalidLinkIndex": "无效的链接索引",
     "PatchErr": "无法获取补丁信息",
+    "PatchErrorTitle": "补丁错误",
     "LastOnline": "最后上线时间",
     "LastOnlineTitle": "最后在线:",
     "Gold": "金币",

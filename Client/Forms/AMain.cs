@@ -30,6 +30,7 @@ namespace Launcher
         private Config ConfigForm = new Config();
 
         private bool Restart = false;
+        private bool PatchListDownloadFailed;
 
         public AMain()
         {
@@ -60,45 +61,44 @@ namespace Launcher
             {
                 GetOldFileList();
 
-                if (OldList.Count == 0)
+                if (PatchListDownloadFailed || OldList == null || OldList.Count == 0)
                 {
-                    MessageBox.Show(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.PatchErr));
+                    if (PatchListDownloadFailed)
+                        MessageBox.Show(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.PatchErr), GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.PatchErrorTitle), MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
                     Completed = true;
                     return;
                 }
 
                 _fileCount = OldList.Count;
-                for (int i = 0; i < OldList.Count; i++)
-                    CheckFile(OldList[i]);
+                for (int i = 0; i < OldList.Count; i++) CheckFile(OldList[i]);
 
                 Checked = true;
                 _fileCount = 0;
                 _currentCount = 0;
-
                 _fileCount = DownloadList.Count;
 
                 ServicePointManager.DefaultConnectionLimit = Settings.P_Concurrency;
-
                 _stopwatch = Stopwatch.StartNew();
-                for (var i = 0; i < Settings.P_Concurrency; i++)
-                    BeginDownload();
 
-
+                for (var i = 0; i < Settings.P_Concurrency; i++) BeginDownload();
             }
             catch (EndOfStreamException ex)
             {
-                MessageBox.Show(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.EndStreamOldVersion));
+                MessageBox.Show(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.EndStreamOldVersion), GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.PatchErrorTitle), MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 Completed = true;
                 SaveError(ex.ToString());
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.ToString(), "Error");
+                if (Settings.LogErrors) SaveError(ex.ToString());
+                MessageBox.Show(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.PatchErr), GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.PatchErrorTitle), MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 Completed = true;
-                SaveError(ex.ToString());
             }
-
-            _stopwatch.Stop();
+            finally
+            {
+                _stopwatch?.Stop();
+            }
         }
 
         private void BeginDownload()
@@ -153,26 +153,34 @@ namespace Launcher
         private void GetOldFileList()
         {
             OldList = new List<FileInformation>();
+            PatchListDownloadFailed = false;
 
             byte[] data = Download(Settings.P_PatchFileName);
-            if (data != null)
+            if (data == null || data.Length < 4)
             {
-                using MemoryStream stream = new MemoryStream(data);
-                using BinaryReader reader = new BinaryReader(stream);
-
-                if (reader.ReadByte() == 60)
-                {
-                    //assume we got a html page back with an error code so it's not a patchlist
-                    return;
-                }
-                reader.BaseStream.Seek(0,SeekOrigin.Begin);
-                int count = reader.ReadInt32();
-
-                for (int i = 0; i < count; i++)
-                {
-                    OldList.Add(new FileInformation(reader));
-                }
+                PatchListDownloadFailed = true;
+                return;
             }
+
+            using MemoryStream stream = new MemoryStream(data);
+            using BinaryReader reader = new BinaryReader(stream);
+
+            if (reader.ReadByte() == 60)
+            {
+                PatchListDownloadFailed = true;
+                return;
+            }
+
+            reader.BaseStream.Seek(0, SeekOrigin.Begin);
+            int count = reader.ReadInt32();
+            if (count < 0)
+            {
+                PatchListDownloadFailed = true;
+                return;
+            }
+
+            for (int i = 0; i < count; i++)
+                OldList.Add(new FileInformation(reader));
         }
 
 
@@ -303,8 +311,7 @@ namespace Launcher
             }
             catch (HttpRequestException e)
             {
-                File.AppendAllText(@".\Error.txt",
-                                       $"[{DateTime.Now}] {info.FileName} 无法下载 ({e.Message}) {Environment.NewLine}");
+                File.AppendAllText(@".\Error.txt", $"[{DateTime.Now}] {info.FileName} 无法下载 ({e.Message}) {Environment.NewLine}");
                 ErrorFound = true;
             }
             catch (Exception ex)
@@ -329,8 +336,17 @@ namespace Launcher
 
         public byte[] Download(string fileName)
         {
-            using (HttpClient client = new())
+            string uriString = Settings.P_Host + Path.ChangeExtension(fileName, ".gz");
+            if (!Uri.IsWellFormedUriString(uriString, UriKind.Absolute))
             {
+                MessageBox.Show(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.LauncherHostSettingFormatError), GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.BadHostFormat));
+                return null;
+            }
+
+            try
+            {
+                using HttpClient client = new();
+                client.Timeout = TimeSpan.FromSeconds(15);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 client.DefaultRequestHeaders.AcceptCharset.Clear();
@@ -343,23 +359,27 @@ namespace Launcher
                     client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", authInfo);
                 }
 
-                string uriString = Settings.P_Host + Path.ChangeExtension(fileName, ".gz");
-
-                if (Uri.IsWellFormedUriString(uriString, UriKind.Absolute))
-                {
-                    var task = Task.Run(() => client.GetAsync(new Uri(uriString), HttpCompletionOption.ResponseHeadersRead));
-                    var response = task.Result;
-                    using Stream sm = response.Content.ReadAsStream();
-                    using MemoryStream ms = new();
-                    sm.CopyTo(ms);
-                    byte[] data = ms.ToArray();
-                    return data;
-                }
-                else
-                {
-                    MessageBox.Show(GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.LauncherHostSettingFormatError), GameLanguage.ClientTextMap.GetLocalization(ClientTextKeys.BadHostFormat));
-                    return null;
-                }
+                using HttpResponseMessage response = client.GetAsync(new Uri(uriString), HttpCompletionOption.ResponseHeadersRead).GetAwaiter().GetResult();
+                response.EnsureSuccessStatusCode();
+                using Stream sm = response.Content.ReadAsStream();
+                using MemoryStream ms = new();
+                sm.CopyTo(ms);
+                return ms.ToArray();
+            }
+            catch (HttpRequestException ex)
+            {
+                if (Settings.LogErrors) CMain.SaveError(ex.ToString());
+                return null;
+            }
+            catch (TaskCanceledException ex)
+            {
+                if (Settings.LogErrors) CMain.SaveError(ex.ToString());
+                return null;
+            }
+            catch (Exception ex)
+            {
+                if (Settings.LogErrors) CMain.SaveError(ex.ToString());
+                return null;
             }
         }
 

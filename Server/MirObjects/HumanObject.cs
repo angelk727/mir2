@@ -4718,7 +4718,7 @@ namespace Server.MirObjects
                 {
                     if (!TryReplaceOldestFireWallCast(activeFireWalls))
                     {
-                        ReceiveChat("Unable to recycle an existing FireWall. Please wait a moment.", ChatType.System);
+                        ReceiveChat("无法再次使用火墙请稍候...", ChatType.System);
                         return;
                     }
 

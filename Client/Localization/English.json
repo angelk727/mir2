@@ -106,6 +106,7 @@
     "InvalidItemIndex": "Invalid item index",
     "InvalidLinkIndex": "Invalid link index",
     "PatchErr": "Could not get Patch Information",
+    "PatchErrorTitle": "Patch Error",
     "LastOnline": "Last Online",
     "LastOnlineTitle": "Last Online:",
     "Gold": "Gold",

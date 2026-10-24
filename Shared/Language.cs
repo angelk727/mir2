@@ -85,6 +85,7 @@ public enum ClientTextKeys
     InvalidLinkIndex,
 
     PatchErr,
+    PatchErrorTitle,
     LastOnline,
 
     Gold,
@@ -2791,6 +2792,7 @@ public static class GameLanguage
             { nameof(ClientTextKeys.InvalidItemIndex), "Invalid item index" },
             { nameof(ClientTextKeys.InvalidLinkIndex), "Invalid link index" },
             { nameof(ClientTextKeys.PatchErr), "Could not get Patch Information" },
+            { nameof(ClientTextKeys.PatchErrorTitle), "Patch Error" },
             { nameof(ClientTextKeys.LastOnline), "Last Online" },
             { nameof(ClientTextKeys.LastOnlineTitle), "Last Online:" },
             { nameof(ClientTextKeys.Gold), "Gold" },
