@@ -50,10 +50,8 @@ namespace Server
             {
                 tabControl1.Enabled = true;
                 lblSelected.Text = " 技能  " + _selectedMagicInfo.ToString();
-                lblDamageExample.Text =
-                    $"实际伤害 0级伤害:{GetMinPower(0):000}-{GetMaxPower(0):000} → 1级伤害:{GetMinPower(1):000}-{GetMaxPower(1):000} →→ 2级伤害:{GetMinPower(2):000}-{GetMaxPower(2):000} →→→ 3级伤害:{GetMinPower(3):000}-{GetMaxPower(3):000}";
-                lblDamageExplained.Text =
-                    $"伤害公式 {{随机(最小值<->最大值)+[<(随机({_selectedMagicInfo.MPowerBase}-{_selectedMagicInfo.MPowerBase + _selectedMagicInfo.MPowerBonus})/4)X(技能等级+1)>+随机<{_selectedMagicInfo.PowerBase}-{_selectedMagicInfo.PowerBonus + _selectedMagicInfo.PowerBase}>]}}X{{{_selectedMagicInfo.MultiplierBase}+(技能等级 * {_selectedMagicInfo.MultiplierBonus})}}";
+                lblDamageExample.Text = $"实际伤害 0级伤害:{GetMinPower(0):000}-{GetMaxPower(0):000} → 1级伤害:{GetMinPower(1):000}-{GetMaxPower(1):000} →→ 2级伤害:{GetMinPower(2):000}-{GetMaxPower(2):000} →→→ 3级伤害:{GetMinPower(3):000}-{GetMaxPower(3):000}";
+                lblDamageExplained.Text = $"伤害公式：{{随机(最小值~最大值)+[(随机({_selectedMagicInfo.MPowerBase}~{(_selectedMagicInfo.MPowerBonus > 0 ? _selectedMagicInfo.MPowerBase + _selectedMagicInfo.MPowerBonus - 1 : _selectedMagicInfo.MPowerBase)})÷4)×(技能等级+1)+随机({_selectedMagicInfo.PowerBase}~{(_selectedMagicInfo.PowerBonus > 0 ? _selectedMagicInfo.PowerBase + _selectedMagicInfo.PowerBonus - 1 : _selectedMagicInfo.PowerBase)})]}}×[{_selectedMagicInfo.MultiplierBase}+(技能等级×{_selectedMagicInfo.MultiplierBonus})]";
                 txtSkillIcon.Text = _selectedMagicInfo.Icon.ToString();
                 txtSkillLvl1Points.Text = _selectedMagicInfo.Need1.ToString();
                 txtSkillLvl1Req.Text = _selectedMagicInfo.Level1.ToString();
@@ -91,8 +89,11 @@ namespace Server
         private int GetMaxPower(byte level)
         {
             if (_selectedMagicInfo == null) return 0;
-            return (int)Math.Round((((_selectedMagicInfo.MPowerBase + _selectedMagicInfo.MPowerBonus) / 4F) * (level + 1) + (_selectedMagicInfo.PowerBase + _selectedMagicInfo.PowerBonus)) * (_selectedMagicInfo.MultiplierBase + (level * _selectedMagicInfo.MultiplierBonus)));
+            int maxMPower = _selectedMagicInfo.MPowerBonus > 0 ? _selectedMagicInfo.MPowerBase + _selectedMagicInfo.MPowerBonus - 1 : _selectedMagicInfo.MPowerBase;
+            int maxPower = _selectedMagicInfo.PowerBonus > 0 ? _selectedMagicInfo.PowerBase + _selectedMagicInfo.PowerBonus - 1 : _selectedMagicInfo.PowerBase;
+            return (int)Math.Round(((maxMPower / 4F) * (level + 1) + maxPower) * (_selectedMagicInfo.MultiplierBase + (level * _selectedMagicInfo.MultiplierBonus)));
         }
+
         private int GetMinPower(byte level)
         {
             if (_selectedMagicInfo == null) return 0;
